@@ -12,6 +12,18 @@ export function getDbMode(): 'postgres' | 'memory' {
   return dbMode;
 }
 
+export function sanitizeSslConnectionString(rawUrl: string, needsSsl: boolean): string {
+  if (!needsSsl) return rawUrl;
+  try {
+    const parsed = new URL(rawUrl);
+    // pg-connection-string v2.x treats sslmode=require as verify-full and overrides ssl.rejectUnauthorized=false
+    parsed.searchParams.delete('sslmode');
+    return parsed.toString();
+  } catch {
+    return rawUrl;
+  }
+}
+
 export async function initDatabase(): Promise<'postgres' | 'memory'> {
   if (!env.databaseUrl) {
     if (!env.allowMemoryFallback) {
@@ -28,7 +40,7 @@ export async function initDatabase(): Promise<'postgres' | 'memory'> {
       (env.databaseUrl.includes('supabase') || env.databaseUrl.includes('sslmode=require')));
 
   const candidate = new Pool({
-    connectionString: env.databaseUrl,
+    connectionString: sanitizeSslConnectionString(env.databaseUrl, needsSsl),
     ssl: needsSsl ? { rejectUnauthorized: false } : undefined,
     connectionTimeoutMillis: env.connectionTimeoutMs,
     max: env.maxPoolSize,

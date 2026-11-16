@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Client } from 'pg';
 import { env } from '../config/env.js';
+import { sanitizeSslConnectionString } from './pool.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -45,7 +46,10 @@ async function main() {
   }
 
   // 2. Kết nối vào database đích và chạy schema.sql + seed.sql
-  const client = new Client({ connectionString: env.databaseUrl, ssl: sslOpt });
+  const client = new Client({
+    connectionString: sanitizeSslConnectionString(env.databaseUrl, needsSsl),
+    ssl: sslOpt,
+  });
   await client.connect();
   try {
     const schemaPath = path.join(dbDir, 'schema.sql');
