@@ -1,0 +1,30 @@
+databaseChangeLog:
+  # 01. Tables (versioned)
+  - includeAll:
+      path: db/migration/01_tables/
+      relativeToChangelogFile: false
+      errorIfMissingOrEmpty: false
+
+  # 02. Views (repeatable: runOnChange=true trong từng file)
+  - includeAll:
+      path: db/migration/02_views/
+      relativeToChangelogFile: false
+      errorIfMissingOrEmpty: false
+
+  # 03. Functions (repeatable)
+  - includeAll:
+      path: db/migration/03_functions/
+      relativeToChangelogFile: false
+      errorIfMissingOrEmpty: false
+
+  # 05. Seed data (versioned)
+  - includeAll:
+      path: db/migration/05_seed_data/
+      relativeToChangelogFile: false
+      errorIfMissingOrEmpty: false
+
+  # 06. Procedures (repeatable)
+  - includeAll:
+      path: db/migration/06_procedures/
+      relativeToChangelogFile: false
+      errorIfMissingOrEmpty: false

@@ -1,0 +1,179 @@
+/* Custom CSS for Chinese Study Web App */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+
+:root {
+  --primary-red: #c22929;
+  --primary-red-dark: #9e1d1d;
+  --primary-red-light: #fef2f2;
+  --accent-gold: #d97706;
+  --accent-jade: #0d9488;
+  --bg-parchment: #fcfaf7;
+  --card-bg: #ffffff;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-parchment);
+  color: var(--text-main);
+  background-image: radial-gradient(#e5e0d8 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.chinese-font {
+  font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+}
+
+.chinese-serif {
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
+}
+
+/* 3D Flashcard flip */
+.flashcard-container {
+  perspective: 1200px;
+  width: 100%;
+  height: 480px;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.flashcard-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front, .flashcard-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 1.5rem;
+  box-sizing: border-box;
+}
+
+.flashcard-front {
+  transform: rotateY(0deg);
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+}
+
+/* Animations */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+@keyframes pop {
+  0% { transform: scale(0.95); opacity: 0; }
+  70% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse-success {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+  70% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+.pop-in {
+  animation: pop 0.3s ease-out forwards;
+}
+
+.pulse-correct {
+  animation: pulse-success 0.8s ease-out;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1ede7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4cec4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b5ada1;
+}
+
+/* Matching Card State */
+.match-card {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.match-card:hover:not(.matched):not(.selected) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1);
+}
+
+.match-card.selected {
+  border-color: #c22929;
+  background-color: #fef2f2;
+  transform: scale(1.03);
+  box-shadow: 0 0 0 3px rgba(194, 41, 41, 0.3);
+}
+
+.match-card.matched {
+  border-color: #10b981;
+  background-color: #ecfdf5;
+  opacity: 0.65;
+  cursor: default;
+  transform: scale(0.98);
+}
+
+.match-card.mismatched {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+  animation: shake 0.4s ease-in-out;
+}
+
+/* Highlight sentence in dialogue */
+.sentence-active {
+  background-color: #fef3c7 !important;
+  border-left: 4px solid #d97706 !important;
+  transform: translateX(4px);
+  transition: all 0.2s ease;
+}
+
+/* Chinese Seal Stamp (Hán ấn) for Test Score */
+.chinese-seal {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 3px solid #c22929;
+  border-radius: 8px;
+  color: #c22929;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transform: rotate(-8deg);
+  box-shadow: 0 4px 6px -1px rgba(194, 41, 41, 0.2);
+}

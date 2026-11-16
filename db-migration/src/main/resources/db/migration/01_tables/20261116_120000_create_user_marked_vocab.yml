@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261116_120000_create_user_marked_vocab
+      author: chinese-study
+      comment: Chuyen tu user_vocab_progress (SRS) sang bang user_marked_vocab (gan co don gian)
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: true
+            sql: |-
+              CREATE TABLE IF NOT EXISTS user_marked_vocab (
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                vocab_id TEXT NOT NULL REFERENCES vocabularies(id) ON DELETE CASCADE,
+                note TEXT,
+                marked_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                CONSTRAINT uq_user_marked_vocab UNIQUE (user_id, vocab_id)
+              );
+
+              CREATE INDEX IF NOT EXISTS idx_marked_vocab_user ON user_marked_vocab (user_id, marked_at DESC);
+
+              DO $$
+              BEGIN
+                IF EXISTS (
+                  SELECT 1 FROM information_schema.tables
+                  WHERE table_schema = 'public' AND table_name = 'user_vocab_progress'
+                ) THEN
+                  INSERT INTO user_marked_vocab (user_id, vocab_id, marked_at)
+                  SELECT user_id, vocab_id, COALESCE(last_reviewed_at, NOW())
+                  FROM user_vocab_progress
+                  WHERE status = 'learning'
+                  ON CONFLICT (user_id, vocab_id) DO NOTHING;
+
+                  DROP TABLE user_vocab_progress CASCADE;
+                END IF;
+              END $$;
+      rollback:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            sql: |-
+              CREATE TABLE IF NOT EXISTS user_vocab_progress (
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                vocab_id TEXT NOT NULL REFERENCES vocabularies(id) ON DELETE CASCADE,
+                status TEXT NOT NULL DEFAULT 'new' CHECK (status IN ('new', 'learning', 'mastered')),
+                ease_factor REAL NOT NULL DEFAULT 2.5,
+                interval_days INTEGER NOT NULL DEFAULT 0,
+                repetitions INTEGER NOT NULL DEFAULT 0,
+                next_review_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                correct_count INTEGER NOT NULL DEFAULT 0,
+                wrong_count INTEGER NOT NULL DEFAULT 0,
+                last_reviewed_at TIMESTAMPTZ,
+                CONSTRAINT uq_user_vocab UNIQUE (user_id, vocab_id)
+              );
+              DROP TABLE IF EXISTS user_marked_vocab CASCADE;

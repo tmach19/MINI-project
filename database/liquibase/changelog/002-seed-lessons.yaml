@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-seed-hsk-26-lessons
+      author: chinese-study
+      comment: Nap 26 bai hoc chuan HSK tu seed.sql (idempotent, tu cap nhat khi seed.sql doi)
+      runOnChange: true
+      runInTransaction: false
+      changes:
+        - sqlFile:
+            path: ../../seed.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+            stripComments: true
+            encoding: utf8

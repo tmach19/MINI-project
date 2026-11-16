@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+*.log
+.env.local
+liquibase.properties
+liquibase-supabase.properties
+target/
+.idea/workspace.xml

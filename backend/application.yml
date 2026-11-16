@@ -1,0 +1,25 @@
+# ============================================================================
+# Cấu hình Backend (tương tự application.yml trong Spring Boot)
+# Hỗ trợ cú pháp ${BIEN_MOI_TRUONG:gia_tri_mac_dinh}
+# ============================================================================
+
+server:
+  port: ${PORT:4000}
+  corsOrigin: ${CORS_ORIGIN:http://localhost:5173}
+
+database:
+  # Local PostgreSQL hoặc Supabase Session Pooler
+  url: ${DATABASE_URL:postgresql://postgres:manhtran191919%40%40@localhost:5432/chinese-study}
+  # auto | true | false (auto tự bật SSL nếu url chứa supabase hoặc sslmode=require)
+  ssl: ${DB_SSL:auto}
+  connectionTimeoutMs: 4000
+  maxPoolSize: 10
+  # Tự động fallback sang ../data.js nếu DB chưa cài hoặc chưa chạy seed.sql
+  allowMemoryFallback: ${ALLOW_MEMORY_FALLBACK:true}
+
+security:
+  jwtSecret: ${JWT_SECRET:dev-chinese-study-jwt-secret-key}
+  jwtExpiresIn: ${JWT_EXPIRES_IN:7d}
+
+legacy:
+  dataPath: ../data.js

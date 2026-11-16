@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261116_110100_seed_hsk_26_lessons
+      author: chinese-study
+      comment: Nap du lieu 26 bai hoc chuan HSK tu seed_data.sql
+      runOnChange: true
+      runInTransaction: false
+      changes:
+        - sqlFile:
+            path: ../sql/seed_data.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+            stripComments: true
+            encoding: utf8
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: DELETE FROM lessons WHERE is_system = TRUE;

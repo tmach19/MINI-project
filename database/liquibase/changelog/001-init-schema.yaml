@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-init-schema
+      author: chinese-study
+      comment: Khoi tao 11 bang PostgreSQL cho ung dung hoc tieng Trung
+      changes:
+        - sqlFile:
+            path: ../../schema.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+            encoding: utf8

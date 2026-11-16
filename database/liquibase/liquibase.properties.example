@@ -1,0 +1,8 @@
+# Cấu hình Liquibase cho PostgreSQL Local
+# Copy file này thành liquibase.properties và điền mật khẩu của bạn
+
+changelog-file=db.changelog-master.yaml
+url=jdbc:postgresql://localhost:5432/chinese-study
+username=postgres
+password=YOUR_POSTGRES_PASSWORD
+driver=org.postgresql.Driver

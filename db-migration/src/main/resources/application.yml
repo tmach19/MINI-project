@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: chinese-study-db-migration
+  main:
+    web-application-type: none
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/chinese-study}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:manhtran191919@@}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      pool-name: chinese-study-liquibase-pool
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 30000
+
+  liquibase:
+    # Bật mặc định để chạy trực tiếp từ IntelliJ (có thể tắt qua SPRING_LIQUIBASE_ENABLED=false)
+    enabled: ${SPRING_LIQUIBASE_ENABLED:true}
+    change-log: classpath:/db/migration/db.changelog-master.yml
+    default-schema: ${DB_SCHEMA:public}
+    liquibase-schema: ${DB_SCHEMA:public}
+    contexts: ${LIQUIBASE_CONTEXTS:dev}
+    drop-first: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,liquibase
+  endpoint:
+    health:
+      show-details: when_authorized
+
+logging:
+  level:
+    liquibase: INFO
+    org.springframework.jdbc: INFO

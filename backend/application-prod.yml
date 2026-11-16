@@ -1,0 +1,4 @@
+# Cấu hình ghi đè khi chạy NODE_ENV=production (deploy lên Render/Railway + Supabase)
+database:
+  ssl: true
+  allowMemoryFallback: false

@@ -1,0 +1,8 @@
+# Cấu hình Liquibase khi deploy lên Supabase PostgreSQL
+# Dùng Session Pooler (port 5432) kèm sslmode=require
+
+changelog-file=db.changelog-master.yaml
+url=jdbc:postgresql://aws-0-[REGION].pooler.supabase.com:5432/postgres?sslmode=require
+username=postgres.[PROJECT_REF]
+password=YOUR_SUPABASE_DB_PASSWORD
+driver=org.postgresql.Driver
