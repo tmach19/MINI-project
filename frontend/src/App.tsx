@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   Award,
-  BookOpen,
   Edit3,
   Gamepad2,
   GitBranch,
@@ -25,6 +24,7 @@ import {
 } from './lib/srsLocal';
 import { AuthModal } from './components/AuthModal';
 import { ConfirmDeleteModal } from './components/ConfirmDeleteModal';
+import { LoadingCard, LoadingScreen } from './components/common/LoadingState';
 import { GamesSection } from './components/GamesSection';
 import { GlobalSearchModal } from './components/GlobalSearchModal';
 import { GrammarSection } from './components/GrammarSection';
@@ -61,6 +61,7 @@ export default function App() {
   });
 
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [initializing, setInitializing] = useState(true);
   const [authChecked, setAuthChecked] = useState<boolean>(() => !getStoredToken());
   const [lessons, setLessons] = useState<LessonSummary[]>([]);
   const [currentLessonId, setCurrentLessonId] = useState<string>(
@@ -187,6 +188,7 @@ export default function App() {
         );
       } finally {
         setAuthChecked(true);
+        setInitializing(false);
       }
     };
     init();
@@ -345,6 +347,13 @@ export default function App() {
   const canEditCurrent = Boolean(
     user && currentLesson && !currentLesson.isSystem && currentLesson.ownerId === user.id
   );
+
+  if (
+    initializing ||
+    (activeView === 'study' && loadingLesson && !currentLesson && lessons.length === 0 && !errorMsg)
+  ) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -552,34 +561,41 @@ export default function App() {
         )}
 
         {activeView === 'exam' ? (
-          <TestSection
-            lesson={{
-              id: comprehensiveExam?.id || 'comprehensive_all_26',
-              title: comprehensiveExam?.title || 'Kiểm tra tổng hợp (26 bài)',
-              unit: 'Tổng hợp 26 bài',
-              hskLevel: comprehensiveExam?.hskLevel || 'HSK 1 - HSK 3',
-              description:
-                comprehensiveExam?.description ||
-                '50 câu hỏi ngẫu nhiên rải đều 26 bài học chuẩn cơ cấu HSK 3.',
-              isSystem: true,
-              vocabulary: [],
-              texts: [],
-              grammar: [],
-              exercises: {
-                sentenceScramble: [],
-                translationExercises: [],
-                expandedQuiz: [],
-              },
-              comprehensiveTest: comprehensiveExam?.questions || [],
-            }}
-            attempts={attempts}
-            onSaveAttempt={handleSaveTestAttempt}
-            onGoToVocab={() => navigateView('study')}
-            isComprehensiveExam
-            loadingExam={loadingExam}
-            onRefreshExam={loadComprehensiveExam}
-            onBackToStudy={() => navigateView('study')}
-          />
+          loadingExam && !comprehensiveExam ? (
+            <LoadingCard
+              message="Đang bốc 50 câu hỏi ngẫu nhiên..."
+              subMessage="Tổng hợp từ 26 bài học theo đúng cơ cấu HSK 3"
+            />
+          ) : (
+            <TestSection
+              lesson={{
+                id: comprehensiveExam?.id || 'comprehensive_all_26',
+                title: comprehensiveExam?.title || 'Kiểm tra tổng hợp (26 bài)',
+                unit: 'Tổng hợp 26 bài',
+                hskLevel: comprehensiveExam?.hskLevel || 'HSK 1 - HSK 3',
+                description:
+                  comprehensiveExam?.description ||
+                  '50 câu hỏi ngẫu nhiên rải đều 26 bài học chuẩn cơ cấu HSK 3.',
+                isSystem: true,
+                vocabulary: [],
+                texts: [],
+                grammar: [],
+                exercises: {
+                  sentenceScramble: [],
+                  translationExercises: [],
+                  expandedQuiz: [],
+                },
+                comprehensiveTest: comprehensiveExam?.questions || [],
+              }}
+              attempts={attempts}
+              onSaveAttempt={handleSaveTestAttempt}
+              onGoToVocab={() => navigateView('study')}
+              isComprehensiveExam
+              loadingExam={loadingExam}
+              onRefreshExam={loadComprehensiveExam}
+              onBackToStudy={() => navigateView('study')}
+            />
+          )
         ) : activeView === 'profile' ? (
           user ? (
             <ProfilePage
@@ -599,16 +615,10 @@ export default function App() {
               onOpenWriter={(vocab) => setWriterVocab(vocab)}
             />
           ) : (
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-stone-200 dark:border-slate-800 p-16 text-center space-y-3">
-              <UserIcon className="w-10 h-10 text-emerald-500 mx-auto animate-pulse" />
-              <p className="text-sm text-gray-500 dark:text-slate-400">Đang tải thông tin tài khoản...</p>
-            </div>
+            <LoadingCard message="Đang tải thông tin tài khoản..." />
           )
         ) : loadingLesson || !currentLesson ? (
-          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-stone-200 dark:border-slate-800 p-16 text-center space-y-3">
-            <BookOpen className="w-10 h-10 text-red-500 mx-auto animate-pulse" />
-            <p className="text-sm text-gray-500 dark:text-slate-400">Đang tải nội dung buổi học...</p>
-          </div>
+          <LoadingCard message="Đang tải nội dung buổi học..." />
         ) : (
           <>
             {activeTab === 'vocab' && (

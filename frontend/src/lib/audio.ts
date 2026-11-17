@@ -163,7 +163,7 @@ export function stopChineseSpeech(): void {
   }
 }
 
-export function speakChinese(text: string, rate = 0.9, onEnd?: () => void): void {
+export function speakChinese(text: string, rate = 1, onEnd?: () => void): void {
   const clean = text.trim();
   if (!clean) {
     onEnd?.();

@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { speakChinese } from '../lib/audio';
+import { LoadingCard, LoadingSpinner } from './common/LoadingState';
 import type {
   LessonAttemptDetailRecord,
   LessonSummary,
@@ -519,9 +520,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               )}
 
               {loadingMarked && markedCards.length === 0 ? (
-                <div className="py-12 text-center text-xs text-gray-500 dark:text-slate-400">
-                  Đang tải danh sách từ đã đánh dấu từ cơ sở dữ liệu...
-                </div>
+                <LoadingCard
+                  compact
+                  message="Đang tải danh sách từ đã đánh dấu từ cơ sở dữ liệu..."
+                />
               ) : filteredMarkedCards.length === 0 ? (
                 <div className="py-12 text-center space-y-2 border border-dashed border-stone-200 dark:border-slate-800 rounded-2xl">
                   <Flag className="w-8 h-8 text-amber-400 mx-auto opacity-80" />
@@ -789,9 +791,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               )}
 
               {loadingAttempts && lessonTestSummaries.length === 0 && comprehensiveAttempts.length === 0 ? (
-                <div className="py-12 text-center text-xs text-gray-500 dark:text-slate-400">
-                  Đang tải lịch sử làm bài từ cơ sở dữ liệu...
-                </div>
+                <LoadingCard
+                  compact
+                  message="Đang tải lịch sử làm bài từ cơ sở dữ liệu..."
+                />
               ) : historySubTab === 'comprehensive' ? (
                 <div className="overflow-x-auto rounded-2xl border border-stone-200 dark:border-slate-800">
                   <table className="w-full text-left border-collapse text-xs">
@@ -1028,8 +1031,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                               <tr className="bg-stone-50/60 dark:bg-slate-900/80">
                                 <td colSpan={7} className="px-6 py-3">
                                   {isLoadingDetails ? (
-                                    <div className="py-3 text-center text-xs text-gray-500 dark:text-slate-400">
-                                      Đang tải chi tiết từng lần kiểm tra...
+                                    <div className="py-4 flex items-center justify-center gap-2.5 text-xs text-gray-500 dark:text-slate-400">
+                                      <LoadingSpinner size="sm" />
+                                      <span>Đang tải chi tiết từng lần kiểm tra...</span>
                                     </div>
                                   ) : details.length === 0 ? (
                                     <div className="py-2 text-center text-xs text-gray-500 dark:text-slate-400">
