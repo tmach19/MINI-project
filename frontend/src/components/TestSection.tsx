@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Award, CheckCircle2, Clock, Play, RotateCcw, Send, Volume2 } from 'lucide-react';
+import { ArrowLeft, Award, CheckCircle2, Clock, Play, RotateCcw, Send, Shuffle, Volume2 } from 'lucide-react';
 import { soundFx, speakChinese } from '../lib/audio';
 import type { LessonDetail, TestAttemptRecord } from '../types';
 
@@ -7,7 +7,8 @@ interface TestSectionProps {
   lesson: LessonDetail;
   attempts: TestAttemptRecord[];
   onSaveAttempt: (payload: {
-    lessonId: string;
+    lessonId: string | null;
+    examTitle?: string | null;
     score: number;
     totalQuestions: number;
     correctCount: number;
@@ -15,6 +16,10 @@ interface TestSectionProps {
     answers: Record<string, number>;
   }) => void;
   onGoToVocab: () => void;
+  isComprehensiveExam?: boolean;
+  loadingExam?: boolean;
+  onRefreshExam?: () => void;
+  onBackToStudy?: () => void;
 }
 
 function getTestDurationSeconds(questionCount: number): number {
@@ -48,6 +53,10 @@ export const TestSection: React.FC<TestSectionProps> = ({
   attempts,
   onSaveAttempt,
   onGoToVocab,
+  isComprehensiveExam = false,
+  loadingExam = false,
+  onRefreshExam,
+  onBackToStudy,
 }) => {
   const questions = lesson.comprehensiveTest || [];
   const totalSeconds = getTestDurationSeconds(questions.length);
@@ -64,7 +73,7 @@ export const TestSection: React.FC<TestSectionProps> = ({
     setAnswers({});
     setCurrentIdx(0);
     setTimeRemaining(totalSeconds);
-  }, [lesson.id, totalSeconds]);
+  }, [lesson.id, lesson.comprehensiveTest, totalSeconds]);
 
   const submitTest = () => {
     setIsActive(false);
@@ -86,7 +95,8 @@ export const TestSection: React.FC<TestSectionProps> = ({
     });
 
     onSaveAttempt({
-      lessonId: lesson.id,
+      lessonId: isComprehensiveExam ? null : lesson.id,
+      examTitle: isComprehensiveExam ? lesson.title : null,
       score,
       totalQuestions: questions.length,
       correctCount,
@@ -124,25 +134,43 @@ export const TestSection: React.FC<TestSectionProps> = ({
     setIsActive(true);
   };
 
-  const lessonAttempts = attempts.filter((a) => a.lessonId === lesson.id);
+  const lessonAttempts = isComprehensiveExam
+    ? attempts.filter((a) => a.lessonId === null)
+    : attempts.filter((a) => a.lessonId === lesson.id);
 
   if (!isActive && !isSubmitted) {
     return (
       <div className="max-w-2xl mx-auto space-y-6">
+        {isComprehensiveExam && onBackToStudy && (
+          <div className="flex items-center justify-between">
+            <button
+              type="button"
+              onClick={onBackToStudy}
+              className="px-3.5 py-2 rounded-xl border border-stone-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-stone-100 dark:hover:bg-slate-800 text-xs font-bold text-gray-700 dark:text-slate-200 inline-flex items-center gap-1.5 transition"
+            >
+              <ArrowLeft className="w-4 h-4" /> Quay lại buổi học
+            </button>
+          </div>
+        )}
+
         <div className="bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 rounded-3xl p-8 text-white shadow-xl text-center space-y-4">
           <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md mx-auto flex items-center justify-center">
             <Award className="w-8 h-8" />
           </div>
           <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-wider">
-            Module 5
+            {isComprehensiveExam ? '26 bài học • Đề ngẫu nhiên' : 'Module 5'}
           </span>
-          <h2 className="text-3xl font-bold">Bài kiểm tra tổng hợp cả buổi</h2>
+          <h2 className="text-3xl font-bold">
+            {isComprehensiveExam ? 'Kiểm tra tổng hợp (26 bài)' : 'Bài kiểm tra tổng hợp cả buổi'}
+          </h2>
           <p className="text-white/90 text-sm max-w-lg mx-auto">
-            Đánh giá toàn diện từ vựng, nghe HSK, đọc hiểu và dịch nghĩa. Điểm thi được lưu vào lịch sử học tập.
+            {isComprehensiveExam
+              ? '50 câu ngẫu nhiên tổng hợp từ 26 bài học theo đúng cơ cấu đề thi HSK 3.'
+              : 'Đánh giá toàn diện từ vựng, nghe HSK, đọc hiểu và dịch nghĩa. Điểm thi được lưu vào lịch sử học tập.'}
           </p>
           <div className="grid grid-cols-3 gap-4 pt-3 max-w-md mx-auto">
             <div className="bg-white/10 p-3 rounded-2xl border border-white/20">
-              <span className="text-2xl font-black">{questions.length}</span>
+              <span className="text-2xl font-black">{loadingExam ? '...' : questions.length}</span>
               <p className="text-[11px] uppercase text-white/80">Câu hỏi</p>
             </div>
             <div className="bg-white/10 p-3 rounded-2xl border border-white/20">
@@ -150,18 +178,25 @@ export const TestSection: React.FC<TestSectionProps> = ({
               <p className="text-[11px] uppercase text-white/80">Thang điểm</p>
             </div>
             <div className="bg-white/10 p-3 rounded-2xl border border-white/20">
-              <span className="text-2xl font-black">{formatDurationMmSs(totalSeconds)}</span>
+              <span className="text-2xl font-black">{loadingExam ? '...' : formatDurationMmSs(totalSeconds)}</span>
               <p className="text-[11px] uppercase text-white/80">Thời gian</p>
             </div>
           </div>
 
-          <button
-            disabled={questions.length === 0}
-            onClick={startTest}
-            className="mt-4 px-8 py-3.5 bg-white text-red-600 hover:bg-red-50 disabled:opacity-50 rounded-2xl font-bold text-sm shadow-lg inline-flex items-center gap-2 transition"
-          >
-            <Play className="w-4 h-4" /> {questions.length === 0 ? 'Chưa có câu hỏi' : 'Bắt đầu làm bài thi'}
-          </button>
+          <div className="pt-2">
+            <button
+              disabled={loadingExam || questions.length === 0}
+              onClick={startTest}
+              className="px-8 py-3.5 bg-white text-red-600 hover:bg-red-50 disabled:opacity-50 rounded-2xl font-bold text-sm shadow-lg inline-flex items-center gap-2 transition"
+            >
+              <Play className="w-4 h-4" />
+              {loadingExam
+                ? 'Đang tạo bộ đề...'
+                : questions.length === 0
+                  ? 'Chưa có câu hỏi'
+                  : 'Bắt đầu làm bài thi'}
+            </button>
+          </div>
         </div>
 
         {lessonAttempts.length > 0 && (
@@ -220,18 +255,28 @@ export const TestSection: React.FC<TestSectionProps> = ({
           <p className="text-sm text-gray-600 dark:text-slate-300">
             Đúng <strong className="text-emerald-600">{correctCount}</strong> / {questions.length} câu hỏi
           </p>
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex items-center justify-center gap-3 flex-wrap">
             <button
               onClick={startTest}
               className="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold inline-flex items-center gap-1.5"
             >
-              <RotateCcw className="w-3.5 h-3.5" /> Làm lại
+              <RotateCcw className="w-3.5 h-3.5" /> Làm lại bộ này
             </button>
+            {isComprehensiveExam && onRefreshExam && (
+              <button
+                type="button"
+                disabled={loadingExam}
+                onClick={onRefreshExam}
+                className="px-6 py-2.5 bg-amber-600 hover:bg-amber-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold inline-flex items-center gap-1.5"
+              >
+                <Shuffle className="w-3.5 h-3.5" /> Bốc bộ 50 câu khác
+              </button>
+            )}
             <button
-              onClick={onGoToVocab}
+              onClick={isComprehensiveExam && onBackToStudy ? onBackToStudy : onGoToVocab}
               className="px-6 py-2.5 bg-stone-100 dark:bg-slate-800 text-gray-700 dark:text-slate-200 rounded-xl text-xs font-bold"
             >
-              Ôn lại từ vựng
+              {isComprehensiveExam ? 'Quay lại buổi học' : 'Ôn lại từ vựng'}
             </button>
           </div>
         </div>
@@ -253,8 +298,8 @@ export const TestSection: React.FC<TestSectionProps> = ({
                     : 'border-red-200 dark:border-red-900 bg-red-50/40 dark:bg-red-950/20'
                 }`}
               >
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span
                       className={`font-bold px-2 py-0.5 rounded-md text-white ${
                         isRight ? 'bg-emerald-600' : 'bg-red-600'
@@ -265,6 +310,11 @@ export const TestSection: React.FC<TestSectionProps> = ({
                     <span className={`px-2 py-0.5 rounded-md border font-semibold ${badge.cls}`}>
                       {badge.label}
                     </span>
+                    {isComprehensiveExam && q.lessonTitle && (
+                      <span className="px-2 py-0.5 rounded-md bg-stone-100 dark:bg-slate-800 text-gray-600 dark:text-slate-300 border border-stone-200 dark:border-slate-700 font-medium">
+                        {q.lessonTitle.split(':')[0]}
+                      </span>
+                    )}
                   </div>
                   <span className={`font-bold ${isRight ? 'text-emerald-700' : 'text-red-700'}`}>
                     {isRight ? '✓ Chính xác' : uAns === undefined ? '✗ Bỏ trống' : '✗ Chưa đúng'}

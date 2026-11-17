@@ -56,11 +56,41 @@ CREATE TABLE IF NOT EXISTS vocabularies (
   example_pinyin TEXT,
   example_meaning TEXT,
   sort_order INTEGER NOT NULL DEFAULT 0,
+  search_tsv TSVECTOR GENERATED ALWAYS AS (
+    setweight(
+      to_tsvector(
+        'simple',
+        translate(
+          lower(
+            coalesce(hanzi, '') || ' ' ||
+            coalesce(pinyin, '') || ' ' ||
+            coalesce(sino_vietnamese, '') || ' ' ||
+            coalesce(meaning, '')
+          ),
+          'áàảãạăắằẳẵặâấầẩẫậāǎéèẻẽẹêếềểễệēěíìỉĩịīǐóòỏõọôốồổỗộơớờởỡợōǒúùủũụưứừửữựūǔǖǘǚǜüýỳỷỹỵđ',
+          'aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeeeiiiiiiiooooooooooooooooooouuuuuuuuuuuuuuuuuuyyyyyd'
+        )
+      ),
+      'A'
+    ) ||
+    setweight(
+      to_tsvector(
+        'simple',
+        translate(
+          lower(coalesce(radical, '')),
+          'áàảãạăắằẳẵặâấầẩẫậāǎéèẻẽẹêếềểễệēěíìỉĩịīǐóòỏõọôốồổỗộơớờởỡợōǒúùủũụưứừửữựūǔǖǘǚǜüýỳỷỹỵđ',
+          'aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeeeiiiiiiiooooooooooooooooooouuuuuuuuuuuuuuuuuuyyyyyd'
+        )
+      ),
+      'D'
+    )
+  ) STORED,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX IF NOT EXISTS idx_vocabularies_lesson ON vocabularies (lesson_id, sort_order);
 CREATE INDEX IF NOT EXISTS idx_vocabularies_hanzi ON vocabularies (hanzi);
+CREATE INDEX IF NOT EXISTS idx_vocabularies_search_tsv ON vocabularies USING GIN (search_tsv);
 
 -- ----------------------------------------------------------------------------
 -- 4. Ngữ pháp trọng tâm (Grammars)
@@ -163,6 +193,7 @@ CREATE TABLE IF NOT EXISTS quiz_questions (
 
 CREATE INDEX IF NOT EXISTS idx_quiz_lesson_scope ON quiz_questions (lesson_id, scope, sort_order);
 CREATE INDEX IF NOT EXISTS idx_quiz_text ON quiz_questions (text_id);
+CREATE INDEX IF NOT EXISTS idx_quiz_comprehensive_cat ON quiz_questions (category, lesson_id) WHERE scope = 'comprehensive_test';
 
 -- ----------------------------------------------------------------------------
 -- 9. Từ vựng được đánh dấu / gắn cờ (User Marked Vocab)
@@ -184,7 +215,8 @@ CREATE INDEX IF NOT EXISTS idx_marked_vocab_user ON user_marked_vocab (user_id, 
 CREATE TABLE IF NOT EXISTS test_attempts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  lesson_id TEXT NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
+  lesson_id TEXT REFERENCES lessons(id) ON DELETE CASCADE,
+  exam_title TEXT,
   score INTEGER NOT NULL CHECK (score >= 0 AND score <= 100),
   total_questions INTEGER NOT NULL CHECK (total_questions > 0),
   correct_count INTEGER NOT NULL CHECK (correct_count >= 0),
@@ -194,3 +226,4 @@ CREATE TABLE IF NOT EXISTS test_attempts (
 );
 
 CREATE INDEX IF NOT EXISTS idx_attempts_user_lesson ON test_attempts (user_id, lesson_id, submitted_at DESC);
+CREATE INDEX IF NOT EXISTS idx_attempts_user_submitted ON test_attempts (user_id, submitted_at DESC);

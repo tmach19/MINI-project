@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261117_141900_comprehensive_exam_support
+      author: chinese-study
+      comment: Cho phep luu lich su kiem tra tong hop 26 bai va them partial index cho quiz_questions
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: true
+            sql: |-
+              ALTER TABLE test_attempts
+                ALTER COLUMN lesson_id DROP NOT NULL;
+
+              ALTER TABLE test_attempts
+                ADD COLUMN IF NOT EXISTS exam_title TEXT;
+
+              CREATE INDEX IF NOT EXISTS idx_quiz_comprehensive_cat
+                ON quiz_questions (category, lesson_id)
+                WHERE scope = 'comprehensive_test';
+
+              CREATE INDEX IF NOT EXISTS idx_attempts_user_submitted
+                ON test_attempts (user_id, submitted_at DESC);
+      rollback:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            sql: |-
+              DROP INDEX IF EXISTS idx_attempts_user_submitted;
+              DROP INDEX IF EXISTS idx_quiz_comprehensive_cat;
+              DELETE FROM test_attempts WHERE lesson_id IS NULL;
+              ALTER TABLE test_attempts DROP COLUMN IF EXISTS exam_title;
+              ALTER TABLE test_attempts ALTER COLUMN lesson_id SET NOT NULL;

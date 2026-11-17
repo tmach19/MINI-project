@@ -3,6 +3,7 @@ import { optionalAuth, requireAuth } from '../middleware/auth.js';
 import {
   createCustomLesson,
   deleteCustomLesson,
+  getComprehensiveExamQuestions,
   getLessonById,
   listLessons,
   searchAllVocabulary,
@@ -25,6 +26,23 @@ router.get('/lessons', optionalAuth, async (req, res, next) => {
   try {
     const lessons = await listLessons(req.user?.userId);
     res.json({ lessons });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/tests/comprehensive-exam', optionalAuth, async (_req, res, next) => {
+  try {
+    const questions = await getComprehensiveExamQuestions(50);
+    res.json({
+      exam: {
+        id: 'comprehensive_all_26',
+        title: 'Kiểm tra tổng hợp (26 bài)',
+        hskLevel: 'HSK 1 - HSK 3',
+        description: '50 câu ngẫu nhiên tổng hợp từ 26 bài học theo tỉ lệ đề thi HSK 3.',
+        questions,
+      },
+    });
   } catch (err) {
     next(err);
   }

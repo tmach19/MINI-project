@@ -1,0 +1,137 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261117_151501_fn_search_vocabulary
+      author: chinese-study
+      comment: Function tim kiem tu vung xep hang do lien quan theo ranh gioi tu va ho tro khong dau
+      runOnChange: true
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: false
+            sql: |-
+              CREATE OR REPLACE FUNCTION fn_search_vocabulary(
+                p_query TEXT,
+                p_user_id UUID DEFAULT NULL,
+                p_limit INTEGER DEFAULT 60
+              )
+              RETURNS TABLE (
+                id TEXT,
+                hanzi TEXT,
+                pinyin TEXT,
+                sino_vietnamese TEXT,
+                meaning TEXT,
+                word_type TEXT,
+                radical TEXT,
+                breakdown TEXT,
+                mnemonic TEXT,
+                example_hanzi TEXT,
+                example_pinyin TEXT,
+                example_meaning TEXT,
+                lesson_id TEXT,
+                lesson_title TEXT,
+                hsk_level TEXT,
+                match_rank INTEGER
+              )
+              LANGUAGE sql
+              STABLE
+              AS $$
+              WITH params AS (
+                SELECT
+                  regexp_replace(lower(btrim(coalesce(p_query, ''))), '\s+', ' ', 'g') AS q_raw,
+                  translate(
+                    regexp_replace(lower(btrim(coalesce(p_query, ''))), '\s+', ' ', 'g'),
+                    'áàảãạăắằẳẵặâấầẩẫậāǎéèẻẽẹêếềểễệēěíìỉĩịīǐóòỏõọôốồổỗộơớờởỡợōǒúùủũụưứừửữựūǔǖǘǚǜüýỳỷỹỵđ',
+                    'aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeeeiiiiiiiooooooooooooooooooouuuuuuuuuuuuuuuuuuyyyyyd'
+                  ) AS q_norm,
+                  regexp_replace(btrim(coalesce(p_query, '')), '\s+', ' ', 'g') ~ '[\u4E00-\u9FFF]' AS is_cjk,
+                  GREATEST(COALESCE(p_limit, 60), 1) AS lim
+              ),
+              rx AS (
+                SELECT
+                  p.*,
+                  (p.q_raw <> p.q_norm) AS has_diacritics,
+                  replace(regexp_replace(p.q_raw, '([.*+?^${}()|\[\]\\])', '\\\1', 'g'), ' ', '\s+') AS q_esc_raw,
+                  replace(regexp_replace(p.q_norm, '([.*+?^${}()|\[\]\\])', '\\\1', 'g'), ' ', '\s+') AS q_esc_norm,
+                  phraseto_tsquery('simple', p.q_norm) AS tsq
+                FROM params p
+                WHERE length(p.q_raw) > 0
+              ),
+              scored AS (
+                SELECT
+                  v.id,
+                  v.hanzi,
+                  v.pinyin,
+                  v.sino_vietnamese,
+                  v.meaning,
+                  v.word_type,
+                  v.radical,
+                  v.breakdown,
+                  v.mnemonic,
+                  v.example_hanzi,
+                  v.example_pinyin,
+                  v.example_meaning,
+                  l.id AS lesson_id,
+                  l.title AS lesson_title,
+                  l.hsk_level,
+                  l.sort_order AS lesson_sort,
+                  v.sort_order AS vocab_sort,
+                  CASE
+                    WHEN r.is_cjk THEN
+                      CASE
+                        WHEN lower(v.hanzi) = r.q_raw THEN 100
+                        WHEN lower(v.hanzi) LIKE r.q_raw || '%' THEN 85
+                        WHEN lower(v.hanzi) LIKE '%' || r.q_raw || '%' THEN 70
+                        WHEN lower(coalesce(v.radical, '')) LIKE '%' || r.q_raw || '%' THEN 10
+                        ELSE 0
+                      END
+                    ELSE
+                      CASE
+                        WHEN lower(v.hanzi) = r.q_raw
+                          OR lower(v.pinyin) = r.q_raw
+                          OR lower(v.meaning) = r.q_raw THEN 100
+                        WHEN lower(coalesce(v.sino_vietnamese, '')) = r.q_raw THEN 92
+                        WHEN lower(v.pinyin) ~ ('\m' || r.q_esc_raw || '\M')
+                          OR lower(coalesce(v.sino_vietnamese, '')) ~ ('\m' || r.q_esc_raw || '\M')
+                          OR lower(v.meaning) ~ ('\m' || r.q_esc_raw || '\M') THEN 85
+                        WHEN NOT r.has_diacritics AND (
+                          translate(lower(v.pinyin), 'áàảãạăắằẳẵặâấầẩẫậāǎéèẻẽẹêếềểễệēěíìỉĩịīǐóòỏõọôốồổỗộơớờởỡợōǒúùủũụưứừửữựūǔǖǘǚǜüýỳỷỹỵđ', 'aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeeeiiiiiiiooooooooooooooooooouuuuuuuuuuuuuuuuuuyyyyyd') = r.q_norm
+                          OR translate(lower(coalesce(v.sino_vietnamese, '')), 'áàảãạăắằẳẵặâấầẩẫậāǎéèẻẽẹêếềểễệēěíìỉĩịīǐóòỏõọôốồổỗộơớờởỡợōǒúùủũụưứừửữựūǔǖǘǚǜüýỳỷỹỵđ', 'aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeeeiiiiiiiooooooooooooooooooouuuuuuuuuuuuuuuuuuyyyyyd') = r.q_norm
+                          OR translate(lower(v.meaning), 'áàảãạăắằẳẵặâấầẩẫậāǎéèẻẽẹêếềểễệēěíìỉĩịīǐóòỏõọôốồổỗộơớờởỡợōǒúùủũụưứừửữựūǔǖǘǚǜüýỳỷỹỵđ', 'aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeeeiiiiiiiooooooooooooooooooouuuuuuuuuuuuuuuuuuyyyyyd') = r.q_norm
+                        ) THEN 65
+                        WHEN NOT r.has_diacritics AND (
+                          translate(lower(v.pinyin), 'áàảãạăắằẳẵặâấầẩẫậāǎéèẻẽẹêếềểễệēěíìỉĩịīǐóòỏõọôốồổỗộơớờởỡợōǒúùủũụưứừửữựūǔǖǘǚǜüýỳỷỹỵđ', 'aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeeeiiiiiiiooooooooooooooooooouuuuuuuuuuuuuuuuuuyyyyyd') ~ ('\m' || r.q_esc_norm || '\M')
+                          OR translate(lower(coalesce(v.sino_vietnamese, '')), 'áàảãạăắằẳẵặâấầẩẫậāǎéèẻẽẹêếềểễệēěíìỉĩịīǐóòỏõọôốồổỗộơớờởỡợōǒúùủũụưứừửữựūǔǖǘǚǜüýỳỷỹỵđ', 'aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeeeiiiiiiiooooooooooooooooooouuuuuuuuuuuuuuuuuuyyyyyd') ~ ('\m' || r.q_esc_norm || '\M')
+                          OR translate(lower(v.meaning), 'áàảãạăắằẳẵặâấầẩẫậāǎéèẻẽẹêếềểễệēěíìỉĩịīǐóòỏõọôốồổỗộơớờởỡợōǒúùủũụưứừửữựūǔǖǘǚǜüýỳỷỹỵđ', 'aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeeeiiiiiiiooooooooooooooooooouuuuuuuuuuuuuuuuuuyyyyyd') ~ ('\m' || r.q_esc_norm || '\M')
+                        ) THEN 50
+                        WHEN lower(coalesce(v.radical, '')) ~ ('\m' || r.q_esc_raw || '\M') THEN 20
+                        WHEN NOT r.has_diacritics AND (v.search_tsv @@ r.tsq) THEN 15
+                        ELSE 0
+                      END
+                  END AS match_rank
+                FROM vocabularies v
+                JOIN lessons l ON l.id = v.lesson_id
+                CROSS JOIN rx r
+                WHERE (l.is_system = TRUE OR (p_user_id IS NOT NULL AND l.owner_id = p_user_id))
+                  AND (
+                    (r.is_cjk AND (
+                      lower(v.hanzi) LIKE '%' || r.q_raw || '%'
+                      OR lower(coalesce(v.radical, '')) LIKE '%' || r.q_raw || '%'
+                    ))
+                    OR
+                    (NOT r.is_cjk AND v.search_tsv @@ r.tsq)
+                  )
+              )
+              SELECT
+                s.id, s.hanzi, s.pinyin, s.sino_vietnamese, s.meaning, s.word_type,
+                s.radical, s.breakdown, s.mnemonic, s.example_hanzi, s.example_pinyin, s.example_meaning,
+                s.lesson_id, s.lesson_title, s.hsk_level, s.match_rank
+              FROM scored s
+              WHERE s.match_rank > 0
+              ORDER BY s.match_rank DESC, s.lesson_sort ASC, s.vocab_sort ASC
+              LIMIT (SELECT lim FROM rx LIMIT 1);
+              $$;
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: DROP FUNCTION IF EXISTS fn_search_vocabulary(TEXT, UUID, INTEGER);

@@ -727,6 +727,185 @@ const DEFAULT_LESSONS = [
             "是",
             "学生"
           ]
+        },
+        {
+          "id": "ss1_exp_1",
+          "targetHanzi": "同学们早上好",
+          "targetMeaning": "Các em học sinh, chào buổi sáng!",
+          "pinyin": "Tóngxuémen, zǎoshang hǎo!",
+          "tokens": [
+            "同学",
+            "们",
+            "早上",
+            "好"
+          ]
+        },
+        {
+          "id": "ss1_exp_2",
+          "targetHanzi": "老师好",
+          "targetMeaning": "Em chào thầy/cô ạ!",
+          "pinyin": "Lǎoshī hǎo!",
+          "tokens": [
+            "老师",
+            "好"
+          ]
+        },
+        {
+          "id": "ss1_exp_3",
+          "targetHanzi": "你是留学生吗",
+          "targetMeaning": "Bạn là du học sinh phải không?",
+          "pinyin": "Nǐ shì liúxuéshēng ma?",
+          "tokens": [
+            "你",
+            "是",
+            "留学生",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss1_exp_4",
+          "targetHanzi": "你也是留学生吗",
+          "targetMeaning": "Bạn cũng là du học sinh à?",
+          "pinyin": "Nǐ yě shì liúxuéshēng ma?",
+          "tokens": [
+            "你",
+            "也",
+            "是",
+            "留学生",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss1_exp_5",
+          "targetHanzi": "是我也是留学生",
+          "targetMeaning": "Vâng, tôi cũng là du học sinh.",
+          "pinyin": "Shì, wǒ yě shì liúxuéshēng.",
+          "tokens": [
+            "是",
+            "我",
+            "也",
+            "是",
+            "留学生"
+          ]
+        },
+        {
+          "id": "ss1_exp_6",
+          "targetHanzi": "早上好",
+          "targetMeaning": "Chào buổi sáng!",
+          "pinyin": "Zǎoshang hǎo",
+          "tokens": [
+            "早上",
+            "好"
+          ]
+        },
+        {
+          "id": "ss1_exp_7",
+          "targetHanzi": "中午好",
+          "targetMeaning": "Chào buổi trưa!",
+          "pinyin": "Zhōngwǔ hǎo",
+          "tokens": [
+            "中午",
+            "好"
+          ]
+        },
+        {
+          "id": "ss1_exp_8",
+          "targetHanzi": "下午好",
+          "targetMeaning": "Chào buổi chiều!",
+          "pinyin": "Xiàwǔ hǎo",
+          "tokens": [
+            "下午",
+            "好"
+          ]
+        },
+        {
+          "id": "ss1_exp_9",
+          "targetHanzi": "老师早上好您是刘老师吗",
+          "targetMeaning": "Thưa thầy, chào buổi sáng ạ! Thầy có phải thầy Lưu không ạ?",
+          "pinyin": "Lǎoshī, zǎoshang hǎo! Nín shì Liú lǎoshī ma?",
+          "tokens": [
+            "老师",
+            "早上",
+            "好",
+            "您",
+            "是",
+            "刘",
+            "老师",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss1_exp_10",
+          "targetHanzi": "早上好我是刘老师你是阮日明吗",
+          "targetMeaning": "Chào buổi sáng! Tôi là thầy Lưu. Em là Nguyễn Nhật Minh phải không?",
+          "pinyin": "Zǎoshang hǎo! Wǒ shì Liú lǎoshī. Nǐ shì Ruǎn Rìmíng ma?",
+          "tokens": [
+            "早上",
+            "好",
+            "我",
+            "是",
+            "刘",
+            "老师",
+            "你",
+            "是",
+            "阮日明",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss1_exp_11",
+          "targetHanzi": "是我是阮日明我是学校的新留学生",
+          "targetMeaning": "Vâng, em là Nguyễn Nhật Minh, em là du học sinh mới của trường.",
+          "pinyin": "Shì, wǒ shì Ruǎn Rìmíng, wǒ shì xuéxiào de xīn liúxuéshēng.",
+          "tokens": [
+            "是",
+            "我",
+            "是",
+            "阮日明",
+            "我",
+            "是",
+            "学校",
+            "的",
+            "新",
+            "留学生"
+          ]
+        },
+        {
+          "id": "ss1_exp_12",
+          "targetHanzi": "欢迎范玉兰也是留学生吗",
+          "targetMeaning": "Hoan nghênh em! Phạm Ngọc Lan cũng là du học sinh à?",
+          "pinyin": "Huānyíng! Fàn Yùlán yě shì liúxuéshēng ma?",
+          "tokens": [
+            "欢",
+            "迎",
+            "范玉兰",
+            "也",
+            "是",
+            "留学生",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss1_exp_13",
+          "targetHanzi": "晚上好",
+          "targetMeaning": "Chào buổi tối!",
+          "pinyin": "Wǎnshang hǎo",
+          "tokens": [
+            "晚上",
+            "好"
+          ]
+        },
+        {
+          "id": "ss1_exp_14",
+          "targetHanzi": "我是大学生",
+          "targetMeaning": "Tôi là sinh viên.",
+          "pinyin": "Wǒ shì dàxuéshēng.",
+          "tokens": [
+            "我",
+            "是",
+            "大学",
+            "生"
+          ]
         }
       ],
       "translationExercises": [
@@ -765,6 +944,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "lǎoshī nín hǎo",
           "hint": "Gợi ý Pinyin: Lǎoshī nín hǎo",
           "explanation": "Em chào thầy/cô ạ → 老师您好！ (Lǎoshī nín hǎo)"
+        },
+        {
+          "id": "tr1_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Các em học sinh, chào buổi sáng!",
+          "expectedChinese": "同学们，早上好！",
+          "acceptedPinyin": "tóngxuémen zǎoshang hǎo",
+          "hint": "Gợi ý Pinyin: Tóngxuémen, zǎoshang hǎo!",
+          "explanation": "Các em học sinh, chào buổi sáng! → 同学们，早上好！ (Tóngxuémen, zǎoshang hǎo!)"
+        },
+        {
+          "id": "tr1_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Bạn là du học sinh phải không?",
+          "expectedChinese": "你是留学生吗？",
+          "acceptedPinyin": "nǐ shì liúxuéshēng ma",
+          "hint": "Gợi ý Pinyin: Nǐ shì liúxuéshēng ma?",
+          "explanation": "Bạn là du học sinh phải không? → 你是留学生吗？ (Nǐ shì liúxuéshēng ma?)"
+        },
+        {
+          "id": "tr1_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Bạn cũng là du học sinh à?",
+          "expectedChinese": "你也是留学生吗？",
+          "acceptedPinyin": "nǐ yě shì liúxuéshēng ma",
+          "hint": "Gợi ý Pinyin: Nǐ yě shì liúxuéshēng ma?",
+          "explanation": "Bạn cũng là du học sinh à? → 你也是留学生吗？ (Nǐ yě shì liúxuéshēng ma?)"
+        },
+        {
+          "id": "tr1_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Vâng, tôi cũng là du học sinh.",
+          "expectedChinese": "是，我也是留学生。",
+          "acceptedPinyin": "shì wǒ yě shì liúxuéshēng",
+          "hint": "Gợi ý Pinyin: Shì, wǒ yě shì liúxuéshēng.",
+          "explanation": "Vâng, tôi cũng là du học sinh. → 是，我也是留学生。 (Shì, wǒ yě shì liúxuéshēng.)"
+        },
+        {
+          "id": "tr1_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Chào buổi sáng!",
+          "expectedChinese": "早上好！",
+          "acceptedPinyin": "zǎoshang hǎo",
+          "hint": "Gợi ý Pinyin: Zǎoshang hǎo",
+          "explanation": "Chào buổi sáng! → 早上好！ (Zǎoshang hǎo)"
+        },
+        {
+          "id": "tr1_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Chào buổi trưa!",
+          "expectedChinese": "中午好！",
+          "acceptedPinyin": "zhōngwǔ hǎo",
+          "hint": "Gợi ý Pinyin: Zhōngwǔ hǎo",
+          "explanation": "Chào buổi trưa! → 中午好！ (Zhōngwǔ hǎo)"
+        },
+        {
+          "id": "tr1_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Chào buổi chiều!",
+          "expectedChinese": "下午好！",
+          "acceptedPinyin": "xiàwǔ hǎo",
+          "hint": "Gợi ý Pinyin: Xiàwǔ hǎo",
+          "explanation": "Chào buổi chiều! → 下午好！ (Xiàwǔ hǎo)"
+        },
+        {
+          "id": "tr1_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Thưa thầy, chào buổi sáng ạ! Thầy có phải thầy Lưu không ạ?",
+          "expectedChinese": "老师，早上好！您是刘老师吗？",
+          "acceptedPinyin": "lǎoshī zǎoshang hǎo nín shì liú lǎoshī ma",
+          "hint": "Gợi ý Pinyin: Lǎoshī, zǎoshang hǎo! Nín shì Liú lǎoshī ma?",
+          "explanation": "Thưa thầy, chào buổi sáng ạ! Thầy có phải thầy Lưu không ạ? → 老师，早上好！您是刘老师吗？ (Lǎoshī, zǎoshang hǎo! Nín shì Liú lǎoshī ma?)"
+        },
+        {
+          "id": "tr1_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Chào buổi sáng! Tôi là thầy Lưu. Em là Nguyễn Nhật Minh phải không?",
+          "expectedChinese": "早上好！我是刘老师。你是阮日明吗？",
+          "acceptedPinyin": "zǎoshang hǎo wǒ shì liú lǎoshī nǐ shì ruǎn rìmíng ma",
+          "hint": "Gợi ý Pinyin: Zǎoshang hǎo! Wǒ shì Liú lǎoshī. Nǐ shì Ruǎn Rìmíng ma?",
+          "explanation": "Chào buổi sáng! Tôi là thầy Lưu. Em là Nguyễn Nhật Minh phải không? → 早上好！我是刘老师。你是阮日明吗？ (Zǎoshang hǎo! Wǒ shì Liú lǎoshī. Nǐ shì Ruǎn Rìmíng ma?)"
+        },
+        {
+          "id": "tr1_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Vâng, em là Nguyễn Nhật Minh, em là du học sinh mới của trường.",
+          "expectedChinese": "是，我是阮日明，我是学校的新留学生。",
+          "acceptedPinyin": "shì wǒ shì ruǎn rìmíng wǒ shì xuéxiào de xīn liúxuéshēng",
+          "hint": "Gợi ý Pinyin: Shì, wǒ shì Ruǎn Rìmíng, wǒ shì xuéxiào de xīn liúxuéshēng.",
+          "explanation": "Vâng, em là Nguyễn Nhật Minh, em là du học sinh mới của trường. → 是，我是阮日明，我是学校的新留学生。 (Shì, wǒ shì Ruǎn Rìmíng, wǒ shì xuéxiào de xīn liúxuéshēng.)"
         },
         {
           "id": "tr1_zh_1",
@@ -825,6 +1094,203 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Xiàwǔ hǎo",
           "explanation": "下午好！ (Xiàwǔ hǎo) nghĩa là: Chào buổi chiều!"
+        },
+        {
+          "id": "tr1_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "我也是学生。",
+          "chineseAudioText": "我也是学生。",
+          "pinyin": "Wǒ yě shì xuéshēng.",
+          "expectedMeaning": "Tôi cũng là học sinh.",
+          "acceptedKeywords": [
+            "tôi",
+            "cũng",
+            "là",
+            "học",
+            "sinh"
+          ],
+          "hint": "Pinyin: Wǒ yě shì xuéshēng.",
+          "explanation": "我也是学生。 (Wǒ yě shì xuéshēng.) nghĩa là: Tôi cũng là học sinh."
+        },
+        {
+          "id": "tr1_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "你是日明吗？",
+          "chineseAudioText": "你是日明吗？",
+          "pinyin": "Nǐ shì Rìmíng ma?",
+          "expectedMeaning": "Cậu là Nhật Minh phải không?",
+          "acceptedKeywords": [
+            "cậu",
+            "là",
+            "nhật",
+            "minh",
+            "phải",
+            "không"
+          ],
+          "hint": "Pinyin: Nǐ shì Rìmíng ma?",
+          "explanation": "你是日明吗？ (Nǐ shì Rìmíng ma?) nghĩa là: Cậu là Nhật Minh phải không?"
+        },
+        {
+          "id": "tr1_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "同学们",
+          "chineseAudioText": "同学们",
+          "pinyin": "tóngxuémen",
+          "expectedMeaning": "Các bạn học sinh",
+          "acceptedKeywords": [
+            "các",
+            "bạn",
+            "học",
+            "sinh"
+          ],
+          "hint": "Pinyin: tóngxuémen",
+          "explanation": "同学们 (tóngxuémen) nghĩa là: Các bạn học sinh"
+        },
+        {
+          "id": "tr1_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "她是老师。",
+          "chineseAudioText": "她是老师。",
+          "pinyin": "Tā shì lǎoshī.",
+          "expectedMeaning": "Cô ấy là giáo viên.",
+          "acceptedKeywords": [
+            "cô",
+            "ấy",
+            "là",
+            "giáo",
+            "viên"
+          ],
+          "hint": "Pinyin: Tā shì lǎoshī.",
+          "explanation": "她是老师。 (Tā shì lǎoshī.) nghĩa là: Cô ấy là giáo viên."
+        },
+        {
+          "id": "tr1_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "我是大学生。",
+          "chineseAudioText": "我是大学生。",
+          "pinyin": "Wǒ shì dàxuéshēng.",
+          "expectedMeaning": "Tôi là sinh viên.",
+          "acceptedKeywords": [
+            "tôi",
+            "là",
+            "sinh",
+            "viên"
+          ],
+          "hint": "Pinyin: Wǒ shì dàxuéshēng.",
+          "explanation": "我是大学生。 (Wǒ shì dàxuéshēng.) nghĩa là: Tôi là sinh viên."
+        },
+        {
+          "id": "tr1_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "晚上好！",
+          "chineseAudioText": "晚上好！",
+          "pinyin": "Wǎnshang hǎo",
+          "expectedMeaning": "Chào buổi tối!",
+          "acceptedKeywords": [
+            "chào",
+            "buổi",
+            "tối"
+          ],
+          "hint": "Pinyin: Wǎnshang hǎo",
+          "explanation": "晚上好！ (Wǎnshang hǎo) nghĩa là: Chào buổi tối!"
+        },
+        {
+          "id": "tr1_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "欢迎！范玉兰也是留学生吗？",
+          "chineseAudioText": "欢迎！范玉兰也是留学生吗？",
+          "pinyin": "Huānyíng! Fàn Yùlán yě shì liúxuéshēng ma?",
+          "expectedMeaning": "Hoan nghênh em! Phạm Ngọc Lan cũng là du học sinh à?",
+          "acceptedKeywords": [
+            "hoan",
+            "nghênh",
+            "em",
+            "phạm",
+            "ngọc",
+            "lan",
+            "cũng",
+            "là",
+            "du",
+            "học",
+            "sinh"
+          ],
+          "hint": "Pinyin: Huānyíng! Fàn Yùlán yě shì liúxuéshēng ma?",
+          "explanation": "欢迎！范玉兰也是留学生吗？ (Huānyíng! Fàn Yùlán yě shì liúxuéshēng ma?) nghĩa là: Hoan nghênh em! Phạm Ngọc Lan cũng là du học sinh à?"
+        },
+        {
+          "id": "tr1_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "是，我是阮日明，我是学校的新留学生。",
+          "chineseAudioText": "是，我是阮日明，我是学校的新留学生。",
+          "pinyin": "Shì, wǒ shì Ruǎn Rìmíng, wǒ shì xuéxiào de xīn liúxuéshēng.",
+          "expectedMeaning": "Vâng, em là Nguyễn Nhật Minh, em là du học sinh mới của trường.",
+          "acceptedKeywords": [
+            "vâng",
+            "em",
+            "là",
+            "nguyễn",
+            "nhật",
+            "minh",
+            "em",
+            "là",
+            "du",
+            "học",
+            "sinh",
+            "mới",
+            "của",
+            "trường"
+          ],
+          "hint": "Pinyin: Shì, wǒ shì Ruǎn Rìmíng, wǒ shì xuéxiào de xīn liúxuéshēng.",
+          "explanation": "是，我是阮日明，我是学校的新留学生。 (Shì, wǒ shì Ruǎn Rìmíng, wǒ shì xuéxiào de xīn liúxuéshēng.) nghĩa là: Vâng, em là Nguyễn Nhật Minh, em là du học sinh mới của trường."
+        },
+        {
+          "id": "tr1_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "早上好！我是刘老师。你是阮日明吗？",
+          "chineseAudioText": "早上好！我是刘老师。你是阮日明吗？",
+          "pinyin": "Zǎoshang hǎo! Wǒ shì Liú lǎoshī. Nǐ shì Ruǎn Rìmíng ma?",
+          "expectedMeaning": "Chào buổi sáng! Tôi là thầy Lưu. Em là Nguyễn Nhật Minh phải không?",
+          "acceptedKeywords": [
+            "chào",
+            "buổi",
+            "sáng",
+            "tôi",
+            "là",
+            "thầy",
+            "lưu",
+            "em",
+            "là",
+            "nguyễn",
+            "nhật",
+            "minh",
+            "phải",
+            "không"
+          ],
+          "hint": "Pinyin: Zǎoshang hǎo! Wǒ shì Liú lǎoshī. Nǐ shì Ruǎn Rìmíng ma?",
+          "explanation": "早上好！我是刘老师。你是阮日明吗？ (Zǎoshang hǎo! Wǒ shì Liú lǎoshī. Nǐ shì Ruǎn Rìmíng ma?) nghĩa là: Chào buổi sáng! Tôi là thầy Lưu. Em là Nguyễn Nhật Minh phải không?"
+        },
+        {
+          "id": "tr1_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "老师，早上好！您是刘老师吗？",
+          "chineseAudioText": "老师，早上好！您是刘老师吗？",
+          "pinyin": "Lǎoshī, zǎoshang hǎo! Nín shì Liú lǎoshī ma?",
+          "expectedMeaning": "Thưa thầy, chào buổi sáng ạ! Thầy có phải thầy Lưu không ạ?",
+          "acceptedKeywords": [
+            "thưa",
+            "thầy",
+            "chào",
+            "buổi",
+            "sáng",
+            "thầy",
+            "có",
+            "phải",
+            "thầy",
+            "lưu",
+            "không"
+          ],
+          "hint": "Pinyin: Lǎoshī, zǎoshang hǎo! Nín shì Liú lǎoshī ma?",
+          "explanation": "老师，早上好！您是刘老师吗？ (Lǎoshī, zǎoshang hǎo! Nín shì Liú lǎoshī ma?) nghĩa là: Thưa thầy, chào buổi sáng ạ! Thầy có phải thầy Lưu không ạ?"
         }
       ],
       "expandedQuiz": [
@@ -2570,6 +3036,191 @@ const DEFAULT_LESSONS = [
             "学生",
             "吗"
           ]
+        },
+        {
+          "id": "ss2_exp_1",
+          "targetHanzi": "你好你也是学生吗",
+          "targetMeaning": "Xin chào! Bạn cũng là học sinh à?",
+          "pinyin": "Nǐ hǎo! Nǐ yě shì xuésheng ma?",
+          "tokens": [
+            "你好",
+            "你",
+            "也",
+            "是",
+            "学生",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss2_exp_2",
+          "targetHanzi": "是我叫张风你叫什么名字",
+          "targetMeaning": "Đúng rồi. Tôi tên là Trương Phong. Bạn tên là gì?",
+          "pinyin": "Shì. Wǒ jiào Zhāng Fēng. Nǐ jiào shénme míngzi?",
+          "tokens": [
+            "是",
+            "我",
+            "叫",
+            "张风",
+            "你",
+            "叫",
+            "什么",
+            "名字"
+          ]
+        },
+        {
+          "id": "ss2_exp_3",
+          "targetHanzi": "我叫马克她叫什么名字",
+          "targetMeaning": "Tôi tên là Mark. Cô ấy tên là gì?",
+          "pinyin": "Wǒ jiào Mǎkè. Tā jiào shénme míngzi?",
+          "tokens": [
+            "我",
+            "叫",
+            "马克",
+            "她",
+            "叫",
+            "什么",
+            "名字"
+          ]
+        },
+        {
+          "id": "ss2_exp_4",
+          "targetHanzi": "我要回宿舍了再见",
+          "targetMeaning": "Tôi phải về ký túc xá rồi. Tạm biệt!",
+          "pinyin": "Wǒ yào huí sùshè le. Zàijiàn!",
+          "tokens": [
+            "我",
+            "要",
+            "回",
+            "宿舍",
+            "了",
+            "再见"
+          ]
+        },
+        {
+          "id": "ss2_exp_5",
+          "targetHanzi": "你是日明吗",
+          "targetMeaning": "Cậu là Nhật Minh phải không?",
+          "pinyin": "Nǐ shì Rìmíng ma?",
+          "tokens": [
+            "你",
+            "是",
+            "日",
+            "明",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss2_exp_6",
+          "targetHanzi": "老师好",
+          "targetMeaning": "Chào thầy/Chào cô",
+          "pinyin": "Lǎoshī hǎo",
+          "tokens": [
+            "老师",
+            "好"
+          ]
+        },
+        {
+          "id": "ss2_exp_7",
+          "targetHanzi": "明天见",
+          "targetMeaning": "Hẹn gặp lại vào ngày mai! (Hoặc “Mai gặp nhé!”)",
+          "pinyin": "Míngtiān jiàn!",
+          "tokens": [
+            "明天",
+            "见"
+          ]
+        },
+        {
+          "id": "ss2_exp_8",
+          "targetHanzi": "晚上好",
+          "targetMeaning": "Chào buổi tối!",
+          "pinyin": "Wǎnshang hǎo",
+          "tokens": [
+            "晚上",
+            "好"
+          ]
+        },
+        {
+          "id": "ss2_exp_9",
+          "targetHanzi": "你叫什么名字",
+          "targetMeaning": "Bạn tên là gì?",
+          "pinyin": "Nǐ jiào shénme míngzi?",
+          "tokens": [
+            "你",
+            "叫",
+            "什么",
+            "名字"
+          ]
+        },
+        {
+          "id": "ss2_exp_10",
+          "targetHanzi": "老师们",
+          "targetMeaning": "Các thầy cô giáo",
+          "pinyin": "lǎoshīmen",
+          "tokens": [
+            "老师",
+            "们"
+          ]
+        },
+        {
+          "id": "ss2_exp_11",
+          "targetHanzi": "你好同学请问你贵姓",
+          "targetMeaning": "Chào bạn! Xin hỏi bạn họ gì vậy?",
+          "pinyin": "Nǐ hǎo, tóngxué! Qǐngwèn nín guìxìng?",
+          "tokens": [
+            "你好",
+            "同学",
+            "请问",
+            "你",
+            "贵姓"
+          ]
+        },
+        {
+          "id": "ss2_exp_12",
+          "targetHanzi": "我姓张叫张风现在我要去上课了",
+          "targetMeaning": "Tôi họ Trương, tên là Trương Phong. Bây giờ tôi phải đi học rồi.",
+          "pinyin": "Wǒ xìng Zhāng, jiào Zhāng Fēng. Xiànzài wǒ yào qù shàngkè le.",
+          "tokens": [
+            "我",
+            "姓",
+            "张",
+            "叫",
+            "张风",
+            "现在",
+            "我",
+            "要",
+            "去",
+            "上课",
+            "了"
+          ]
+        },
+        {
+          "id": "ss2_exp_13",
+          "targetHanzi": "我也去上课明天我们什么时候见",
+          "targetMeaning": "Tôi cũng đi học đây. Ngày mai chúng ta gặp nhau lúc nào?",
+          "pinyin": "Wǒ yě qù shàngkè. Míngtiān wǒmen shénme shíhou jiàn?",
+          "tokens": [
+            "我",
+            "也",
+            "去",
+            "上课",
+            "明天",
+            "我们",
+            "什么",
+            "时候",
+            "见"
+          ]
+        },
+        {
+          "id": "ss2_exp_14",
+          "targetHanzi": "明天早上见再见",
+          "targetMeaning": "Sáng mai gặp lại nhé, tạm biệt!",
+          "pinyin": "Míngtiān zǎoshang jiàn, zàijiàn!",
+          "tokens": [
+            "明天",
+            "早上",
+            "见",
+            "再见"
+          ]
         }
       ],
       "translationExercises": [
@@ -2608,6 +3259,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "míngtiān jiàn",
           "hint": "Gợi ý Pinyin: Míngtiān jiàn!",
           "explanation": "Hẹn gặp lại vào ngày mai! (Hoặc “Mai gặp nhé!”) → 明天见！ (Míngtiān jiàn!)"
+        },
+        {
+          "id": "tr2_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Xin chào! Bạn cũng là học sinh à?",
+          "expectedChinese": "你好！你也是学生吗？",
+          "acceptedPinyin": "nǐ hǎo nǐ yě shì xuésheng ma",
+          "hint": "Gợi ý Pinyin: Nǐ hǎo! Nǐ yě shì xuésheng ma?",
+          "explanation": "Xin chào! Bạn cũng là học sinh à? → 你好！你也是学生吗？ (Nǐ hǎo! Nǐ yě shì xuésheng ma?)"
+        },
+        {
+          "id": "tr2_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Đúng rồi. Tôi tên là Trương Phong. Bạn tên là gì?",
+          "expectedChinese": "是。我叫张风。你叫什么名字？",
+          "acceptedPinyin": "shì wǒ jiào zhāng fēng nǐ jiào shénme míngzi",
+          "hint": "Gợi ý Pinyin: Shì. Wǒ jiào Zhāng Fēng. Nǐ jiào shénme míngzi?",
+          "explanation": "Đúng rồi. Tôi tên là Trương Phong. Bạn tên là gì? → 是。我叫张风。你叫什么名字？ (Shì. Wǒ jiào Zhāng Fēng. Nǐ jiào shénme míngzi?)"
+        },
+        {
+          "id": "tr2_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Tôi tên là Mark. Cô ấy tên là gì?",
+          "expectedChinese": "我叫马克。她叫什么名字？",
+          "acceptedPinyin": "wǒ jiào mǎkè tā jiào shénme míngzi",
+          "hint": "Gợi ý Pinyin: Wǒ jiào Mǎkè. Tā jiào shénme míngzi?",
+          "explanation": "Tôi tên là Mark. Cô ấy tên là gì? → 我叫马克。她叫什么名字？ (Wǒ jiào Mǎkè. Tā jiào shénme míngzi?)"
+        },
+        {
+          "id": "tr2_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Cô ấy là Bạch Như Tuyết.",
+          "expectedChinese": "她是白茹雪。",
+          "acceptedPinyin": "tā shì bái rúxuě",
+          "hint": "Gợi ý Pinyin: Tā shì Bái Rúxuě.",
+          "explanation": "Cô ấy là Bạch Như Tuyết. → 她是白茹雪。 (Tā shì Bái Rúxuě.)"
+        },
+        {
+          "id": "tr2_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Tôi phải về ký túc xá rồi. Tạm biệt!",
+          "expectedChinese": "我要回宿舍了。再见!",
+          "acceptedPinyin": "wǒ yào huí sùshè le zàijiàn",
+          "hint": "Gợi ý Pinyin: Wǒ yào huí sùshè le. Zàijiàn!",
+          "explanation": "Tôi phải về ký túc xá rồi. Tạm biệt! → 我要回宿舍了。再见! (Wǒ yào huí sùshè le. Zàijiàn!)"
+        },
+        {
+          "id": "tr2_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Được, ngày mai gặp lại nhé!",
+          "expectedChinese": "好，明天见！",
+          "acceptedPinyin": "hǎo míngtiān jiàn",
+          "hint": "Gợi ý Pinyin: Hǎo, míngtiān jiàn!",
+          "explanation": "Được, ngày mai gặp lại nhé! → 好，明天见！ (Hǎo, míngtiān jiàn!)"
+        },
+        {
+          "id": "tr2_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu là Nhật Minh phải không?",
+          "expectedChinese": "你是日明吗？",
+          "acceptedPinyin": "nǐ shì rìmíng ma",
+          "hint": "Gợi ý Pinyin: Nǐ shì Rìmíng ma?",
+          "explanation": "Cậu là Nhật Minh phải không? → 你是日明吗？ (Nǐ shì Rìmíng ma?)"
+        },
+        {
+          "id": "tr2_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Chào thầy/Chào cô",
+          "expectedChinese": "老师好",
+          "acceptedPinyin": "lǎoshī hǎo",
+          "hint": "Gợi ý Pinyin: Lǎoshī hǎo",
+          "explanation": "Chào thầy/Chào cô → 老师好 (Lǎoshī hǎo)"
+        },
+        {
+          "id": "tr2_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Chào buổi tối!",
+          "expectedChinese": "晚上好！",
+          "acceptedPinyin": "wǎnshang hǎo",
+          "hint": "Gợi ý Pinyin: Wǎnshang hǎo",
+          "explanation": "Chào buổi tối! → 晚上好！ (Wǎnshang hǎo)"
+        },
+        {
+          "id": "tr2_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Bạn tên là gì?",
+          "expectedChinese": "你叫什么名字？",
+          "acceptedPinyin": "nǐ jiào shénme míngzi",
+          "hint": "Gợi ý Pinyin: Nǐ jiào shénme míngzi?",
+          "explanation": "Bạn tên là gì? → 你叫什么名字？ (Nǐ jiào shénme míngzi?)"
         },
         {
           "id": "tr2_zh_1",
@@ -2668,6 +3409,197 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Tā shì lǎoshī.",
           "explanation": "她是老师。 (Tā shì lǎoshī.) nghĩa là: Cô ấy là giáo viên."
+        },
+        {
+          "id": "tr2_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "你昨天去学校了吗？",
+          "chineseAudioText": "你昨天去学校了吗？",
+          "pinyin": "Nǐ zuótiān qù xuéxiào le ma?",
+          "expectedMeaning": "Hôm qua cậu đã đến trường chưa?",
+          "acceptedKeywords": [
+            "hôm",
+            "qua",
+            "cậu",
+            "đã",
+            "đến",
+            "trường",
+            "chưa"
+          ],
+          "hint": "Pinyin: Nǐ zuótiān qù xuéxiào le ma?",
+          "explanation": "你昨天去学校了吗？ (Nǐ zuótiān qù xuéxiào le ma?) nghĩa là: Hôm qua cậu đã đến trường chưa?"
+        },
+        {
+          "id": "tr2_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "我明天上午八点上课。",
+          "chineseAudioText": "我明天上午八点上课。",
+          "pinyin": "Wǒ míngtiān shàngwǔ bā diǎn shàngkè.",
+          "expectedMeaning": "Tám giờ sáng ngày mai tớ đi học.",
+          "acceptedKeywords": [
+            "tám",
+            "giờ",
+            "sáng",
+            "ngày",
+            "mai",
+            "tớ",
+            "đi",
+            "học"
+          ],
+          "hint": "Pinyin: Wǒ míngtiān shàngwǔ bā diǎn shàngkè.",
+          "explanation": "我明天上午八点上课。 (Wǒ míngtiān shàngwǔ bā diǎn shàngkè.) nghĩa là: Tám giờ sáng ngày mai tớ đi học."
+        },
+        {
+          "id": "tr2_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "这是什么书？",
+          "chineseAudioText": "这是什么书？",
+          "pinyin": "Zhè shì shénme shū?",
+          "expectedMeaning": "Đây là sách gì?",
+          "acceptedKeywords": [
+            "đây",
+            "là",
+            "sách",
+            "gì"
+          ],
+          "hint": "Pinyin: Zhè shì shénme shū?",
+          "explanation": "这是什么书？ (Zhè shì shénme shū?) nghĩa là: Đây là sách gì?"
+        },
+        {
+          "id": "tr2_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "你说什么？",
+          "chineseAudioText": "你说什么？",
+          "pinyin": "Nǐ shuō shénme?",
+          "expectedMeaning": "Cậu nói gì?",
+          "acceptedKeywords": [
+            "cậu",
+            "nói",
+            "gì"
+          ],
+          "hint": "Pinyin: Nǐ shuō shénme?",
+          "explanation": "你说什么？ (Nǐ shuō shénme?) nghĩa là: Cậu nói gì?"
+        },
+        {
+          "id": "tr2_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "我叫陈英。",
+          "chineseAudioText": "我叫陈英。",
+          "pinyin": "Wǒ jiào Chén Yīng.",
+          "expectedMeaning": "Tôi là Trần Anh.",
+          "acceptedKeywords": [
+            "tôi",
+            "là",
+            "trần",
+            "anh"
+          ],
+          "hint": "Pinyin: Wǒ jiào Chén Yīng.",
+          "explanation": "我叫陈英。 (Wǒ jiào Chén Yīng.) nghĩa là: Tôi là Trần Anh."
+        },
+        {
+          "id": "tr2_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "我姓林。",
+          "chineseAudioText": "我姓林。",
+          "pinyin": "Wǒ xìng Lín.",
+          "expectedMeaning": "Tôi họ Lâm.",
+          "acceptedKeywords": [
+            "tôi",
+            "họ",
+            "lâm"
+          ],
+          "hint": "Pinyin: Wǒ xìng Lín.",
+          "explanation": "我姓林。 (Wǒ xìng Lín.) nghĩa là: Tôi họ Lâm."
+        },
+        {
+          "id": "tr2_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "明天早上见，再见！",
+          "chineseAudioText": "明天早上见，再见！",
+          "pinyin": "Míngtiān zǎoshang jiàn, zàijiàn!",
+          "expectedMeaning": "Sáng mai gặp lại nhé, tạm biệt!",
+          "acceptedKeywords": [
+            "sáng",
+            "mai",
+            "gặp",
+            "lại",
+            "nhé",
+            "tạm",
+            "biệt"
+          ],
+          "hint": "Pinyin: Míngtiān zǎoshang jiàn, zàijiàn!",
+          "explanation": "明天早上见，再见！ (Míngtiān zǎoshang jiàn, zàijiàn!) nghĩa là: Sáng mai gặp lại nhé, tạm biệt!"
+        },
+        {
+          "id": "tr2_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "我也去上课。明天我们什么时候见？",
+          "chineseAudioText": "我也去上课。明天我们什么时候见？",
+          "pinyin": "Wǒ yě qù shàngkè. Míngtiān wǒmen shénme shíhou jiàn?",
+          "expectedMeaning": "Tôi cũng đi học đây. Ngày mai chúng ta gặp nhau lúc nào?",
+          "acceptedKeywords": [
+            "tôi",
+            "cũng",
+            "đi",
+            "học",
+            "đây",
+            "ngày",
+            "mai",
+            "chúng",
+            "ta",
+            "gặp",
+            "nhau",
+            "lúc",
+            "nào"
+          ],
+          "hint": "Pinyin: Wǒ yě qù shàngkè. Míngtiān wǒmen shénme shíhou jiàn?",
+          "explanation": "我也去上课。明天我们什么时候见？ (Wǒ yě qù shàngkè. Míngtiān wǒmen shénme shíhou jiàn?) nghĩa là: Tôi cũng đi học đây. Ngày mai chúng ta gặp nhau lúc nào?"
+        },
+        {
+          "id": "tr2_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "我姓张，叫张风。现在我要去上课了。",
+          "chineseAudioText": "我姓张，叫张风。现在我要去上课了。",
+          "pinyin": "Wǒ xìng Zhāng, jiào Zhāng Fēng. Xiànzài wǒ yào qù shàngkè le.",
+          "expectedMeaning": "Tôi họ Trương, tên là Trương Phong. Bây giờ tôi phải đi học rồi.",
+          "acceptedKeywords": [
+            "tôi",
+            "họ",
+            "trương",
+            "tên",
+            "là",
+            "trương",
+            "phong",
+            "bây",
+            "giờ",
+            "tôi",
+            "phải",
+            "đi",
+            "học",
+            "rồi"
+          ],
+          "hint": "Pinyin: Wǒ xìng Zhāng, jiào Zhāng Fēng. Xiànzài wǒ yào qù shàngkè le.",
+          "explanation": "我姓张，叫张风。现在我要去上课了。 (Wǒ xìng Zhāng, jiào Zhāng Fēng. Xiànzài wǒ yào qù shàngkè le.) nghĩa là: Tôi họ Trương, tên là Trương Phong. Bây giờ tôi phải đi học rồi."
+        },
+        {
+          "id": "tr2_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "你好，同学！请问你贵姓？",
+          "chineseAudioText": "你好，同学！请问你贵姓？",
+          "pinyin": "Nǐ hǎo, tóngxué! Qǐngwèn nín guìxìng?",
+          "expectedMeaning": "Chào bạn! Xin hỏi bạn họ gì vậy?",
+          "acceptedKeywords": [
+            "chào",
+            "bạn",
+            "xin",
+            "hỏi",
+            "bạn",
+            "họ",
+            "gì",
+            "vậy"
+          ],
+          "hint": "Pinyin: Nǐ hǎo, tóngxué! Qǐngwèn nín guìxìng?",
+          "explanation": "你好，同学！请问你贵姓？ (Nǐ hǎo, tóngxué! Qǐngwèn nín guìxìng?) nghĩa là: Chào bạn! Xin hỏi bạn họ gì vậy?"
         }
       ],
       "expandedQuiz": [
@@ -4383,6 +5315,194 @@ const DEFAULT_LESSONS = [
             "学生",
             "吗"
           ]
+        },
+        {
+          "id": "ss3_exp_1",
+          "targetHanzi": "日明同学你好",
+          "targetMeaning": "Chào bạn Nhật Minh!",
+          "pinyin": "Rìmíng tóngxué! Nǐ hǎo!",
+          "tokens": [
+            "日",
+            "明",
+            "同学",
+            "你好"
+          ]
+        },
+        {
+          "id": "ss3_exp_2",
+          "targetHanzi": "安妮同学你好这是谁啊",
+          "targetMeaning": "Chào bạn Annie! Đây là ai vậy?",
+          "pinyin": "Ānnī tóngxué nǐ hǎo! Zhè shì shéi a?",
+          "tokens": [
+            "安妮",
+            "同学",
+            "你好",
+            "这",
+            "是",
+            "谁",
+            "啊"
+          ]
+        },
+        {
+          "id": "ss3_exp_3",
+          "targetHanzi": "这是我的好朋友他叫马克",
+          "targetMeaning": "Đây là bạn thân của tôi, cậu ấy tên là Mark.",
+          "pinyin": "Zhè shì wǒ de hǎo péngyou, tā jiào Mǎkè.",
+          "tokens": [
+            "这",
+            "是",
+            "我",
+            "的",
+            "好",
+            "朋友",
+            "他",
+            "叫",
+            "马克"
+          ]
+        },
+        {
+          "id": "ss3_exp_4",
+          "targetHanzi": "马克同学你好你也是加拿大人吗",
+          "targetMeaning": "Chào bạn Mark! Bạn cũng là người Canada à?",
+          "pinyin": "Mǎkè tóngxué nǐ hǎo! Nǐ yě shì Jiānádà rén ma?",
+          "tokens": [
+            "马克",
+            "同学",
+            "你好",
+            "你",
+            "也",
+            "是",
+            "加拿大",
+            "人",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss3_exp_5",
+          "targetHanzi": "不是我是美国人你来自哪个国家",
+          "targetMeaning": "Không phải. Tôi là người Mỹ. Bạn đến từ nước nào?",
+          "pinyin": "Bú shì. Wǒ shì Měiguó rén. Nǐ láizì nǎ gè guójiā?",
+          "tokens": [
+            "不是",
+            "我",
+            "是",
+            "美国",
+            "人",
+            "你",
+            "来自",
+            "哪",
+            "个",
+            "国家"
+          ]
+        },
+        {
+          "id": "ss3_exp_6",
+          "targetHanzi": "我来自越南",
+          "targetMeaning": "Tôi đến từ Việt Nam.",
+          "pinyin": "Wǒ láizì Yuènán.",
+          "tokens": [
+            "我",
+            "来自",
+            "越南"
+          ]
+        },
+        {
+          "id": "ss3_exp_7",
+          "targetHanzi": "很高兴认识你",
+          "targetMeaning": "Rất vui được làm quen với bạn!",
+          "pinyin": "Hěn gāoxìng rènshi nǐ!",
+          "tokens": [
+            "很",
+            "高兴",
+            "认识",
+            "你"
+          ]
+        },
+        {
+          "id": "ss3_exp_8",
+          "targetHanzi": "我也很高兴认识你",
+          "targetMeaning": "Tôi cũng rất vui được làm quen với bạn.",
+          "pinyin": "Wǒ yě hěn gāoxìng rènshi nǐ.",
+          "tokens": [
+            "我",
+            "也",
+            "很",
+            "高兴",
+            "认识",
+            "你"
+          ]
+        },
+        {
+          "id": "ss3_exp_9",
+          "targetHanzi": "明天见",
+          "targetMeaning": "Hẹn gặp lại vào ngày mai! (Hoặc “Mai gặp nhé!”)",
+          "pinyin": "Míngtiān jiàn!",
+          "tokens": [
+            "明天",
+            "见"
+          ]
+        },
+        {
+          "id": "ss3_exp_10",
+          "targetHanzi": "中午好",
+          "targetMeaning": "Chào buổi trưa!",
+          "pinyin": "Zhōngwǔ hǎo",
+          "tokens": [
+            "中午",
+            "好"
+          ]
+        },
+        {
+          "id": "ss3_exp_11",
+          "targetHanzi": "你叫什么名字",
+          "targetMeaning": "Bạn tên là gì?",
+          "pinyin": "Nǐ jiào shénme míngzi?",
+          "tokens": [
+            "你",
+            "叫",
+            "什么",
+            "名字"
+          ]
+        },
+        {
+          "id": "ss3_exp_12",
+          "targetHanzi": "他是谁",
+          "targetMeaning": "Anh ấy là ai?",
+          "pinyin": "Tā shì shéi?",
+          "tokens": [
+            "他",
+            "是",
+            "谁"
+          ]
+        },
+        {
+          "id": "ss3_exp_13",
+          "targetHanzi": "老师们",
+          "targetMeaning": "Các thầy cô giáo",
+          "pinyin": "lǎoshīmen",
+          "tokens": [
+            "老师",
+            "们"
+          ]
+        },
+        {
+          "id": "ss3_exp_14",
+          "targetHanzi": "日明这位是我的朋友他叫马克",
+          "targetMeaning": "Nhật Minh, vị này là bạn tôi, cậu ấy tên là Mark.",
+          "pinyin": "Rìmíng, zhè wèi shì wǒ de péngyou, tā jiào Mǎkè.",
+          "tokens": [
+            "日",
+            "明",
+            "这",
+            "位",
+            "是",
+            "我",
+            "的",
+            "朋友",
+            "他",
+            "叫",
+            "马克"
+          ]
         }
       ],
       "translationExercises": [
@@ -4421,6 +5541,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "tā shì nǎ gè xuéxiào de xuésheng",
           "hint": "Gợi ý Pinyin: Tā shì nǎ gè xuéxiào de xuésheng?",
           "explanation": "Cô ấy là học sinh trường nào? → 她是哪个学校的学生？ (Tā shì nǎ gè xuéxiào de xuésheng?)"
+        },
+        {
+          "id": "tr3_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Chào bạn Nhật Minh!",
+          "expectedChinese": "日明同学！你好！",
+          "acceptedPinyin": "rìmíng tóngxué nǐ hǎo",
+          "hint": "Gợi ý Pinyin: Rìmíng tóngxué! Nǐ hǎo!",
+          "explanation": "Chào bạn Nhật Minh! → 日明同学！你好！ (Rìmíng tóngxué! Nǐ hǎo!)"
+        },
+        {
+          "id": "tr3_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Chào bạn Annie! Đây là ai vậy?",
+          "expectedChinese": "安妮同学！你好！这是谁啊？",
+          "acceptedPinyin": "ānnī tóngxué nǐ hǎo zhè shì shéi a",
+          "hint": "Gợi ý Pinyin: Ānnī tóngxué nǐ hǎo! Zhè shì shéi a?",
+          "explanation": "Chào bạn Annie! Đây là ai vậy? → 安妮同学！你好！这是谁啊？ (Ānnī tóngxué nǐ hǎo! Zhè shì shéi a?)"
+        },
+        {
+          "id": "tr3_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Đây là bạn thân của tôi, cậu ấy tên là Mark.",
+          "expectedChinese": "这是我的好朋友，他叫马克。",
+          "acceptedPinyin": "zhè shì wǒ de hǎo péngyou tā jiào mǎkè",
+          "hint": "Gợi ý Pinyin: Zhè shì wǒ de hǎo péngyou, tā jiào Mǎkè.",
+          "explanation": "Đây là bạn thân của tôi, cậu ấy tên là Mark. → 这是我的好朋友，他叫马克。 (Zhè shì wǒ de hǎo péngyou, tā jiào Mǎkè.)"
+        },
+        {
+          "id": "tr3_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Chào bạn Mark! Bạn cũng là người Canada à?",
+          "expectedChinese": "马克同学你好！你也是加拿大人吗？",
+          "acceptedPinyin": "mǎkè tóngxué nǐ hǎo nǐ yě shì jiānádà rén ma",
+          "hint": "Gợi ý Pinyin: Mǎkè tóngxué nǐ hǎo! Nǐ yě shì Jiānádà rén ma?",
+          "explanation": "Chào bạn Mark! Bạn cũng là người Canada à? → 马克同学你好！你也是加拿大人吗？ (Mǎkè tóngxué nǐ hǎo! Nǐ yě shì Jiānádà rén ma?)"
+        },
+        {
+          "id": "tr3_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Không phải. Tôi là người Mỹ. Bạn đến từ nước nào?",
+          "expectedChinese": "不是。我是美国人。你来自哪个国家？",
+          "acceptedPinyin": "bú shì wǒ shì měiguó rén nǐ láizì nǎ gè guójiā",
+          "hint": "Gợi ý Pinyin: Bú shì. Wǒ shì Měiguó rén. Nǐ láizì nǎ gè guójiā?",
+          "explanation": "Không phải. Tôi là người Mỹ. Bạn đến từ nước nào? → 不是。我是美国人。你来自哪个国家？ (Bú shì. Wǒ shì Měiguó rén. Nǐ láizì nǎ gè guójiā?)"
+        },
+        {
+          "id": "tr3_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Tôi đến từ Việt Nam.",
+          "expectedChinese": "我来自越南。",
+          "acceptedPinyin": "wǒ láizì yuènán",
+          "hint": "Gợi ý Pinyin: Wǒ láizì Yuènán.",
+          "explanation": "Tôi đến từ Việt Nam. → 我来自越南。 (Wǒ láizì Yuènán.)"
+        },
+        {
+          "id": "tr3_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Rất vui được làm quen với bạn!",
+          "expectedChinese": "很高兴认识你！",
+          "acceptedPinyin": "hěn gāoxìng rènshi nǐ",
+          "hint": "Gợi ý Pinyin: Hěn gāoxìng rènshi nǐ!",
+          "explanation": "Rất vui được làm quen với bạn! → 很高兴认识你！ (Hěn gāoxìng rènshi nǐ!)"
+        },
+        {
+          "id": "tr3_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Tôi cũng rất vui được làm quen với bạn.",
+          "expectedChinese": "我也很高兴认识你。",
+          "acceptedPinyin": "wǒ yě hěn gāoxìng rènshi nǐ",
+          "hint": "Gợi ý Pinyin: Wǒ yě hěn gāoxìng rènshi nǐ.",
+          "explanation": "Tôi cũng rất vui được làm quen với bạn. → 我也很高兴认识你。 (Wǒ yě hěn gāoxìng rènshi nǐ.)"
+        },
+        {
+          "id": "tr3_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Hẹn gặp lại vào ngày mai! (Hoặc “Mai gặp nhé!”)",
+          "expectedChinese": "明天见！",
+          "acceptedPinyin": "míngtiān jiàn",
+          "hint": "Gợi ý Pinyin: Míngtiān jiàn!",
+          "explanation": "Hẹn gặp lại vào ngày mai! (Hoặc “Mai gặp nhé!”) → 明天见！ (Míngtiān jiàn!)"
+        },
+        {
+          "id": "tr3_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Chào buổi trưa!",
+          "expectedChinese": "中午好！",
+          "acceptedPinyin": "zhōngwǔ hǎo",
+          "hint": "Gợi ý Pinyin: Zhōngwǔ hǎo",
+          "explanation": "Chào buổi trưa! → 中午好！ (Zhōngwǔ hǎo)"
         },
         {
           "id": "tr3_zh_1",
@@ -4481,6 +5691,199 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Wǎnshang hǎo",
           "explanation": "晚上好！ (Wǎnshang hǎo) nghĩa là: Chào buổi tối!"
+        },
+        {
+          "id": "tr3_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "她很漂亮。",
+          "chineseAudioText": "她很漂亮。",
+          "pinyin": "Tā hěn piàoliang.",
+          "expectedMeaning": "Cô ấy rất xinh đẹp.",
+          "acceptedKeywords": [
+            "cô",
+            "ấy",
+            "rất",
+            "xinh",
+            "đẹp"
+          ],
+          "hint": "Pinyin: Tā hěn piàoliang.",
+          "explanation": "她很漂亮。 (Tā hěn piàoliang.) nghĩa là: Cô ấy rất xinh đẹp."
+        },
+        {
+          "id": "tr3_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "那个人是王老师。",
+          "chineseAudioText": "那个人是王老师。",
+          "pinyin": "Nà gè rén shì Wáng lǎoshī.",
+          "expectedMeaning": "Người đó là thầy Vương.",
+          "acceptedKeywords": [
+            "người",
+            "đó",
+            "là",
+            "thầy",
+            "vương"
+          ],
+          "hint": "Pinyin: Nà gè rén shì Wáng lǎoshī.",
+          "explanation": "那个人是王老师。 (Nà gè rén shì Wáng lǎoshī.) nghĩa là: Người đó là thầy Vương."
+        },
+        {
+          "id": "tr3_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "这本书是我的书。",
+          "chineseAudioText": "这本书是我的书。",
+          "pinyin": "Zhè běn shū shì wǒ de shū.",
+          "expectedMeaning": "Quyển sách này là sách của tớ.",
+          "acceptedKeywords": [
+            "quyển",
+            "sách",
+            "này",
+            "là",
+            "sách",
+            "của",
+            "tớ"
+          ],
+          "hint": "Pinyin: Zhè běn shū shì wǒ de shū.",
+          "explanation": "这本书是我的书。 (Zhè běn shū shì wǒ de shū.) nghĩa là: Quyển sách này là sách của tớ."
+        },
+        {
+          "id": "tr3_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "你是哪国人？",
+          "chineseAudioText": "你是哪国人？",
+          "pinyin": "Nǐ shì nǎ guó rén?",
+          "expectedMeaning": "Bạn là người nước nào?",
+          "acceptedKeywords": [
+            "bạn",
+            "là",
+            "người",
+            "nước",
+            "nào"
+          ],
+          "hint": "Pinyin: Nǐ shì nǎ guó rén?",
+          "explanation": "你是哪国人？ (Nǐ shì nǎ guó rén?) nghĩa là: Bạn là người nước nào?"
+        },
+        {
+          "id": "tr3_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "这是我的书。",
+          "chineseAudioText": "这是我的书。",
+          "pinyin": "Zhè shì wǒ de shū.",
+          "expectedMeaning": "Đây là sách của tôi.",
+          "acceptedKeywords": [
+            "đây",
+            "là",
+            "sách",
+            "của",
+            "tôi"
+          ],
+          "hint": "Pinyin: Zhè shì wǒ de shū.",
+          "explanation": "这是我的书。 (Zhè shì wǒ de shū.) nghĩa là: Đây là sách của tôi."
+        },
+        {
+          "id": "tr3_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "我来自越南，现在生活在这里。",
+          "chineseAudioText": "我来自越南，现在生活在这里。",
+          "pinyin": "Wǒ láizì Yuènán, xiànzài shēnghuó zài zhèlǐ.",
+          "expectedMeaning": "Tôi đến từ Việt Nam, hiện đang sống ở đây.",
+          "acceptedKeywords": [
+            "tôi",
+            "đến",
+            "từ",
+            "việt",
+            "nam",
+            "hiện",
+            "đang",
+            "sống",
+            "đây"
+          ],
+          "hint": "Pinyin: Wǒ láizì Yuènán, xiànzài shēnghuó zài zhèlǐ.",
+          "explanation": "我来自越南，现在生活在这里。 (Wǒ láizì Yuènán, xiànzài shēnghuó zài zhèlǐ.) nghĩa là: Tôi đến từ Việt Nam, hiện đang sống ở đây."
+        },
+        {
+          "id": "tr3_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "不是，我来自美国。安妮是加拿大人。",
+          "chineseAudioText": "不是，我来自美国。安妮是加拿大人。",
+          "pinyin": "Bú shì, wǒ láizì Měiguó. Ānnī shì Jiānádà rén.",
+          "expectedMeaning": "Không phải, tôi đến từ Mỹ. Annie là người Canada.",
+          "acceptedKeywords": [
+            "không",
+            "phải",
+            "tôi",
+            "đến",
+            "từ",
+            "mỹ",
+            "annie",
+            "là",
+            "người",
+            "canada"
+          ],
+          "hint": "Pinyin: Bú shì, wǒ láizì Měiguó. Ānnī shì Jiānádà rén.",
+          "explanation": "不是，我来自美国。安妮是加拿大人。 (Bú shì, wǒ láizì Měiguó. Ānnī shì Jiānádà rén.) nghĩa là: Không phải, tôi đến từ Mỹ. Annie là người Canada."
+        },
+        {
+          "id": "tr3_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "很高兴认识你！你来自加拿大吗？",
+          "chineseAudioText": "很高兴认识你！你来自加拿大吗？",
+          "pinyin": "Hěn gāoxìng rènshi nǐ! Nǐ láizì Jiānádà ma?",
+          "expectedMeaning": "Rất vui được làm quen với bạn! Bạn đến từ Canada à?",
+          "acceptedKeywords": [
+            "rất",
+            "vui",
+            "được",
+            "làm",
+            "quen",
+            "với",
+            "bạn",
+            "bạn",
+            "đến",
+            "từ",
+            "canada"
+          ],
+          "hint": "Pinyin: Hěn gāoxìng rènshi nǐ! Nǐ láizì Jiānádà ma?",
+          "explanation": "很高兴认识你！你来自加拿大吗？ (Hěn gāoxìng rènshi nǐ! Nǐ láizì Jiānádà ma?) nghĩa là: Rất vui được làm quen với bạn! Bạn đến từ Canada à?"
+        },
+        {
+          "id": "tr3_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "日明，这位是我的朋友，他叫马克。",
+          "chineseAudioText": "日明，这位是我的朋友，他叫马克。",
+          "pinyin": "Rìmíng, zhè wèi shì wǒ de péngyou, tā jiào Mǎkè.",
+          "expectedMeaning": "Nhật Minh, vị này là bạn tôi, cậu ấy tên là Mark.",
+          "acceptedKeywords": [
+            "nhật",
+            "minh",
+            "vị",
+            "này",
+            "là",
+            "bạn",
+            "tôi",
+            "cậu",
+            "ấy",
+            "tên",
+            "là",
+            "mark"
+          ],
+          "hint": "Pinyin: Rìmíng, zhè wèi shì wǒ de péngyou, tā jiào Mǎkè.",
+          "explanation": "日明，这位是我的朋友，他叫马克。 (Rìmíng, zhè wèi shì wǒ de péngyou, tā jiào Mǎkè.) nghĩa là: Nhật Minh, vị này là bạn tôi, cậu ấy tên là Mark."
+        },
+        {
+          "id": "tr3_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "老师们",
+          "chineseAudioText": "老师们",
+          "pinyin": "lǎoshīmen",
+          "expectedMeaning": "Các thầy cô giáo",
+          "acceptedKeywords": [
+            "các",
+            "thầy",
+            "cô",
+            "giáo"
+          ],
+          "hint": "Pinyin: lǎoshīmen",
+          "explanation": "老师们 (lǎoshīmen) nghĩa là: Các thầy cô giáo"
         }
       ],
       "expandedQuiz": [
@@ -6245,6 +7648,219 @@ const DEFAULT_LESSONS = [
             "留学生",
             "吗"
           ]
+        },
+        {
+          "id": "ss4_exp_1",
+          "targetHanzi": "你好请问学校的食堂在哪儿",
+          "targetMeaning": "Xin chào. Xin hỏi nhà ăn của trường ở đâu vậy?",
+          "pinyin": "Nǐ hǎo. Qǐngwèn, xuéxiào de shítáng zài nǎr?",
+          "tokens": [
+            "你好",
+            "请问",
+            "学校",
+            "的",
+            "食堂",
+            "在",
+            "哪儿"
+          ]
+        },
+        {
+          "id": "ss4_exp_2",
+          "targetHanzi": "后面的那座楼是宿舍食堂在宿舍的左边",
+          "targetMeaning": "Tòa nhà phía sau kia là ký túc xá, nhà ăn nằm ở bên trái ký túc xá.",
+          "pinyin": "Hòumian de nà zuò lóu shì sùshè, shítáng zài sùshè de zuǒbian.",
+          "tokens": [
+            "后",
+            "面",
+            "的",
+            "那",
+            "座",
+            "楼",
+            "是",
+            "宿舍",
+            "食堂",
+            "在",
+            "宿舍",
+            "的",
+            "左边"
+          ]
+        },
+        {
+          "id": "ss4_exp_3",
+          "targetHanzi": "好的我去食堂吃饭啊你知道图书馆在哪里吗",
+          "targetMeaning": "Vâng, tôi đến nhà ăn ăn cơm. À, bạn có biết thư viện ở đâu không?",
+          "pinyin": "Hǎo de, wǒ qù shítáng chīfàn. A, nǐ zhīdào túshūguǎn zài nǎli ma?",
+          "tokens": [
+            "好",
+            "的",
+            "我",
+            "去",
+            "食堂",
+            "吃",
+            "饭",
+            "啊",
+            "你",
+            "知道",
+            "图书馆",
+            "在",
+            "哪里",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss4_exp_4",
+          "targetHanzi": "教学楼的右边是图书馆你去图书馆看书吗",
+          "targetMeaning": "Bên phải tòa nhà giảng đường là thư viện. Bạn đi thư viện đọc sách à?",
+          "pinyin": "Jiàoxué lóu de yòubian shì túshūguǎn. Nǐ qù túshūguǎn kànshū ma?",
+          "tokens": [
+            "教学楼",
+            "的",
+            "右边",
+            "是",
+            "图书馆",
+            "你",
+            "去",
+            "图书馆",
+            "看",
+            "书",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss4_exp_5",
+          "targetHanzi": "他是谁",
+          "targetMeaning": "Anh ấy là ai?",
+          "pinyin": "Tā shì shéi?",
+          "tokens": [
+            "他",
+            "是",
+            "谁"
+          ]
+        },
+        {
+          "id": "ss4_exp_6",
+          "targetHanzi": "你叫什么名字",
+          "targetMeaning": "Bạn tên là gì?",
+          "pinyin": "Nǐ jiào shénme míngzi?",
+          "tokens": [
+            "你",
+            "叫",
+            "什么",
+            "名字"
+          ]
+        },
+        {
+          "id": "ss4_exp_7",
+          "targetHanzi": "老师们",
+          "targetMeaning": "Các thầy cô giáo",
+          "pinyin": "lǎoshīmen",
+          "tokens": [
+            "老师",
+            "们"
+          ]
+        },
+        {
+          "id": "ss4_exp_8",
+          "targetHanzi": "他是我的老师",
+          "targetMeaning": "Thầy ấy là thầy giáo của tớ.",
+          "pinyin": "Tā shì wǒ de lǎoshī.",
+          "tokens": [
+            "他",
+            "是",
+            "我",
+            "的",
+            "老师"
+          ]
+        },
+        {
+          "id": "ss4_exp_9",
+          "targetHanzi": "请问附近有食堂吗",
+          "targetMeaning": "Xin hỏi quanh đây có nhà ăn không ạ?",
+          "pinyin": "Qǐngwèn, fùjìn yǒu shítáng ma?",
+          "tokens": [
+            "请问",
+            "附近",
+            "有",
+            "食堂",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss4_exp_10",
+          "targetHanzi": "有食堂在教学楼的右边",
+          "targetMeaning": "Có, nhà ăn nằm ở bên phải tòa nhà giảng đường.",
+          "pinyin": "Yǒu, shítáng zài jiàoxué lóu de yòubian.",
+          "tokens": [
+            "有",
+            "食堂",
+            "在",
+            "教学楼",
+            "的",
+            "右边"
+          ]
+        },
+        {
+          "id": "ss4_exp_11",
+          "targetHanzi": "图书馆也在教学楼前面吗",
+          "targetMeaning": "Thư viện cũng ở phía trước tòa giảng đường à?",
+          "pinyin": "Túshūguǎn yě zài jiàoxué lóu qiánmian ma?",
+          "tokens": [
+            "图书馆",
+            "也",
+            "在",
+            "教学楼",
+            "前面",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss4_exp_12",
+          "targetHanzi": "不是图书馆在教学楼的左边我们一起去吧",
+          "targetMeaning": "Không, thư viện ở bên trái tòa giảng đường, chúng ta cùng đi nhé!",
+          "pinyin": "Bú shì, túshūguǎn zài jiàoxué lóu de zuǒbian, wǒmen yīqǐ qù ba!",
+          "tokens": [
+            "不是",
+            "图书馆",
+            "在",
+            "教学楼",
+            "的",
+            "左边",
+            "我们",
+            "一",
+            "起",
+            "去",
+            "吧"
+          ]
+        },
+        {
+          "id": "ss4_exp_13",
+          "targetHanzi": "医院在我们学校的右边",
+          "targetMeaning": "Bệnh viện ở bên phải trường học của chúng ta.",
+          "pinyin": "Yīyuàn zài wǒmen xuéxiào de yòubian.",
+          "tokens": [
+            "医",
+            "院",
+            "在",
+            "我们",
+            "学校",
+            "的",
+            "右边"
+          ]
+        },
+        {
+          "id": "ss4_exp_14",
+          "targetHanzi": "老师不在办公室里",
+          "targetMeaning": "Cô giáo không ở trong phòng làm việc.",
+          "pinyin": "Lǎoshī búzài bàngōngshì li.",
+          "tokens": [
+            "老师",
+            "不",
+            "在",
+            "办",
+            "公",
+            "室",
+            "里"
+          ]
         }
       ],
       "translationExercises": [
@@ -6283,6 +7899,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "yīyuàn zài wǒmen xuéxiào de yòubian",
           "hint": "Gợi ý Pinyin: Yīyuàn zài wǒmen xuéxiào de yòubian. | Từ chưa học: 医院 (yīyuàn: bệnh viện)",
           "explanation": "Bệnh viện ở bên phải trường học của chúng ta. → 医院在我们学校的右边。 (Yīyuàn zài wǒmen xuéxiào de yòubian.)"
+        },
+        {
+          "id": "tr4_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Xin chào. Xin hỏi nhà ăn của trường ở đâu vậy?",
+          "expectedChinese": "你好。请问，学校的食堂在哪儿？",
+          "acceptedPinyin": "nǐ hǎo qǐngwèn xuéxiào de shítáng zài nǎr",
+          "hint": "Gợi ý Pinyin: Nǐ hǎo. Qǐngwèn, xuéxiào de shítáng zài nǎr?",
+          "explanation": "Xin chào. Xin hỏi nhà ăn của trường ở đâu vậy? → 你好。请问，学校的食堂在哪儿？ (Nǐ hǎo. Qǐngwèn, xuéxiào de shítáng zài nǎr?)"
+        },
+        {
+          "id": "tr4_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Tòa nhà phía sau kia là ký túc xá, nhà ăn nằm ở bên trái ký túc xá.",
+          "expectedChinese": "后面的那座楼是宿舍，食堂在宿舍的左边。",
+          "acceptedPinyin": "hòumian de nà zuò lóu shì sùshè shítáng zài sùshè de zuǒbian",
+          "hint": "Gợi ý Pinyin: Hòumian de nà zuò lóu shì sùshè, shítáng zài sùshè de zuǒbian.",
+          "explanation": "Tòa nhà phía sau kia là ký túc xá, nhà ăn nằm ở bên trái ký túc xá. → 后面的那座楼是宿舍，食堂在宿舍的左边。 (Hòumian de nà zuò lóu shì sùshè, shítáng zài sùshè de zuǒbian.)"
+        },
+        {
+          "id": "tr4_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Vâng, tôi đến nhà ăn ăn cơm. À, bạn có biết thư viện ở đâu không?",
+          "expectedChinese": "好的，我去食堂吃饭。啊，你知道图书馆在哪里吗？",
+          "acceptedPinyin": "hǎo de wǒ qù shítáng chīfàn a nǐ zhīdào túshūguǎn zài nǎli ma",
+          "hint": "Gợi ý Pinyin: Hǎo de, wǒ qù shítáng chīfàn. A, nǐ zhīdào túshūguǎn zài nǎli ma?",
+          "explanation": "Vâng, tôi đến nhà ăn ăn cơm. À, bạn có biết thư viện ở đâu không? → 好的，我去食堂吃饭。啊，你知道图书馆在哪里吗？ (Hǎo de, wǒ qù shítáng chīfàn. A, nǐ zhīdào túshūguǎn zài nǎli ma?)"
+        },
+        {
+          "id": "tr4_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Bên phải tòa nhà giảng đường là thư viện. Bạn đi thư viện đọc sách à?",
+          "expectedChinese": "教学楼的右边是图书馆。你去图书馆看书吗？",
+          "acceptedPinyin": "jiàoxué lóu de yòubian shì túshūguǎn nǐ qù túshūguǎn kànshū ma",
+          "hint": "Gợi ý Pinyin: Jiàoxué lóu de yòubian shì túshūguǎn. Nǐ qù túshūguǎn kànshū ma?",
+          "explanation": "Bên phải tòa nhà giảng đường là thư viện. Bạn đi thư viện đọc sách à? → 教学楼的右边是图书馆。你去图书馆看书吗？ (Jiàoxué lóu de yòubian shì túshūguǎn. Nǐ qù túshūguǎn kànshū ma?)"
+        },
+        {
+          "id": "tr4_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Đúng vậy, cảm ơn bạn!",
+          "expectedChinese": "是啊，谢谢你！",
+          "acceptedPinyin": "shì a xièxie nǐ",
+          "hint": "Gợi ý Pinyin: Shì a, xièxie nǐ!",
+          "explanation": "Đúng vậy, cảm ơn bạn! → 是啊，谢谢你！ (Shì a, xièxie nǐ!)"
+        },
+        {
+          "id": "tr4_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Không có gì!",
+          "expectedChinese": "不客气！",
+          "acceptedPinyin": "bú kèqì",
+          "hint": "Gợi ý Pinyin: Bú kèqì!",
+          "explanation": "Không có gì! → 不客气！ (Bú kèqì!)"
+        },
+        {
+          "id": "tr4_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Anh ấy là ai?",
+          "expectedChinese": "他是谁？",
+          "acceptedPinyin": "tā shì shéi",
+          "hint": "Gợi ý Pinyin: Tā shì shéi?",
+          "explanation": "Anh ấy là ai? → 他是谁？ (Tā shì shéi?)"
+        },
+        {
+          "id": "tr4_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Bạn tên là gì?",
+          "expectedChinese": "你叫什么名字？",
+          "acceptedPinyin": "nǐ jiào shénme míngzi",
+          "hint": "Gợi ý Pinyin: Nǐ jiào shénme míngzi?",
+          "explanation": "Bạn tên là gì? → 你叫什么名字？ (Nǐ jiào shénme míngzi?)"
+        },
+        {
+          "id": "tr4_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Các thầy cô giáo",
+          "expectedChinese": "老师们",
+          "acceptedPinyin": "lǎoshīmen",
+          "hint": "Gợi ý Pinyin: lǎoshīmen",
+          "explanation": "Các thầy cô giáo → 老师们 (lǎoshīmen)"
+        },
+        {
+          "id": "tr4_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Thầy ấy là thầy giáo của tớ.",
+          "expectedChinese": "他是我的老师。",
+          "acceptedPinyin": "tā shì wǒ de lǎoshī",
+          "hint": "Gợi ý Pinyin: Tā shì wǒ de lǎoshī.",
+          "explanation": "Thầy ấy là thầy giáo của tớ. → 他是我的老师。 (Tā shì wǒ de lǎoshī.)"
         },
         {
           "id": "tr4_zh_1",
@@ -6343,6 +8049,208 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Zhè shì shénme shū?",
           "explanation": "这是什么书？ (Zhè shì shénme shū?) nghĩa là: Đây là sách gì?"
+        },
+        {
+          "id": "tr4_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "食堂在教学楼旁边。",
+          "chineseAudioText": "食堂在教学楼旁边。",
+          "pinyin": "Shítáng zài jiàoxué lóu pángbiān.",
+          "expectedMeaning": "Nhà ăn ở cạnh giảng đường.",
+          "acceptedKeywords": [
+            "nhà",
+            "ăn",
+            "cạnh",
+            "giảng",
+            "đường"
+          ],
+          "hint": "Pinyin: Shítáng zài jiàoxué lóu pángbiān.",
+          "explanation": "食堂在教学楼旁边。 (Shítáng zài jiàoxué lóu pángbiān.) nghĩa là: Nhà ăn ở cạnh giảng đường."
+        },
+        {
+          "id": "tr4_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "老师在外面等你。",
+          "chineseAudioText": "老师在外面等你。",
+          "pinyin": "Lǎoshī zài wàimian děng nǐ.",
+          "expectedMeaning": "Thầy giáo đang đợi bạn ở bên ngoài.",
+          "acceptedKeywords": [
+            "thầy",
+            "giáo",
+            "đang",
+            "đợi",
+            "bạn",
+            "bên",
+            "ngoài"
+          ],
+          "hint": "Pinyin: Lǎoshī zài wàimian děng nǐ.",
+          "explanation": "老师在外面等你。 (Lǎoshī zài wàimian děng nǐ.) nghĩa là: Thầy giáo đang đợi bạn ở bên ngoài."
+        },
+        {
+          "id": "tr4_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "我的左边不是教学楼。",
+          "chineseAudioText": "我的左边不是教学楼。",
+          "pinyin": "Wǒ de zuǒbian búshì jiàoxué lóu.",
+          "expectedMeaning": "Bên trái tôi không phải là tòa giảng đường.",
+          "acceptedKeywords": [
+            "bên",
+            "trái",
+            "tôi",
+            "không",
+            "phải",
+            "là",
+            "tòa",
+            "giảng",
+            "đường"
+          ],
+          "hint": "Pinyin: Wǒ de zuǒbian búshì jiàoxué lóu.",
+          "explanation": "我的左边不是教学楼。 (Wǒ de zuǒbian búshì jiàoxué lóu.) nghĩa là: Bên trái tôi không phải là tòa giảng đường."
+        },
+        {
+          "id": "tr4_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "弟弟在花园里玩儿。",
+          "chineseAudioText": "弟弟在花园里玩儿。",
+          "pinyin": "Dìdi zài huāyuán li wánr.",
+          "expectedMeaning": "Em trai tôi chơi trong vườn hoa.",
+          "acceptedKeywords": [
+            "em",
+            "trai",
+            "tôi",
+            "chơi",
+            "trong",
+            "vườn",
+            "hoa"
+          ],
+          "hint": "Pinyin: Dìdi zài huāyuán li wánr.",
+          "explanation": "弟弟在花园里玩儿。 (Dìdi zài huāyuán li wánr.) nghĩa là: Em trai tôi chơi trong vườn hoa."
+        },
+        {
+          "id": "tr4_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "爸爸在洗手间里吗？",
+          "chineseAudioText": "爸爸在洗手间里吗？",
+          "pinyin": "Bàba zài xǐshǒujiān li ma?",
+          "expectedMeaning": "Bố có trong nhà vệ sinh không?",
+          "acceptedKeywords": [
+            "bố",
+            "có",
+            "trong",
+            "nhà",
+            "vệ",
+            "sinh",
+            "không"
+          ],
+          "hint": "Pinyin: Bàba zài xǐshǒujiān li ma?",
+          "explanation": "爸爸在洗手间里吗？ (Bàba zài xǐshǒujiān li ma?) nghĩa là: Bố có trong nhà vệ sinh không?"
+        },
+        {
+          "id": "tr4_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "老师不在办公室里。",
+          "chineseAudioText": "老师不在办公室里。",
+          "pinyin": "Lǎoshī búzài bàngōngshì li.",
+          "expectedMeaning": "Cô giáo không ở trong phòng làm việc.",
+          "acceptedKeywords": [
+            "cô",
+            "giáo",
+            "không",
+            "trong",
+            "phòng",
+            "làm",
+            "việc"
+          ],
+          "hint": "Pinyin: Lǎoshī búzài bàngōngshì li.",
+          "explanation": "老师不在办公室里。 (Lǎoshī búzài bàngōngshì li.) nghĩa là: Cô giáo không ở trong phòng làm việc."
+        },
+        {
+          "id": "tr4_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "医院在我们学校的右边。",
+          "chineseAudioText": "医院在我们学校的右边。",
+          "pinyin": "Yīyuàn zài wǒmen xuéxiào de yòubian.",
+          "expectedMeaning": "Bệnh viện ở bên phải trường học của chúng ta.",
+          "acceptedKeywords": [
+            "bệnh",
+            "viện",
+            "bên",
+            "phải",
+            "trường",
+            "học",
+            "của",
+            "chúng",
+            "ta"
+          ],
+          "hint": "Pinyin: Yīyuàn zài wǒmen xuéxiào de yòubian.",
+          "explanation": "医院在我们学校的右边。 (Yīyuàn zài wǒmen xuéxiào de yòubian.) nghĩa là: Bệnh viện ở bên phải trường học của chúng ta."
+        },
+        {
+          "id": "tr4_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "不是，图书馆在教学楼的左边，我们一起去吧！",
+          "chineseAudioText": "不是，图书馆在教学楼的左边，我们一起去吧！",
+          "pinyin": "Bú shì, túshūguǎn zài jiàoxué lóu de zuǒbian, wǒmen yīqǐ qù ba!",
+          "expectedMeaning": "Không, thư viện ở bên trái tòa giảng đường, chúng ta cùng đi nhé!",
+          "acceptedKeywords": [
+            "không",
+            "thư",
+            "viện",
+            "bên",
+            "trái",
+            "tòa",
+            "giảng",
+            "đường",
+            "chúng",
+            "ta",
+            "cùng",
+            "đi",
+            "nhé"
+          ],
+          "hint": "Pinyin: Bú shì, túshūguǎn zài jiàoxué lóu de zuǒbian, wǒmen yīqǐ qù ba!",
+          "explanation": "不是，图书馆在教学楼的左边，我们一起去吧！ (Bú shì, túshūguǎn zài jiàoxué lóu de zuǒbian, wǒmen yīqǐ qù ba!) nghĩa là: Không, thư viện ở bên trái tòa giảng đường, chúng ta cùng đi nhé!"
+        },
+        {
+          "id": "tr4_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "图书馆也在教学楼前面吗？",
+          "chineseAudioText": "图书馆也在教学楼前面吗？",
+          "pinyin": "Túshūguǎn yě zài jiàoxué lóu qiánmian ma?",
+          "expectedMeaning": "Thư viện cũng ở phía trước tòa giảng đường à?",
+          "acceptedKeywords": [
+            "thư",
+            "viện",
+            "cũng",
+            "phía",
+            "trước",
+            "tòa",
+            "giảng",
+            "đường"
+          ],
+          "hint": "Pinyin: Túshūguǎn yě zài jiàoxué lóu qiánmian ma?",
+          "explanation": "图书馆也在教学楼前面吗？ (Túshūguǎn yě zài jiàoxué lóu qiánmian ma?) nghĩa là: Thư viện cũng ở phía trước tòa giảng đường à?"
+        },
+        {
+          "id": "tr4_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "有，食堂在教学楼的右边。",
+          "chineseAudioText": "有，食堂在教学楼的右边。",
+          "pinyin": "Yǒu, shítáng zài jiàoxué lóu de yòubian.",
+          "expectedMeaning": "Có, nhà ăn nằm ở bên phải tòa nhà giảng đường.",
+          "acceptedKeywords": [
+            "có",
+            "nhà",
+            "ăn",
+            "nằm",
+            "bên",
+            "phải",
+            "tòa",
+            "nhà",
+            "giảng",
+            "đường"
+          ],
+          "hint": "Pinyin: Yǒu, shítáng zài jiàoxué lóu de yòubian.",
+          "explanation": "有，食堂在教学楼的右边。 (Yǒu, shítáng zài jiàoxué lóu de yòubian.) nghĩa là: Có, nhà ăn nằm ở bên phải tòa nhà giảng đường."
         }
       ],
       "expandedQuiz": [
@@ -8395,6 +10303,208 @@ const DEFAULT_LESSONS = [
             "同学们"
           ],
           "unlearnedHint": "Từ chưa học: 同学们 (tóngxuémen: các bạn học)"
+        },
+        {
+          "id": "ss5_exp_1",
+          "targetHanzi": "小白现在几点了",
+          "targetMeaning": "Tiểu Bạch, bây giờ mấy giờ rồi?",
+          "pinyin": "Xiǎobái, xiànzài jǐ diǎn le?",
+          "tokens": [
+            "小",
+            "白",
+            "现在",
+            "几",
+            "点",
+            "了"
+          ]
+        },
+        {
+          "id": "ss5_exp_2",
+          "targetHanzi": "四点二十分了怎么了",
+          "targetMeaning": "4 giờ 20 phút rồi! Có chuyện gì thế?",
+          "pinyin": "Sì diǎn èr shí fēn le! Zěnmele?",
+          "tokens": [
+            "四",
+            "点",
+            "二",
+            "十",
+            "分",
+            "了",
+            "怎么了"
+          ]
+        },
+        {
+          "id": "ss5_exp_3",
+          "targetHanzi": "图书馆几点关门",
+          "targetMeaning": "Thư viện mấy giờ đóng cửa?",
+          "pinyin": "Túshūguǎn jǐ diǎn guānmén?",
+          "tokens": [
+            "图书馆",
+            "几",
+            "点",
+            "关",
+            "门"
+          ]
+        },
+        {
+          "id": "ss5_exp_4",
+          "targetHanzi": "五点半你想借书吗",
+          "targetMeaning": "5 giờ rưỡi! Bạn muốn mượn sách à?",
+          "pinyin": "Wǔ diǎn bàn! Nǐ xiǎng jiè shū ma?",
+          "tokens": [
+            "五",
+            "点",
+            "半",
+            "你",
+            "想",
+            "借",
+            "书",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss5_exp_5",
+          "targetHanzi": "对你知道图书馆在几楼吗",
+          "targetMeaning": "Đúng rồi. Bạn có biết thư viện ở tầng mấy không?",
+          "pinyin": "Dùi. Nǐ zhīdào túshūguǎn zài jǐ lóu ma?",
+          "tokens": [
+            "对",
+            "你",
+            "知道",
+            "图书馆",
+            "在",
+            "几",
+            "楼",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss5_exp_6",
+          "targetHanzi": "三楼号",
+          "targetMeaning": "Tầng 3, phòng 202.",
+          "pinyin": "Sān lóu, èr líng èr hào.",
+          "tokens": [
+            "三",
+            "楼",
+            "号"
+          ]
+        },
+        {
+          "id": "ss5_exp_7",
+          "targetHanzi": "谢谢你",
+          "targetMeaning": "Cảm ơn bạn!",
+          "pinyin": "Xièxie nǐ!",
+          "tokens": [
+            "谢谢",
+            "你"
+          ]
+        },
+        {
+          "id": "ss5_exp_8",
+          "targetHanzi": "马克你明天要上课吗",
+          "targetMeaning": "Mark, ngày mai bạn có phải lên lớp không?",
+          "pinyin": "Mǎkè, nǐ míngtiān yào shàngkè ma?",
+          "tokens": [
+            "马克",
+            "你",
+            "明天",
+            "要",
+            "上课",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss5_exp_9",
+          "targetHanzi": "上午要上课下午不上",
+          "targetMeaning": "Buổi sáng phải lên lớp, buổi chiều không học.",
+          "pinyin": "Shàngwǔ yào shàngkè, xiàwǔ bú shàng.",
+          "tokens": [
+            "上午",
+            "要",
+            "上课",
+            "下午",
+            "不",
+            "上"
+          ]
+        },
+        {
+          "id": "ss5_exp_10",
+          "targetHanzi": "明天上午你几点去教室",
+          "targetMeaning": "Sáng mai mấy giờ bạn đến phòng học?",
+          "pinyin": "Míngtiān shàngwǔ nǐ jǐ diǎn qù jiàoshì?",
+          "tokens": [
+            "明天",
+            "上午",
+            "你",
+            "几",
+            "点",
+            "去",
+            "教室"
+          ]
+        },
+        {
+          "id": "ss5_exp_11",
+          "targetHanzi": "三点一刻你什么时候去",
+          "targetMeaning": "3 giờ 15 phút. Khi nào bạn đi?",
+          "pinyin": "Sān diǎn yí kè. Nǐ shénme shíhou qù?",
+          "tokens": [
+            "三",
+            "点",
+            "一",
+            "刻",
+            "你",
+            "什么",
+            "时候",
+            "去"
+          ]
+        },
+        {
+          "id": "ss5_exp_12",
+          "targetHanzi": "我也是这是我的电话号码明天去上课的时候你给我打电话好吗",
+          "targetMeaning": "Tôi cũng vậy. Đây là số điện thoại của tôi: 0322110012. Ngày mai lúc đi học bạn gọi điện cho tôi nhé, được không?",
+          "pinyin": "Wǒ yě shì. Zhè shì wǒ de diànhuà hàomǎ líng sān èr èr yāo yāo líng líng yāo èr. Míngtiān qù shàngkè de shíhou nǐ gěi wǒ dǎ diànhuà, hǎo ma?",
+          "tokens": [
+            "我",
+            "也",
+            "是",
+            "这",
+            "是",
+            "我",
+            "的",
+            "电话号码",
+            "明天",
+            "去",
+            "上课",
+            "的",
+            "时候",
+            "你",
+            "给",
+            "我",
+            "打",
+            "电话",
+            "好",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss5_exp_13",
+          "targetHanzi": "食堂左边",
+          "targetMeaning": "Phía bên trái nhà ăn",
+          "pinyin": "shítáng zuǒbian",
+          "tokens": [
+            "食堂",
+            "左边"
+          ]
+        },
+        {
+          "id": "ss5_exp_14",
+          "targetHanzi": "明天见",
+          "targetMeaning": "Hẹn gặp lại vào ngày mai! (Hoặc “Mai gặp nhé!”)",
+          "pinyin": "Míngtiān jiàn!",
+          "tokens": [
+            "明天",
+            "见"
+          ]
         }
       ],
       "translationExercises": [
@@ -8433,6 +10543,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "nǐ zuótiān qù xuéxiào le ma",
           "hint": "Gợi ý Pinyin: Nǐ zuótiān qù xuéxiào le ma?",
           "explanation": "Hôm qua cậu đã đến trường chưa? → 你昨天去学校了吗？ (Nǐ zuótiān qù xuéxiào le ma?)"
+        },
+        {
+          "id": "tr5_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Tiểu Bạch, bây giờ mấy giờ rồi?",
+          "expectedChinese": "小白，现在几点了？",
+          "acceptedPinyin": "xiǎobái xiànzài jǐ diǎn le",
+          "hint": "Gợi ý Pinyin: Xiǎobái, xiànzài jǐ diǎn le?",
+          "explanation": "Tiểu Bạch, bây giờ mấy giờ rồi? → 小白，现在几点了？ (Xiǎobái, xiànzài jǐ diǎn le?)"
+        },
+        {
+          "id": "tr5_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "4 giờ 20 phút rồi! Có chuyện gì thế?",
+          "expectedChinese": "四点二十分了！怎么了？",
+          "acceptedPinyin": "sì diǎn èr shí fēn le zěnmele",
+          "hint": "Gợi ý Pinyin: Sì diǎn èr shí fēn le! Zěnmele?",
+          "explanation": "4 giờ 20 phút rồi! Có chuyện gì thế? → 四点二十分了！怎么了？ (Sì diǎn èr shí fēn le! Zěnmele?)"
+        },
+        {
+          "id": "tr5_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Thư viện mấy giờ đóng cửa?",
+          "expectedChinese": "图书馆几点关门？",
+          "acceptedPinyin": "túshūguǎn jǐ diǎn guānmén",
+          "hint": "Gợi ý Pinyin: Túshūguǎn jǐ diǎn guānmén?",
+          "explanation": "Thư viện mấy giờ đóng cửa? → 图书馆几点关门？ (Túshūguǎn jǐ diǎn guānmén?)"
+        },
+        {
+          "id": "tr5_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "5 giờ rưỡi! Bạn muốn mượn sách à?",
+          "expectedChinese": "五点半！你想借书吗？",
+          "acceptedPinyin": "wǔ diǎn bàn nǐ xiǎng jiè shū ma",
+          "hint": "Gợi ý Pinyin: Wǔ diǎn bàn! Nǐ xiǎng jiè shū ma?",
+          "explanation": "5 giờ rưỡi! Bạn muốn mượn sách à? → 五点半！你想借书吗？ (Wǔ diǎn bàn! Nǐ xiǎng jiè shū ma?)"
+        },
+        {
+          "id": "tr5_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Đúng rồi. Bạn có biết thư viện ở tầng mấy không?",
+          "expectedChinese": "对。你知道图书馆在几楼吗？",
+          "acceptedPinyin": "dùi nǐ zhīdào túshūguǎn zài jǐ lóu ma",
+          "hint": "Gợi ý Pinyin: Dùi. Nǐ zhīdào túshūguǎn zài jǐ lóu ma?",
+          "explanation": "Đúng rồi. Bạn có biết thư viện ở tầng mấy không? → 对。你知道图书馆在几楼吗？ (Dùi. Nǐ zhīdào túshūguǎn zài jǐ lóu ma?)"
+        },
+        {
+          "id": "tr5_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Tầng 3, phòng 202.",
+          "expectedChinese": "三楼，202 号。",
+          "acceptedPinyin": "sān lóu èr líng èr hào",
+          "hint": "Gợi ý Pinyin: Sān lóu, èr líng èr hào.",
+          "explanation": "Tầng 3, phòng 202. → 三楼，202 号。 (Sān lóu, èr líng èr hào.)"
+        },
+        {
+          "id": "tr5_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Cảm ơn bạn!",
+          "expectedChinese": "谢谢你！",
+          "acceptedPinyin": "xièxie nǐ",
+          "hint": "Gợi ý Pinyin: Xièxie nǐ!",
+          "explanation": "Cảm ơn bạn! → 谢谢你！ (Xièxie nǐ!)"
+        },
+        {
+          "id": "tr5_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Không có gì!",
+          "expectedChinese": "不客气！",
+          "acceptedPinyin": "bú kèqì",
+          "hint": "Gợi ý Pinyin: Bú kèqì!",
+          "explanation": "Không có gì! → 不客气！ (Bú kèqì!)"
+        },
+        {
+          "id": "tr5_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Mark, ngày mai bạn có phải lên lớp không?",
+          "expectedChinese": "马克，你明天要上课吗？",
+          "acceptedPinyin": "mǎkè nǐ míngtiān yào shàngkè ma",
+          "hint": "Gợi ý Pinyin: Mǎkè, nǐ míngtiān yào shàngkè ma?",
+          "explanation": "Mark, ngày mai bạn có phải lên lớp không? → 马克，你明天要上课吗？ (Mǎkè, nǐ míngtiān yào shàngkè ma?)"
+        },
+        {
+          "id": "tr5_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Buổi sáng phải lên lớp, buổi chiều không học.",
+          "expectedChinese": "上午要上课，下午不上。",
+          "acceptedPinyin": "shàngwǔ yào shàngkè xiàwǔ bú shàng",
+          "hint": "Gợi ý Pinyin: Shàngwǔ yào shàngkè, xiàwǔ bú shàng.",
+          "explanation": "Buổi sáng phải lên lớp, buổi chiều không học. → 上午要上课，下午不上。 (Shàngwǔ yào shàngkè, xiàwǔ bú shàng.)"
         },
         {
           "id": "tr5_zh_1",
@@ -8493,6 +10693,215 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Zhè shì shénme shū?",
           "explanation": "这是什么书？ (Zhè shì shénme shū?) nghĩa là: Đây là sách gì?"
+        },
+        {
+          "id": "tr5_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "小兰，你房间号码是多少？",
+          "chineseAudioText": "小兰，你房间号码是多少？",
+          "pinyin": "Xiǎolán, nǐ fángjiān hàomǎ shì duōshao?",
+          "expectedMeaning": "Lan ơi, số phòng của cậu là bao nhiêu?",
+          "acceptedKeywords": [
+            "lan",
+            "ơi",
+            "số",
+            "phòng",
+            "của",
+            "cậu",
+            "là",
+            "bao",
+            "nhiêu"
+          ],
+          "hint": "Pinyin: Xiǎolán, nǐ fángjiān hàomǎ shì duōshao?",
+          "explanation": "小兰，你房间号码是多少？ (Xiǎolán, nǐ fángjiān hàomǎ shì duōshao?) nghĩa là: Lan ơi, số phòng của cậu là bao nhiêu?"
+        },
+        {
+          "id": "tr5_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "太好了，十一点半我也在食堂等你。",
+          "chineseAudioText": "太好了，十一点半我也在食堂等你。",
+          "pinyin": "Tài hǎo le, shíyī diǎn bàn wǒ yě zài shítáng děng nǐ.",
+          "expectedMeaning": "Hay quá, 11 giờ rưỡi tớ cũng đợi cậu ở nhà ăn.",
+          "acceptedKeywords": [
+            "hay",
+            "quá",
+            "11",
+            "giờ",
+            "rưỡi",
+            "tớ",
+            "cũng",
+            "đợi",
+            "cậu",
+            "nhà",
+            "ăn"
+          ],
+          "hint": "Pinyin: Tài hǎo le, shíyī diǎn bàn wǒ yě zài shítáng děng nǐ.",
+          "explanation": "太好了，十一点半我也在食堂等你。 (Tài hǎo le, shíyī diǎn bàn wǒ yě zài shítáng děng nǐ.) nghĩa là: Hay quá, 11 giờ rưỡi tớ cũng đợi cậu ở nhà ăn."
+        },
+        {
+          "id": "tr5_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "上午九点半我有一节汉语课，十一点半去食堂。",
+          "chineseAudioText": "上午九点半我有一节汉语课，十一点半去食堂。",
+          "pinyin": "Shàngwǔ jiǔ diǎn bàn wǒ yǒu yì jié Hànyǔ kè, shíyī diǎn bàn qù shítáng.",
+          "expectedMeaning": "9 giờ 30 sáng tôi có một tiết tiếng Hán, 11 giờ rưỡi đi nhà ăn.",
+          "acceptedKeywords": [
+            "giờ",
+            "30",
+            "sáng",
+            "tôi",
+            "có",
+            "một",
+            "tiết",
+            "tiếng",
+            "hán",
+            "11",
+            "giờ",
+            "rưỡi",
+            "đi",
+            "nhà",
+            "ăn"
+          ],
+          "hint": "Pinyin: Shàngwǔ jiǔ diǎn bàn wǒ yǒu yì jié Hànyǔ kè, shíyī diǎn bàn qù shítáng.",
+          "explanation": "上午九点半我有一节汉语课，十一点半去食堂。 (Shàngwǔ jiǔ diǎn bàn wǒ yǒu yì jié Hànyǔ kè, shíyī diǎn bàn qù shítáng.) nghĩa là: 9 giờ 30 sáng tôi có một tiết tiếng Hán, 11 giờ rưỡi đi nhà ăn."
+        },
+        {
+          "id": "tr5_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "现在八点一刻，你要去哪儿？",
+          "chineseAudioText": "现在八点一刻，你要去哪儿？",
+          "pinyin": "Xiànzài bā diǎn yí kè, nǐ yào qù nǎr?",
+          "expectedMeaning": "Bây giờ là 8 giờ 15 phút, cậu định đi đâu thế?",
+          "acceptedKeywords": [
+            "bây",
+            "giờ",
+            "là",
+            "giờ",
+            "15",
+            "phút",
+            "cậu",
+            "định",
+            "đi",
+            "đâu",
+            "thế"
+          ],
+          "hint": "Pinyin: Xiànzài bā diǎn yí kè, nǐ yào qù nǎr?",
+          "explanation": "现在八点一刻，你要去哪儿？ (Xiànzài bā diǎn yí kè, nǐ yào qù nǎr?) nghĩa là: Bây giờ là 8 giờ 15 phút, cậu định đi đâu thế?"
+        },
+        {
+          "id": "tr5_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "张风，现在几点了？",
+          "chineseAudioText": "张风，现在几点了？",
+          "pinyin": "Zhāng Fēng, xiànzài jǐ diǎn le?",
+          "expectedMeaning": "Trương Phong, bây giờ mấy giờ rồi?",
+          "acceptedKeywords": [
+            "trương",
+            "phong",
+            "bây",
+            "giờ",
+            "mấy",
+            "giờ",
+            "rồi"
+          ],
+          "hint": "Pinyin: Zhāng Fēng, xiànzài jǐ diǎn le?",
+          "explanation": "张风，现在几点了？ (Zhāng Fēng, xiànzài jǐ diǎn le?) nghĩa là: Trương Phong, bây giờ mấy giờ rồi?"
+        },
+        {
+          "id": "tr5_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "他是我的老师。",
+          "chineseAudioText": "他是我的老师。",
+          "pinyin": "Tā shì wǒ de lǎoshī.",
+          "expectedMeaning": "Thầy ấy là thầy giáo của tớ.",
+          "acceptedKeywords": [
+            "thầy",
+            "ấy",
+            "là",
+            "thầy",
+            "giáo",
+            "của",
+            "tớ"
+          ],
+          "hint": "Pinyin: Tā shì wǒ de lǎoshī.",
+          "explanation": "他是我的老师。 (Tā shì wǒ de lǎoshī.) nghĩa là: Thầy ấy là thầy giáo của tớ."
+        },
+        {
+          "id": "tr5_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "老师好",
+          "chineseAudioText": "老师好",
+          "pinyin": "Lǎoshī hǎo",
+          "expectedMeaning": "Chào thầy/Chào cô",
+          "acceptedKeywords": [
+            "chào",
+            "thầy",
+            "chào",
+            "cô"
+          ],
+          "hint": "Pinyin: Lǎoshī hǎo",
+          "explanation": "老师好 (Lǎoshī hǎo) nghĩa là: Chào thầy/Chào cô"
+        },
+        {
+          "id": "tr5_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "你昨天去学校了吗？",
+          "chineseAudioText": "你昨天去学校了吗？",
+          "pinyin": "Nǐ zuótiān qù xuéxiào le ma?",
+          "expectedMeaning": "Hôm qua cậu đã đến trường chưa?",
+          "acceptedKeywords": [
+            "hôm",
+            "qua",
+            "cậu",
+            "đã",
+            "đến",
+            "trường",
+            "chưa"
+          ],
+          "hint": "Pinyin: Nǐ zuótiān qù xuéxiào le ma?",
+          "explanation": "你昨天去学校了吗？ (Nǐ zuótiān qù xuéxiào le ma?) nghĩa là: Hôm qua cậu đã đến trường chưa?"
+        },
+        {
+          "id": "tr5_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "明天见！",
+          "chineseAudioText": "明天见！",
+          "pinyin": "Míngtiān jiàn!",
+          "expectedMeaning": "Hẹn gặp lại vào ngày mai! (Hoặc “Mai gặp nhé!”)",
+          "acceptedKeywords": [
+            "hẹn",
+            "gặp",
+            "lại",
+            "vào",
+            "ngày",
+            "mai",
+            "hoặc",
+            "mai",
+            "gặp",
+            "nhé"
+          ],
+          "hint": "Pinyin: Míngtiān jiàn!",
+          "explanation": "明天见！ (Míngtiān jiàn!) nghĩa là: Hẹn gặp lại vào ngày mai! (Hoặc “Mai gặp nhé!”)"
+        },
+        {
+          "id": "tr5_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "我明天上午八点上课。",
+          "chineseAudioText": "我明天上午八点上课。",
+          "pinyin": "Wǒ míngtiān shàngwǔ bā diǎn shàngkè.",
+          "expectedMeaning": "Tám giờ sáng ngày mai tớ đi học.",
+          "acceptedKeywords": [
+            "tám",
+            "giờ",
+            "sáng",
+            "ngày",
+            "mai",
+            "tớ",
+            "đi",
+            "học"
+          ],
+          "hint": "Pinyin: Wǒ míngtiān shàngwǔ bā diǎn shàngkè.",
+          "explanation": "我明天上午八点上课。 (Wǒ míngtiān shàngwǔ bā diǎn shàngkè.) nghĩa là: Tám giờ sáng ngày mai tớ đi học."
         }
       ],
       "expandedQuiz": [
@@ -10586,6 +12995,239 @@ const DEFAULT_LESSONS = [
             "同学们"
           ],
           "unlearnedHint": "Từ chưa học: 同学们 (tóngxuémen: các bạn học)"
+        },
+        {
+          "id": "ss6_exp_1",
+          "targetHanzi": "书店在西边在美术馆和电影院中间",
+          "targetMeaning": "Hiệu sách ở phía tây, nằm giữa bảo tàng mỹ thuật và rạp chiếu phim.",
+          "pinyin": "Shūdiàn zài xībian, zài měishùguǎn hé diànyǐngyuàn zhōngjiān.",
+          "tokens": [
+            "书店",
+            "在",
+            "西边",
+            "在",
+            "美术馆",
+            "和",
+            "电影院",
+            "中间"
+          ]
+        },
+        {
+          "id": "ss6_exp_2",
+          "targetHanzi": "不远很近从这儿到那儿有二百米",
+          "targetMeaning": "Không xa, rất gần. Từ đây đến đó khoảng 200 mét.",
+          "pinyin": "Bù yuǎn，hěn jìn. Cóng zhèr dào nàr yǒu èrbǎi mǐ.",
+          "tokens": [
+            "不",
+            "远",
+            "很",
+            "近",
+            "从",
+            "这儿",
+            "到",
+            "那儿",
+            "有",
+            "二",
+            "百",
+            "米"
+          ]
+        },
+        {
+          "id": "ss6_exp_3",
+          "targetHanzi": "怎么走呢",
+          "targetMeaning": "Đi như thế nào vậy?",
+          "pinyin": "Zěnme zǒu ne?",
+          "tokens": [
+            "怎么",
+            "走",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss6_exp_4",
+          "targetHanzi": "你从这儿一直往东走到十字路口往左拐马路西边有一座白色的大楼那就是书店",
+          "targetMeaning": "Bạn đi thẳng về phía đông từ đây, đến ngã tư thì rẽ trái, phía tây con đường có một tòa nhà lớn màu trắng, đó chính là hiệu sách.",
+          "pinyin": "Nǐ cóng zhèr yīzhí wǎng dōng zǒu, dào shízìlùkǒu wǎng zuǒ guǎi, mǎlù xībian yǒu yízuò báisè de dàlóu, nà jiùshì shūdiàn.",
+          "tokens": [
+            "你",
+            "从",
+            "这儿",
+            "一直",
+            "往",
+            "东",
+            "走",
+            "到",
+            "十字路口",
+            "往",
+            "左",
+            "拐",
+            "马路",
+            "西边",
+            "有",
+            "一",
+            "座",
+            "白色",
+            "的",
+            "大",
+            "楼",
+            "那",
+            "就",
+            "是",
+            "书店"
+          ]
+        },
+        {
+          "id": "ss6_exp_5",
+          "targetHanzi": "谢谢你常到那儿买书吗",
+          "targetMeaning": "Cảm ơn, bạn có hay đến đó mua sách không?",
+          "pinyin": "Xièxie, nǐ cháng dào nàr mǎi shū ma?",
+          "tokens": [
+            "谢谢",
+            "你",
+            "常",
+            "到",
+            "那儿",
+            "买",
+            "书",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss6_exp_6",
+          "targetHanzi": "是每个周末我都到那儿买书",
+          "targetMeaning": "Có, cuối tuần nào tôi cũng đến đó mua sách.",
+          "pinyin": "Shì, měi gè zhōumò wǒ dōu dào nàr mǎi shū.",
+          "tokens": [
+            "是",
+            "每",
+            "个",
+            "周末",
+            "我",
+            "都",
+            "到",
+            "那儿",
+            "买",
+            "书"
+          ]
+        },
+        {
+          "id": "ss6_exp_7",
+          "targetHanzi": "你昨天去学校了吗",
+          "targetMeaning": "Hôm qua cậu đã đến trường chưa?",
+          "pinyin": "Nǐ zuótiān qù xuéxiào le ma?",
+          "tokens": [
+            "你",
+            "昨天",
+            "去",
+            "学校",
+            "了",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss6_exp_8",
+          "targetHanzi": "他是谁",
+          "targetMeaning": "Anh ấy là ai?",
+          "pinyin": "Tā shì shéi?",
+          "tokens": [
+            "他",
+            "是",
+            "谁"
+          ]
+        },
+        {
+          "id": "ss6_exp_9",
+          "targetHanzi": "你是日明吗",
+          "targetMeaning": "Cậu là Nhật Minh phải không?",
+          "pinyin": "Nǐ shì Rìmíng ma?",
+          "tokens": [
+            "你",
+            "是",
+            "日",
+            "明",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss6_exp_10",
+          "targetHanzi": "食堂左边",
+          "targetMeaning": "Phía bên trái nhà ăn",
+          "pinyin": "shítáng zuǒbian",
+          "tokens": [
+            "食堂",
+            "左边"
+          ]
+        },
+        {
+          "id": "ss6_exp_11",
+          "targetHanzi": "请问电影院附近有书店吗",
+          "targetMeaning": "Xin hỏi quanh rạp chiếu phim có hiệu sách không?",
+          "pinyin": "Qǐngwèn, diànyǐngyuàn fùjìn yǒu shūdiàn ma?",
+          "tokens": [
+            "请问",
+            "电影院",
+            "附近",
+            "有",
+            "书店",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss6_exp_12",
+          "targetHanzi": "有书店在电影院和美术馆中间离这儿只有三百米",
+          "targetMeaning": "Có, hiệu sách nằm giữa rạp chiếu phim và bảo tàng mỹ thuật, cách đây chỉ 300 mét.",
+          "pinyin": "Yǒu, shūdiàn zài diànyǐngyuàn hé měishùguǎn zhōngjiān, lí zhèr zhǐyǒu sānbǎi mǐ.",
+          "tokens": [
+            "有",
+            "书店",
+            "在",
+            "电影院",
+            "和",
+            "美术馆",
+            "中间",
+            "离",
+            "这儿",
+            "只",
+            "有",
+            "三",
+            "百",
+            "米"
+          ]
+        },
+        {
+          "id": "ss6_exp_13",
+          "targetHanzi": "从这儿到书店怎么走",
+          "targetMeaning": "Từ đây đến hiệu sách đi như thế nào?",
+          "pinyin": "Cóng zhèr dào shūdiàn zěnme zǒu?",
+          "tokens": [
+            "从",
+            "这儿",
+            "到",
+            "书店",
+            "怎么",
+            "走"
+          ]
+        },
+        {
+          "id": "ss6_exp_14",
+          "targetHanzi": "你一直往北走到十字路口往右拐就到了",
+          "targetMeaning": "Bạn cứ đi thẳng về phía bắc, đến ngã tư rẽ phải là tới.",
+          "pinyin": "Nǐ yīzhí wǎng běi zǒu, dào shízìlùkǒu wǎng yòu guǎi jiù dào le.",
+          "tokens": [
+            "你",
+            "一直",
+            "往",
+            "北",
+            "走",
+            "到",
+            "十字路口",
+            "往",
+            "右",
+            "拐",
+            "就",
+            "到",
+            "了"
+          ]
         }
       ],
       "translationExercises": [
@@ -10624,6 +13266,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "nǐ zěnme qù chāoshì ne",
           "hint": "Gợi ý Pinyin: Nǐ zěnme qù chāoshì ne? | Từ chưa học: 超市 (chāoshì: siêu thị)",
           "explanation": "Cậu đi gì đến siêu thị thế? → A: 你怎么去超市呢？ (Nǐ zěnme qù chāoshì ne?)"
+        },
+        {
+          "id": "tr6_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Trương Phong, bạn có biết hiệu sách ở đâu không?",
+          "expectedChinese": "张风，你知道书店在哪儿吗？",
+          "acceptedPinyin": "zhāng fēng nǐ zhīdào shūdiàn zài nǎr ma",
+          "hint": "Gợi ý Pinyin: Zhāng Fēng, nǐ zhīdào shūdiàn zài nǎr ma?",
+          "explanation": "Trương Phong, bạn có biết hiệu sách ở đâu không? → 张风，你知道书店在哪儿吗？ (Zhāng Fēng, nǐ zhīdào shūdiàn zài nǎr ma?)"
+        },
+        {
+          "id": "tr6_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Hiệu sách ở phía tây, nằm giữa bảo tàng mỹ thuật và rạp chiếu phim.",
+          "expectedChinese": "书店在西边，在美术馆和电影院中间。",
+          "acceptedPinyin": "shūdiàn zài xībian zài měishùguǎn hé diànyǐngyuàn zhōngjiān",
+          "hint": "Gợi ý Pinyin: Shūdiàn zài xībian, zài měishùguǎn hé diànyǐngyuàn zhōngjiān.",
+          "explanation": "Hiệu sách ở phía tây, nằm giữa bảo tàng mỹ thuật và rạp chiếu phim. → 书店在西边，在美术馆和电影院中间。 (Shūdiàn zài xībian, zài měishùguǎn hé diànyǐngyuàn zhōngjiān.)"
+        },
+        {
+          "id": "tr6_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Cách đây có xa không?",
+          "expectedChinese": "离这儿远吗？",
+          "acceptedPinyin": "lí zhèr yuǎn ma",
+          "hint": "Gợi ý Pinyin: Lí zhèr yuǎn ma?",
+          "explanation": "Cách đây có xa không? → 离这儿远吗？ (Lí zhèr yuǎn ma?)"
+        },
+        {
+          "id": "tr6_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Không xa, rất gần. Từ đây đến đó khoảng 200 mét.",
+          "expectedChinese": "不远，很近。从这儿到那儿有二百米。",
+          "acceptedPinyin": "bù yuǎn hěn jìn cóng zhèr dào nàr yǒu èrbǎi mǐ",
+          "hint": "Gợi ý Pinyin: Bù yuǎn，hěn jìn. Cóng zhèr dào nàr yǒu èrbǎi mǐ.",
+          "explanation": "Không xa, rất gần. Từ đây đến đó khoảng 200 mét. → 不远，很近。从这儿到那儿有二百米。 (Bù yuǎn，hěn jìn. Cóng zhèr dào nàr yǒu èrbǎi mǐ.)"
+        },
+        {
+          "id": "tr6_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Đi như thế nào vậy?",
+          "expectedChinese": "怎么走呢？",
+          "acceptedPinyin": "zěnme zǒu ne",
+          "hint": "Gợi ý Pinyin: Zěnme zǒu ne?",
+          "explanation": "Đi như thế nào vậy? → 怎么走呢？ (Zěnme zǒu ne?)"
+        },
+        {
+          "id": "tr6_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Bạn đi thẳng về phía đông từ đây, đến ngã tư thì rẽ trái, phía tây con đường có một tòa nhà lớn màu trắng, đó chính là hiệu sách.",
+          "expectedChinese": "你从这儿一直往东走，到十字路口往左拐，马路西边有一座白色的大楼，那就是书店。",
+          "acceptedPinyin": "nǐ cóng zhèr yīzhí wǎng dōng zǒu dào shízìlùkǒu wǎng zuǒ guǎi mǎlù xībian yǒu yízuò báisè de dàlóu nà jiùshì shūdiàn",
+          "hint": "Gợi ý Pinyin: Nǐ cóng zhèr yīzhí wǎng dōng zǒu, dào shízìlùkǒu wǎng zuǒ guǎi, mǎlù xībian yǒu yízuò báisè de dàlóu, nà jiùshì shūdiàn.",
+          "explanation": "Bạn đi thẳng về phía đông từ đây, đến ngã tư thì rẽ trái, phía tây con đường có một tòa nhà lớn màu trắng, đó chính là hiệu sách. → 你从这儿一直往东走，到十字路口往左拐，马路西边有一座白色的大楼，那就是书店。 (Nǐ cóng zhèr yīzhí wǎng dōng zǒu, dào shízìlùkǒu wǎng zuǒ guǎi, mǎlù xībian yǒu yízuò báisè de dàlóu, nà jiùshì shūdiàn.)"
+        },
+        {
+          "id": "tr6_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Cảm ơn, bạn có hay đến đó mua sách không?",
+          "expectedChinese": "谢谢，你常到那儿买书吗？",
+          "acceptedPinyin": "xièxie nǐ cháng dào nàr mǎi shū ma",
+          "hint": "Gợi ý Pinyin: Xièxie, nǐ cháng dào nàr mǎi shū ma?",
+          "explanation": "Cảm ơn, bạn có hay đến đó mua sách không? → 谢谢，你常到那儿买书吗？ (Xièxie, nǐ cháng dào nàr mǎi shū ma?)"
+        },
+        {
+          "id": "tr6_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Có, cuối tuần nào tôi cũng đến đó mua sách.",
+          "expectedChinese": "是，每个周末我都到那儿买书。",
+          "acceptedPinyin": "shì měi gè zhōumò wǒ dōu dào nàr mǎi shū",
+          "hint": "Gợi ý Pinyin: Shì, měi gè zhōumò wǒ dōu dào nàr mǎi shū.",
+          "explanation": "Có, cuối tuần nào tôi cũng đến đó mua sách. → 是，每个周末我都到那儿买书。 (Shì, měi gè zhōumò wǒ dōu dào nàr mǎi shū.)"
+        },
+        {
+          "id": "tr6_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Hôm qua cậu đã đến trường chưa?",
+          "expectedChinese": "你昨天去学校了吗？",
+          "acceptedPinyin": "nǐ zuótiān qù xuéxiào le ma",
+          "hint": "Gợi ý Pinyin: Nǐ zuótiān qù xuéxiào le ma?",
+          "explanation": "Hôm qua cậu đã đến trường chưa? → 你昨天去学校了吗？ (Nǐ zuótiān qù xuéxiào le ma?)"
+        },
+        {
+          "id": "tr6_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Anh ấy là ai?",
+          "expectedChinese": "他是谁？",
+          "acceptedPinyin": "tā shì shéi",
+          "hint": "Gợi ý Pinyin: Tā shì shéi?",
+          "explanation": "Anh ấy là ai? → 他是谁？ (Tā shì shéi?)"
         },
         {
           "id": "tr6_zh_1",
@@ -10684,6 +13416,223 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Tā shì wǒ de lǎoshī.",
           "explanation": "他是我的老师。 (Tā shì wǒ de lǎoshī.) nghĩa là: Thầy ấy là thầy giáo của tớ."
+        },
+        {
+          "id": "tr6_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "每一个学生都坐公共汽车上课。",
+          "chineseAudioText": "每一个学生都坐公共汽车上课。",
+          "pinyin": "Měi yígè xuésheng dōu zuò gōnggòng qìchē shàngkè.",
+          "expectedMeaning": "Mỗi học sinh đều đi học bằng xe buýt.",
+          "acceptedKeywords": [
+            "mỗi",
+            "học",
+            "sinh",
+            "đều",
+            "đi",
+            "học",
+            "bằng",
+            "xe",
+            "buýt"
+          ],
+          "hint": "Pinyin: Měi yígè xuésheng dōu zuò gōnggòng qìchē shàngkè.",
+          "explanation": "每一个学生都坐公共汽车上课。 (Měi yígè xuésheng dōu zuò gōnggòng qìchē shàngkè.) nghĩa là: Mỗi học sinh đều đi học bằng xe buýt."
+        },
+        {
+          "id": "tr6_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "从早上八点到下午五点，他要在公司工作。",
+          "chineseAudioText": "从早上八点到下午五点，他要在公司工作。",
+          "pinyin": "Cóng zǎoshang bā diǎn dào xiàwǔ wǔ diǎn, tā yào zài gōngsī gōngzuò.",
+          "expectedMeaning": "Anh ấy phải làm việc ở công ty từ 8 giờ sáng đến 5 giờ chiều.",
+          "acceptedKeywords": [
+            "anh",
+            "ấy",
+            "phải",
+            "làm",
+            "việc",
+            "công",
+            "ty",
+            "từ",
+            "giờ",
+            "sáng",
+            "đến",
+            "giờ",
+            "chiều"
+          ],
+          "hint": "Pinyin: Cóng zǎoshang bā diǎn dào xiàwǔ wǔ diǎn, tā yào zài gōngsī gōngzuò.",
+          "explanation": "从早上八点到下午五点，他要在公司工作。 (Cóng zǎoshang bā diǎn dào xiàwǔ wǔ diǎn, tā yào zài gōngsī gōngzuò.) nghĩa là: Anh ấy phải làm việc ở công ty từ 8 giờ sáng đến 5 giờ chiều."
+        },
+        {
+          "id": "tr6_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "你往左拐，然后一直往前走就到。",
+          "chineseAudioText": "你往左拐，然后一直往前走就到。",
+          "pinyin": "Nǐ wǎng zuǒ guǎi, ránhòu yīzhí wǎng qián",
+          "expectedMeaning": "zǒu jiù dào.",
+          "acceptedKeywords": [
+            "zǒu",
+            "jiù",
+            "dào"
+          ],
+          "hint": "Pinyin: Nǐ wǎng zuǒ guǎi, ránhòu yīzhí wǎng qián",
+          "explanation": "你往左拐，然后一直往前走就到。 (Nǐ wǎng zuǒ guǎi, ránhòu yīzhí wǎng qián) nghĩa là: zǒu jiù dào."
+        },
+        {
+          "id": "tr6_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "请问，超市怎么走呢？",
+          "chineseAudioText": "请问，超市怎么走呢？",
+          "pinyin": "Qǐngwèn, chāoshì zěnme zǒu ne?",
+          "expectedMeaning": "Xin hỏi đến siêu thị đi thế nào vậy?",
+          "acceptedKeywords": [
+            "xin",
+            "hỏi",
+            "đến",
+            "siêu",
+            "thị",
+            "đi",
+            "thế",
+            "nào",
+            "vậy"
+          ],
+          "hint": "Pinyin: Qǐngwèn, chāoshì zěnme zǒu ne?",
+          "explanation": "请问，超市怎么走呢？ (Qǐngwèn, chāoshì zěnme zǒu ne?) nghĩa là: Xin hỏi đến siêu thị đi thế nào vậy?"
+        },
+        {
+          "id": "tr6_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "我不知道。",
+          "chineseAudioText": "我不知道。",
+          "pinyin": "Wǒ bù zhīdào.",
+          "expectedMeaning": "Mình không biết.",
+          "acceptedKeywords": [
+            "mình",
+            "không",
+            "biết"
+          ],
+          "hint": "Pinyin: Wǒ bù zhīdào.",
+          "explanation": "我不知道。 (Wǒ bù zhīdào.) nghĩa là: Mình không biết."
+        },
+        {
+          "id": "tr6_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "你知道这个字怎么写吗？",
+          "chineseAudioText": "你知道这个字怎么写吗？",
+          "pinyin": "Nǐ zhīdào zhè gè zì zěnme xiě ma?",
+          "expectedMeaning": "Cậu có biết chữ này viết như thế nào không?",
+          "acceptedKeywords": [
+            "cậu",
+            "có",
+            "biết",
+            "chữ",
+            "này",
+            "viết",
+            "như",
+            "thế",
+            "nào",
+            "không"
+          ],
+          "hint": "Pinyin: Nǐ zhīdào zhè gè zì zěnme xiě ma?",
+          "explanation": "你知道这个字怎么写吗？ (Nǐ zhīdào zhè gè zì zěnme xiě ma?) nghĩa là: Cậu có biết chữ này viết như thế nào không?"
+        },
+        {
+          "id": "tr6_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "你一直往前走，然后右拐就看到医院在你左边。",
+          "chineseAudioText": "你一直往前走，然后右拐就看到医院在你左边。",
+          "pinyin": "Nǐ yīzhí wǎng qián zǒu, ránhòu yòu guǎi jiù kàndào yīyuàn zài nǐ zuǒbian.",
+          "expectedMeaning": "Bạn cứ đi thẳng, sau đó rẽ phải là sẽ nhìn thấy bệnh viện ở bên trái của",
+          "acceptedKeywords": [
+            "bạn",
+            "cứ",
+            "đi",
+            "thẳng",
+            "sau",
+            "đó",
+            "rẽ",
+            "phải",
+            "là",
+            "sẽ",
+            "nhìn",
+            "thấy",
+            "bệnh",
+            "viện",
+            "bên",
+            "trái",
+            "của"
+          ],
+          "hint": "Pinyin: Nǐ yīzhí wǎng qián zǒu, ránhòu yòu guǎi jiù kàndào yīyuàn zài nǐ zuǒbian.",
+          "explanation": "你一直往前走，然后右拐就看到医院在你左边。 (Nǐ yīzhí wǎng qián zǒu, ránhòu yòu guǎi jiù kàndào yīyuàn zài nǐ zuǒbian.) nghĩa là: Bạn cứ đi thẳng, sau đó rẽ phải là sẽ nhìn thấy bệnh viện ở bên trái của"
+        },
+        {
+          "id": "tr6_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "请问，去医院怎么走呢？",
+          "chineseAudioText": "请问，去医院怎么走呢？",
+          "pinyin": "Qǐngwèn, qù yīyuàn zěnme zǒu ne?",
+          "expectedMeaning": "Xin hỏi, đi đến bệnh viện như thế nào vậy?",
+          "acceptedKeywords": [
+            "xin",
+            "hỏi",
+            "đi",
+            "đến",
+            "bệnh",
+            "viện",
+            "như",
+            "thế",
+            "nào",
+            "vậy"
+          ],
+          "hint": "Pinyin: Qǐngwèn, qù yīyuàn zěnme zǒu ne?",
+          "explanation": "请问，去医院怎么走呢？ (Qǐngwèn, qù yīyuàn zěnme zǒu ne?) nghĩa là: Xin hỏi, đi đến bệnh viện như thế nào vậy?"
+        },
+        {
+          "id": "tr6_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "你一直往北走，到十字路口往右拐就到了。",
+          "chineseAudioText": "你一直往北走，到十字路口往右拐就到了。",
+          "pinyin": "Nǐ yīzhí wǎng běi zǒu, dào shízìlùkǒu wǎng yòu guǎi jiù dào le.",
+          "expectedMeaning": "Bạn cứ đi thẳng về phía bắc, đến ngã tư rẽ phải là tới.",
+          "acceptedKeywords": [
+            "bạn",
+            "cứ",
+            "đi",
+            "thẳng",
+            "về",
+            "phía",
+            "bắc",
+            "đến",
+            "ngã",
+            "tư",
+            "rẽ",
+            "phải",
+            "là",
+            "tới"
+          ],
+          "hint": "Pinyin: Nǐ yīzhí wǎng běi zǒu, dào shízìlùkǒu wǎng yòu guǎi jiù dào le.",
+          "explanation": "你一直往北走，到十字路口往右拐就到了。 (Nǐ yīzhí wǎng běi zǒu, dào shízìlùkǒu wǎng yòu guǎi jiù dào le.) nghĩa là: Bạn cứ đi thẳng về phía bắc, đến ngã tư rẽ phải là tới."
+        },
+        {
+          "id": "tr6_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "从这儿到书店怎么走？",
+          "chineseAudioText": "从这儿到书店怎么走？",
+          "pinyin": "Cóng zhèr dào shūdiàn zěnme zǒu?",
+          "expectedMeaning": "Từ đây đến hiệu sách đi như thế nào?",
+          "acceptedKeywords": [
+            "từ",
+            "đây",
+            "đến",
+            "hiệu",
+            "sách",
+            "đi",
+            "như",
+            "thế",
+            "nào"
+          ],
+          "hint": "Pinyin: Cóng zhèr dào shūdiàn zěnme zǒu?",
+          "explanation": "从这儿到书店怎么走？ (Cóng zhèr dào shūdiàn zěnme zǒu?) nghĩa là: Từ đây đến hiệu sách đi như thế nào?"
         }
       ],
       "expandedQuiz": [
@@ -12716,6 +15665,245 @@ const DEFAULT_LESSONS = [
             "地方",
             "吗"
           ]
+        },
+        {
+          "id": "ss7_exp_1",
+          "targetHanzi": "马克今天下午你去哪儿",
+          "targetMeaning": "Mark, chiều nay bạn đi đâu?",
+          "pinyin": "Mǎkè, jīntiān xiàwǔ nǐ qù nǎr?",
+          "tokens": [
+            "马克",
+            "今天",
+            "下午",
+            "你",
+            "去",
+            "哪儿"
+          ]
+        },
+        {
+          "id": "ss7_exp_2",
+          "targetHanzi": "我想去商店买两支圆珠笔一把尺子和三本笔记本你想去吗",
+          "targetMeaning": "Tôi muốn đi cửa hàng mua hai cây bút bi, một cây thước kẻ và ba quyển vở ghi chép. Bạn có muốn đi không?",
+          "pinyin": "Wǒ xiǎng qù shāngdiàn mǎi liǎng zhī yuánzhūbǐ, yī bǎ chǐzi hé sān běn bǐjìběn. Nǐ xiǎng qù ma?",
+          "tokens": [
+            "我",
+            "想",
+            "去",
+            "商店",
+            "买",
+            "两",
+            "支",
+            "圆珠笔",
+            "一",
+            "把",
+            "尺子",
+            "和",
+            "三",
+            "本",
+            "笔记本",
+            "你",
+            "想",
+            "去",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss7_exp_3",
+          "targetHanzi": "我也想去买一支铅笔和一本汉语词典",
+          "targetMeaning": "Tôi cũng muốn đi mua một cây bút chì và một quyển từ điển tiếng Hán.",
+          "pinyin": "Wǒ yě xiǎng qù mǎi yī zhī qiānbǐ hé yī běn Hànyǔ cídiǎn.",
+          "tokens": [
+            "我",
+            "也",
+            "想",
+            "去",
+            "买",
+            "一",
+            "支",
+            "铅笔",
+            "和",
+            "一",
+            "本",
+            "汉语",
+            "词典"
+          ]
+        },
+        {
+          "id": "ss7_exp_4",
+          "targetHanzi": "那今天下午四点我在学校门口等你我们一起去好吗",
+          "targetMeaning": "Vậy chiều nay 4 giờ tôi đợi bạn ở cổng trường. Chúng ta cùng đi nhé, được không?",
+          "pinyin": "Nà jīntiān xiàwǔ sìdiǎn wǒ zài xuéxiào ménkǒu děng nǐ. Wǒmen yīqǐ qù, hǎo ma?",
+          "tokens": [
+            "那",
+            "今天",
+            "下午",
+            "四",
+            "点",
+            "我",
+            "在",
+            "学校",
+            "门",
+            "口",
+            "等",
+            "你",
+            "我们",
+            "一起",
+            "去",
+            "好",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss7_exp_5",
+          "targetHanzi": "小白你觉得我今天买的书包怎么样",
+          "targetMeaning": "Tiểu Bạch, bạn thấy chiếc cặp sách hôm nay tôi mua thế nào?",
+          "pinyin": "Xiǎobái, nǐ juéde wǒ jīntiān mǎi de shūbāo zěnmeyàng?",
+          "tokens": [
+            "小",
+            "白",
+            "你",
+            "觉得",
+            "我",
+            "今天",
+            "买",
+            "的",
+            "书包",
+            "怎么样"
+          ]
+        },
+        {
+          "id": "ss7_exp_6",
+          "targetHanzi": "哇真好看啊你买的那家商店有蓝色的书包吗",
+          "targetMeaning": "Chà, đẹp quá đi mất! Cửa hàng bạn mua có cặp sách màu xanh dương không?",
+          "pinyin": "Wa, zhēn hǎokàn a! Nǐ mǎi de nà jiā shāngdiàn yǒu lán sè de shūbāo ma?",
+          "tokens": [
+            "哇",
+            "真",
+            "好看",
+            "啊",
+            "你",
+            "买",
+            "的",
+            "那",
+            "家",
+            "商店",
+            "有",
+            "蓝色",
+            "的",
+            "书包",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss7_exp_7",
+          "targetHanzi": "有啊还有黄色和白色的书包",
+          "targetMeaning": "Có chứ, còn có cả cặp màu vàng và màu trắng nữa.",
+          "pinyin": "Yǒu a, hái yǒu huángsè hé báisè de shūbāo.",
+          "tokens": [
+            "有",
+            "啊",
+            "还",
+            "有",
+            "黄色",
+            "和",
+            "白色",
+            "的",
+            "书包"
+          ]
+        },
+        {
+          "id": "ss7_exp_8",
+          "targetHanzi": "太漂亮了我下午也想去买一个",
+          "targetMeaning": "Đẹp quá! Chiều nay tôi cũng muốn đi mua một cái.",
+          "pinyin": "Tài piàoliang le! Wǒ xiàwǔ yě xiǎng qù mǎi yígè.",
+          "tokens": [
+            "太",
+            "漂亮",
+            "了",
+            "我",
+            "下午",
+            "也",
+            "想",
+            "去",
+            "买",
+            "一",
+            "个"
+          ]
+        },
+        {
+          "id": "ss7_exp_9",
+          "targetHanzi": "那家商店就在学校门口前面",
+          "targetMeaning": "Cửa hàng đó nằm ngay phía trước cổng trường đấy.",
+          "pinyin": "Nà jiā shāngdiàn jiù zài xuéxiào ménkǒu qiánmian.",
+          "tokens": [
+            "那",
+            "家",
+            "商店",
+            "就",
+            "在",
+            "学校",
+            "门",
+            "口",
+            "前面"
+          ]
+        },
+        {
+          "id": "ss7_exp_10",
+          "targetHanzi": "好谢谢你",
+          "targetMeaning": "Được, cảm ơn bạn!",
+          "pinyin": "Hǎo, xièxie nǐ!",
+          "tokens": [
+            "好",
+            "谢谢",
+            "你"
+          ]
+        },
+        {
+          "id": "ss7_exp_11",
+          "targetHanzi": "你怎么去超市呢",
+          "targetMeaning": "Cậu đi gì đến siêu thị thế?",
+          "pinyin": "Nǐ zěnme qù chāoshì ne?",
+          "tokens": [
+            "你",
+            "怎么",
+            "去",
+            "超",
+            "市",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss7_exp_12",
+          "targetHanzi": "好学生",
+          "targetMeaning": "học sinh tốt, học sinh giỏi",
+          "pinyin": "hǎo xuésheng",
+          "tokens": [
+            "好",
+            "学生"
+          ]
+        },
+        {
+          "id": "ss7_exp_13",
+          "targetHanzi": "三个朋友",
+          "targetMeaning": "Ba người bạn (cách dùng đúng)",
+          "pinyin": "sān gè péngyou",
+          "tokens": [
+            "三",
+            "个",
+            "朋友"
+          ]
+        },
+        {
+          "id": "ss7_exp_14",
+          "targetHanzi": "这是什么书",
+          "targetMeaning": "Đây là sách gì?",
+          "pinyin": "Zhè shì shénme shū?",
+          "tokens": [
+            "这",
+            "是",
+            "什么",
+            "书"
+          ]
         }
       ],
       "translationExercises": [
@@ -12754,6 +15942,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "hànyǔ lǎoshī",
           "hint": "Gợi ý Pinyin: Hànyǔ lǎoshī",
           "explanation": "giáo viên tiếng Trung → 汉语老师 (Hànyǔ lǎoshī)"
+        },
+        {
+          "id": "tr7_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Mark, chiều nay bạn đi đâu?",
+          "expectedChinese": "马克，今天下午你去哪儿？",
+          "acceptedPinyin": "mǎkè jīntiān xiàwǔ nǐ qù nǎr",
+          "hint": "Gợi ý Pinyin: Mǎkè, jīntiān xiàwǔ nǐ qù nǎr?",
+          "explanation": "Mark, chiều nay bạn đi đâu? → 马克，今天下午你去哪儿？ (Mǎkè, jīntiān xiàwǔ nǐ qù nǎr?)"
+        },
+        {
+          "id": "tr7_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Tôi muốn đi cửa hàng mua hai cây bút bi, một cây thước kẻ và ba quyển vở ghi chép. Bạn có muốn đi không?",
+          "expectedChinese": "我想去商店买两支圆珠笔、一把尺子和三本笔记本。你想去吗？",
+          "acceptedPinyin": "wǒ xiǎng qù shāngdiàn mǎi liǎng zhī yuánzhūbǐ yī bǎ chǐzi hé sān běn bǐjìběn nǐ xiǎng qù ma",
+          "hint": "Gợi ý Pinyin: Wǒ xiǎng qù shāngdiàn mǎi liǎng zhī yuánzhūbǐ, yī bǎ chǐzi hé sān běn bǐjìběn. Nǐ xiǎng qù ma?",
+          "explanation": "Tôi muốn đi cửa hàng mua hai cây bút bi, một cây thước kẻ và ba quyển vở ghi chép. Bạn có muốn đi không? → 我想去商店买两支圆珠笔、一把尺子和三本笔记本。你想去吗？ (Wǒ xiǎng qù shāngdiàn mǎi liǎng zhī yuánzhūbǐ, yī bǎ chǐzi hé sān běn bǐjìběn. Nǐ xiǎng qù ma?)"
+        },
+        {
+          "id": "tr7_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Tôi cũng muốn đi mua một cây bút chì và một quyển từ điển tiếng Hán.",
+          "expectedChinese": "我也想去买一支铅笔和一本汉语词典。",
+          "acceptedPinyin": "wǒ yě xiǎng qù mǎi yī zhī qiānbǐ hé yī běn hànyǔ cídiǎn",
+          "hint": "Gợi ý Pinyin: Wǒ yě xiǎng qù mǎi yī zhī qiānbǐ hé yī běn Hànyǔ cídiǎn.",
+          "explanation": "Tôi cũng muốn đi mua một cây bút chì và một quyển từ điển tiếng Hán. → 我也想去买一支铅笔和一本汉语词典。 (Wǒ yě xiǎng qù mǎi yī zhī qiānbǐ hé yī běn Hànyǔ cídiǎn.)"
+        },
+        {
+          "id": "tr7_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Vậy chiều nay 4 giờ tôi đợi bạn ở cổng trường. Chúng ta cùng đi nhé, được không?",
+          "expectedChinese": "那今天下午四点我在学校门口等你。我们一起去，好吗？",
+          "acceptedPinyin": "nà jīntiān xiàwǔ sìdiǎn wǒ zài xuéxiào ménkǒu děng nǐ wǒmen yīqǐ qù hǎo ma",
+          "hint": "Gợi ý Pinyin: Nà jīntiān xiàwǔ sìdiǎn wǒ zài xuéxiào ménkǒu děng nǐ. Wǒmen yīqǐ qù, hǎo ma?",
+          "explanation": "Vậy chiều nay 4 giờ tôi đợi bạn ở cổng trường. Chúng ta cùng đi nhé, được không? → 那今天下午四点我在学校门口等你。我们一起去，好吗？ (Nà jīntiān xiàwǔ sìdiǎn wǒ zài xuéxiào ménkǒu děng nǐ. Wǒmen yīqǐ qù, hǎo ma?)"
+        },
+        {
+          "id": "tr7_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Tiểu Bạch, bạn thấy chiếc cặp sách hôm nay tôi mua thế nào?",
+          "expectedChinese": "小白，你觉得我今天买的书包怎么样？",
+          "acceptedPinyin": "xiǎobái nǐ juéde wǒ jīntiān mǎi de shūbāo zěnmeyàng",
+          "hint": "Gợi ý Pinyin: Xiǎobái, nǐ juéde wǒ jīntiān mǎi de shūbāo zěnmeyàng?",
+          "explanation": "Tiểu Bạch, bạn thấy chiếc cặp sách hôm nay tôi mua thế nào? → 小白，你觉得我今天买的书包怎么样？ (Xiǎobái, nǐ juéde wǒ jīntiān mǎi de shūbāo zěnmeyàng?)"
+        },
+        {
+          "id": "tr7_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Chà, đẹp quá đi mất! Cửa hàng bạn mua có cặp sách màu xanh dương không?",
+          "expectedChinese": "哇，真好看啊！你买的那家商店有蓝色的书包吗？",
+          "acceptedPinyin": "wa zhēn hǎokàn a nǐ mǎi de nà jiā shāngdiàn yǒu lán sè de shūbāo ma",
+          "hint": "Gợi ý Pinyin: Wa, zhēn hǎokàn a! Nǐ mǎi de nà jiā shāngdiàn yǒu lán sè de shūbāo ma?",
+          "explanation": "Chà, đẹp quá đi mất! Cửa hàng bạn mua có cặp sách màu xanh dương không? → 哇，真好看啊！你买的那家商店有蓝色的书包吗？ (Wa, zhēn hǎokàn a! Nǐ mǎi de nà jiā shāngdiàn yǒu lán sè de shūbāo ma?)"
+        },
+        {
+          "id": "tr7_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Có chứ, còn có cả cặp màu vàng và màu trắng nữa.",
+          "expectedChinese": "有啊，还有黄色和白色的书包。",
+          "acceptedPinyin": "yǒu a hái yǒu huángsè hé báisè de shūbāo",
+          "hint": "Gợi ý Pinyin: Yǒu a, hái yǒu huángsè hé báisè de shūbāo.",
+          "explanation": "Có chứ, còn có cả cặp màu vàng và màu trắng nữa. → 有啊，还有黄色和白色的书包。 (Yǒu a, hái yǒu huángsè hé báisè de shūbāo.)"
+        },
+        {
+          "id": "tr7_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Đẹp quá! Chiều nay tôi cũng muốn đi mua một cái.",
+          "expectedChinese": "太漂亮了！我下午也想去买一个。",
+          "acceptedPinyin": "tài piàoliang le wǒ xiàwǔ yě xiǎng qù mǎi yígè",
+          "hint": "Gợi ý Pinyin: Tài piàoliang le! Wǒ xiàwǔ yě xiǎng qù mǎi yígè.",
+          "explanation": "Đẹp quá! Chiều nay tôi cũng muốn đi mua một cái. → 太漂亮了！我下午也想去买一个。 (Tài piàoliang le! Wǒ xiàwǔ yě xiǎng qù mǎi yígè.)"
+        },
+        {
+          "id": "tr7_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Cửa hàng đó nằm ngay phía trước cổng trường đấy.",
+          "expectedChinese": "那家商店就在学校门口前面。",
+          "acceptedPinyin": "nà jiā shāngdiàn jiù zài xuéxiào ménkǒu qiánmian",
+          "hint": "Gợi ý Pinyin: Nà jiā shāngdiàn jiù zài xuéxiào ménkǒu qiánmian.",
+          "explanation": "Cửa hàng đó nằm ngay phía trước cổng trường đấy. → 那家商店就在学校门口前面。 (Nà jiā shāngdiàn jiù zài xuéxiào ménkǒu qiánmian.)"
+        },
+        {
+          "id": "tr7_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Được, cảm ơn bạn!",
+          "expectedChinese": "好，谢谢你！",
+          "acceptedPinyin": "hǎo xièxie nǐ",
+          "hint": "Gợi ý Pinyin: Hǎo, xièxie nǐ!",
+          "explanation": "Được, cảm ơn bạn! → 好，谢谢你！ (Hǎo, xièxie nǐ!)"
         },
         {
           "id": "tr7_zh_1",
@@ -12814,6 +16092,182 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Tā shì wǒ de lǎoshī.",
           "explanation": "他是我的老师。 (Tā shì wǒ de lǎoshī.) nghĩa là: Thầy ấy là thầy giáo của tớ."
+        },
+        {
+          "id": "tr7_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "小王是个怎么样的人，你给我介绍一下儿。",
+          "chineseAudioText": "小王是个怎么样的人，你给我介绍一下儿。",
+          "pinyin": "Xiǎowáng shì gè zěnmeyàng de rén, nǐ gěi wǒ jièshào yíxiàr.",
+          "expectedMeaning": "Vương là người như thế nào, bạn giới thiệu cho tôi xíu đi.",
+          "acceptedKeywords": [
+            "vương",
+            "là",
+            "người",
+            "như",
+            "thế",
+            "nào",
+            "bạn",
+            "giới",
+            "thiệu",
+            "cho",
+            "tôi",
+            "xíu",
+            "đi"
+          ],
+          "hint": "Pinyin: Xiǎowáng shì gè zěnmeyàng de rén, nǐ gěi wǒ jièshào yíxiàr.",
+          "explanation": "小王是个怎么样的人，你给我介绍一下儿。 (Xiǎowáng shì gè zěnmeyàng de rén, nǐ gěi wǒ jièshào yíxiàr.) nghĩa là: Vương là người như thế nào, bạn giới thiệu cho tôi xíu đi."
+        },
+        {
+          "id": "tr7_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "我们国家",
+          "chineseAudioText": "我们国家",
+          "pinyin": "wǒmen guójiā",
+          "expectedMeaning": "đất nước (quốc gia) của chúng tôi",
+          "acceptedKeywords": [
+            "đất",
+            "nước",
+            "quốc",
+            "gia",
+            "của",
+            "chúng",
+            "tôi"
+          ],
+          "hint": "Pinyin: wǒmen guójiā",
+          "explanation": "我们国家 (wǒmen guójiā) nghĩa là: đất nước (quốc gia) của chúng tôi"
+        },
+        {
+          "id": "tr7_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "后面的姑娘很漂亮。",
+          "chineseAudioText": "后面的姑娘很漂亮。",
+          "pinyin": "Hòumian de gūniang hěn piàoliang.",
+          "expectedMeaning": "Cô gái ở phía sau rất xinh đẹp.",
+          "acceptedKeywords": [
+            "cô",
+            "gái",
+            "phía",
+            "sau",
+            "rất",
+            "xinh",
+            "đẹp"
+          ],
+          "hint": "Pinyin: Hòumian de gūniang hěn piàoliang.",
+          "explanation": "后面的姑娘很漂亮。 (Hòumian de gūniang hěn piàoliang.) nghĩa là: Cô gái ở phía sau rất xinh đẹp."
+        },
+        {
+          "id": "tr7_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "三支铅笔",
+          "chineseAudioText": "三支铅笔",
+          "pinyin": "sān zhī qiānbǐ",
+          "expectedMeaning": "ba cây bút chì",
+          "acceptedKeywords": [
+            "ba",
+            "cây",
+            "bút",
+            "chì"
+          ],
+          "hint": "Pinyin: sān zhī qiānbǐ",
+          "explanation": "三支铅笔 (sān zhī qiānbǐ) nghĩa là: ba cây bút chì"
+        },
+        {
+          "id": "tr7_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "他的尺子",
+          "chineseAudioText": "他的尺子",
+          "pinyin": "tā de chǐzi",
+          "expectedMeaning": "cây thước kẻ của anh ấy",
+          "acceptedKeywords": [
+            "cây",
+            "thước",
+            "kẻ",
+            "của",
+            "anh",
+            "ấy"
+          ],
+          "hint": "Pinyin: tā de chǐzi",
+          "explanation": "他的尺子 (tā de chǐzi) nghĩa là: cây thước kẻ của anh ấy"
+        },
+        {
+          "id": "tr7_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "她的圆珠笔",
+          "chineseAudioText": "她的圆珠笔",
+          "pinyin": "tā de yuánzhūbǐ",
+          "expectedMeaning": "bút bi của cô ấy",
+          "acceptedKeywords": [
+            "bút",
+            "bi",
+            "của",
+            "cô",
+            "ấy"
+          ],
+          "hint": "Pinyin: tā de yuánzhūbǐ",
+          "explanation": "她的圆珠笔 (tā de yuánzhūbǐ) nghĩa là: bút bi của cô ấy"
+        },
+        {
+          "id": "tr7_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "这个书包",
+          "chineseAudioText": "这个书包",
+          "pinyin": "zhègè shūbāo",
+          "expectedMeaning": "chiếc cặp này",
+          "acceptedKeywords": [
+            "chiếc",
+            "cặp",
+            "này"
+          ],
+          "hint": "Pinyin: zhègè shūbāo",
+          "explanation": "这个书包 (zhègè shūbāo) nghĩa là: chiếc cặp này"
+        },
+        {
+          "id": "tr7_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "中国人",
+          "chineseAudioText": "中国人",
+          "pinyin": "Zhōngguó rén",
+          "expectedMeaning": "người Trung Quốc",
+          "acceptedKeywords": [
+            "người",
+            "trung",
+            "quốc"
+          ],
+          "hint": "Pinyin: Zhōngguó rén",
+          "explanation": "中国人 (Zhōngguó rén) nghĩa là: người Trung Quốc"
+        },
+        {
+          "id": "tr7_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "大学生",
+          "chineseAudioText": "大学生",
+          "pinyin": "dàxuéshēng",
+          "expectedMeaning": "sinh viên đại học",
+          "acceptedKeywords": [
+            "sinh",
+            "viên",
+            "đại",
+            "học"
+          ],
+          "hint": "Pinyin: dàxuéshēng",
+          "explanation": "大学生 (dàxuéshēng) nghĩa là: sinh viên đại học"
+        },
+        {
+          "id": "tr7_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "小学生",
+          "chineseAudioText": "小学生",
+          "pinyin": "xiǎoxuéshēng",
+          "expectedMeaning": "học sinh tiểu học",
+          "acceptedKeywords": [
+            "học",
+            "sinh",
+            "tiểu",
+            "học"
+          ],
+          "hint": "Pinyin: xiǎoxuéshēng",
+          "explanation": "小学生 (xiǎoxuéshēng) nghĩa là: học sinh tiểu học"
         }
       ],
       "expandedQuiz": [
@@ -14732,6 +18186,231 @@ const DEFAULT_LESSONS = [
             "吃",
             "饭"
           ]
+        },
+        {
+          "id": "ss8_exp_1",
+          "targetHanzi": "阿姨请问一斤苹果多少钱",
+          "targetMeaning": "Cô ơi, cho cháu hỏi một cân táo bao nhiêu tiền ạ?",
+          "pinyin": "Āyí, qǐngwèn, yī jīn píngguǒ duōshao qián?",
+          "tokens": [
+            "阿姨",
+            "请问",
+            "一",
+            "斤",
+            "苹果",
+            "多少",
+            "钱"
+          ]
+        },
+        {
+          "id": "ss8_exp_2",
+          "targetHanzi": "苹果很甜一斤两块你想买几斤",
+          "targetMeaning": "Táo ngọt lắm, một cân 2 tệ. Cháu muốn mua mấy cân?",
+          "pinyin": "Píngguǒ hěn tián, yī jīn liǎng kuài. Nǐ xiǎng mǎi jǐ jīn?",
+          "tokens": [
+            "苹果",
+            "很",
+            "甜",
+            "一",
+            "斤",
+            "两",
+            "块",
+            "你",
+            "想",
+            "买",
+            "几",
+            "斤"
+          ]
+        },
+        {
+          "id": "ss8_exp_3",
+          "targetHanzi": "我买三斤啊阿姨西瓜和芒果怎么卖",
+          "targetMeaning": "Cháu mua ba cân ạ. À cô ơi, dưa hấu và xoài bán thế nào ạ?",
+          "pinyin": "Wǒ mǎi sān jīn. A, āyí, xīguā hé mángguǒ zěnme mài?",
+          "tokens": [
+            "我",
+            "买",
+            "三",
+            "斤",
+            "啊",
+            "阿姨",
+            "西瓜",
+            "和",
+            "芒果",
+            "怎么",
+            "卖"
+          ]
+        },
+        {
+          "id": "ss8_exp_4",
+          "targetHanzi": "西瓜一个十五块芒果一斤七块",
+          "targetMeaning": "Dưa hấu 15 tệ một quả. Xoài 7 tệ một cân.",
+          "pinyin": "Xīguā yí gè shíwǔ kuài. Mángguǒ yī jīn qī kuài.",
+          "tokens": [
+            "西瓜",
+            "一",
+            "个",
+            "十",
+            "五",
+            "块",
+            "芒果",
+            "一",
+            "斤",
+            "七",
+            "块"
+          ]
+        },
+        {
+          "id": "ss8_exp_5",
+          "targetHanzi": "芒果酸吗",
+          "targetMeaning": "Xoài có chua không ạ?",
+          "pinyin": "Mángguǒ suān ma?",
+          "tokens": [
+            "芒果",
+            "酸",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss8_exp_6",
+          "targetHanzi": "不太酸很好吃还有木瓜和火龙果很甜你要买什么吗",
+          "targetMeaning": "Không chua lắm, ngon lắm. Còn có đu đủ và thanh long rất ngọt, cháu muốn mua thêm gì không?",
+          "pinyin": "Bú tài suān, hěn hǎo chī. Hái yǒu mùguā hé huǒlóng guǒ hěn tián, nǐ yào mǎi shénme ma?",
+          "tokens": [
+            "不",
+            "太",
+            "酸",
+            "很",
+            "好吃",
+            "还",
+            "有",
+            "木瓜",
+            "和",
+            "火龙果",
+            "很",
+            "甜",
+            "你",
+            "要",
+            "买",
+            "什么",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss8_exp_7",
+          "targetHanzi": "木瓜多少钱一个呢",
+          "targetMeaning": "Đu đủ bao nhiêu tiền một quả vậy cô?",
+          "pinyin": "Mùguā duōshao qián yí gè ne?",
+          "tokens": [
+            "木瓜",
+            "多少",
+            "钱",
+            "一",
+            "个",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss8_exp_8",
+          "targetHanzi": "一个七块",
+          "targetMeaning": "Một quả 7 tệ.",
+          "pinyin": "Yí gè qī kuài.",
+          "tokens": [
+            "一",
+            "个",
+            "七",
+            "块"
+          ]
+        },
+        {
+          "id": "ss8_exp_9",
+          "targetHanzi": "这里有果汁吗",
+          "targetMeaning": "Ở đây có nước ép trái cây không ạ?",
+          "pinyin": "Zhè li yǒu guǒzhī ma?",
+          "tokens": [
+            "这里",
+            "有",
+            "果汁",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss8_exp_10",
+          "targetHanzi": "有啊你要买什么果汁呢",
+          "targetMeaning": "Có chứ, cháu muốn mua nước ép gì nào?",
+          "pinyin": "Yǒu a, nǐ yāomǎi shénme guǒzhī ne?",
+          "tokens": [
+            "有",
+            "啊",
+            "你",
+            "要",
+            "买",
+            "什么",
+            "果汁",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss8_exp_11",
+          "targetHanzi": "草莓果汁多少钱一杯",
+          "targetMeaning": "Nước ép dâu tây bao nhiêu tiền một cốc ạ?",
+          "pinyin": "Cǎoméi guǒzhī duōshao qián yī bēi?",
+          "tokens": [
+            "草莓",
+            "果汁",
+            "多少",
+            "钱",
+            "一",
+            "杯"
+          ]
+        },
+        {
+          "id": "ss8_exp_12",
+          "targetHanzi": "一杯六块",
+          "targetMeaning": "Một cốc 6 tệ.",
+          "pinyin": "Yī bēi liù kuài.",
+          "tokens": [
+            "一",
+            "杯",
+            "六",
+            "块"
+          ]
+        },
+        {
+          "id": "ss8_exp_13",
+          "targetHanzi": "那我买三斤苹果两个木瓜一个西瓜和三杯草莓果汁",
+          "targetMeaning": "Vậy cháu mua ba cân táo, hai quả đu đủ, một quả dưa hấu và ba cốc nước ép dâu tây ạ.",
+          "pinyin": "Nà wǒ mǎi sān jīn píngguǒ, liǎng gè mùguā, yí gè xīguā hé sān bēi cǎoméi guǒzhī.",
+          "tokens": [
+            "那",
+            "我",
+            "买",
+            "三",
+            "斤",
+            "苹果",
+            "两",
+            "个",
+            "木瓜",
+            "一",
+            "个",
+            "西瓜",
+            "和",
+            "三",
+            "杯",
+            "草莓",
+            "果汁"
+          ]
+        },
+        {
+          "id": "ss8_exp_14",
+          "targetHanzi": "好总共块",
+          "targetMeaning": "Được rồi. Tổng cộng là 53 tệ.",
+          "pinyin": "Hǎo. Zǒnggòng 53 kuài.",
+          "tokens": [
+            "好",
+            "总共",
+            "块"
+          ]
         }
       ],
       "translationExercises": [
@@ -14770,6 +18449,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "nǐ jiā yǒu duōshao rén",
           "hint": "Gợi ý Pinyin: Nǐ jiā yǒu duōshao rén?",
           "explanation": "Nhà cậu có bao nhiêu người? → 你家有多少人？ (Nǐ jiā yǒu duōshao rén?)"
+        },
+        {
+          "id": "tr8_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Cô ơi, cho cháu hỏi một cân táo bao nhiêu tiền ạ?",
+          "expectedChinese": "阿姨，请问，一斤苹果多少钱？",
+          "acceptedPinyin": "āyí qǐngwèn yī jīn píngguǒ duōshao qián",
+          "hint": "Gợi ý Pinyin: Āyí, qǐngwèn, yī jīn píngguǒ duōshao qián?",
+          "explanation": "Cô ơi, cho cháu hỏi một cân táo bao nhiêu tiền ạ? → 阿姨，请问，一斤苹果多少钱？ (Āyí, qǐngwèn, yī jīn píngguǒ duōshao qián?)"
+        },
+        {
+          "id": "tr8_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Táo ngọt lắm, một cân 2 tệ. Cháu muốn mua mấy cân?",
+          "expectedChinese": "苹果很甜，一斤两块。你想买几斤？",
+          "acceptedPinyin": "píngguǒ hěn tián yī jīn liǎng kuài nǐ xiǎng mǎi jǐ jīn",
+          "hint": "Gợi ý Pinyin: Píngguǒ hěn tián, yī jīn liǎng kuài. Nǐ xiǎng mǎi jǐ jīn?",
+          "explanation": "Táo ngọt lắm, một cân 2 tệ. Cháu muốn mua mấy cân? → 苹果很甜，一斤两块。你想买几斤？ (Píngguǒ hěn tián, yī jīn liǎng kuài. Nǐ xiǎng mǎi jǐ jīn?)"
+        },
+        {
+          "id": "tr8_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Cháu mua ba cân ạ. À cô ơi, dưa hấu và xoài bán thế nào ạ?",
+          "expectedChinese": "我买三斤。啊，阿姨，西瓜和芒果怎么卖？",
+          "acceptedPinyin": "wǒ mǎi sān jīn a āyí xīguā hé mángguǒ zěnme mài",
+          "hint": "Gợi ý Pinyin: Wǒ mǎi sān jīn. A, āyí, xīguā hé mángguǒ zěnme mài?",
+          "explanation": "Cháu mua ba cân ạ. À cô ơi, dưa hấu và xoài bán thế nào ạ? → 我买三斤。啊，阿姨，西瓜和芒果怎么卖？ (Wǒ mǎi sān jīn. A, āyí, xīguā hé mángguǒ zěnme mài?)"
+        },
+        {
+          "id": "tr8_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Dưa hấu 15 tệ một quả. Xoài 7 tệ một cân.",
+          "expectedChinese": "西瓜一个十五块。芒果一斤七块。",
+          "acceptedPinyin": "xīguā yí gè shíwǔ kuài mángguǒ yī jīn qī kuài",
+          "hint": "Gợi ý Pinyin: Xīguā yí gè shíwǔ kuài. Mángguǒ yī jīn qī kuài.",
+          "explanation": "Dưa hấu 15 tệ một quả. Xoài 7 tệ một cân. → 西瓜一个十五块。芒果一斤七块。 (Xīguā yí gè shíwǔ kuài. Mángguǒ yī jīn qī kuài.)"
+        },
+        {
+          "id": "tr8_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Xoài có chua không ạ?",
+          "expectedChinese": "芒果酸吗？",
+          "acceptedPinyin": "mángguǒ suān ma",
+          "hint": "Gợi ý Pinyin: Mángguǒ suān ma?",
+          "explanation": "Xoài có chua không ạ? → 芒果酸吗？ (Mángguǒ suān ma?)"
+        },
+        {
+          "id": "tr8_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Không chua lắm, ngon lắm. Còn có đu đủ và thanh long rất ngọt, cháu muốn mua thêm gì không?",
+          "expectedChinese": "不太酸, 很好吃。还有木瓜和火龙果很甜，你要买什么吗？",
+          "acceptedPinyin": "bú tài suān hěn hǎo chī hái yǒu mùguā hé huǒlóng guǒ hěn tián nǐ yào mǎi shénme ma",
+          "hint": "Gợi ý Pinyin: Bú tài suān, hěn hǎo chī. Hái yǒu mùguā hé huǒlóng guǒ hěn tián, nǐ yào mǎi shénme ma?",
+          "explanation": "Không chua lắm, ngon lắm. Còn có đu đủ và thanh long rất ngọt, cháu muốn mua thêm gì không? → 不太酸, 很好吃。还有木瓜和火龙果很甜，你要买什么吗？ (Bú tài suān, hěn hǎo chī. Hái yǒu mùguā hé huǒlóng guǒ hěn tián, nǐ yào mǎi shénme ma?)"
+        },
+        {
+          "id": "tr8_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Đu đủ bao nhiêu tiền một quả vậy cô?",
+          "expectedChinese": "木瓜多少钱一个呢？",
+          "acceptedPinyin": "mùguā duōshao qián yí gè ne",
+          "hint": "Gợi ý Pinyin: Mùguā duōshao qián yí gè ne?",
+          "explanation": "Đu đủ bao nhiêu tiền một quả vậy cô? → 木瓜多少钱一个呢？ (Mùguā duōshao qián yí gè ne?)"
+        },
+        {
+          "id": "tr8_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Một quả 7 tệ.",
+          "expectedChinese": "一个七块。",
+          "acceptedPinyin": "yí gè qī kuài",
+          "hint": "Gợi ý Pinyin: Yí gè qī kuài.",
+          "explanation": "Một quả 7 tệ. → 一个七块。 (Yí gè qī kuài.)"
+        },
+        {
+          "id": "tr8_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Ở đây có nước ép trái cây không ạ?",
+          "expectedChinese": "这里有果汁吗？",
+          "acceptedPinyin": "zhè li yǒu guǒzhī ma",
+          "hint": "Gợi ý Pinyin: Zhè li yǒu guǒzhī ma?",
+          "explanation": "Ở đây có nước ép trái cây không ạ? → 这里有果汁吗？ (Zhè li yǒu guǒzhī ma?)"
+        },
+        {
+          "id": "tr8_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Có chứ, cháu muốn mua nước ép gì nào?",
+          "expectedChinese": "有啊，你要买什么果汁呢？",
+          "acceptedPinyin": "yǒu a nǐ yāomǎi shénme guǒzhī ne",
+          "hint": "Gợi ý Pinyin: Yǒu a, nǐ yāomǎi shénme guǒzhī ne?",
+          "explanation": "Có chứ, cháu muốn mua nước ép gì nào? → 有啊，你要买什么果汁呢？ (Yǒu a, nǐ yāomǎi shénme guǒzhī ne?)"
         },
         {
           "id": "tr8_zh_1",
@@ -14830,6 +18599,218 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: shítáng zuǒbian",
           "explanation": "食堂左边 (shítáng zuǒbian) nghĩa là: Phía bên trái nhà ăn"
+        },
+        {
+          "id": "tr8_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "你们班有多少学生？",
+          "chineseAudioText": "你们班有多少学生？",
+          "pinyin": "Nǐmen bān yǒu duōshao xuésheng?",
+          "expectedMeaning": "Lớp cậu có bao nhiêu học sinh?",
+          "acceptedKeywords": [
+            "lớp",
+            "cậu",
+            "có",
+            "bao",
+            "nhiêu",
+            "học",
+            "sinh"
+          ],
+          "hint": "Pinyin: Nǐmen bān yǒu duōshao xuésheng?",
+          "explanation": "你们班有多少学生？ (Nǐmen bān yǒu duōshao xuésheng?) nghĩa là: Lớp cậu có bao nhiêu học sinh?"
+        },
+        {
+          "id": "tr8_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "今天星期几？",
+          "chineseAudioText": "今天星期几？",
+          "pinyin": "Jīntiān xīngqī jǐ?",
+          "expectedMeaning": "Hôm nay là thứ mấy?",
+          "acceptedKeywords": [
+            "hôm",
+            "nay",
+            "là",
+            "thứ",
+            "mấy"
+          ],
+          "hint": "Pinyin: Jīntiān xīngqī jǐ?",
+          "explanation": "今天星期几？ (Jīntiān xīngqī jǐ?) nghĩa là: Hôm nay là thứ mấy?"
+        },
+        {
+          "id": "tr8_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "这幅画有几千年历史了？",
+          "chineseAudioText": "这幅画有几千年历史了？",
+          "pinyin": "Zhè fú huà yǒu jǐ qiān nián lìshǐ le?",
+          "expectedMeaning": "Bức tranh này có lịch sử mấy nghìn năm rồi?",
+          "acceptedKeywords": [
+            "bức",
+            "tranh",
+            "này",
+            "có",
+            "lịch",
+            "sử",
+            "mấy",
+            "nghìn",
+            "năm",
+            "rồi"
+          ],
+          "hint": "Pinyin: Zhè fú huà yǒu jǐ qiān nián lìshǐ le?",
+          "explanation": "这幅画有几千年历史了？ (Zhè fú huà yǒu jǐ qiān nián lìshǐ le?) nghĩa là: Bức tranh này có lịch sử mấy nghìn năm rồi?"
+        },
+        {
+          "id": "tr8_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "小姑娘，你今年几岁？",
+          "chineseAudioText": "小姑娘，你今年几岁？",
+          "pinyin": "Xiǎo gūniang, nǐ jīnnián jǐ suì?",
+          "expectedMeaning": "Cô bé, năm nay cháu mấy tuổi rồi?",
+          "acceptedKeywords": [
+            "cô",
+            "bé",
+            "năm",
+            "nay",
+            "cháu",
+            "mấy",
+            "tuổi",
+            "rồi"
+          ],
+          "hint": "Pinyin: Xiǎo gūniang, nǐ jīnnián jǐ suì?",
+          "explanation": "小姑娘，你今年几岁？ (Xiǎo gūniang, nǐ jīnnián jǐ suì?) nghĩa là: Cô bé, năm nay cháu mấy tuổi rồi?"
+        },
+        {
+          "id": "tr8_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "果汁五块钱一杯，一共三十八块钱。",
+          "chineseAudioText": "果汁五块钱一杯，一共三十八块钱。",
+          "pinyin": "Guǒzhī wǔ kuài qián yì bēi, yígòng sānshíbā kuài qián.",
+          "expectedMeaning": "Nước ép 5 tệ một cốc, tổng cộng hết 38 tệ nhé.",
+          "acceptedKeywords": [
+            "nước",
+            "ép",
+            "tệ",
+            "một",
+            "cốc",
+            "tổng",
+            "cộng",
+            "hết",
+            "38",
+            "tệ",
+            "nhé"
+          ],
+          "hint": "Pinyin: Guǒzhī wǔ kuài qián yì bēi, yígòng sānshíbā kuài qián.",
+          "explanation": "果汁五块钱一杯，一共三十八块钱。 (Guǒzhī wǔ kuài qián yì bēi, yígòng sānshíbā kuài qián.) nghĩa là: Nước ép 5 tệ một cốc, tổng cộng hết 38 tệ nhé."
+        },
+        {
+          "id": "tr8_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "给我一个西瓜和两斤火龙果，还要两杯草莓果汁。",
+          "chineseAudioText": "给我一个西瓜和两斤火龙果，还要两杯草莓果汁。",
+          "pinyin": "Gěi wǒ yígè xīguā hé liǎng jīn huǒlóngguǒ, hái yào liǎng bēi cǎoméi guǒzhī.",
+          "expectedMeaning": "Lấy cho cháu một quả dưa hấu, hai cân thanh long và hai cốc nước ép dâu.",
+          "acceptedKeywords": [
+            "lấy",
+            "cho",
+            "cháu",
+            "một",
+            "quả",
+            "dưa",
+            "hấu",
+            "hai",
+            "cân",
+            "thanh",
+            "long",
+            "và",
+            "hai",
+            "cốc",
+            "nước",
+            "ép",
+            "dâu"
+          ],
+          "hint": "Pinyin: Gěi wǒ yígè xīguā hé liǎng jīn huǒlóngguǒ, hái yào liǎng bēi cǎoméi guǒzhī.",
+          "explanation": "给我一个西瓜和两斤火龙果，还要两杯草莓果汁。 (Gěi wǒ yígè xīguā hé liǎng jīn huǒlóngguǒ, hái yào liǎng bēi cǎoméi guǒzhī.) nghĩa là: Lấy cho cháu một quả dưa hấu, hai cân thanh long và hai cốc nước ép dâu."
+        },
+        {
+          "id": "tr8_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "西瓜十二块钱一个，火龙果八块钱一斤。",
+          "chineseAudioText": "西瓜十二块钱一个，火龙果八块钱一斤。",
+          "pinyin": "Xīguā shí'èr kuài qián yígè, huǒlóngguǒ bā kuài qián yì jīn.",
+          "expectedMeaning": "Dưa hấu 12 tệ một quả, thanh long 8 tệ một cân.",
+          "acceptedKeywords": [
+            "dưa",
+            "hấu",
+            "12",
+            "tệ",
+            "một",
+            "quả",
+            "thanh",
+            "long",
+            "tệ",
+            "một",
+            "cân"
+          ],
+          "hint": "Pinyin: Xīguā shí'èr kuài qián yígè, huǒlóngguǒ bā kuài qián yì jīn.",
+          "explanation": "西瓜十二块钱一个，火龙果八块钱一斤。 (Xīguā shí'èr kuài qián yígè, huǒlóngguǒ bā kuài qián yì jīn.) nghĩa là: Dưa hấu 12 tệ một quả, thanh long 8 tệ một cân."
+        },
+        {
+          "id": "tr8_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "阿姨，请问西瓜和火龙果怎么卖？",
+          "chineseAudioText": "阿姨，请问西瓜和火龙果怎么卖？",
+          "pinyin": "Āyí, qǐngwèn xīguā hé huǒlóngguǒ zěnme mài?",
+          "expectedMeaning": "Cô ơi, cho cháu hỏi dưa hấu và thanh long bán thế nào ạ?",
+          "acceptedKeywords": [
+            "cô",
+            "ơi",
+            "cho",
+            "cháu",
+            "hỏi",
+            "dưa",
+            "hấu",
+            "và",
+            "thanh",
+            "long",
+            "bán",
+            "thế",
+            "nào"
+          ],
+          "hint": "Pinyin: Āyí, qǐngwèn xīguā hé huǒlóngguǒ zěnme mài?",
+          "explanation": "阿姨，请问西瓜和火龙果怎么卖？ (Āyí, qǐngwèn xīguā hé huǒlóngguǒ zěnme mài?) nghĩa là: Cô ơi, cho cháu hỏi dưa hấu và thanh long bán thế nào ạ?"
+        },
+        {
+          "id": "tr8_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "一个人",
+          "chineseAudioText": "一个人",
+          "pinyin": "yígè rén",
+          "expectedMeaning": "Một người",
+          "acceptedKeywords": [
+            "một",
+            "người"
+          ],
+          "hint": "Pinyin: yígè rén",
+          "explanation": "一个人 (yígè rén) nghĩa là: Một người"
+        },
+        {
+          "id": "tr8_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "我明天上午八点上课。",
+          "chineseAudioText": "我明天上午八点上课。",
+          "pinyin": "Wǒ míngtiān shàngwǔ bā diǎn shàngkè.",
+          "expectedMeaning": "Tám giờ sáng ngày mai tớ đi học.",
+          "acceptedKeywords": [
+            "tám",
+            "giờ",
+            "sáng",
+            "ngày",
+            "mai",
+            "tớ",
+            "đi",
+            "học"
+          ],
+          "hint": "Pinyin: Wǒ míngtiān shàngwǔ bā diǎn shàngkè.",
+          "explanation": "我明天上午八点上课。 (Wǒ míngtiān shàngwǔ bā diǎn shàngkè.) nghĩa là: Tám giờ sáng ngày mai tớ đi học."
         }
       ],
       "expandedQuiz": [
@@ -16767,6 +20748,249 @@ const DEFAULT_LESSONS = [
             "个",
             "国家"
           ]
+        },
+        {
+          "id": "ss9_exp_1",
+          "targetHanzi": "小兰你跟我一起去超市买衣服好吗",
+          "targetMeaning": "Tiểu Lan! Cậu đi siêu thị mua quần áo cùng tớ nhé, được không?",
+          "pinyin": "Xiǎolán, nǐ gēn wǒ yīqǐ qù chāoshì mǎi yīfu, hǎo ma?",
+          "tokens": [
+            "小",
+            "兰",
+            "你",
+            "跟",
+            "我",
+            "一起",
+            "去",
+            "超市",
+            "买",
+            "衣服",
+            "好",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss9_exp_2",
+          "targetHanzi": "我想买一条裤子一条裙子和一件大衣",
+          "targetMeaning": "Tớ muốn mua một chiếc quần dài, một chiếc váy và một chiếc áo khoác dài.",
+          "pinyin": "Wǒ xiǎng mǎi yī tiáo kùzi, yī tiáo qúnzi hé yī jiàn dàyī.",
+          "tokens": [
+            "我",
+            "想",
+            "买",
+            "一",
+            "条",
+            "裤子",
+            "一",
+            "条",
+            "裙子",
+            "和",
+            "一",
+            "件",
+            "大衣"
+          ]
+        },
+        {
+          "id": "ss9_exp_3",
+          "targetHanzi": "你觉得这条裤子好不好看",
+          "targetMeaning": "Cậu thấy chiếc quần này có đẹp không?",
+          "pinyin": "Nǐ juéde zhè tiáo kùzi hǎo bu hǎokàn?",
+          "tokens": [
+            "你",
+            "觉得",
+            "这",
+            "条",
+            "裤子",
+            "好",
+            "不",
+            "好看"
+          ]
+        },
+        {
+          "id": "ss9_exp_4",
+          "targetHanzi": "我觉得颜色不太好看我不喜欢绿色我最喜欢红色和黄色",
+          "targetMeaning": "Tớ thấy màu sắc không đẹp lắm, tớ không thích màu xanh lá, tớ thích nhất màu đỏ và màu vàng.",
+          "pinyin": "Wǒ juéde yánsè bú tài hǎokàn, wǒ bù xǐhuan lǜsè, wǒ zuì xǐhuan hóngsè hé huángsè.",
+          "tokens": [
+            "我",
+            "觉得",
+            "颜色",
+            "不",
+            "太",
+            "好看",
+            "我",
+            "不",
+            "喜欢",
+            "绿色",
+            "我",
+            "最",
+            "喜欢",
+            "红色",
+            "和",
+            "黄色"
+          ]
+        },
+        {
+          "id": "ss9_exp_5",
+          "targetHanzi": "那这条红色的裤子行吗你试试看",
+          "targetMeaning": "Vậy chiếc quần màu đỏ này có được không? Cậu mặc thử xem!",
+          "pinyin": "Nà zhè tiáo hóngsè de kùzi xíng ma? Nǐ shìshi kàn!",
+          "tokens": [
+            "那",
+            "这",
+            "条",
+            "红色",
+            "的",
+            "裤子",
+            "行",
+            "吗",
+            "你",
+            "试",
+            "试",
+            "看"
+          ]
+        },
+        {
+          "id": "ss9_exp_6",
+          "targetHanzi": "不错很合适我买这条吧",
+          "targetMeaning": "Khá ổn, rất vừa vặn. Tớ mua chiếc này nhé!",
+          "pinyin": "Búcuò, hěn héshì. Wǒ mǎi zhè tiáo ba!",
+          "tokens": [
+            "不错",
+            "很",
+            "合适",
+            "我",
+            "买",
+            "这",
+            "条",
+            "吧"
+          ]
+        },
+        {
+          "id": "ss9_exp_7",
+          "targetHanzi": "你看那边是大衣和裙子好漂亮啊",
+          "targetMeaning": "Cậu nhìn kìa, bên kia là áo khoác và váy, đẹp quá đi!",
+          "pinyin": "Nǐ kàn, nàbian shì dàyī hé qúnzi, hǎo piàoliang a!",
+          "tokens": [
+            "你",
+            "看",
+            "那",
+            "边",
+            "是",
+            "大衣",
+            "和",
+            "裙子",
+            "好",
+            "漂亮",
+            "啊"
+          ]
+        },
+        {
+          "id": "ss9_exp_8",
+          "targetHanzi": "很好看我买这件黄色的大衣和这条粉红色的裙子你觉得这件大衣贵不贵",
+          "targetMeaning": "Đẹp lắm, tớ sẽ mua chiếc áo khoác màu vàng này và chiếc váy màu hồng này. Cậu thấy chiếc áo khoác này có đắt không?",
+          "pinyin": "Hěn hǎokàn, wǒ mǎi zhè jiàn huángsè de dàyī hé zhè tiáo fěnhóngsè de qúnzi. Nǐ juéde zhè jiàn dàyī guì bu guì?",
+          "tokens": [
+            "很",
+            "好看",
+            "我",
+            "买",
+            "这",
+            "件",
+            "黄色",
+            "的",
+            "大衣",
+            "和",
+            "这",
+            "条",
+            "粉红色",
+            "的",
+            "裙子",
+            "你",
+            "觉得",
+            "这",
+            "件",
+            "大衣",
+            "贵",
+            "不",
+            "贵"
+          ]
+        },
+        {
+          "id": "ss9_exp_9",
+          "targetHanzi": "我觉得不贵很便宜",
+          "targetMeaning": "Tớ thấy không đắt đâu, rất rẻ!",
+          "pinyin": "Wǒ juéde bú guì, hěn piányi!",
+          "tokens": [
+            "我",
+            "觉得",
+            "不",
+            "贵",
+            "很",
+            "便宜"
+          ]
+        },
+        {
+          "id": "ss9_exp_10",
+          "targetHanzi": "好的我们去结账吧",
+          "targetMeaning": "Được rồi, chúng ta đi thanh toán thôi!",
+          "pinyin": "Hǎo de, wǒmen qù jiézhàng ba!",
+          "tokens": [
+            "好",
+            "的",
+            "我们",
+            "去",
+            "结账",
+            "吧"
+          ]
+        },
+        {
+          "id": "ss9_exp_11",
+          "targetHanzi": "你好请给我们结一下儿账",
+          "targetMeaning": "Chào bạn, làm ơn thanh toán giúp bọn mình nhé!",
+          "pinyin": "Nǐ hǎo, qǐng gěi wǒmen jié yíxiàr zhàng!",
+          "tokens": [
+            "你好",
+            "请",
+            "给",
+            "我们",
+            "结",
+            "一下儿",
+            "账"
+          ]
+        },
+        {
+          "id": "ss9_exp_12",
+          "targetHanzi": "好的一共块",
+          "targetMeaning": "Vâng, tổng cộng 150 tệ ạ.",
+          "pinyin": "Hǎo de, yígòng 150 kuài.",
+          "tokens": [
+            "好",
+            "的",
+            "一共",
+            "块"
+          ]
+        },
+        {
+          "id": "ss9_exp_13",
+          "targetHanzi": "给你谢谢",
+          "targetMeaning": "Gửi bạn tiền, cảm ơn nhé!",
+          "pinyin": "Gěi nǐ, xièxie!",
+          "tokens": [
+            "给",
+            "你",
+            "谢谢"
+          ]
+        },
+        {
+          "id": "ss9_exp_14",
+          "targetHanzi": "谢谢你们",
+          "targetMeaning": "Cảm ơn hai bạn!",
+          "pinyin": "Xièxie nǐmen!",
+          "tokens": [
+            "谢谢",
+            "你们"
+          ]
         }
       ],
       "translationExercises": [
@@ -16805,6 +21029,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "nǐ mǎi ba",
           "hint": "Gợi ý Pinyin: Nǐ mǎi ba!",
           "explanation": "Cậu mua đi! → 你买吧！ (Nǐ mǎi ba!)"
+        },
+        {
+          "id": "tr9_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Tiểu Lan! Cậu đi siêu thị mua quần áo cùng tớ nhé, được không?",
+          "expectedChinese": "小兰！你跟我一起去超市买衣服，好吗？",
+          "acceptedPinyin": "xiǎolán nǐ gēn wǒ yīqǐ qù chāoshì mǎi yīfu hǎo ma",
+          "hint": "Gợi ý Pinyin: Xiǎolán, nǐ gēn wǒ yīqǐ qù chāoshì mǎi yīfu, hǎo ma?",
+          "explanation": "Tiểu Lan! Cậu đi siêu thị mua quần áo cùng tớ nhé, được không? → 小兰！你跟我一起去超市买衣服，好吗？ (Xiǎolán, nǐ gēn wǒ yīqǐ qù chāoshì mǎi yīfu, hǎo ma?)"
+        },
+        {
+          "id": "tr9_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu muốn mua quần áo gì?",
+          "expectedChinese": "你想买什么衣服？",
+          "acceptedPinyin": "nǐ xiǎng mǎi shénme yīfu",
+          "hint": "Gợi ý Pinyin: Nǐ xiǎng mǎi shénme yīfu?",
+          "explanation": "Cậu muốn mua quần áo gì? → 你想买什么衣服？ (Nǐ xiǎng mǎi shénme yīfu?)"
+        },
+        {
+          "id": "tr9_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Tớ muốn mua một chiếc quần dài, một chiếc váy và một chiếc áo khoác dài.",
+          "expectedChinese": "我想买一条裤子，一条裙子和一件大衣。",
+          "acceptedPinyin": "wǒ xiǎng mǎi yī tiáo kùzi yī tiáo qúnzi hé yī jiàn dàyī",
+          "hint": "Gợi ý Pinyin: Wǒ xiǎng mǎi yī tiáo kùzi, yī tiáo qúnzi hé yī jiàn dàyī.",
+          "explanation": "Tớ muốn mua một chiếc quần dài, một chiếc váy và một chiếc áo khoác dài. → 我想买一条裤子，一条裙子和一件大衣。 (Wǒ xiǎng mǎi yī tiáo kùzi, yī tiáo qúnzi hé yī jiàn dàyī.)"
+        },
+        {
+          "id": "tr9_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu thấy chiếc quần này có đẹp không?",
+          "expectedChinese": "你觉得这条裤子好不好看？",
+          "acceptedPinyin": "nǐ juéde zhè tiáo kùzi hǎo bu hǎokàn",
+          "hint": "Gợi ý Pinyin: Nǐ juéde zhè tiáo kùzi hǎo bu hǎokàn?",
+          "explanation": "Cậu thấy chiếc quần này có đẹp không? → 你觉得这条裤子好不好看？ (Nǐ juéde zhè tiáo kùzi hǎo bu hǎokàn?)"
+        },
+        {
+          "id": "tr9_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Tớ thấy màu sắc không đẹp lắm, tớ không thích màu xanh lá, tớ thích nhất màu đỏ và màu vàng.",
+          "expectedChinese": "我觉得颜色不太好看，我不喜欢绿色，我最喜欢红色和黄色。",
+          "acceptedPinyin": "wǒ juéde yánsè bú tài hǎokàn wǒ bù xǐhuan lǜsè wǒ zuì xǐhuan hóngsè hé huángsè",
+          "hint": "Gợi ý Pinyin: Wǒ juéde yánsè bú tài hǎokàn, wǒ bù xǐhuan lǜsè, wǒ zuì xǐhuan hóngsè hé huángsè.",
+          "explanation": "Tớ thấy màu sắc không đẹp lắm, tớ không thích màu xanh lá, tớ thích nhất màu đỏ và màu vàng. → 我觉得颜色不太好看，我不喜欢绿色，我最喜欢红色和黄色。 (Wǒ juéde yánsè bú tài hǎokàn, wǒ bù xǐhuan lǜsè, wǒ zuì xǐhuan hóngsè hé huángsè.)"
+        },
+        {
+          "id": "tr9_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Vậy chiếc quần màu đỏ này có được không? Cậu mặc thử xem!",
+          "expectedChinese": "那这条红色的裤子行吗？你试试看！",
+          "acceptedPinyin": "nà zhè tiáo hóngsè de kùzi xíng ma nǐ shìshi kàn",
+          "hint": "Gợi ý Pinyin: Nà zhè tiáo hóngsè de kùzi xíng ma? Nǐ shìshi kàn!",
+          "explanation": "Vậy chiếc quần màu đỏ này có được không? Cậu mặc thử xem! → 那这条红色的裤子行吗？你试试看！ (Nà zhè tiáo hóngsè de kùzi xíng ma? Nǐ shìshi kàn!)"
+        },
+        {
+          "id": "tr9_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Khá ổn, rất vừa vặn. Tớ mua chiếc này nhé!",
+          "expectedChinese": "不错，很合适。我买这条吧！",
+          "acceptedPinyin": "búcuò hěn héshì wǒ mǎi zhè tiáo ba",
+          "hint": "Gợi ý Pinyin: Búcuò, hěn héshì. Wǒ mǎi zhè tiáo ba!",
+          "explanation": "Khá ổn, rất vừa vặn. Tớ mua chiếc này nhé! → 不错，很合适。我买这条吧！ (Búcuò, hěn héshì. Wǒ mǎi zhè tiáo ba!)"
+        },
+        {
+          "id": "tr9_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu nhìn kìa, bên kia là áo khoác và váy, đẹp quá đi!",
+          "expectedChinese": "你看，那边是大衣和裙子，好漂亮啊！",
+          "acceptedPinyin": "nǐ kàn nàbian shì dàyī hé qúnzi hǎo piàoliang a",
+          "hint": "Gợi ý Pinyin: Nǐ kàn, nàbian shì dàyī hé qúnzi, hǎo piàoliang a!",
+          "explanation": "Cậu nhìn kìa, bên kia là áo khoác và váy, đẹp quá đi! → 你看，那边是大衣和裙子，好漂亮啊！ (Nǐ kàn, nàbian shì dàyī hé qúnzi, hǎo piàoliang a!)"
+        },
+        {
+          "id": "tr9_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Đẹp lắm, tớ sẽ mua chiếc áo khoác màu vàng này và chiếc váy màu hồng này. Cậu thấy chiếc áo khoác này có đắt không?",
+          "expectedChinese": "很好看，我买这件黄色的大衣和这条粉红色的裙子。你觉得这件大衣贵不贵？",
+          "acceptedPinyin": "hěn hǎokàn wǒ mǎi zhè jiàn huángsè de dàyī hé zhè tiáo fěnhóngsè de qúnzi nǐ juéde zhè jiàn dàyī guì bu guì",
+          "hint": "Gợi ý Pinyin: Hěn hǎokàn, wǒ mǎi zhè jiàn huángsè de dàyī hé zhè tiáo fěnhóngsè de qúnzi. Nǐ juéde zhè jiàn dàyī guì bu guì?",
+          "explanation": "Đẹp lắm, tớ sẽ mua chiếc áo khoác màu vàng này và chiếc váy màu hồng này. Cậu thấy chiếc áo khoác này có đắt không? → 很好看，我买这件黄色的大衣和这条粉红色的裙子。你觉得这件大衣贵不贵？ (Hěn hǎokàn, wǒ mǎi zhè jiàn huángsè de dàyī hé zhè tiáo fěnhóngsè de qúnzi. Nǐ juéde zhè jiàn dàyī guì bu guì?)"
+        },
+        {
+          "id": "tr9_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Tớ thấy không đắt đâu, rất rẻ!",
+          "expectedChinese": "我觉得不贵，很便宜!",
+          "acceptedPinyin": "wǒ juéde bú guì hěn piányi",
+          "hint": "Gợi ý Pinyin: Wǒ juéde bú guì, hěn piányi!",
+          "explanation": "Tớ thấy không đắt đâu, rất rẻ! → 我觉得不贵，很便宜! (Wǒ juéde bú guì, hěn piányi!)"
         },
         {
           "id": "tr9_zh_1",
@@ -16865,6 +21179,212 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: shítáng zuǒbian",
           "explanation": "食堂左边 (shítáng zuǒbian) nghĩa là: Phía bên trái nhà ăn"
+        },
+        {
+          "id": "tr9_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "他最喜欢打篮球。",
+          "chineseAudioText": "他最喜欢打篮球。",
+          "pinyin": "Tā zuì xǐhuān dǎ lánqiú.",
+          "expectedMeaning": "Anh ấy thích chơi bóng rổ nhất.",
+          "acceptedKeywords": [
+            "anh",
+            "ấy",
+            "thích",
+            "chơi",
+            "bóng",
+            "rổ",
+            "nhất"
+          ],
+          "hint": "Pinyin: Tā zuì xǐhuān dǎ lánqiú.",
+          "explanation": "他最喜欢打篮球。 (Tā zuì xǐhuān dǎ lánqiú.) nghĩa là: Anh ấy thích chơi bóng rổ nhất."
+        },
+        {
+          "id": "tr9_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "我用法语跟小芳谈话。",
+          "chineseAudioText": "我用法语跟小芳谈话。",
+          "pinyin": "Wǒ yòng Fǎyǔ gēn Xiǎofāng tánhuà.",
+          "expectedMeaning": "Tôi dùng tiếng Pháp nói chuyện với Phương.",
+          "acceptedKeywords": [
+            "tôi",
+            "dùng",
+            "tiếng",
+            "pháp",
+            "nói",
+            "chuyện",
+            "với",
+            "phương"
+          ],
+          "hint": "Pinyin: Wǒ yòng Fǎyǔ gēn Xiǎofāng tánhuà.",
+          "explanation": "我用法语跟小芳谈话。 (Wǒ yòng Fǎyǔ gēn Xiǎofāng tánhuà.) nghĩa là: Tôi dùng tiếng Pháp nói chuyện với Phương."
+        },
+        {
+          "id": "tr9_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "小林去英国旅游过一次。",
+          "chineseAudioText": "小林去英国旅游过一次。",
+          "pinyin": "Xiǎolín qù Yīngguó lǚyóuguo yícì.",
+          "expectedMeaning": "Lâm từng đi Anh du lịch một lần.",
+          "acceptedKeywords": [
+            "lâm",
+            "từng",
+            "đi",
+            "anh",
+            "du",
+            "lịch",
+            "một",
+            "lần"
+          ],
+          "hint": "Pinyin: Xiǎolín qù Yīngguó lǚyóuguo yícì.",
+          "explanation": "小林去英国旅游过一次。 (Xiǎolín qù Yīngguó lǚyóuguo yícì.) nghĩa là: Lâm từng đi Anh du lịch một lần."
+        },
+        {
+          "id": "tr9_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "她去银行取钱了。",
+          "chineseAudioText": "她去银行取钱了。",
+          "pinyin": "Tā qù yínháng qǔqián le.",
+          "expectedMeaning": "Chị ấy đi ngân hàng rút tiền rồi.",
+          "acceptedKeywords": [
+            "chị",
+            "ấy",
+            "đi",
+            "ngân",
+            "hàng",
+            "rút",
+            "tiền",
+            "rồi"
+          ],
+          "hint": "Pinyin: Tā qù yínháng qǔqián le.",
+          "explanation": "她去银行取钱了。 (Tā qù yínháng qǔqián le.) nghĩa là: Chị ấy đi ngân hàng rút tiền rồi."
+        },
+        {
+          "id": "tr9_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "我想来超市买一些东西。",
+          "chineseAudioText": "我想来超市买一些东西。",
+          "pinyin": "Wǒ xiǎng lái chāoshì mǎi yīxiē dōngxi.",
+          "expectedMeaning": "Tôi muốn đi siêu thị mua một chút đồ.",
+          "acceptedKeywords": [
+            "tôi",
+            "muốn",
+            "đi",
+            "siêu",
+            "thị",
+            "mua",
+            "một",
+            "chút",
+            "đồ"
+          ],
+          "hint": "Pinyin: Wǒ xiǎng lái chāoshì mǎi yīxiē dōngxi.",
+          "explanation": "我想来超市买一些东西。 (Wǒ xiǎng lái chāoshì mǎi yīxiē dōngxi.) nghĩa là: Tôi muốn đi siêu thị mua một chút đồ."
+        },
+        {
+          "id": "tr9_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "他去北京留学。",
+          "chineseAudioText": "他去北京留学。",
+          "pinyin": "Tā qù Běijīng liúxué.",
+          "expectedMeaning": "Anh ấy đi du học ở Bắc Kinh.",
+          "acceptedKeywords": [
+            "anh",
+            "ấy",
+            "đi",
+            "du",
+            "học",
+            "bắc",
+            "kinh"
+          ],
+          "hint": "Pinyin: Tā qù Běijīng liúxué.",
+          "explanation": "他去北京留学。 (Tā qù Běijīng liúxué.) nghĩa là: Anh ấy đi du học ở Bắc Kinh."
+        },
+        {
+          "id": "tr9_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "你可以跟我一起去买帽子吗？",
+          "chineseAudioText": "你可以跟我一起去买帽子吗？",
+          "pinyin": "Nǐ kěyǐ gēn wǒ yīqǐ qù mǎi màozi ma?",
+          "expectedMeaning": "Bạn có thể đi mua mũ cùng với tôi không?",
+          "acceptedKeywords": [
+            "bạn",
+            "có",
+            "thể",
+            "đi",
+            "mua",
+            "mũ",
+            "cùng",
+            "với",
+            "tôi",
+            "không"
+          ],
+          "hint": "Pinyin: Nǐ kěyǐ gēn wǒ yīqǐ qù mǎi màozi ma?",
+          "explanation": "你可以跟我一起去买帽子吗？ (Nǐ kěyǐ gēn wǒ yīqǐ qù mǎi màozi ma?) nghĩa là: Bạn có thể đi mua mũ cùng với tôi không?"
+        },
+        {
+          "id": "tr9_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "我不会跟他一起回家。",
+          "chineseAudioText": "我不会跟他一起回家。",
+          "pinyin": "Wǒ bú huì gēn tā yīqǐ huí jiā.",
+          "expectedMeaning": "Tôi sẽ không về nhà cùng với anh ta đâu.",
+          "acceptedKeywords": [
+            "tôi",
+            "sẽ",
+            "không",
+            "về",
+            "nhà",
+            "cùng",
+            "với",
+            "anh",
+            "ta",
+            "đâu"
+          ],
+          "hint": "Pinyin: Wǒ bú huì gēn tā yīqǐ huí jiā.",
+          "explanation": "我不会跟他一起回家。 (Wǒ bú huì gēn tā yīqǐ huí jiā.) nghĩa là: Tôi sẽ không về nhà cùng với anh ta đâu."
+        },
+        {
+          "id": "tr9_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "明天我跟小林一起去旅游。",
+          "chineseAudioText": "明天我跟小林一起去旅游。",
+          "pinyin": "Míngtiān wǒ gēn Xiǎo Lín yīqǐ qù lǚyóu.",
+          "expectedMeaning": "Ngày mai tôi sẽ đi du lịch với Lâm.",
+          "acceptedKeywords": [
+            "ngày",
+            "mai",
+            "tôi",
+            "sẽ",
+            "đi",
+            "du",
+            "lịch",
+            "với",
+            "lâm"
+          ],
+          "hint": "Pinyin: Míngtiān wǒ gēn Xiǎo Lín yīqǐ qù lǚyóu.",
+          "explanation": "明天我跟小林一起去旅游。 (Míngtiān wǒ gēn Xiǎo Lín yīqǐ qù lǚyóu.) nghĩa là: Ngày mai tôi sẽ đi du lịch với Lâm."
+        },
+        {
+          "id": "tr9_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "那你试试这条小一点儿的吧。",
+          "chineseAudioText": "那你试试这条小一点儿的吧。",
+          "pinyin": "Nà nǐ shìshi zhè tiáo xiǎo yìdiǎnr de ba.",
+          "expectedMeaning": "Vậy bạn thử chiếc nhỏ hơn một chút này nhé.",
+          "acceptedKeywords": [
+            "vậy",
+            "bạn",
+            "thử",
+            "chiếc",
+            "nhỏ",
+            "hơn",
+            "một",
+            "chút",
+            "này",
+            "nhé"
+          ],
+          "hint": "Pinyin: Nà nǐ shìshi zhè tiáo xiǎo yìdiǎnr de ba.",
+          "explanation": "那你试试这条小一点儿的吧。 (Nà nǐ shìshi zhè tiáo xiǎo yìdiǎnr de ba.) nghĩa là: Vậy bạn thử chiếc nhỏ hơn một chút này nhé."
         }
       ],
       "expandedQuiz": [
@@ -18781,6 +23301,273 @@ const DEFAULT_LESSONS = [
             "地方",
             "吗"
           ]
+        },
+        {
+          "id": "ss10_exp_1",
+          "targetHanzi": "小雪下午你跟我一起去商店买书本吧",
+          "targetMeaning": "Tiểu Tuyết, chiều nay cậu cùng tớ ra cửa hàng mua sách vở nhé!",
+          "pinyin": "Xiǎoxuě, xiàwǔ nǐ gēn wǒ yīqǐ qù shāngdiàn mǎi shūběn ba!",
+          "tokens": [
+            "小",
+            "雪",
+            "下午",
+            "你",
+            "跟",
+            "我",
+            "一起",
+            "去",
+            "商店",
+            "买",
+            "书本",
+            "吧"
+          ]
+        },
+        {
+          "id": "ss10_exp_2",
+          "targetHanzi": "你怎么到现在还去商店买东西啊在中国人们都在网上买了",
+          "targetMeaning": "Sao đến bây giờ cậu vẫn còn ra cửa hàng mua đồ vậy! Ở Trung Quốc mọi người đều mua trên mạng hết rồi!",
+          "pinyin": "Nǐ zěnme dào xiànzài hái qù shāngdiàn mǎi dōngxi a! Zài Zhōngguó, rénmen dōu zài wǎngshàng mǎi le!",
+          "tokens": [
+            "你",
+            "怎么",
+            "到",
+            "现在",
+            "还",
+            "去",
+            "商店",
+            "买",
+            "东西",
+            "啊",
+            "在",
+            "中国",
+            "人",
+            "们",
+            "都",
+            "在",
+            "网上",
+            "买",
+            "了"
+          ]
+        },
+        {
+          "id": "ss10_exp_3",
+          "targetHanzi": "我不常上网买东西你经常在网上买东西吗",
+          "targetMeaning": "Tớ ít khi lên mạng mua đồ. Cậu có hay mua đồ qua mạng không?",
+          "pinyin": "Wǒ bù cháng shàngwǎng mǎi dōngxi. Nǐ jīngcháng zài wǎngshàng mǎi dōngxi ma?",
+          "tokens": [
+            "我",
+            "不",
+            "常",
+            "上网",
+            "买",
+            "东西",
+            "你",
+            "经常",
+            "在",
+            "网上",
+            "买",
+            "东西",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss10_exp_4",
+          "targetHanzi": "是啊在网上你可以买到很多东西比如衣服手表眼镜书本等等",
+          "targetMeaning": "Có chứ. Trên mạng cậu có thể mua được rất nhiều thứ, ví dụ như quần áo, đồng hồ, kính mắt, sách vở, v.v.",
+          "pinyin": "Shì a. Zài wǎngshàng nǐ kěyǐ mǎidào hěn duō dōngxi, bǐrú yīfu, shǒubiǎo, yǎnjìng, shūběn děngděng.",
+          "tokens": [
+            "是",
+            "啊",
+            "在",
+            "网上",
+            "你",
+            "可以",
+            "买",
+            "到",
+            "很",
+            "多",
+            "东西",
+            "比如",
+            "衣服",
+            "手表",
+            "眼镜",
+            "书本",
+            "等等"
+          ]
+        },
+        {
+          "id": "ss10_exp_5",
+          "targetHanzi": "真的吗",
+          "targetMeaning": "Thật sao?",
+          "pinyin": "Zhēn de ma?",
+          "tokens": [
+            "真",
+            "的",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss10_exp_6",
+          "targetHanzi": "真的网上购物还挺方便你只要有电脑或者手机不用出门也能买到东西很容易是吧",
+          "targetMeaning": "Thật đấy. Mua sắm trực tuyến khá tiện lợi, chỉ cần có máy tính hoặc điện thoại là không cần ra khỏi nhà cũng mua được đồ. Rất dễ đúng không nào!",
+          "pinyin": "Zhēn de. Wǎngshàng gòuwù hái tǐng fāngbiàn, nǐ zhǐyào yǒu diànnǎo huòzhě shǒujī, búyòng chūmén yě néng mǎi dào dōngxi. Hěn róngyì shì ba!",
+          "tokens": [
+            "真",
+            "的",
+            "网上",
+            "购物",
+            "还",
+            "挺",
+            "方便",
+            "你",
+            "只",
+            "要",
+            "有",
+            "电脑",
+            "或者",
+            "手机",
+            "不",
+            "用",
+            "出门",
+            "也",
+            "能",
+            "买",
+            "到",
+            "东西",
+            "很",
+            "容易",
+            "是",
+            "吧"
+          ]
+        },
+        {
+          "id": "ss10_exp_7",
+          "targetHanzi": "哇太方便了但是网上的东西价格怎么样",
+          "targetMeaning": "Chà! Tiện lợi quá! Nhưng giá cả đồ trên mạng thế nào?",
+          "pinyin": "Wa! Tài fāngbiàn le! Dànshì wǎngshàng de dōngxi jiàgé zěnmeyàng?",
+          "tokens": [
+            "哇",
+            "太",
+            "方便",
+            "了",
+            "但是",
+            "网上",
+            "的",
+            "东西",
+            "价格",
+            "怎么样"
+          ]
+        },
+        {
+          "id": "ss10_exp_8",
+          "targetHanzi": "有的挺便宜有的挺贵",
+          "targetMeaning": "Có thứ khá rẻ, cũng có thứ khá đắt.",
+          "pinyin": "Yǒu de tǐng piányi, yǒu de tǐng guì.",
+          "tokens": [
+            "有",
+            "的",
+            "挺",
+            "便宜",
+            "有",
+            "的",
+            "挺",
+            "贵"
+          ]
+        },
+        {
+          "id": "ss10_exp_9",
+          "targetHanzi": "质量呢",
+          "targetMeaning": "Còn chất lượng thì sao?",
+          "pinyin": "Zhìliàng ne?",
+          "tokens": [
+            "质量",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss10_exp_10",
+          "targetHanzi": "有的质量挺好但是也有的太差了你要小心啊",
+          "targetMeaning": "Có thứ chất lượng rất tốt, nhưng cũng có thứ tệ lắm! Cậu phải cẩn thận đấy!",
+          "pinyin": "Yǒu de zhìliàng tǐng hǎo, dànshì yě yǒu de tài chà le! Nǐ yào xiǎoxīn a!",
+          "tokens": [
+            "有",
+            "的",
+            "质量",
+            "挺",
+            "好",
+            "但是",
+            "也",
+            "有",
+            "的",
+            "太",
+            "差",
+            "了",
+            "你",
+            "要",
+            "小心",
+            "啊"
+          ]
+        },
+        {
+          "id": "ss10_exp_11",
+          "targetHanzi": "那怎么才能买到好东西",
+          "targetMeaning": "Vậy làm sao để mua được đồ tốt?",
+          "pinyin": "Nà zěnme cái néng mǎidào hǎo dōngxi?",
+          "tokens": [
+            "那",
+            "怎么",
+            "才",
+            "能",
+            "买",
+            "到",
+            "好",
+            "东西"
+          ]
+        },
+        {
+          "id": "ss10_exp_12",
+          "targetHanzi": "这个不好说你上网吧我会告诉你怎么买",
+          "targetMeaning": "Chuyện này khó nói lắm. Cậu lên mạng đi, tớ sẽ chỉ cậu cách mua.",
+          "pinyin": "Zhège bù hǎoshuō. Nǐ shàngwǎng ba, wǒ huì gàosù nǐ zěnme mǎi.",
+          "tokens": [
+            "这",
+            "个",
+            "不",
+            "好",
+            "说",
+            "你",
+            "上网",
+            "吧",
+            "我",
+            "会",
+            "告诉",
+            "你",
+            "怎么",
+            "买"
+          ]
+        },
+        {
+          "id": "ss10_exp_13",
+          "targetHanzi": "好谢谢你",
+          "targetMeaning": "Được, cảm ơn bạn!",
+          "pinyin": "Hǎo, xièxie nǐ!",
+          "tokens": [
+            "好",
+            "谢谢",
+            "你"
+          ]
+        },
+        {
+          "id": "ss10_exp_14",
+          "targetHanzi": "我们下午去吧",
+          "targetMeaning": "Buổi chiều chúng ta đi nhé!",
+          "pinyin": "Wǒmen xiàwǔ qù ba!",
+          "tokens": [
+            "我们",
+            "下午",
+            "去",
+            "吧"
+          ]
         }
       ],
       "translationExercises": [
@@ -18819,6 +23606,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "zhè tiáo qúnzi shì nǐ de ma",
           "hint": "Gợi ý Pinyin: Zhè tiáo qúnzi shì nǐ de ma?",
           "explanation": "Cái váy này là của em à? → 这条裙子是你的吗？ (Zhè tiáo qúnzi shì nǐ de ma?)"
+        },
+        {
+          "id": "tr10_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Tiểu Tuyết, chiều nay cậu cùng tớ ra cửa hàng mua sách vở nhé!",
+          "expectedChinese": "小雪，下午你跟我一起去商店买书本吧！",
+          "acceptedPinyin": "xiǎoxuě xiàwǔ nǐ gēn wǒ yīqǐ qù shāngdiàn mǎi shūběn ba",
+          "hint": "Gợi ý Pinyin: Xiǎoxuě, xiàwǔ nǐ gēn wǒ yīqǐ qù shāngdiàn mǎi shūběn ba!",
+          "explanation": "Tiểu Tuyết, chiều nay cậu cùng tớ ra cửa hàng mua sách vở nhé! → 小雪，下午你跟我一起去商店买书本吧！ (Xiǎoxuě, xiàwǔ nǐ gēn wǒ yīqǐ qù shāngdiàn mǎi shūběn ba!)"
+        },
+        {
+          "id": "tr10_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Sao đến bây giờ cậu vẫn còn ra cửa hàng mua đồ vậy! Ở Trung Quốc mọi người đều mua trên mạng hết rồi!",
+          "expectedChinese": "你怎么到现在还去商店买东西啊！在中国，人们都在网上买了！",
+          "acceptedPinyin": "nǐ zěnme dào xiànzài hái qù shāngdiàn mǎi dōngxi a zài zhōngguó rénmen dōu zài wǎngshàng mǎi le",
+          "hint": "Gợi ý Pinyin: Nǐ zěnme dào xiànzài hái qù shāngdiàn mǎi dōngxi a! Zài Zhōngguó, rénmen dōu zài wǎngshàng mǎi le!",
+          "explanation": "Sao đến bây giờ cậu vẫn còn ra cửa hàng mua đồ vậy! Ở Trung Quốc mọi người đều mua trên mạng hết rồi! → 你怎么到现在还去商店买东西啊！在中国，人们都在网上买了！ (Nǐ zěnme dào xiànzài hái qù shāngdiàn mǎi dōngxi a! Zài Zhōngguó, rénmen dōu zài wǎngshàng mǎi le!)"
+        },
+        {
+          "id": "tr10_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Tớ ít khi lên mạng mua đồ. Cậu có hay mua đồ qua mạng không?",
+          "expectedChinese": "我不常上网买东西。你经常在网上买东西吗？",
+          "acceptedPinyin": "wǒ bù cháng shàngwǎng mǎi dōngxi nǐ jīngcháng zài wǎngshàng mǎi dōngxi ma",
+          "hint": "Gợi ý Pinyin: Wǒ bù cháng shàngwǎng mǎi dōngxi. Nǐ jīngcháng zài wǎngshàng mǎi dōngxi ma?",
+          "explanation": "Tớ ít khi lên mạng mua đồ. Cậu có hay mua đồ qua mạng không? → 我不常上网买东西。你经常在网上买东西吗？ (Wǒ bù cháng shàngwǎng mǎi dōngxi. Nǐ jīngcháng zài wǎngshàng mǎi dōngxi ma?)"
+        },
+        {
+          "id": "tr10_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Có chứ. Trên mạng cậu có thể mua được rất nhiều thứ, ví dụ như quần áo, đồng hồ, kính mắt, sách vở, v.v.",
+          "expectedChinese": "是啊。在网上你可以买到很多东西，比如衣服、手表、眼镜、书本等等。",
+          "acceptedPinyin": "shì a zài wǎngshàng nǐ kěyǐ mǎidào hěn duō dōngxi bǐrú yīfu shǒubiǎo yǎnjìng shūběn děngděng",
+          "hint": "Gợi ý Pinyin: Shì a. Zài wǎngshàng nǐ kěyǐ mǎidào hěn duō dōngxi, bǐrú yīfu, shǒubiǎo, yǎnjìng, shūběn děngděng.",
+          "explanation": "Có chứ. Trên mạng cậu có thể mua được rất nhiều thứ, ví dụ như quần áo, đồng hồ, kính mắt, sách vở, v.v. → 是啊。在网上你可以买到很多东西，比如衣服、手表、眼镜、书本等等。 (Shì a. Zài wǎngshàng nǐ kěyǐ mǎidào hěn duō dōngxi, bǐrú yīfu, shǒubiǎo, yǎnjìng, shūběn děngděng.)"
+        },
+        {
+          "id": "tr10_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Thật sao?",
+          "expectedChinese": "真的吗？",
+          "acceptedPinyin": "zhēn de ma",
+          "hint": "Gợi ý Pinyin: Zhēn de ma?",
+          "explanation": "Thật sao? → 真的吗？ (Zhēn de ma?)"
+        },
+        {
+          "id": "tr10_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Thật đấy. Mua sắm trực tuyến khá tiện lợi, chỉ cần có máy tính hoặc điện thoại là không cần ra khỏi nhà cũng mua được đồ. Rất dễ đúng không nào!",
+          "expectedChinese": "真的。网上购物还挺方便，你只要有电脑或者手机，不用出门也能买到东西。很容易是吧！",
+          "acceptedPinyin": "zhēn de wǎngshàng gòuwù hái tǐng fāngbiàn nǐ zhǐyào yǒu diànnǎo huòzhě shǒujī búyòng chūmén yě néng mǎi dào dōngxi hěn róngyì shì ba",
+          "hint": "Gợi ý Pinyin: Zhēn de. Wǎngshàng gòuwù hái tǐng fāngbiàn, nǐ zhǐyào yǒu diànnǎo huòzhě shǒujī, búyòng chūmén yě néng mǎi dào dōngxi. Hěn róngyì shì ba!",
+          "explanation": "Thật đấy. Mua sắm trực tuyến khá tiện lợi, chỉ cần có máy tính hoặc điện thoại là không cần ra khỏi nhà cũng mua được đồ. Rất dễ đúng không nào! → 真的。网上购物还挺方便，你只要有电脑或者手机，不用出门也能买到东西。很容易是吧！ (Zhēn de. Wǎngshàng gòuwù hái tǐng fāngbiàn, nǐ zhǐyào yǒu diànnǎo huòzhě shǒujī, búyòng chūmén yě néng mǎi dào dōngxi. Hěn róngyì shì ba!)"
+        },
+        {
+          "id": "tr10_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Chà! Tiện lợi quá! Nhưng giá cả đồ trên mạng thế nào?",
+          "expectedChinese": "哇！太方便了！但是网上的东西价格怎么样？",
+          "acceptedPinyin": "wa tài fāngbiàn le dànshì wǎngshàng de dōngxi jiàgé zěnmeyàng",
+          "hint": "Gợi ý Pinyin: Wa! Tài fāngbiàn le! Dànshì wǎngshàng de dōngxi jiàgé zěnmeyàng?",
+          "explanation": "Chà! Tiện lợi quá! Nhưng giá cả đồ trên mạng thế nào? → 哇！太方便了！但是网上的东西价格怎么样？ (Wa! Tài fāngbiàn le! Dànshì wǎngshàng de dōngxi jiàgé zěnmeyàng?)"
+        },
+        {
+          "id": "tr10_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Có thứ khá rẻ, cũng có thứ khá đắt.",
+          "expectedChinese": "有的挺便宜，有的挺贵。",
+          "acceptedPinyin": "yǒu de tǐng piányi yǒu de tǐng guì",
+          "hint": "Gợi ý Pinyin: Yǒu de tǐng piányi, yǒu de tǐng guì.",
+          "explanation": "Có thứ khá rẻ, cũng có thứ khá đắt. → 有的挺便宜，有的挺贵。 (Yǒu de tǐng piányi, yǒu de tǐng guì.)"
+        },
+        {
+          "id": "tr10_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Còn chất lượng thì sao?",
+          "expectedChinese": "质量呢？",
+          "acceptedPinyin": "zhìliàng ne",
+          "hint": "Gợi ý Pinyin: Zhìliàng ne?",
+          "explanation": "Còn chất lượng thì sao? → 质量呢？ (Zhìliàng ne?)"
+        },
+        {
+          "id": "tr10_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Có thứ chất lượng rất tốt, nhưng cũng có thứ tệ lắm! Cậu phải cẩn thận đấy!",
+          "expectedChinese": "有的质量挺好，但是也有的太差了！你要小心啊！",
+          "acceptedPinyin": "yǒu de zhìliàng tǐng hǎo dànshì yě yǒu de tài chà le nǐ yào xiǎoxīn a",
+          "hint": "Gợi ý Pinyin: Yǒu de zhìliàng tǐng hǎo, dànshì yě yǒu de tài chà le! Nǐ yào xiǎoxīn a!",
+          "explanation": "Có thứ chất lượng rất tốt, nhưng cũng có thứ tệ lắm! Cậu phải cẩn thận đấy! → 有的质量挺好，但是也有的太差了！你要小心啊！ (Yǒu de zhìliàng tǐng hǎo, dànshì yě yǒu de tài chà le! Nǐ yào xiǎoxīn a!)"
         },
         {
           "id": "tr10_zh_1",
@@ -18879,6 +23756,236 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Wǒ míngtiān shàngwǔ bā diǎn shàngkè.",
           "explanation": "我明天上午八点上课。 (Wǒ míngtiān shàngwǔ bā diǎn shàngkè.) nghĩa là: Tám giờ sáng ngày mai tớ đi học."
+        },
+        {
+          "id": "tr10_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "这首歌最近挺流行的！",
+          "chineseAudioText": "这首歌最近挺流行的！",
+          "pinyin": "Zhè shǒu gē zuìjìn tǐng liúxíng de!",
+          "expectedMeaning": "Bài hát này dạo gần đây khá thịnh hành đấy!",
+          "acceptedKeywords": [
+            "bài",
+            "hát",
+            "này",
+            "dạo",
+            "gần",
+            "đây",
+            "khá",
+            "thịnh",
+            "hành",
+            "đấy"
+          ],
+          "hint": "Pinyin: Zhè shǒu gē zuìjìn tǐng liúxíng de!",
+          "explanation": "这首歌最近挺流行的！ (Zhè shǒu gē zuìjìn tǐng liúxíng de!) nghĩa là: Bài hát này dạo gần đây khá thịnh hành đấy!"
+        },
+        {
+          "id": "tr10_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "我昨天睡得挺晚的，所以今天有点儿困！",
+          "chineseAudioText": "我昨天睡得挺晚的，所以今天有点儿困！",
+          "pinyin": "Wǒ zuótiān shuì de tǐng wǎn de, suǒyǐ jīntiān yǒudiǎnr kùn!",
+          "expectedMeaning": "Hôm qua tớ ngủ khá trễ nên hôm nay hơi buồn ngủ!",
+          "acceptedKeywords": [
+            "hôm",
+            "qua",
+            "tớ",
+            "ngủ",
+            "khá",
+            "trễ",
+            "nên",
+            "hôm",
+            "nay",
+            "hơi",
+            "buồn",
+            "ngủ"
+          ],
+          "hint": "Pinyin: Wǒ zuótiān shuì de tǐng wǎn de, suǒyǐ jīntiān yǒudiǎnr kùn!",
+          "explanation": "我昨天睡得挺晚的，所以今天有点儿困！ (Wǒ zuótiān shuì de tǐng wǎn de, suǒyǐ jīntiān yǒudiǎnr kùn!) nghĩa là: Hôm qua tớ ngủ khá trễ nên hôm nay hơi buồn ngủ!"
+        },
+        {
+          "id": "tr10_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "我不常跟李君联系。",
+          "chineseAudioText": "我不常跟李君联系。",
+          "pinyin": "Wǒ bù cháng gēn Lǐ Jūn liánxì.",
+          "expectedMeaning": "Tôi không hay (không thường) liên lạc với Lý Quân.",
+          "acceptedKeywords": [
+            "tôi",
+            "không",
+            "hay",
+            "không",
+            "thường",
+            "liên",
+            "lạc",
+            "với",
+            "lý",
+            "quân"
+          ],
+          "hint": "Pinyin: Wǒ bù cháng gēn Lǐ Jūn liánxì.",
+          "explanation": "我不常跟李君联系。 (Wǒ bù cháng gēn Lǐ Jūn liánxì.) nghĩa là: Tôi không hay (không thường) liên lạc với Lý Quân."
+        },
+        {
+          "id": "tr10_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "爸爸很少带我去旅游。",
+          "chineseAudioText": "爸爸很少带我去旅游。",
+          "pinyin": "Bàba hěnshǎo dài wǒ qù lǚyóu.",
+          "expectedMeaning": "Bố rất ít đưa tôi đi du lịch.",
+          "acceptedKeywords": [
+            "bố",
+            "rất",
+            "ít",
+            "đưa",
+            "tôi",
+            "đi",
+            "du",
+            "lịch"
+          ],
+          "hint": "Pinyin: Bàba hěnshǎo dài wǒ qù lǚyóu.",
+          "explanation": "爸爸很少带我去旅游。 (Bàba hěnshǎo dài wǒ qù lǚyóu.) nghĩa là: Bố rất ít đưa tôi đi du lịch."
+        },
+        {
+          "id": "tr10_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "那件蓝色的衣服没有这件白色的好看。",
+          "chineseAudioText": "那件蓝色的衣服没有这件白色的好看。",
+          "pinyin": "Nà jiàn lánsè de yīfu méiyǒu zhè jiàn báisè de hǎokàn.",
+          "expectedMeaning": "Bộ quần áo màu xanh da trời kia không đẹp bằng bộ màu trắng này.",
+          "acceptedKeywords": [
+            "bộ",
+            "quần",
+            "áo",
+            "màu",
+            "xanh",
+            "da",
+            "trời",
+            "kia",
+            "không",
+            "đẹp",
+            "bằng",
+            "bộ",
+            "màu",
+            "trắng",
+            "này"
+          ],
+          "hint": "Pinyin: Nà jiàn lánsè de yīfu méiyǒu zhè jiàn báisè de hǎokàn.",
+          "explanation": "那件蓝色的衣服没有这件白色的好看。 (Nà jiàn lánsè de yīfu méiyǒu zhè jiàn báisè de hǎokàn.) nghĩa là: Bộ quần áo màu xanh da trời kia không đẹp bằng bộ màu trắng này."
+        },
+        {
+          "id": "tr10_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "价格比商店便宜，但是买的时候要小心看质量。",
+          "chineseAudioText": "价格比商店便宜，但是买的时候要小心看质量。",
+          "pinyin": "Jiàgé bǐ shāngdiàn piányi, dànshì mǎi de shíhou yào xiǎoxīn kàn zhìliàng.",
+          "expectedMeaning": "Giá rẻ hơn cửa hàng, nhưng lúc mua phải cẩn thận xem chất lượng.",
+          "acceptedKeywords": [
+            "giá",
+            "rẻ",
+            "hơn",
+            "cửa",
+            "hàng",
+            "nhưng",
+            "lúc",
+            "mua",
+            "phải",
+            "cẩn",
+            "thận",
+            "xem",
+            "chất",
+            "lượng"
+          ],
+          "hint": "Pinyin: Jiàgé bǐ shāngdiàn piányi, dànshì mǎi de shíhou yào xiǎoxīn kàn zhìliàng.",
+          "explanation": "价格比商店便宜，但是买的时候要小心看质量。 (Jiàgé bǐ shāngdiàn piányi, dànshì mǎi de shíhou yào xiǎoxīn kàn zhìliàng.) nghĩa là: Giá rẻ hơn cửa hàng, nhưng lúc mua phải cẩn thận xem chất lượng."
+        },
+        {
+          "id": "tr10_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "网上的价格便宜吗？质量好不好？",
+          "chineseAudioText": "网上的价格便宜吗？质量好不好？",
+          "pinyin": "Wǎngshàng de jiàgé piányi ma? Zhìliàng hǎo bu hǎo?",
+          "expectedMeaning": "Giá trên mạng có rẻ không? Chất lượng có tốt không?",
+          "acceptedKeywords": [
+            "giá",
+            "trên",
+            "mạng",
+            "có",
+            "rẻ",
+            "không",
+            "chất",
+            "lượng",
+            "có",
+            "tốt",
+            "không"
+          ],
+          "hint": "Pinyin: Wǎngshàng de jiàgé piányi ma? Zhìliàng hǎo bu hǎo?",
+          "explanation": "网上的价格便宜吗？质量好不好？ (Wǎngshàng de jiàgé piányi ma? Zhìliàng hǎo bu hǎo?) nghĩa là: Giá trên mạng có rẻ không? Chất lượng có tốt không?"
+        },
+        {
+          "id": "tr10_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "不是，我是在网上买的，不用出门也很方便。",
+          "chineseAudioText": "不是，我是在网上买的，不用出门也很方便。",
+          "pinyin": "Bú shì, wǒ shì zài wǎngshàng mǎi de, búyòng chūmén yě hěn fāngbiàn.",
+          "expectedMeaning": "Không, tôi mua trên mạng đấy, không cần ra ngoài mà rất tiện lợi.",
+          "acceptedKeywords": [
+            "không",
+            "tôi",
+            "mua",
+            "trên",
+            "mạng",
+            "đấy",
+            "không",
+            "cần",
+            "ra",
+            "ngoài",
+            "mà",
+            "rất",
+            "tiện",
+            "lợi"
+          ],
+          "hint": "Pinyin: Bú shì, wǒ shì zài wǎngshàng mǎi de, búyòng chūmén yě hěn fāngbiàn.",
+          "explanation": "不是，我是在网上买的，不用出门也很方便。 (Bú shì, wǒ shì zài wǎngshàng mǎi de, búyòng chūmén yě hěn fāngbiàn.) nghĩa là: Không, tôi mua trên mạng đấy, không cần ra ngoài mà rất tiện lợi."
+        },
+        {
+          "id": "tr10_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "你这副新眼镜是在超市买的吗？",
+          "chineseAudioText": "你这副新眼镜是在超市买的吗？",
+          "pinyin": "Nǐ zhè fù xīn yǎnjìng shì zài chāoshì mǎi de ma?",
+          "expectedMeaning": "Cặp kính mắt mới này của bạn mua ở siêu thị à?",
+          "acceptedKeywords": [
+            "cặp",
+            "kính",
+            "mắt",
+            "mới",
+            "này",
+            "của",
+            "bạn",
+            "mua",
+            "siêu",
+            "thị"
+          ],
+          "hint": "Pinyin: Nǐ zhè fù xīn yǎnjìng shì zài chāoshì mǎi de ma?",
+          "explanation": "你这副新眼镜是在超市买的吗？ (Nǐ zhè fù xīn yǎnjìng shì zài chāoshì mǎi de ma?) nghĩa là: Cặp kính mắt mới này của bạn mua ở siêu thị à?"
+        },
+        {
+          "id": "tr10_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "你家有多少人？",
+          "chineseAudioText": "你家有多少人？",
+          "pinyin": "Nǐ jiā yǒu duōshao rén?",
+          "expectedMeaning": "Nhà cậu có bao nhiêu người?",
+          "acceptedKeywords": [
+            "nhà",
+            "cậu",
+            "có",
+            "bao",
+            "nhiêu",
+            "người"
+          ],
+          "hint": "Pinyin: Nǐ jiā yǒu duōshao rén?",
+          "explanation": "你家有多少人？ (Nǐ jiā yǒu duōshao rén?) nghĩa là: Nhà cậu có bao nhiêu người?"
         }
       ],
       "expandedQuiz": [
@@ -20895,6 +26002,258 @@ const DEFAULT_LESSONS = [
             "杯"
           ],
           "unlearnedHint": "Từ chưa học: 两 (liǎng: hai (số lượng))"
+        },
+        {
+          "id": "ss11_exp_1",
+          "targetHanzi": "安妮你家有几口人",
+          "targetMeaning": "Annie, nhà bạn có mấy người?",
+          "pinyin": "Ānnī, nǐ jiā yǒu jǐ kǒu rén?",
+          "tokens": [
+            "安妮",
+            "你",
+            "家",
+            "有",
+            "几",
+            "口",
+            "人"
+          ]
+        },
+        {
+          "id": "ss11_exp_2",
+          "targetHanzi": "我家有六口人我爷爷奶奶爸爸妈妈哥哥和我你家呢",
+          "targetMeaning": "Nhà tôi có 6 người: ông nội, bà nội, bố, mẹ, anh trai và tôi. Còn nhà bạn thì sao?",
+          "pinyin": "Wǒjiā yǒu liù kǒu rén: Wǒ yéye, nǎinai, bàba, māma, gēge hé wǒ. Nǐ jiā ne?",
+          "tokens": [
+            "我",
+            "家",
+            "有",
+            "六",
+            "口",
+            "人",
+            "我",
+            "爷爷",
+            "奶奶",
+            "爸爸",
+            "妈妈",
+            "哥哥",
+            "和",
+            "我",
+            "你",
+            "家",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss11_exp_3",
+          "targetHanzi": "我家有五口人爸爸妈妈姐姐弟弟和我",
+          "targetMeaning": "Nhà tôi có 5 người: bố, mẹ, chị gái, em trai và tôi.",
+          "pinyin": "Wǒjiā yǒu wǔ kǒu rén: Bàba, māma, jiějie, dìdi hé wǒ.",
+          "tokens": [
+            "我",
+            "家",
+            "有",
+            "五",
+            "口",
+            "人",
+            "爸爸",
+            "妈妈",
+            "姐姐",
+            "弟弟",
+            "和",
+            "我"
+          ]
+        },
+        {
+          "id": "ss11_exp_4",
+          "targetHanzi": "你姐姐今年多大了",
+          "targetMeaning": "Chị gái bạn năm nay bao nhiêu tuổi rồi?",
+          "pinyin": "Nǐ jiějie jīnnián duōdà le?",
+          "tokens": [
+            "你",
+            "姐姐",
+            "今",
+            "年",
+            "多大",
+            "了"
+          ]
+        },
+        {
+          "id": "ss11_exp_5",
+          "targetHanzi": "她今年岁你想看我们全家的照片吗",
+          "targetMeaning": "Chị ấy năm nay 22 tuổi. Bạn có muốn xem ảnh cả nhà tôi không?",
+          "pinyin": "Tā jīnnián 22 suì. Nǐ xiǎng kàn wǒmen quánjiā de zhàopiàn ma?",
+          "tokens": [
+            "她",
+            "今",
+            "年",
+            "岁",
+            "你",
+            "想",
+            "看",
+            "我们",
+            "全家",
+            "的",
+            "照片",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss11_exp_6",
+          "targetHanzi": "当然了",
+          "targetMeaning": "Tất nhiên rồi.",
+          "pinyin": "Dāngrán le.",
+          "tokens": [
+            "当然",
+            "了"
+          ]
+        },
+        {
+          "id": "ss11_exp_7",
+          "targetHanzi": "等我一下儿这是我家的照片给你看",
+          "targetMeaning": "Chờ tôi một lát, đây là ảnh gia đình tôi, cho bạn xem này.",
+          "pinyin": "Děng wǒ yíxiàr, zhè shì wǒjiā de zhàopiàn, gěi nǐ kàn.",
+          "tokens": [
+            "等",
+            "我",
+            "一下儿",
+            "这",
+            "是",
+            "我",
+            "家",
+            "的",
+            "照片",
+            "给",
+            "你",
+            "看"
+          ]
+        },
+        {
+          "id": "ss11_exp_8",
+          "targetHanzi": "你们家的人都那么高吗",
+          "targetMeaning": "Mọi người trong nhà bạn đều cao thế sao?",
+          "pinyin": "Nǐmen jiā de rén dōu nàme gāo ma?",
+          "tokens": [
+            "你们",
+            "家",
+            "的",
+            "人",
+            "都",
+            "那么",
+            "高",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss11_exp_9",
+          "targetHanzi": "是的只有我这么矮",
+          "targetMeaning": "Đúng vậy, chỉ có mình tôi lùn thế này thôi.",
+          "pinyin": "Shì de, zhǐyǒu wǒ zhème ǎi.",
+          "tokens": [
+            "是",
+            "的",
+            "只",
+            "有",
+            "我",
+            "这么",
+            "矮"
+          ]
+        },
+        {
+          "id": "ss11_exp_10",
+          "targetHanzi": "这样也很可爱嘛你姐姐好漂亮啊",
+          "targetMeaning": "Thế này cũng rất đáng yêu mà! Chị gái bạn xinh quá đi!",
+          "pinyin": "Zhèyàng yě hěn kě'ài ma! Nǐ jiějie hǎo piàoliang a!",
+          "tokens": [
+            "这样",
+            "也",
+            "很",
+            "可爱",
+            "嘛",
+            "你",
+            "姐姐",
+            "好",
+            "漂亮",
+            "啊"
+          ]
+        },
+        {
+          "id": "ss11_exp_11",
+          "targetHanzi": "对啊很多人喜欢她",
+          "targetMeaning": "Đúng vậy! Nhiều người thích chị ấy lắm.",
+          "pinyin": "Duì a! Hěnduō rén xǐhuan tā.",
+          "tokens": [
+            "对",
+            "啊",
+            "很",
+            "多",
+            "人",
+            "喜欢",
+            "她"
+          ]
+        },
+        {
+          "id": "ss11_exp_12",
+          "targetHanzi": "这里还有一条狗和一只猫你们家是不是很爱它们",
+          "targetMeaning": "Ở đây còn có một con chó và một con mèo nữa. Nhà bạn chắc yêu quý chúng lắm nhỉ?",
+          "pinyin": "Zhèli hái yǒu yītiáo gǒu hé yī zhī māo. Nǐmen jiā shì bu shì hěn ài tāmen?",
+          "tokens": [
+            "这里",
+            "还",
+            "有",
+            "一",
+            "条",
+            "狗",
+            "和",
+            "一",
+            "只",
+            "猫",
+            "你们",
+            "家",
+            "是",
+            "不是",
+            "很",
+            "爱",
+            "它们"
+          ]
+        },
+        {
+          "id": "ss11_exp_13",
+          "targetHanzi": "是的它们也是我家的一部分对我来说它们也是我的朋友",
+          "targetMeaning": "Đúng rồi, chúng cũng là một phần của gia đình tôi; đối với tôi, chúng còn là những người bạn nữa.",
+          "pinyin": "Shì de, tāmen yěshì wǒjiā de yíbùfen, duì wǒ lái shuō, tāmen yěshì wǒ de péngyou.",
+          "tokens": [
+            "是",
+            "的",
+            "它们",
+            "也",
+            "是",
+            "我",
+            "家",
+            "的",
+            "一",
+            "部分",
+            "对我来说",
+            "它们",
+            "也",
+            "是",
+            "我",
+            "的",
+            "朋友"
+          ]
+        },
+        {
+          "id": "ss11_exp_14",
+          "targetHanzi": "这本书是我的",
+          "targetMeaning": "Quyển sách này là sách của tôi.",
+          "pinyin": "Zhè běn shū shì wǒ de.",
+          "tokens": [
+            "这",
+            "本",
+            "书",
+            "是",
+            "我",
+            "的"
+          ]
         }
       ],
       "translationExercises": [
@@ -20933,6 +26292,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "tāmen zhǐ guānxīn zìjǐ",
           "hint": "Gợi ý Pinyin: Tāmen zhǐ guānxīn zìjǐ.",
           "explanation": "Bọn họ chỉ quan tâm đến bản thân mình mà thôi. → 他们只关心自己。 (Tāmen zhǐ guānxīn zìjǐ.)"
+        },
+        {
+          "id": "tr11_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Annie, nhà bạn có mấy người?",
+          "expectedChinese": "安妮，你家有几口人？",
+          "acceptedPinyin": "ānnī nǐ jiā yǒu jǐ kǒu rén",
+          "hint": "Gợi ý Pinyin: Ānnī, nǐ jiā yǒu jǐ kǒu rén?",
+          "explanation": "Annie, nhà bạn có mấy người? → 安妮，你家有几口人？ (Ānnī, nǐ jiā yǒu jǐ kǒu rén?)"
+        },
+        {
+          "id": "tr11_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Nhà tôi có 6 người: ông nội, bà nội, bố, mẹ, anh trai và tôi. Còn nhà bạn thì sao?",
+          "expectedChinese": "我家有六口人：我爷爷、奶奶、爸爸、妈妈、哥哥和我。你家呢？",
+          "acceptedPinyin": "wǒjiā yǒu liù kǒu rén wǒ yéye nǎinai bàba māma gēge hé wǒ nǐ jiā ne",
+          "hint": "Gợi ý Pinyin: Wǒjiā yǒu liù kǒu rén: Wǒ yéye, nǎinai, bàba, māma, gēge hé wǒ. Nǐ jiā ne?",
+          "explanation": "Nhà tôi có 6 người: ông nội, bà nội, bố, mẹ, anh trai và tôi. Còn nhà bạn thì sao? → 我家有六口人：我爷爷、奶奶、爸爸、妈妈、哥哥和我。你家呢？ (Wǒjiā yǒu liù kǒu rén: Wǒ yéye, nǎinai, bàba, māma, gēge hé wǒ. Nǐ jiā ne?)"
+        },
+        {
+          "id": "tr11_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Nhà tôi có 5 người: bố, mẹ, chị gái, em trai và tôi.",
+          "expectedChinese": "我家有五口人：爸爸、妈妈、姐姐、弟弟和我。",
+          "acceptedPinyin": "wǒjiā yǒu wǔ kǒu rén bàba māma jiějie dìdi hé wǒ",
+          "hint": "Gợi ý Pinyin: Wǒjiā yǒu wǔ kǒu rén: Bàba, māma, jiějie, dìdi hé wǒ.",
+          "explanation": "Nhà tôi có 5 người: bố, mẹ, chị gái, em trai và tôi. → 我家有五口人：爸爸、妈妈、姐姐、弟弟和我。 (Wǒjiā yǒu wǔ kǒu rén: Bàba, māma, jiějie, dìdi hé wǒ.)"
+        },
+        {
+          "id": "tr11_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Chị gái bạn năm nay bao nhiêu tuổi rồi?",
+          "expectedChinese": "你姐姐今年多大了？",
+          "acceptedPinyin": "nǐ jiějie jīnnián duōdà le",
+          "hint": "Gợi ý Pinyin: Nǐ jiějie jīnnián duōdà le?",
+          "explanation": "Chị gái bạn năm nay bao nhiêu tuổi rồi? → 你姐姐今年多大了？ (Nǐ jiějie jīnnián duōdà le?)"
+        },
+        {
+          "id": "tr11_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Chị ấy năm nay 22 tuổi. Bạn có muốn xem ảnh cả nhà tôi không?",
+          "expectedChinese": "她今年 22 岁。你想看我们全家的照片吗?",
+          "acceptedPinyin": "tā jīnnián 22 suì nǐ xiǎng kàn wǒmen quánjiā de zhàopiàn ma",
+          "hint": "Gợi ý Pinyin: Tā jīnnián 22 suì. Nǐ xiǎng kàn wǒmen quánjiā de zhàopiàn ma?",
+          "explanation": "Chị ấy năm nay 22 tuổi. Bạn có muốn xem ảnh cả nhà tôi không? → 她今年 22 岁。你想看我们全家的照片吗? (Tā jīnnián 22 suì. Nǐ xiǎng kàn wǒmen quánjiā de zhàopiàn ma?)"
+        },
+        {
+          "id": "tr11_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Tất nhiên rồi.",
+          "expectedChinese": "当然了。",
+          "acceptedPinyin": "dāngrán le",
+          "hint": "Gợi ý Pinyin: Dāngrán le.",
+          "explanation": "Tất nhiên rồi. → 当然了。 (Dāngrán le.)"
+        },
+        {
+          "id": "tr11_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Chờ tôi một lát, đây là ảnh gia đình tôi, cho bạn xem này.",
+          "expectedChinese": "等我一下儿，这是我家的照片，给你看。",
+          "acceptedPinyin": "děng wǒ yíxiàr zhè shì wǒjiā de zhàopiàn gěi nǐ kàn",
+          "hint": "Gợi ý Pinyin: Děng wǒ yíxiàr, zhè shì wǒjiā de zhàopiàn, gěi nǐ kàn.",
+          "explanation": "Chờ tôi một lát, đây là ảnh gia đình tôi, cho bạn xem này. → 等我一下儿，这是我家的照片，给你看。 (Děng wǒ yíxiàr, zhè shì wǒjiā de zhàopiàn, gěi nǐ kàn.)"
+        },
+        {
+          "id": "tr11_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Mọi người trong nhà bạn đều cao thế sao?",
+          "expectedChinese": "你们家的人都那么高吗？",
+          "acceptedPinyin": "nǐmen jiā de rén dōu nàme gāo ma",
+          "hint": "Gợi ý Pinyin: Nǐmen jiā de rén dōu nàme gāo ma?",
+          "explanation": "Mọi người trong nhà bạn đều cao thế sao? → 你们家的人都那么高吗？ (Nǐmen jiā de rén dōu nàme gāo ma?)"
+        },
+        {
+          "id": "tr11_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Đúng vậy, chỉ có mình tôi lùn thế này thôi.",
+          "expectedChinese": "是的，只有我这么矮。",
+          "acceptedPinyin": "shì de zhǐyǒu wǒ zhème ǎi",
+          "hint": "Gợi ý Pinyin: Shì de, zhǐyǒu wǒ zhème ǎi.",
+          "explanation": "Đúng vậy, chỉ có mình tôi lùn thế này thôi. → 是的，只有我这么矮。 (Shì de, zhǐyǒu wǒ zhème ǎi.)"
+        },
+        {
+          "id": "tr11_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Thế này cũng rất đáng yêu mà! Chị gái bạn xinh quá đi!",
+          "expectedChinese": "这样也很可爱嘛！你姐姐好漂亮啊！",
+          "acceptedPinyin": "zhèyàng yě hěn kě ài ma nǐ jiějie hǎo piàoliang a",
+          "hint": "Gợi ý Pinyin: Zhèyàng yě hěn kě'ài ma! Nǐ jiějie hǎo piàoliang a!",
+          "explanation": "Thế này cũng rất đáng yêu mà! Chị gái bạn xinh quá đi! → 这样也很可爱嘛！你姐姐好漂亮啊！ (Zhèyàng yě hěn kě'ài ma! Nǐ jiějie hǎo piàoliang a!)"
         },
         {
           "id": "tr11_zh_1",
@@ -20993,6 +26442,223 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Wǒ míngtiān shàngwǔ bā diǎn shàngkè.",
           "explanation": "我明天上午八点上课。 (Wǒ míngtiān shàngwǔ bā diǎn shàngkè.) nghĩa là: Tám giờ sáng ngày mai tớ đi học."
+        },
+        {
+          "id": "tr11_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "他真的这么说。",
+          "chineseAudioText": "他真的这么说。",
+          "pinyin": "Tā zhēn de zhème shuō.",
+          "expectedMeaning": "Anh ta thật sự nói như thế.",
+          "acceptedKeywords": [
+            "anh",
+            "ta",
+            "thật",
+            "sự",
+            "nói",
+            "như",
+            "thế"
+          ],
+          "hint": "Pinyin: Tā zhēn de zhème shuō.",
+          "explanation": "他真的这么说。 (Tā zhēn de zhème shuō.) nghĩa là: Anh ta thật sự nói như thế."
+        },
+        {
+          "id": "tr11_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "为什么你昨天那么晚才回来？",
+          "chineseAudioText": "为什么你昨天那么晚才回来？",
+          "pinyin": "Wèishénme nǐ zuótiān nàme wǎn cái huílai?",
+          "expectedMeaning": "Vì sao tối qua muộn như thế anh mới về?",
+          "acceptedKeywords": [
+            "vì",
+            "sao",
+            "tối",
+            "qua",
+            "muộn",
+            "như",
+            "thế",
+            "anh",
+            "mới",
+            "về"
+          ],
+          "hint": "Pinyin: Wèishénme nǐ zuótiān nàme wǎn cái huílai?",
+          "explanation": "为什么你昨天那么晚才回来？ (Wèishénme nǐ zuótiān nàme wǎn cái huílai?) nghĩa là: Vì sao tối qua muộn như thế anh mới về?"
+        },
+        {
+          "id": "tr11_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "他不相信命运，只相信自己。",
+          "chineseAudioText": "他不相信命运，只相信自己。",
+          "pinyin": "Tā bù xiāngxìn mìngyùn, zhǐ xiāngxìn zìjǐ.",
+          "expectedMeaning": "Anh ấy không tin vào vận mệnh, chỉ tin vào bản thân mình.",
+          "acceptedKeywords": [
+            "anh",
+            "ấy",
+            "không",
+            "tin",
+            "vào",
+            "vận",
+            "mệnh",
+            "chỉ",
+            "tin",
+            "vào",
+            "bản",
+            "thân",
+            "mình"
+          ],
+          "hint": "Pinyin: Tā bù xiāngxìn mìngyùn, zhǐ xiāngxìn zìjǐ.",
+          "explanation": "他不相信命运，只相信自己。 (Tā bù xiāngxìn mìngyùn, zhǐ xiāngxìn zìjǐ.) nghĩa là: Anh ấy không tin vào vận mệnh, chỉ tin vào bản thân mình."
+        },
+        {
+          "id": "tr11_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "这里只有我们两个人？",
+          "chineseAudioText": "这里只有我们两个人？",
+          "pinyin": "Zhèli zhǐ yǒu wǒmen liǎng gèrén?",
+          "expectedMeaning": "Ở đây chỉ có hai người chúng ta?",
+          "acceptedKeywords": [
+            "đây",
+            "chỉ",
+            "có",
+            "hai",
+            "người",
+            "chúng",
+            "ta"
+          ],
+          "hint": "Pinyin: Zhèli zhǐ yǒu wǒmen liǎng gèrén?",
+          "explanation": "这里只有我们两个人？ (Zhèli zhǐ yǒu wǒmen liǎng gèrén?) nghĩa là: Ở đây chỉ có hai người chúng ta?"
+        },
+        {
+          "id": "tr11_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "学校左边有一家银行。",
+          "chineseAudioText": "学校左边有一家银行。",
+          "pinyin": "Xuéxiào zuǒbian yǒu yījiā yínháng.",
+          "expectedMeaning": "Phía bên trái trường học có một ngân hàng.",
+          "acceptedKeywords": [
+            "phía",
+            "bên",
+            "trái",
+            "trường",
+            "học",
+            "có",
+            "một",
+            "ngân",
+            "hàng"
+          ],
+          "hint": "Pinyin: Xuéxiào zuǒbian yǒu yījiā yínháng.",
+          "explanation": "学校左边有一家银行。 (Xuéxiào zuǒbian yǒu yījiā yínháng.) nghĩa là: Phía bên trái trường học có một ngân hàng."
+        },
+        {
+          "id": "tr11_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "教室里有三个人。",
+          "chineseAudioText": "教室里有三个人。",
+          "pinyin": "Jiàoshì li yǒu sān gèrén.",
+          "expectedMeaning": "Trong phòng học có 3 người.",
+          "acceptedKeywords": [
+            "trong",
+            "phòng",
+            "học",
+            "có",
+            "người"
+          ],
+          "hint": "Pinyin: Jiàoshì li yǒu sān gèrén.",
+          "explanation": "教室里有三个人。 (Jiàoshì li yǒu sān gèrén.) nghĩa là: Trong phòng học có 3 người."
+        },
+        {
+          "id": "tr11_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "我没有弟弟。",
+          "chineseAudioText": "我没有弟弟。",
+          "pinyin": "Wǒ méiyǒu dìdi.",
+          "expectedMeaning": "Tôi không có em trai.",
+          "acceptedKeywords": [
+            "tôi",
+            "không",
+            "có",
+            "em",
+            "trai"
+          ],
+          "hint": "Pinyin: Wǒ méiyǒu dìdi.",
+          "explanation": "我没有弟弟。 (Wǒ méiyǒu dìdi.) nghĩa là: Tôi không có em trai."
+        },
+        {
+          "id": "tr11_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "她二十五岁了，在一家医院工作，很喜欢小猫。",
+          "chineseAudioText": "她二十五岁了，在一家医院工作，很喜欢小猫。",
+          "pinyin": "Tā èrshíwǔ suì le, zài yì jiā yīyuàn gōngzuò, hěn xǐhuan xiǎo māo.",
+          "expectedMeaning": "Chị ấy 25 tuổi rồi, làm việc ở một bệnh viện và rất thích mèo con.",
+          "acceptedKeywords": [
+            "chị",
+            "ấy",
+            "25",
+            "tuổi",
+            "rồi",
+            "làm",
+            "việc",
+            "một",
+            "bệnh",
+            "viện",
+            "và",
+            "rất",
+            "thích",
+            "mèo",
+            "con"
+          ],
+          "hint": "Pinyin: Tā èrshíwǔ suì le, zài yì jiā yīyuàn gōngzuò, hěn xǐhuan xiǎo māo.",
+          "explanation": "她二十五岁了，在一家医院工作，很喜欢小猫。 (Tā èrshíwǔ suì le, zài yì jiā yīyuàn gōngzuò, hěn xǐhuan xiǎo māo.) nghĩa là: Chị ấy 25 tuổi rồi, làm việc ở một bệnh viện và rất thích mèo con."
+        },
+        {
+          "id": "tr11_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "你姐姐今年多大？她工作了吗？",
+          "chineseAudioText": "你姐姐今年多大？她工作了吗？",
+          "pinyin": "Nǐ jiějie jīnnián duōdà? Tā gōngzuò le ma?",
+          "expectedMeaning": "Chị gái bạn năm nay bao nhiêu tuổi? Chị ấy đi làm chưa?",
+          "acceptedKeywords": [
+            "chị",
+            "gái",
+            "bạn",
+            "năm",
+            "nay",
+            "bao",
+            "nhiêu",
+            "tuổi",
+            "chị",
+            "ấy",
+            "đi",
+            "làm",
+            "chưa"
+          ],
+          "hint": "Pinyin: Nǐ jiějie jīnnián duōdà? Tā gōngzuò le ma?",
+          "explanation": "你姐姐今年多大？她工作了吗？ (Nǐ jiějie jīnnián duōdà? Tā gōngzuò le ma?) nghĩa là: Chị gái bạn năm nay bao nhiêu tuổi? Chị ấy đi làm chưa?"
+        },
+        {
+          "id": "tr11_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "我家有五口人：爷爷、爸爸、妈妈、姐姐和我。",
+          "chineseAudioText": "我家有五口人：爷爷、爸爸、妈妈、姐姐和我。",
+          "pinyin": "Wǒ jiā yǒu wǔ kǒu rén: yéye, bàba, māma, jiějie hé wǒ.",
+          "expectedMeaning": "Nhà tôi có năm người: ông nội, bố, mẹ, chị gái và tôi.",
+          "acceptedKeywords": [
+            "nhà",
+            "tôi",
+            "có",
+            "năm",
+            "người",
+            "ông",
+            "nội",
+            "bố",
+            "mẹ",
+            "chị",
+            "gái",
+            "và",
+            "tôi"
+          ],
+          "hint": "Pinyin: Wǒ jiā yǒu wǔ kǒu rén: yéye, bàba, māma, jiějie hé wǒ.",
+          "explanation": "我家有五口人：爷爷、爸爸、妈妈、姐姐和我。 (Wǒ jiā yǒu wǔ kǒu rén: yéye, bàba, māma, jiějie hé wǒ.) nghĩa là: Nhà tôi có năm người: ông nội, bố, mẹ, chị gái và tôi."
         }
       ],
       "expandedQuiz": [
@@ -23090,6 +28756,351 @@ const DEFAULT_LESSONS = [
             "的",
             "左边"
           ]
+        },
+        {
+          "id": "ss12_exp_1",
+          "targetHanzi": "昨天你去哪儿了我到你的宿舍但是没见到你",
+          "targetMeaning": "Hôm qua cậu đi đâu thế? Tớ qua ký túc xá của cậu nhưng không gặp được cậu.",
+          "pinyin": "Zuótiān nǐ qù nǎr le? Wǒ dào nǐ de sùshè dànshì méi jiàn dào nǐ.",
+          "tokens": [
+            "昨天",
+            "你",
+            "去",
+            "哪儿",
+            "了",
+            "我",
+            "到",
+            "你",
+            "的",
+            "宿舍",
+            "但是",
+            "没",
+            "见",
+            "到",
+            "你"
+          ]
+        },
+        {
+          "id": "ss12_exp_2",
+          "targetHanzi": "你问上午还是下午上午六点我去图书馆学习下午跟山本同学马克同学到张风家",
+          "targetMeaning": "Cậu hỏi buổi sáng hay buổi chiều? 6 giờ sáng tớ đi thư viện học, buổi chiều cùng bạn Yamamoto và bạn Mark đến nhà Trương Phong.",
+          "pinyin": "Nǐ wèn shàngwǔ háishi xiàwǔ? Shàngwǔ liù diǎn wǒ qù túshūguǎn xuéxí, xiàwǔ gēn Shānběn tóngxué, Mǎkè tóngxué dào Zhāng Fēng jiā.",
+          "tokens": [
+            "你",
+            "问",
+            "上午",
+            "还是",
+            "下午",
+            "上午",
+            "六",
+            "点",
+            "我",
+            "去",
+            "图书馆",
+            "学",
+            "习",
+            "下午",
+            "跟",
+            "山",
+            "本",
+            "同学",
+            "马克",
+            "同学",
+            "到",
+            "张风",
+            "家"
+          ]
+        },
+        {
+          "id": "ss12_exp_3",
+          "targetHanzi": "你们到他家聚会还是有什么事",
+          "targetMeaning": "Các cậu đến nhà cậu ấy tụ tập hay có việc gì thế?",
+          "pinyin": "Nǐmen dào tā jiā jùhuì háishi yǒu shénme shì?",
+          "tokens": [
+            "你们",
+            "到",
+            "他",
+            "家",
+            "聚会",
+            "还是",
+            "有",
+            "什么",
+            "事"
+          ]
+        },
+        {
+          "id": "ss12_exp_4",
+          "targetHanzi": "那么你一定见到他的家人了吧他们怎么样",
+          "targetMeaning": "Vậy chắc cậu đã gặp người nhà cậu ấy rồi nhỉ? Họ thế nào?",
+          "pinyin": "Nàme nǐ yídìng jiàn dào tā de jiārén le ba? Tāmen zěnmeyàng?",
+          "tokens": [
+            "那么",
+            "你",
+            "一",
+            "定",
+            "见",
+            "到",
+            "他",
+            "的",
+            "家",
+            "人",
+            "了",
+            "吧",
+            "他们",
+            "怎么样"
+          ]
+        },
+        {
+          "id": "ss12_exp_5",
+          "targetHanzi": "是的张风给我们介绍了他的妈妈和弟弟他爸爸不在家阿姨很漂亮很年轻他弟弟也很可爱他们都很热情地接待了我们",
+          "targetMeaning": "Đúng rồi. Trương Phong giới thiệu mẹ và em trai cậu ấy cho bọn tớ, bố cậu ấy không có ở nhà. Cô ấy rất xinh đẹp và trẻ trung, em trai cậu ấy cũng rất đáng yêu. Mọi người đều tiếp đón bọn tớ rất nhiệt tình.",
+          "pinyin": "Shì de. Zhāng Fēng gěi wǒmen jièshào le tā de māma hé dìdi, tā bàba bú zàijiā. Āyí hěn piàoliang, hěn niánqīng, tā dìdi yě hěn kě'ài. Tāmen dōu hěn rèqíng de jiēdài le wǒmen.",
+          "tokens": [
+            "是",
+            "的",
+            "张风",
+            "给",
+            "我们",
+            "介绍",
+            "了",
+            "他",
+            "的",
+            "妈妈",
+            "和",
+            "弟弟",
+            "他",
+            "爸爸",
+            "不",
+            "在",
+            "家",
+            "阿姨",
+            "很",
+            "漂亮",
+            "很",
+            "年轻",
+            "他",
+            "弟弟",
+            "也",
+            "很",
+            "可爱",
+            "他们",
+            "都",
+            "很",
+            "热情",
+            "地",
+            "接待",
+            "了",
+            "我们"
+          ]
+        },
+        {
+          "id": "ss12_exp_6",
+          "targetHanzi": "你们不觉得紧张吗如果是我我就紧张死了",
+          "targetMeaning": "Các cậu không thấy hồi hộp à? Nếu là tớ chắc tớ hồi hộp chết mất.",
+          "pinyin": "Nǐmen bù juéde jǐnzhāng ma? Rúguǒ shì wǒ, wǒ jiù jǐnzhāng sǐle.",
+          "tokens": [
+            "你们",
+            "不",
+            "觉得",
+            "紧张",
+            "吗",
+            "如果",
+            "是",
+            "我",
+            "我",
+            "就",
+            "紧张",
+            "死了"
+          ]
+        },
+        {
+          "id": "ss12_exp_7",
+          "targetHanzi": "我也有点儿不好意思但是张风和他家人都很欢迎我们阿姨给我们准备了很多好吃的有茶咖啡牛肉鱼水果等等",
+          "targetMeaning": "Tớ cũng hơi ngại một chút, nhưng Trương Phong và gia đình cậu ấy rất hoan nghênh bọn tớ. Cô ấy chuẩn bị cho bọn tớ rất nhiều đồ ngon, nào là trà, cà phê, thịt bò, cá, hoa quả, v.v.",
+          "pinyin": "Wǒ yě yǒudiǎnr bù hǎoyìsi, dànshì Zhāng Fēng hé tā jiārén dōu hěn huānyíng wǒmen. Āyí gěi wǒmen zhǔnbèi le hěnduō hǎo chī de, yǒu chá, kāfēi, niúròu, yú, shuǐguǒ děng děng.",
+          "tokens": [
+            "我",
+            "也",
+            "有点儿",
+            "不好意思",
+            "但是",
+            "张风",
+            "和",
+            "他",
+            "家",
+            "人",
+            "都",
+            "很",
+            "欢迎",
+            "我们",
+            "阿姨",
+            "给",
+            "我们",
+            "准备",
+            "了",
+            "很",
+            "多",
+            "好吃",
+            "的",
+            "有",
+            "茶",
+            "咖啡",
+            "牛肉",
+            "鱼",
+            "水果",
+            "等等"
+          ]
+        },
+        {
+          "id": "ss12_exp_8",
+          "targetHanzi": "哇她真好你们在他家做什么了",
+          "targetMeaning": "Chà! Cô ấy tốt thật đấy! Các cậu đã làm gì ở nhà cậu ấy?",
+          "pinyin": "Wa! Tā zhēn hǎo! Nǐmen zài tā jiā zuò shénme le?",
+          "tokens": [
+            "哇",
+            "她",
+            "真",
+            "好",
+            "你们",
+            "在",
+            "他",
+            "家",
+            "做",
+            "什么",
+            "了"
+          ]
+        },
+        {
+          "id": "ss12_exp_9",
+          "targetHanzi": "打游戏听音乐聊天儿喝水吃东西到十点半我们才回宿舍现在回想起来昨天真快乐真热闹",
+          "targetMeaning": "Chơi game, nghe nhạc, trò chuyện, uống nước, ăn uống. Đến 10 giờ rưỡi bọn tớ mới về ký túc xá. Giờ nhớ lại, hôm qua thật vui và náo nhiệt.",
+          "pinyin": "Dǎ yóuxì, tīng yīnyuè, liáotiānr, hē shuǐ, chī dōngxi. Dào shí diǎn bàn wǒmen cái huí sùshè. Xiànzài huíxiǎng qǐlai, zuótiān zhēn kuàilè, zhēn rènao.",
+          "tokens": [
+            "打游戏",
+            "听音乐",
+            "聊天儿",
+            "喝",
+            "水",
+            "吃",
+            "东西",
+            "到",
+            "十",
+            "点",
+            "半",
+            "我们",
+            "才",
+            "回",
+            "宿舍",
+            "现在",
+            "回",
+            "想",
+            "起",
+            "来",
+            "昨天",
+            "真",
+            "快乐",
+            "真",
+            "热闹"
+          ]
+        },
+        {
+          "id": "ss12_exp_10",
+          "targetHanzi": "我也想去啊你们怎么不叫我一起去",
+          "targetMeaning": "Tớ cũng muốn đi mà. Sao các cậu không rủ tớ đi cùng?",
+          "pinyin": "Wǒ yě xiǎng qù a. Nǐmen zěnme bú jiào wǒ yīqǐ qù?",
+          "tokens": [
+            "我",
+            "也",
+            "想",
+            "去",
+            "啊",
+            "你们",
+            "怎么",
+            "不",
+            "叫",
+            "我",
+            "一起",
+            "去"
+          ]
+        },
+        {
+          "id": "ss12_exp_11",
+          "targetHanzi": "昨天上午山本才说他可以去所以到那个时候我们才决定去等下次吧下次去玩儿我就跟你说",
+          "targetMeaning": "Sáng hôm qua Yamamoto mới nói có thể đi, nên lúc đó bọn tớ mới quyết định đi! Đợi lần sau nhé! Lần sau đi chơi tớ sẽ rủ cậu.",
+          "pinyin": "Zuótiān shàngwǔ Shānběn cái shuō tā kěyǐ qù, suǒyǐ dào nàge shíhou wǒmen cái juédìng qù! Děng xià cì ba! Xià cì qù wánr wǒ jiù gēn nǐ shuō.",
+          "tokens": [
+            "昨天",
+            "上午",
+            "山",
+            "本",
+            "才",
+            "说",
+            "他",
+            "可以",
+            "去",
+            "所以",
+            "到",
+            "那",
+            "个",
+            "时候",
+            "我们",
+            "才",
+            "决定",
+            "去",
+            "等",
+            "下次",
+            "吧",
+            "下次",
+            "去",
+            "玩儿",
+            "我",
+            "就",
+            "跟",
+            "你",
+            "说"
+          ]
+        },
+        {
+          "id": "ss12_exp_12",
+          "targetHanzi": "好下次一定要叫我啊",
+          "targetMeaning": "Được, lần sau nhất định phải gọi tớ nhé!",
+          "pinyin": "Hǎo, xià cì yídìng yào jiào wǒ a!",
+          "tokens": [
+            "好",
+            "下次",
+            "一",
+            "定",
+            "要",
+            "叫",
+            "我",
+            "啊"
+          ]
+        },
+        {
+          "id": "ss12_exp_13",
+          "targetHanzi": "他在吃饭呢",
+          "targetMeaning": "Anh ấy đang ăn cơm kìa.",
+          "pinyin": "Tā zài chīfàn ne.",
+          "tokens": [
+            "他",
+            "在",
+            "吃",
+            "饭",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss12_exp_14",
+          "targetHanzi": "你怎么去超市呢",
+          "targetMeaning": "Cậu đi gì đến siêu thị thế?",
+          "pinyin": "Nǐ zěnme qù chāoshì ne?",
+          "tokens": [
+            "你",
+            "怎么",
+            "去",
+            "超市",
+            "呢"
+          ]
         }
       ],
       "translationExercises": [
@@ -23128,6 +29139,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "wǒ zhēn bù xǐhuan",
           "hint": "Gợi ý Pinyin: Wǒ zhēn bù xǐhuan! | Từ chưa học: 不 (bù: không)",
           "explanation": "Tôi thực sự không thích! → 我真不喜欢！ (Wǒ zhēn bù xǐhuan!)"
+        },
+        {
+          "id": "tr12_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Hôm qua cậu đi đâu thế? Tớ qua ký túc xá của cậu nhưng không gặp được cậu.",
+          "expectedChinese": "昨天你去哪儿了？我到你的宿舍但是没见到你。",
+          "acceptedPinyin": "zuótiān nǐ qù nǎr le wǒ dào nǐ de sùshè dànshì méi jiàn dào nǐ",
+          "hint": "Gợi ý Pinyin: Zuótiān nǐ qù nǎr le? Wǒ dào nǐ de sùshè dànshì méi jiàn dào nǐ.",
+          "explanation": "Hôm qua cậu đi đâu thế? Tớ qua ký túc xá của cậu nhưng không gặp được cậu. → 昨天你去哪儿了？我到你的宿舍但是没见到你。 (Zuótiān nǐ qù nǎr le? Wǒ dào nǐ de sùshè dànshì méi jiàn dào nǐ.)"
+        },
+        {
+          "id": "tr12_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu hỏi buổi sáng hay buổi chiều? 6 giờ sáng tớ đi thư viện học, buổi chiều cùng bạn Yamamoto và bạn Mark đến nhà Trương Phong.",
+          "expectedChinese": "你问上午还是下午？上午六点我去图书馆学习，下午跟 山本同学、马克同学到张风家。",
+          "acceptedPinyin": "nǐ wèn shàngwǔ háishi xiàwǔ shàngwǔ liù diǎn wǒ qù túshūguǎn xuéxí xiàwǔ gēn shānběn tóngxué mǎkè tóngxué dào zhāng fēng jiā",
+          "hint": "Gợi ý Pinyin: Nǐ wèn shàngwǔ háishi xiàwǔ? Shàngwǔ liù diǎn wǒ qù túshūguǎn xuéxí, xiàwǔ gēn Shānběn tóngxué, Mǎkè tóngxué dào Zhāng Fēng jiā.",
+          "explanation": "Cậu hỏi buổi sáng hay buổi chiều? 6 giờ sáng tớ đi thư viện học, buổi chiều cùng bạn Yamamoto và bạn Mark đến nhà Trương Phong. → 你问上午还是下午？上午六点我去图书馆学习，下午跟 山本同学、马克同学到张风家。 (Nǐ wèn shàngwǔ háishi xiàwǔ? Shàngwǔ liù diǎn wǒ qù túshūguǎn xuéxí, xiàwǔ gēn Shānběn tóngxué, Mǎkè tóngxué dào Zhāng Fēng jiā.)"
+        },
+        {
+          "id": "tr12_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Các cậu đến nhà cậu ấy tụ tập hay có việc gì thế?",
+          "expectedChinese": "你们到他家聚会还是有什么事？",
+          "acceptedPinyin": "nǐmen dào tā jiā jùhuì háishi yǒu shénme shì",
+          "hint": "Gợi ý Pinyin: Nǐmen dào tā jiā jùhuì háishi yǒu shénme shì?",
+          "explanation": "Các cậu đến nhà cậu ấy tụ tập hay có việc gì thế? → 你们到他家聚会还是有什么事？ (Nǐmen dào tā jiā jùhuì háishi yǒu shénme shì?)"
+        },
+        {
+          "id": "tr12_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Trương Phong mời bọn tớ đến nhà cậu ấy chơi.",
+          "expectedChinese": "张风请我们去他家做客。",
+          "acceptedPinyin": "zhāng fēng qǐng wǒmen qù tā jiā zuòkè",
+          "hint": "Gợi ý Pinyin: Zhāng Fēng qǐng wǒmen qù tā jiā zuòkè.",
+          "explanation": "Trương Phong mời bọn tớ đến nhà cậu ấy chơi. → 张风请我们去他家做客。 (Zhāng Fēng qǐng wǒmen qù tā jiā zuòkè.)"
+        },
+        {
+          "id": "tr12_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Vậy chắc cậu đã gặp người nhà cậu ấy rồi nhỉ? Họ thế nào?",
+          "expectedChinese": "那么你一定见到他的家人了吧？他们怎么样？",
+          "acceptedPinyin": "nàme nǐ yídìng jiàn dào tā de jiārén le ba tāmen zěnmeyàng",
+          "hint": "Gợi ý Pinyin: Nàme nǐ yídìng jiàn dào tā de jiārén le ba? Tāmen zěnmeyàng?",
+          "explanation": "Vậy chắc cậu đã gặp người nhà cậu ấy rồi nhỉ? Họ thế nào? → 那么你一定见到他的家人了吧？他们怎么样？ (Nàme nǐ yídìng jiàn dào tā de jiārén le ba? Tāmen zěnmeyàng?)"
+        },
+        {
+          "id": "tr12_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Đúng rồi. Trương Phong giới thiệu mẹ và em trai cậu ấy cho bọn tớ, bố cậu ấy không có ở nhà. Cô ấy rất xinh đẹp và trẻ trung, em trai cậu ấy cũng rất đáng yêu. Mọi người đều tiếp đón bọn tớ rất nhiệt tình.",
+          "expectedChinese": "是的。张风给我们介绍了他的妈妈和弟弟，他爸爸不在家。阿姨很漂亮、很年轻，他弟弟也很可爱。他们都很热情地接待了我们。",
+          "acceptedPinyin": "shì de zhāng fēng gěi wǒmen jièshào le tā de māma hé dìdi tā bàba bú zàijiā āyí hěn piàoliang hěn niánqīng tā dìdi yě hěn kě ài tāmen dōu hěn rèqíng de jiēdài le wǒmen",
+          "hint": "Gợi ý Pinyin: Shì de. Zhāng Fēng gěi wǒmen jièshào le tā de māma hé dìdi, tā bàba bú zàijiā. Āyí hěn piàoliang, hěn niánqīng, tā dìdi yě hěn kě'ài. Tāmen dōu hěn rèqíng de jiēdài le wǒmen.",
+          "explanation": "Đúng rồi. Trương Phong giới thiệu mẹ và em trai cậu ấy cho bọn tớ, bố cậu ấy không có ở nhà. Cô ấy rất xinh đẹp và trẻ trung, em trai cậu ấy cũng rất đáng yêu. Mọi người đều tiếp đón bọn tớ rất nhiệt tình. → 是的。张风给我们介绍了他的妈妈和弟弟，他爸爸不在家。阿姨很漂亮、很年轻，他弟弟也很可爱。他们都很热情地接待了我们。 (Shì de. Zhāng Fēng gěi wǒmen jièshào le tā de māma hé dìdi, tā bàba bú zàijiā. Āyí hěn piàoliang, hěn niánqīng, tā dìdi yě hěn kě'ài. Tāmen dōu hěn rèqíng de jiēdài le wǒmen.)"
+        },
+        {
+          "id": "tr12_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Các cậu không thấy hồi hộp à? Nếu là tớ chắc tớ hồi hộp chết mất.",
+          "expectedChinese": "你们不觉得紧张吗？如果是我，我就紧张死了。",
+          "acceptedPinyin": "nǐmen bù juéde jǐnzhāng ma rúguǒ shì wǒ wǒ jiù jǐnzhāng sǐle",
+          "hint": "Gợi ý Pinyin: Nǐmen bù juéde jǐnzhāng ma? Rúguǒ shì wǒ, wǒ jiù jǐnzhāng sǐle.",
+          "explanation": "Các cậu không thấy hồi hộp à? Nếu là tớ chắc tớ hồi hộp chết mất. → 你们不觉得紧张吗？如果是我，我就紧张死了。 (Nǐmen bù juéde jǐnzhāng ma? Rúguǒ shì wǒ, wǒ jiù jǐnzhāng sǐle.)"
+        },
+        {
+          "id": "tr12_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Tớ cũng hơi ngại một chút, nhưng Trương Phong và gia đình cậu ấy rất hoan nghênh bọn tớ. Cô ấy chuẩn bị cho bọn tớ rất nhiều đồ ngon, nào là trà, cà phê, thịt bò, cá, hoa quả, v.v.",
+          "expectedChinese": "我也有点儿不好意思，但是张风和他家人都很欢迎我们。阿姨给我们准备了很多好吃的，有茶、咖啡、牛肉、鱼、水果等等。",
+          "acceptedPinyin": "wǒ yě yǒudiǎnr bù hǎoyìsi dànshì zhāng fēng hé tā jiārén dōu hěn huānyíng wǒmen āyí gěi wǒmen zhǔnbèi le hěnduō hǎo chī de yǒu chá kāfēi niúròu yú shuǐguǒ děng děng",
+          "hint": "Gợi ý Pinyin: Wǒ yě yǒudiǎnr bù hǎoyìsi, dànshì Zhāng Fēng hé tā jiārén dōu hěn huānyíng wǒmen. Āyí gěi wǒmen zhǔnbèi le hěnduō hǎo chī de, yǒu chá, kāfēi, niúròu, yú, shuǐguǒ děng děng.",
+          "explanation": "Tớ cũng hơi ngại một chút, nhưng Trương Phong và gia đình cậu ấy rất hoan nghênh bọn tớ. Cô ấy chuẩn bị cho bọn tớ rất nhiều đồ ngon, nào là trà, cà phê, thịt bò, cá, hoa quả, v.v. → 我也有点儿不好意思，但是张风和他家人都很欢迎我们。阿姨给我们准备了很多好吃的，有茶、咖啡、牛肉、鱼、水果等等。 (Wǒ yě yǒudiǎnr bù hǎoyìsi, dànshì Zhāng Fēng hé tā jiārén dōu hěn huānyíng wǒmen. Āyí gěi wǒmen zhǔnbèi le hěnduō hǎo chī de, yǒu chá, kāfēi, niúròu, yú, shuǐguǒ děng děng.)"
+        },
+        {
+          "id": "tr12_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Chà! Cô ấy tốt thật đấy! Các cậu đã làm gì ở nhà cậu ấy?",
+          "expectedChinese": "哇！她真好！你们在他家做什么了？",
+          "acceptedPinyin": "wa tā zhēn hǎo nǐmen zài tā jiā zuò shénme le",
+          "hint": "Gợi ý Pinyin: Wa! Tā zhēn hǎo! Nǐmen zài tā jiā zuò shénme le?",
+          "explanation": "Chà! Cô ấy tốt thật đấy! Các cậu đã làm gì ở nhà cậu ấy? → 哇！她真好！你们在他家做什么了？ (Wa! Tā zhēn hǎo! Nǐmen zài tā jiā zuò shénme le?)"
+        },
+        {
+          "id": "tr12_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Chơi game, nghe nhạc, trò chuyện, uống nước, ăn uống. Đến 10 giờ rưỡi bọn tớ mới về ký túc xá. Giờ nhớ lại, hôm qua thật vui và náo nhiệt.",
+          "expectedChinese": "打游戏、听音乐、聊天儿、喝 水、吃东西。到十点半我们才回宿舍。现在回想起来，昨天真快乐，真热闹。",
+          "acceptedPinyin": "dǎ yóuxì tīng yīnyuè liáotiānr hē shuǐ chī dōngxi dào shí diǎn bàn wǒmen cái huí sùshè xiànzài huíxiǎng qǐlai zuótiān zhēn kuàilè zhēn rènao",
+          "hint": "Gợi ý Pinyin: Dǎ yóuxì, tīng yīnyuè, liáotiānr, hē shuǐ, chī dōngxi. Dào shí diǎn bàn wǒmen cái huí sùshè. Xiànzài huíxiǎng qǐlai, zuótiān zhēn kuàilè, zhēn rènao.",
+          "explanation": "Chơi game, nghe nhạc, trò chuyện, uống nước, ăn uống. Đến 10 giờ rưỡi bọn tớ mới về ký túc xá. Giờ nhớ lại, hôm qua thật vui và náo nhiệt. → 打游戏、听音乐、聊天儿、喝 水、吃东西。到十点半我们才回宿舍。现在回想起来，昨天真快乐，真热闹。 (Dǎ yóuxì, tīng yīnyuè, liáotiānr, hē shuǐ, chī dōngxi. Dào shí diǎn bàn wǒmen cái huí sùshè. Xiànzài huíxiǎng qǐlai, zuótiān zhēn kuàilè, zhēn rènao.)"
         },
         {
           "id": "tr12_zh_1",
@@ -23188,6 +29289,232 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Nǐ zěnme qù chāoshì ne?",
           "explanation": "A: 你怎么去超市呢？ (Nǐ zěnme qù chāoshì ne?) nghĩa là: Cậu đi gì đến siêu thị thế?"
+        },
+        {
+          "id": "tr12_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "中村是中国人还是日本人？",
+          "chineseAudioText": "中村是中国人还是日本人？",
+          "pinyin": "Zhōngcūn shì Zhōngguó rén háishi Rìběn rén?",
+          "expectedMeaning": "Nakamura là người Trung Quốc hay người Nhật Bản?",
+          "acceptedKeywords": [
+            "nakamura",
+            "là",
+            "người",
+            "trung",
+            "quốc",
+            "hay",
+            "người",
+            "nhật",
+            "bản"
+          ],
+          "hint": "Pinyin: Zhōngcūn shì Zhōngguó rén háishi Rìběn rén?",
+          "explanation": "中村是中国人还是日本人？ (Zhōngcūn shì Zhōngguó rén háishi Rìběn rén?) nghĩa là: Nakamura là người Trung Quốc hay người Nhật Bản?"
+        },
+        {
+          "id": "tr12_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "你今年去留学还是明年去？",
+          "chineseAudioText": "你今年去留学还是明年去？",
+          "pinyin": "Nǐ jīnnián qù liúxué háishi míngnián qù?",
+          "expectedMeaning": "Năm nay hay năm sau cậu đi du học?",
+          "acceptedKeywords": [
+            "năm",
+            "nay",
+            "hay",
+            "năm",
+            "sau",
+            "cậu",
+            "đi",
+            "du",
+            "học"
+          ],
+          "hint": "Pinyin: Nǐ jīnnián qù liúxué háishi míngnián qù?",
+          "explanation": "你今年去留学还是明年去？ (Nǐ jīnnián qù liúxué háishi míngnián qù?) nghĩa là: Năm nay hay năm sau cậu đi du học?"
+        },
+        {
+          "id": "tr12_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "这个会议，你去还是小明去？",
+          "chineseAudioText": "这个会议，你去还是小明去？",
+          "pinyin": "Zhège huìyì, nǐ qù háishi Xiǎomíng qù?",
+          "expectedMeaning": "Hội nghị này, cậu đi hay Minh đi?",
+          "acceptedKeywords": [
+            "hội",
+            "nghị",
+            "này",
+            "cậu",
+            "đi",
+            "hay",
+            "minh",
+            "đi"
+          ],
+          "hint": "Pinyin: Zhège huìyì, nǐ qù háishi Xiǎomíng qù?",
+          "explanation": "这个会议，你去还是小明去？ (Zhège huìyì, nǐ qù háishi Xiǎomíng qù?) nghĩa là: Hội nghị này, cậu đi hay Minh đi?"
+        },
+        {
+          "id": "tr12_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "你喜欢学汉语还是英语？",
+          "chineseAudioText": "你喜欢学汉语还是英语？",
+          "pinyin": "Nǐ xǐhuan xué Hànyǔ háishi Yīngyǔ?",
+          "expectedMeaning": "Em thích học tiếng Trung hay tiếng Anh?",
+          "acceptedKeywords": [
+            "em",
+            "thích",
+            "học",
+            "tiếng",
+            "trung",
+            "hay",
+            "tiếng",
+            "anh"
+          ],
+          "hint": "Pinyin: Nǐ xǐhuan xué Hànyǔ háishi Yīngyǔ?",
+          "explanation": "你喜欢学汉语还是英语？ (Nǐ xǐhuan xué Hànyǔ háishi Yīngyǔ?) nghĩa là: Em thích học tiếng Trung hay tiếng Anh?"
+        },
+        {
+          "id": "tr12_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "我真心真意想跟你去。",
+          "chineseAudioText": "我真心真意想跟你去。",
+          "pinyin": "Wǒ zhēnxīn zhēnyì xiǎng gēn nǐ qù.",
+          "expectedMeaning": "Tôi thật lòng muốn đi cùng em.",
+          "acceptedKeywords": [
+            "tôi",
+            "thật",
+            "lòng",
+            "muốn",
+            "đi",
+            "cùng",
+            "em"
+          ],
+          "hint": "Pinyin: Wǒ zhēnxīn zhēnyì xiǎng gēn nǐ qù.",
+          "explanation": "我真心真意想跟你去。 (Wǒ zhēnxīn zhēnyì xiǎng gēn nǐ qù.) nghĩa là: Tôi thật lòng muốn đi cùng em."
+        },
+        {
+          "id": "tr12_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "那件事是真的。",
+          "chineseAudioText": "那件事是真的。",
+          "pinyin": "Nà jiàn shì shì zhēn de.",
+          "expectedMeaning": "Việc đó là thật.",
+          "acceptedKeywords": [
+            "việc",
+            "đó",
+            "là",
+            "thật"
+          ],
+          "hint": "Pinyin: Nà jiàn shì shì zhēn de.",
+          "explanation": "那件事是真的。 (Nà jiàn shì shì zhēn de.) nghĩa là: Việc đó là thật."
+        },
+        {
+          "id": "tr12_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "我要一杯热茶吧。吃饱了我们一起听音乐、聊天儿！",
+          "chineseAudioText": "我要一杯热茶吧。吃饱了我们一起听音乐、聊天儿！",
+          "pinyin": "Wǒ yào yì bēi rè chá ba. Chībǎo le wǒmen yīqǐ tīng yīnyuè, liáotiānr!",
+          "expectedMeaning": "Cho mình một tách trà nóng nhé. Ăn xong chúng ta cùng nghe nhạc và trò chuyện!",
+          "acceptedKeywords": [
+            "cho",
+            "mình",
+            "một",
+            "tách",
+            "trà",
+            "nóng",
+            "nhé",
+            "ăn",
+            "xong",
+            "chúng",
+            "ta",
+            "cùng",
+            "nghe",
+            "nhạc",
+            "và",
+            "trò",
+            "chuyện"
+          ],
+          "hint": "Pinyin: Wǒ yào yì bēi rè chá ba. Chībǎo le wǒmen yīqǐ tīng yīnyuè, liáotiānr!",
+          "explanation": "我要一杯热茶吧。吃饱了我们一起听音乐、聊天儿！ (Wǒ yào yì bēi rè chá ba. Chībǎo le wǒmen yīqǐ tīng yīnyuè, liáotiānr!) nghĩa là: Cho mình một tách trà nóng nhé. Ăn xong chúng ta cùng nghe nhạc và trò chuyện!"
+        },
+        {
+          "id": "tr12_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "你们想喝茶还是咖啡？这里还有水果和牛肉。",
+          "chineseAudioText": "你们想喝茶还是咖啡？这里还有水果和牛肉。",
+          "pinyin": "Nǐmen xiǎng hē chá háishi kāfēi? Zhèlǐ hái yǒu shuǐguǒ hé niúròu.",
+          "expectedMeaning": "Các cậu muốn uống trà hay cà phê? Ở đây còn có hoa quả và thịt bò nữa.",
+          "acceptedKeywords": [
+            "các",
+            "cậu",
+            "muốn",
+            "uống",
+            "trà",
+            "hay",
+            "cà",
+            "phê",
+            "đây",
+            "còn",
+            "có",
+            "hoa",
+            "quả",
+            "và",
+            "thịt",
+            "bò",
+            "nữa"
+          ],
+          "hint": "Pinyin: Nǐmen xiǎng hē chá háishi kāfēi? Zhèlǐ hái yǒu shuǐguǒ hé niúròu.",
+          "explanation": "你们想喝茶还是咖啡？这里还有水果和牛肉。 (Nǐmen xiǎng hē chá háishi kāfēi? Zhèlǐ hái yǒu shuǐguǒ hé niúròu.) nghĩa là: Các cậu muốn uống trà hay cà phê? Ở đây còn có hoa quả và thịt bò nữa."
+        },
+        {
+          "id": "tr12_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "谢谢你和阿姨这么热情地接待我们。",
+          "chineseAudioText": "谢谢你和阿姨这么热情地接待我们。",
+          "pinyin": "Xièxie nǐ hé āyí zhème rèqíng de jiēdài wǒmen.",
+          "expectedMeaning": "Cảm ơn cậu và cô đã tiếp đón bọn mình nhiệt tình thế này.",
+          "acceptedKeywords": [
+            "cảm",
+            "ơn",
+            "cậu",
+            "và",
+            "cô",
+            "đã",
+            "tiếp",
+            "đón",
+            "bọn",
+            "mình",
+            "nhiệt",
+            "tình",
+            "thế",
+            "này"
+          ],
+          "hint": "Pinyin: Xièxie nǐ hé āyí zhème rèqíng de jiēdài wǒmen.",
+          "explanation": "谢谢你和阿姨这么热情地接待我们。 (Xièxie nǐ hé āyí zhème rèqíng de jiēdài wǒmen.) nghĩa là: Cảm ơn cậu và cô đã tiếp đón bọn mình nhiệt tình thế này."
+        },
+        {
+          "id": "tr12_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "欢迎大家来我家做客！快请坐！",
+          "chineseAudioText": "欢迎大家来我家做客！快请坐！",
+          "pinyin": "Huānyíng dàjiā lái wǒ jiā zuòkè! Kuài qǐng zuò!",
+          "expectedMeaning": "Chào mừng mọi người đến nhà mình chơi! Mời ngồi tự nhiên nhé!",
+          "acceptedKeywords": [
+            "chào",
+            "mừng",
+            "mọi",
+            "người",
+            "đến",
+            "nhà",
+            "mình",
+            "chơi",
+            "mời",
+            "ngồi",
+            "tự",
+            "nhiên",
+            "nhé"
+          ],
+          "hint": "Pinyin: Huānyíng dàjiā lái wǒ jiā zuòkè! Kuài qǐng zuò!",
+          "explanation": "欢迎大家来我家做客！快请坐！ (Huānyíng dàjiā lái wǒ jiā zuòkè! Kuài qǐng zuò!) nghĩa là: Chào mừng mọi người đến nhà mình chơi! Mời ngồi tự nhiên nhé!"
         }
       ],
       "expandedQuiz": [
@@ -25238,6 +31565,249 @@ const DEFAULT_LESSONS = [
             "东西"
           ],
           "unlearnedHint": "Từ chưa học: 下雨 (xià yǔ: mưa), 不 (bù: không)"
+        },
+        {
+          "id": "ss13_exp_1",
+          "targetHanzi": "马克你在干什么呢",
+          "targetMeaning": "Mark, cậu đang làm gì thế?",
+          "pinyin": "Mǎkè, nǐ zài gàn shénme ne?",
+          "tokens": [
+            "马克",
+            "你",
+            "在",
+            "干",
+            "什么",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss13_exp_2",
+          "targetHanzi": "我正在选生日礼物",
+          "targetMeaning": "Tớ đang chọn quà sinh nhật.",
+          "pinyin": "Wǒ zhèngzài xuǎn shēngrì lǐwù.",
+          "tokens": [
+            "我",
+            "正在",
+            "选",
+            "生日",
+            "礼物"
+          ]
+        },
+        {
+          "id": "ss13_exp_3",
+          "targetHanzi": "是谁的生日礼物",
+          "targetMeaning": "Quà sinh nhật của ai vậy?",
+          "pinyin": "Shì shéi de shēngrì lǐwù?",
+          "tokens": [
+            "是",
+            "谁",
+            "的",
+            "生日",
+            "礼物"
+          ]
+        },
+        {
+          "id": "ss13_exp_4",
+          "targetHanzi": "我妹妹的",
+          "targetMeaning": "Của em gái tớ.",
+          "pinyin": "Wǒ mèimei de.",
+          "tokens": [
+            "我",
+            "妹妹",
+            "的"
+          ]
+        },
+        {
+          "id": "ss13_exp_5",
+          "targetHanzi": "你打算送给她什么礼物",
+          "targetMeaning": "Cậu định tặng em ấy món quà gì?",
+          "pinyin": "Nǐ dǎsuan sòng gěi tā shénme lǐwù?",
+          "tokens": [
+            "你",
+            "打算",
+            "送",
+            "给",
+            "她",
+            "什么",
+            "礼物"
+          ]
+        },
+        {
+          "id": "ss13_exp_6",
+          "targetHanzi": "我打算送给她一顶帽子和一双鞋你觉得这顶红色的帽子怎么样",
+          "targetMeaning": "Tớ định tặng em ấy một chiếc mũ và một đôi giày. Cậu thấy chiếc mũ màu đỏ này thế nào?",
+          "pinyin": "Wǒ dǎsuan sòng gěi tā yī dǐng màozi hé yīshuāng xié. Nǐ juéde zhè dǐng hóngsè de màozi zěnmeyàng?",
+          "tokens": [
+            "我",
+            "打算",
+            "送",
+            "给",
+            "她",
+            "一",
+            "顶",
+            "帽子",
+            "和",
+            "一",
+            "双",
+            "鞋",
+            "你",
+            "觉得",
+            "这",
+            "顶",
+            "红色",
+            "的",
+            "帽子",
+            "怎么样"
+          ]
+        },
+        {
+          "id": "ss13_exp_7",
+          "targetHanzi": "哇太好看了我觉得你妹妹一定很喜欢对了你妹妹的生日是几月几号",
+          "targetMeaning": "Chà, đẹp quá đi! Tớ nghĩ em gái cậu nhất định sẽ rất thích! À, sinh nhật em gái cậu là ngày mấy tháng mấy?",
+          "pinyin": "Wa, tài hǎokàn le! Wǒ juéde nǐ mèimei yídìng hěn xǐhuan! Duì le, nǐ mèimei de shēngrì shì jǐ yuè jǐ hào?",
+          "tokens": [
+            "哇",
+            "太",
+            "好看",
+            "了",
+            "我",
+            "觉得",
+            "你",
+            "妹妹",
+            "一",
+            "定",
+            "很",
+            "喜欢",
+            "对",
+            "了",
+            "你",
+            "妹妹",
+            "的",
+            "生日",
+            "是",
+            "几",
+            "月",
+            "几",
+            "号"
+          ]
+        },
+        {
+          "id": "ss13_exp_8",
+          "targetHanzi": "十二月二十四号",
+          "targetMeaning": "Ngày 24 tháng 12.",
+          "pinyin": "Shí'èr yuè èrshísì hào.",
+          "tokens": [
+            "十",
+            "二",
+            "月",
+            "二",
+            "十",
+            "四",
+            "号"
+          ]
+        },
+        {
+          "id": "ss13_exp_9",
+          "targetHanzi": "是星期几",
+          "targetMeaning": "Là thứ mấy?",
+          "pinyin": "Shì xīngqī jǐ?",
+          "tokens": [
+            "是",
+            "星期几"
+          ]
+        },
+        {
+          "id": "ss13_exp_10",
+          "targetHanzi": "是星期六怎么了",
+          "targetMeaning": "Là thứ Bảy, có chuyện gì thế?",
+          "pinyin": "Shì xīngqīliù, zěnme le?",
+          "tokens": [
+            "是",
+            "星期六",
+            "怎么了"
+          ]
+        },
+        {
+          "id": "ss13_exp_11",
+          "targetHanzi": "我差点儿忘了星期六也是我的一个朋友的生日那你买你的吧我现在去书店给他买一本汉语书明天再跟你说吧",
+          "targetMeaning": "Suýt nữa tớ quên mất, thứ Bảy cũng là sinh nhật một người bạn của tớ. Vậy cậu cứ mua đồ của cậu đi, giờ tớ ra hiệu sách mua tặng cậu ấy một quyển sách tiếng Hán, mai nói chuyện với cậu sau nhé!",
+          "pinyin": "Wǒ chàdiǎnr wàng le, xīngqīliù yěshì wǒ de yígè péngyou de shēngrì. Nà nǐ mǎi nǐ de ba, wǒ xiànzài qù shūdiàn gěi tā mǎi yī běn Hànyǔ shū, míngtiān zài gēn nǐ shuō ba!",
+          "tokens": [
+            "我",
+            "差点儿",
+            "忘",
+            "了",
+            "星期六",
+            "也",
+            "是",
+            "我",
+            "的",
+            "一",
+            "个",
+            "朋友",
+            "的",
+            "生日",
+            "那",
+            "你",
+            "买",
+            "你",
+            "的",
+            "吧",
+            "我",
+            "现在",
+            "去",
+            "书店",
+            "给",
+            "他",
+            "买",
+            "一",
+            "本",
+            "汉语",
+            "书",
+            "明天",
+            "再",
+            "跟",
+            "你",
+            "说",
+            "吧"
+          ]
+        },
+        {
+          "id": "ss13_exp_12",
+          "targetHanzi": "好再见",
+          "targetMeaning": "Được, tạm biệt!",
+          "pinyin": "Hǎo, zàijiàn!",
+          "tokens": [
+            "好",
+            "再见"
+          ]
+        },
+        {
+          "id": "ss13_exp_13",
+          "targetHanzi": "他这个人真好",
+          "targetMeaning": "Con người anh ta thật là tốt!",
+          "pinyin": "Tā zhège rén zhēn hǎo!",
+          "tokens": [
+            "他",
+            "这",
+            "个",
+            "人",
+            "真",
+            "好"
+          ]
+        },
+        {
+          "id": "ss13_exp_14",
+          "targetHanzi": "你怎么去超市呢",
+          "targetMeaning": "Cậu đi gì đến siêu thị thế?",
+          "pinyin": "Nǐ zěnme qù chāoshì ne?",
+          "tokens": [
+            "你",
+            "怎么",
+            "去",
+            "超市",
+            "呢"
+          ]
         }
       ],
       "translationExercises": [
@@ -25276,6 +31846,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "tā yīzhí zài děng nǐ",
           "hint": "Gợi ý Pinyin: Tā yīzhí zài děng nǐ.",
           "explanation": "Anh ấy vẫn cứ chờ đợi cậu. → 他一直在等你。 (Tā yīzhí zài děng nǐ.)"
+        },
+        {
+          "id": "tr13_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Mark, cậu đang làm gì thế?",
+          "expectedChinese": "马克，你在干什么呢？",
+          "acceptedPinyin": "mǎkè nǐ zài gàn shénme ne",
+          "hint": "Gợi ý Pinyin: Mǎkè, nǐ zài gàn shénme ne?",
+          "explanation": "Mark, cậu đang làm gì thế? → 马克，你在干什么呢？ (Mǎkè, nǐ zài gàn shénme ne?)"
+        },
+        {
+          "id": "tr13_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Tớ đang chọn quà sinh nhật.",
+          "expectedChinese": "我正在选生日礼物。",
+          "acceptedPinyin": "wǒ zhèngzài xuǎn shēngrì lǐwù",
+          "hint": "Gợi ý Pinyin: Wǒ zhèngzài xuǎn shēngrì lǐwù.",
+          "explanation": "Tớ đang chọn quà sinh nhật. → 我正在选生日礼物。 (Wǒ zhèngzài xuǎn shēngrì lǐwù.)"
+        },
+        {
+          "id": "tr13_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Quà sinh nhật của ai vậy?",
+          "expectedChinese": "是谁的生日礼物？",
+          "acceptedPinyin": "shì shéi de shēngrì lǐwù",
+          "hint": "Gợi ý Pinyin: Shì shéi de shēngrì lǐwù?",
+          "explanation": "Quà sinh nhật của ai vậy? → 是谁的生日礼物？ (Shì shéi de shēngrì lǐwù?)"
+        },
+        {
+          "id": "tr13_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Của em gái tớ.",
+          "expectedChinese": "我妹妹的。",
+          "acceptedPinyin": "wǒ mèimei de",
+          "hint": "Gợi ý Pinyin: Wǒ mèimei de.",
+          "explanation": "Của em gái tớ. → 我妹妹的。 (Wǒ mèimei de.)"
+        },
+        {
+          "id": "tr13_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu định tặng em ấy món quà gì?",
+          "expectedChinese": "你打算送给她什么礼物？",
+          "acceptedPinyin": "nǐ dǎsuan sòng gěi tā shénme lǐwù",
+          "hint": "Gợi ý Pinyin: Nǐ dǎsuan sòng gěi tā shénme lǐwù?",
+          "explanation": "Cậu định tặng em ấy món quà gì? → 你打算送给她什么礼物？ (Nǐ dǎsuan sòng gěi tā shénme lǐwù?)"
+        },
+        {
+          "id": "tr13_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Tớ định tặng em ấy một chiếc mũ và một đôi giày. Cậu thấy chiếc mũ màu đỏ này thế nào?",
+          "expectedChinese": "我打算送给她一顶帽子和一双鞋。你觉得这顶红色的帽子怎么样？",
+          "acceptedPinyin": "wǒ dǎsuan sòng gěi tā yī dǐng màozi hé yīshuāng xié nǐ juéde zhè dǐng hóngsè de màozi zěnmeyàng",
+          "hint": "Gợi ý Pinyin: Wǒ dǎsuan sòng gěi tā yī dǐng màozi hé yīshuāng xié. Nǐ juéde zhè dǐng hóngsè de màozi zěnmeyàng?",
+          "explanation": "Tớ định tặng em ấy một chiếc mũ và một đôi giày. Cậu thấy chiếc mũ màu đỏ này thế nào? → 我打算送给她一顶帽子和一双鞋。你觉得这顶红色的帽子怎么样？ (Wǒ dǎsuan sòng gěi tā yī dǐng màozi hé yīshuāng xié. Nǐ juéde zhè dǐng hóngsè de màozi zěnmeyàng?)"
+        },
+        {
+          "id": "tr13_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Chà, đẹp quá đi! Tớ nghĩ em gái cậu nhất định sẽ rất thích! À, sinh nhật em gái cậu là ngày mấy tháng mấy?",
+          "expectedChinese": "哇，太好看了！我觉得你妹妹一定很喜欢！对了，你妹妹的生日是几月几号？",
+          "acceptedPinyin": "wa tài hǎokàn le wǒ juéde nǐ mèimei yídìng hěn xǐhuan duì le nǐ mèimei de shēngrì shì jǐ yuè jǐ hào",
+          "hint": "Gợi ý Pinyin: Wa, tài hǎokàn le! Wǒ juéde nǐ mèimei yídìng hěn xǐhuan! Duì le, nǐ mèimei de shēngrì shì jǐ yuè jǐ hào?",
+          "explanation": "Chà, đẹp quá đi! Tớ nghĩ em gái cậu nhất định sẽ rất thích! À, sinh nhật em gái cậu là ngày mấy tháng mấy? → 哇，太好看了！我觉得你妹妹一定很喜欢！对了，你妹妹的生日是几月几号？ (Wa, tài hǎokàn le! Wǒ juéde nǐ mèimei yídìng hěn xǐhuan! Duì le, nǐ mèimei de shēngrì shì jǐ yuè jǐ hào?)"
+        },
+        {
+          "id": "tr13_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Ngày 24 tháng 12.",
+          "expectedChinese": "十二月二十四号。",
+          "acceptedPinyin": "shí èr yuè èrshísì hào",
+          "hint": "Gợi ý Pinyin: Shí'èr yuè èrshísì hào.",
+          "explanation": "Ngày 24 tháng 12. → 十二月二十四号。 (Shí'èr yuè èrshísì hào.)"
+        },
+        {
+          "id": "tr13_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Là thứ mấy?",
+          "expectedChinese": "是星期几？",
+          "acceptedPinyin": "shì xīngqī jǐ",
+          "hint": "Gợi ý Pinyin: Shì xīngqī jǐ?",
+          "explanation": "Là thứ mấy? → 是星期几？ (Shì xīngqī jǐ?)"
+        },
+        {
+          "id": "tr13_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Là thứ Bảy, có chuyện gì thế?",
+          "expectedChinese": "是星期六，怎么了？",
+          "acceptedPinyin": "shì xīngqīliù zěnme le",
+          "hint": "Gợi ý Pinyin: Shì xīngqīliù, zěnme le?",
+          "explanation": "Là thứ Bảy, có chuyện gì thế? → 是星期六，怎么了？ (Shì xīngqīliù, zěnme le?)"
         },
         {
           "id": "tr13_zh_1",
@@ -25336,6 +31996,228 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Nǐ zěnme qù chāoshì ne?",
           "explanation": "A: 你怎么去超市呢？ (Nǐ zěnme qù chāoshì ne?) nghĩa là: Cậu đi gì đến siêu thị thế?"
+        },
+        {
+          "id": "tr13_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "我明天再来你家玩儿吧！",
+          "chineseAudioText": "我明天再来你家玩儿吧！",
+          "pinyin": "Wǒ míngtiān zài lái nǐ jiā wánr ba!",
+          "expectedMeaning": "Ngày mai tớ sẽ đến nhà cậu chơi tiếp nhé!",
+          "acceptedKeywords": [
+            "ngày",
+            "mai",
+            "tớ",
+            "sẽ",
+            "đến",
+            "nhà",
+            "cậu",
+            "chơi",
+            "tiếp",
+            "nhé"
+          ],
+          "hint": "Pinyin: Wǒ míngtiān zài lái nǐ jiā wánr ba!",
+          "explanation": "我明天再来你家玩儿吧！ (Wǒ míngtiān zài lái nǐ jiā wánr ba!) nghĩa là: Ngày mai tớ sẽ đến nhà cậu chơi tiếp nhé!"
+        },
+        {
+          "id": "tr13_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "今天星期三。",
+          "chineseAudioText": "今天星期三。",
+          "pinyin": "Jīntiān xīngqīsān.",
+          "expectedMeaning": "Hôm nay là thứ tư.",
+          "acceptedKeywords": [
+            "hôm",
+            "nay",
+            "là",
+            "thứ",
+            "tư"
+          ],
+          "hint": "Pinyin: Jīntiān xīngqīsān.",
+          "explanation": "今天星期三。 (Jīntiān xīngqīsān.) nghĩa là: Hôm nay là thứ tư."
+        },
+        {
+          "id": "tr13_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "老师讲课时，我正在查生词。",
+          "chineseAudioText": "老师讲课时，我正在查生词。",
+          "pinyin": "Lǎoshī jiǎngkè shí, wǒ zhèngzài chá shēngcí.",
+          "expectedMeaning": "Lúc cô giáo giảng bài thì tôi đang tra từ mới.",
+          "acceptedKeywords": [
+            "lúc",
+            "cô",
+            "giáo",
+            "giảng",
+            "bài",
+            "thì",
+            "tôi",
+            "đang",
+            "tra",
+            "từ",
+            "mới"
+          ],
+          "hint": "Pinyin: Lǎoshī jiǎngkè shí, wǒ zhèngzài chá shēngcí.",
+          "explanation": "老师讲课时，我正在查生词。 (Lǎoshī jiǎngkè shí, wǒ zhèngzài chá shēngcí.) nghĩa là: Lúc cô giáo giảng bài thì tôi đang tra từ mới."
+        },
+        {
+          "id": "tr13_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "我给朋友打电话时，爸爸在看着我呢。",
+          "chineseAudioText": "我给朋友打电话时，爸爸在看着我呢。",
+          "pinyin": "Wǒ gěi péngyou dǎ diànhuà shí, bàba zài kàn zhe wǒ ne.",
+          "expectedMeaning": "Lúc tôi gọi điện thoại cho bạn thì bố đang nhìn tôi.",
+          "acceptedKeywords": [
+            "lúc",
+            "tôi",
+            "gọi",
+            "điện",
+            "thoại",
+            "cho",
+            "bạn",
+            "thì",
+            "bố",
+            "đang",
+            "nhìn",
+            "tôi"
+          ],
+          "hint": "Pinyin: Wǒ gěi péngyou dǎ diànhuà shí, bàba zài kàn zhe wǒ ne.",
+          "explanation": "我给朋友打电话时，爸爸在看着我呢。 (Wǒ gěi péngyou dǎ diànhuà shí, bàba zài kàn zhe wǒ ne.) nghĩa là: Lúc tôi gọi điện thoại cho bạn thì bố đang nhìn tôi."
+        },
+        {
+          "id": "tr13_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "妈妈做饭时，我正洗澡呢。",
+          "chineseAudioText": "妈妈做饭时，我正洗澡呢。",
+          "pinyin": "Māma zuò fàn shí, wǒ zhèng xǐzǎo ne.",
+          "expectedMeaning": "Lúc mẹ nấu cơm thì tôi đang tắm.",
+          "acceptedKeywords": [
+            "lúc",
+            "mẹ",
+            "nấu",
+            "cơm",
+            "thì",
+            "tôi",
+            "đang",
+            "tắm"
+          ],
+          "hint": "Pinyin: Māma zuò fàn shí, wǒ zhèng xǐzǎo ne.",
+          "explanation": "妈妈做饭时，我正洗澡呢。 (Māma zuò fàn shí, wǒ zhèng xǐzǎo ne.) nghĩa là: Lúc mẹ nấu cơm thì tôi đang tắm."
+        },
+        {
+          "id": "tr13_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "我回家时，爸爸正看着电视。",
+          "chineseAudioText": "我回家时，爸爸正看着电视。",
+          "pinyin": "Wǒ huí jiā shí, bàba zhèng kànzhe diànshì.",
+          "expectedMeaning": "Lúc tôi về nhà, bố đang xem ti vi.",
+          "acceptedKeywords": [
+            "lúc",
+            "tôi",
+            "về",
+            "nhà",
+            "bố",
+            "đang",
+            "xem",
+            "ti",
+            "vi"
+          ],
+          "hint": "Pinyin: Wǒ huí jiā shí, bàba zhèng kànzhe diànshì.",
+          "explanation": "我回家时，爸爸正看着电视。 (Wǒ huí jiā shí, bàba zhèng kànzhe diànshì.) nghĩa là: Lúc tôi về nhà, bố đang xem ti vi."
+        },
+        {
+          "id": "tr13_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "我正在洗澡呢。",
+          "chineseAudioText": "我正在洗澡呢。",
+          "pinyin": "Wǒ zhèngzài xǐzǎo ne.",
+          "expectedMeaning": "Tôi đang tắm.",
+          "acceptedKeywords": [
+            "tôi",
+            "đang",
+            "tắm"
+          ],
+          "hint": "Pinyin: Wǒ zhèngzài xǐzǎo ne.",
+          "explanation": "我正在洗澡呢。 (Wǒ zhèngzài xǐzǎo ne.) nghĩa là: Tôi đang tắm."
+        },
+        {
+          "id": "tr13_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "谢谢你们，我太高兴了！",
+          "chineseAudioText": "谢谢你们，我太高兴了！",
+          "pinyin": "Xièxie nǐmen, wǒ tài gāoxìng le!",
+          "expectedMeaning": "Cảm ơn các cậu nhiều, tớ vui quá đi mất!",
+          "acceptedKeywords": [
+            "cảm",
+            "ơn",
+            "các",
+            "cậu",
+            "nhiều",
+            "tớ",
+            "vui",
+            "quá",
+            "đi",
+            "mất"
+          ],
+          "hint": "Pinyin: Xièxie nǐmen, wǒ tài gāoxìng le!",
+          "explanation": "谢谢你们，我太高兴了！ (Xièxie nǐmen, wǒ tài gāoxìng le!) nghĩa là: Cảm ơn các cậu nhiều, tớ vui quá đi mất!"
+        },
+        {
+          "id": "tr13_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "太好了！我和玉兰给你准备了一双漂亮的运动鞋。",
+          "chineseAudioText": "太好了！我和玉兰给你准备了一双漂亮的运动鞋。",
+          "pinyin": "Tài hǎo le! Wǒ hé Yùlán gěi nǐ zhǔnbèi le yì shuāng piàoliang de yùndòngxié.",
+          "expectedMeaning": "Tuyệt quá! Tớ và Ngọc Lan đã chuẩn bị tặng cậu một đôi giày thể thao rất đẹp.",
+          "acceptedKeywords": [
+            "tuyệt",
+            "quá",
+            "tớ",
+            "và",
+            "ngọc",
+            "lan",
+            "đã",
+            "chuẩn",
+            "bị",
+            "tặng",
+            "cậu",
+            "một",
+            "đôi",
+            "giày",
+            "thể",
+            "thao",
+            "rất",
+            "đẹp"
+          ],
+          "hint": "Pinyin: Tài hǎo le! Wǒ hé Yùlán gěi nǐ zhǔnbèi le yì shuāng piàoliang de yùndòngxié.",
+          "explanation": "太好了！我和玉兰给你准备了一双漂亮的运动鞋。 (Tài hǎo le! Wǒ hé Yùlán gěi nǐ zhǔnbèi le yì shuāng piàoliang de yùndòngxié.) nghĩa là: Tuyệt quá! Tớ và Ngọc Lan đã chuẩn bị tặng cậu một đôi giày thể thao rất đẹp."
+        },
+        {
+          "id": "tr13_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "对呀！我打算星期五晚上在宿舍附近请大家吃饭。",
+          "chineseAudioText": "对呀！我打算星期五晚上在宿舍附近请大家吃饭。",
+          "pinyin": "Duì ya! Wǒ dǎsuan xīngqīwǔ wǎnshang zài sùshè fùjìn qǐng dàjiā chīfàn.",
+          "expectedMeaning": "Đúng rồi! Tớ định tối thứ Sáu mời mọi người ăn cơm gần ký túc xá.",
+          "acceptedKeywords": [
+            "đúng",
+            "rồi",
+            "tớ",
+            "định",
+            "tối",
+            "thứ",
+            "sáu",
+            "mời",
+            "mọi",
+            "người",
+            "ăn",
+            "cơm",
+            "gần",
+            "ký",
+            "túc",
+            "xá"
+          ],
+          "hint": "Pinyin: Duì ya! Wǒ dǎsuan xīngqīwǔ wǎnshang zài sùshè fùjìn qǐng dàjiā chīfàn.",
+          "explanation": "对呀！我打算星期五晚上在宿舍附近请大家吃饭。 (Duì ya! Wǒ dǎsuan xīngqīwǔ wǎnshang zài sùshè fùjìn qǐng dàjiā chīfàn.) nghĩa là: Đúng rồi! Tớ định tối thứ Sáu mời mọi người ăn cơm gần ký túc xá."
         }
       ],
       "expandedQuiz": [
@@ -27260,6 +34142,293 @@ const DEFAULT_LESSONS = [
             "便宜"
           ],
           "unlearnedHint": "Từ chưa học: 大 (dà: to, lớn)"
+        },
+        {
+          "id": "ss14_exp_1",
+          "targetHanzi": "小兰你家人的爱好是什么",
+          "targetMeaning": "Tiểu Lan, sở thích của những người trong gia đình cậu là gì?",
+          "pinyin": "Xiǎo Lán, nǐ jiārén de àihào shì shénme?",
+          "tokens": [
+            "小",
+            "兰",
+            "你",
+            "家人",
+            "的",
+            "爱好",
+            "是",
+            "什么"
+          ]
+        },
+        {
+          "id": "ss14_exp_2",
+          "targetHanzi": "我家有很多人每个人的爱好都不一样",
+          "targetMeaning": "Nhà tớ có rất nhiều người, sở thích của mỗi người đều khác nhau.",
+          "pinyin": "Wǒ jiā yǒu hěn duō rén, měi gèrén de àihào dōu bù yíyàng.",
+          "tokens": [
+            "我",
+            "家",
+            "有",
+            "很",
+            "多",
+            "人",
+            "每",
+            "个",
+            "人",
+            "的",
+            "爱好",
+            "都",
+            "不",
+            "一样"
+          ]
+        },
+        {
+          "id": "ss14_exp_3",
+          "targetHanzi": "你爸爸喜欢什么",
+          "targetMeaning": "Bố cậu thích gì?",
+          "pinyin": "Nǐ bàba xǐhuan shénme?",
+          "tokens": [
+            "你",
+            "爸爸",
+            "喜欢",
+            "什么"
+          ]
+        },
+        {
+          "id": "ss14_exp_4",
+          "targetHanzi": "我爸爸很喜欢种树我家有一个小园子园子里全都是花和树",
+          "targetMeaning": "Bố tớ rất thích trồng cây, nhà tớ có một khu vườn nhỏ, trong vườn toàn là hoa và cây cối.",
+          "pinyin": "Wǒ bàba hěn xǐhuan zhòng shù, wǒjiā yǒu yígè xiǎo yuánzi, yuánzi li quán dōu shì huā hé shù.",
+          "tokens": [
+            "我",
+            "爸爸",
+            "很",
+            "喜欢",
+            "种",
+            "树",
+            "我",
+            "家",
+            "有",
+            "一",
+            "个",
+            "小",
+            "园子",
+            "园子",
+            "里",
+            "全",
+            "都",
+            "是",
+            "花",
+            "和",
+            "树"
+          ]
+        },
+        {
+          "id": "ss14_exp_5",
+          "targetHanzi": "一定很漂亮你妈妈呢",
+          "targetMeaning": "Chắc chắn rất đẹp! Thế còn mẹ cậu?",
+          "pinyin": "Yídìng hěn piàoliang! Nǐ māma ne?",
+          "tokens": [
+            "一",
+            "定",
+            "很",
+            "漂亮",
+            "你",
+            "妈妈",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss14_exp_6",
+          "targetHanzi": "我妈妈很喜欢唱歌和看书她买了很多书",
+          "targetMeaning": "Mẹ tớ rất thích hát và đọc sách, bà mua rất nhiều sách.",
+          "pinyin": "Wǒ māma hěn xǐhuan chàng gē hé kànshū, tā mǎi le hěnduō shū.",
+          "tokens": [
+            "我",
+            "妈妈",
+            "很",
+            "喜欢",
+            "唱歌",
+            "和",
+            "看",
+            "书",
+            "她",
+            "买",
+            "了",
+            "很",
+            "多",
+            "书"
+          ]
+        },
+        {
+          "id": "ss14_exp_7",
+          "targetHanzi": "我爸爸也很喜欢看书他有空儿的时候就给我和弟弟讲故事你弟弟喜欢什么",
+          "targetMeaning": "Bố tớ cũng rất thích đọc sách, lúc rảnh rỗi ông thường kể chuyện cho tớ và em trai nghe. Em trai cậu thích gì?",
+          "pinyin": "Wǒ bàba yě hěn xǐhuan kànshū, tā yǒu kòngr de shíhou jiù gěi wǒ hé dìdi jiǎng gùshi. Nǐ dìdi xǐhuan shénme?",
+          "tokens": [
+            "我",
+            "爸爸",
+            "也",
+            "很",
+            "喜欢",
+            "看",
+            "书",
+            "他",
+            "有空儿",
+            "的",
+            "时候",
+            "就",
+            "给",
+            "我",
+            "和",
+            "弟弟",
+            "讲故事",
+            "你",
+            "弟弟",
+            "喜欢",
+            "什么"
+          ]
+        },
+        {
+          "id": "ss14_exp_8",
+          "targetHanzi": "我弟弟今年岁他最喜欢画画儿你看这是他画的画儿他画了爷爷的真容",
+          "targetMeaning": "Em trai tớ năm nay 6 tuổi, em ấy thích nhất là vẽ tranh. Cậu xem, đây là bức tranh em ấy vẽ, em ấy vẽ chân dung ông nội đấy.",
+          "pinyin": "Wǒ dìdi jīnnián 6 suì, tā zuì xǐhuan huà huàr. Nǐ kàn，zhè shì tā huà de huàr, tā huà le yéye de zhēnróng.",
+          "tokens": [
+            "我",
+            "弟弟",
+            "今",
+            "年",
+            "岁",
+            "他",
+            "最",
+            "喜欢",
+            "画",
+            "画儿",
+            "你",
+            "看",
+            "这",
+            "是",
+            "他",
+            "画",
+            "的",
+            "画儿",
+            "他",
+            "画",
+            "了",
+            "爷爷",
+            "的",
+            "真容"
+          ]
+        },
+        {
+          "id": "ss14_exp_9",
+          "targetHanzi": "很好看那你爷爷喜欢什么",
+          "targetMeaning": "Đẹp quá! Vậy ông nội cậu thích gì?",
+          "pinyin": "Hěn hǎokàn! Nà nǐ yéye xǐhuan shénme?",
+          "tokens": [
+            "很",
+            "好看",
+            "那",
+            "你",
+            "爷爷",
+            "喜欢",
+            "什么"
+          ]
+        },
+        {
+          "id": "ss14_exp_10",
+          "targetHanzi": "爷爷很喜欢散步和看报纸他每天早上在家看报纸下午去公园散步你有什么爱好吗",
+          "targetMeaning": "Ông nội rất thích đi dạo và đọc báo, sáng nào ông cũng đọc báo ở nhà, chiều ra công viên đi dạo. Cậu có sở thích gì không?",
+          "pinyin": "Yéye hěn xǐhuan sànbù hé kàn bàozhǐ, tā měitiān zǎoshang zài jiā kàn bàozhǐ, xiàwǔ qù gōngyuán sànbù. Nǐ yǒu shénme àihào ma?",
+          "tokens": [
+            "爷爷",
+            "很",
+            "喜欢",
+            "散步",
+            "和",
+            "看",
+            "报纸",
+            "他",
+            "每",
+            "天",
+            "早上",
+            "在",
+            "家",
+            "看",
+            "报纸",
+            "下午",
+            "去",
+            "公园",
+            "散步",
+            "你",
+            "有",
+            "什么",
+            "爱好",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss14_exp_11",
+          "targetHanzi": "我最喜欢踢足球如果学校有足球比赛我一定参加",
+          "targetMeaning": "Tớ thích nhất đá bóng, nếu trường có giải bóng đá, tớ nhất định sẽ tham gia.",
+          "pinyin": "Wǒ zuì xǐhuan tī zúqiú, rúguǒ xuéxiào yǒu zúqiú bǐsài, wǒ yídìng cānjiā.",
+          "tokens": [
+            "我",
+            "最",
+            "喜欢",
+            "踢足球",
+            "如果",
+            "学校",
+            "有",
+            "足",
+            "球",
+            "比赛",
+            "我",
+            "一",
+            "定",
+            "参加"
+          ]
+        },
+        {
+          "id": "ss14_exp_12",
+          "targetHanzi": "我也是我家人都叫我足球迷",
+          "targetMeaning": "Tớ cũng vậy. Người nhà tớ đều gọi tớ là tín đồ bóng đá.",
+          "pinyin": "Wǒ yěshì. Wǒ jiā rén dōu jiào wǒ zúqiúmí.",
+          "tokens": [
+            "我",
+            "也",
+            "是",
+            "我",
+            "家人",
+            "都",
+            "叫",
+            "我",
+            "足球迷"
+          ]
+        },
+        {
+          "id": "ss14_exp_13",
+          "targetHanzi": "我在看书呢",
+          "targetMeaning": "Tôi đang đọc sách.",
+          "pinyin": "Wǒ zài kànshū ne.",
+          "tokens": [
+            "我",
+            "在",
+            "看",
+            "书",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss14_exp_14",
+          "targetHanzi": "现在的我们",
+          "targetMeaning": "chúng tôi của hiện tại",
+          "pinyin": "xiànzài de wǒmen",
+          "tokens": [
+            "现在",
+            "的",
+            "我们"
+          ]
         }
       ],
       "translationExercises": [
@@ -27298,6 +34467,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "tāmen zhǐ guānxīn zìjǐ",
           "hint": "Gợi ý Pinyin: Tāmen zhǐ guānxīn zìjǐ.",
           "explanation": "Bọn họ chỉ quan tâm đến bản thân mình mà thôi. → 他们只关心自己。 (Tāmen zhǐ guānxīn zìjǐ.)"
+        },
+        {
+          "id": "tr14_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Tiểu Lan, sở thích của những người trong gia đình cậu là gì?",
+          "expectedChinese": "小兰，你家人的爱好是什么？",
+          "acceptedPinyin": "xiǎo lán nǐ jiārén de àihào shì shénme",
+          "hint": "Gợi ý Pinyin: Xiǎo Lán, nǐ jiārén de àihào shì shénme?",
+          "explanation": "Tiểu Lan, sở thích của những người trong gia đình cậu là gì? → 小兰，你家人的爱好是什么？ (Xiǎo Lán, nǐ jiārén de àihào shì shénme?)"
+        },
+        {
+          "id": "tr14_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Nhà tớ có rất nhiều người, sở thích của mỗi người đều khác nhau.",
+          "expectedChinese": "我家有很多人，每个人的爱好都不一样。",
+          "acceptedPinyin": "wǒ jiā yǒu hěn duō rén měi gèrén de àihào dōu bù yíyàng",
+          "hint": "Gợi ý Pinyin: Wǒ jiā yǒu hěn duō rén, měi gèrén de àihào dōu bù yíyàng.",
+          "explanation": "Nhà tớ có rất nhiều người, sở thích của mỗi người đều khác nhau. → 我家有很多人，每个人的爱好都不一样。 (Wǒ jiā yǒu hěn duō rén, měi gèrén de àihào dōu bù yíyàng.)"
+        },
+        {
+          "id": "tr14_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Bố cậu thích gì?",
+          "expectedChinese": "你爸爸喜欢什么？",
+          "acceptedPinyin": "nǐ bàba xǐhuan shénme",
+          "hint": "Gợi ý Pinyin: Nǐ bàba xǐhuan shénme?",
+          "explanation": "Bố cậu thích gì? → 你爸爸喜欢什么？ (Nǐ bàba xǐhuan shénme?)"
+        },
+        {
+          "id": "tr14_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Bố tớ rất thích trồng cây, nhà tớ có một khu vườn nhỏ, trong vườn toàn là hoa và cây cối.",
+          "expectedChinese": "我爸爸很喜欢种树，我家有一个小园子，园子里全都是花和树.",
+          "acceptedPinyin": "wǒ bàba hěn xǐhuan zhòng shù wǒjiā yǒu yígè xiǎo yuánzi yuánzi li quán dōu shì huā hé shù",
+          "hint": "Gợi ý Pinyin: Wǒ bàba hěn xǐhuan zhòng shù, wǒjiā yǒu yígè xiǎo yuánzi, yuánzi li quán dōu shì huā hé shù.",
+          "explanation": "Bố tớ rất thích trồng cây, nhà tớ có một khu vườn nhỏ, trong vườn toàn là hoa và cây cối. → 我爸爸很喜欢种树，我家有一个小园子，园子里全都是花和树. (Wǒ bàba hěn xǐhuan zhòng shù, wǒjiā yǒu yígè xiǎo yuánzi, yuánzi li quán dōu shì huā hé shù.)"
+        },
+        {
+          "id": "tr14_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Chắc chắn rất đẹp! Thế còn mẹ cậu?",
+          "expectedChinese": "一定很漂亮！ 你妈妈呢？",
+          "acceptedPinyin": "yídìng hěn piàoliang nǐ māma ne",
+          "hint": "Gợi ý Pinyin: Yídìng hěn piàoliang! Nǐ māma ne?",
+          "explanation": "Chắc chắn rất đẹp! Thế còn mẹ cậu? → 一定很漂亮！ 你妈妈呢？ (Yídìng hěn piàoliang! Nǐ māma ne?)"
+        },
+        {
+          "id": "tr14_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Mẹ tớ rất thích hát và đọc sách, bà mua rất nhiều sách.",
+          "expectedChinese": "我妈妈很喜欢唱歌和看书，她买了很多书。",
+          "acceptedPinyin": "wǒ māma hěn xǐhuan chàng gē hé kànshū tā mǎi le hěnduō shū",
+          "hint": "Gợi ý Pinyin: Wǒ māma hěn xǐhuan chàng gē hé kànshū, tā mǎi le hěnduō shū.",
+          "explanation": "Mẹ tớ rất thích hát và đọc sách, bà mua rất nhiều sách. → 我妈妈很喜欢唱歌和看书，她买了很多书。 (Wǒ māma hěn xǐhuan chàng gē hé kànshū, tā mǎi le hěnduō shū.)"
+        },
+        {
+          "id": "tr14_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Bố tớ cũng rất thích đọc sách, lúc rảnh rỗi ông thường kể chuyện cho tớ và em trai nghe. Em trai cậu thích gì?",
+          "expectedChinese": "我爸爸也很喜欢看书，他有空儿的时候就给我和弟弟讲故事。你弟弟喜欢什么？",
+          "acceptedPinyin": "wǒ bàba yě hěn xǐhuan kànshū tā yǒu kòngr de shíhou jiù gěi wǒ hé dìdi jiǎng gùshi nǐ dìdi xǐhuan shénme",
+          "hint": "Gợi ý Pinyin: Wǒ bàba yě hěn xǐhuan kànshū, tā yǒu kòngr de shíhou jiù gěi wǒ hé dìdi jiǎng gùshi. Nǐ dìdi xǐhuan shénme?",
+          "explanation": "Bố tớ cũng rất thích đọc sách, lúc rảnh rỗi ông thường kể chuyện cho tớ và em trai nghe. Em trai cậu thích gì? → 我爸爸也很喜欢看书，他有空儿的时候就给我和弟弟讲故事。你弟弟喜欢什么？ (Wǒ bàba yě hěn xǐhuan kànshū, tā yǒu kòngr de shíhou jiù gěi wǒ hé dìdi jiǎng gùshi. Nǐ dìdi xǐhuan shénme?)"
+        },
+        {
+          "id": "tr14_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Em trai tớ năm nay 6 tuổi, em ấy thích nhất là vẽ tranh. Cậu xem, đây là bức tranh em ấy vẽ, em ấy vẽ chân dung ông nội đấy.",
+          "expectedChinese": "我弟弟今年 6 岁，他最喜欢画画儿。你看，这是他画的画儿，他画了爷爷的真容。",
+          "acceptedPinyin": "wǒ dìdi jīnnián 6 suì tā zuì xǐhuan huà huàr nǐ kàn zhè shì tā huà de huàr tā huà le yéye de zhēnróng",
+          "hint": "Gợi ý Pinyin: Wǒ dìdi jīnnián 6 suì, tā zuì xǐhuan huà huàr. Nǐ kàn，zhè shì tā huà de huàr, tā huà le yéye de zhēnróng.",
+          "explanation": "Em trai tớ năm nay 6 tuổi, em ấy thích nhất là vẽ tranh. Cậu xem, đây là bức tranh em ấy vẽ, em ấy vẽ chân dung ông nội đấy. → 我弟弟今年 6 岁，他最喜欢画画儿。你看，这是他画的画儿，他画了爷爷的真容。 (Wǒ dìdi jīnnián 6 suì, tā zuì xǐhuan huà huàr. Nǐ kàn，zhè shì tā huà de huàr, tā huà le yéye de zhēnróng.)"
+        },
+        {
+          "id": "tr14_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Đẹp quá! Vậy ông nội cậu thích gì?",
+          "expectedChinese": "很好看！那你爷爷喜欢什么？",
+          "acceptedPinyin": "hěn hǎokàn nà nǐ yéye xǐhuan shénme",
+          "hint": "Gợi ý Pinyin: Hěn hǎokàn! Nà nǐ yéye xǐhuan shénme?",
+          "explanation": "Đẹp quá! Vậy ông nội cậu thích gì? → 很好看！那你爷爷喜欢什么？ (Hěn hǎokàn! Nà nǐ yéye xǐhuan shénme?)"
+        },
+        {
+          "id": "tr14_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Ông nội rất thích đi dạo và đọc báo, sáng nào ông cũng đọc báo ở nhà, chiều ra công viên đi dạo. Cậu có sở thích gì không?",
+          "expectedChinese": "爷爷很喜欢散步和看报纸，他每天早上在家看报纸，下午去公园散步。你有什么爱好吗？",
+          "acceptedPinyin": "yéye hěn xǐhuan sànbù hé kàn bàozhǐ tā měitiān zǎoshang zài jiā kàn bàozhǐ xiàwǔ qù gōngyuán sànbù nǐ yǒu shénme àihào ma",
+          "hint": "Gợi ý Pinyin: Yéye hěn xǐhuan sànbù hé kàn bàozhǐ, tā měitiān zǎoshang zài jiā kàn bàozhǐ, xiàwǔ qù gōngyuán sànbù. Nǐ yǒu shénme àihào ma?",
+          "explanation": "Ông nội rất thích đi dạo và đọc báo, sáng nào ông cũng đọc báo ở nhà, chiều ra công viên đi dạo. Cậu có sở thích gì không? → 爷爷很喜欢散步和看报纸，他每天早上在家看报纸，下午去公园散步。你有什么爱好吗？ (Yéye hěn xǐhuan sànbù hé kàn bàozhǐ, tā měitiān zǎoshang zài jiā kàn bàozhǐ, xiàwǔ qù gōngyuán sànbù. Nǐ yǒu shénme àihào ma?)"
         },
         {
           "id": "tr14_zh_1",
@@ -27358,6 +34617,235 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: xuéshēng de shūbāo",
           "explanation": "学生的书包 (xuéshēng de shūbāo) nghĩa là: cặp của học sinh"
+        },
+        {
+          "id": "tr14_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "我爷爷真不喜欢吃面条。",
+          "chineseAudioText": "我爷爷真不喜欢吃面条。",
+          "pinyin": "Wǒ yéye zhēn bù xǐhuan chī miàntiáo.",
+          "expectedMeaning": "Ông nội tôi thật sự không thích ăn mì.",
+          "acceptedKeywords": [
+            "ông",
+            "nội",
+            "tôi",
+            "thật",
+            "sự",
+            "không",
+            "thích",
+            "ăn",
+            "mì"
+          ],
+          "hint": "Pinyin: Wǒ yéye zhēn bù xǐhuan chī miàntiáo.",
+          "explanation": "我爷爷真不喜欢吃面条。 (Wǒ yéye zhēn bù xǐhuan chī miàntiáo.) nghĩa là: Ông nội tôi thật sự không thích ăn mì."
+        },
+        {
+          "id": "tr14_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "我爸爸那么帅，所以我当然也很帅了。",
+          "chineseAudioText": "我爸爸那么帅，所以我当然也很帅了。",
+          "pinyin": "Wǒ bàba nàme shuài, suǒyǐ wǒ dāngrán yě hěn shuài le.",
+          "expectedMeaning": "Bố tôi đẹp trai như vậy, nên đương nhiên tôi cũng đẹp trai rồi.",
+          "acceptedKeywords": [
+            "bố",
+            "tôi",
+            "đẹp",
+            "trai",
+            "như",
+            "vậy",
+            "nên",
+            "đương",
+            "nhiên",
+            "tôi",
+            "cũng",
+            "đẹp",
+            "trai",
+            "rồi"
+          ],
+          "hint": "Pinyin: Wǒ bàba nàme shuài, suǒyǐ wǒ dāngrán yě hěn shuài le.",
+          "explanation": "我爸爸那么帅，所以我当然也很帅了。 (Wǒ bàba nàme shuài, suǒyǐ wǒ dāngrán yě hěn shuài le.) nghĩa là: Bố tôi đẹp trai như vậy, nên đương nhiên tôi cũng đẹp trai rồi."
+        },
+        {
+          "id": "tr14_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "我伯伯今年五十六岁，你伯伯呢？",
+          "chineseAudioText": "我伯伯今年五十六岁，你伯伯呢？",
+          "pinyin": "Wǒ bóbo jīnnián wǔshíliù suì, nǐ bóbo ne?",
+          "expectedMeaning": "Năm nay bác tôi 56 tuổi, bác cậu thì sao?",
+          "acceptedKeywords": [
+            "năm",
+            "nay",
+            "bác",
+            "tôi",
+            "56",
+            "tuổi",
+            "bác",
+            "cậu",
+            "thì",
+            "sao"
+          ],
+          "hint": "Pinyin: Wǒ bóbo jīnnián wǔshíliù suì, nǐ bóbo ne?",
+          "explanation": "我伯伯今年五十六岁，你伯伯呢？ (Wǒ bóbo jīnnián wǔshíliù suì, nǐ bóbo ne?) nghĩa là: Năm nay bác tôi 56 tuổi, bác cậu thì sao?"
+        },
+        {
+          "id": "tr14_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "我叔叔只有一个儿子。",
+          "chineseAudioText": "我叔叔只有一个儿子。",
+          "pinyin": "Wǒ shūshu zhǐyǒu yígè érzi.",
+          "expectedMeaning": "Chú tôi chỉ có một người con trai.",
+          "acceptedKeywords": [
+            "chú",
+            "tôi",
+            "chỉ",
+            "có",
+            "một",
+            "người",
+            "con",
+            "trai"
+          ],
+          "hint": "Pinyin: Wǒ shūshu zhǐyǒu yígè érzi.",
+          "explanation": "我叔叔只有一个儿子。 (Wǒ shūshu zhǐyǒu yígè érzi.) nghĩa là: Chú tôi chỉ có một người con trai."
+        },
+        {
+          "id": "tr14_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "客厅里有三个人。",
+          "chineseAudioText": "客厅里有三个人。",
+          "pinyin": "Kètīng li yǒu sān gèrén.",
+          "expectedMeaning": "Trong phòng khách có 3 người.",
+          "acceptedKeywords": [
+            "trong",
+            "phòng",
+            "khách",
+            "có",
+            "người"
+          ],
+          "hint": "Pinyin: Kètīng li yǒu sān gèrén.",
+          "explanation": "客厅里有三个人。 (Kètīng li yǒu sān gèrén.) nghĩa là: Trong phòng khách có 3 người."
+        },
+        {
+          "id": "tr14_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "他最喜欢画画儿，我才是家里的足球迷。",
+          "chineseAudioText": "他最喜欢画画儿，我才是家里的足球迷。",
+          "pinyin": "Tā zuì xǐhuan huà huàr, wǒ cái shì jiālǐ de zúqiúmí.",
+          "expectedMeaning": "Em ấy thích nhất vẽ tranh, còn tớ mới là tín đồ bóng đá của cả nhà.",
+          "acceptedKeywords": [
+            "em",
+            "ấy",
+            "thích",
+            "nhất",
+            "vẽ",
+            "tranh",
+            "còn",
+            "tớ",
+            "mới",
+            "là",
+            "tín",
+            "đồ",
+            "bóng",
+            "đá",
+            "của",
+            "cả",
+            "nhà"
+          ],
+          "hint": "Pinyin: Tā zuì xǐhuan huà huàr, wǒ cái shì jiālǐ de zúqiúmí.",
+          "explanation": "他最喜欢画画儿，我才是家里的足球迷。 (Tā zuì xǐhuan huà huàr, wǒ cái shì jiālǐ de zúqiúmí.) nghĩa là: Em ấy thích nhất vẽ tranh, còn tớ mới là tín đồ bóng đá của cả nhà."
+        },
+        {
+          "id": "tr14_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "那你弟弟呢？他也喜欢踢足球吗？",
+          "chineseAudioText": "那你弟弟呢？他也喜欢踢足球吗？",
+          "pinyin": "Nà nǐ dìdi ne? Tā yě xǐhuan tī zúqiú ma?",
+          "expectedMeaning": "Vậy còn em trai cậu? Em ấy cũng thích đá bóng à?",
+          "acceptedKeywords": [
+            "vậy",
+            "còn",
+            "em",
+            "trai",
+            "cậu",
+            "em",
+            "ấy",
+            "cũng",
+            "thích",
+            "đá",
+            "bóng"
+          ],
+          "hint": "Pinyin: Nà nǐ dìdi ne? Tā yě xǐhuan tī zúqiú ma?",
+          "explanation": "那你弟弟呢？他也喜欢踢足球吗？ (Nà nǐ dìdi ne? Tā yě xǐhuan tī zúqiú ma?) nghĩa là: Vậy còn em trai cậu? Em ấy cũng thích đá bóng à?"
+        },
+        {
+          "id": "tr14_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "不一样。爸爸喜欢看报纸和种花，妈妈喜欢听音乐唱歌。",
+          "chineseAudioText": "不一样。爸爸喜欢看报纸和种花，妈妈喜欢听音乐唱歌。",
+          "pinyin": "Bù yíyàng. Bàba xǐhuan kàn bàozhǐ hé zhòng huā, māma xǐhuan tīng yīnyuè chànggē.",
+          "expectedMeaning": "Không giống nhau. Bố thích đọc báo và trồng hoa, mẹ thích nghe nhạc và ca hát.",
+          "acceptedKeywords": [
+            "không",
+            "giống",
+            "nhau",
+            "bố",
+            "thích",
+            "đọc",
+            "báo",
+            "và",
+            "trồng",
+            "hoa",
+            "mẹ",
+            "thích",
+            "nghe",
+            "nhạc",
+            "và",
+            "ca",
+            "hát"
+          ],
+          "hint": "Pinyin: Bù yíyàng. Bàba xǐhuan kàn bàozhǐ hé zhòng huā, māma xǐhuan tīng yīnyuè chànggē.",
+          "explanation": "不一样。爸爸喜欢看报纸和种花，妈妈喜欢听音乐唱歌。 (Bù yíyàng. Bàba xǐhuan kàn bàozhǐ hé zhòng huā, māma xǐhuan tīng yīnyuè chànggē.) nghĩa là: Không giống nhau. Bố thích đọc báo và trồng hoa, mẹ thích nghe nhạc và ca hát."
+        },
+        {
+          "id": "tr14_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "日明，你们家人的爱好都一样吗？",
+          "chineseAudioText": "日明，你们家人的爱好都一样吗？",
+          "pinyin": "Rìmíng, nǐmen jiārén de àihào dōu yíyàng ma?",
+          "expectedMeaning": "Nhật Minh, sở thích của mọi người trong nhà cậu có giống nhau không?",
+          "acceptedKeywords": [
+            "nhật",
+            "minh",
+            "sở",
+            "thích",
+            "của",
+            "mọi",
+            "người",
+            "trong",
+            "nhà",
+            "cậu",
+            "có",
+            "giống",
+            "nhau",
+            "không"
+          ],
+          "hint": "Pinyin: Rìmíng, nǐmen jiārén de àihào dōu yíyàng ma?",
+          "explanation": "日明，你们家人的爱好都一样吗？ (Rìmíng, nǐmen jiārén de àihào dōu yíyàng ma?) nghĩa là: Nhật Minh, sở thích của mọi người trong nhà cậu có giống nhau không?"
+        },
+        {
+          "id": "tr14_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "我正在吃饭。",
+          "chineseAudioText": "我正在吃饭。",
+          "pinyin": "Wǒ zhèngzài chīfàn.",
+          "expectedMeaning": "Tớ đang ăn cơm.",
+          "acceptedKeywords": [
+            "tớ",
+            "đang",
+            "ăn",
+            "cơm"
+          ],
+          "hint": "Pinyin: Wǒ zhèngzài chīfàn.",
+          "explanation": "我正在吃饭。 (Wǒ zhèngzài chīfàn.) nghĩa là: Tớ đang ăn cơm."
         }
       ],
       "expandedQuiz": [
@@ -29296,6 +36784,247 @@ const DEFAULT_LESSONS = [
             "去的",
             "地方"
           ]
+        },
+        {
+          "id": "ss15_exp_1",
+          "targetHanzi": "张风北京有几个季节",
+          "targetMeaning": "Trương Phong, Bắc Kinh có mấy mùa?",
+          "pinyin": "Zhāng Fēng, Běijīng yǒu jǐ gè jìjié?",
+          "tokens": [
+            "张风",
+            "北京",
+            "有",
+            "几",
+            "个",
+            "季节"
+          ]
+        },
+        {
+          "id": "ss15_exp_2",
+          "targetHanzi": "北京有春天夏天秋天和冬天四个季节",
+          "targetMeaning": "Bắc Kinh có bốn mùa: xuân, hạ, thu và đông.",
+          "pinyin": "Běijīng yǒu chūntiān, xiàtiān, qiūtiān hé dōngtiān sì gè jìjié.",
+          "tokens": [
+            "北京",
+            "有",
+            "春天",
+            "夏天",
+            "秋天",
+            "和",
+            "冬天",
+            "四",
+            "个",
+            "季节"
+          ]
+        },
+        {
+          "id": "ss15_exp_3",
+          "targetHanzi": "北京的春天怎么样",
+          "targetMeaning": "Mùa xuân ở Bắc Kinh thế nào?",
+          "pinyin": "Běijīng de chūntiān zěnmeyàng?",
+          "tokens": [
+            "北京",
+            "的",
+            "春天",
+            "怎么样"
+          ]
+        },
+        {
+          "id": "ss15_exp_4",
+          "targetHanzi": "北京的春天很暖和不常下雨有时候刮大风",
+          "targetMeaning": "Mùa xuân ở Bắc Kinh rất ấm áp, ít khi mưa, thỉnh thoảng có gió lớn.",
+          "pinyin": "Běijīng de chūntiān hěn nuǎnhuo, bù cháng xiàyǔ, yǒushíhou guā dàfēng.",
+          "tokens": [
+            "北京",
+            "的",
+            "春天",
+            "很",
+            "暖和",
+            "不常",
+            "下雨",
+            "有",
+            "时候",
+            "刮",
+            "大风"
+          ]
+        },
+        {
+          "id": "ss15_exp_5",
+          "targetHanzi": "夏天怎么样热么",
+          "targetMeaning": "Mùa hạ thì sao? Có nóng không?",
+          "pinyin": "Xiàtiān zěnmeyàng? Rè ma?",
+          "tokens": [
+            "夏天",
+            "怎么样",
+            "热",
+            "么"
+          ]
+        },
+        {
+          "id": "ss15_exp_6",
+          "targetHanzi": "夏天天气不太热最热的时候是七月七月和八月经常下雨",
+          "targetMeaning": "Thời tiết mùa hè không quá nóng. Nóng nhất là vào tháng 7, tháng 7 và tháng 8 thường hay mưa.",
+          "pinyin": "Xiàtiān tiānqì bú tài rè. Zuì rè de shíhou shì qī yuè, qī yuè hé bā yuè jīngcháng xià yǔ.",
+          "tokens": [
+            "夏天",
+            "天气",
+            "不",
+            "太",
+            "热",
+            "最",
+            "热",
+            "的",
+            "时候",
+            "是",
+            "七",
+            "月",
+            "七",
+            "月",
+            "和",
+            "八",
+            "月",
+            "经常",
+            "下雨"
+          ]
+        },
+        {
+          "id": "ss15_exp_7",
+          "targetHanzi": "秋天呢",
+          "targetMeaning": "Còn mùa thu thì sao?",
+          "pinyin": "Qiūtiān ne?",
+          "tokens": [
+            "秋天",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss15_exp_8",
+          "targetHanzi": "北京的秋天不冷不热很舒服这是一年中最好的季节",
+          "targetMeaning": "Mùa thu Bắc Kinh không lạnh không nóng, rất dễ chịu, đây là mùa đẹp nhất trong năm.",
+          "pinyin": "Běijīng de qiūtiān bù lěng bú rè, hěn shūfu, zhè shì yī nián zhōng zuì hǎo de jìjié.",
+          "tokens": [
+            "北京",
+            "的",
+            "秋天",
+            "不",
+            "冷",
+            "不",
+            "热",
+            "很",
+            "舒服",
+            "这",
+            "是",
+            "一",
+            "年",
+            "中",
+            "最",
+            "好",
+            "的",
+            "季节"
+          ]
+        },
+        {
+          "id": "ss15_exp_9",
+          "targetHanzi": "冬天是不是特别冷",
+          "targetMeaning": "Mùa đông có phải rất lạnh không?",
+          "pinyin": "Dōngtiān shì bu shì tèbié lěng?",
+          "tokens": [
+            "冬天",
+            "是",
+            "不是",
+            "特别",
+            "冷"
+          ]
+        },
+        {
+          "id": "ss15_exp_10",
+          "targetHanzi": "是北京的冬天比较冷最冷差不多零下二十二度",
+          "targetMeaning": "Đúng vậy. Mùa đông Bắc Kinh khá lạnh, lạnh nhất khoảng âm 22 độ.",
+          "pinyin": "Shì. Běijīng de dōngtiān bǐjiào lěng, zuì lěng chàbùduō língxià èrshíèr dù.",
+          "tokens": [
+            "是",
+            "北京",
+            "的",
+            "冬天",
+            "比较",
+            "冷",
+            "最",
+            "冷",
+            "差不多",
+            "零下",
+            "二",
+            "十",
+            "二",
+            "度"
+          ]
+        },
+        {
+          "id": "ss15_exp_11",
+          "targetHanzi": "常下雪吗",
+          "targetMeaning": "Có hay có tuyết rơi không?",
+          "pinyin": "Cháng xiàxuě ma?",
+          "tokens": [
+            "常",
+            "下雪",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss15_exp_12",
+          "targetHanzi": "常下雪冬天的时候我经常跟朋友去滑冰滑雪特别好玩儿",
+          "targetMeaning": "Thường hay có tuyết rơi. Vào mùa đông tôi hay đi trượt băng, trượt tuyết cùng bạn bè. Vui lắm.",
+          "pinyin": "Cháng xiàxuě. Dōngtiān de shíhou wǒ jīngcháng gēn péngyou qù huábīng, huáxuě. Tèbié hǎowánr.",
+          "tokens": [
+            "常",
+            "下雪",
+            "冬天",
+            "的",
+            "时候",
+            "我",
+            "经常",
+            "跟",
+            "朋友",
+            "去",
+            "滑冰",
+            "滑雪",
+            "特别",
+            "好",
+            "玩儿"
+          ]
+        },
+        {
+          "id": "ss15_exp_13",
+          "targetHanzi": "你最喜欢哪个季节",
+          "targetMeaning": "Bạn thích mùa nào nhất?",
+          "pinyin": "Nǐ zuì xǐhuan nǎge jìjié?",
+          "tokens": [
+            "你",
+            "最",
+            "喜欢",
+            "哪",
+            "个",
+            "季节"
+          ]
+        },
+        {
+          "id": "ss15_exp_14",
+          "targetHanzi": "我最喜欢夏天因为我喜欢游泳小明你呢",
+          "targetMeaning": "Tôi thích mùa hè nhất. Vì tôi thích bơi lội. Còn bạn thì sao, Tiểu Minh?",
+          "pinyin": "Wǒ zuì xǐhuan xiàtiān. Yīnwèi wǒ xǐhuan yóuyǒng. Xiǎomíng, nǐ ne?",
+          "tokens": [
+            "我",
+            "最",
+            "喜欢",
+            "夏天",
+            "因为",
+            "我",
+            "喜欢",
+            "游泳",
+            "小",
+            "明",
+            "你",
+            "呢"
+          ]
         }
       ],
       "translationExercises": [
@@ -29334,6 +37063,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "nǐ xiànzài juéde zěnmeyàng",
           "hint": "Gợi ý Pinyin: Nǐ xiànzài juéde zěnmeyàng?",
           "explanation": "Bây giờ cậu cảm thấy thế nào? → 你现在觉得怎么样？ (Nǐ xiànzài juéde zěnmeyàng?)"
+        },
+        {
+          "id": "tr15_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Trương Phong, Bắc Kinh có mấy mùa?",
+          "expectedChinese": "张风，北京有几个季节？",
+          "acceptedPinyin": "zhāng fēng běijīng yǒu jǐ gè jìjié",
+          "hint": "Gợi ý Pinyin: Zhāng Fēng, Běijīng yǒu jǐ gè jìjié?",
+          "explanation": "Trương Phong, Bắc Kinh có mấy mùa? → 张风，北京有几个季节？ (Zhāng Fēng, Běijīng yǒu jǐ gè jìjié?)"
+        },
+        {
+          "id": "tr15_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Bắc Kinh có bốn mùa: xuân, hạ, thu và đông.",
+          "expectedChinese": "北京有春天、夏天、秋天和冬天四个季节。",
+          "acceptedPinyin": "běijīng yǒu chūntiān xiàtiān qiūtiān hé dōngtiān sì gè jìjié",
+          "hint": "Gợi ý Pinyin: Běijīng yǒu chūntiān, xiàtiān, qiūtiān hé dōngtiān sì gè jìjié.",
+          "explanation": "Bắc Kinh có bốn mùa: xuân, hạ, thu và đông. → 北京有春天、夏天、秋天和冬天四个季节。 (Běijīng yǒu chūntiān, xiàtiān, qiūtiān hé dōngtiān sì gè jìjié.)"
+        },
+        {
+          "id": "tr15_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Mùa xuân ở Bắc Kinh thế nào?",
+          "expectedChinese": "北京的春天怎么样？",
+          "acceptedPinyin": "běijīng de chūntiān zěnmeyàng",
+          "hint": "Gợi ý Pinyin: Běijīng de chūntiān zěnmeyàng?",
+          "explanation": "Mùa xuân ở Bắc Kinh thế nào? → 北京的春天怎么样？ (Běijīng de chūntiān zěnmeyàng?)"
+        },
+        {
+          "id": "tr15_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Mùa xuân ở Bắc Kinh rất ấm áp, ít khi mưa, thỉnh thoảng có gió lớn.",
+          "expectedChinese": "北京的春天很暖和，不常下雨，有时候刮大风。",
+          "acceptedPinyin": "běijīng de chūntiān hěn nuǎnhuo bù cháng xiàyǔ yǒushíhou guā dàfēng",
+          "hint": "Gợi ý Pinyin: Běijīng de chūntiān hěn nuǎnhuo, bù cháng xiàyǔ, yǒushíhou guā dàfēng.",
+          "explanation": "Mùa xuân ở Bắc Kinh rất ấm áp, ít khi mưa, thỉnh thoảng có gió lớn. → 北京的春天很暖和，不常下雨，有时候刮大风。 (Běijīng de chūntiān hěn nuǎnhuo, bù cháng xiàyǔ, yǒushíhou guā dàfēng.)"
+        },
+        {
+          "id": "tr15_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Mùa hạ thì sao? Có nóng không?",
+          "expectedChinese": "夏天怎么样？热么？",
+          "acceptedPinyin": "xiàtiān zěnmeyàng rè ma",
+          "hint": "Gợi ý Pinyin: Xiàtiān zěnmeyàng? Rè ma?",
+          "explanation": "Mùa hạ thì sao? Có nóng không? → 夏天怎么样？热么？ (Xiàtiān zěnmeyàng? Rè ma?)"
+        },
+        {
+          "id": "tr15_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Thời tiết mùa hè không quá nóng. Nóng nhất là vào tháng 7, tháng 7 và tháng 8 thường hay mưa.",
+          "expectedChinese": "夏天天气不太热。最热的时候是七月，七月和八月经常下雨。",
+          "acceptedPinyin": "xiàtiān tiānqì bú tài rè zuì rè de shíhou shì qī yuè qī yuè hé bā yuè jīngcháng xià yǔ",
+          "hint": "Gợi ý Pinyin: Xiàtiān tiānqì bú tài rè. Zuì rè de shíhou shì qī yuè, qī yuè hé bā yuè jīngcháng xià yǔ.",
+          "explanation": "Thời tiết mùa hè không quá nóng. Nóng nhất là vào tháng 7, tháng 7 và tháng 8 thường hay mưa. → 夏天天气不太热。最热的时候是七月，七月和八月经常下雨。 (Xiàtiān tiānqì bú tài rè. Zuì rè de shíhou shì qī yuè, qī yuè hé bā yuè jīngcháng xià yǔ.)"
+        },
+        {
+          "id": "tr15_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Còn mùa thu thì sao?",
+          "expectedChinese": "秋天呢？",
+          "acceptedPinyin": "qiūtiān ne",
+          "hint": "Gợi ý Pinyin: Qiūtiān ne?",
+          "explanation": "Còn mùa thu thì sao? → 秋天呢？ (Qiūtiān ne?)"
+        },
+        {
+          "id": "tr15_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Mùa thu Bắc Kinh không lạnh không nóng, rất dễ chịu, đây là mùa đẹp nhất trong năm.",
+          "expectedChinese": "北京的秋天不冷不热，很舒服，这是一年中最好的季节。",
+          "acceptedPinyin": "běijīng de qiūtiān bù lěng bú rè hěn shūfu zhè shì yī nián zhōng zuì hǎo de jìjié",
+          "hint": "Gợi ý Pinyin: Běijīng de qiūtiān bù lěng bú rè, hěn shūfu, zhè shì yī nián zhōng zuì hǎo de jìjié.",
+          "explanation": "Mùa thu Bắc Kinh không lạnh không nóng, rất dễ chịu, đây là mùa đẹp nhất trong năm. → 北京的秋天不冷不热，很舒服，这是一年中最好的季节。 (Běijīng de qiūtiān bù lěng bú rè, hěn shūfu, zhè shì yī nián zhōng zuì hǎo de jìjié.)"
+        },
+        {
+          "id": "tr15_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Mùa đông có phải rất lạnh không?",
+          "expectedChinese": "冬天是不是特别冷？",
+          "acceptedPinyin": "dōngtiān shì bu shì tèbié lěng",
+          "hint": "Gợi ý Pinyin: Dōngtiān shì bu shì tèbié lěng?",
+          "explanation": "Mùa đông có phải rất lạnh không? → 冬天是不是特别冷？ (Dōngtiān shì bu shì tèbié lěng?)"
+        },
+        {
+          "id": "tr15_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Đúng vậy. Mùa đông Bắc Kinh khá lạnh, lạnh nhất khoảng âm 22 độ.",
+          "expectedChinese": "是。北京的冬天比较冷，最冷差不多零下二十二度。",
+          "acceptedPinyin": "shì běijīng de dōngtiān bǐjiào lěng zuì lěng chàbùduō língxià èrshíèr dù",
+          "hint": "Gợi ý Pinyin: Shì. Běijīng de dōngtiān bǐjiào lěng, zuì lěng chàbùduō língxià èrshíèr dù.",
+          "explanation": "Đúng vậy. Mùa đông Bắc Kinh khá lạnh, lạnh nhất khoảng âm 22 độ. → 是。北京的冬天比较冷，最冷差不多零下二十二度。 (Shì. Běijīng de dōngtiān bǐjiào lěng, zuì lěng chàbùduō língxià èrshíèr dù.)"
         },
         {
           "id": "tr15_zh_1",
@@ -29394,6 +37213,223 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Hànyǔ cídiǎn",
           "explanation": "汉语词典 (Hànyǔ cídiǎn) nghĩa là: từ điển tiếng Trung"
+        },
+        {
+          "id": "tr15_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "我比较累，想睡觉了！",
+          "chineseAudioText": "我比较累，想睡觉了！",
+          "pinyin": "Wǒ bǐjiào lèi, xiǎng shuìjiào le!",
+          "expectedMeaning": "Tôi khá mệt, muốn đi ngủ rồi!",
+          "acceptedKeywords": [
+            "tôi",
+            "khá",
+            "mệt",
+            "muốn",
+            "đi",
+            "ngủ",
+            "rồi"
+          ],
+          "hint": "Pinyin: Wǒ bǐjiào lèi, xiǎng shuìjiào le!",
+          "explanation": "我比较累，想睡觉了！ (Wǒ bǐjiào lèi, xiǎng shuìjiào le!) nghĩa là: Tôi khá mệt, muốn đi ngủ rồi!"
+        },
+        {
+          "id": "tr15_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "今天比较热。",
+          "chineseAudioText": "今天比较热。",
+          "pinyin": "Jīntiān bǐjiào rè.",
+          "expectedMeaning": "Hôm nay trời khá nóng.",
+          "acceptedKeywords": [
+            "hôm",
+            "nay",
+            "trời",
+            "khá",
+            "nóng"
+          ],
+          "hint": "Pinyin: Jīntiān bǐjiào rè.",
+          "explanation": "今天比较热。 (Jīntiān bǐjiào rè.) nghĩa là: Hôm nay trời khá nóng."
+        },
+        {
+          "id": "tr15_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "他的考试成绩不怎么样。",
+          "chineseAudioText": "他的考试成绩不怎么样。",
+          "pinyin": "Tā de kǎoshì chéngjì bù zěnmeyàng.",
+          "expectedMeaning": "Thành tích kiểm tra của anh ấy chẳng ra làm sao. (Ý nói kết quả kém)",
+          "acceptedKeywords": [
+            "thành",
+            "tích",
+            "kiểm",
+            "tra",
+            "của",
+            "anh",
+            "ấy",
+            "chẳng",
+            "ra",
+            "làm",
+            "sao",
+            "nói",
+            "kết",
+            "quả",
+            "kém"
+          ],
+          "hint": "Pinyin: Tā de kǎoshì chéngjì bù zěnmeyàng.",
+          "explanation": "他的考试成绩不怎么样。 (Tā de kǎoshì chéngjì bù zěnmeyàng.) nghĩa là: Thành tích kiểm tra của anh ấy chẳng ra làm sao. (Ý nói kết quả kém)"
+        },
+        {
+          "id": "tr15_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "你身体怎么样了？",
+          "chineseAudioText": "你身体怎么样了？",
+          "pinyin": "Nǐ shēntǐ zěnmeyàng le?",
+          "expectedMeaning": "Cơ thể con sao rồi?",
+          "acceptedKeywords": [
+            "cơ",
+            "thể",
+            "con",
+            "sao",
+            "rồi"
+          ],
+          "hint": "Pinyin: Nǐ shēntǐ zěnmeyàng le?",
+          "explanation": "你身体怎么样了？ (Nǐ shēntǐ zěnmeyàng le?) nghĩa là: Cơ thể con sao rồi?"
+        },
+        {
+          "id": "tr15_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "后天会下大雪，你们出去玩儿要多穿点儿大衣！",
+          "chineseAudioText": "后天会下大雪，你们出去玩儿要多穿点儿大衣！",
+          "pinyin": "Hòutiān huì xià dàxuě, nǐmen chūqù wánr yào duō chuān diǎnr dàyī!",
+          "expectedMeaning": "Ngày kia sẽ có tuyết rơi lớn, các cậu ra ngoài chơi nhớ mặc thêm áo khoác nhé!",
+          "acceptedKeywords": [
+            "ngày",
+            "kia",
+            "sẽ",
+            "có",
+            "tuyết",
+            "rơi",
+            "lớn",
+            "các",
+            "cậu",
+            "ra",
+            "ngoài",
+            "chơi",
+            "nhớ",
+            "mặc",
+            "thêm",
+            "áo",
+            "khoác",
+            "nhé"
+          ],
+          "hint": "Pinyin: Hòutiān huì xià dàxuě, nǐmen chūqù wánr yào duō chuān diǎnr dàyī!",
+          "explanation": "后天会下大雪，你们出去玩儿要多穿点儿大衣！ (Hòutiān huì xià dàxuě, nǐmen chūqù wánr yào duō chuān diǎnr dàyī!) nghĩa là: Ngày kia sẽ có tuyết rơi lớn, các cậu ra ngoài chơi nhớ mặc thêm áo khoác nhé!"
+        },
+        {
+          "id": "tr15_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "会下雪吗？我想周末和朋友去滑雪。",
+          "chineseAudioText": "会下雪吗？我想周末和朋友去滑雪。",
+          "pinyin": "Huì xiàxuě ma? Wǒ xiǎng zhōumò hé péngyou qù huáxuě.",
+          "expectedMeaning": "Có tuyết rơi không? Cuối tuần tớ muốn đi trượt tuyết cùng bạn bè.",
+          "acceptedKeywords": [
+            "có",
+            "tuyết",
+            "rơi",
+            "không",
+            "cuối",
+            "tuần",
+            "tớ",
+            "muốn",
+            "đi",
+            "trượt",
+            "tuyết",
+            "cùng",
+            "bạn",
+            "bè"
+          ],
+          "hint": "Pinyin: Huì xiàxuě ma? Wǒ xiǎng zhōumò hé péngyou qù huáxuě.",
+          "explanation": "会下雪吗？我想周末和朋友去滑雪。 (Huì xiàxuě ma? Wǒ xiǎng zhōumò hé péngyou qù huáxuě.) nghĩa là: Có tuyết rơi không? Cuối tuần tớ muốn đi trượt tuyết cùng bạn bè."
+        },
+        {
+          "id": "tr15_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "明天刮大风，也很冷，温度大概零下八度。",
+          "chineseAudioText": "明天刮大风，也很冷，温度大概零下八度。",
+          "pinyin": "Míngtiān guā dàfēng, yě hěn lěng, wēndù dàgài língxià bā dù.",
+          "expectedMeaning": "Ngày mai có gió lớn và rất lạnh, nhiệt độ khoảng âm 8 độ.",
+          "acceptedKeywords": [
+            "ngày",
+            "mai",
+            "có",
+            "gió",
+            "lớn",
+            "và",
+            "rất",
+            "lạnh",
+            "nhiệt",
+            "độ",
+            "khoảng",
+            "âm",
+            "độ"
+          ],
+          "hint": "Pinyin: Míngtiān guā dàfēng, yě hěn lěng, wēndù dàgài língxià bā dù.",
+          "explanation": "明天刮大风，也很冷，温度大概零下八度。 (Míngtiān guā dàfēng, yě hěn lěng, wēndù dàgài língxià bā dù.) nghĩa là: Ngày mai có gió lớn và rất lạnh, nhiệt độ khoảng âm 8 độ."
+        },
+        {
+          "id": "tr15_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "小雪，明天北京的天气怎么样？",
+          "chineseAudioText": "小雪，明天北京的天气怎么样？",
+          "pinyin": "Xiǎoxuě, míngtiān Běijīng de tiānqì zěnmeyàng?",
+          "expectedMeaning": "Tiểu Tuyết, ngày mai thời tiết ở Bắc Kinh thế nào?",
+          "acceptedKeywords": [
+            "tiểu",
+            "tuyết",
+            "ngày",
+            "mai",
+            "thời",
+            "tiết",
+            "bắc",
+            "kinh",
+            "thế",
+            "nào"
+          ],
+          "hint": "Pinyin: Xiǎoxuě, míngtiān Běijīng de tiānqì zěnmeyàng?",
+          "explanation": "小雪，明天北京的天气怎么样？ (Xiǎoxuě, míngtiān Běijīng de tiānqì zěnmeyàng?) nghĩa là: Tiểu Tuyết, ngày mai thời tiết ở Bắc Kinh thế nào?"
+        },
+        {
+          "id": "tr15_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "今天天气很冷。",
+          "chineseAudioText": "今天天气很冷。",
+          "pinyin": "Jīntiān tiānqì hěn lěng.",
+          "expectedMeaning": "Hôm nay trời rất lạnh.",
+          "acceptedKeywords": [
+            "hôm",
+            "nay",
+            "trời",
+            "rất",
+            "lạnh"
+          ],
+          "hint": "Pinyin: Jīntiān tiānqì hěn lěng.",
+          "explanation": "今天天气很冷。 (Jīntiān tiānqì hěn lěng.) nghĩa là: Hôm nay trời rất lạnh."
+        },
+        {
+          "id": "tr15_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "我真不喜欢！",
+          "chineseAudioText": "我真不喜欢！",
+          "pinyin": "Wǒ zhēn bù xǐhuan!",
+          "expectedMeaning": "Tôi thực sự không thích!",
+          "acceptedKeywords": [
+            "tôi",
+            "thực",
+            "sự",
+            "không",
+            "thích"
+          ],
+          "hint": "Pinyin: Wǒ zhēn bù xǐhuan!",
+          "explanation": "我真不喜欢！ (Wǒ zhēn bù xǐhuan!) nghĩa là: Tôi thực sự không thích!"
         }
       ],
       "expandedQuiz": [
@@ -31352,6 +39388,255 @@ const DEFAULT_LESSONS = [
             "最",
             "舒服"
           ]
+        },
+        {
+          "id": "ss16_exp_1",
+          "targetHanzi": "明天是周末我们不上课",
+          "targetMeaning": "Ngày mai là cuối tuần rồi, chúng ta không phải lên lớp!",
+          "pinyin": "Míngtiān shì zhōumò, wǒmen bú shàngkè!",
+          "tokens": [
+            "明天",
+            "是",
+            "周末",
+            "我们",
+            "不",
+            "上课"
+          ]
+        },
+        {
+          "id": "ss16_exp_2",
+          "targetHanzi": "是啊你觉得周末做什么比较好呢",
+          "targetMeaning": "Đúng rồi! Bạn thấy cuối tuần làm gì thì hay nhỉ?",
+          "pinyin": "Shì a! Nǐ juéde zhōumò zuò shénme bǐjiào hǎo ne?",
+          "tokens": [
+            "是",
+            "啊",
+            "你",
+            "觉得",
+            "周末",
+            "做",
+            "什么",
+            "比较",
+            "好",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss16_exp_3",
+          "targetHanzi": "可以去看电影吃火锅逛街购物或者去健身房健身",
+          "targetMeaning": "Có thể đi xem phim, ăn lẩu, dạo phố, mua sắm hoặc đến phòng tập thể hình tập luyện.",
+          "pinyin": "Kěyǐ qù kàn diànyǐng, chī huǒguō, guàngjiē, gòuwù huòzhě qù jiànshēnfáng jiànshēn.",
+          "tokens": [
+            "可以",
+            "去",
+            "看电影",
+            "吃火锅",
+            "逛街",
+            "购物",
+            "或者",
+            "去",
+            "健身房",
+            "健身"
+          ]
+        },
+        {
+          "id": "ss16_exp_4",
+          "targetHanzi": "很好那你周末常常做什么",
+          "targetMeaning": "Hay đấy, thế cuối tuần bạn thường làm gì?",
+          "pinyin": "Hěn hǎo, nà nǐ zhōumò chángcháng zuò shénme?",
+          "tokens": [
+            "很",
+            "好",
+            "那",
+            "你",
+            "周末",
+            "常常",
+            "做",
+            "什么"
+          ]
+        },
+        {
+          "id": "ss16_exp_5",
+          "targetHanzi": "我常常跟朋友出去玩儿我非常喜欢去公园照相",
+          "targetMeaning": "Tôi thường ra ngoài chơi với bạn bè, tôi rất thích ra công viên chụp ảnh.",
+          "pinyin": "Wǒ chángcháng gēn péngyou chūqù wánr, wǒ fēicháng xǐhuan qù gōngyuán zhàoxiàng.",
+          "tokens": [
+            "我",
+            "常常",
+            "跟",
+            "朋友",
+            "出去",
+            "玩儿",
+            "我",
+            "非常",
+            "喜欢",
+            "去",
+            "公园",
+            "照相"
+          ]
+        },
+        {
+          "id": "ss16_exp_6",
+          "targetHanzi": "周末的时候我在家休息休息如果有作业我就做作业如果妈妈要帮忙我就去帮忙",
+          "targetMeaning": "Cuối tuần tôi nghỉ ngơi ở nhà, nếu có bài tập thì làm bài tập, nếu mẹ cần giúp việc gì thì tôi giúp mẹ.",
+          "pinyin": "Zhōumò de shíhou wǒ zài jiā xiūxi xiūxi, rúguǒ yǒu zuòyè wǒ jiù zuò zuòyè, rúguǒ māma yào bāngmáng wǒ jiù qù bāngmáng.",
+          "tokens": [
+            "周末",
+            "的",
+            "时候",
+            "我",
+            "在",
+            "家",
+            "休息",
+            "休息",
+            "如果",
+            "有",
+            "作业",
+            "我",
+            "就",
+            "做",
+            "作业",
+            "如果",
+            "妈妈",
+            "要",
+            "帮忙",
+            "我",
+            "就",
+            "去",
+            "帮忙"
+          ]
+        },
+        {
+          "id": "ss16_exp_7",
+          "targetHanzi": "你很乖啊如果没有什么做我就上网看新闻或者玩游戏",
+          "targetMeaning": "Bạn ngoan thật đấy! Nếu không có việc gì làm thì tôi lên mạng đọc tin tức hoặc chơi game.",
+          "pinyin": "Nǐ hěn guāi a! Rúguǒ méiyǒu shénme zuò wǒ jiù shàngwǎng kàn xīnwén huòzhě wán yóuxì.",
+          "tokens": [
+            "你",
+            "很",
+            "乖",
+            "啊",
+            "如果",
+            "没有",
+            "什么",
+            "做",
+            "我",
+            "就",
+            "上网",
+            "看",
+            "新闻",
+            "或者",
+            "玩",
+            "游",
+            "戏"
+          ]
+        },
+        {
+          "id": "ss16_exp_8",
+          "targetHanzi": "你的周末很无聊你看看这简直太浪费时间了吧",
+          "targetMeaning": "Cuối tuần của bạn nhàm chán quá, bạn xem đấy, như vậy thật quá lãng phí thời gian rồi!",
+          "pinyin": "Nǐ de zhōumò hěn wúliáo, nǐ kànkan, zhè jiǎnzhí tài làngfèi shíjiān le ba!",
+          "tokens": [
+            "你",
+            "的",
+            "周末",
+            "很",
+            "无聊",
+            "你",
+            "看",
+            "看",
+            "这",
+            "简直",
+            "太",
+            "浪费",
+            "时间",
+            "了",
+            "吧"
+          ]
+        },
+        {
+          "id": "ss16_exp_9",
+          "targetHanzi": "那好明天我在家复习功课吧快要考试了",
+          "targetMeaning": "Thôi được, ngày mai tôi ở nhà ôn tập bài vở vậy, sắp thi rồi.",
+          "pinyin": "Nà hǎo, míngtiān wǒ zài jiā fùxí gōngkè ba, kuàiyào kǎoshì le.",
+          "tokens": [
+            "那",
+            "好",
+            "明天",
+            "我",
+            "在",
+            "家",
+            "复习",
+            "功课",
+            "吧",
+            "快",
+            "要",
+            "考试",
+            "了"
+          ]
+        },
+        {
+          "id": "ss16_exp_10",
+          "targetHanzi": "他是个不怎么样的人",
+          "targetMeaning": "Anh ta là người chẳng ra gì.",
+          "pinyin": "Tā shì gè bù zěnme yàng de rén.",
+          "tokens": [
+            "他",
+            "是",
+            "个",
+            "不",
+            "怎么样",
+            "的",
+            "人"
+          ]
+        },
+        {
+          "id": "ss16_exp_11",
+          "targetHanzi": "一斤苹果多少钱",
+          "targetMeaning": "Nửa kg (1 cân) táo bao nhiêu tiền?",
+          "pinyin": "Yī jīn píngguǒ duōshao qián?",
+          "tokens": [
+            "一",
+            "斤",
+            "苹果",
+            "多少",
+            "钱"
+          ]
+        },
+        {
+          "id": "ss16_exp_12",
+          "targetHanzi": "你是日明吗",
+          "targetMeaning": "Cậu là Nhật Minh phải không?",
+          "pinyin": "Nǐ shì Rìmíng ma?",
+          "tokens": [
+            "你",
+            "是",
+            "日",
+            "明",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss16_exp_13",
+          "targetHanzi": "休息休息",
+          "targetMeaning": "Nghỉ ngơi một chút",
+          "pinyin": "xiūxi xiūxi",
+          "tokens": [
+            "休息",
+            "休息"
+          ]
+        },
+        {
+          "id": "ss16_exp_14",
+          "targetHanzi": "我真不喜欢",
+          "targetMeaning": "Tôi thực sự không thích!",
+          "pinyin": "Wǒ zhēn bù xǐhuan!",
+          "tokens": [
+            "我",
+            "真",
+            "不",
+            "喜欢"
+          ]
         }
       ],
       "translationExercises": [
@@ -31390,6 +39675,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "děngdeng  děng yi děng",
           "hint": "Gợi ý Pinyin: děngdeng = děng yi děng",
           "explanation": "Đợi một chút. → 等等 = 等一等 (děngdeng = děng yi děng)"
+        },
+        {
+          "id": "tr16_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Ngày mai là cuối tuần rồi, chúng ta không phải lên lớp!",
+          "expectedChinese": "明天是周末，我们不上课！",
+          "acceptedPinyin": "míngtiān shì zhōumò wǒmen bú shàngkè",
+          "hint": "Gợi ý Pinyin: Míngtiān shì zhōumò, wǒmen bú shàngkè!",
+          "explanation": "Ngày mai là cuối tuần rồi, chúng ta không phải lên lớp! → 明天是周末，我们不上课！ (Míngtiān shì zhōumò, wǒmen bú shàngkè!)"
+        },
+        {
+          "id": "tr16_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Đúng rồi! Bạn thấy cuối tuần làm gì thì hay nhỉ?",
+          "expectedChinese": "是啊！你觉得周末做什么比较好呢？",
+          "acceptedPinyin": "shì a nǐ juéde zhōumò zuò shénme bǐjiào hǎo ne",
+          "hint": "Gợi ý Pinyin: Shì a! Nǐ juéde zhōumò zuò shénme bǐjiào hǎo ne?",
+          "explanation": "Đúng rồi! Bạn thấy cuối tuần làm gì thì hay nhỉ? → 是啊！你觉得周末做什么比较好呢？ (Shì a! Nǐ juéde zhōumò zuò shénme bǐjiào hǎo ne?)"
+        },
+        {
+          "id": "tr16_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Có thể đi xem phim, ăn lẩu, dạo phố, mua sắm hoặc đến phòng tập thể hình tập luyện.",
+          "expectedChinese": "可以去看电影，吃火锅，逛街，购物或者去健身房健身。",
+          "acceptedPinyin": "kěyǐ qù kàn diànyǐng chī huǒguō guàngjiē gòuwù huòzhě qù jiànshēnfáng jiànshēn",
+          "hint": "Gợi ý Pinyin: Kěyǐ qù kàn diànyǐng, chī huǒguō, guàngjiē, gòuwù huòzhě qù jiànshēnfáng jiànshēn.",
+          "explanation": "Có thể đi xem phim, ăn lẩu, dạo phố, mua sắm hoặc đến phòng tập thể hình tập luyện. → 可以去看电影，吃火锅，逛街，购物或者去健身房健身。 (Kěyǐ qù kàn diànyǐng, chī huǒguō, guàngjiē, gòuwù huòzhě qù jiànshēnfáng jiànshēn.)"
+        },
+        {
+          "id": "tr16_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Hay đấy, thế cuối tuần bạn thường làm gì?",
+          "expectedChinese": "很好，那你周末常常做什么？",
+          "acceptedPinyin": "hěn hǎo nà nǐ zhōumò chángcháng zuò shénme",
+          "hint": "Gợi ý Pinyin: Hěn hǎo, nà nǐ zhōumò chángcháng zuò shénme?",
+          "explanation": "Hay đấy, thế cuối tuần bạn thường làm gì? → 很好，那你周末常常做什么？ (Hěn hǎo, nà nǐ zhōumò chángcháng zuò shénme?)"
+        },
+        {
+          "id": "tr16_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Tôi thường ra ngoài chơi với bạn bè, tôi rất thích ra công viên chụp ảnh.",
+          "expectedChinese": "我常常跟朋友出去玩儿，我非常喜欢去公园照相。",
+          "acceptedPinyin": "wǒ chángcháng gēn péngyou chūqù wánr wǒ fēicháng xǐhuan qù gōngyuán zhàoxiàng",
+          "hint": "Gợi ý Pinyin: Wǒ chángcháng gēn péngyou chūqù wánr, wǒ fēicháng xǐhuan qù gōngyuán zhàoxiàng.",
+          "explanation": "Tôi thường ra ngoài chơi với bạn bè, tôi rất thích ra công viên chụp ảnh. → 我常常跟朋友出去玩儿，我非常喜欢去公园照相。 (Wǒ chángcháng gēn péngyou chūqù wánr, wǒ fēicháng xǐhuan qù gōngyuán zhàoxiàng.)"
+        },
+        {
+          "id": "tr16_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Cuối tuần tôi nghỉ ngơi ở nhà, nếu có bài tập thì làm bài tập, nếu mẹ cần giúp việc gì thì tôi giúp mẹ.",
+          "expectedChinese": "周末的时候我在家休息休息，如果有作业我就做作业，如果妈妈要帮忙我就去帮忙。",
+          "acceptedPinyin": "zhōumò de shíhou wǒ zài jiā xiūxi xiūxi rúguǒ yǒu zuòyè wǒ jiù zuò zuòyè rúguǒ māma yào bāngmáng wǒ jiù qù bāngmáng",
+          "hint": "Gợi ý Pinyin: Zhōumò de shíhou wǒ zài jiā xiūxi xiūxi, rúguǒ yǒu zuòyè wǒ jiù zuò zuòyè, rúguǒ māma yào bāngmáng wǒ jiù qù bāngmáng.",
+          "explanation": "Cuối tuần tôi nghỉ ngơi ở nhà, nếu có bài tập thì làm bài tập, nếu mẹ cần giúp việc gì thì tôi giúp mẹ. → 周末的时候我在家休息休息，如果有作业我就做作业，如果妈妈要帮忙我就去帮忙。 (Zhōumò de shíhou wǒ zài jiā xiūxi xiūxi, rúguǒ yǒu zuòyè wǒ jiù zuò zuòyè, rúguǒ māma yào bāngmáng wǒ jiù qù bāngmáng.)"
+        },
+        {
+          "id": "tr16_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Bạn ngoan thật đấy! Nếu không có việc gì làm thì tôi lên mạng đọc tin tức hoặc chơi game.",
+          "expectedChinese": "你很乖啊！如果没有什么做我就上网看新闻或者玩游戏。",
+          "acceptedPinyin": "nǐ hěn guāi a rúguǒ méiyǒu shénme zuò wǒ jiù shàngwǎng kàn xīnwén huòzhě wán yóuxì",
+          "hint": "Gợi ý Pinyin: Nǐ hěn guāi a! Rúguǒ méiyǒu shénme zuò wǒ jiù shàngwǎng kàn xīnwén huòzhě wán yóuxì.",
+          "explanation": "Bạn ngoan thật đấy! Nếu không có việc gì làm thì tôi lên mạng đọc tin tức hoặc chơi game. → 你很乖啊！如果没有什么做我就上网看新闻或者玩游戏。 (Nǐ hěn guāi a! Rúguǒ méiyǒu shénme zuò wǒ jiù shàngwǎng kàn xīnwén huòzhě wán yóuxì.)"
+        },
+        {
+          "id": "tr16_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Cuối tuần của bạn nhàm chán quá, bạn xem đấy, như vậy thật quá lãng phí thời gian rồi!",
+          "expectedChinese": "你的周末很无聊，你看看, 这简直太浪费时间了吧！",
+          "acceptedPinyin": "nǐ de zhōumò hěn wúliáo nǐ kànkan zhè jiǎnzhí tài làngfèi shíjiān le ba",
+          "hint": "Gợi ý Pinyin: Nǐ de zhōumò hěn wúliáo, nǐ kànkan, zhè jiǎnzhí tài làngfèi shíjiān le ba!",
+          "explanation": "Cuối tuần của bạn nhàm chán quá, bạn xem đấy, như vậy thật quá lãng phí thời gian rồi! → 你的周末很无聊，你看看, 这简直太浪费时间了吧！ (Nǐ de zhōumò hěn wúliáo, nǐ kànkan, zhè jiǎnzhí tài làngfèi shíjiān le ba!)"
+        },
+        {
+          "id": "tr16_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Thôi được, ngày mai tôi ở nhà ôn tập bài vở vậy, sắp thi rồi.",
+          "expectedChinese": "那好，明天我在家复习功课吧，快要考试了。",
+          "acceptedPinyin": "nà hǎo míngtiān wǒ zài jiā fùxí gōngkè ba kuàiyào kǎoshì le",
+          "hint": "Gợi ý Pinyin: Nà hǎo, míngtiān wǒ zài jiā fùxí gōngkè ba, kuàiyào kǎoshì le.",
+          "explanation": "Thôi được, ngày mai tôi ở nhà ôn tập bài vở vậy, sắp thi rồi. → 那好，明天我在家复习功课吧，快要考试了。 (Nà hǎo, míngtiān wǒ zài jiā fùxí gōngkè ba, kuàiyào kǎoshì le.)"
+        },
+        {
+          "id": "tr16_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Anh ta là người chẳng ra gì.",
+          "expectedChinese": "他是个不怎么样的人。",
+          "acceptedPinyin": "tā shì gè bù zěnme yàng de rén",
+          "hint": "Gợi ý Pinyin: Tā shì gè bù zěnme yàng de rén.",
+          "explanation": "Anh ta là người chẳng ra gì. → 他是个不怎么样的人。 (Tā shì gè bù zěnme yàng de rén.)"
         },
         {
           "id": "tr16_zh_1",
@@ -31450,6 +39825,231 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Nǐ mǎi jǐ gè xīguā?",
           "explanation": "你买几个西瓜？ (Nǐ mǎi jǐ gè xīguā?) nghĩa là: Cậu mua mấy quả dưa hấu thế?"
+        },
+        {
+          "id": "tr16_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "昨天晚上我复习了复习课文。",
+          "chineseAudioText": "昨天晚上我复习了复习课文。",
+          "pinyin": "Zuótiān wǎnshàng wǒ fùxí le fùxí kèwén.",
+          "expectedMeaning": "Tối hôm qua tôi đã ôn tập qua bài khóa rồi.",
+          "acceptedKeywords": [
+            "tối",
+            "hôm",
+            "qua",
+            "tôi",
+            "đã",
+            "ôn",
+            "tập",
+            "qua",
+            "bài",
+            "khóa",
+            "rồi"
+          ],
+          "hint": "Pinyin: Zuótiān wǎnshàng wǒ fùxí le fùxí kèwén.",
+          "explanation": "昨天晚上我复习了复习课文。 (Zuótiān wǎnshàng wǒ fùxí le fùxí kèwén.) nghĩa là: Tối hôm qua tôi đã ôn tập qua bài khóa rồi."
+        },
+        {
+          "id": "tr16_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "我想去逛逛街。",
+          "chineseAudioText": "我想去逛逛街。",
+          "pinyin": "Wǒ xiǎng qù guàngguang jiē.",
+          "expectedMeaning": "Tớ muốn đi dạo phố một lúc.",
+          "acceptedKeywords": [
+            "tớ",
+            "muốn",
+            "đi",
+            "dạo",
+            "phố",
+            "một",
+            "lúc"
+          ],
+          "hint": "Pinyin: Wǒ xiǎng qù guàngguang jiē.",
+          "explanation": "我想去逛逛街。 (Wǒ xiǎng qù guàngguang jiē.) nghĩa là: Tớ muốn đi dạo phố một lúc."
+        },
+        {
+          "id": "tr16_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "妈妈拍了拍我的头。",
+          "chineseAudioText": "妈妈拍了拍我的头。",
+          "pinyin": "Māma pāi le pāi wǒ de tóu.",
+          "expectedMeaning": "Mẹ gõ nhẹ vào đầu tôi.",
+          "acceptedKeywords": [
+            "mẹ",
+            "gõ",
+            "nhẹ",
+            "vào",
+            "đầu",
+            "tôi"
+          ],
+          "hint": "Pinyin: Māma pāi le pāi wǒ de tóu.",
+          "explanation": "妈妈拍了拍我的头。 (Māma pāi le pāi wǒ de tóu.) nghĩa là: Mẹ gõ nhẹ vào đầu tôi."
+        },
+        {
+          "id": "tr16_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "她看了看自己的长头发。",
+          "chineseAudioText": "她看了看自己的长头发。",
+          "pinyin": "Tā kàn le kàn zìjǐ de cháng tóufa.",
+          "expectedMeaning": "Cô ấy ngắm qua mái tóc dài của mình.",
+          "acceptedKeywords": [
+            "cô",
+            "ấy",
+            "ngắm",
+            "qua",
+            "mái",
+            "tóc",
+            "dài",
+            "của",
+            "mình"
+          ],
+          "hint": "Pinyin: Tā kàn le kàn zìjǐ de cháng tóufa.",
+          "explanation": "她看了看自己的长头发。 (Tā kàn le kàn zìjǐ de cháng tóufa.) nghĩa là: Cô ấy ngắm qua mái tóc dài của mình."
+        },
+        {
+          "id": "tr16_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "尝尝 = 尝一尝",
+          "chineseAudioText": "尝尝 = 尝一尝",
+          "pinyin": "chángchang = cháng yi cháng",
+          "expectedMeaning": "Thử qua một chút.",
+          "acceptedKeywords": [
+            "thử",
+            "qua",
+            "một",
+            "chút"
+          ],
+          "hint": "Pinyin: chángchang = cháng yi cháng",
+          "explanation": "尝尝 = 尝一尝 (chángchang = cháng yi cháng) nghĩa là: Thử qua một chút."
+        },
+        {
+          "id": "tr16_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "= 明天天气好的话，我们就去爬山。",
+          "chineseAudioText": "= 明天天气好的话，我们就去爬山。",
+          "pinyin": "Rúguǒ míngtiān tiānqì hǎo dehuà, wǒmen jiù qù páshān.",
+          "expectedMeaning": "Nếu ngày mai trời đẹp, chúng ta sẽ đi leo núi.",
+          "acceptedKeywords": [
+            "nếu",
+            "ngày",
+            "mai",
+            "trời",
+            "đẹp",
+            "chúng",
+            "ta",
+            "sẽ",
+            "đi",
+            "leo",
+            "núi"
+          ],
+          "hint": "Pinyin: Rúguǒ míngtiān tiānqì hǎo dehuà, wǒmen jiù qù páshān.",
+          "explanation": "= 明天天气好的话，我们就去爬山。 (Rúguǒ míngtiān tiānqì hǎo dehuà, wǒmen jiù qù páshān.) nghĩa là: Nếu ngày mai trời đẹp, chúng ta sẽ đi leo núi."
+        },
+        {
+          "id": "tr16_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "如果你有困难，我就帮助你。",
+          "chineseAudioText": "如果你有困难，我就帮助你。",
+          "pinyin": "Rúguǒ nǐ yǒu kùnnan, wǒ jiù bāngzhù nǐ.",
+          "expectedMeaning": "Nếu cậu gặp khó khăn thì tớ sẽ giúp đỡ.",
+          "acceptedKeywords": [
+            "nếu",
+            "cậu",
+            "gặp",
+            "khó",
+            "khăn",
+            "thì",
+            "tớ",
+            "sẽ",
+            "giúp",
+            "đỡ"
+          ],
+          "hint": "Pinyin: Rúguǒ nǐ yǒu kùnnan, wǒ jiù bāngzhù nǐ.",
+          "explanation": "如果你有困难，我就帮助你。 (Rúguǒ nǐ yǒu kùnnan, wǒ jiù bāngzhù nǐ.) nghĩa là: Nếu cậu gặp khó khăn thì tớ sẽ giúp đỡ."
+        },
+        {
+          "id": "tr16_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "如果你好好学习，就能考上大学.",
+          "chineseAudioText": "如果你好好学习，就能考上大学.",
+          "pinyin": "Rúguǒ nǐ hǎohào xuéxí, jiù néng kǎo shàng dàxué.",
+          "expectedMeaning": "Nếu chăm chỉ học hành thì bạn sẽ có thể thi đỗ đại học.",
+          "acceptedKeywords": [
+            "nếu",
+            "chăm",
+            "chỉ",
+            "học",
+            "hành",
+            "thì",
+            "bạn",
+            "sẽ",
+            "có",
+            "thể",
+            "thi",
+            "đỗ",
+            "đại",
+            "học"
+          ],
+          "hint": "Pinyin: Rúguǒ nǐ hǎohào xuéxí, jiù néng kǎo shàng dàxué.",
+          "explanation": "如果你好好学习，就能考上大学. (Rúguǒ nǐ hǎohào xuéxí, jiù néng kǎo shàng dàxué.) nghĩa là: Nếu chăm chỉ học hành thì bạn sẽ có thể thi đỗ đại học."
+        },
+        {
+          "id": "tr16_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "太好了！吃完火锅我们还可以在公园照相休息。",
+          "chineseAudioText": "太好了！吃完火锅我们还可以在公园照相休息。",
+          "pinyin": "Tài hǎo le! Chīwán huǒguō wǒmen hái kěyǐ zài gōngyuán zhàoxiàng xiūxi.",
+          "expectedMeaning": "Hay quá! Ăn lẩu xong chúng ta còn có thể ra công viên chụp ảnh và thư giãn.",
+          "acceptedKeywords": [
+            "hay",
+            "quá",
+            "ăn",
+            "lẩu",
+            "xong",
+            "chúng",
+            "ta",
+            "còn",
+            "có",
+            "thể",
+            "ra",
+            "công",
+            "viên",
+            "chụp",
+            "ảnh",
+            "và",
+            "thư",
+            "giãn"
+          ],
+          "hint": "Pinyin: Tài hǎo le! Chīwán huǒguō wǒmen hái kěyǐ zài gōngyuán zhàoxiàng xiūxi.",
+          "explanation": "太好了！吃完火锅我们还可以在公园照相休息。 (Tài hǎo le! Chīwán huǒguō wǒmen hái kěyǐ zài gōngyuán zhàoxiàng xiūxi.) nghĩa là: Hay quá! Ăn lẩu xong chúng ta còn có thể ra công viên chụp ảnh và thư giãn."
+        },
+        {
+          "id": "tr16_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "那晚上我们去吃火锅吧，好久没见大家了。",
+          "chineseAudioText": "那晚上我们去吃火锅吧，好久没见大家了。",
+          "pinyin": "Nà wǎnshang wǒmen qù chī huǒguō ba, hǎojiǔ méi jiàn dàjiā le.",
+          "expectedMeaning": "Vậy buổi tối chúng ta đi ăn lẩu nhé, lâu rồi không gặp mọi người.",
+          "acceptedKeywords": [
+            "vậy",
+            "buổi",
+            "tối",
+            "chúng",
+            "ta",
+            "đi",
+            "ăn",
+            "lẩu",
+            "nhé",
+            "lâu",
+            "rồi",
+            "không",
+            "gặp",
+            "mọi",
+            "người"
+          ],
+          "hint": "Pinyin: Nà wǎnshang wǒmen qù chī huǒguō ba, hǎojiǔ méi jiàn dàjiā le.",
+          "explanation": "那晚上我们去吃火锅吧，好久没见大家了。 (Nà wǎnshang wǒmen qù chī huǒguō ba, hǎojiǔ méi jiàn dàjiā le.) nghĩa là: Vậy buổi tối chúng ta đi ăn lẩu nhé, lâu rồi không gặp mọi người."
         }
       ],
       "expandedQuiz": [
@@ -33478,6 +42078,295 @@ const DEFAULT_LESSONS = [
             "吃",
             "饭"
           ]
+        },
+        {
+          "id": "ss17_exp_1",
+          "targetHanzi": "我听几个朋友说快到春节了春节是你们的一个节日对吗",
+          "targetMeaning": "Tôi nghe mấy người bạn nói sắp đến Tết Nguyên Đán rồi, Tết là một ngày lễ của các bạn đúng không?",
+          "pinyin": "Wǒ tīng jǐ gè péngyou shuō kuài dào Chūnjié le, Chūnjié shì nǐmen de yígè jiérì, duì ma?",
+          "tokens": [
+            "我",
+            "听",
+            "几",
+            "个",
+            "朋友",
+            "说",
+            "快",
+            "到",
+            "春节",
+            "了",
+            "春节",
+            "是",
+            "你们",
+            "的",
+            "一",
+            "个",
+            "节日",
+            "对",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss17_exp_2",
+          "targetHanzi": "对春节是中国的一个重要传统节日",
+          "targetMeaning": "Đúng vậy, Tết Nguyên Đán là một ngày lễ truyền thống quan trọng của Trung Quốc.",
+          "pinyin": "Duì, Chūnjié shì Zhōngguó de yígè zhòngyào chuántǒng jiérì.",
+          "tokens": [
+            "对",
+            "春节",
+            "是",
+            "中国",
+            "的",
+            "一",
+            "个",
+            "重要",
+            "传统",
+            "节日"
+          ]
+        },
+        {
+          "id": "ss17_exp_3",
+          "targetHanzi": "我们越南人也有春节和中国的春节差不多",
+          "targetMeaning": "Người Việt Nam chúng tôi cũng có Tết Nguyên Đán, khá giống Tết ở Trung Quốc.",
+          "pinyin": "Wǒmen Yuènán rén yě yǒu Chūnjié, hé Zhōngguó de Chūnjié chàbuduō.",
+          "tokens": [
+            "我们",
+            "越南",
+            "人",
+            "也",
+            "有",
+            "春节",
+            "和",
+            "中国",
+            "的",
+            "春节",
+            "差不多"
+          ]
+        },
+        {
+          "id": "ss17_exp_4",
+          "targetHanzi": "你们怎么准备过年",
+          "targetMeaning": "Các bạn chuẩn bị đón Tết thế nào?",
+          "pinyin": "Nǐmen zěnme zhǔnbèi guònián?",
+          "tokens": [
+            "你们",
+            "怎么",
+            "准备",
+            "过年"
+          ]
+        },
+        {
+          "id": "ss17_exp_5",
+          "targetHanzi": "要准备很多比如打扫房子买茶食水果贴春联包饺子",
+          "targetMeaning": "Phải chuẩn bị nhiều thứ lắm, ví dụ như dọn dẹp nhà cửa, mua bánh mứt, trái cây, dán câu đối Tết, gói sủi cảo.",
+          "pinyin": "Yào zhǔnbèi hěnduō, bǐrú dǎsǎo fángzi, mǎi cháshi, shuǐguǒ, tiē chūnlián, bāo jiǎozi.",
+          "tokens": [
+            "要",
+            "准备",
+            "很",
+            "多",
+            "比如",
+            "打扫",
+            "房子",
+            "买",
+            "茶食",
+            "水果",
+            "贴",
+            "春联",
+            "包",
+            "饺子"
+          ]
+        },
+        {
+          "id": "ss17_exp_6",
+          "targetHanzi": "我们越南不包饺子我们包粽子",
+          "targetMeaning": "Việt Nam chúng tôi không gói sủi cảo, chúng tôi gói bánh chưng.",
+          "pinyin": "Wǒmen Yuènán bù bāo jiǎozi, wǒmen bāo zòngzi.",
+          "tokens": [
+            "我们",
+            "越南",
+            "不",
+            "包",
+            "饺子",
+            "我们",
+            "包",
+            "粽子"
+          ]
+        },
+        {
+          "id": "ss17_exp_7",
+          "targetHanzi": "然后呢",
+          "targetMeaning": "Sau đó thì sao?",
+          "pinyin": "Ránhòu ne?",
+          "tokens": [
+            "然",
+            "后",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss17_exp_8",
+          "targetHanzi": "先准备好这些然后到除夕全家人团圆一起吃年夜饭放鞭炮庆祝新年",
+          "targetMeaning": "Trước tiên chuẩn bị xong những thứ này, rồi đến đêm Giao thừa, cả nhà đoàn tụ cùng ăn bữa cơm tất niên, đốt pháo mừng năm mới.",
+          "pinyin": "Xiān zhǔnbèi hǎo zhèxiē, ránhòu dào chúxī, quán jiārén tuányuán, yīqǐ chī niányèfàn, fàng biānpào, qìngzhù xīnnián.",
+          "tokens": [
+            "先",
+            "准备",
+            "好",
+            "这",
+            "些",
+            "然",
+            "后",
+            "到",
+            "除夕",
+            "全家",
+            "人",
+            "团圆",
+            "一起",
+            "吃",
+            "年夜饭",
+            "放",
+            "鞭炮",
+            "庆祝",
+            "新年"
+          ]
+        },
+        {
+          "id": "ss17_exp_9",
+          "targetHanzi": "对还有红包我还记得我小时候去亲戚家拜年他们给我很多红包真开心但是现在没有了",
+          "targetMeaning": "Đúng rồi, còn có lì xì nữa. Tôi vẫn nhớ hồi nhỏ đi chúc Tết họ hàng, mọi người mừng tuổi tôi rất nhiều bao lì xì, vui lắm, nhưng bây giờ thì không còn nữa rồi.",
+          "pinyin": "Duì, hái yǒu hóngbāo. Wǒ hái jìde wǒ xiǎoshíhou qù qīnqi jiā bàinián, tāmen gěi wǒ hěnduō hóngbāo, zhēn kāixīn, dànshì xiànzài méiyǒu le.",
+          "tokens": [
+            "对",
+            "还",
+            "有",
+            "红包",
+            "我",
+            "还",
+            "记",
+            "得",
+            "我",
+            "小",
+            "时候",
+            "去",
+            "亲戚",
+            "家",
+            "拜年",
+            "他们",
+            "给",
+            "我",
+            "很",
+            "多",
+            "红包",
+            "真",
+            "开心",
+            "但是",
+            "现在",
+            "没有",
+            "了"
+          ]
+        },
+        {
+          "id": "ss17_exp_10",
+          "targetHanzi": "哇春节真有意思我也想过春节",
+          "targetMeaning": "Chà! Tết thú vị thật đấy! Tôi cũng muốn đón Tết.",
+          "pinyin": "Wa! Chūnjié zhēn yǒuyìsi! Wǒ yě xiǎngguò chūnjié.",
+          "tokens": [
+            "哇",
+            "春节",
+            "真",
+            "有意思",
+            "我",
+            "也",
+            "想",
+            "过",
+            "春节"
+          ]
+        },
+        {
+          "id": "ss17_exp_11",
+          "targetHanzi": "那么今年春节请你们到我们家做客我们在一块儿好好儿过年一定会很快乐",
+          "targetMeaning": "Vậy Tết năm nay mời các bạn đến nhà chúng tôi chơi, chúng ta cùng nhau đón Tết thật vui vẻ, chắc chắn sẽ rất hạnh phúc.",
+          "pinyin": "Nàme jīnnián Chūnjié qǐng nǐmen dào wǒmen jiā zuòkè, wǒmen zài yíkuàir hǎohāor guònián, yídìng huì hěn kuàilè.",
+          "tokens": [
+            "那么",
+            "今",
+            "年",
+            "春节",
+            "请",
+            "你们",
+            "到",
+            "我们",
+            "家",
+            "做客",
+            "我们",
+            "在一块儿",
+            "好好儿",
+            "过年",
+            "一",
+            "定",
+            "会",
+            "很",
+            "快乐"
+          ]
+        },
+        {
+          "id": "ss17_exp_12",
+          "targetHanzi": "好玉兰我们一起去吧你才过越南春节还没有过中国春节对吗",
+          "targetMeaning": "Được! Ngọc Lan chúng ta cùng đi nhé! Cậu mới đón Tết Việt Nam thôi, chưa từng đón Tết Trung Quốc đúng không?",
+          "pinyin": "Hǎo! Yùlán wǒmen yīqǐ qù ba! Nǐ cái guò Yuènán Chūnjié, hái méiyǒu guò Zhōngguó Chūnjié, duì ma?",
+          "tokens": [
+            "好",
+            "玉",
+            "兰",
+            "我们",
+            "一起",
+            "去",
+            "吧",
+            "你",
+            "才",
+            "过",
+            "越南",
+            "春节",
+            "还",
+            "没有",
+            "过",
+            "中国",
+            "春节",
+            "对",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss17_exp_13",
+          "targetHanzi": "嗯到那时候我们一定要好好儿玩",
+          "targetMeaning": "Ừ. Đến lúc đó chúng ta nhất định phải chơi thật vui.",
+          "pinyin": "Ēn. Dào nàge shíhou wǒmen yídìng yào hǎohāor wán.",
+          "tokens": [
+            "嗯",
+            "到",
+            "那",
+            "时候",
+            "我们",
+            "一",
+            "定",
+            "要",
+            "好好儿",
+            "玩"
+          ]
+        },
+        {
+          "id": "ss17_exp_14",
+          "targetHanzi": "找找找一找",
+          "targetMeaning": "Tìm một chút, tìm qua.",
+          "pinyin": "zhǎozhao = zhǎo yi zhǎo",
+          "tokens": [
+            "找",
+            "找",
+            "找",
+            "一",
+            "找"
+          ]
         }
       ],
       "translationExercises": [
@@ -33516,6 +42405,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "nǐ búyào zǒu hǎo bu hǎo",
           "hint": "Gợi ý Pinyin: Nǐ búyào zǒu! Hǎo bu hǎo?",
           "explanation": "Anh đừng đi! Có được không? → 你不要走！好不好？ (Nǐ búyào zǒu! Hǎo bu hǎo?)"
+        },
+        {
+          "id": "tr17_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Tôi nghe mấy người bạn nói sắp đến Tết Nguyên Đán rồi, Tết là một ngày lễ của các bạn đúng không?",
+          "expectedChinese": "我听几个朋友说快到春节了，春节是你们的一个节日，对吗？",
+          "acceptedPinyin": "wǒ tīng jǐ gè péngyou shuō kuài dào chūnjié le chūnjié shì nǐmen de yígè jiérì duì ma",
+          "hint": "Gợi ý Pinyin: Wǒ tīng jǐ gè péngyou shuō kuài dào Chūnjié le, Chūnjié shì nǐmen de yígè jiérì, duì ma?",
+          "explanation": "Tôi nghe mấy người bạn nói sắp đến Tết Nguyên Đán rồi, Tết là một ngày lễ của các bạn đúng không? → 我听几个朋友说快到春节了，春节是你们的一个节日，对吗？ (Wǒ tīng jǐ gè péngyou shuō kuài dào Chūnjié le, Chūnjié shì nǐmen de yígè jiérì, duì ma?)"
+        },
+        {
+          "id": "tr17_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Đúng vậy, Tết Nguyên Đán là một ngày lễ truyền thống quan trọng của Trung Quốc.",
+          "expectedChinese": "对，春节是中国的一个重要传统节日。",
+          "acceptedPinyin": "duì chūnjié shì zhōngguó de yígè zhòngyào chuántǒng jiérì",
+          "hint": "Gợi ý Pinyin: Duì, Chūnjié shì Zhōngguó de yígè zhòngyào chuántǒng jiérì.",
+          "explanation": "Đúng vậy, Tết Nguyên Đán là một ngày lễ truyền thống quan trọng của Trung Quốc. → 对，春节是中国的一个重要传统节日。 (Duì, Chūnjié shì Zhōngguó de yígè zhòngyào chuántǒng jiérì.)"
+        },
+        {
+          "id": "tr17_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Người Việt Nam chúng tôi cũng có Tết Nguyên Đán, khá giống Tết ở Trung Quốc.",
+          "expectedChinese": "我们越南人也有春节，和中国的春节差不多。",
+          "acceptedPinyin": "wǒmen yuènán rén yě yǒu chūnjié hé zhōngguó de chūnjié chàbuduō",
+          "hint": "Gợi ý Pinyin: Wǒmen Yuènán rén yě yǒu Chūnjié, hé Zhōngguó de Chūnjié chàbuduō.",
+          "explanation": "Người Việt Nam chúng tôi cũng có Tết Nguyên Đán, khá giống Tết ở Trung Quốc. → 我们越南人也有春节，和中国的春节差不多。 (Wǒmen Yuènán rén yě yǒu Chūnjié, hé Zhōngguó de Chūnjié chàbuduō.)"
+        },
+        {
+          "id": "tr17_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Các bạn chuẩn bị đón Tết thế nào?",
+          "expectedChinese": "你们怎么准备过年？",
+          "acceptedPinyin": "nǐmen zěnme zhǔnbèi guònián",
+          "hint": "Gợi ý Pinyin: Nǐmen zěnme zhǔnbèi guònián?",
+          "explanation": "Các bạn chuẩn bị đón Tết thế nào? → 你们怎么准备过年？ (Nǐmen zěnme zhǔnbèi guònián?)"
+        },
+        {
+          "id": "tr17_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Phải chuẩn bị nhiều thứ lắm, ví dụ như dọn dẹp nhà cửa, mua bánh mứt, trái cây, dán câu đối Tết, gói sủi cảo.",
+          "expectedChinese": "要准备很多，比如打扫房子、买茶食、水果、贴春联、包饺子。",
+          "acceptedPinyin": "yào zhǔnbèi hěnduō bǐrú dǎsǎo fángzi mǎi cháshi shuǐguǒ tiē chūnlián bāo jiǎozi",
+          "hint": "Gợi ý Pinyin: Yào zhǔnbèi hěnduō, bǐrú dǎsǎo fángzi, mǎi cháshi, shuǐguǒ, tiē chūnlián, bāo jiǎozi.",
+          "explanation": "Phải chuẩn bị nhiều thứ lắm, ví dụ như dọn dẹp nhà cửa, mua bánh mứt, trái cây, dán câu đối Tết, gói sủi cảo. → 要准备很多，比如打扫房子、买茶食、水果、贴春联、包饺子。 (Yào zhǔnbèi hěnduō, bǐrú dǎsǎo fángzi, mǎi cháshi, shuǐguǒ, tiē chūnlián, bāo jiǎozi.)"
+        },
+        {
+          "id": "tr17_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Việt Nam chúng tôi không gói sủi cảo, chúng tôi gói bánh chưng.",
+          "expectedChinese": "我们越南不包饺子，我们包粽子。",
+          "acceptedPinyin": "wǒmen yuènán bù bāo jiǎozi wǒmen bāo zòngzi",
+          "hint": "Gợi ý Pinyin: Wǒmen Yuènán bù bāo jiǎozi, wǒmen bāo zòngzi.",
+          "explanation": "Việt Nam chúng tôi không gói sủi cảo, chúng tôi gói bánh chưng. → 我们越南不包饺子，我们包粽子。 (Wǒmen Yuènán bù bāo jiǎozi, wǒmen bāo zòngzi.)"
+        },
+        {
+          "id": "tr17_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Sau đó thì sao?",
+          "expectedChinese": "然后呢？",
+          "acceptedPinyin": "ránhòu ne",
+          "hint": "Gợi ý Pinyin: Ránhòu ne?",
+          "explanation": "Sau đó thì sao? → 然后呢？ (Ránhòu ne?)"
+        },
+        {
+          "id": "tr17_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Trước tiên chuẩn bị xong những thứ này, rồi đến đêm Giao thừa, cả nhà đoàn tụ cùng ăn bữa cơm tất niên, đốt pháo mừng năm mới.",
+          "expectedChinese": "先准备好这些，然后到除夕，全家人团圆，一起吃年夜饭、放鞭炮，庆祝新年。",
+          "acceptedPinyin": "xiān zhǔnbèi hǎo zhèxiē ránhòu dào chúxī quán jiārén tuányuán yīqǐ chī niányèfàn fàng biānpào qìngzhù xīnnián",
+          "hint": "Gợi ý Pinyin: Xiān zhǔnbèi hǎo zhèxiē, ránhòu dào chúxī, quán jiārén tuányuán, yīqǐ chī niányèfàn, fàng biānpào, qìngzhù xīnnián.",
+          "explanation": "Trước tiên chuẩn bị xong những thứ này, rồi đến đêm Giao thừa, cả nhà đoàn tụ cùng ăn bữa cơm tất niên, đốt pháo mừng năm mới. → 先准备好这些，然后到除夕，全家人团圆，一起吃年夜饭、放鞭炮，庆祝新年。 (Xiān zhǔnbèi hǎo zhèxiē, ránhòu dào chúxī, quán jiārén tuányuán, yīqǐ chī niányèfàn, fàng biānpào, qìngzhù xīnnián.)"
+        },
+        {
+          "id": "tr17_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Đúng rồi, còn có lì xì nữa. Tôi vẫn nhớ hồi nhỏ đi chúc Tết họ hàng, mọi người mừng tuổi tôi rất nhiều bao lì xì, vui lắm, nhưng bây giờ thì không còn nữa rồi.",
+          "expectedChinese": "对，还有红包。我还记得我小时候去亲戚家拜年，他们给我很多红包，真开心，但是现在没有了。",
+          "acceptedPinyin": "duì hái yǒu hóngbāo wǒ hái jìde wǒ xiǎoshíhou qù qīnqi jiā bàinián tāmen gěi wǒ hěnduō hóngbāo zhēn kāixīn dànshì xiànzài méiyǒu le",
+          "hint": "Gợi ý Pinyin: Duì, hái yǒu hóngbāo. Wǒ hái jìde wǒ xiǎoshíhou qù qīnqi jiā bàinián, tāmen gěi wǒ hěnduō hóngbāo, zhēn kāixīn, dànshì xiànzài méiyǒu le.",
+          "explanation": "Đúng rồi, còn có lì xì nữa. Tôi vẫn nhớ hồi nhỏ đi chúc Tết họ hàng, mọi người mừng tuổi tôi rất nhiều bao lì xì, vui lắm, nhưng bây giờ thì không còn nữa rồi. → 对，还有红包。我还记得我小时候去亲戚家拜年，他们给我很多红包，真开心，但是现在没有了。 (Duì, hái yǒu hóngbāo. Wǒ hái jìde wǒ xiǎoshíhou qù qīnqi jiā bàinián, tāmen gěi wǒ hěnduō hóngbāo, zhēn kāixīn, dànshì xiànzài méiyǒu le.)"
+        },
+        {
+          "id": "tr17_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Chà! Tết thú vị thật đấy! Tôi cũng muốn đón Tết.",
+          "expectedChinese": "哇！春节真有意思！我也想过春节。",
+          "acceptedPinyin": "wa chūnjié zhēn yǒuyìsi wǒ yě xiǎngguò chūnjié",
+          "hint": "Gợi ý Pinyin: Wa! Chūnjié zhēn yǒuyìsi! Wǒ yě xiǎngguò chūnjié.",
+          "explanation": "Chà! Tết thú vị thật đấy! Tôi cũng muốn đón Tết. → 哇！春节真有意思！我也想过春节。 (Wa! Chūnjié zhēn yǒuyìsi! Wǒ yě xiǎngguò chūnjié.)"
         },
         {
           "id": "tr17_zh_1",
@@ -33576,6 +42555,235 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Nǐ jiā yǒu duōshao rén?",
           "explanation": "你家有多少人？ (Nǐ jiā yǒu duōshao rén?) nghĩa là: Nhà cậu có bao nhiêu người?"
+        },
+        {
+          "id": "tr17_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "手机刚才还好好儿的，怎么就坏了。",
+          "chineseAudioText": "手机刚才还好好儿的，怎么就坏了。",
+          "pinyin": "Shǒujī gāngcái hái hǎohāor de, zěnme jiù huài le.",
+          "expectedMeaning": "Điện thoại vừa nãy còn tốt lắm mà, sao đã hỏng rồi.",
+          "acceptedKeywords": [
+            "điện",
+            "thoại",
+            "vừa",
+            "nãy",
+            "còn",
+            "tốt",
+            "lắm",
+            "mà",
+            "sao",
+            "đã",
+            "hỏng",
+            "rồi"
+          ],
+          "hint": "Pinyin: Shǒujī gāngcái hái hǎohāor de, zěnme jiù huài le.",
+          "explanation": "手机刚才还好好儿的，怎么就坏了。 (Shǒujī gāngcái hái hǎohāor de, zěnme jiù huài le.) nghĩa là: Điện thoại vừa nãy còn tốt lắm mà, sao đã hỏng rồi."
+        },
+        {
+          "id": "tr17_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "你已经喝了两瓶了，别喝了！",
+          "chineseAudioText": "你已经喝了两瓶了，别喝了！",
+          "pinyin": "Nǐ yǐjīng hē le liǎng píng le, bié hē le!",
+          "expectedMeaning": "Anh đã uống 2 chai rồi, đừng uống nữa!",
+          "acceptedKeywords": [
+            "anh",
+            "đã",
+            "uống",
+            "chai",
+            "rồi",
+            "đừng",
+            "uống",
+            "nữa"
+          ],
+          "hint": "Pinyin: Nǐ yǐjīng hē le liǎng píng le, bié hē le!",
+          "explanation": "你已经喝了两瓶了，别喝了！ (Nǐ yǐjīng hē le liǎng píng le, bié hē le!) nghĩa là: Anh đã uống 2 chai rồi, đừng uống nữa!"
+        },
+        {
+          "id": "tr17_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "你别哭了！",
+          "chineseAudioText": "你别哭了！",
+          "pinyin": "Nǐ bié kū le!",
+          "expectedMeaning": "Cậu đừng khóc nữa!",
+          "acceptedKeywords": [
+            "cậu",
+            "đừng",
+            "khóc",
+            "nữa"
+          ],
+          "hint": "Pinyin: Nǐ bié kū le!",
+          "explanation": "你别哭了！ (Nǐ bié kū le!) nghĩa là: Cậu đừng khóc nữa!"
+        },
+        {
+          "id": "tr17_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "你好好儿读书吧！",
+          "chineseAudioText": "你好好儿读书吧！",
+          "pinyin": "Nǐ hǎohāor dúshū ba!",
+          "expectedMeaning": "Con cố gắng học hành đi!",
+          "acceptedKeywords": [
+            "con",
+            "cố",
+            "gắng",
+            "học",
+            "hành",
+            "đi"
+          ],
+          "hint": "Pinyin: Nǐ hǎohāor dúshū ba!",
+          "explanation": "你好好儿读书吧！ (Nǐ hǎohāor dúshū ba!) nghĩa là: Con cố gắng học hành đi!"
+        },
+        {
+          "id": "tr17_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "你放心吧！",
+          "chineseAudioText": "你放心吧！",
+          "pinyin": "Nǐ fàngxīn ba!",
+          "expectedMeaning": "Cậu yên tâm đi!",
+          "acceptedKeywords": [
+            "cậu",
+            "yên",
+            "tâm",
+            "đi"
+          ],
+          "hint": "Pinyin: Nǐ fàngxīn ba!",
+          "explanation": "你放心吧！ (Nǐ fàngxīn ba!) nghĩa là: Cậu yên tâm đi!"
+        },
+        {
+          "id": "tr17_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "太热闹了！我也想学怎么包饺子。",
+          "chineseAudioText": "太热闹了！我也想学怎么包饺子。",
+          "pinyin": "Tài rènao le! Wǒ yě xiǎng xué zěnme bāo jiǎozi.",
+          "expectedMeaning": "Náo nhiệt quá! Tớ cũng muốn học cách gói sủi cảo.",
+          "acceptedKeywords": [
+            "náo",
+            "nhiệt",
+            "quá",
+            "tớ",
+            "cũng",
+            "muốn",
+            "học",
+            "cách",
+            "gói",
+            "sủi",
+            "cảo"
+          ],
+          "hint": "Pinyin: Tài rènao le! Wǒ yě xiǎng xué zěnme bāo jiǎozi.",
+          "explanation": "太热闹了！我也想学怎么包饺子。 (Tài rènao le! Wǒ yě xiǎng xué zěnme bāo jiǎozi.) nghĩa là: Náo nhiệt quá! Tớ cũng muốn học cách gói sủi cảo."
+        },
+        {
+          "id": "tr17_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "是的，除夕晚上全家一起吃年夜饭、放鞭炮，还会包饺子。",
+          "chineseAudioText": "是的，除夕晚上全家一起吃年夜饭、放鞭炮，还会包饺子。",
+          "pinyin": "Shì de, chúxī wǎnshang quán jiā yīqǐ chī niányèfàn, fàng biānpào, hái huì bāo jiǎozi.",
+          "expectedMeaning": "Đúng rồi, tối Giao thừa cả nhà cùng ăn cơm tất niên, đốt pháo và còn gói sủi cảo nữa.",
+          "acceptedKeywords": [
+            "đúng",
+            "rồi",
+            "tối",
+            "giao",
+            "thừa",
+            "cả",
+            "nhà",
+            "cùng",
+            "ăn",
+            "cơm",
+            "tất",
+            "niên",
+            "đốt",
+            "pháo",
+            "và",
+            "còn",
+            "gói",
+            "sủi",
+            "cảo",
+            "nữa"
+          ],
+          "hint": "Pinyin: Shì de, chúxī wǎnshang quán jiā yīqǐ chī niányèfàn, fàng biānpào, hái huì bāo jiǎozi.",
+          "explanation": "是的，除夕晚上全家一起吃年夜饭、放鞭炮，还会包饺子。 (Shì de, chúxī wǎnshang quán jiā yīqǐ chī niányèfàn, fàng biānpào, hái huì bāo jiǎozi.) nghĩa là: Đúng rồi, tối Giao thừa cả nhà cùng ăn cơm tất niên, đốt pháo và còn gói sủi cảo nữa."
+        },
+        {
+          "id": "tr17_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "谢谢！中国春节和越南春节都要大扫除、贴春联吧？",
+          "chineseAudioText": "谢谢！中国春节和越南春节都要大扫除、贴春联吧？",
+          "pinyin": "Xièxie! Zhōngguó Chūnjié hé Yuènán Chūnjié dōu yào dàsǎochú, tiē chūnlián ba?",
+          "expectedMeaning": "Cảm ơn cậu! Tết Trung Quốc và Tết Việt Nam đều dọn dẹp nhà cửa và dán câu đối đúng không?",
+          "acceptedKeywords": [
+            "cảm",
+            "ơn",
+            "cậu",
+            "tết",
+            "trung",
+            "quốc",
+            "và",
+            "tết",
+            "việt",
+            "nam",
+            "đều",
+            "dọn",
+            "dẹp",
+            "nhà",
+            "cửa",
+            "và",
+            "dán",
+            "câu",
+            "đối",
+            "đúng",
+            "không"
+          ],
+          "hint": "Pinyin: Xièxie! Zhōngguó Chūnjié hé Yuènán Chūnjié dōu yào dàsǎochú, tiē chūnlián ba?",
+          "explanation": "谢谢！中国春节和越南春节都要大扫除、贴春联吧？ (Xièxie! Zhōngguó Chūnjié hé Yuènán Chūnjié dōu yào dàsǎochú, tiē chūnlián ba?) nghĩa là: Cảm ơn cậu! Tết Trung Quốc và Tết Việt Nam đều dọn dẹp nhà cửa và dán câu đối đúng không?"
+        },
+        {
+          "id": "tr17_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "今年的除夕夜，欢迎你来我家过春节！",
+          "chineseAudioText": "今年的除夕夜，欢迎你来我家过春节！",
+          "pinyin": "Jīnnián de chúxī yè, huānyíng nǐ lái wǒ jiā guò Chūnjié!",
+          "expectedMeaning": "Đêm Giao thừa năm nay mời cậu sang nhà tớ đón Tết nhé!",
+          "acceptedKeywords": [
+            "đêm",
+            "giao",
+            "thừa",
+            "năm",
+            "nay",
+            "mời",
+            "cậu",
+            "sang",
+            "nhà",
+            "tớ",
+            "đón",
+            "tết",
+            "nhé"
+          ],
+          "hint": "Pinyin: Jīnnián de chúxī yè, huānyíng nǐ lái wǒ jiā guò Chūnjié!",
+          "explanation": "今年的除夕夜，欢迎你来我家过春节！ (Jīnnián de chúxī yè, huānyíng nǐ lái wǒ jiā guò Chūnjié!) nghĩa là: Đêm Giao thừa năm nay mời cậu sang nhà tớ đón Tết nhé!"
+        },
+        {
+          "id": "tr17_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "他请我明天去他家吃饭。",
+          "chineseAudioText": "他请我明天去他家吃饭。",
+          "pinyin": "Tā qǐng wǒ míngtiān qù tā jiā chīfàn.",
+          "expectedMeaning": "Anh ta mời tôi ngày mai tới nhà dùng cơm.",
+          "acceptedKeywords": [
+            "anh",
+            "ta",
+            "mời",
+            "tôi",
+            "ngày",
+            "mai",
+            "tới",
+            "nhà",
+            "dùng",
+            "cơm"
+          ],
+          "hint": "Pinyin: Tā qǐng wǒ míngtiān qù tā jiā chīfàn.",
+          "explanation": "他请我明天去他家吃饭。 (Tā qǐng wǒ míngtiān qù tā jiā chīfàn.) nghĩa là: Anh ta mời tôi ngày mai tới nhà dùng cơm."
         }
       ],
       "expandedQuiz": [
@@ -35538,6 +44746,248 @@ const DEFAULT_LESSONS = [
             "的",
             "东边"
           ]
+        },
+        {
+          "id": "ss18_exp_1",
+          "targetHanzi": "马克去年暑假你去哪儿旅行",
+          "targetMeaning": "Mark, kỳ nghỉ hè năm ngoái bạn đi du lịch ở đâu?",
+          "pinyin": "Mǎkè, qùnián shǔjià nǐ qù nǎr lǚxíng?",
+          "tokens": [
+            "马克",
+            "去",
+            "年",
+            "暑假",
+            "你",
+            "去",
+            "哪儿",
+            "旅行"
+          ]
+        },
+        {
+          "id": "ss18_exp_2",
+          "targetHanzi": "我去北京旅行",
+          "targetMeaning": "Tôi đi du lịch Bắc Kinh.",
+          "pinyin": "Wǒ qù Běijīng lǚxíng.",
+          "tokens": [
+            "我",
+            "去",
+            "北京",
+            "旅行"
+          ]
+        },
+        {
+          "id": "ss18_exp_3",
+          "targetHanzi": "北京美吗",
+          "targetMeaning": "Bắc Kinh có đẹp không?",
+          "pinyin": "Běijīng měi ma?",
+          "tokens": [
+            "北京",
+            "美",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss18_exp_4",
+          "targetHanzi": "当然了北京特别美有很多有名的景点比如万里长城颐和园故宫和天安门",
+          "targetMeaning": "Tất nhiên rồi. Bắc Kinh vô cùng đẹp, có rất nhiều danh thắng nổi tiếng như: Vạn Lý Trường Thành, Di Hòa Viên, Cố Cung và Thiên An Môn.",
+          "pinyin": "Dāngrán le. Běijīng tèbié měi, yǒu hěnduō yǒumíng de jǐngdiǎn, bǐrú: Wànlǐ Chángchéng, Yíhéyuán, Gùgōng hé Tiān'ānmén.",
+          "tokens": [
+            "当然",
+            "了",
+            "北京",
+            "特别",
+            "美",
+            "有",
+            "很",
+            "多",
+            "有名",
+            "的",
+            "景点",
+            "比如",
+            "万里长城",
+            "颐和园",
+            "故宫",
+            "和",
+            "天安门"
+          ]
+        },
+        {
+          "id": "ss18_exp_5",
+          "targetHanzi": "哇我挺喜欢万里长城它很雄伟对吗",
+          "targetMeaning": "Chà, tôi rất thích Vạn Lý Trường Thành. Nó rất hùng vĩ đúng không?",
+          "pinyin": "Wa, wǒ tǐng xǐhuan Wànlǐ Chángchéng. Tā hěn xióngwěi duì ma?",
+          "tokens": [
+            "哇",
+            "我",
+            "挺",
+            "喜欢",
+            "万里长城",
+            "它",
+            "很",
+            "雄伟",
+            "对",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss18_exp_6",
+          "targetHanzi": "对万里长城非常雄伟壮丽是中国人历史和文化的象征",
+          "targetMeaning": "Đúng vậy. Vạn Lý Trường Thành vô cùng hùng vĩ tráng lệ, là biểu tượng lịch sử và văn hóa của người Trung Quốc.",
+          "pinyin": "Duì. Wànlǐ Chángchéng fēicháng xióngwěi zhuànglì, shì Zhōngguó rén lìshǐ hé wénhuà de xiàngzhēng.",
+          "tokens": [
+            "对",
+            "万里长城",
+            "非常",
+            "雄伟",
+            "壮丽",
+            "是",
+            "中国",
+            "人",
+            "历史",
+            "和",
+            "文化",
+            "的",
+            "象征"
+          ]
+        },
+        {
+          "id": "ss18_exp_7",
+          "targetHanzi": "你还去哪儿玩儿",
+          "targetMeaning": "Bạn còn đi đâu chơi nữa không?",
+          "pinyin": "Nǐ hái qù nǎr wánr?",
+          "tokens": [
+            "你",
+            "还",
+            "去",
+            "哪儿",
+            "玩儿"
+          ]
+        },
+        {
+          "id": "ss18_exp_8",
+          "targetHanzi": "我还去爬山拍照购物和尝尝北京的菜",
+          "targetMeaning": "Tôi còn đi leo núi, chụp ảnh, mua sắm và thưởng thức các món ăn Bắc Kinh.",
+          "pinyin": "Wǒ hái qù páshān, pāizhào, gòuwù hé chángchang Běijīng de cài.",
+          "tokens": [
+            "我",
+            "还",
+            "去",
+            "爬山",
+            "拍照",
+            "购物",
+            "和",
+            "尝",
+            "尝",
+            "北京",
+            "的",
+            "菜"
+          ]
+        },
+        {
+          "id": "ss18_exp_9",
+          "targetHanzi": "北京的菜怎么样",
+          "targetMeaning": "Món ăn Bắc Kinh thế nào?",
+          "pinyin": "Běijīng de cài zěnmeyàng?",
+          "tokens": [
+            "北京",
+            "的",
+            "菜",
+            "怎么样"
+          ]
+        },
+        {
+          "id": "ss18_exp_10",
+          "targetHanzi": "不但很好吃而且也比较便宜特别是北京烤鸭",
+          "targetMeaning": "Không những rất ngon mà giá cũng khá rẻ, đặc biệt là món vịt quay Bắc Kinh.",
+          "pinyin": "Búdàn hěn hǎo chī érqiě yě bǐjiào piányi, tèbié shì Běijīng kǎoyā.",
+          "tokens": [
+            "不",
+            "但",
+            "很",
+            "好吃",
+            "而",
+            "且",
+            "也",
+            "比较",
+            "便宜",
+            "特别",
+            "是",
+            "北京",
+            "烤鸭"
+          ]
+        },
+        {
+          "id": "ss18_exp_11",
+          "targetHanzi": "北京人呢",
+          "targetMeaning": "Người Bắc Kinh thì sao?",
+          "pinyin": "Běijīng rén ne?",
+          "tokens": [
+            "北京",
+            "人",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss18_exp_12",
+          "targetHanzi": "很热情和好客我还认识了一个很好的朋友",
+          "targetMeaning": "Rất nhiệt tình và hiếu khách, tôi còn kết quen được một người bạn rất tốt.",
+          "pinyin": "Hěn rèqíng hé hàokè, wǒ hái rènshi le yí gè hěn hǎo de péngyou.",
+          "tokens": [
+            "很",
+            "热情",
+            "和",
+            "好客",
+            "我",
+            "还",
+            "认识",
+            "了",
+            "一",
+            "个",
+            "很",
+            "好",
+            "的",
+            "朋友"
+          ]
+        },
+        {
+          "id": "ss18_exp_13",
+          "targetHanzi": "好羡慕你啊今年暑假我也会去北京旅行",
+          "targetMeaning": "Ghen tị với bạn quá đi! Kỳ nghỉ hè năm nay tôi cũng sẽ đi du lịch Bắc Kinh.",
+          "pinyin": "Hǎo xiànmù nǐ a! Jīnnián shǔjià wǒ yě huì qù Běijīng lǚxíng.",
+          "tokens": [
+            "好",
+            "羡慕",
+            "你",
+            "啊",
+            "今",
+            "年",
+            "暑假",
+            "我",
+            "也",
+            "会",
+            "去",
+            "北京",
+            "旅行"
+          ]
+        },
+        {
+          "id": "ss18_exp_14",
+          "targetHanzi": "你不是说今年要去日本旅行吗",
+          "targetMeaning": "Không phải bạn nói năm nay sẽ đi du lịch Nhật Bản sao?",
+          "pinyin": "Nǐ búshì shuō jīnnián yào qù Rìběn lǚxíng ma?",
+          "tokens": [
+            "你",
+            "不是",
+            "说",
+            "今",
+            "年",
+            "要",
+            "去",
+            "日",
+            "本",
+            "旅行",
+            "吗"
+          ]
         }
       ],
       "translationExercises": [
@@ -35576,6 +45026,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "wǒ huì tī zúqiú",
           "hint": "Gợi ý Pinyin: Wǒ huì tī zúqiú.",
           "explanation": "Tôi biết đá bóng. → 我会踢足球。 (Wǒ huì tī zúqiú.)"
+        },
+        {
+          "id": "tr18_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Mark, kỳ nghỉ hè năm ngoái bạn đi du lịch ở đâu?",
+          "expectedChinese": "马克，去年暑假你去哪儿旅行？",
+          "acceptedPinyin": "mǎkè qùnián shǔjià nǐ qù nǎr lǚxíng",
+          "hint": "Gợi ý Pinyin: Mǎkè, qùnián shǔjià nǐ qù nǎr lǚxíng?",
+          "explanation": "Mark, kỳ nghỉ hè năm ngoái bạn đi du lịch ở đâu? → 马克，去年暑假你去哪儿旅行？ (Mǎkè, qùnián shǔjià nǐ qù nǎr lǚxíng?)"
+        },
+        {
+          "id": "tr18_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Tôi đi du lịch Bắc Kinh.",
+          "expectedChinese": "我去北京旅行。",
+          "acceptedPinyin": "wǒ qù běijīng lǚxíng",
+          "hint": "Gợi ý Pinyin: Wǒ qù Běijīng lǚxíng.",
+          "explanation": "Tôi đi du lịch Bắc Kinh. → 我去北京旅行。 (Wǒ qù Běijīng lǚxíng.)"
+        },
+        {
+          "id": "tr18_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Bắc Kinh có đẹp không?",
+          "expectedChinese": "北京美吗？",
+          "acceptedPinyin": "běijīng měi ma",
+          "hint": "Gợi ý Pinyin: Běijīng měi ma?",
+          "explanation": "Bắc Kinh có đẹp không? → 北京美吗？ (Běijīng měi ma?)"
+        },
+        {
+          "id": "tr18_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Tất nhiên rồi. Bắc Kinh vô cùng đẹp, có rất nhiều danh thắng nổi tiếng như: Vạn Lý Trường Thành, Di Hòa Viên, Cố Cung và Thiên An Môn.",
+          "expectedChinese": "当然了。北京特别美，有很多有名的景点，比如：万里长城、颐和园、故宫和天安门。",
+          "acceptedPinyin": "dāngrán le běijīng tèbié měi yǒu hěnduō yǒumíng de jǐngdiǎn bǐrú wànlǐ chángchéng yíhéyuán gùgōng hé tiān ānmén",
+          "hint": "Gợi ý Pinyin: Dāngrán le. Běijīng tèbié měi, yǒu hěnduō yǒumíng de jǐngdiǎn, bǐrú: Wànlǐ Chángchéng, Yíhéyuán, Gùgōng hé Tiān'ānmén.",
+          "explanation": "Tất nhiên rồi. Bắc Kinh vô cùng đẹp, có rất nhiều danh thắng nổi tiếng như: Vạn Lý Trường Thành, Di Hòa Viên, Cố Cung và Thiên An Môn. → 当然了。北京特别美，有很多有名的景点，比如：万里长城、颐和园、故宫和天安门。 (Dāngrán le. Běijīng tèbié měi, yǒu hěnduō yǒumíng de jǐngdiǎn, bǐrú: Wànlǐ Chángchéng, Yíhéyuán, Gùgōng hé Tiān'ānmén.)"
+        },
+        {
+          "id": "tr18_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Chà, tôi rất thích Vạn Lý Trường Thành. Nó rất hùng vĩ đúng không?",
+          "expectedChinese": "哇，我挺喜欢万里长城。它很雄伟，对吗？",
+          "acceptedPinyin": "wa wǒ tǐng xǐhuan wànlǐ chángchéng tā hěn xióngwěi duì ma",
+          "hint": "Gợi ý Pinyin: Wa, wǒ tǐng xǐhuan Wànlǐ Chángchéng. Tā hěn xióngwěi duì ma?",
+          "explanation": "Chà, tôi rất thích Vạn Lý Trường Thành. Nó rất hùng vĩ đúng không? → 哇，我挺喜欢万里长城。它很雄伟，对吗？ (Wa, wǒ tǐng xǐhuan Wànlǐ Chángchéng. Tā hěn xióngwěi duì ma?)"
+        },
+        {
+          "id": "tr18_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Đúng vậy. Vạn Lý Trường Thành vô cùng hùng vĩ tráng lệ, là biểu tượng lịch sử và văn hóa của người Trung Quốc.",
+          "expectedChinese": "对。万里长城非常雄伟壮丽，是中国人历史和文化的象征。",
+          "acceptedPinyin": "duì wànlǐ chángchéng fēicháng xióngwěi zhuànglì shì zhōngguó rén lìshǐ hé wénhuà de xiàngzhēng",
+          "hint": "Gợi ý Pinyin: Duì. Wànlǐ Chángchéng fēicháng xióngwěi zhuànglì, shì Zhōngguó rén lìshǐ hé wénhuà de xiàngzhēng.",
+          "explanation": "Đúng vậy. Vạn Lý Trường Thành vô cùng hùng vĩ tráng lệ, là biểu tượng lịch sử và văn hóa của người Trung Quốc. → 对。万里长城非常雄伟壮丽，是中国人历史和文化的象征。 (Duì. Wànlǐ Chángchéng fēicháng xióngwěi zhuànglì, shì Zhōngguó rén lìshǐ hé wénhuà de xiàngzhēng.)"
+        },
+        {
+          "id": "tr18_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Bạn còn đi đâu chơi nữa không?",
+          "expectedChinese": "你还去哪儿玩儿？",
+          "acceptedPinyin": "nǐ hái qù nǎr wánr",
+          "hint": "Gợi ý Pinyin: Nǐ hái qù nǎr wánr?",
+          "explanation": "Bạn còn đi đâu chơi nữa không? → 你还去哪儿玩儿？ (Nǐ hái qù nǎr wánr?)"
+        },
+        {
+          "id": "tr18_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Tôi còn đi leo núi, chụp ảnh, mua sắm và thưởng thức các món ăn Bắc Kinh.",
+          "expectedChinese": "我还去爬山、拍照、购物和尝尝北京的菜。",
+          "acceptedPinyin": "wǒ hái qù páshān pāizhào gòuwù hé chángchang běijīng de cài",
+          "hint": "Gợi ý Pinyin: Wǒ hái qù páshān, pāizhào, gòuwù hé chángchang Běijīng de cài.",
+          "explanation": "Tôi còn đi leo núi, chụp ảnh, mua sắm và thưởng thức các món ăn Bắc Kinh. → 我还去爬山、拍照、购物和尝尝北京的菜。 (Wǒ hái qù páshān, pāizhào, gòuwù hé chángchang Běijīng de cài.)"
+        },
+        {
+          "id": "tr18_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Món ăn Bắc Kinh thế nào?",
+          "expectedChinese": "北京的菜怎么样？",
+          "acceptedPinyin": "běijīng de cài zěnmeyàng",
+          "hint": "Gợi ý Pinyin: Běijīng de cài zěnmeyàng?",
+          "explanation": "Món ăn Bắc Kinh thế nào? → 北京的菜怎么样？ (Běijīng de cài zěnmeyàng?)"
+        },
+        {
+          "id": "tr18_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Không những rất ngon mà giá cũng khá rẻ, đặc biệt là món vịt quay Bắc Kinh.",
+          "expectedChinese": "不但很好吃而且也比较便宜，特别是北京烤鸭。",
+          "acceptedPinyin": "búdàn hěn hǎo chī érqiě yě bǐjiào piányi tèbié shì běijīng kǎoyā",
+          "hint": "Gợi ý Pinyin: Búdàn hěn hǎo chī érqiě yě bǐjiào piányi, tèbié shì Běijīng kǎoyā.",
+          "explanation": "Không những rất ngon mà giá cũng khá rẻ, đặc biệt là món vịt quay Bắc Kinh. → 不但很好吃而且也比较便宜，特别是北京烤鸭。 (Búdàn hěn hǎo chī érqiě yě bǐjiào piányi, tèbié shì Běijīng kǎoyā.)"
         },
         {
           "id": "tr18_zh_1",
@@ -35636,6 +45176,227 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Wǒmen xiàwǔ qù ba!",
           "explanation": "我们下午去吧！ (Wǒmen xiàwǔ qù ba!) nghĩa là: Buổi chiều chúng ta đi nhé!"
+        },
+        {
+          "id": "tr18_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "他会开车。",
+          "chineseAudioText": "他会开车。",
+          "pinyin": "Tā huì kāichē",
+          "expectedMeaning": "Anh ấy biết lái xe.",
+          "acceptedKeywords": [
+            "anh",
+            "ấy",
+            "biết",
+            "lái",
+            "xe"
+          ],
+          "hint": "Pinyin: Tā huì kāichē",
+          "explanation": "他会开车。 (Tā huì kāichē) nghĩa là: Anh ấy biết lái xe."
+        },
+        {
+          "id": "tr18_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "你帮我，然后我会帮你，好吗？",
+          "chineseAudioText": "你帮我，然后我会帮你，好吗？",
+          "pinyin": "Nǐ bāng wǒ, ránhòu wǒ huì bāng nǐ, hǎo ma?",
+          "expectedMeaning": "Cậu giúp tới rồi tớ sẽ giúp cậu, có được không?",
+          "acceptedKeywords": [
+            "cậu",
+            "giúp",
+            "tới",
+            "rồi",
+            "tớ",
+            "sẽ",
+            "giúp",
+            "cậu",
+            "có",
+            "được",
+            "không"
+          ],
+          "hint": "Pinyin: Nǐ bāng wǒ, ránhòu wǒ huì bāng nǐ, hǎo ma?",
+          "explanation": "你帮我，然后我会帮你，好吗？ (Nǐ bāng wǒ, ránhòu wǒ huì bāng nǐ, hǎo ma?) nghĩa là: Cậu giúp tới rồi tớ sẽ giúp cậu, có được không?"
+        },
+        {
+          "id": "tr18_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "特别好吃！北京烤鸭真香，明年我还要再去一次。",
+          "chineseAudioText": "特别好吃！北京烤鸭真香，明年我还要再去一次。",
+          "pinyin": "Tèbié hǎochī! Běijīng kǎoyā zhēn xiāng, míngnián wǒ hái yào zài qù yí cì.",
+          "expectedMeaning": "Đặc biệt ngon! Vịt quay Bắc Kinh thơm lắm, năm sau tôi muốn đi lại lần nữa.",
+          "acceptedKeywords": [
+            "đặc",
+            "biệt",
+            "ngon",
+            "vịt",
+            "quay",
+            "bắc",
+            "kinh",
+            "thơm",
+            "lắm",
+            "năm",
+            "sau",
+            "tôi",
+            "muốn",
+            "đi",
+            "lại",
+            "lần",
+            "nữa"
+          ],
+          "hint": "Pinyin: Tèbié hǎochī! Běijīng kǎoyā zhēn xiāng, míngnián wǒ hái yào zài qù yí cì.",
+          "explanation": "特别好吃！北京烤鸭真香，明年我还要再去一次。 (Tèbié hǎochī! Běijīng kǎoyā zhēn xiāng, míngnián wǒ hái yào zài qù yí cì.) nghĩa là: Đặc biệt ngon! Vịt quay Bắc Kinh thơm lắm, năm sau tôi muốn đi lại lần nữa."
+        },
+        {
+          "id": "tr18_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "北京的菜好吃吗？",
+          "chineseAudioText": "北京的菜好吃吗？",
+          "pinyin": "Běijīng de cài hǎochī ma?",
+          "expectedMeaning": "Món ăn ở Bắc Kinh có ngon không?",
+          "acceptedKeywords": [
+            "món",
+            "ăn",
+            "bắc",
+            "kinh",
+            "có",
+            "ngon",
+            "không"
+          ],
+          "hint": "Pinyin: Běijīng de cài hǎochī ma?",
+          "explanation": "北京的菜好吃吗？ (Běijīng de cài hǎochī ma?) nghĩa là: Món ăn ở Bắc Kinh có ngon không?"
+        },
+        {
+          "id": "tr18_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "我去了故宫、颐和园和万里长城，了解了好多中国历史文化。",
+          "chineseAudioText": "我去了故宫、颐和园和万里长城，了解了好多中国历史文化。",
+          "pinyin": "Wǒ qù le Gùgōng, Yíhéyuán hé Wànlǐ Chángchéng, liǎojiě le hǎoduō Zhōngguó lìshǐ wénhuà.",
+          "expectedMeaning": "Tôi đã đi Cố Cung, Di Hòa Viên và Vạn Lý Trường Thành, hiểu thêm rất nhiều về lịch sử văn hóa Trung Quốc.",
+          "acceptedKeywords": [
+            "tôi",
+            "đã",
+            "đi",
+            "cố",
+            "cung",
+            "di",
+            "hòa",
+            "viên",
+            "và",
+            "vạn",
+            "lý",
+            "trường",
+            "thành",
+            "hiểu",
+            "thêm",
+            "rất",
+            "nhiều",
+            "về",
+            "lịch",
+            "sử",
+            "văn",
+            "hóa",
+            "trung",
+            "quốc"
+          ],
+          "hint": "Pinyin: Wǒ qù le Gùgōng, Yíhéyuán hé Wànlǐ Chángchéng, liǎojiě le hǎoduō Zhōngguó lìshǐ wénhuà.",
+          "explanation": "我去了故宫、颐和园和万里长城，了解了好多中国历史文化。 (Wǒ qù le Gùgōng, Yíhéyuán hé Wànlǐ Chángchéng, liǎojiě le hǎoduō Zhōngguó lìshǐ wénhuà.) nghĩa là: Tôi đã đi Cố Cung, Di Hòa Viên và Vạn Lý Trường Thành, hiểu thêm rất nhiều về lịch sử văn hóa Trung Quốc."
+        },
+        {
+          "id": "tr18_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "马克，去年暑假你去北京旅游去了哪些景点？",
+          "chineseAudioText": "马克，去年暑假你去北京旅游去了哪些景点？",
+          "pinyin": "Mǎkè, qùnián shǔjià nǐ qù Běijīng lǚyóu qù le nǎxiē jǐngdiǎn?",
+          "expectedMeaning": "Mark, kỳ nghỉ hè năm ngoái đi du lịch Bắc Kinh bạn đã tới những thắng cảnh nào?",
+          "acceptedKeywords": [
+            "mark",
+            "kỳ",
+            "nghỉ",
+            "hè",
+            "năm",
+            "ngoái",
+            "đi",
+            "du",
+            "lịch",
+            "bắc",
+            "kinh",
+            "bạn",
+            "đã",
+            "tới",
+            "những",
+            "thắng",
+            "cảnh",
+            "nào"
+          ],
+          "hint": "Pinyin: Mǎkè, qùnián shǔjià nǐ qù Běijīng lǚyóu qù le nǎxiē jǐngdiǎn?",
+          "explanation": "马克，去年暑假你去北京旅游去了哪些景点？ (Mǎkè, qùnián shǔjià nǐ qù Běijīng lǚyóu qù le nǎxiē jǐngdiǎn?) nghĩa là: Mark, kỳ nghỉ hè năm ngoái đi du lịch Bắc Kinh bạn đã tới những thắng cảnh nào?"
+        },
+        {
+          "id": "tr18_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "你知道他在哪儿吗？",
+          "chineseAudioText": "你知道他在哪儿吗？",
+          "pinyin": "Nǐ zhīdào tā zài nǎr ma?",
+          "expectedMeaning": "Bạn biết anh ấy ở đâu không?",
+          "acceptedKeywords": [
+            "bạn",
+            "biết",
+            "anh",
+            "ấy",
+            "đâu",
+            "không"
+          ],
+          "hint": "Pinyin: Nǐ zhīdào tā zài nǎr ma?",
+          "explanation": "你知道他在哪儿吗？ (Nǐ zhīdào tā zài nǎr ma?) nghĩa là: Bạn biết anh ấy ở đâu không?"
+        },
+        {
+          "id": "tr18_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "他正在听音乐呢。",
+          "chineseAudioText": "他正在听音乐呢。",
+          "pinyin": "Tā zhèngzài tīng yīnyuè ne.",
+          "expectedMeaning": "Anh ấy đang nghe nhạc.",
+          "acceptedKeywords": [
+            "anh",
+            "ấy",
+            "đang",
+            "nghe",
+            "nhạc"
+          ],
+          "hint": "Pinyin: Tā zhèngzài tīng yīnyuè ne.",
+          "explanation": "他正在听音乐呢。 (Tā zhèngzài tīng yīnyuè ne.) nghĩa là: Anh ấy đang nghe nhạc."
+        },
+        {
+          "id": "tr18_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "老师您好！",
+          "chineseAudioText": "老师您好！",
+          "pinyin": "Lǎoshī nín hǎo",
+          "expectedMeaning": "Em chào thầy/cô ạ",
+          "acceptedKeywords": [
+            "em",
+            "chào",
+            "thầy",
+            "cô"
+          ],
+          "hint": "Pinyin: Lǎoshī nín hǎo",
+          "explanation": "老师您好！ (Lǎoshī nín hǎo) nghĩa là: Em chào thầy/cô ạ"
+        },
+        {
+          "id": "tr18_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "我会踢足球。",
+          "chineseAudioText": "我会踢足球。",
+          "pinyin": "Wǒ huì tī zúqiú.",
+          "expectedMeaning": "Tôi biết đá bóng.",
+          "acceptedKeywords": [
+            "tôi",
+            "biết",
+            "đá",
+            "bóng"
+          ],
+          "hint": "Pinyin: Wǒ huì tī zúqiú.",
+          "explanation": "我会踢足球。 (Wǒ huì tī zúqiú.) nghĩa là: Tôi biết đá bóng."
         }
       ],
       "expandedQuiz": [
@@ -37512,6 +47273,280 @@ const DEFAULT_LESSONS = [
             "最",
             "舒服"
           ]
+        },
+        {
+          "id": "ss19_exp_1",
+          "targetHanzi": "小兰你的脸色不太好是不是生病了",
+          "targetMeaning": "Tiểu Lan, sắc mặt cậu không tốt lắm, có phải bị ốm rồi không?",
+          "pinyin": "Xiǎo Lán, nǐ de liǎnsè bú tài hǎo, shì bu shì shēngbìng le?",
+          "tokens": [
+            "小",
+            "兰",
+            "你",
+            "的",
+            "脸色",
+            "不",
+            "太",
+            "好",
+            "是",
+            "不是",
+            "生病",
+            "了"
+          ]
+        },
+        {
+          "id": "ss19_exp_2",
+          "targetHanzi": "我觉得头很疼上午还发烧和咳嗽好像感冒了",
+          "targetMeaning": "Tớ thấy rất đau đầu, buổi sáng còn bị sốt và ho, hình như cảm lạnh rồi.",
+          "pinyin": "Wǒ juéde tóu hěn téng, shàngwǔ hái fāshāo hé késou, hǎoxiàng gǎnmào le.",
+          "tokens": [
+            "我",
+            "觉得",
+            "头",
+            "很",
+            "疼",
+            "上午",
+            "还",
+            "发烧",
+            "和",
+            "咳嗽",
+            "好像",
+            "感冒",
+            "了"
+          ]
+        },
+        {
+          "id": "ss19_exp_3",
+          "targetHanzi": "你是不是又喝冰水了你的喉咙经常发炎你还不戒除冰水",
+          "targetMeaning": "Có phải cậu lại uống nước đá rồi không? Cổ họng cậu hay bị viêm mà cậu vẫn chưa bỏ uống nước đá.",
+          "pinyin": "Nǐ shì bu shì yòu hē bīngshuǐ le? Nǐ de hóulong jīngcháng fāyán, nǐ hái bù jièchú bīngshuǐ.",
+          "tokens": [
+            "你",
+            "是",
+            "不是",
+            "又",
+            "喝",
+            "冰水",
+            "了",
+            "你",
+            "的",
+            "喉",
+            "咙",
+            "经常",
+            "发",
+            "炎",
+            "你",
+            "还",
+            "不",
+            "戒除",
+            "冰水"
+          ]
+        },
+        {
+          "id": "ss19_exp_4",
+          "targetHanzi": "今天下午有课你这样一定不能上课了最好回家休息吧",
+          "targetMeaning": "Chiều nay có tiết học, cậu thế này chắc chắn không đi học được rồi. Tốt nhất là về nhà nghỉ ngơi đi!",
+          "pinyin": "Jīntiān xiàwǔ yǒu kè, nǐ zhèyàng yídìng bùnéng shàngkè le. Zuì hǎo huí jiā xiūxi ba!",
+          "tokens": [
+            "今天",
+            "下午",
+            "有",
+            "课",
+            "你",
+            "这样",
+            "一",
+            "定",
+            "不",
+            "能",
+            "上课",
+            "了",
+            "最",
+            "好",
+            "回",
+            "家",
+            "休息",
+            "吧"
+          ]
+        },
+        {
+          "id": "ss19_exp_5",
+          "targetHanzi": "那你帮我跟刘老师说一声我生病不能上课了",
+          "targetMeaning": "Vậy cậu nói giúp tớ với cô Lưu một tiếng là tớ bị ốm không thể lên lớp được nhé!",
+          "pinyin": "Nà nǐ bāng wǒ gēn Liú lǎoshī shuō yī shēng, wǒ shēngbìng bùnéng shàngkè le!",
+          "tokens": [
+            "那",
+            "你",
+            "帮",
+            "我",
+            "跟",
+            "刘",
+            "老师",
+            "说",
+            "一",
+            "声",
+            "我",
+            "生病",
+            "不",
+            "能",
+            "上课",
+            "了"
+          ]
+        },
+        {
+          "id": "ss19_exp_6",
+          "targetHanzi": "好的我现在有空儿还能帮你做什么吗",
+          "targetMeaning": "Được rồi! Giờ tớ đang rảnh, còn giúp được gì cho cậu nữa không?",
+          "pinyin": "Hǎo de! Wǒ xiànzài yǒu kòngr, hái néng bāng nǐ zuò shénme ma?",
+          "tokens": [
+            "好",
+            "的",
+            "我",
+            "现在",
+            "有空儿",
+            "还",
+            "能",
+            "帮",
+            "你",
+            "做",
+            "什么",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss19_exp_7",
+          "targetHanzi": "没事儿只得了感冒而已不要紧",
+          "targetMeaning": "Không sao đâu, chỉ bị cảm nhẹ thôi mà, không đáng ngại đâu.",
+          "pinyin": "Méishìr, zhǐ déle gǎnmào éryǐ, bú yàojǐn.",
+          "tokens": [
+            "没事儿",
+            "只",
+            "得了",
+            "感冒",
+            "而已",
+            "不",
+            "要紧"
+          ]
+        },
+        {
+          "id": "ss19_exp_8",
+          "targetHanzi": "你还这样说我现在去药店给你买药对了听说感冒应该吃肉粥这样很快就恢复了我顺便给你买一碗粥吧",
+          "targetMeaning": "Cậu vẫn còn nói thế được à! Giờ tớ ra hiệu thuốc mua thuốc cho cậu. À đúng rồi, nghe nói bị cảm nên ăn cháo thịt để mau hồi phục. Tớ tiện đường mua cho cậu một bát cháo nhé!",
+          "pinyin": "Nǐ hái zhèyàng shuō! Wǒ xiànzài qù yàodiàn gěi nǐ mǎi yào. Duì le, tīngshuō gǎnmào yīnggāi chī ròu zhōu, zhèyàng hěn kuài jiù huīfù le. Wǒ shùnbiàn gěi nǐ mǎi yī wǎn zhōu ba!",
+          "tokens": [
+            "你",
+            "还",
+            "这样",
+            "说",
+            "我",
+            "现在",
+            "去",
+            "药店",
+            "给",
+            "你",
+            "买",
+            "药",
+            "对",
+            "了",
+            "听说",
+            "感冒",
+            "应",
+            "该",
+            "吃",
+            "肉粥",
+            "这样",
+            "很",
+            "快",
+            "就",
+            "恢复",
+            "了",
+            "我",
+            "顺便",
+            "给",
+            "你",
+            "买",
+            "一",
+            "碗",
+            "粥",
+            "吧"
+          ]
+        },
+        {
+          "id": "ss19_exp_9",
+          "targetHanzi": "谢谢你辛苦了",
+          "targetMeaning": "Cảm ơn cậu! Làm phiền cậu quá!",
+          "pinyin": "Xièxie! Nǐ xīnkǔ le!",
+          "tokens": [
+            "谢谢",
+            "你",
+            "辛苦",
+            "了"
+          ]
+        },
+        {
+          "id": "ss19_exp_10",
+          "targetHanzi": "她会说汉语",
+          "targetMeaning": "Cô ấy biết nói tiếng Trung.",
+          "pinyin": "Tā huì shuō Hànyǔ.",
+          "tokens": [
+            "她",
+            "会",
+            "说",
+            "汉语"
+          ]
+        },
+        {
+          "id": "ss19_exp_11",
+          "targetHanzi": "我们下午去吧",
+          "targetMeaning": "Buổi chiều chúng ta đi nhé!",
+          "pinyin": "Wǒmen xiàwǔ qù ba!",
+          "tokens": [
+            "我们",
+            "下午",
+            "去",
+            "吧"
+          ]
+        },
+        {
+          "id": "ss19_exp_12",
+          "targetHanzi": "老师们",
+          "targetMeaning": "Các thầy cô giáo",
+          "pinyin": "lǎoshīmen",
+          "tokens": [
+            "老师",
+            "们"
+          ]
+        },
+        {
+          "id": "ss19_exp_13",
+          "targetHanzi": "他们只关心自己",
+          "targetMeaning": "Bọn họ chỉ quan tâm đến bản thân mình mà thôi.",
+          "pinyin": "Tāmen zhǐ guānxīn zìjǐ.",
+          "tokens": [
+            "他们",
+            "只",
+            "关心",
+            "自己"
+          ]
+        },
+        {
+          "id": "ss19_exp_14",
+          "targetHanzi": "小兰你脸色不太好是不是感冒发烧了",
+          "targetMeaning": "Tiểu Lan, sắc mặt cậu không tốt lắm, có phải bị cảm sốt rồi không?",
+          "pinyin": "Xiǎolán, nǐ liǎnsè bú tài hǎo, shì bu shì gǎnmào fāshāo le?",
+          "tokens": [
+            "小",
+            "兰",
+            "你",
+            "脸色",
+            "不",
+            "太",
+            "好",
+            "是",
+            "不是",
+            "感冒",
+            "发烧",
+            "了"
+          ]
         }
       ],
       "translationExercises": [
@@ -37550,6 +47585,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "wǒ míngtiān yào kǎoshì le bù néng gēn nǐ qù",
           "hint": "Gợi ý Pinyin: Wǒ míngtiān yào kǎoshì le, bù néng gēn nǐ qù. | Từ chưa học: 跟 (gēn: cùng, với)",
           "explanation": "Mai tớ thi rồi, không thể đi cùng cậu được. → 我明天要考试了，不能跟你去。 (Wǒ míngtiān yào kǎoshì le, bù néng gēn nǐ qù.)"
+        },
+        {
+          "id": "tr19_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Tiểu Lan, sắc mặt cậu không tốt lắm, có phải bị ốm rồi không?",
+          "expectedChinese": "小兰，你的脸色不太好，是不是生病了？",
+          "acceptedPinyin": "xiǎo lán nǐ de liǎnsè bú tài hǎo shì bu shì shēngbìng le",
+          "hint": "Gợi ý Pinyin: Xiǎo Lán, nǐ de liǎnsè bú tài hǎo, shì bu shì shēngbìng le?",
+          "explanation": "Tiểu Lan, sắc mặt cậu không tốt lắm, có phải bị ốm rồi không? → 小兰，你的脸色不太好，是不是生病了？ (Xiǎo Lán, nǐ de liǎnsè bú tài hǎo, shì bu shì shēngbìng le?)"
+        },
+        {
+          "id": "tr19_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Tớ thấy rất đau đầu, buổi sáng còn bị sốt và ho, hình như cảm lạnh rồi.",
+          "expectedChinese": "我觉得头很疼，上午还发烧和咳嗽， 好像感冒了。",
+          "acceptedPinyin": "wǒ juéde tóu hěn téng shàngwǔ hái fāshāo hé késou hǎoxiàng gǎnmào le",
+          "hint": "Gợi ý Pinyin: Wǒ juéde tóu hěn téng, shàngwǔ hái fāshāo hé késou, hǎoxiàng gǎnmào le.",
+          "explanation": "Tớ thấy rất đau đầu, buổi sáng còn bị sốt và ho, hình như cảm lạnh rồi. → 我觉得头很疼，上午还发烧和咳嗽， 好像感冒了。 (Wǒ juéde tóu hěn téng, shàngwǔ hái fāshāo hé késou, hǎoxiàng gǎnmào le.)"
+        },
+        {
+          "id": "tr19_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Có phải cậu lại uống nước đá rồi không? Cổ họng cậu hay bị viêm mà cậu vẫn chưa bỏ uống nước đá.",
+          "expectedChinese": "你是不是又喝冰水了？你的喉咙经常发炎,你还不戒除冰水。",
+          "acceptedPinyin": "nǐ shì bu shì yòu hē bīngshuǐ le nǐ de hóulong jīngcháng fāyán nǐ hái bù jièchú bīngshuǐ",
+          "hint": "Gợi ý Pinyin: Nǐ shì bu shì yòu hē bīngshuǐ le? Nǐ de hóulong jīngcháng fāyán, nǐ hái bù jièchú bīngshuǐ.",
+          "explanation": "Có phải cậu lại uống nước đá rồi không? Cổ họng cậu hay bị viêm mà cậu vẫn chưa bỏ uống nước đá. → 你是不是又喝冰水了？你的喉咙经常发炎,你还不戒除冰水。 (Nǐ shì bu shì yòu hē bīngshuǐ le? Nǐ de hóulong jīngcháng fāyán, nǐ hái bù jièchú bīngshuǐ.)"
+        },
+        {
+          "id": "tr19_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Tớ chỉ uống có một ngụm thôi, không ngờ…",
+          "expectedChinese": "我只喝了一口， 没想到……",
+          "acceptedPinyin": "wǒ zhǐ hē le yī kǒu méixiǎngdào…",
+          "hint": "Gợi ý Pinyin: Wǒ zhǐ hē le yī kǒu, méixiǎngdào…",
+          "explanation": "Tớ chỉ uống có một ngụm thôi, không ngờ… → 我只喝了一口， 没想到…… (Wǒ zhǐ hē le yī kǒu, méixiǎngdào…)"
+        },
+        {
+          "id": "tr19_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Chiều nay có tiết học, cậu thế này chắc chắn không đi học được rồi. Tốt nhất là về nhà nghỉ ngơi đi!",
+          "expectedChinese": "今天下午有课，你这样一定不能上课了。 最好回家休息吧！",
+          "acceptedPinyin": "jīntiān xiàwǔ yǒu kè nǐ zhèyàng yídìng bùnéng shàngkè le zuì hǎo huí jiā xiūxi ba",
+          "hint": "Gợi ý Pinyin: Jīntiān xiàwǔ yǒu kè, nǐ zhèyàng yídìng bùnéng shàngkè le. Zuì hǎo huí jiā xiūxi ba!",
+          "explanation": "Chiều nay có tiết học, cậu thế này chắc chắn không đi học được rồi. Tốt nhất là về nhà nghỉ ngơi đi! → 今天下午有课，你这样一定不能上课了。 最好回家休息吧！ (Jīntiān xiàwǔ yǒu kè, nǐ zhèyàng yídìng bùnéng shàngkè le. Zuì hǎo huí jiā xiūxi ba!)"
+        },
+        {
+          "id": "tr19_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Vậy cậu nói giúp tớ với cô Lưu một tiếng là tớ bị ốm không thể lên lớp được nhé!",
+          "expectedChinese": "那你帮我跟刘老师说一声， 我生病不能上课了！",
+          "acceptedPinyin": "nà nǐ bāng wǒ gēn liú lǎoshī shuō yī shēng wǒ shēngbìng bùnéng shàngkè le",
+          "hint": "Gợi ý Pinyin: Nà nǐ bāng wǒ gēn Liú lǎoshī shuō yī shēng, wǒ shēngbìng bùnéng shàngkè le!",
+          "explanation": "Vậy cậu nói giúp tớ với cô Lưu một tiếng là tớ bị ốm không thể lên lớp được nhé! → 那你帮我跟刘老师说一声， 我生病不能上课了！ (Nà nǐ bāng wǒ gēn Liú lǎoshī shuō yī shēng, wǒ shēngbìng bùnéng shàngkè le!)"
+        },
+        {
+          "id": "tr19_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Được rồi! Giờ tớ đang rảnh, còn giúp được gì cho cậu nữa không?",
+          "expectedChinese": "好的！我现在有空儿，还能帮你做什么吗？",
+          "acceptedPinyin": "hǎo de wǒ xiànzài yǒu kòngr hái néng bāng nǐ zuò shénme ma",
+          "hint": "Gợi ý Pinyin: Hǎo de! Wǒ xiànzài yǒu kòngr, hái néng bāng nǐ zuò shénme ma?",
+          "explanation": "Được rồi! Giờ tớ đang rảnh, còn giúp được gì cho cậu nữa không? → 好的！我现在有空儿，还能帮你做什么吗？ (Hǎo de! Wǒ xiànzài yǒu kòngr, hái néng bāng nǐ zuò shénme ma?)"
+        },
+        {
+          "id": "tr19_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Không sao đâu, chỉ bị cảm nhẹ thôi mà, không đáng ngại đâu.",
+          "expectedChinese": "没事儿， 只得了感冒而已， 不要紧。",
+          "acceptedPinyin": "méishìr zhǐ déle gǎnmào éryǐ bú yàojǐn",
+          "hint": "Gợi ý Pinyin: Méishìr, zhǐ déle gǎnmào éryǐ, bú yàojǐn.",
+          "explanation": "Không sao đâu, chỉ bị cảm nhẹ thôi mà, không đáng ngại đâu. → 没事儿， 只得了感冒而已， 不要紧。 (Méishìr, zhǐ déle gǎnmào éryǐ, bú yàojǐn.)"
+        },
+        {
+          "id": "tr19_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu vẫn còn nói thế được à! Giờ tớ ra hiệu thuốc mua thuốc cho cậu. À đúng rồi, nghe nói bị cảm nên ăn cháo thịt để mau hồi phục. Tớ tiện đường mua cho cậu một bát cháo nhé!",
+          "expectedChinese": "你还这样说！我现在去药店给你买药。对了， 听说感冒应该吃肉粥，这样很快就恢复了。我顺便给你买一碗粥吧！",
+          "acceptedPinyin": "nǐ hái zhèyàng shuō wǒ xiànzài qù yàodiàn gěi nǐ mǎi yào duì le tīngshuō gǎnmào yīnggāi chī ròu zhōu zhèyàng hěn kuài jiù huīfù le wǒ shùnbiàn gěi nǐ mǎi yī wǎn zhōu ba",
+          "hint": "Gợi ý Pinyin: Nǐ hái zhèyàng shuō! Wǒ xiànzài qù yàodiàn gěi nǐ mǎi yào. Duì le, tīngshuō gǎnmào yīnggāi chī ròu zhōu, zhèyàng hěn kuài jiù huīfù le. Wǒ shùnbiàn gěi nǐ mǎi yī wǎn zhōu ba!",
+          "explanation": "Cậu vẫn còn nói thế được à! Giờ tớ ra hiệu thuốc mua thuốc cho cậu. À đúng rồi, nghe nói bị cảm nên ăn cháo thịt để mau hồi phục. Tớ tiện đường mua cho cậu một bát cháo nhé! → 你还这样说！我现在去药店给你买药。对了， 听说感冒应该吃肉粥，这样很快就恢复了。我顺便给你买一碗粥吧！ (Nǐ hái zhèyàng shuō! Wǒ xiànzài qù yàodiàn gěi nǐ mǎi yào. Duì le, tīngshuō gǎnmào yīnggāi chī ròu zhōu, zhèyàng hěn kuài jiù huīfù le. Wǒ shùnbiàn gěi nǐ mǎi yī wǎn zhōu ba!)"
+        },
+        {
+          "id": "tr19_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Cảm ơn cậu! Làm phiền cậu quá!",
+          "expectedChinese": "谢谢！你辛苦了！",
+          "acceptedPinyin": "xièxie nǐ xīnkǔ le",
+          "hint": "Gợi ý Pinyin: Xièxie! Nǐ xīnkǔ le!",
+          "explanation": "Cảm ơn cậu! Làm phiền cậu quá! → 谢谢！你辛苦了！ (Xièxie! Nǐ xīnkǔ le!)"
         },
         {
           "id": "tr19_zh_1",
@@ -37610,6 +47735,258 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Nǐ mǎi ba!",
           "explanation": "你买吧！ (Nǐ mǎi ba!) nghĩa là: Cậu mua đi!"
+        },
+        {
+          "id": "tr19_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "孩子发烧了，最好带她去看医生吧。",
+          "chineseAudioText": "孩子发烧了，最好带她去看医生吧。",
+          "pinyin": "Háizi fāshāo le, zuì hǎo dài tā qù kàn yīshēng ba.",
+          "expectedMeaning": "Con bị ốm rồi, tốt nhất là đưa con đi khám bác sĩ đi.",
+          "acceptedKeywords": [
+            "con",
+            "bị",
+            "ốm",
+            "rồi",
+            "tốt",
+            "nhất",
+            "là",
+            "đưa",
+            "con",
+            "đi",
+            "khám",
+            "bác",
+            "sĩ",
+            "đi"
+          ],
+          "hint": "Pinyin: Háizi fāshāo le, zuì hǎo dài tā qù kàn yīshēng ba.",
+          "explanation": "孩子发烧了，最好带她去看医生吧。 (Háizi fāshāo le, zuì hǎo dài tā qù kàn yīshēng ba.) nghĩa là: Con bị ốm rồi, tốt nhất là đưa con đi khám bác sĩ đi."
+        },
+        {
+          "id": "tr19_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "你咳嗽了，最好别抽烟了。",
+          "chineseAudioText": "你咳嗽了，最好别抽烟了。",
+          "pinyin": "Nǐ késou le, zuì hǎo bié chōuyān le.",
+          "expectedMeaning": "Anh bị ho rồi, tốt nhất đừng hút thuốc nữa.",
+          "acceptedKeywords": [
+            "anh",
+            "bị",
+            "ho",
+            "rồi",
+            "tốt",
+            "nhất",
+            "đừng",
+            "hút",
+            "thuốc",
+            "nữa"
+          ],
+          "hint": "Pinyin: Nǐ késou le, zuì hǎo bié chōuyān le.",
+          "explanation": "你咳嗽了，最好别抽烟了。 (Nǐ késou le, zuì hǎo bié chōuyān le.) nghĩa là: Anh bị ho rồi, tốt nhất đừng hút thuốc nữa."
+        },
+        {
+          "id": "tr19_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "我明天要考试了，不能跟你去。",
+          "chineseAudioText": "我明天要考试了，不能跟你去。",
+          "pinyin": "Wǒ míngtiān yào kǎoshì le, bù néng gēn nǐ qù.",
+          "expectedMeaning": "Mai tớ thi rồi, không thể đi cùng cậu được.",
+          "acceptedKeywords": [
+            "mai",
+            "tớ",
+            "thi",
+            "rồi",
+            "không",
+            "thể",
+            "đi",
+            "cùng",
+            "cậu",
+            "được"
+          ],
+          "hint": "Pinyin: Wǒ míngtiān yào kǎoshì le, bù néng gēn nǐ qù.",
+          "explanation": "我明天要考试了，不能跟你去。 (Wǒ míngtiān yào kǎoshì le, bù néng gēn nǐ qù.) nghĩa là: Mai tớ thi rồi, không thể đi cùng cậu được."
+        },
+        {
+          "id": "tr19_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "我的头很疼，不能上课。",
+          "chineseAudioText": "我的头很疼，不能上课。",
+          "pinyin": "Wǒ de tóu hěn téng, bù néng shàngkè.",
+          "expectedMeaning": "Tớ rất đau đầu, không thể đi học được.",
+          "acceptedKeywords": [
+            "tớ",
+            "rất",
+            "đau",
+            "đầu",
+            "không",
+            "thể",
+            "đi",
+            "học",
+            "được"
+          ],
+          "hint": "Pinyin: Wǒ de tóu hěn téng, bù néng shàngkè.",
+          "explanation": "我的头很疼，不能上课。 (Wǒ de tóu hěn téng, bù néng shàngkè.) nghĩa là: Tớ rất đau đầu, không thể đi học được."
+        },
+        {
+          "id": "tr19_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "早餐他能吃十个包子。",
+          "chineseAudioText": "早餐他能吃十个包子。",
+          "pinyin": "Zǎocān tā néng chī shí gè bāozi.",
+          "expectedMeaning": "Bữa sáng cậu ấy có thể ăn 10 cái bánh bao.",
+          "acceptedKeywords": [
+            "bữa",
+            "sáng",
+            "cậu",
+            "ấy",
+            "có",
+            "thể",
+            "ăn",
+            "10",
+            "cái",
+            "bánh",
+            "bao"
+          ],
+          "hint": "Pinyin: Zǎocān tā néng chī shí gè bāozi.",
+          "explanation": "早餐他能吃十个包子。 (Zǎocān tā néng chī shí gè bāozi.) nghĩa là: Bữa sáng cậu ấy có thể ăn 10 cái bánh bao."
+        },
+        {
+          "id": "tr19_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "太谢谢你了，喝完粥吃药我一定会很快恢复！",
+          "chineseAudioText": "太谢谢你了，喝完粥吃药我一定会很快恢复！",
+          "pinyin": "Tài xièxie nǐ le, hēwán zhōu chī yào wǒ yídìng huì hěn kuài huīfù!",
+          "expectedMeaning": "Cảm ơn cậu nhiều lắm, ăn cháo uống thuốc xong tớ nhất định sẽ mau khỏi!",
+          "acceptedKeywords": [
+            "cảm",
+            "ơn",
+            "cậu",
+            "nhiều",
+            "lắm",
+            "ăn",
+            "cháo",
+            "uống",
+            "thuốc",
+            "xong",
+            "tớ",
+            "nhất",
+            "định",
+            "sẽ",
+            "mau",
+            "khỏi"
+          ],
+          "hint": "Pinyin: Tài xièxie nǐ le, hēwán zhōu chī yào wǒ yídìng huì hěn kuài huīfù!",
+          "explanation": "太谢谢你了，喝完粥吃药我一定会很快恢复！ (Tài xièxie nǐ le, hēwán zhōu chī yào wǒ yídìng huì hěn kuài huīfù!) nghĩa là: Cảm ơn cậu nhiều lắm, ăn cháo uống thuốc xong tớ nhất định sẽ mau khỏi!"
+        },
+        {
+          "id": "tr19_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "你以后得戒除冰水了。我已经去药店给你买了药和一碗肉粥。",
+          "chineseAudioText": "你以后得戒除冰水了。我已经去药店给你买了药和一碗肉粥。",
+          "pinyin": "Nǐ yǐhòu děi jièchú bīngshuǐ le. Wǒ yǐjīng qù yàodiàn gěi nǐ mǎi le yào hé yì wǎn ròuzhōu.",
+          "expectedMeaning": "Sau này cậu phải bỏ uống nước đá đi nhé. Tớ đã ra hiệu thuốc mua thuốc và một bát cháo thịt cho cậu rồi.",
+          "acceptedKeywords": [
+            "sau",
+            "này",
+            "cậu",
+            "phải",
+            "bỏ",
+            "uống",
+            "nước",
+            "đá",
+            "đi",
+            "nhé",
+            "tớ",
+            "đã",
+            "ra",
+            "hiệu",
+            "thuốc",
+            "mua",
+            "thuốc",
+            "và",
+            "một",
+            "bát",
+            "cháo",
+            "thịt",
+            "cho",
+            "cậu",
+            "rồi"
+          ],
+          "hint": "Pinyin: Nǐ yǐhòu děi jièchú bīngshuǐ le. Wǒ yǐjīng qù yàodiàn gěi nǐ mǎi le yào hé yì wǎn ròuzhōu.",
+          "explanation": "你以后得戒除冰水了。我已经去药店给你买了药和一碗肉粥。 (Nǐ yǐhòu děi jièchú bīngshuǐ le. Wǒ yǐjīng qù yàodiàn gěi nǐ mǎi le yào hé yì wǎn ròuzhōu.) nghĩa là: Sau này cậu phải bỏ uống nước đá đi nhé. Tớ đã ra hiệu thuốc mua thuốc và một bát cháo thịt cho cậu rồi."
+        },
+        {
+          "id": "tr19_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "嗯，我头很疼，还有点儿咳嗽、喉咙发炎。",
+          "chineseAudioText": "嗯，我头很疼，还有点儿咳嗽、喉咙发炎。",
+          "pinyin": "Ēn, wǒ tóu hěn téng, hái yǒudiǎnr késou, hóulong fāyán.",
+          "expectedMeaning": "Ừ, tớ đau đầu quá, lại hơi ho và viêm họng nữa.",
+          "acceptedKeywords": [
+            "tớ",
+            "đau",
+            "đầu",
+            "quá",
+            "lại",
+            "hơi",
+            "ho",
+            "và",
+            "viêm",
+            "họng",
+            "nữa"
+          ],
+          "hint": "Pinyin: Ēn, wǒ tóu hěn téng, hái yǒudiǎnr késou, hóulong fāyán.",
+          "explanation": "嗯，我头很疼，还有点儿咳嗽、喉咙发炎。 (Ēn, wǒ tóu hěn téng, hái yǒudiǎnr késou, hóulong fāyán.) nghĩa là: Ừ, tớ đau đầu quá, lại hơi ho và viêm họng nữa."
+        },
+        {
+          "id": "tr19_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "小兰，你脸色不太好，是不是感冒发烧了？",
+          "chineseAudioText": "小兰，你脸色不太好，是不是感冒发烧了？",
+          "pinyin": "Xiǎolán, nǐ liǎnsè bú tài hǎo, shì bu shì gǎnmào fāshāo le?",
+          "expectedMeaning": "Tiểu Lan, sắc mặt cậu không tốt lắm, có phải bị cảm sốt rồi không?",
+          "acceptedKeywords": [
+            "tiểu",
+            "lan",
+            "sắc",
+            "mặt",
+            "cậu",
+            "không",
+            "tốt",
+            "lắm",
+            "có",
+            "phải",
+            "bị",
+            "cảm",
+            "sốt",
+            "rồi",
+            "không"
+          ],
+          "hint": "Pinyin: Xiǎolán, nǐ liǎnsè bú tài hǎo, shì bu shì gǎnmào fāshāo le?",
+          "explanation": "小兰，你脸色不太好，是不是感冒发烧了？ (Xiǎolán, nǐ liǎnsè bú tài hǎo, shì bu shì gǎnmào fāshāo le?) nghĩa là: Tiểu Lan, sắc mặt cậu không tốt lắm, có phải bị cảm sốt rồi không?"
+        },
+        {
+          "id": "tr19_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "他们只关心自己。",
+          "chineseAudioText": "他们只关心自己。",
+          "pinyin": "Tāmen zhǐ guānxīn zìjǐ.",
+          "expectedMeaning": "Bọn họ chỉ quan tâm đến bản thân mình mà thôi.",
+          "acceptedKeywords": [
+            "bọn",
+            "họ",
+            "chỉ",
+            "quan",
+            "tâm",
+            "đến",
+            "bản",
+            "thân",
+            "mình",
+            "mà",
+            "thôi"
+          ],
+          "hint": "Pinyin: Tāmen zhǐ guānxīn zìjǐ.",
+          "explanation": "他们只关心自己。 (Tāmen zhǐ guānxīn zìjǐ.) nghĩa là: Bọn họ chỉ quan tâm đến bản thân mình mà thôi."
         }
       ],
       "expandedQuiz": [
@@ -39538,6 +49915,309 @@ const DEFAULT_LESSONS = [
             "听音乐"
           ],
           "unlearnedHint": "Từ chưa học: 边 (biān: bên, phía)"
+        },
+        {
+          "id": "ss20_exp_1",
+          "targetHanzi": "阿明我看你每天早上都跑步你是不是常常锻炼身体",
+          "targetMeaning": "A Minh, mình thấy sáng nào cậu cũng chạy bộ, cậu có thường xuyên rèn luyện sức khỏe không?",
+          "pinyin": "Āmíng, wǒ kàn nǐ měi tiān zǎoshang dōu pǎobù, nǐ shì bu shì chángcháng duànliàn shēntǐ?",
+          "tokens": [
+            "阿",
+            "明",
+            "我",
+            "看",
+            "你",
+            "每",
+            "天",
+            "早上",
+            "都",
+            "跑步",
+            "你",
+            "是",
+            "不是",
+            "常常",
+            "锻炼",
+            "身体"
+          ]
+        },
+        {
+          "id": "ss20_exp_2",
+          "targetHanzi": "是我每天早上六点都起来跑步",
+          "targetMeaning": "Có. Sáng nào 6 giờ mình cũng dậy chạy bộ.",
+          "pinyin": "Shì. Wǒ měitiān zǎoshang liù diǎn dōu qǐlai pǎobù.",
+          "tokens": [
+            "是",
+            "我",
+            "每",
+            "天",
+            "早上",
+            "六",
+            "点",
+            "都",
+            "起",
+            "来",
+            "跑步"
+          ]
+        },
+        {
+          "id": "ss20_exp_3",
+          "targetHanzi": "你每天跑多长时间",
+          "targetMeaning": "Mỗi ngày cậu chạy bao lâu?",
+          "pinyin": "Nǐ měi tiān pǎo duō cháng shíjiān?",
+          "tokens": [
+            "你",
+            "每",
+            "天",
+            "跑",
+            "多",
+            "长",
+            "时间"
+          ]
+        },
+        {
+          "id": "ss20_exp_4",
+          "targetHanzi": "大概跑半个小时",
+          "targetMeaning": "Chạy khoảng nửa tiếng.",
+          "pinyin": "Dàgài pǎo bàn gè xiǎoshí.",
+          "tokens": [
+            "大概",
+            "跑",
+            "半",
+            "个",
+            "小时"
+          ]
+        },
+        {
+          "id": "ss20_exp_5",
+          "targetHanzi": "你好认真啊",
+          "targetMeaning": "Cậu chăm chỉ thật đấy!",
+          "pinyin": "Nǐ hǎo rènzhēn a!",
+          "tokens": [
+            "你好",
+            "认真",
+            "啊"
+          ]
+        },
+        {
+          "id": "ss20_exp_6",
+          "targetHanzi": "早上跑步不但可以享受新鲜的空气而且对身体也有很多好处",
+          "targetMeaning": "Chạy bộ buổi sáng không những được hít thở không khí trong lành mà còn có rất nhiều lợi ích cho sức khỏe.",
+          "pinyin": "Zǎoshang pǎobù búdàn kěyǐ xiǎngshòu xīnxiān de kōngqì, érqiě duì shēntǐ yě yǒu hěn duō hǎochu.",
+          "tokens": [
+            "早上",
+            "跑步",
+            "不",
+            "但",
+            "可以",
+            "享受",
+            "新鲜",
+            "的",
+            "空气",
+            "而",
+            "且",
+            "对",
+            "身体",
+            "也",
+            "有",
+            "很",
+            "多",
+            "好处"
+          ]
+        },
+        {
+          "id": "ss20_exp_7",
+          "targetHanzi": "我看你的身体真棒你一定很喜欢体育运动吧",
+          "targetMeaning": "Mình thấy thể lực của cậu tốt thật đấy. Chắc cậu rất thích thể dục thể thao nhỉ?",
+          "pinyin": "Wǒ kàn nǐ de shēntǐ zhēn bàng. Nǐ yídìng hěn xǐhuān tǐyù yùndòng ba?",
+          "tokens": [
+            "我",
+            "看",
+            "你",
+            "的",
+            "身体",
+            "真",
+            "棒",
+            "你",
+            "一",
+            "定",
+            "很",
+            "喜欢",
+            "体",
+            "育",
+            "运动",
+            "吧"
+          ]
+        },
+        {
+          "id": "ss20_exp_8",
+          "targetHanzi": "对每天下午我都去体育馆游泳打篮球打网球和武术周末如果天气好我就跟几个朋友去爬山我觉得你的身体太弱可能是因为不经常锻炼身体",
+          "targetMeaning": "Đúng vậy. Chiều nào mình cũng đến nhà thi đấu bơi lội, chơi bóng rổ, đánh tennis và tập võ. Cuối tuần nếu thời tiết đẹp mình đi leo núi cùng vài người bạn. Mình thấy sức khỏe cậu hơi yếu, có lẽ vì ít rèn luyện thể thao đấy.",
+          "pinyin": "Duì. Měi tiān xiàwǔ wǒ dōu qù tǐyùguǎn yóuyǒng, dǎ lánqiú, dǎ wǎngqiú hé wǔshù. Zhōumò rúguǒ tiānqì hǎo wǒ jiù gēn jǐ gè péngyou qù páshān. Wǒ juéde nǐ de shēntǐ tài ruò, kěnéng shì yīnwèi bù jīngcháng duànliàn shēntǐ.",
+          "tokens": [
+            "对",
+            "每",
+            "天",
+            "下午",
+            "我",
+            "都",
+            "去",
+            "体育馆",
+            "游泳",
+            "打",
+            "篮球",
+            "打",
+            "网球",
+            "和",
+            "武术",
+            "周末",
+            "如果",
+            "天气",
+            "好",
+            "我",
+            "就",
+            "跟",
+            "几",
+            "个",
+            "朋友",
+            "去",
+            "爬山",
+            "我",
+            "觉得",
+            "你",
+            "的",
+            "身体",
+            "太",
+            "弱",
+            "可能",
+            "是",
+            "因为",
+            "不",
+            "经常",
+            "锻炼",
+            "身体"
+          ]
+        },
+        {
+          "id": "ss20_exp_9",
+          "targetHanzi": "我每天都晚睡晚起也不太喜欢体育运动",
+          "targetMeaning": "Ngày nào mình cũng thức khuya dậy muộn, lại không thích vận động thể thao lắm.",
+          "pinyin": "Wǒ měitiān dōu wǎn shuì wǎn qǐ, yě bú tài xǐhuan tǐyù yùndòng.",
+          "tokens": [
+            "我",
+            "每",
+            "天",
+            "都",
+            "晚",
+            "睡",
+            "晚",
+            "起",
+            "也",
+            "不",
+            "太",
+            "喜欢",
+            "体",
+            "育",
+            "运动"
+          ]
+        },
+        {
+          "id": "ss20_exp_10",
+          "targetHanzi": "你这样对身体不好也很容易生病你得多多锻炼身体锻炼身体还可以预防疾病",
+          "targetMeaning": "Cậu sống như vậy không tốt cho sức khỏe đâu, rất dễ bị ốm đấy. Cậu phải rèn luyện sức khỏe nhiều lên. Tập thể dục còn giúp phòng ngừa bệnh tật nữa.",
+          "pinyin": "Nǐ zhèyàng duì shēntǐ bù hǎo, yě hěn róngyì shēngbìng. Nǐ děi duōduō duànliàn shēntǐ. Duànliàn shēntǐ hái kěyǐ yùfáng jíbìng.",
+          "tokens": [
+            "你",
+            "这样",
+            "对",
+            "身体",
+            "不",
+            "好",
+            "也",
+            "很",
+            "容易",
+            "生病",
+            "你",
+            "得",
+            "多",
+            "多",
+            "锻炼",
+            "身体",
+            "锻炼",
+            "身体",
+            "还",
+            "可以",
+            "预防",
+            "疾病"
+          ]
+        },
+        {
+          "id": "ss20_exp_11",
+          "targetHanzi": "我知道了明天你跑步的时候能叫我吗我决定要跟你一样坚持锻炼身体",
+          "targetMeaning": "Mình biết rồi, ngày mai lúc đi chạy bộ cậu gọi mình với nhé? Mình quyết định sẽ kiên trì tập luyện giống cậu.",
+          "pinyin": "Wǒ zhīdào le, míngtiān nǐ pǎobù de shíhou néng jiào wǒ ma? Wǒ juédìng yào gēn nǐ yíyàng jiānchí duànliàn shēntǐ.",
+          "tokens": [
+            "我",
+            "知道",
+            "了",
+            "明天",
+            "你",
+            "跑步",
+            "的",
+            "时候",
+            "能",
+            "叫",
+            "我",
+            "吗",
+            "我",
+            "决定",
+            "要",
+            "跟",
+            "你",
+            "一样",
+            "坚持",
+            "锻炼",
+            "身体"
+          ]
+        },
+        {
+          "id": "ss20_exp_12",
+          "targetHanzi": "今天会下雨吧",
+          "targetMeaning": "Hôm nay chắc sẽ mưa đấy nhỉ.",
+          "pinyin": "Jīntiān huì xià yǔ ba.",
+          "tokens": [
+            "今天",
+            "会",
+            "下雨",
+            "吧"
+          ]
+        },
+        {
+          "id": "ss20_exp_13",
+          "targetHanzi": "天气太舒服了",
+          "targetMeaning": "Thời tiết dễ chịu quá!",
+          "pinyin": "Tiānqì tài shūfu le!",
+          "tokens": [
+            "天气",
+            "太",
+            "舒服",
+            "了"
+          ]
+        },
+        {
+          "id": "ss20_exp_14",
+          "targetHanzi": "你是不是累了多休息吧",
+          "targetMeaning": "Bạn mệt à? Nghỉ ngơi thêm chút đi!",
+          "pinyin": "Nǐ shì bu shì lèi le? Duō xiūxi ba!",
+          "tokens": [
+            "你",
+            "是",
+            "不是",
+            "累",
+            "了",
+            "多",
+            "休息",
+            "吧"
+          ]
         }
       ],
       "translationExercises": [
@@ -39576,6 +50256,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "nǐ shì bu shì lèi le duō xiūxi ba",
           "hint": "Gợi ý Pinyin: Nǐ shì bu shì lèi le? Duō xiūxi ba!",
           "explanation": "Bạn mệt à? Nghỉ ngơi thêm chút đi! → 你是不是累了？多休息吧！ (Nǐ shì bu shì lèi le? Duō xiūxi ba!)"
+        },
+        {
+          "id": "tr20_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "A Minh, mình thấy sáng nào cậu cũng chạy bộ, cậu có thường xuyên rèn luyện sức khỏe không?",
+          "expectedChinese": "阿明，我看你每天早上都跑步，你是不是常常锻炼身体？",
+          "acceptedPinyin": "āmíng wǒ kàn nǐ měi tiān zǎoshang dōu pǎobù nǐ shì bu shì chángcháng duànliàn shēntǐ",
+          "hint": "Gợi ý Pinyin: Āmíng, wǒ kàn nǐ měi tiān zǎoshang dōu pǎobù, nǐ shì bu shì chángcháng duànliàn shēntǐ?",
+          "explanation": "A Minh, mình thấy sáng nào cậu cũng chạy bộ, cậu có thường xuyên rèn luyện sức khỏe không? → 阿明，我看你每天早上都跑步，你是不是常常锻炼身体？ (Āmíng, wǒ kàn nǐ měi tiān zǎoshang dōu pǎobù, nǐ shì bu shì chángcháng duànliàn shēntǐ?)"
+        },
+        {
+          "id": "tr20_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Có. Sáng nào 6 giờ mình cũng dậy chạy bộ.",
+          "expectedChinese": "是。我每天早上六点都起来跑步。",
+          "acceptedPinyin": "shì wǒ měitiān zǎoshang liù diǎn dōu qǐlai pǎobù",
+          "hint": "Gợi ý Pinyin: Shì. Wǒ měitiān zǎoshang liù diǎn dōu qǐlai pǎobù.",
+          "explanation": "Có. Sáng nào 6 giờ mình cũng dậy chạy bộ. → 是。我每天早上六点都起来跑步。 (Shì. Wǒ měitiān zǎoshang liù diǎn dōu qǐlai pǎobù.)"
+        },
+        {
+          "id": "tr20_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Mỗi ngày cậu chạy bao lâu?",
+          "expectedChinese": "你每天跑多长时间？",
+          "acceptedPinyin": "nǐ měi tiān pǎo duō cháng shíjiān",
+          "hint": "Gợi ý Pinyin: Nǐ měi tiān pǎo duō cháng shíjiān?",
+          "explanation": "Mỗi ngày cậu chạy bao lâu? → 你每天跑多长时间？ (Nǐ měi tiān pǎo duō cháng shíjiān?)"
+        },
+        {
+          "id": "tr20_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Chạy khoảng nửa tiếng.",
+          "expectedChinese": "大概跑半个小时。",
+          "acceptedPinyin": "dàgài pǎo bàn gè xiǎoshí",
+          "hint": "Gợi ý Pinyin: Dàgài pǎo bàn gè xiǎoshí.",
+          "explanation": "Chạy khoảng nửa tiếng. → 大概跑半个小时。 (Dàgài pǎo bàn gè xiǎoshí.)"
+        },
+        {
+          "id": "tr20_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu chăm chỉ thật đấy!",
+          "expectedChinese": "你好认真啊！",
+          "acceptedPinyin": "nǐ hǎo rènzhēn a",
+          "hint": "Gợi ý Pinyin: Nǐ hǎo rènzhēn a!",
+          "explanation": "Cậu chăm chỉ thật đấy! → 你好认真啊！ (Nǐ hǎo rènzhēn a!)"
+        },
+        {
+          "id": "tr20_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Chạy bộ buổi sáng không những được hít thở không khí trong lành mà còn có rất nhiều lợi ích cho sức khỏe.",
+          "expectedChinese": "早上跑步不但可以享受新鲜的空气，而且对身体也有很多好处。",
+          "acceptedPinyin": "zǎoshang pǎobù búdàn kěyǐ xiǎngshòu xīnxiān de kōngqì érqiě duì shēntǐ yě yǒu hěn duō hǎochu",
+          "hint": "Gợi ý Pinyin: Zǎoshang pǎobù búdàn kěyǐ xiǎngshòu xīnxiān de kōngqì, érqiě duì shēntǐ yě yǒu hěn duō hǎochu.",
+          "explanation": "Chạy bộ buổi sáng không những được hít thở không khí trong lành mà còn có rất nhiều lợi ích cho sức khỏe. → 早上跑步不但可以享受新鲜的空气，而且对身体也有很多好处。 (Zǎoshang pǎobù búdàn kěyǐ xiǎngshòu xīnxiān de kōngqì, érqiě duì shēntǐ yě yǒu hěn duō hǎochu.)"
+        },
+        {
+          "id": "tr20_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Mình thấy thể lực của cậu tốt thật đấy. Chắc cậu rất thích thể dục thể thao nhỉ?",
+          "expectedChinese": "我看你的身体真棒。你一定很喜欢体育运动吧？",
+          "acceptedPinyin": "wǒ kàn nǐ de shēntǐ zhēn bàng nǐ yídìng hěn xǐhuān tǐyù yùndòng ba",
+          "hint": "Gợi ý Pinyin: Wǒ kàn nǐ de shēntǐ zhēn bàng. Nǐ yídìng hěn xǐhuān tǐyù yùndòng ba?",
+          "explanation": "Mình thấy thể lực của cậu tốt thật đấy. Chắc cậu rất thích thể dục thể thao nhỉ? → 我看你的身体真棒。你一定很喜欢体育运动吧？ (Wǒ kàn nǐ de shēntǐ zhēn bàng. Nǐ yídìng hěn xǐhuān tǐyù yùndòng ba?)"
+        },
+        {
+          "id": "tr20_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Đúng vậy. Chiều nào mình cũng đến nhà thi đấu bơi lội, chơi bóng rổ, đánh tennis và tập võ. Cuối tuần nếu thời tiết đẹp mình đi leo núi cùng vài người bạn. Mình thấy sức khỏe cậu hơi yếu, có lẽ vì ít rèn luyện thể thao đấy.",
+          "expectedChinese": "对。每天下午我都去体育馆游泳，打篮球、打网球和武术。周末如果天气好我就跟几个朋友去爬山。我觉得你的身体太弱，可能是因为不经常锻炼身体。",
+          "acceptedPinyin": "duì měi tiān xiàwǔ wǒ dōu qù tǐyùguǎn yóuyǒng dǎ lánqiú dǎ wǎngqiú hé wǔshù zhōumò rúguǒ tiānqì hǎo wǒ jiù gēn jǐ gè péngyou qù páshān wǒ juéde nǐ de shēntǐ tài ruò kěnéng shì yīnwèi bù jīngcháng duànliàn shēntǐ",
+          "hint": "Gợi ý Pinyin: Duì. Měi tiān xiàwǔ wǒ dōu qù tǐyùguǎn yóuyǒng, dǎ lánqiú, dǎ wǎngqiú hé wǔshù. Zhōumò rúguǒ tiānqì hǎo wǒ jiù gēn jǐ gè péngyou qù páshān. Wǒ juéde nǐ de shēntǐ tài ruò, kěnéng shì yīnwèi bù jīngcháng duànliàn shēntǐ.",
+          "explanation": "Đúng vậy. Chiều nào mình cũng đến nhà thi đấu bơi lội, chơi bóng rổ, đánh tennis và tập võ. Cuối tuần nếu thời tiết đẹp mình đi leo núi cùng vài người bạn. Mình thấy sức khỏe cậu hơi yếu, có lẽ vì ít rèn luyện thể thao đấy. → 对。每天下午我都去体育馆游泳，打篮球、打网球和武术。周末如果天气好我就跟几个朋友去爬山。我觉得你的身体太弱，可能是因为不经常锻炼身体。 (Duì. Měi tiān xiàwǔ wǒ dōu qù tǐyùguǎn yóuyǒng, dǎ lánqiú, dǎ wǎngqiú hé wǔshù. Zhōumò rúguǒ tiānqì hǎo wǒ jiù gēn jǐ gè péngyou qù páshān. Wǒ juéde nǐ de shēntǐ tài ruò, kěnéng shì yīnwèi bù jīngcháng duànliàn shēntǐ.)"
+        },
+        {
+          "id": "tr20_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Ngày nào mình cũng thức khuya dậy muộn, lại không thích vận động thể thao lắm.",
+          "expectedChinese": "我每天都晚睡晚起，也不太喜欢体育运动。",
+          "acceptedPinyin": "wǒ měitiān dōu wǎn shuì wǎn qǐ yě bú tài xǐhuan tǐyù yùndòng",
+          "hint": "Gợi ý Pinyin: Wǒ měitiān dōu wǎn shuì wǎn qǐ, yě bú tài xǐhuan tǐyù yùndòng.",
+          "explanation": "Ngày nào mình cũng thức khuya dậy muộn, lại không thích vận động thể thao lắm. → 我每天都晚睡晚起，也不太喜欢体育运动。 (Wǒ měitiān dōu wǎn shuì wǎn qǐ, yě bú tài xǐhuan tǐyù yùndòng.)"
+        },
+        {
+          "id": "tr20_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu sống như vậy không tốt cho sức khỏe đâu, rất dễ bị ốm đấy. Cậu phải rèn luyện sức khỏe nhiều lên. Tập thể dục còn giúp phòng ngừa bệnh tật nữa.",
+          "expectedChinese": "你这样对身体不好，也很容易生病。你得多多锻炼身体。锻炼身体还可以预防疾病。",
+          "acceptedPinyin": "nǐ zhèyàng duì shēntǐ bù hǎo yě hěn róngyì shēngbìng nǐ děi duōduō duànliàn shēntǐ duànliàn shēntǐ hái kěyǐ yùfáng jíbìng",
+          "hint": "Gợi ý Pinyin: Nǐ zhèyàng duì shēntǐ bù hǎo, yě hěn róngyì shēngbìng. Nǐ děi duōduō duànliàn shēntǐ. Duànliàn shēntǐ hái kěyǐ yùfáng jíbìng.",
+          "explanation": "Cậu sống như vậy không tốt cho sức khỏe đâu, rất dễ bị ốm đấy. Cậu phải rèn luyện sức khỏe nhiều lên. Tập thể dục còn giúp phòng ngừa bệnh tật nữa. → 你这样对身体不好，也很容易生病。你得多多锻炼身体。锻炼身体还可以预防疾病。 (Nǐ zhèyàng duì shēntǐ bù hǎo, yě hěn róngyì shēngbìng. Nǐ děi duōduō duànliàn shēntǐ. Duànliàn shēntǐ hái kěyǐ yùfáng jíbìng.)"
         },
         {
           "id": "tr20_zh_1",
@@ -39636,6 +50406,228 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Tiānqì tài shūfu le!",
           "explanation": "天气太舒服了！ (Tiānqì tài shūfu le!) nghĩa là: Thời tiết dễ chịu quá!"
+        },
+        {
+          "id": "tr20_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "天可能要下雨。",
+          "chineseAudioText": "天可能要下雨。",
+          "pinyin": "Tiān kěnéng yào xià yǔ.",
+          "expectedMeaning": "Trời có thể sắp mưa.",
+          "acceptedKeywords": [
+            "trời",
+            "có",
+            "thể",
+            "sắp",
+            "mưa"
+          ],
+          "hint": "Pinyin: Tiān kěnéng yào xià yǔ.",
+          "explanation": "天可能要下雨。 (Tiān kěnéng yào xià yǔ.) nghĩa là: Trời có thể sắp mưa."
+        },
+        {
+          "id": "tr20_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "早点儿睡吧，明天还要早点儿起床呢！",
+          "chineseAudioText": "早点儿睡吧，明天还要早点儿起床呢！",
+          "pinyin": "Zǎodiǎnr shuì ba, míngtiān hái yào zǎodiǎnr qǐchuáng ne!",
+          "expectedMeaning": "Ngủ sớm đi, ngày mai còn phải dậy sớm nữa.",
+          "acceptedKeywords": [
+            "ngủ",
+            "sớm",
+            "đi",
+            "ngày",
+            "mai",
+            "còn",
+            "phải",
+            "dậy",
+            "sớm",
+            "nữa"
+          ],
+          "hint": "Pinyin: Zǎodiǎnr shuì ba, míngtiān hái yào zǎodiǎnr qǐchuáng ne!",
+          "explanation": "早点儿睡吧，明天还要早点儿起床呢！ (Zǎodiǎnr shuì ba, míngtiān hái yào zǎodiǎnr qǐchuáng ne!) nghĩa là: Ngủ sớm đi, ngày mai còn phải dậy sớm nữa."
+        },
+        {
+          "id": "tr20_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "如果要减肥，你可以多锻炼身体。",
+          "chineseAudioText": "如果要减肥，你可以多锻炼身体。",
+          "pinyin": "Rúguǒ yào jiǎnféi, nǐ kěyǐ duō duànliàn shēntǐ.",
+          "expectedMeaning": "Nếu muốn giảm cân, cậu có thể tập thể dục nhiều hơn",
+          "acceptedKeywords": [
+            "nếu",
+            "muốn",
+            "giảm",
+            "cân",
+            "cậu",
+            "có",
+            "thể",
+            "tập",
+            "thể",
+            "dục",
+            "nhiều",
+            "hơn"
+          ],
+          "hint": "Pinyin: Rúguǒ yào jiǎnféi, nǐ kěyǐ duō duànliàn shēntǐ.",
+          "explanation": "如果要减肥，你可以多锻炼身体。 (Rúguǒ yào jiǎnféi, nǐ kěyǐ duō duànliàn shēntǐ.) nghĩa là: Nếu muốn giảm cân, cậu có thể tập thể dục nhiều hơn"
+        },
+        {
+          "id": "tr20_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "妈妈，做完作业以后，我可以看电影吗？",
+          "chineseAudioText": "妈妈，做完作业以后，我可以看电影吗？",
+          "pinyin": "Māma, zuò wán zuòyè yǐhòu, wǒ kěyǐ kàn diànyǐng ma?",
+          "expectedMeaning": "Mẹ ơi, sau khi làm xong bài tập về nhà con có thể xem phim không ạ?",
+          "acceptedKeywords": [
+            "mẹ",
+            "ơi",
+            "sau",
+            "khi",
+            "làm",
+            "xong",
+            "bài",
+            "tập",
+            "về",
+            "nhà",
+            "con",
+            "có",
+            "thể",
+            "xem",
+            "phim",
+            "không"
+          ],
+          "hint": "Pinyin: Māma, zuò wán zuòyè yǐhòu, wǒ kěyǐ kàn diànyǐng ma?",
+          "explanation": "妈妈，做完作业以后，我可以看电影吗？ (Māma, zuò wán zuòyè yǐhòu, wǒ kěyǐ kàn diànyǐng ma?) nghĩa là: Mẹ ơi, sau khi làm xong bài tập về nhà con có thể xem phim không ạ?"
+        },
+        {
+          "id": "tr20_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "明天是国庆节，我们可以去买东西。",
+          "chineseAudioText": "明天是国庆节，我们可以去买东西。",
+          "pinyin": "Míngtiān shì Guóqìng jié, wǒmen kěyǐ qù mǎi dōngxi.",
+          "expectedMeaning": "Ngày mai là lễ Quốc khánh, chúng ta có thể đi mua sắm.",
+          "acceptedKeywords": [
+            "ngày",
+            "mai",
+            "là",
+            "lễ",
+            "quốc",
+            "khánh",
+            "chúng",
+            "ta",
+            "có",
+            "thể",
+            "đi",
+            "mua",
+            "sắm"
+          ],
+          "hint": "Pinyin: Míngtiān shì Guóqìng jié, wǒmen kěyǐ qù mǎi dōngxi.",
+          "explanation": "明天是国庆节，我们可以去买东西。 (Míngtiān shì Guóqìng jié, wǒmen kěyǐ qù mǎi dōngxi.) nghĩa là: Ngày mai là lễ Quốc khánh, chúng ta có thể đi mua sắm."
+        },
+        {
+          "id": "tr20_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "我可以做好这件事。",
+          "chineseAudioText": "我可以做好这件事。",
+          "pinyin": "Wǒ kěyǐ zuò hǎo zhè jiàn shì.",
+          "expectedMeaning": "Tôi có thể làm tốt việc này",
+          "acceptedKeywords": [
+            "tôi",
+            "có",
+            "thể",
+            "làm",
+            "tốt",
+            "việc",
+            "này"
+          ],
+          "hint": "Pinyin: Wǒ kěyǐ zuò hǎo zhè jiàn shì.",
+          "explanation": "我可以做好这件事。 (Wǒ kěyǐ zuò hǎo zhè jiàn shì.) nghĩa là: Tôi có thể làm tốt việc này"
+        },
+        {
+          "id": "tr20_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "我会打羽毛球。",
+          "chineseAudioText": "我会打羽毛球。",
+          "pinyin": "Wǒ huì dǎ yǔmáoqiú.",
+          "expectedMeaning": "Tôi biết đánh cầu lông.",
+          "acceptedKeywords": [
+            "tôi",
+            "biết",
+            "đánh",
+            "cầu",
+            "lông"
+          ],
+          "hint": "Pinyin: Wǒ huì dǎ yǔmáoqiú.",
+          "explanation": "我会打羽毛球。 (Wǒ huì dǎ yǔmáoqiú.) nghĩa là: Tôi biết đánh cầu lông."
+        },
+        {
+          "id": "tr20_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "她会中文。",
+          "chineseAudioText": "她会中文。",
+          "pinyin": "Tā huì Zhōngwén.",
+          "expectedMeaning": "Cô ấy biết tiếng Trung.",
+          "acceptedKeywords": [
+            "cô",
+            "ấy",
+            "biết",
+            "tiếng",
+            "trung"
+          ],
+          "hint": "Pinyin: Tā huì Zhōngwén.",
+          "explanation": "她会中文。 (Tā huì Zhōngwén.) nghĩa là: Cô ấy biết tiếng Trung."
+        },
+        {
+          "id": "tr20_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "你应该多听，多说，多读，多写。",
+          "chineseAudioText": "你应该多听，多说，多读，多写。",
+          "pinyin": "Nǐ yīnggāi duō tīng, duō shuō, duō dú, duō xiě.",
+          "expectedMeaning": "Bạn nên nghe nhiều, nói nhiều, đọc nhiều và viết nhiều.",
+          "acceptedKeywords": [
+            "bạn",
+            "nên",
+            "nghe",
+            "nhiều",
+            "nói",
+            "nhiều",
+            "đọc",
+            "nhiều",
+            "và",
+            "viết",
+            "nhiều"
+          ],
+          "hint": "Pinyin: Nǐ yīnggāi duō tīng, duō shuō, duō dú, duō xiě.",
+          "explanation": "你应该多听，多说，多读，多写。 (Nǐ yīnggāi duō tīng, duō shuō, duō dú, duō xiě.) nghĩa là: Bạn nên nghe nhiều, nói nhiều, đọc nhiều và viết nhiều."
+        },
+        {
+          "id": "tr20_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "当然，不仅让人精神好，还能预防疾病呢！",
+          "chineseAudioText": "当然，不仅让人精神好，还能预防疾病呢！",
+          "pinyin": "Dāngrán, bùjǐn ràng rén jīngshen hǎo, hái néng yùfáng jíbìng ne!",
+          "expectedMeaning": "Tất nhiên rồi, không chỉ giúp tinh thần minh mẫn mà còn phòng ngừa bệnh tật nữa đấy!",
+          "acceptedKeywords": [
+            "tất",
+            "nhiên",
+            "rồi",
+            "không",
+            "chỉ",
+            "giúp",
+            "tinh",
+            "thần",
+            "minh",
+            "mẫn",
+            "mà",
+            "còn",
+            "phòng",
+            "ngừa",
+            "bệnh",
+            "tật",
+            "nữa",
+            "đấy"
+          ],
+          "hint": "Pinyin: Dāngrán, bùjǐn ràng rén jīngshen hǎo, hái néng yùfáng jíbìng ne!",
+          "explanation": "当然，不仅让人精神好，还能预防疾病呢！ (Dāngrán, bùjǐn ràng rén jīngshen hǎo, hái néng yùfáng jíbìng ne!) nghĩa là: Tất nhiên rồi, không chỉ giúp tinh thần minh mẫn mà còn phòng ngừa bệnh tật nữa đấy!"
         }
       ],
       "expandedQuiz": [
@@ -41598,6 +52590,276 @@ const DEFAULT_LESSONS = [
             "早上",
             "见"
           ]
+        },
+        {
+          "id": "ss21_exp_1",
+          "targetHanzi": "马克我下午想去医院检查身体你可以陪我去吗",
+          "targetMeaning": "Mark, chiều nay tôi muốn đi bệnh viện kiểm tra sức khỏe, bạn đi cùng tôi được không?",
+          "pinyin": "Mǎkè, wǒ xiàwǔ xiǎng qù yīyuàn jiǎnchá shēntǐ, nǐ kěyǐ péi wǒ qù ma?",
+          "tokens": [
+            "马克",
+            "我",
+            "下午",
+            "想",
+            "去",
+            "医院",
+            "检查",
+            "身体",
+            "你",
+            "可以",
+            "陪",
+            "我",
+            "去",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss21_exp_2",
+          "targetHanzi": "你怎么了身体不好吗",
+          "targetMeaning": "Bạn làm sao thế? Trong người không khỏe à?",
+          "pinyin": "Nǐ zěnme le? Shēntǐ bù hǎo ma?",
+          "tokens": [
+            "你",
+            "怎么了",
+            "身体",
+            "不",
+            "好",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss21_exp_3",
+          "targetHanzi": "是的最近觉得身体不太好所以想去医院看看得了什么病",
+          "targetMeaning": "Đúng vậy, dạo này thấy người không khỏe lắm, nên muốn đi bệnh viện khám xem bị bệnh gì.",
+          "pinyin": "Shì de, zuìjìn juéde shēntǐ bù tài hǎo, suǒyǐ xiǎng qù yīyuàn kànkan déle shénme bìng.",
+          "tokens": [
+            "是",
+            "的",
+            "最近",
+            "觉得",
+            "身体",
+            "不",
+            "太",
+            "好",
+            "所以",
+            "想",
+            "去",
+            "医院",
+            "看",
+            "看",
+            "得了",
+            "什么",
+            "病"
+          ]
+        },
+        {
+          "id": "ss21_exp_4",
+          "targetHanzi": "好的我陪你去看病",
+          "targetMeaning": "Được thôi. Tôi sẽ đi khám bệnh cùng bạn.",
+          "pinyin": "Hǎo de. Wǒ péi nǐ qù kànbìng.",
+          "tokens": [
+            "好",
+            "的",
+            "我",
+            "陪",
+            "你",
+            "去",
+            "看病"
+          ]
+        },
+        {
+          "id": "ss21_exp_5",
+          "targetHanzi": "你有什么症状",
+          "targetMeaning": "Bạn có triệu chứng gì?",
+          "pinyin": "Nǐ yǒu shénme zhèngzhuàng?",
+          "tokens": [
+            "你",
+            "有",
+            "什么",
+            "症状"
+          ]
+        },
+        {
+          "id": "ss21_exp_6",
+          "targetHanzi": "我经常觉得头晕吃什么都过敏最近胃口和睡眠都不好",
+          "targetMeaning": "Tôi hay bị chóng mặt, ăn gì cũng bị dị ứng. Dạo này ăn uống và giấc ngủ đều kém.",
+          "pinyin": "Wǒ jīngcháng juéde tóuyūn, chī shénme dōu guòmǐn. Zuìjìn wèikǒu hé shuìmián dōu bù hǎo.",
+          "tokens": [
+            "我",
+            "经常",
+            "觉得",
+            "头晕",
+            "吃",
+            "什么",
+            "都",
+            "过敏",
+            "最近",
+            "胃口",
+            "和",
+            "睡眠",
+            "都",
+            "不",
+            "好"
+          ]
+        },
+        {
+          "id": "ss21_exp_7",
+          "targetHanzi": "好的我们现在给你检查检查",
+          "targetMeaning": "Được rồi, bây giờ chúng tôi sẽ kiểm tra cho bạn.",
+          "pinyin": "Hǎo de，wǒmen xiànzài gěi nǐ jiǎnchá jiǎnchá.",
+          "tokens": [
+            "好",
+            "的",
+            "我们",
+            "现在",
+            "给",
+            "你",
+            "检查",
+            "检查"
+          ]
+        },
+        {
+          "id": "ss21_exp_8",
+          "targetHanzi": "我是不是得了重病",
+          "targetMeaning": "Có phải tôi mắc bệnh nặng rồi không?",
+          "pinyin": "Wǒ shì bu shì dé le zhòngbìng?",
+          "tokens": [
+            "我",
+            "是",
+            "不是",
+            "得了",
+            "重病"
+          ]
+        },
+        {
+          "id": "ss21_exp_9",
+          "targetHanzi": "你学习和工作太累了所以才有那样的症状",
+          "targetMeaning": "Bạn học tập và làm việc quá mệt mỏi, nên mới xuất hiện những triệu chứng như vậy.",
+          "pinyin": "Nǐ xuéxí hé gōngzuò tài lèi le, suǒyǐ cái yǒu nàyàng de zhèngzhuàng.",
+          "tokens": [
+            "你",
+            "学",
+            "习",
+            "和",
+            "工作",
+            "太",
+            "累",
+            "了",
+            "所以",
+            "才",
+            "有",
+            "那",
+            "样",
+            "的",
+            "症状"
+          ]
+        },
+        {
+          "id": "ss21_exp_10",
+          "targetHanzi": "那现在怎么治病呢医生",
+          "targetMeaning": "Vậy bây giờ điều trị thế nào ạ, thưa bác sĩ?",
+          "pinyin": "Nà xiànzài zěnme zhì bìng ne, yīshēng?",
+          "tokens": [
+            "那",
+            "现在",
+            "怎么",
+            "治病",
+            "呢",
+            "医生"
+          ]
+        },
+        {
+          "id": "ss21_exp_11",
+          "targetHanzi": "其实没有什么要紧的我让护士给你打个针并开给你一个处方你回家吃完饭再吃药和多喝水过几天身体就恢复了",
+          "targetMeaning": "Thực ra không có gì nghiêm trọng đâu. Tôi bảo y tá tiêm cho bạn một mũi và kê đơn thuốc, bạn về nhà ăn cơm xong uống thuốc và uống nhiều nước, vài ngày sau sức khỏe sẽ hồi phục thôi.",
+          "pinyin": "Qíshí méiyǒu shénme yàojǐn de. Wǒ ràng hùshì gěi nǐ dǎ gè zhēn bìng kāi gěi nǐ yí gè chǔfāng, nǐ huí jiā chī wán fàn zài chī yào hé duō hē shuǐ, guò jǐ tiān shēntǐ jiù huīfù le.",
+          "tokens": [
+            "其实",
+            "没有",
+            "什么",
+            "要紧",
+            "的",
+            "我",
+            "让",
+            "护士",
+            "给",
+            "你",
+            "打",
+            "个",
+            "针",
+            "并",
+            "开",
+            "给",
+            "你",
+            "一",
+            "个",
+            "处",
+            "方",
+            "你",
+            "回",
+            "家",
+            "吃",
+            "完",
+            "饭",
+            "再",
+            "吃",
+            "药",
+            "和",
+            "多",
+            "喝",
+            "水",
+            "过",
+            "几",
+            "天",
+            "身体",
+            "就",
+            "恢复",
+            "了"
+          ]
+        },
+        {
+          "id": "ss21_exp_12",
+          "targetHanzi": "谢谢医生",
+          "targetMeaning": "Cảm ơn bác sĩ ạ!",
+          "pinyin": "Xièxie yīshēng!",
+          "tokens": [
+            "谢谢",
+            "医生"
+          ]
+        },
+        {
+          "id": "ss21_exp_13",
+          "targetHanzi": "对了你有没有医疗保险如果有的话就可以减少检查费用",
+          "targetMeaning": "À đúng rồi, bạn có bảo hiểm y tế không? Nếu có thì có thể giảm bớt chi phí khám bệnh đấy.",
+          "pinyin": "Duì le, nǐ yǒu méiyǒu yīliáo bǎoxiǎn? Rúguǒ yǒu de huà jiù kěyǐ jiǎnshǎo jiǎnchá fèiyòng.",
+          "tokens": [
+            "对",
+            "了",
+            "你",
+            "有",
+            "没有",
+            "医疗保险",
+            "如果",
+            "有",
+            "的",
+            "话",
+            "就",
+            "可以",
+            "减少",
+            "检查",
+            "费用"
+          ]
+        },
+        {
+          "id": "ss21_exp_14",
+          "targetHanzi": "我没有医疗保险",
+          "targetMeaning": "Tôi chưa có bảo hiểm y tế ạ.",
+          "pinyin": "Wǒ méiyǒu yīliáo bǎoxiǎn.",
+          "tokens": [
+            "我",
+            "没有",
+            "医疗保险"
+          ]
         }
       ],
       "translationExercises": [
@@ -41636,6 +52898,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "wǒ huì yóuyǒng yě huì huábīng",
           "hint": "Gợi ý Pinyin: Wǒ huì yóuyǒng, yě huì huábīng.",
           "explanation": "Tớ biết bơi, còn biết trượt băng. → 我会游泳，也会滑冰。 (Wǒ huì yóuyǒng, yě huì huábīng.)"
+        },
+        {
+          "id": "tr21_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Mark, chiều nay tôi muốn đi bệnh viện kiểm tra sức khỏe, bạn đi cùng tôi được không?",
+          "expectedChinese": "马克，我下午想去医院检查身体， 你可以陪我去吗？",
+          "acceptedPinyin": "mǎkè wǒ xiàwǔ xiǎng qù yīyuàn jiǎnchá shēntǐ nǐ kěyǐ péi wǒ qù ma",
+          "hint": "Gợi ý Pinyin: Mǎkè, wǒ xiàwǔ xiǎng qù yīyuàn jiǎnchá shēntǐ, nǐ kěyǐ péi wǒ qù ma?",
+          "explanation": "Mark, chiều nay tôi muốn đi bệnh viện kiểm tra sức khỏe, bạn đi cùng tôi được không? → 马克，我下午想去医院检查身体， 你可以陪我去吗？ (Mǎkè, wǒ xiàwǔ xiǎng qù yīyuàn jiǎnchá shēntǐ, nǐ kěyǐ péi wǒ qù ma?)"
+        },
+        {
+          "id": "tr21_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Bạn làm sao thế? Trong người không khỏe à?",
+          "expectedChinese": "你怎么了? 身体不好吗？",
+          "acceptedPinyin": "nǐ zěnme le shēntǐ bù hǎo ma",
+          "hint": "Gợi ý Pinyin: Nǐ zěnme le? Shēntǐ bù hǎo ma?",
+          "explanation": "Bạn làm sao thế? Trong người không khỏe à? → 你怎么了? 身体不好吗？ (Nǐ zěnme le? Shēntǐ bù hǎo ma?)"
+        },
+        {
+          "id": "tr21_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Đúng vậy, dạo này thấy người không khỏe lắm, nên muốn đi bệnh viện khám xem bị bệnh gì.",
+          "expectedChinese": "是的，最近觉得身体不太好，所以想去医院看看得了什么病。",
+          "acceptedPinyin": "shì de zuìjìn juéde shēntǐ bù tài hǎo suǒyǐ xiǎng qù yīyuàn kànkan déle shénme bìng",
+          "hint": "Gợi ý Pinyin: Shì de, zuìjìn juéde shēntǐ bù tài hǎo, suǒyǐ xiǎng qù yīyuàn kànkan déle shénme bìng.",
+          "explanation": "Đúng vậy, dạo này thấy người không khỏe lắm, nên muốn đi bệnh viện khám xem bị bệnh gì. → 是的，最近觉得身体不太好，所以想去医院看看得了什么病。 (Shì de, zuìjìn juéde shēntǐ bù tài hǎo, suǒyǐ xiǎng qù yīyuàn kànkan déle shénme bìng.)"
+        },
+        {
+          "id": "tr21_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Được thôi. Tôi sẽ đi khám bệnh cùng bạn.",
+          "expectedChinese": "好的。 我陪你去看病。",
+          "acceptedPinyin": "hǎo de wǒ péi nǐ qù kànbìng",
+          "hint": "Gợi ý Pinyin: Hǎo de. Wǒ péi nǐ qù kànbìng.",
+          "explanation": "Được thôi. Tôi sẽ đi khám bệnh cùng bạn. → 好的。 我陪你去看病。 (Hǎo de. Wǒ péi nǐ qù kànbìng.)"
+        },
+        {
+          "id": "tr21_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Bạn có triệu chứng gì?",
+          "expectedChinese": "你有什么症状？",
+          "acceptedPinyin": "nǐ yǒu shénme zhèngzhuàng",
+          "hint": "Gợi ý Pinyin: Nǐ yǒu shénme zhèngzhuàng?",
+          "explanation": "Bạn có triệu chứng gì? → 你有什么症状？ (Nǐ yǒu shénme zhèngzhuàng?)"
+        },
+        {
+          "id": "tr21_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Tôi hay bị chóng mặt, ăn gì cũng bị dị ứng. Dạo này ăn uống và giấc ngủ đều kém.",
+          "expectedChinese": "我经常觉得头晕，吃什么都过敏。 最近胃口和睡眠都不好。",
+          "acceptedPinyin": "wǒ jīngcháng juéde tóuyūn chī shénme dōu guòmǐn zuìjìn wèikǒu hé shuìmián dōu bù hǎo",
+          "hint": "Gợi ý Pinyin: Wǒ jīngcháng juéde tóuyūn, chī shénme dōu guòmǐn. Zuìjìn wèikǒu hé shuìmián dōu bù hǎo.",
+          "explanation": "Tôi hay bị chóng mặt, ăn gì cũng bị dị ứng. Dạo này ăn uống và giấc ngủ đều kém. → 我经常觉得头晕，吃什么都过敏。 最近胃口和睡眠都不好。 (Wǒ jīngcháng juéde tóuyūn, chī shénme dōu guòmǐn. Zuìjìn wèikǒu hé shuìmián dōu bù hǎo.)"
+        },
+        {
+          "id": "tr21_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Được rồi, bây giờ chúng tôi sẽ kiểm tra cho bạn.",
+          "expectedChinese": "好的，我们现在给你检查检查。",
+          "acceptedPinyin": "hǎo de wǒmen xiànzài gěi nǐ jiǎnchá jiǎnchá",
+          "hint": "Gợi ý Pinyin: Hǎo de，wǒmen xiànzài gěi nǐ jiǎnchá jiǎnchá.",
+          "explanation": "Được rồi, bây giờ chúng tôi sẽ kiểm tra cho bạn. → 好的，我们现在给你检查检查。 (Hǎo de，wǒmen xiànzài gěi nǐ jiǎnchá jiǎnchá.)"
+        },
+        {
+          "id": "tr21_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Có phải tôi mắc bệnh nặng rồi không?",
+          "expectedChinese": "我是不是得了重病？",
+          "acceptedPinyin": "wǒ shì bu shì dé le zhòngbìng",
+          "hint": "Gợi ý Pinyin: Wǒ shì bu shì dé le zhòngbìng?",
+          "explanation": "Có phải tôi mắc bệnh nặng rồi không? → 我是不是得了重病？ (Wǒ shì bu shì dé le zhòngbìng?)"
+        },
+        {
+          "id": "tr21_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Bạn học tập và làm việc quá mệt mỏi, nên mới xuất hiện những triệu chứng như vậy.",
+          "expectedChinese": "你学习和工作太累了， 所以才有那样的症状。",
+          "acceptedPinyin": "nǐ xuéxí hé gōngzuò tài lèi le suǒyǐ cái yǒu nàyàng de zhèngzhuàng",
+          "hint": "Gợi ý Pinyin: Nǐ xuéxí hé gōngzuò tài lèi le, suǒyǐ cái yǒu nàyàng de zhèngzhuàng.",
+          "explanation": "Bạn học tập và làm việc quá mệt mỏi, nên mới xuất hiện những triệu chứng như vậy. → 你学习和工作太累了， 所以才有那样的症状。 (Nǐ xuéxí hé gōngzuò tài lèi le, suǒyǐ cái yǒu nàyàng de zhèngzhuàng.)"
+        },
+        {
+          "id": "tr21_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Vậy bây giờ điều trị thế nào ạ, thưa bác sĩ?",
+          "expectedChinese": "那现在怎么治病呢, 医生？",
+          "acceptedPinyin": "nà xiànzài zěnme zhì bìng ne yīshēng",
+          "hint": "Gợi ý Pinyin: Nà xiànzài zěnme zhì bìng ne, yīshēng?",
+          "explanation": "Vậy bây giờ điều trị thế nào ạ, thưa bác sĩ? → 那现在怎么治病呢, 医生？ (Nà xiànzài zěnme zhì bìng ne, yīshēng?)"
         },
         {
           "id": "tr21_zh_1",
@@ -41696,6 +53048,255 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Tiānqì tài shūfu le!",
           "explanation": "天气太舒服了！ (Tiānqì tài shūfu le!) nghĩa là: Thời tiết dễ chịu quá!"
+        },
+        {
+          "id": "tr21_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "你能给我倒杯水吗？",
+          "chineseAudioText": "你能给我倒杯水吗？",
+          "pinyin": "Nǐ néng gěi wǒ dào bēi shuǐ ma?",
+          "expectedMeaning": "Cậu có thể rót cho tớ cốc nước không?",
+          "acceptedKeywords": [
+            "cậu",
+            "có",
+            "thể",
+            "rót",
+            "cho",
+            "tớ",
+            "cốc",
+            "nước",
+            "không"
+          ],
+          "hint": "Pinyin: Nǐ néng gěi wǒ dào bēi shuǐ ma?",
+          "explanation": "你能给我倒杯水吗？ (Nǐ néng gěi wǒ dào bēi shuǐ ma?) nghĩa là: Cậu có thể rót cho tớ cốc nước không?"
+        },
+        {
+          "id": "tr21_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "你多吃点儿蔬菜吧，对身体有好处！",
+          "chineseAudioText": "你多吃点儿蔬菜吧，对身体有好处！",
+          "pinyin": "Nǐ duō chī diǎnr shūcài ba, duì shēntǐ yǒu hǎochù!",
+          "expectedMeaning": "Con ăn nhiều rau chút, có lợi cho sức khỏe!",
+          "acceptedKeywords": [
+            "con",
+            "ăn",
+            "nhiều",
+            "rau",
+            "chút",
+            "có",
+            "lợi",
+            "cho",
+            "sức",
+            "khỏe"
+          ],
+          "hint": "Pinyin: Nǐ duō chī diǎnr shūcài ba, duì shēntǐ yǒu hǎochù!",
+          "explanation": "你多吃点儿蔬菜吧，对身体有好处！ (Nǐ duō chī diǎnr shūcài ba, duì shēntǐ yǒu hǎochù!) nghĩa là: Con ăn nhiều rau chút, có lợi cho sức khỏe!"
+        },
+        {
+          "id": "tr21_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "他可能同意了吧？",
+          "chineseAudioText": "他可能同意了吧？",
+          "pinyin": "Tā kěnéng tóngyì le ba?",
+          "expectedMeaning": "Hẳn là anh ấy đồng ý rồi?",
+          "acceptedKeywords": [
+            "hẳn",
+            "là",
+            "anh",
+            "ấy",
+            "đồng",
+            "rồi"
+          ],
+          "hint": "Pinyin: Tā kěnéng tóngyì le ba?",
+          "explanation": "他可能同意了吧？ (Tā kěnéng tóngyì le ba?) nghĩa là: Hẳn là anh ấy đồng ý rồi?"
+        },
+        {
+          "id": "tr21_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "你这么努力，肯定很累吧？",
+          "chineseAudioText": "你这么努力，肯定很累吧？",
+          "pinyin": "Nǐ zhème nǔlì, kěndìng hěn lèi ba?",
+          "expectedMeaning": "Bạn cố gắng như vậy, nhất định rất mệt nhỉ?",
+          "acceptedKeywords": [
+            "bạn",
+            "cố",
+            "gắng",
+            "như",
+            "vậy",
+            "nhất",
+            "định",
+            "rất",
+            "mệt",
+            "nhỉ"
+          ],
+          "hint": "Pinyin: Nǐ zhème nǔlì, kěndìng hěn lèi ba?",
+          "explanation": "你这么努力，肯定很累吧？ (Nǐ zhème nǔlì, kěndìng hěn lèi ba?) nghĩa là: Bạn cố gắng như vậy, nhất định rất mệt nhỉ?"
+        },
+        {
+          "id": "tr21_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "最好的办法是什么都不要说，保持安静！",
+          "chineseAudioText": "最好的办法是什么都不要说，保持安静！",
+          "pinyin": "Zuì hǎo de bànfǎ shì shénme dōu búyào shuō, bǎochí ānjìng!",
+          "expectedMeaning": "Cách tốt nhất đó chính là không nói gì cả và giữ im lặng!",
+          "acceptedKeywords": [
+            "cách",
+            "tốt",
+            "nhất",
+            "đó",
+            "chính",
+            "là",
+            "không",
+            "nói",
+            "gì",
+            "cả",
+            "và",
+            "giữ",
+            "im",
+            "lặng"
+          ],
+          "hint": "Pinyin: Zuì hǎo de bànfǎ shì shénme dōu búyào shuō, bǎochí ānjìng!",
+          "explanation": "最好的办法是什么都不要说，保持安静！ (Zuì hǎo de bànfǎ shì shénme dōu búyào shuō, bǎochí ānjìng!) nghĩa là: Cách tốt nhất đó chính là không nói gì cả và giữ im lặng!"
+        },
+        {
+          "id": "tr21_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "你最好继续锻炼身体吧！",
+          "chineseAudioText": "你最好继续锻炼身体吧！",
+          "pinyin": "Nǐ zuì hǎo jìxù duànliàn shēntǐ ba!",
+          "expectedMeaning": "Tốt nhất bạn nên tiếp tục rèn luyện sức khỏe đi!",
+          "acceptedKeywords": [
+            "tốt",
+            "nhất",
+            "bạn",
+            "nên",
+            "tiếp",
+            "tục",
+            "rèn",
+            "luyện",
+            "sức",
+            "khỏe",
+            "đi"
+          ],
+          "hint": "Pinyin: Nǐ zuì hǎo jìxù duànliàn shēntǐ ba!",
+          "explanation": "你最好继续锻炼身体吧！ (Nǐ zuì hǎo jìxù duànliàn shēntǐ ba!) nghĩa là: Tốt nhất bạn nên tiếp tục rèn luyện sức khỏe đi!"
+        },
+        {
+          "id": "tr21_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "还好我有医疗保险，费用减轻了不少，谢谢医生和护士！",
+          "chineseAudioText": "还好我有医疗保险，费用减轻了不少，谢谢医生和护士！",
+          "pinyin": "Háihǎo wǒ yǒu yīliáo bǎoxiǎn, fèiyòng jiǎnqīng le bùshǎo, xièxie yīshēng hé hùshi!",
+          "expectedMeaning": "May quá tôi có bảo hiểm y tế nên chi phí giảm đi nhiều, cảm ơn bác sĩ và y tá!",
+          "acceptedKeywords": [
+            "may",
+            "quá",
+            "tôi",
+            "có",
+            "bảo",
+            "hiểm",
+            "tế",
+            "nên",
+            "chi",
+            "phí",
+            "giảm",
+            "đi",
+            "nhiều",
+            "cảm",
+            "ơn",
+            "bác",
+            "sĩ",
+            "và",
+            "tá"
+          ],
+          "hint": "Pinyin: Háihǎo wǒ yǒu yīliáo bǎoxiǎn, fèiyòng jiǎnqīng le bùshǎo, xièxie yīshēng hé hùshi!",
+          "explanation": "还好我有医疗保险，费用减轻了不少，谢谢医生和护士！ (Háihǎo wǒ yǒu yīliáo bǎoxiǎn, fèiyòng jiǎnqīng le bùshǎo, xièxie yīshēng hé hùshi!) nghĩa là: May quá tôi có bảo hiểm y tế nên chi phí giảm đi nhiều, cảm ơn bác sĩ và y tá!"
+        },
+        {
+          "id": "tr21_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "别担心，检查结果正常，没有重病，只是太累了。",
+          "chineseAudioText": "别担心，检查结果正常，没有重病，只是太累了。",
+          "pinyin": "Bié dānxīn, jiǎnchá jiéguǒ zhèngcháng, méiyǒu zhòngbìng, zhǐshì tài lèi le.",
+          "expectedMeaning": "Đừng lo, kết quả kiểm tra bình thường, không có bệnh nặng đâu, chỉ là làm việc quá mệt thôi.",
+          "acceptedKeywords": [
+            "đừng",
+            "lo",
+            "kết",
+            "quả",
+            "kiểm",
+            "tra",
+            "bình",
+            "thường",
+            "không",
+            "có",
+            "bệnh",
+            "nặng",
+            "đâu",
+            "chỉ",
+            "là",
+            "làm",
+            "việc",
+            "quá",
+            "mệt",
+            "thôi"
+          ],
+          "hint": "Pinyin: Bié dānxīn, jiǎnchá jiéguǒ zhèngcháng, méiyǒu zhòngbìng, zhǐshì tài lèi le.",
+          "explanation": "别担心，检查结果正常，没有重病，只是太累了。 (Bié dānxīn, jiǎnchá jiéguǒ zhèngcháng, méiyǒu zhòngbìng, zhǐshì tài lèi le.) nghĩa là: Đừng lo, kết quả kiểm tra bình thường, không có bệnh nặng đâu, chỉ là làm việc quá mệt thôi."
+        },
+        {
+          "id": "tr21_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "医生，我头晕、睡眠不好，对有些食物还会过敏。",
+          "chineseAudioText": "医生，我头晕、睡眠不好，对有些食物还会过敏。",
+          "pinyin": "Yīshēng, wǒ tóuyūn, shuìmián bù hǎo, duì yǒuxiē shíwù hái huì guòmǐn.",
+          "expectedMeaning": "Thưa bác sĩ, tôi bị chóng mặt, ngủ không ngon giấc, lại còn dị ứng với vài món ăn.",
+          "acceptedKeywords": [
+            "thưa",
+            "bác",
+            "sĩ",
+            "tôi",
+            "bị",
+            "chóng",
+            "mặt",
+            "ngủ",
+            "không",
+            "ngon",
+            "giấc",
+            "lại",
+            "còn",
+            "dị",
+            "ứng",
+            "với",
+            "vài",
+            "món",
+            "ăn"
+          ],
+          "hint": "Pinyin: Yīshēng, wǒ tóuyūn, shuìmián bù hǎo, duì yǒuxiē shíwù hái huì guòmǐn.",
+          "explanation": "医生，我头晕、睡眠不好，对有些食物还会过敏。 (Yīshēng, wǒ tóuyūn, shuìmián bù hǎo, duì yǒuxiē shíwù hái huì guòmǐn.) nghĩa là: Thưa bác sĩ, tôi bị chóng mặt, ngủ không ngon giấc, lại còn dị ứng với vài món ăn."
+        },
+        {
+          "id": "tr21_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "你最近有什么症状，哪里不舒服？",
+          "chineseAudioText": "你最近有什么症状，哪里不舒服？",
+          "pinyin": "Nǐ zuìjìn yǒu shénme zhèngzhuàng, nǎlǐ bù shūfu?",
+          "expectedMeaning": "Dạo này bạn có triệu chứng gì, thấy khó chịu ở đâu?",
+          "acceptedKeywords": [
+            "dạo",
+            "này",
+            "bạn",
+            "có",
+            "triệu",
+            "chứng",
+            "gì",
+            "thấy",
+            "khó",
+            "chịu",
+            "đâu"
+          ],
+          "hint": "Pinyin: Nǐ zuìjìn yǒu shénme zhèngzhuàng, nǎlǐ bù shūfu?",
+          "explanation": "你最近有什么症状，哪里不舒服？ (Nǐ zuìjìn yǒu shénme zhèngzhuàng, nǎlǐ bù shūfu?) nghĩa là: Dạo này bạn có triệu chứng gì, thấy khó chịu ở đâu?"
         }
       ],
       "expandedQuiz": [
@@ -43764,6 +55365,386 @@ const DEFAULT_LESSONS = [
             "叫",
             "范玉兰"
           ]
+        },
+        {
+          "id": "ss22_exp_1",
+          "targetHanzi": "玉兰你怎么了生病了吗",
+          "targetMeaning": "Ngọc Lan, cậu sao thế? Bị ốm à?",
+          "pinyin": "Yùlán, nǐ zěnmele? Shēngbìngle ma?",
+          "tokens": [
+            "玉",
+            "兰",
+            "你",
+            "怎么了",
+            "生病",
+            "了",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss22_exp_2",
+          "targetHanzi": "昨天下雪了天挺冷的所以我好像感冒了",
+          "targetMeaning": "Hôm qua trời có tuyết rơi, lạnh lắm, nên hình như tớ bị cảm rồi.",
+          "pinyin": "Zuótiān xià xuěle, tiān tǐng lěng de, suǒyǐ wǒ hǎoxiàng gǎnmào le.",
+          "tokens": [
+            "昨天",
+            "下雪",
+            "了",
+            "天",
+            "挺",
+            "冷",
+            "的",
+            "所以",
+            "我",
+            "好像",
+            "感冒",
+            "了"
+          ]
+        },
+        {
+          "id": "ss22_exp_3",
+          "targetHanzi": "你还没习惯这里的气候吗",
+          "targetMeaning": "Cậu vẫn chưa quen với khí hậu ở đây à?",
+          "pinyin": "Nǐ hái méi xíguàn zhèli de qìhòu ma?",
+          "tokens": [
+            "你",
+            "还",
+            "没",
+            "习惯",
+            "这里",
+            "的",
+            "气候",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss22_exp_4",
+          "targetHanzi": "还没习惯因为我家乡冬天不太冷也不下雪",
+          "targetMeaning": "Vẫn chưa quen, vì mùa đông quê tớ không quá lạnh, cũng không có tuyết rơi.",
+          "pinyin": "Hái méi xíguàn, yīnwèi wǒ jiāxiāng dōngtiān bú tài lěng, yě bú xià xuě.",
+          "tokens": [
+            "还",
+            "没",
+            "习惯",
+            "因为",
+            "我",
+            "家乡",
+            "冬天",
+            "不",
+            "太",
+            "冷",
+            "也",
+            "不",
+            "下雪"
+          ]
+        },
+        {
+          "id": "ss22_exp_5",
+          "targetHanzi": "我也希望是这样出国留学真是不容易啊",
+          "targetMeaning": "Tớ cũng hy vọng là thế. Đi du học nước ngoài thật sự không dễ dàng chút nào!",
+          "pinyin": "Wǒ yě xīwàng shì zhèyàng. Chūguó liúxué zhēnshì bù róngyì a!",
+          "tokens": [
+            "我",
+            "也",
+            "希望",
+            "是",
+            "这样",
+            "出国",
+            "留",
+            "学",
+            "真",
+            "是",
+            "不",
+            "容易",
+            "啊"
+          ]
+        },
+        {
+          "id": "ss22_exp_6",
+          "targetHanzi": "怎么了你还有什么困难告诉我吧我会帮你解决",
+          "targetMeaning": "Sao vậy? Cậu còn gặp khó khăn gì cứ nói với tớ! Tớ sẽ giúp cậu giải quyết.",
+          "pinyin": "Zěnmele? Nǐ hái yǒu shén me kùnnan, gàosù wǒ ba! Wǒ huì bāng nǐ jiějué.",
+          "tokens": [
+            "怎么了",
+            "你",
+            "还",
+            "有",
+            "什么",
+            "困难",
+            "告诉",
+            "我",
+            "吧",
+            "我",
+            "会",
+            "帮",
+            "你",
+            "解决"
+          ]
+        },
+        {
+          "id": "ss22_exp_7",
+          "targetHanzi": "都是留学生经常遇到的困难比如文化不同生活环境不同等等我们留学生的压力很大",
+          "targetMeaning": "Đều là những khó khăn mà du học sinh hay gặp phải thôi, như khác biệt văn hóa, môi trường sống khác nhau, v.v. Áp lực của du học sinh bọn tớ lớn lắm.",
+          "pinyin": "Dōu shì liúxuéshēng jīngcháng yùdào de kùnnan, bǐrú wénhuà bùtóng, shēnghuó huánjìng bùtóng děngděng. Wǒmen liúxuéshēng de yālì hěn dà.",
+          "tokens": [
+            "都",
+            "是",
+            "留学生",
+            "经常",
+            "遇到",
+            "的",
+            "困难",
+            "比如",
+            "文化",
+            "不同",
+            "生活",
+            "环境",
+            "不同",
+            "等等",
+            "我们",
+            "留学生",
+            "的",
+            "压力",
+            "很",
+            "大"
+          ]
+        },
+        {
+          "id": "ss22_exp_8",
+          "targetHanzi": "我现在才知道你们辛苦了",
+          "targetMeaning": "Bây giờ tớ mới biết đấy. Các cậu vất vả quá.",
+          "pinyin": "Wǒ xiànzài cái zhīdao. Nǐmen xīnkǔle.",
+          "tokens": [
+            "我",
+            "现在",
+            "才",
+            "知道",
+            "你们",
+            "辛苦",
+            "了"
+          ]
+        },
+        {
+          "id": "ss22_exp_9",
+          "targetHanzi": "那些困难我都能自己适应自己解决最糟糕的要说到学习问题刚来中国的时候因为不习惯这里的学习方法所以我做什么事都很难虽然在国内已经学汉语了但是到中国以后有很多时候你们说的我听不懂考试又有很多要抓紧时间练习我一点儿也不习惯哭了很多次",
+          "targetMeaning": "Những khó khăn đó tớ đều có thể tự thích nghi và tự giải quyết. Tệ nhất phải nói đến chuyện học tập. Hồi mới sang Trung Quốc, vì chưa quen phương pháp học ở đây nên làm việc gì cũng thấy khó. Dù ở trong nước đã học tiếng Trung rồi, nhưng sang đây có nhiều lúc các bạn nói tớ nghe không hiểu. Thi cử lại nhiều, phải tranh thủ thời gian luyện tập. Tớ chẳng quen chút nào, đã khóc rất nhiều lần.",
+          "pinyin": "Nàxiē kùnnan wǒ dōu néng zìjǐ shìyìng, zìjǐ jiějué. Zuì zāogāo de yāo shuō dào xuéxí wèntí. Gāng lái Zhōngguó de shíhou, yīn wèi bù xíguàn zhèli de xuéxí fāngfǎ, suǒ yǐ wǒ zuò shénme shì dōu hěn nán. Suīrán zài guónèi yǐjīng xué Hànyǔ le, dànshì dào Zhōngguó yǐhòu, yǒu hěnduō shíhou nǐmen shuō de wǒ tīng bù dǒng. Kǎoshì yòu yǒu hěnduō, yào zhuā jǐn shíjiān liànxí. Wǒ yīdiǎnr yě bù xíguàn, kūle hěnduō cì.",
+          "tokens": [
+            "那",
+            "些",
+            "困难",
+            "我",
+            "都",
+            "能",
+            "自己",
+            "适应",
+            "自己",
+            "解决",
+            "最",
+            "糟糕",
+            "的",
+            "要",
+            "说",
+            "到",
+            "学",
+            "习",
+            "问题",
+            "刚",
+            "来",
+            "中国",
+            "的",
+            "时候",
+            "因为",
+            "不",
+            "习惯",
+            "这里",
+            "的",
+            "学",
+            "习",
+            "方法",
+            "所以",
+            "我",
+            "做",
+            "什么",
+            "事",
+            "都",
+            "很",
+            "难",
+            "虽然",
+            "在",
+            "国",
+            "内",
+            "已经",
+            "学",
+            "汉语",
+            "了",
+            "但是",
+            "到",
+            "中国",
+            "以后",
+            "有",
+            "很",
+            "多",
+            "时候",
+            "你们",
+            "说",
+            "的",
+            "我",
+            "听",
+            "不",
+            "懂",
+            "考试",
+            "又",
+            "有",
+            "很",
+            "多",
+            "要",
+            "抓紧",
+            "时间",
+            "练习",
+            "我",
+            "一点儿",
+            "也",
+            "不",
+            "习惯",
+            "哭",
+            "了",
+            "很",
+            "多",
+            "次"
+          ]
+        },
+        {
+          "id": "ss22_exp_10",
+          "targetHanzi": "你怎么不跟我们说啊那时候你一定很难过",
+          "targetMeaning": "Sao cậu không kể với bọn tớ? Lúc đó chắc cậu buồn lắm.",
+          "pinyin": "Nǐ zěnme bù gēn wǒmen shuō a? Nà shíhou nǐ yídìng hěn nánguò.",
+          "tokens": [
+            "你",
+            "怎么",
+            "不",
+            "跟",
+            "我们",
+            "说",
+            "啊",
+            "那",
+            "时候",
+            "你",
+            "一",
+            "定",
+            "很",
+            "难过"
+          ]
+        },
+        {
+          "id": "ss22_exp_11",
+          "targetHanzi": "没关系我只要继续努力相信自己就好再说虽然我不说但是你们也帮助我很多能到中国跟你们交朋友我很幸福",
+          "targetMeaning": "Không sao đâu! Chỉ cần tớ tiếp tục cố gắng, tin vào bản thân là được. Hơn nữa, dù tớ không nói ra nhưng các bạn cũng giúp đỡ tớ rất nhiều. Được đến Trung Quốc và kết bạn với các bạn, tớ thấy rất hạnh phúc.",
+          "pinyin": "Méiguānxi! Wǒ zhǐyào jìxù nǔlì, xiāngxìn zìjǐ jiù hǎo. Zàishuō, suīrán wǒ bù shuō, dànshì nǐmen yě bāngzhù wǒ hěnduō. Néng dào Zhōngguó, gēn nǐmen jiāo péngyou, wǒ hěn xìngfú.",
+          "tokens": [
+            "没关系",
+            "我",
+            "只",
+            "要",
+            "继续",
+            "努力",
+            "相信",
+            "自己",
+            "就",
+            "好",
+            "再说",
+            "虽然",
+            "我",
+            "不",
+            "说",
+            "但是",
+            "你们",
+            "也",
+            "帮助",
+            "我",
+            "很",
+            "多",
+            "能",
+            "到",
+            "中国",
+            "跟",
+            "你们",
+            "交",
+            "朋友",
+            "我",
+            "很",
+            "幸福"
+          ]
+        },
+        {
+          "id": "ss22_exp_12",
+          "targetHanzi": "哪有啊都是你自己解决我们没有做什么",
+          "targetMeaning": "Đâu có đâu! Đều do cậu tự vượt qua cả, bọn tớ có làm gì đâu.",
+          "pinyin": "Nǎ yǒu a! Dōu shì nǐ zìjǐ jiějué, wǒmen méiyǒu zuò shénme.",
+          "tokens": [
+            "哪",
+            "有",
+            "啊",
+            "都",
+            "是",
+            "你",
+            "自己",
+            "解决",
+            "我们",
+            "没有",
+            "做",
+            "什么"
+          ]
+        },
+        {
+          "id": "ss22_exp_13",
+          "targetHanzi": "其实这些事我出国以前我奶奶已经跟我说了她年轻的时候也去国外留学很有经验",
+          "targetMeaning": "Thực ra những chuyện này trước khi ra nước ngoài bà nội tớ đã dặn dò tớ hết rồi. Thời trẻ bà cũng từng đi du học nên rất có kinh nghiệm.",
+          "pinyin": "Qíshí zhèxiē shì wǒ chūguó yǐqián wǒ nǎinai yǐjīng gēn wǒ shuō le. Tā niánqīng de shíhou yě qù guówài liúxué, hěn yǒu jīngyàn.",
+          "tokens": [
+            "其实",
+            "这",
+            "些",
+            "事",
+            "我",
+            "出国",
+            "以前",
+            "我",
+            "奶奶",
+            "已经",
+            "跟",
+            "我",
+            "说",
+            "了",
+            "她",
+            "年轻",
+            "的",
+            "时候",
+            "也",
+            "去",
+            "国",
+            "外",
+            "留",
+            "学",
+            "很",
+            "有经验"
+          ]
+        },
+        {
+          "id": "ss22_exp_14",
+          "targetHanzi": "到中国留学的时候你多大",
+          "targetMeaning": "Lúc sang Trung Quốc du học cậu bao nhiêu tuổi?",
+          "pinyin": "Dào Zhōngguó liúxué de shíhou nǐ duōdà?",
+          "tokens": [
+            "到",
+            "中国",
+            "留",
+            "学",
+            "的",
+            "时候",
+            "你",
+            "多大"
+          ]
         }
       ],
       "translationExercises": [
@@ -43802,6 +55783,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "wǒ èrshísān suì",
           "hint": "Gợi ý Pinyin: Wǒ èrshísān suì.",
           "explanation": "Tôi 23 tuổi. → 我二十三岁。 (Wǒ èrshísān suì.)"
+        },
+        {
+          "id": "tr22_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Ngọc Lan, cậu sao thế? Bị ốm à?",
+          "expectedChinese": "玉兰，你怎么了？生病了吗？",
+          "acceptedPinyin": "yùlán nǐ zěnmele shēngbìngle ma",
+          "hint": "Gợi ý Pinyin: Yùlán, nǐ zěnmele? Shēngbìngle ma?",
+          "explanation": "Ngọc Lan, cậu sao thế? Bị ốm à? → 玉兰，你怎么了？生病了吗？ (Yùlán, nǐ zěnmele? Shēngbìngle ma?)"
+        },
+        {
+          "id": "tr22_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Hôm qua trời có tuyết rơi, lạnh lắm, nên hình như tớ bị cảm rồi.",
+          "expectedChinese": "昨天下雪了，天挺冷的，所以我好像感冒了。",
+          "acceptedPinyin": "zuótiān xià xuěle tiān tǐng lěng de suǒyǐ wǒ hǎoxiàng gǎnmào le",
+          "hint": "Gợi ý Pinyin: Zuótiān xià xuěle, tiān tǐng lěng de, suǒyǐ wǒ hǎoxiàng gǎnmào le.",
+          "explanation": "Hôm qua trời có tuyết rơi, lạnh lắm, nên hình như tớ bị cảm rồi. → 昨天下雪了，天挺冷的，所以我好像感冒了。 (Zuótiān xià xuěle, tiān tǐng lěng de, suǒyǐ wǒ hǎoxiàng gǎnmào le.)"
+        },
+        {
+          "id": "tr22_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu vẫn chưa quen với khí hậu ở đây à?",
+          "expectedChinese": "你还没习惯这里的气候吗？",
+          "acceptedPinyin": "nǐ hái méi xíguàn zhèli de qìhòu ma",
+          "hint": "Gợi ý Pinyin: Nǐ hái méi xíguàn zhèli de qìhòu ma?",
+          "explanation": "Cậu vẫn chưa quen với khí hậu ở đây à? → 你还没习惯这里的气候吗？ (Nǐ hái méi xíguàn zhèli de qìhòu ma?)"
+        },
+        {
+          "id": "tr22_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Vẫn chưa quen, vì mùa đông quê tớ không quá lạnh, cũng không có tuyết rơi.",
+          "expectedChinese": "还没习惯，因为我家乡冬天不太冷，也不下雪。",
+          "acceptedPinyin": "hái méi xíguàn yīnwèi wǒ jiāxiāng dōngtiān bú tài lěng yě bú xià xuě",
+          "hint": "Gợi ý Pinyin: Hái méi xíguàn, yīnwèi wǒ jiāxiāng dōngtiān bú tài lěng, yě bú xià xuě.",
+          "explanation": "Vẫn chưa quen, vì mùa đông quê tớ không quá lạnh, cũng không có tuyết rơi. → 还没习惯，因为我家乡冬天不太冷，也不下雪。 (Hái méi xíguàn, yīnwèi wǒ jiāxiāng dōngtiān bú tài lěng, yě bú xià xuě.)"
+        },
+        {
+          "id": "tr22_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Dần dần rồi sẽ quen thôi.",
+          "expectedChinese": "慢慢就会习惯了。",
+          "acceptedPinyin": "mànmàn jiù huì xíguàn le",
+          "hint": "Gợi ý Pinyin: Mànmàn jiù huì xíguàn le.",
+          "explanation": "Dần dần rồi sẽ quen thôi. → 慢慢就会习惯了。 (Mànmàn jiù huì xíguàn le.)"
+        },
+        {
+          "id": "tr22_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Tớ cũng hy vọng là thế. Đi du học nước ngoài thật sự không dễ dàng chút nào!",
+          "expectedChinese": "我也希望是这样。出国留学真是不容易啊！",
+          "acceptedPinyin": "wǒ yě xīwàng shì zhèyàng chūguó liúxué zhēnshì bù róngyì a",
+          "hint": "Gợi ý Pinyin: Wǒ yě xīwàng shì zhèyàng. Chūguó liúxué zhēnshì bù róngyì a!",
+          "explanation": "Tớ cũng hy vọng là thế. Đi du học nước ngoài thật sự không dễ dàng chút nào! → 我也希望是这样。出国留学真是不容易啊！ (Wǒ yě xīwàng shì zhèyàng. Chūguó liúxué zhēnshì bù róngyì a!)"
+        },
+        {
+          "id": "tr22_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Sao vậy? Cậu còn gặp khó khăn gì cứ nói với tớ! Tớ sẽ giúp cậu giải quyết.",
+          "expectedChinese": "怎么了？你还有什么困难，告诉我吧！我会帮你解决。",
+          "acceptedPinyin": "zěnmele nǐ hái yǒu shén me kùnnan gàosù wǒ ba wǒ huì bāng nǐ jiějué",
+          "hint": "Gợi ý Pinyin: Zěnmele? Nǐ hái yǒu shén me kùnnan, gàosù wǒ ba! Wǒ huì bāng nǐ jiějué.",
+          "explanation": "Sao vậy? Cậu còn gặp khó khăn gì cứ nói với tớ! Tớ sẽ giúp cậu giải quyết. → 怎么了？你还有什么困难，告诉我吧！我会帮你解决。 (Zěnmele? Nǐ hái yǒu shén me kùnnan, gàosù wǒ ba! Wǒ huì bāng nǐ jiějué.)"
+        },
+        {
+          "id": "tr22_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Đều là những khó khăn mà du học sinh hay gặp phải thôi, như khác biệt văn hóa, môi trường sống khác nhau, v.v. Áp lực của du học sinh bọn tớ lớn lắm.",
+          "expectedChinese": "都是留学生经常遇到的困难，比如文化不同、生活环境不同等等。我们留学生的压力很大。",
+          "acceptedPinyin": "dōu shì liúxuéshēng jīngcháng yùdào de kùnnan bǐrú wénhuà bùtóng shēnghuó huánjìng bùtóng děngděng wǒmen liúxuéshēng de yālì hěn dà",
+          "hint": "Gợi ý Pinyin: Dōu shì liúxuéshēng jīngcháng yùdào de kùnnan, bǐrú wénhuà bùtóng, shēnghuó huánjìng bùtóng děngděng. Wǒmen liúxuéshēng de yālì hěn dà.",
+          "explanation": "Đều là những khó khăn mà du học sinh hay gặp phải thôi, như khác biệt văn hóa, môi trường sống khác nhau, v.v. Áp lực của du học sinh bọn tớ lớn lắm. → 都是留学生经常遇到的困难，比如文化不同、生活环境不同等等。我们留学生的压力很大。 (Dōu shì liúxuéshēng jīngcháng yùdào de kùnnan, bǐrú wénhuà bùtóng, shēnghuó huánjìng bùtóng děngděng. Wǒmen liúxuéshēng de yālì hěn dà.)"
+        },
+        {
+          "id": "tr22_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Bây giờ tớ mới biết đấy. Các cậu vất vả quá.",
+          "expectedChinese": "我现在才知道。你们辛苦了。",
+          "acceptedPinyin": "wǒ xiànzài cái zhīdao nǐmen xīnkǔle",
+          "hint": "Gợi ý Pinyin: Wǒ xiànzài cái zhīdao. Nǐmen xīnkǔle.",
+          "explanation": "Bây giờ tớ mới biết đấy. Các cậu vất vả quá. → 我现在才知道。你们辛苦了。 (Wǒ xiànzài cái zhīdao. Nǐmen xīnkǔle.)"
+        },
+        {
+          "id": "tr22_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Những khó khăn đó tớ đều có thể tự thích nghi và tự giải quyết. Tệ nhất phải nói đến chuyện học tập. Hồi mới sang Trung Quốc, vì chưa quen phương pháp học ở đây nên làm việc gì cũng thấy khó. Dù ở trong nước đã học tiếng Trung rồi, nhưng sang đây có nhiều lúc các bạn nói tớ nghe không hiểu. Thi cử lại nhiều, phải tranh thủ thời gian luyện tập. Tớ chẳng quen chút nào, đã khóc rất nhiều lần.",
+          "expectedChinese": "那些困难我都能自己适应，自己解决。最糟糕的要说到学习问题。刚来中国的时候，因为不习惯这里的学习方法，所以我做什么事都很难。虽然在国内已经学汉语了，但是到中国以后，有很多时候你们说的我听不懂。考试又有很多，要抓紧时间练习。我一点儿也不习惯，哭了很多次。",
+          "acceptedPinyin": "nàxiē kùnnan wǒ dōu néng zìjǐ shìyìng zìjǐ jiějué zuì zāogāo de yāo shuō dào xuéxí wèntí gāng lái zhōngguó de shíhou yīn wèi bù xíguàn zhèli de xuéxí fāngfǎ suǒ yǐ wǒ zuò shénme shì dōu hěn nán suīrán zài guónèi yǐjīng xué hànyǔ le dànshì dào zhōngguó yǐhòu yǒu hěnduō shíhou nǐmen shuō de wǒ tīng bù dǒng kǎoshì yòu yǒu hěnduō yào zhuā jǐn shíjiān liànxí wǒ yīdiǎnr yě bù xíguàn kūle hěnduō cì",
+          "hint": "Gợi ý Pinyin: Nàxiē kùnnan wǒ dōu néng zìjǐ shìyìng, zìjǐ jiějué. Zuì zāogāo de yāo shuō dào xuéxí wèntí. Gāng lái Zhōngguó de shíhou, yīn wèi bù xíguàn zhèli de xuéxí fāngfǎ, suǒ yǐ wǒ zuò shénme shì dōu hěn nán. Suīrán zài guónèi yǐjīng xué Hànyǔ le, dànshì dào Zhōngguó yǐhòu, yǒu hěnduō shíhou nǐmen shuō de wǒ tīng bù dǒng. Kǎoshì yòu yǒu hěnduō, yào zhuā jǐn shíjiān liànxí. Wǒ yīdiǎnr yě bù xíguàn, kūle hěnduō cì.",
+          "explanation": "Những khó khăn đó tớ đều có thể tự thích nghi và tự giải quyết. Tệ nhất phải nói đến chuyện học tập. Hồi mới sang Trung Quốc, vì chưa quen phương pháp học ở đây nên làm việc gì cũng thấy khó. Dù ở trong nước đã học tiếng Trung rồi, nhưng sang đây có nhiều lúc các bạn nói tớ nghe không hiểu. Thi cử lại nhiều, phải tranh thủ thời gian luyện tập. Tớ chẳng quen chút nào, đã khóc rất nhiều lần. → 那些困难我都能自己适应，自己解决。最糟糕的要说到学习问题。刚来中国的时候，因为不习惯这里的学习方法，所以我做什么事都很难。虽然在国内已经学汉语了，但是到中国以后，有很多时候你们说的我听不懂。考试又有很多，要抓紧时间练习。我一点儿也不习惯，哭了很多次。 (Nàxiē kùnnan wǒ dōu néng zìjǐ shìyìng, zìjǐ jiějué. Zuì zāogāo de yāo shuō dào xuéxí wèntí. Gāng lái Zhōngguó de shíhou, yīn wèi bù xíguàn zhèli de xuéxí fāngfǎ, suǒ yǐ wǒ zuò shénme shì dōu hěn nán. Suīrán zài guónèi yǐjīng xué Hànyǔ le, dànshì dào Zhōngguó yǐhòu, yǒu hěnduō shíhou nǐmen shuō de wǒ tīng bù dǒng. Kǎoshì yòu yǒu hěnduō, yào zhuā jǐn shíjiān liànxí. Wǒ yīdiǎnr yě bù xíguàn, kūle hěnduō cì.)"
         },
         {
           "id": "tr22_zh_1",
@@ -43862,6 +55933,232 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Tā zhèngzài tīng yīnyuè ne.",
           "explanation": "他正在听音乐呢。 (Tā zhèngzài tīng yīnyuè ne.) nghĩa là: Anh ấy đang nghe nhạc."
+        },
+        {
+          "id": "tr22_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "您今年多大年纪？",
+          "chineseAudioText": "您今年多大年纪？",
+          "pinyin": "Nín jīnnián duōdà niánjì?",
+          "expectedMeaning": "Năm nay bác bao nhiêu tuổi rồi ạ?",
+          "acceptedKeywords": [
+            "năm",
+            "nay",
+            "bác",
+            "bao",
+            "nhiêu",
+            "tuổi",
+            "rồi"
+          ],
+          "hint": "Pinyin: Nín jīnnián duōdà niánjì?",
+          "explanation": "您今年多大年纪？ (Nín jīnnián duōdà niánjì?) nghĩa là: Năm nay bác bao nhiêu tuổi rồi ạ?"
+        },
+        {
+          "id": "tr22_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "我的病还没好。",
+          "chineseAudioText": "我的病还没好。",
+          "pinyin": "Wǒ de bìng hái méi hǎo.",
+          "expectedMeaning": "Bệnh của tôi vẫn chưa khỏi.",
+          "acceptedKeywords": [
+            "bệnh",
+            "của",
+            "tôi",
+            "vẫn",
+            "chưa",
+            "khỏi"
+          ],
+          "hint": "Pinyin: Wǒ de bìng hái méi hǎo.",
+          "explanation": "我的病还没好。 (Wǒ de bìng hái méi hǎo.) nghĩa là: Bệnh của tôi vẫn chưa khỏi."
+        },
+        {
+          "id": "tr22_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "好了，我同意，你别再说了！",
+          "chineseAudioText": "好了，我同意，你别再说了！",
+          "pinyin": "Hǎole, wǒ tóngyì, nǐ bié zài shuōle!",
+          "expectedMeaning": "Được rồi, tôi đồng ý, cậu đừng nói lại nữa!",
+          "acceptedKeywords": [
+            "được",
+            "rồi",
+            "tôi",
+            "đồng",
+            "cậu",
+            "đừng",
+            "nói",
+            "lại",
+            "nữa"
+          ],
+          "hint": "Pinyin: Hǎole, wǒ tóngyì, nǐ bié zài shuōle!",
+          "explanation": "好了，我同意，你别再说了！ (Hǎole, wǒ tóngyì, nǐ bié zài shuōle!) nghĩa là: Được rồi, tôi đồng ý, cậu đừng nói lại nữa!"
+        },
+        {
+          "id": "tr22_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "太棒了！以后我们还会更加习惯这里的生活。",
+          "chineseAudioText": "太棒了！以后我们还会更加习惯这里的生活。",
+          "pinyin": "Tài bàng le! Yǐhòu wǒmen hái huì gèngjiā xíguàn zhèlǐ de shēnghuó.",
+          "expectedMeaning": "Tuyệt vời! Sau này chúng ta sẽ còn quen với cuộc sống ở đây hơn nữa.",
+          "acceptedKeywords": [
+            "tuyệt",
+            "vời",
+            "sau",
+            "này",
+            "chúng",
+            "ta",
+            "sẽ",
+            "còn",
+            "quen",
+            "với",
+            "cuộc",
+            "sống",
+            "đây",
+            "hơn",
+            "nữa"
+          ],
+          "hint": "Pinyin: Tài bàng le! Yǐhòu wǒmen hái huì gèngjiā xíguàn zhèlǐ de shēnghuó.",
+          "explanation": "太棒了！以后我们还会更加习惯这里的生活。 (Tài bàng le! Yǐhòu wǒmen hái huì gèngjiā xíguàn zhèlǐ de shēnghuó.) nghĩa là: Tuyệt vời! Sau này chúng ta sẽ còn quen với cuộc sống ở đây hơn nữa."
+        },
+        {
+          "id": "tr22_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "是的，不过有朋友鼓励，我也每天努力练习，现在都能听懂了。",
+          "chineseAudioText": "是的，不过有朋友鼓励，我也每天努力练习，现在都能听懂了。",
+          "pinyin": "Shì de, búguò yǒu péngyou gǔlì, wǒ yě měitiān nǔlì liànxí, xiànzài dōu néng tīng dǒng le.",
+          "expectedMeaning": "Đúng vậy, nhưng nhờ bạn bè động viên và ngày nào tôi cũng chăm chỉ luyện tập, giờ đã nghe hiểu hết rồi.",
+          "acceptedKeywords": [
+            "đúng",
+            "vậy",
+            "nhưng",
+            "nhờ",
+            "bạn",
+            "bè",
+            "động",
+            "viên",
+            "và",
+            "ngày",
+            "nào",
+            "tôi",
+            "cũng",
+            "chăm",
+            "chỉ",
+            "luyện",
+            "tập",
+            "giờ",
+            "đã",
+            "nghe",
+            "hiểu",
+            "hết",
+            "rồi"
+          ],
+          "hint": "Pinyin: Shì de, búguò yǒu péngyou gǔlì, wǒ yě měitiān nǔlì liànxí, xiànzài dōu néng tīng dǒng le.",
+          "explanation": "是的，不过有朋友鼓励，我也每天努力练习，现在都能听懂了。 (Shì de, búguò yǒu péngyou gǔlì, wǒ yě měitiān nǔlì liànxí, xiànzài dōu néng tīng dǒng le.) nghĩa là: Đúng vậy, nhưng nhờ bạn bè động viên và ngày nào tôi cũng chăm chỉ luyện tập, giờ đã nghe hiểu hết rồi."
+        },
+        {
+          "id": "tr22_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "遇到那些困难的时候，你的压力很大吧？",
+          "chineseAudioText": "遇到那些困难的时候，你的压力很大吧？",
+          "pinyin": "Yùdào nàxiē kùnnan de shíhou, nǐ de yālì hěn dà ba?",
+          "expectedMeaning": "Khi gặp những khó khăn đó, chắc áp lực của cậu lớn lắm nhỉ?",
+          "acceptedKeywords": [
+            "khi",
+            "gặp",
+            "những",
+            "khó",
+            "khăn",
+            "đó",
+            "chắc",
+            "áp",
+            "lực",
+            "của",
+            "cậu",
+            "lớn",
+            "lắm",
+            "nhỉ"
+          ],
+          "hint": "Pinyin: Yùdào nàxiē kùnnan de shíhou, nǐ de yālì hěn dà ba?",
+          "explanation": "遇到那些困难的时候，你的压力很大吧？ (Yùdào nàxiē kùnnan de shíhou, nǐ de yālì hěn dà ba?) nghĩa là: Khi gặp những khó khăn đó, chắc áp lực của cậu lớn lắm nhỉ?"
+        },
+        {
+          "id": "tr22_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "刚来中国的时候，我对这里的气候和学习方法都不太适应。",
+          "chineseAudioText": "刚来中国的时候，我对这里的气候和学习方法都不太适应。",
+          "pinyin": "Gāng lái Zhōngguó de shíhou, wǒ duì zhèlǐ de qìhòu hé xuéxí fāngfǎ dōu bú tài shìyìng.",
+          "expectedMeaning": "Hồi mới sang Trung Quốc, tôi đều chưa quen lắm với khí hậu và phương pháp học ở đây.",
+          "acceptedKeywords": [
+            "hồi",
+            "mới",
+            "sang",
+            "trung",
+            "quốc",
+            "tôi",
+            "đều",
+            "chưa",
+            "quen",
+            "lắm",
+            "với",
+            "khí",
+            "hậu",
+            "và",
+            "phương",
+            "pháp",
+            "học",
+            "đây"
+          ],
+          "hint": "Pinyin: Gāng lái Zhōngguó de shíhou, wǒ duì zhèlǐ de qìhòu hé xuéxí fāngfǎ dōu bú tài shìyìng.",
+          "explanation": "刚来中国的时候，我对这里的气候和学习方法都不太适应。 (Gāng lái Zhōngguó de shíhou, wǒ duì zhèlǐ de qìhòu hé xuéxí fāngfǎ dōu bú tài shìyìng.) nghĩa là: Hồi mới sang Trung Quốc, tôi đều chưa quen lắm với khí hậu và phương pháp học ở đây."
+        },
+        {
+          "id": "tr22_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "二十五个",
+          "chineseAudioText": "二十五个",
+          "pinyin": "èrshíwǔ gè",
+          "expectedMeaning": "Hai mươi lăm cái",
+          "acceptedKeywords": [
+            "hai",
+            "mươi",
+            "lăm",
+            "cái"
+          ],
+          "hint": "Pinyin: èrshíwǔ gè",
+          "explanation": "二十五个 (èrshíwǔ gè) nghĩa là: Hai mươi lăm cái"
+        },
+        {
+          "id": "tr22_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "她不是学生吗？",
+          "chineseAudioText": "她不是学生吗？",
+          "pinyin": "Tā bú shì xuésheng ma?",
+          "expectedMeaning": "Cô ấy không phải là học sinh à?",
+          "acceptedKeywords": [
+            "cô",
+            "ấy",
+            "không",
+            "phải",
+            "là",
+            "học",
+            "sinh"
+          ],
+          "hint": "Pinyin: Tā bú shì xuésheng ma?",
+          "explanation": "她不是学生吗？ (Tā bú shì xuésheng ma?) nghĩa là: Cô ấy không phải là học sinh à?"
+        },
+        {
+          "id": "tr22_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "我二十三岁。",
+          "chineseAudioText": "我二十三岁。",
+          "pinyin": "Wǒ èrshísān suì.",
+          "expectedMeaning": "Tôi 23 tuổi.",
+          "acceptedKeywords": [
+            "tôi",
+            "23",
+            "tuổi"
+          ],
+          "hint": "Pinyin: Wǒ èrshísān suì.",
+          "explanation": "我二十三岁。 (Wǒ èrshísān suì.) nghĩa là: Tôi 23 tuổi."
         }
       ],
       "expandedQuiz": [
@@ -45978,6 +58275,345 @@ const DEFAULT_LESSONS = [
             "多少",
             "钱"
           ]
+        },
+        {
+          "id": "ss23_exp_1",
+          "targetHanzi": "小雪中国人常吃什么味道的菜",
+          "targetMeaning": "Tiểu Tuyết, người Trung Quốc thường ăn các món có hương vị như thế nào?",
+          "pinyin": "Xiǎoxuě, Zhōngguó rén cháng chī shénme wèidao de cài?",
+          "tokens": [
+            "小",
+            "雪",
+            "中国",
+            "人",
+            "常",
+            "吃",
+            "什么",
+            "味道",
+            "的",
+            "菜"
+          ]
+        },
+        {
+          "id": "ss23_exp_2",
+          "targetHanzi": "在中国不同地方菜的味道不同比如南方人常吃甜的北方人吃咸的东部的人吃酸的西部人吃辣的",
+          "targetMeaning": "Ở Trung Quốc, hương vị món ăn từng vùng khác nhau, ví dụ: người miền Nam hay ăn ngọt, miền Bắc ăn mặn, miền Đông ăn chua, còn miền Tây ăn cay.",
+          "pinyin": "Zài Zhōngguó, bùtóng dìfang cài de wèidao bùtóng, bǐrú: Nánfāng rén cháng chī tián de, Běifāng rén chī xián de, Dōngbù de rén chī suān de, Xībù rén chī là de.",
+          "tokens": [
+            "在",
+            "中国",
+            "不同",
+            "地方",
+            "菜",
+            "的",
+            "味道",
+            "不同",
+            "比如",
+            "南方",
+            "人",
+            "常",
+            "吃",
+            "甜",
+            "的",
+            "北方",
+            "人",
+            "吃",
+            "咸",
+            "的",
+            "东部",
+            "的",
+            "人",
+            "吃",
+            "酸",
+            "的",
+            "西部",
+            "人",
+            "吃",
+            "辣",
+            "的"
+          ]
+        },
+        {
+          "id": "ss23_exp_3",
+          "targetHanzi": "那你喜欢吃什么味道",
+          "targetMeaning": "Vậy cậu thích ăn vị gì?",
+          "pinyin": "Nà nǐ xǐhuan chī shénme wèidao?",
+          "tokens": [
+            "那",
+            "你",
+            "喜欢",
+            "吃",
+            "什么",
+            "味道"
+          ]
+        },
+        {
+          "id": "ss23_exp_4",
+          "targetHanzi": "我喜欢吃辣的你呢",
+          "targetMeaning": "Tớ thích ăn cay, còn cậu?",
+          "pinyin": "Wǒ xǐhuan chī là de, nǐ ne?",
+          "tokens": [
+            "我",
+            "喜欢",
+            "吃",
+            "辣",
+            "的",
+            "你",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss23_exp_5",
+          "targetHanzi": "我不能吃辣的我每次吃辣都会过敏",
+          "targetMeaning": "Tớ không ăn được cay, hễ ăn cay là tớ lại bị dị ứng.",
+          "pinyin": "Wǒ bùnéng chī là de, wǒ měi cì chī là dōu huì guòmǐn.",
+          "tokens": [
+            "我",
+            "不",
+            "能",
+            "吃",
+            "辣",
+            "的",
+            "我",
+            "每",
+            "次",
+            "吃",
+            "辣",
+            "都",
+            "会",
+            "过敏"
+          ]
+        },
+        {
+          "id": "ss23_exp_6",
+          "targetHanzi": "你还有什么菜不能吃的吗",
+          "targetMeaning": "Cậu còn món nào không ăn được nữa không?",
+          "pinyin": "Nǐ hái yǒu shén me cài bùnéng chī de ma?",
+          "tokens": [
+            "你",
+            "还",
+            "有",
+            "什么",
+            "菜",
+            "不",
+            "能",
+            "吃",
+            "的",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss23_exp_7",
+          "targetHanzi": "有中国的臭豆腐真的太难吃了我来中国快要三个月了可是到现在还不能吃闻也不行",
+          "targetMeaning": "Có chứ, đậu phụ thối của Trung Quốc. Thật sự khó ăn quá. Tớ sang Trung Quốc gần ba tháng rồi mà đến giờ vẫn không ăn nổi, ngửi cũng không chịu được.",
+          "pinyin": "Yǒu, Zhōngguó de Chòudòufu. Zhēn de tài nán chī le. Wǒ lái Zhōngguó kuàiyào sān gè yuè le, kěshì dào xiànzài hái bùnéng chī, wén yě bùxíng.",
+          "tokens": [
+            "有",
+            "中国",
+            "的",
+            "臭豆腐",
+            "真",
+            "的",
+            "太",
+            "难",
+            "吃",
+            "了",
+            "我",
+            "来",
+            "中国",
+            "快",
+            "要",
+            "三",
+            "个",
+            "月",
+            "了",
+            "可是",
+            "到",
+            "现在",
+            "还",
+            "不",
+            "能",
+            "吃",
+            "闻",
+            "也",
+            "不",
+            "行"
+          ]
+        },
+        {
+          "id": "ss23_exp_8",
+          "targetHanzi": "好像大多数外国人都跟你一样都不喜欢它的味道但是如果你吃了一两次你会觉得它很好吃",
+          "targetMeaning": "Hình như đa số người nước ngoài đều giống cậu, không thích mùi vị của nó, nhưng nếu ăn thử một hai lần cậu sẽ thấy nó rất ngon đấy!",
+          "pinyin": "Hǎoxiàng dàduōshù wàiguó rén dōu gēn nǐ yíyàng, dōu bù xǐhuan tā de wèidào, dànshì rúguǒ nǐ chīle yī liǎng cì, nǐ huì juéde tā hěn hǎo chī!",
+          "tokens": [
+            "好像",
+            "大",
+            "多",
+            "数",
+            "外国",
+            "人",
+            "都",
+            "跟",
+            "你",
+            "一样",
+            "都",
+            "不",
+            "喜欢",
+            "它",
+            "的",
+            "味道",
+            "但是",
+            "如果",
+            "你",
+            "吃",
+            "了",
+            "一",
+            "两",
+            "次",
+            "你",
+            "会",
+            "觉得",
+            "它",
+            "很",
+            "好吃"
+          ]
+        },
+        {
+          "id": "ss23_exp_9",
+          "targetHanzi": "是吗下次我会尝一尝那中国人的主食是什么",
+          "targetMeaning": "Thật sao? Lần sau tớ sẽ nếm thử xem. Vậy lương thực chính của người Trung Quốc là gì?",
+          "pinyin": "Shì ma? Xià cì wǒ huì cháng yi cháng. Nà Zhōngguó rén de zhǔshí shì shénme?",
+          "tokens": [
+            "是",
+            "吗",
+            "下次",
+            "我",
+            "会",
+            "尝",
+            "一",
+            "尝",
+            "那",
+            "中国",
+            "人",
+            "的",
+            "主食",
+            "是",
+            "什么"
+          ]
+        },
+        {
+          "id": "ss23_exp_10",
+          "targetHanzi": "中国人常说南米北面意思是北方人的主食是馒头面包和小麦南方人的主食是米饭",
+          "targetMeaning": "Người Trung Quốc hay nói 'Nam cơm Bắc mì', nghĩa là món chính của người miền Bắc là màn thầu, bánh mì và lúa mì, còn người miền Nam là cơm.",
+          "pinyin": "Zhōngguó rén cháng shuō: “Nán mǐ Běi miàn”, yìsi shì Běifāng rén de zhǔshí shì mántou, miànbāo hé xiǎomài, Nánfāng rén de zhǔshí shì mǐfàn.",
+          "tokens": [
+            "中国",
+            "人",
+            "常",
+            "说",
+            "南",
+            "米",
+            "北",
+            "面",
+            "意",
+            "思",
+            "是",
+            "北方",
+            "人",
+            "的",
+            "主食",
+            "是",
+            "馒头",
+            "面包",
+            "和",
+            "小麦",
+            "南方",
+            "人",
+            "的",
+            "主食",
+            "是",
+            "米",
+            "饭"
+          ]
+        },
+        {
+          "id": "ss23_exp_11",
+          "targetHanzi": "中国的饮料呢",
+          "targetMeaning": "Còn đồ uống ở Trung Quốc thì sao?",
+          "pinyin": "Zhōngguó de yǐnliào ne?",
+          "tokens": [
+            "中国",
+            "的",
+            "饮料",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss23_exp_12",
+          "targetHanzi": "中国人常喝啤酒白酒红酒还有茶如果你到中国人家里去做客他们就会请你喝酒",
+          "targetMeaning": "Người Trung Quốc hay uống bia, rượu trắng, rượu vang đỏ và trà. Nếu cậu đến nhà người Trung Quốc làm khách, họ sẽ mời cậu uống rượu.",
+          "pinyin": "Zhōngguó rén cháng hē píjiǔ, báijiǔ, hóngjiǔ hái yǒu chá. Rúguǒ nǐ dào Zhōngguó rén jiāli qù zuòkè, tāmen jiù huì qǐng nǐ hē jiǔ.",
+          "tokens": [
+            "中国",
+            "人",
+            "常",
+            "喝",
+            "啤酒",
+            "白酒",
+            "红酒",
+            "还",
+            "有",
+            "茶",
+            "如果",
+            "你",
+            "到",
+            "中国",
+            "人",
+            "家",
+            "里",
+            "去",
+            "做客",
+            "他们",
+            "就",
+            "会",
+            "请",
+            "你",
+            "喝",
+            "酒"
+          ]
+        },
+        {
+          "id": "ss23_exp_13",
+          "targetHanzi": "如果不会喝酒呢",
+          "targetMeaning": "Nếu không biết uống rượu thì sao?",
+          "pinyin": "Rúguǒ bú huì hējiǔ ne?",
+          "tokens": [
+            "如果",
+            "不",
+            "会",
+            "喝",
+            "酒",
+            "呢"
+          ]
+        },
+        {
+          "id": "ss23_exp_14",
+          "targetHanzi": "那也没关系你可以用茶来代替也行",
+          "targetMeaning": "Cũng không sao cả. Cậu có thể dùng trà thay thế cũng được.",
+          "pinyin": "Nà yě méiguānxi. Nǐ kěyǐ yòng chá lái dàitì yě xíng.",
+          "tokens": [
+            "那",
+            "也",
+            "没关系",
+            "你",
+            "可以",
+            "用",
+            "茶",
+            "来",
+            "代替",
+            "也",
+            "行"
+          ]
         }
       ],
       "translationExercises": [
@@ -46016,6 +58652,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "zuótiān wǒmen yīqǐ qù shūdiàn tā mǎile yī běn cídiǎn",
           "hint": "Gợi ý Pinyin: Zuótiān wǒmen yīqǐ qù shūdiàn, tā mǎile yī běn cídiǎn.",
           "explanation": "Hôm qua chúng tôi đi hiệu sách, anh ấy đã mua một cuốn từ điển. → 昨天我们一起去书店，他买了一本词典。 (Zuótiān wǒmen yīqǐ qù shūdiàn, tā mǎile yī běn cídiǎn.)"
+        },
+        {
+          "id": "tr23_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Tiểu Tuyết, người Trung Quốc thường ăn các món có hương vị như thế nào?",
+          "expectedChinese": "小雪，中国人常吃什么味道的菜？",
+          "acceptedPinyin": "xiǎoxuě zhōngguó rén cháng chī shénme wèidao de cài",
+          "hint": "Gợi ý Pinyin: Xiǎoxuě, Zhōngguó rén cháng chī shénme wèidao de cài?",
+          "explanation": "Tiểu Tuyết, người Trung Quốc thường ăn các món có hương vị như thế nào? → 小雪，中国人常吃什么味道的菜？ (Xiǎoxuě, Zhōngguó rén cháng chī shénme wèidao de cài?)"
+        },
+        {
+          "id": "tr23_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Ở Trung Quốc, hương vị món ăn từng vùng khác nhau, ví dụ: người miền Nam hay ăn ngọt, miền Bắc ăn mặn, miền Đông ăn chua, còn miền Tây ăn cay.",
+          "expectedChinese": "在中国，不同地方菜的味道不同，比如：南方人常吃甜的、北方人吃咸的、东部的人吃酸的、西部人吃辣的。",
+          "acceptedPinyin": "zài zhōngguó bùtóng dìfang cài de wèidao bùtóng bǐrú nánfāng rén cháng chī tián de běifāng rén chī xián de dōngbù de rén chī suān de xībù rén chī là de",
+          "hint": "Gợi ý Pinyin: Zài Zhōngguó, bùtóng dìfang cài de wèidao bùtóng, bǐrú: Nánfāng rén cháng chī tián de, Běifāng rén chī xián de, Dōngbù de rén chī suān de, Xībù rén chī là de.",
+          "explanation": "Ở Trung Quốc, hương vị món ăn từng vùng khác nhau, ví dụ: người miền Nam hay ăn ngọt, miền Bắc ăn mặn, miền Đông ăn chua, còn miền Tây ăn cay. → 在中国，不同地方菜的味道不同，比如：南方人常吃甜的、北方人吃咸的、东部的人吃酸的、西部人吃辣的。 (Zài Zhōngguó, bùtóng dìfang cài de wèidao bùtóng, bǐrú: Nánfāng rén cháng chī tián de, Běifāng rén chī xián de, Dōngbù de rén chī suān de, Xībù rén chī là de.)"
+        },
+        {
+          "id": "tr23_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Vậy cậu thích ăn vị gì?",
+          "expectedChinese": "那你喜欢吃什么味道？",
+          "acceptedPinyin": "nà nǐ xǐhuan chī shénme wèidao",
+          "hint": "Gợi ý Pinyin: Nà nǐ xǐhuan chī shénme wèidao?",
+          "explanation": "Vậy cậu thích ăn vị gì? → 那你喜欢吃什么味道？ (Nà nǐ xǐhuan chī shénme wèidao?)"
+        },
+        {
+          "id": "tr23_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Tớ thích ăn cay, còn cậu?",
+          "expectedChinese": "我喜欢吃辣的，你呢？",
+          "acceptedPinyin": "wǒ xǐhuan chī là de nǐ ne",
+          "hint": "Gợi ý Pinyin: Wǒ xǐhuan chī là de, nǐ ne?",
+          "explanation": "Tớ thích ăn cay, còn cậu? → 我喜欢吃辣的，你呢？ (Wǒ xǐhuan chī là de, nǐ ne?)"
+        },
+        {
+          "id": "tr23_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Tớ không ăn được cay, hễ ăn cay là tớ lại bị dị ứng.",
+          "expectedChinese": "我不能吃辣的，我每次吃辣都会过敏。",
+          "acceptedPinyin": "wǒ bùnéng chī là de wǒ měi cì chī là dōu huì guòmǐn",
+          "hint": "Gợi ý Pinyin: Wǒ bùnéng chī là de, wǒ měi cì chī là dōu huì guòmǐn.",
+          "explanation": "Tớ không ăn được cay, hễ ăn cay là tớ lại bị dị ứng. → 我不能吃辣的，我每次吃辣都会过敏。 (Wǒ bùnéng chī là de, wǒ měi cì chī là dōu huì guòmǐn.)"
+        },
+        {
+          "id": "tr23_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu còn món nào không ăn được nữa không?",
+          "expectedChinese": "你还有什么菜不能吃的吗？",
+          "acceptedPinyin": "nǐ hái yǒu shén me cài bùnéng chī de ma",
+          "hint": "Gợi ý Pinyin: Nǐ hái yǒu shén me cài bùnéng chī de ma?",
+          "explanation": "Cậu còn món nào không ăn được nữa không? → 你还有什么菜不能吃的吗？ (Nǐ hái yǒu shén me cài bùnéng chī de ma?)"
+        },
+        {
+          "id": "tr23_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Có chứ, đậu phụ thối của Trung Quốc. Thật sự khó ăn quá. Tớ sang Trung Quốc gần ba tháng rồi mà đến giờ vẫn không ăn nổi, ngửi cũng không chịu được.",
+          "expectedChinese": "有，中国的臭豆腐。真的太难吃了。我来中国快要三个月了，可是到现在还不能吃，闻也不行。",
+          "acceptedPinyin": "yǒu zhōngguó de chòudòufu zhēn de tài nán chī le wǒ lái zhōngguó kuàiyào sān gè yuè le kěshì dào xiànzài hái bùnéng chī wén yě bùxíng",
+          "hint": "Gợi ý Pinyin: Yǒu, Zhōngguó de Chòudòufu. Zhēn de tài nán chī le. Wǒ lái Zhōngguó kuàiyào sān gè yuè le, kěshì dào xiànzài hái bùnéng chī, wén yě bùxíng.",
+          "explanation": "Có chứ, đậu phụ thối của Trung Quốc. Thật sự khó ăn quá. Tớ sang Trung Quốc gần ba tháng rồi mà đến giờ vẫn không ăn nổi, ngửi cũng không chịu được. → 有，中国的臭豆腐。真的太难吃了。我来中国快要三个月了，可是到现在还不能吃，闻也不行。 (Yǒu, Zhōngguó de Chòudòufu. Zhēn de tài nán chī le. Wǒ lái Zhōngguó kuàiyào sān gè yuè le, kěshì dào xiànzài hái bùnéng chī, wén yě bùxíng.)"
+        },
+        {
+          "id": "tr23_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Hình như đa số người nước ngoài đều giống cậu, không thích mùi vị của nó, nhưng nếu ăn thử một hai lần cậu sẽ thấy nó rất ngon đấy!",
+          "expectedChinese": "好像大多数外国人都跟你一样，都不喜欢它的味道，但是如果你吃了一两次，你会觉得它很好吃！",
+          "acceptedPinyin": "hǎoxiàng dàduōshù wàiguó rén dōu gēn nǐ yíyàng dōu bù xǐhuan tā de wèidào dànshì rúguǒ nǐ chīle yī liǎng cì nǐ huì juéde tā hěn hǎo chī",
+          "hint": "Gợi ý Pinyin: Hǎoxiàng dàduōshù wàiguó rén dōu gēn nǐ yíyàng, dōu bù xǐhuan tā de wèidào, dànshì rúguǒ nǐ chīle yī liǎng cì, nǐ huì juéde tā hěn hǎo chī!",
+          "explanation": "Hình như đa số người nước ngoài đều giống cậu, không thích mùi vị của nó, nhưng nếu ăn thử một hai lần cậu sẽ thấy nó rất ngon đấy! → 好像大多数外国人都跟你一样，都不喜欢它的味道，但是如果你吃了一两次，你会觉得它很好吃！ (Hǎoxiàng dàduōshù wàiguó rén dōu gēn nǐ yíyàng, dōu bù xǐhuan tā de wèidào, dànshì rúguǒ nǐ chīle yī liǎng cì, nǐ huì juéde tā hěn hǎo chī!)"
+        },
+        {
+          "id": "tr23_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Thật sao? Lần sau tớ sẽ nếm thử xem. Vậy lương thực chính của người Trung Quốc là gì?",
+          "expectedChinese": "是吗？下次我会尝一尝。那中国人的主食是什么？",
+          "acceptedPinyin": "shì ma xià cì wǒ huì cháng yi cháng nà zhōngguó rén de zhǔshí shì shénme",
+          "hint": "Gợi ý Pinyin: Shì ma? Xià cì wǒ huì cháng yi cháng. Nà Zhōngguó rén de zhǔshí shì shénme?",
+          "explanation": "Thật sao? Lần sau tớ sẽ nếm thử xem. Vậy lương thực chính của người Trung Quốc là gì? → 是吗？下次我会尝一尝。那中国人的主食是什么？ (Shì ma? Xià cì wǒ huì cháng yi cháng. Nà Zhōngguó rén de zhǔshí shì shénme?)"
+        },
+        {
+          "id": "tr23_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Người Trung Quốc hay nói 'Nam cơm Bắc mì', nghĩa là món chính của người miền Bắc là màn thầu, bánh mì và lúa mì, còn người miền Nam là cơm.",
+          "expectedChinese": "中国人常说：“南米北面”，意思是北方人的主食是馒头、面包和小麦，南方人的主食是米饭。",
+          "acceptedPinyin": "zhōngguó rén cháng shuō nán mǐ běi miàn yìsi shì běifāng rén de zhǔshí shì mántou miànbāo hé xiǎomài nánfāng rén de zhǔshí shì mǐfàn",
+          "hint": "Gợi ý Pinyin: Zhōngguó rén cháng shuō: “Nán mǐ Běi miàn”, yìsi shì Běifāng rén de zhǔshí shì mántou, miànbāo hé xiǎomài, Nánfāng rén de zhǔshí shì mǐfàn.",
+          "explanation": "Người Trung Quốc hay nói 'Nam cơm Bắc mì', nghĩa là món chính của người miền Bắc là màn thầu, bánh mì và lúa mì, còn người miền Nam là cơm. → 中国人常说：“南米北面”，意思是北方人的主食是馒头、面包和小麦，南方人的主食是米饭。 (Zhōngguó rén cháng shuō: “Nán mǐ Běi miàn”, yìsi shì Běifāng rén de zhǔshí shì mántou, miànbāo hé xiǎomài, Nánfāng rén de zhǔshí shì mǐfàn.)"
         },
         {
           "id": "tr23_zh_1",
@@ -46076,6 +58802,255 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Tā zhèngzài tīng yīnyuè ne.",
           "explanation": "他正在听音乐呢。 (Tā zhèngzài tīng yīnyuè ne.) nghĩa là: Anh ấy đang nghe nhạc."
+        },
+        {
+          "id": "tr23_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "她自信地参加比赛。",
+          "chineseAudioText": "她自信地参加比赛。",
+          "pinyin": "Tā zìxìn de cānjiā bǐsài.",
+          "expectedMeaning": "Cô ấy tự tin tham gia cuộc thi.",
+          "acceptedKeywords": [
+            "cô",
+            "ấy",
+            "tự",
+            "tin",
+            "tham",
+            "gia",
+            "cuộc",
+            "thi"
+          ],
+          "hint": "Pinyin: Tā zìxìn de cānjiā bǐsài.",
+          "explanation": "她自信地参加比赛。 (Tā zìxìn de cānjiā bǐsài.) nghĩa là: Cô ấy tự tin tham gia cuộc thi."
+        },
+        {
+          "id": "tr23_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "他高高兴兴地对我讲故事。",
+          "chineseAudioText": "他高高兴兴地对我讲故事。",
+          "pinyin": "Tā gāogāoxìngxìng de duì wǒ jiǎng gùshì.",
+          "expectedMeaning": "Anh ấy kể chuyện cho tôi nghe một cách hạnh phúc.",
+          "acceptedKeywords": [
+            "anh",
+            "ấy",
+            "kể",
+            "chuyện",
+            "cho",
+            "tôi",
+            "nghe",
+            "một",
+            "cách",
+            "hạnh",
+            "phúc"
+          ],
+          "hint": "Pinyin: Tā gāogāoxìngxìng de duì wǒ jiǎng gùshì.",
+          "explanation": "他高高兴兴地对我讲故事。 (Tā gāogāoxìngxìng de duì wǒ jiǎng gùshì.) nghĩa là: Anh ấy kể chuyện cho tôi nghe một cách hạnh phúc."
+        },
+        {
+          "id": "tr23_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "他们俩好像是多年的好朋友了。",
+          "chineseAudioText": "他们俩好像是多年的好朋友了。",
+          "pinyin": "Tāmen liǎ hǎoxiàng shì duōnián de hǎo péngyou le.",
+          "expectedMeaning": "Hai người họ dường như là bạn bè thân thiết đã nhiều năm rồi.",
+          "acceptedKeywords": [
+            "hai",
+            "người",
+            "họ",
+            "dường",
+            "như",
+            "là",
+            "bạn",
+            "bè",
+            "thân",
+            "thiết",
+            "đã",
+            "nhiều",
+            "năm",
+            "rồi"
+          ],
+          "hint": "Pinyin: Tāmen liǎ hǎoxiàng shì duōnián de hǎo péngyou le.",
+          "explanation": "他们俩好像是多年的好朋友了。 (Tāmen liǎ hǎoxiàng shì duōnián de hǎo péngyou le.) nghĩa là: Hai người họ dường như là bạn bè thân thiết đã nhiều năm rồi."
+        },
+        {
+          "id": "tr23_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "你好像不太喜欢吃辣的。",
+          "chineseAudioText": "你好像不太喜欢吃辣的。",
+          "pinyin": "Nǐ hǎoxiàng bú tài xǐhuan chī là de.",
+          "expectedMeaning": "Hình như cậu không thích ăn cay.",
+          "acceptedKeywords": [
+            "hình",
+            "như",
+            "cậu",
+            "không",
+            "thích",
+            "ăn",
+            "cay"
+          ],
+          "hint": "Pinyin: Nǐ hǎoxiàng bú tài xǐhuan chī là de.",
+          "explanation": "你好像不太喜欢吃辣的。 (Nǐ hǎoxiàng bú tài xǐhuan chī là de.) nghĩa là: Hình như cậu không thích ăn cay."
+        },
+        {
+          "id": "tr23_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "臭豆腐我还没试过，但是辣菜配冰饮料可香了！",
+          "chineseAudioText": "臭豆腐我还没试过，但是辣菜配冰饮料可香了！",
+          "pinyin": "Chòudòufu wǒ hái méi shì guo, dànshì là cài pèi bīng yǐnliào kě xiāng le!",
+          "expectedMeaning": "Đậu phụ thối mình chưa thử bao giờ, nhưng món cay ăn kèm đồ uống lạnh thì ngon tuyệt!",
+          "acceptedKeywords": [
+            "đậu",
+            "phụ",
+            "thối",
+            "mình",
+            "chưa",
+            "thử",
+            "bao",
+            "giờ",
+            "nhưng",
+            "món",
+            "cay",
+            "ăn",
+            "kèm",
+            "đồ",
+            "uống",
+            "lạnh",
+            "thì",
+            "ngon",
+            "tuyệt"
+          ],
+          "hint": "Pinyin: Chòudòufu wǒ hái méi shì guo, dànshì là cài pèi bīng yǐnliào kě xiāng le!",
+          "explanation": "臭豆腐我还没试过，但是辣菜配冰饮料可香了！ (Chòudòufu wǒ hái méi shì guo, dànshì là cài pèi bīng yǐnliào kě xiāng le!) nghĩa là: Đậu phụ thối mình chưa thử bao giờ, nhưng món cay ăn kèm đồ uống lạnh thì ngon tuyệt!"
+        },
+        {
+          "id": "tr23_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "那你敢吃臭豆腐或者特别辣的菜吗？",
+          "chineseAudioText": "那你敢吃臭豆腐或者特别辣的菜吗？",
+          "pinyin": "Nà nǐ gǎn chī chòudòufu huòzhě tèbié là de cài ma?",
+          "expectedMeaning": "Vậy cậu có dám ăn đậu phụ thối hay các món thật cay không?",
+          "acceptedKeywords": [
+            "vậy",
+            "cậu",
+            "có",
+            "dám",
+            "ăn",
+            "đậu",
+            "phụ",
+            "thối",
+            "hay",
+            "các",
+            "món",
+            "thật",
+            "cay",
+            "không"
+          ],
+          "hint": "Pinyin: Nà nǐ gǎn chī chòudòufu huòzhě tèbié là de cài ma?",
+          "explanation": "那你敢吃臭豆腐或者特别辣的菜吗？ (Nà nǐ gǎn chī chòudòufu huòzhě tèbié là de cài ma?) nghĩa là: Vậy cậu có dám ăn đậu phụ thối hay các món thật cay không?"
+        },
+        {
+          "id": "tr23_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "真的！南方主食多是米饭和年糕，北方人爱吃馒头和面条。",
+          "chineseAudioText": "真的！南方主食多是米饭和年糕，北方人爱吃馒头和面条。",
+          "pinyin": "Zhēn de! Nánfāng zhǔshí duō shì mǐfàn hé niángāo, běifāng rén ài chī mántou hé miàntiáo.",
+          "expectedMeaning": "Thật đấy! Món chính miền Nam phần nhiều là cơm và bánh tổ, người miền Bắc thích ăn màn thầu và mì sợi.",
+          "acceptedKeywords": [
+            "thật",
+            "đấy",
+            "món",
+            "chính",
+            "miền",
+            "nam",
+            "phần",
+            "nhiều",
+            "là",
+            "cơm",
+            "và",
+            "bánh",
+            "tổ",
+            "người",
+            "miền",
+            "bắc",
+            "thích",
+            "ăn",
+            "màn",
+            "thầu",
+            "và",
+            "mì",
+            "sợi"
+          ],
+          "hint": "Pinyin: Zhēn de! Nánfāng zhǔshí duō shì mǐfàn hé niángāo, běifāng rén ài chī mántou hé miàntiáo.",
+          "explanation": "真的！南方主食多是米饭和年糕，北方人爱吃馒头和面条。 (Zhēn de! Nánfāng zhǔshí duō shì mǐfàn hé niángāo, běifāng rén ài chī mántou hé miàntiáo.) nghĩa là: Thật đấy! Món chính miền Nam phần nhiều là cơm và bánh tổ, người miền Bắc thích ăn màn thầu và mì sợi."
+        },
+        {
+          "id": "tr23_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "听说中国南方和北方的饮食习惯不太一样，是真的吗？",
+          "chineseAudioText": "听说中国南方和北方的饮食习惯不太一样，是真的吗？",
+          "pinyin": "Tīngshuō Zhōngguó nánfāng hé běifāng de yǐnshí xíguàn bú tài yíyàng, shì zhēn de ma?",
+          "expectedMeaning": "Nghe nói thói quen ăn uống của miền Nam và miền Bắc Trung Quốc khá khác nhau, có thật không?",
+          "acceptedKeywords": [
+            "nghe",
+            "nói",
+            "thói",
+            "quen",
+            "ăn",
+            "uống",
+            "của",
+            "miền",
+            "nam",
+            "và",
+            "miền",
+            "bắc",
+            "trung",
+            "quốc",
+            "khá",
+            "khác",
+            "nhau",
+            "có",
+            "thật",
+            "không"
+          ],
+          "hint": "Pinyin: Tīngshuō Zhōngguó nánfāng hé běifāng de yǐnshí xíguàn bú tài yíyàng, shì zhēn de ma?",
+          "explanation": "听说中国南方和北方的饮食习惯不太一样，是真的吗？ (Tīngshuō Zhōngguó nánfāng hé běifāng de yǐnshí xíguàn bú tài yíyàng, shì zhēn de ma?) nghĩa là: Nghe nói thói quen ăn uống của miền Nam và miền Bắc Trung Quốc khá khác nhau, có thật không?"
+        },
+        {
+          "id": "tr23_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "这个人我好像认识。",
+          "chineseAudioText": "这个人我好像认识。",
+          "pinyin": "Zhège rén wǒ hǎoxiàng rènshi.",
+          "expectedMeaning": "Hình như tớ quen người này.",
+          "acceptedKeywords": [
+            "hình",
+            "như",
+            "tớ",
+            "quen",
+            "người",
+            "này"
+          ],
+          "hint": "Pinyin: Zhège rén wǒ hǎoxiàng rènshi.",
+          "explanation": "这个人我好像认识。 (Zhège rén wǒ hǎoxiàng rènshi.) nghĩa là: Hình như tớ quen người này."
+        },
+        {
+          "id": "tr23_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "你喜欢春天还是夏天？",
+          "chineseAudioText": "你喜欢春天还是夏天？",
+          "pinyin": "Nǐ xǐhuan chūntiān háishi xiàtiān?",
+          "expectedMeaning": "Cậu thích mùa xuân hay mùa hè?",
+          "acceptedKeywords": [
+            "cậu",
+            "thích",
+            "mùa",
+            "xuân",
+            "hay",
+            "mùa",
+            "hè"
+          ],
+          "hint": "Pinyin: Nǐ xǐhuan chūntiān háishi xiàtiān?",
+          "explanation": "你喜欢春天还是夏天？ (Nǐ xǐhuan chūntiān háishi xiàtiān?) nghĩa là: Cậu thích mùa xuân hay mùa hè?"
         }
       ],
       "expandedQuiz": [
@@ -48033,6 +61008,332 @@ const DEFAULT_LESSONS = [
             "个",
             "饺子"
           ]
+        },
+        {
+          "id": "ss24_exp_1",
+          "targetHanzi": "小兰你来中国留学快要一年了中国的交通你习惯了吗",
+          "targetMeaning": "Tiểu Lan, cậu sang Trung Quốc du học gần một năm rồi, cậu đã quen với giao thông ở Trung Quốc chưa?",
+          "pinyin": "Xiǎolán, nǐ lái Zhōngguó liúxué kuàiyào yī nián le, Zhōngguó de jiāotōng nǐ xíguàn le ma?",
+          "tokens": [
+            "小",
+            "兰",
+            "你",
+            "来",
+            "中国",
+            "留",
+            "学",
+            "快",
+            "要",
+            "一",
+            "年",
+            "了",
+            "中国",
+            "的",
+            "交通",
+            "你",
+            "习惯",
+            "了",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss24_exp_2",
+          "targetHanzi": "我习惯了中国的交通很好高峰时间很少堵车",
+          "targetMeaning": "Tớ quen rồi. Giao thông ở Trung Quốc rất tốt, giờ cao điểm cũng ít khi tắc đường.",
+          "pinyin": "Wǒ xíguàn le. Zhōngguó de jiāotōng hěn hǎo, gāofēng shíjiān hěn shǎo dǔchē.",
+          "tokens": [
+            "我",
+            "习惯",
+            "了",
+            "中国",
+            "的",
+            "交通",
+            "很",
+            "好",
+            "高峰时间",
+            "很",
+            "少",
+            "堵车"
+          ]
+        },
+        {
+          "id": "ss24_exp_3",
+          "targetHanzi": "是啊大部分中国人都遵守交通规则",
+          "targetMeaning": "Đúng vậy! Phần lớn người Trung Quốc đều tuân thủ luật giao thông.",
+          "pinyin": "Shì a! Dàbùfen Zhōngguó rén dōu zūnshǒu jiāotōng guīzé.",
+          "tokens": [
+            "是",
+            "啊",
+            "大",
+            "部分",
+            "中国",
+            "人",
+            "都",
+            "遵守",
+            "交通规则"
+          ]
+        },
+        {
+          "id": "ss24_exp_4",
+          "targetHanzi": "你会骑什么车",
+          "targetMeaning": "Cậu biết đi xe gì?",
+          "pinyin": "Nǐ huì qí shénme chē?",
+          "tokens": [
+            "你",
+            "会",
+            "骑",
+            "什么",
+            "车"
+          ]
+        },
+        {
+          "id": "ss24_exp_5",
+          "targetHanzi": "我会骑自行车和摩托车我爸爸刚买了一辆汽车所以我正在学开车学会的时候我就开车去玩儿",
+          "targetMeaning": "Tớ biết đi xe đạp và xe máy, bố tớ vừa mua một chiếc ô tô nên tớ đang học lái xe. Khi nào học xong tớ sẽ lái xe đi chơi.",
+          "pinyin": "Wǒ huì qí zìxíngchē hé mótuōchē, wǒ bàba gāng mǎi le yí liàng qìchē, suǒyǐ wǒ zhèngzài xué kāichē. Xuéhuì de shíhou wǒ jiù kāichē qù wánr.",
+          "tokens": [
+            "我",
+            "会",
+            "骑",
+            "自行车",
+            "和",
+            "摩托车",
+            "我",
+            "爸爸",
+            "刚",
+            "买",
+            "了",
+            "一",
+            "辆",
+            "汽车",
+            "所以",
+            "我",
+            "正在",
+            "学",
+            "开车",
+            "学",
+            "会",
+            "的",
+            "时候",
+            "我",
+            "就",
+            "开车",
+            "去",
+            "玩儿"
+          ]
+        },
+        {
+          "id": "ss24_exp_6",
+          "targetHanzi": "你很棒啊你会不会迷路",
+          "targetMeaning": "Cậu giỏi thế! Cậu có hay bị lạc đường không?",
+          "pinyin": "Nǐ hěn bàng a! Nǐ huì bu huì mílù?",
+          "tokens": [
+            "你",
+            "很",
+            "棒",
+            "啊",
+            "你",
+            "会",
+            "不",
+            "会",
+            "迷路"
+          ]
+        },
+        {
+          "id": "ss24_exp_7",
+          "targetHanzi": "不会啊如果不知道的话我就看地图或者可以看路上的标志",
+          "targetMeaning": "Không đâu, nếu không biết đường thì tớ xem bản đồ hoặc nhìn biển báo chỉ đường.",
+          "pinyin": "Bú huì a, rúguǒ bù zhīdao dehuà, wǒ jiù kàn dìtú huòzhě kěyǐ kàn lùshang de biāozhì.",
+          "tokens": [
+            "不",
+            "会",
+            "啊",
+            "如果",
+            "不",
+            "知道",
+            "的",
+            "话",
+            "我",
+            "就",
+            "看",
+            "地图",
+            "或者",
+            "可以",
+            "看",
+            "路",
+            "上",
+            "的",
+            "标志"
+          ]
+        },
+        {
+          "id": "ss24_exp_8",
+          "targetHanzi": "你觉得在中国坐什么车比较方便",
+          "targetMeaning": "Cậu thấy ở Trung Quốc đi phương tiện gì thì tiện hơn?",
+          "pinyin": "Nǐ juéde zài Zhōngguó zuò shénme chē bǐjiào fāngbiàn?",
+          "tokens": [
+            "你",
+            "觉得",
+            "在",
+            "中国",
+            "坐",
+            "什么",
+            "车",
+            "比较",
+            "方便"
+          ]
+        },
+        {
+          "id": "ss24_exp_9",
+          "targetHanzi": "如果要去比较近的地方你可以走路或者骑自行车较远的地方可以坐火车出租车或者公共汽车但公共汽车上的乘客比较多",
+          "targetMeaning": "Nếu đi chỗ gần, cậu có thể đi bộ hoặc đạp xe. Chỗ xa hơn có thể đi tàu hỏa, taxi hoặc xe buýt, nhưng hành khách trên xe buýt khá đông.",
+          "pinyin": "Rúguǒ yào qù bǐjiào jìn de dìfang, nǐ kěyǐ zǒulù huòzhě qí zìxíngchē. Jiào yuǎn de dìfang kěyǐ zuò huǒchē, chūzūchē huòzhě gōnggòng qìchē, dàn gōnggòng qìchē shàng de chéngkè bǐjiào duō.",
+          "tokens": [
+            "如果",
+            "要",
+            "去",
+            "比较",
+            "近",
+            "的",
+            "地方",
+            "你",
+            "可以",
+            "走路",
+            "或者",
+            "骑",
+            "自行车",
+            "较",
+            "远",
+            "的",
+            "地方",
+            "可以",
+            "坐",
+            "火车",
+            "出租车",
+            "或者",
+            "公共汽车",
+            "但",
+            "公共汽车",
+            "上",
+            "的",
+            "乘客",
+            "比较",
+            "多"
+          ]
+        },
+        {
+          "id": "ss24_exp_10",
+          "targetHanzi": "是的我昨天坐公共汽车去上课车上很拥挤所以司机开车开得挺慢我坐车坐了一个小时才到学校",
+          "targetMeaning": "Đúng thế, hôm qua tớ đi xe buýt đến lớp, trên xe rất đông đúc. Vì vậy tài xế lái khá chậm, tớ ngồi xe mất một tiếng mới tới trường.",
+          "pinyin": "Shì de, wǒ zuótiān zuò gōnggòng qìchē qù shàngkè, chē shàng hěn yōngjǐ. Suǒyǐ sījī kāichē kāi de tǐng màn, wǒ zuòchē zuòle yígè xiǎoshí cái dào xuéxiào.",
+          "tokens": [
+            "是",
+            "的",
+            "我",
+            "昨天",
+            "坐",
+            "公共汽车",
+            "去",
+            "上课",
+            "车",
+            "上",
+            "很",
+            "拥挤",
+            "所以",
+            "司机",
+            "开车",
+            "开",
+            "得",
+            "挺",
+            "慢",
+            "我",
+            "坐车",
+            "坐",
+            "了",
+            "一",
+            "个",
+            "小时",
+            "才",
+            "到",
+            "学校"
+          ]
+        },
+        {
+          "id": "ss24_exp_11",
+          "targetHanzi": "最好应该骑摩托车但是要有安全帽红绿灯的红灯亮了要停车因为路上都有交通警察",
+          "targetMeaning": "Tốt nhất là nên đi xe máy, nhưng phải đội mũ bảo hiểm, đèn đỏ bật sáng là phải dừng xe vì trên đường đều có cảnh sát giao thông.",
+          "pinyin": "Zuì hǎo yīnggāi qí mótuōchē, dànshì yào yǒu ānquán mào, hónglǜdēng de hóngdēng liàngle yào tíngchē, yīnwèi lùshang dōu yǒu jiāotōng jǐngchá.",
+          "tokens": [
+            "最",
+            "好",
+            "应该",
+            "骑",
+            "摩托车",
+            "但是",
+            "要",
+            "有",
+            "安全帽",
+            "红绿灯",
+            "的",
+            "红",
+            "灯",
+            "亮",
+            "了",
+            "要",
+            "停",
+            "车",
+            "因为",
+            "路",
+            "上",
+            "都",
+            "有",
+            "交通",
+            "警察"
+          ]
+        },
+        {
+          "id": "ss24_exp_12",
+          "targetHanzi": "昨天我去了超市和书店你去哪儿了",
+          "targetMeaning": "Hôm qua tôi đã đi đến siêu thị và hiệu sách. (Bạn đã đi đâu thế?)",
+          "pinyin": "Zuótiān wǒ qù le chāoshì hé shūdiàn. (Nǐ qù nǎr le?)",
+          "tokens": [
+            "昨天",
+            "我",
+            "去",
+            "了",
+            "超市",
+            "和",
+            "书店",
+            "你",
+            "去",
+            "哪儿",
+            "了"
+          ]
+        },
+        {
+          "id": "ss24_exp_13",
+          "targetHanzi": "你累了还是去休息吧",
+          "targetMeaning": "Mẹ mệt rồi, mẹ cứ đi nghỉ ngơi đi!",
+          "pinyin": "Nǐ lèile, háishi qù xiūxi ba!",
+          "tokens": [
+            "你",
+            "累",
+            "了",
+            "还是",
+            "去",
+            "休息",
+            "吧"
+          ]
+        },
+        {
+          "id": "ss24_exp_14",
+          "targetHanzi": "中午好",
+          "targetMeaning": "Chào buổi trưa!",
+          "pinyin": "Zhōngwǔ hǎo",
+          "tokens": [
+            "中午",
+            "好"
+          ]
         }
       ],
       "translationExercises": [
@@ -48071,6 +61372,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "qù lǚyóu de dōngxi nǐ zhǔnbèi hǎo le ma",
           "hint": "Gợi ý Pinyin: Qù lǚyóu de dōngxi nǐ zhǔnbèi hǎo le ma?",
           "explanation": "Bạn đã chuẩn bị đầy đủ đồ đạc để đi du lịch chưa? → 去旅游的东西你准备好了吗？ (Qù lǚyóu de dōngxi nǐ zhǔnbèi hǎo le ma?)"
+        },
+        {
+          "id": "tr24_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Tiểu Lan, cậu sang Trung Quốc du học gần một năm rồi, cậu đã quen với giao thông ở Trung Quốc chưa?",
+          "expectedChinese": "小兰， 你来中国留学快要一年了，中国的交通你习惯了吗？",
+          "acceptedPinyin": "xiǎolán nǐ lái zhōngguó liúxué kuàiyào yī nián le zhōngguó de jiāotōng nǐ xíguàn le ma",
+          "hint": "Gợi ý Pinyin: Xiǎolán, nǐ lái Zhōngguó liúxué kuàiyào yī nián le, Zhōngguó de jiāotōng nǐ xíguàn le ma?",
+          "explanation": "Tiểu Lan, cậu sang Trung Quốc du học gần một năm rồi, cậu đã quen với giao thông ở Trung Quốc chưa? → 小兰， 你来中国留学快要一年了，中国的交通你习惯了吗？ (Xiǎolán, nǐ lái Zhōngguó liúxué kuàiyào yī nián le, Zhōngguó de jiāotōng nǐ xíguàn le ma?)"
+        },
+        {
+          "id": "tr24_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Tớ quen rồi. Giao thông ở Trung Quốc rất tốt, giờ cao điểm cũng ít khi tắc đường.",
+          "expectedChinese": "我习惯了。 中国的交通很好，高峰时间很少堵车。",
+          "acceptedPinyin": "wǒ xíguàn le zhōngguó de jiāotōng hěn hǎo gāofēng shíjiān hěn shǎo dǔchē",
+          "hint": "Gợi ý Pinyin: Wǒ xíguàn le. Zhōngguó de jiāotōng hěn hǎo, gāofēng shíjiān hěn shǎo dǔchē.",
+          "explanation": "Tớ quen rồi. Giao thông ở Trung Quốc rất tốt, giờ cao điểm cũng ít khi tắc đường. → 我习惯了。 中国的交通很好，高峰时间很少堵车。 (Wǒ xíguàn le. Zhōngguó de jiāotōng hěn hǎo, gāofēng shíjiān hěn shǎo dǔchē.)"
+        },
+        {
+          "id": "tr24_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Đúng vậy! Phần lớn người Trung Quốc đều tuân thủ luật giao thông.",
+          "expectedChinese": "是啊! 大部分中国人都遵守交通规则。",
+          "acceptedPinyin": "shì a dàbùfen zhōngguó rén dōu zūnshǒu jiāotōng guīzé",
+          "hint": "Gợi ý Pinyin: Shì a! Dàbùfen Zhōngguó rén dōu zūnshǒu jiāotōng guīzé.",
+          "explanation": "Đúng vậy! Phần lớn người Trung Quốc đều tuân thủ luật giao thông. → 是啊! 大部分中国人都遵守交通规则。 (Shì a! Dàbùfen Zhōngguó rén dōu zūnshǒu jiāotōng guīzé.)"
+        },
+        {
+          "id": "tr24_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu biết đi xe gì?",
+          "expectedChinese": "你会骑什么车？",
+          "acceptedPinyin": "nǐ huì qí shénme chē",
+          "hint": "Gợi ý Pinyin: Nǐ huì qí shénme chē?",
+          "explanation": "Cậu biết đi xe gì? → 你会骑什么车？ (Nǐ huì qí shénme chē?)"
+        },
+        {
+          "id": "tr24_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Tớ biết đi xe đạp và xe máy, bố tớ vừa mua một chiếc ô tô nên tớ đang học lái xe. Khi nào học xong tớ sẽ lái xe đi chơi.",
+          "expectedChinese": "我会骑自行车和摩托车，我爸爸刚买了一辆汽车， 所以我正在学开车。学会的时候我就开车去玩儿。",
+          "acceptedPinyin": "wǒ huì qí zìxíngchē hé mótuōchē wǒ bàba gāng mǎi le yí liàng qìchē suǒyǐ wǒ zhèngzài xué kāichē xuéhuì de shíhou wǒ jiù kāichē qù wánr",
+          "hint": "Gợi ý Pinyin: Wǒ huì qí zìxíngchē hé mótuōchē, wǒ bàba gāng mǎi le yí liàng qìchē, suǒyǐ wǒ zhèngzài xué kāichē. Xuéhuì de shíhou wǒ jiù kāichē qù wánr.",
+          "explanation": "Tớ biết đi xe đạp và xe máy, bố tớ vừa mua một chiếc ô tô nên tớ đang học lái xe. Khi nào học xong tớ sẽ lái xe đi chơi. → 我会骑自行车和摩托车，我爸爸刚买了一辆汽车， 所以我正在学开车。学会的时候我就开车去玩儿。 (Wǒ huì qí zìxíngchē hé mótuōchē, wǒ bàba gāng mǎi le yí liàng qìchē, suǒyǐ wǒ zhèngzài xué kāichē. Xuéhuì de shíhou wǒ jiù kāichē qù wánr.)"
+        },
+        {
+          "id": "tr24_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu giỏi thế! Cậu có hay bị lạc đường không?",
+          "expectedChinese": "你很棒啊！你会不会迷路?",
+          "acceptedPinyin": "nǐ hěn bàng a nǐ huì bu huì mílù",
+          "hint": "Gợi ý Pinyin: Nǐ hěn bàng a! Nǐ huì bu huì mílù?",
+          "explanation": "Cậu giỏi thế! Cậu có hay bị lạc đường không? → 你很棒啊！你会不会迷路? (Nǐ hěn bàng a! Nǐ huì bu huì mílù?)"
+        },
+        {
+          "id": "tr24_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Không đâu, nếu không biết đường thì tớ xem bản đồ hoặc nhìn biển báo chỉ đường.",
+          "expectedChinese": "不会啊，如果不知道的话，我就看地图或者可以看路上的标志。",
+          "acceptedPinyin": "bú huì a rúguǒ bù zhīdao dehuà wǒ jiù kàn dìtú huòzhě kěyǐ kàn lùshang de biāozhì",
+          "hint": "Gợi ý Pinyin: Bú huì a, rúguǒ bù zhīdao dehuà, wǒ jiù kàn dìtú huòzhě kěyǐ kàn lùshang de biāozhì.",
+          "explanation": "Không đâu, nếu không biết đường thì tớ xem bản đồ hoặc nhìn biển báo chỉ đường. → 不会啊，如果不知道的话，我就看地图或者可以看路上的标志。 (Bú huì a, rúguǒ bù zhīdao dehuà, wǒ jiù kàn dìtú huòzhě kěyǐ kàn lùshang de biāozhì.)"
+        },
+        {
+          "id": "tr24_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu thấy ở Trung Quốc đi phương tiện gì thì tiện hơn?",
+          "expectedChinese": "你觉得在中国坐什么车比较方便？",
+          "acceptedPinyin": "nǐ juéde zài zhōngguó zuò shénme chē bǐjiào fāngbiàn",
+          "hint": "Gợi ý Pinyin: Nǐ juéde zài Zhōngguó zuò shénme chē bǐjiào fāngbiàn?",
+          "explanation": "Cậu thấy ở Trung Quốc đi phương tiện gì thì tiện hơn? → 你觉得在中国坐什么车比较方便？ (Nǐ juéde zài Zhōngguó zuò shénme chē bǐjiào fāngbiàn?)"
+        },
+        {
+          "id": "tr24_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Nếu đi chỗ gần, cậu có thể đi bộ hoặc đạp xe. Chỗ xa hơn có thể đi tàu hỏa, taxi hoặc xe buýt, nhưng hành khách trên xe buýt khá đông.",
+          "expectedChinese": "如果要去比较近的地方，你可以走路或者骑自行车。较远的地方可以坐火车、出租车或者公共汽车， 但公共汽车上的乘客比较多。",
+          "acceptedPinyin": "rúguǒ yào qù bǐjiào jìn de dìfang nǐ kěyǐ zǒulù huòzhě qí zìxíngchē jiào yuǎn de dìfang kěyǐ zuò huǒchē chūzūchē huòzhě gōnggòng qìchē dàn gōnggòng qìchē shàng de chéngkè bǐjiào duō",
+          "hint": "Gợi ý Pinyin: Rúguǒ yào qù bǐjiào jìn de dìfang, nǐ kěyǐ zǒulù huòzhě qí zìxíngchē. Jiào yuǎn de dìfang kěyǐ zuò huǒchē, chūzūchē huòzhě gōnggòng qìchē, dàn gōnggòng qìchē shàng de chéngkè bǐjiào duō.",
+          "explanation": "Nếu đi chỗ gần, cậu có thể đi bộ hoặc đạp xe. Chỗ xa hơn có thể đi tàu hỏa, taxi hoặc xe buýt, nhưng hành khách trên xe buýt khá đông. → 如果要去比较近的地方，你可以走路或者骑自行车。较远的地方可以坐火车、出租车或者公共汽车， 但公共汽车上的乘客比较多。 (Rúguǒ yào qù bǐjiào jìn de dìfang, nǐ kěyǐ zǒulù huòzhě qí zìxíngchē. Jiào yuǎn de dìfang kěyǐ zuò huǒchē, chūzūchē huòzhě gōnggòng qìchē, dàn gōnggòng qìchē shàng de chéngkè bǐjiào duō.)"
+        },
+        {
+          "id": "tr24_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Đúng thế, hôm qua tớ đi xe buýt đến lớp, trên xe rất đông đúc. Vì vậy tài xế lái khá chậm, tớ ngồi xe mất một tiếng mới tới trường.",
+          "expectedChinese": "是的，我昨天坐公共汽车去上课，车上很拥挤。所以司机开车开得挺慢，我坐车坐了一个小时才到学校。",
+          "acceptedPinyin": "shì de wǒ zuótiān zuò gōnggòng qìchē qù shàngkè chē shàng hěn yōngjǐ suǒyǐ sījī kāichē kāi de tǐng màn wǒ zuòchē zuòle yígè xiǎoshí cái dào xuéxiào",
+          "hint": "Gợi ý Pinyin: Shì de, wǒ zuótiān zuò gōnggòng qìchē qù shàngkè, chē shàng hěn yōngjǐ. Suǒyǐ sījī kāichē kāi de tǐng màn, wǒ zuòchē zuòle yígè xiǎoshí cái dào xuéxiào.",
+          "explanation": "Đúng thế, hôm qua tớ đi xe buýt đến lớp, trên xe rất đông đúc. Vì vậy tài xế lái khá chậm, tớ ngồi xe mất một tiếng mới tới trường. → 是的，我昨天坐公共汽车去上课，车上很拥挤。所以司机开车开得挺慢，我坐车坐了一个小时才到学校。 (Shì de, wǒ zuótiān zuò gōnggòng qìchē qù shàngkè, chē shàng hěn yōngjǐ. Suǒyǐ sījī kāichē kāi de tǐng màn, wǒ zuòchē zuòle yígè xiǎoshí cái dào xuéxiào.)"
         },
         {
           "id": "tr24_zh_1",
@@ -48131,6 +61522,241 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Cóng wǒ jiā zǒulù dào xuéxiào, wǔ fēnzhōng jiù dào.",
           "explanation": "从我家走路到学校，五分钟就到。 (Cóng wǒ jiā zǒulù dào xuéxiào, wǔ fēnzhōng jiù dào.) nghĩa là: Đi bộ từ nhà tôi tới trường, chỉ mất 5 phút là đến rồi."
+        },
+        {
+          "id": "tr24_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "火车马上就开。",
+          "chineseAudioText": "火车马上就开。",
+          "pinyin": "Huǒchē mǎshàng jiù kāi.",
+          "expectedMeaning": "Tàu hỏa sắp chạy ngay bây giờ.",
+          "acceptedKeywords": [
+            "tàu",
+            "hỏa",
+            "sắp",
+            "chạy",
+            "ngay",
+            "bây",
+            "giờ"
+          ],
+          "hint": "Pinyin: Huǒchē mǎshàng jiù kāi.",
+          "explanation": "火车马上就开。 (Huǒchē mǎshàng jiù kāi.) nghĩa là: Tàu hỏa sắp chạy ngay bây giờ."
+        },
+        {
+          "id": "tr24_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "我学会了太极拳了。",
+          "chineseAudioText": "我学会了太极拳了。",
+          "pinyin": "Wǒ xuéhuìle tàijí quánle.",
+          "expectedMeaning": "Tớ học được môn Thái cực quyền rồi.",
+          "acceptedKeywords": [
+            "tớ",
+            "học",
+            "được",
+            "môn",
+            "thái",
+            "cực",
+            "quyền",
+            "rồi"
+          ],
+          "hint": "Pinyin: Wǒ xuéhuìle tàijí quánle.",
+          "explanation": "我学会了太极拳了。 (Wǒ xuéhuìle tàijí quánle.) nghĩa là: Tớ học được môn Thái cực quyền rồi."
+        },
+        {
+          "id": "tr24_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "我学汉语学了三年。",
+          "chineseAudioText": "我学汉语学了三年。",
+          "pinyin": "Wǒ xué Hànyǔ xué le sān nián.",
+          "expectedMeaning": "Tôi học tiếng Hán được 3 năm.",
+          "acceptedKeywords": [
+            "tôi",
+            "học",
+            "tiếng",
+            "hán",
+            "được",
+            "năm"
+          ],
+          "hint": "Pinyin: Wǒ xué Hànyǔ xué le sān nián.",
+          "explanation": "我学汉语学了三年。 (Wǒ xué Hànyǔ xué le sān nián.) nghĩa là: Tôi học tiếng Hán được 3 năm."
+        },
+        {
+          "id": "tr24_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "他睡觉睡了九个小时。",
+          "chineseAudioText": "他睡觉睡了九个小时。",
+          "pinyin": "Tā shuìjiào shuìle jiǔ gè xiǎoshí.",
+          "expectedMeaning": "Cậu ấy ngủ suốt chín tiếng đồng hồ.",
+          "acceptedKeywords": [
+            "cậu",
+            "ấy",
+            "ngủ",
+            "suốt",
+            "chín",
+            "tiếng",
+            "đồng",
+            "hồ"
+          ],
+          "hint": "Pinyin: Tā shuìjiào shuìle jiǔ gè xiǎoshí.",
+          "explanation": "他睡觉睡了九个小时。 (Tā shuìjiào shuìle jiǔ gè xiǎoshí.) nghĩa là: Cậu ấy ngủ suốt chín tiếng đồng hồ."
+        },
+        {
+          "id": "tr24_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "是啊，每个人遵守交通规则，路上才安全。",
+          "chineseAudioText": "是啊，每个人遵守交通规则，路上才安全。",
+          "pinyin": "Shì a, měi gèrén zūnshǒu jiāotōng guīzé, lùshang cái ānquán.",
+          "expectedMeaning": "Đúng vậy, mỗi người đều tuân thủ luật giao thông thì đi đường mới an toàn.",
+          "acceptedKeywords": [
+            "đúng",
+            "vậy",
+            "mỗi",
+            "người",
+            "đều",
+            "tuân",
+            "thủ",
+            "luật",
+            "giao",
+            "thông",
+            "thì",
+            "đi",
+            "đường",
+            "mới",
+            "an",
+            "toàn"
+          ],
+          "hint": "Pinyin: Shì a, měi gèrén zūnshǒu jiāotōng guīzé, lùshang cái ānquán.",
+          "explanation": "是啊，每个人遵守交通规则，路上才安全。 (Shì a, měi gèrén zūnshǒu jiāotōng guīzé, lùshang cái ānquán.) nghĩa là: Đúng vậy, mỗi người đều tuân thủ luật giao thông thì đi đường mới an toàn."
+        },
+        {
+          "id": "tr24_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "对了，我看大家骑摩托车都戴安全帽，也很注意红绿灯。",
+          "chineseAudioText": "对了，我看大家骑摩托车都戴安全帽，也很注意红绿灯。",
+          "pinyin": "Duì le, wǒ kàn dàjiā qí mótuōchē dōu dài ānquán mào, yě hěn zhùyì hónglǜdēng.",
+          "expectedMeaning": "Đúng rồi, tớ thấy mọi người đi xe máy đều đội mũ bảo hiểm và rất chú ý đèn đỏ đèn xanh.",
+          "acceptedKeywords": [
+            "đúng",
+            "rồi",
+            "tớ",
+            "thấy",
+            "mọi",
+            "người",
+            "đi",
+            "xe",
+            "máy",
+            "đều",
+            "đội",
+            "mũ",
+            "bảo",
+            "hiểm",
+            "và",
+            "rất",
+            "chú",
+            "đèn",
+            "đỏ",
+            "đèn",
+            "xanh"
+          ],
+          "hint": "Pinyin: Duì le, wǒ kàn dàjiā qí mótuōchē dōu dài ānquán mào, yě hěn zhùyì hónglǜdēng.",
+          "explanation": "对了，我看大家骑摩托车都戴安全帽，也很注意红绿灯。 (Duì le, wǒ kàn dàjiā qí mótuōchē dōu dài ānquán mào, yě hěn zhùyì hónglǜdēng.) nghĩa là: Đúng rồi, tớ thấy mọi người đi xe máy đều đội mũ bảo hiểm và rất chú ý đèn đỏ đèn xanh."
+        },
+        {
+          "id": "tr24_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "早上乘客多、容易堵车，坐地铁或者提早出门打车比较好。",
+          "chineseAudioText": "早上乘客多、容易堵车，坐地铁或者提早出门打车比较好。",
+          "pinyin": "Zǎoshang chéngkè duō, róngyì dǔchē, zuò dìtiě huòzhě tízǎo chūmén dǎchē bǐjiào hǎo.",
+          "expectedMeaning": "Buổi sáng hành khách đông, dễ tắc đường, đi tàu điện ngầm hoặc ra sớm bắt taxi thì tốt hơn.",
+          "acceptedKeywords": [
+            "buổi",
+            "sáng",
+            "hành",
+            "khách",
+            "đông",
+            "dễ",
+            "tắc",
+            "đường",
+            "đi",
+            "tàu",
+            "điện",
+            "ngầm",
+            "hoặc",
+            "ra",
+            "sớm",
+            "bắt",
+            "taxi",
+            "thì",
+            "tốt",
+            "hơn"
+          ],
+          "hint": "Pinyin: Zǎoshang chéngkè duō, róngyì dǔchē, zuò dìtiě huòzhě tízǎo chūmén dǎchē bǐjiào hǎo.",
+          "explanation": "早上乘客多、容易堵车，坐地铁或者提早出门打车比较好。 (Zǎoshang chéngkè duō, róngyì dǔchē, zuò dìtiě huòzhě tízǎo chūmén dǎchē bǐjiào hǎo.) nghĩa là: Buổi sáng hành khách đông, dễ tắc đường, đi tàu điện ngầm hoặc ra sớm bắt taxi thì tốt hơn."
+        },
+        {
+          "id": "tr24_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "从学校去火车站坐公共汽车还是坐出租车方便？",
+          "chineseAudioText": "从学校去火车站坐公共汽车还是坐出租车方便？",
+          "pinyin": "Cóng xuéxiào qù huǒchēzhàn zuò gōnggòng qìchē háishi zuò chūzūchē fāngbiàn?",
+          "expectedMeaning": "Từ trường ra ga tàu hỏa thì đi xe buýt hay taxi tiện hơn?",
+          "acceptedKeywords": [
+            "từ",
+            "trường",
+            "ra",
+            "ga",
+            "tàu",
+            "hỏa",
+            "thì",
+            "đi",
+            "xe",
+            "buýt",
+            "hay",
+            "taxi",
+            "tiện",
+            "hơn"
+          ],
+          "hint": "Pinyin: Cóng xuéxiào qù huǒchēzhàn zuò gōnggòng qìchē háishi zuò chūzūchē fāngbiàn?",
+          "explanation": "从学校去火车站坐公共汽车还是坐出租车方便？ (Cóng xuéxiào qù huǒchēzhàn zuò gōnggòng qìchē háishi zuò chūzūchē fāngbiàn?) nghĩa là: Từ trường ra ga tàu hỏa thì đi xe buýt hay taxi tiện hơn?"
+        },
+        {
+          "id": "tr24_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "如果有什么不知道，你就问我。",
+          "chineseAudioText": "如果有什么不知道，你就问我。",
+          "pinyin": "Rúguǒ yǒu shénme bù zhīdào, nǐ jiù wèn wǒ.",
+          "expectedMeaning": "Nếu có gì không biết thì cậu cứ hỏi tớ.",
+          "acceptedKeywords": [
+            "nếu",
+            "có",
+            "gì",
+            "không",
+            "biết",
+            "thì",
+            "cậu",
+            "cứ",
+            "hỏi",
+            "tớ"
+          ],
+          "hint": "Pinyin: Rúguǒ yǒu shénme bù zhīdào, nǐ jiù wèn wǒ.",
+          "explanation": "如果有什么不知道，你就问我。 (Rúguǒ yǒu shénme bù zhīdào, nǐ jiù wèn wǒ.) nghĩa là: Nếu có gì không biết thì cậu cứ hỏi tớ."
+        },
+        {
+          "id": "tr24_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "这是我的书。",
+          "chineseAudioText": "这是我的书。",
+          "pinyin": "Zhè shì wǒ de shū.",
+          "expectedMeaning": "Đây là sách của tôi.",
+          "acceptedKeywords": [
+            "đây",
+            "là",
+            "sách",
+            "của",
+            "tôi"
+          ],
+          "hint": "Pinyin: Zhè shì wǒ de shū.",
+          "explanation": "这是我的书。 (Zhè shì wǒ de shū.) nghĩa là: Đây là sách của tôi."
         }
       ],
       "expandedQuiz": [
@@ -50061,6 +63687,380 @@ const DEFAULT_LESSONS = [
             "什么",
             "名字"
           ]
+        },
+        {
+          "id": "ss25_exp_1",
+          "targetHanzi": "老师我遇到一个问题想问您",
+          "targetMeaning": "Thưa thầy/cô, em gặp một vấn đề muốn hỏi thầy/cô ạ!",
+          "pinyin": "Lǎoshī, wǒ yùdào yí gè wèntí xiǎng wèn nín!",
+          "tokens": [
+            "老师",
+            "我",
+            "遇到",
+            "一",
+            "个",
+            "问题",
+            "想",
+            "问",
+            "您"
+          ]
+        },
+        {
+          "id": "ss25_exp_2",
+          "targetHanzi": "你说吧",
+          "targetMeaning": "Em cứ nói đi!",
+          "pinyin": "Nǐ shuō ba!",
+          "tokens": [
+            "你",
+            "说",
+            "吧"
+          ]
+        },
+        {
+          "id": "ss25_exp_3",
+          "targetHanzi": "您也知道我们来中国留学是为了想学汉语学得更好说得更流利更标准但是来中国以后我发现自己没有进步我不知道要怎么办所以只好来找您",
+          "targetMeaning": "Thầy/cô cũng biết chúng em sang Trung Quốc du học là để học tiếng Hán tốt hơn, nói trôi chảy và chuẩn hơn. Nhưng sau khi đến Trung Quốc, em thấy mình không tiến bộ. Em không biết phải làm sao nên đành đến tìm thầy/cô.",
+          "pinyin": "Nín yě zhīdao wǒmen lái Zhōngguó liúxué shì wèile xiǎng xué Hànyǔ xué de gèng hǎo, shuō de gèng liúlì gèng biāozhǔn. Dànshì lái Zhōngguó yǐhòu, wǒ fāxiàn zìjǐ méiyǒu jìnbù. Wǒ bù zhīdào yào zěnme bàn, suǒyǐ zhǐhǎo lái zhǎo nín.",
+          "tokens": [
+            "您",
+            "也",
+            "知道",
+            "我们",
+            "来",
+            "中国",
+            "留",
+            "学",
+            "是",
+            "为了",
+            "想",
+            "学",
+            "汉语",
+            "学",
+            "得",
+            "更",
+            "好",
+            "说",
+            "得",
+            "更",
+            "流利",
+            "更",
+            "标准",
+            "但是",
+            "来",
+            "中国",
+            "以后",
+            "我",
+            "发现",
+            "自己",
+            "没有",
+            "进步",
+            "我",
+            "不",
+            "知道",
+            "要",
+            "怎么",
+            "办",
+            "所以",
+            "只好",
+            "来",
+            "找",
+            "您"
+          ]
+        },
+        {
+          "id": "ss25_exp_4",
+          "targetHanzi": "你为什么这么想",
+          "targetMeaning": "Sao em lại nghĩ như vậy?",
+          "pinyin": "Nǐ wèishénme zhème xiǎng?",
+          "tokens": [
+            "你",
+            "为",
+            "什么",
+            "这么",
+            "想"
+          ]
+        },
+        {
+          "id": "ss25_exp_5",
+          "targetHanzi": "跟中国朋友说话的时候我觉得他们说什么我都能听懂因为朋友们说得很慢还选择比较简单的词语但是如果在路边随便找一个人问路他们说得很快还用很多我不知道的词语我听不清楚",
+          "targetMeaning": "Khi nói chuyện với bạn bè Trung Quốc, em thấy họ nói gì em cũng hiểu, vì các bạn nói chậm và chọn từ ngữ khá đơn giản. Nhưng nếu hỏi đường ngẫu nhiên một người ngoài phố, họ nói rất nhanh lại dùng nhiều từ em không biết nên em nghe không rõ.",
+          "pinyin": "Gēn Zhōngguó péngyou shuōhuà de shíhou, wǒ juéde tāmen shuō shénme wǒ dōu néng tīng dǒng, yīnwèi péngyoumen shuō de hěn màn, hái xuǎnzé bǐ jiào jiǎndān de cíyǔ. Dànshì rúguǒ zài lù biān suíbiàn zhǎo yígè rén wèn lù, tāmen shuō de hěn kuài, hái yòng hěnduō wǒ bù zhīdao de cíyǔ, wǒ tīng bu qīngchu.",
+          "tokens": [
+            "跟",
+            "中国",
+            "朋友",
+            "说",
+            "话",
+            "的",
+            "时候",
+            "我",
+            "觉得",
+            "他们",
+            "说",
+            "什么",
+            "我",
+            "都",
+            "能",
+            "听",
+            "懂",
+            "因为",
+            "朋友",
+            "们",
+            "说",
+            "得",
+            "很",
+            "慢",
+            "还",
+            "选择",
+            "比较",
+            "简单",
+            "的",
+            "词语",
+            "但是",
+            "如果",
+            "在",
+            "路",
+            "边",
+            "随便",
+            "找",
+            "一",
+            "个",
+            "人",
+            "问",
+            "路",
+            "他们",
+            "说",
+            "得",
+            "很",
+            "快",
+            "还",
+            "用",
+            "很",
+            "多",
+            "我",
+            "不",
+            "知道",
+            "的",
+            "词语",
+            "我",
+            "听",
+            "不",
+            "清楚"
+          ]
+        },
+        {
+          "id": "ss25_exp_6",
+          "targetHanzi": "这是留学生常遇到的困难你应该多去外面走走比如晚上你可以到湖边或者公园散步然后跟那里的人说话如果你听不清楚的话也可以让他们再说一遍慢慢的你的沟通问题就没有了",
+          "targetMeaning": "Đây là khó khăn thường gặp của du học sinh. Em nên ra ngoài đi dạo nhiều hơn, ví dụ buổi tối ra bờ hồ hoặc công viên tản bộ rồi trò chuyện với mọi người ở đó. Nếu nghe chưa rõ thì có thể nhờ họ nói lại lần nữa. Dần dần vấn đề giao tiếp của em sẽ hết thôi.",
+          "pinyin": "Zhè shì liúxuéshēng cháng yùdào de kùnnan. Nǐ yīnggāi duō qù wàimian zǒuzou, bǐrú wǎnshàng nǐ kěyǐ dào hú biān huòzhě gōngyuán sànbù, ránhòu gēn",
+          "tokens": [
+            "这",
+            "是",
+            "留学生",
+            "常",
+            "遇到",
+            "的",
+            "困难",
+            "你",
+            "应该",
+            "多",
+            "去",
+            "外",
+            "面",
+            "走",
+            "走",
+            "比如",
+            "晚上",
+            "你",
+            "可以",
+            "到",
+            "湖边",
+            "或者",
+            "公园",
+            "散步",
+            "然",
+            "后",
+            "跟",
+            "那里",
+            "的",
+            "人",
+            "说",
+            "话",
+            "如果",
+            "你",
+            "听",
+            "不",
+            "清楚",
+            "的",
+            "话",
+            "也",
+            "可以",
+            "让",
+            "他们",
+            "再说",
+            "一",
+            "遍",
+            "慢慢",
+            "的",
+            "你",
+            "的",
+            "沟通",
+            "问题",
+            "就",
+            "没有",
+            "了"
+          ]
+        },
+        {
+          "id": "ss25_exp_7",
+          "targetHanzi": "但是这样做可能会打扰他们",
+          "targetMeaning": "Nhưng làm như vậy có thể sẽ làm phiền họ ạ.",
+          "pinyin": "Dànshì zhèyàng zuò kěnéng huì dǎrǎo tāmen.",
+          "tokens": [
+            "但是",
+            "这样",
+            "做",
+            "可能",
+            "会",
+            "打扰",
+            "他们"
+          ]
+        },
+        {
+          "id": "ss25_exp_8",
+          "targetHanzi": "不会的中国人很热情他们一定会帮你可是你要注意一点就是不要害怕说错你是留学生你说错也没有人笑你",
+          "targetMeaning": "Không đâu. Người Trung Quốc rất nhiệt tình, họ nhất định sẽ giúp em. Nhưng em cần chú ý một điều là đừng sợ nói sai. Em là du học sinh, nói sai cũng không ai cười em đâu.",
+          "pinyin": "Bú huì de. Zhōngguó rén hěn rèqíng, tāmen yídìng huì bāng nǐ. Kěshì nǐ yào zhùyì yīdiǎn, jiùshì búyào hàipà shuō cuò. Nǐ shì liúxuéshēng, nǐ shuō cuò yě méiyǒu rén xiào nǐ.",
+          "tokens": [
+            "不",
+            "会",
+            "的",
+            "中国",
+            "人",
+            "很",
+            "热情",
+            "他们",
+            "一",
+            "定",
+            "会",
+            "帮",
+            "你",
+            "可是",
+            "你",
+            "要",
+            "注意",
+            "一点",
+            "就",
+            "是",
+            "不",
+            "要",
+            "害怕",
+            "说",
+            "错",
+            "你",
+            "是",
+            "留学生",
+            "你",
+            "说",
+            "错",
+            "也",
+            "没有",
+            "人",
+            "笑",
+            "你"
+          ]
+        },
+        {
+          "id": "ss25_exp_9",
+          "targetHanzi": "老师我知道了",
+          "targetMeaning": "Vâng, em hiểu rồi ạ.",
+          "pinyin": "Lǎoshī, wǒ zhīdao le.",
+          "tokens": [
+            "老师",
+            "我",
+            "知道",
+            "了"
+          ]
+        },
+        {
+          "id": "ss25_exp_10",
+          "targetHanzi": "你不要着急我们慢慢学其实现在你汉语说得很流利了",
+          "targetMeaning": "Em đừng nóng vội, chúng ta cứ học từ từ. Thực ra bây giờ tiếng Hán của em nói cũng rất trôi chảy rồi đấy.",
+          "pinyin": "Nǐ búyào zháojí, wǒmen mànmàn xué. Qíshí xiànzài nǐ Hànyǔ shuō de hěn liúlì le.",
+          "tokens": [
+            "你",
+            "不",
+            "要",
+            "着急",
+            "我们",
+            "慢慢",
+            "学",
+            "其实",
+            "现在",
+            "你",
+            "汉语",
+            "说",
+            "得",
+            "很",
+            "流利",
+            "了"
+          ]
+        },
+        {
+          "id": "ss25_exp_11",
+          "targetHanzi": "谢谢您",
+          "targetMeaning": "Em cảm ơn thầy/cô ạ!",
+          "pinyin": "Xièxie nín!",
+          "tokens": [
+            "谢谢",
+            "您"
+          ]
+        },
+        {
+          "id": "ss25_exp_12",
+          "targetHanzi": "如果有什么不知道你就问我",
+          "targetMeaning": "Nếu có gì không biết thì cậu cứ hỏi tớ.",
+          "pinyin": "Rúguǒ yǒu shénme bù zhīdào, nǐ jiù wèn wǒ.",
+          "tokens": [
+            "如果",
+            "有",
+            "什么",
+            "不",
+            "知道",
+            "你",
+            "就",
+            "问",
+            "我"
+          ]
+        },
+        {
+          "id": "ss25_exp_13",
+          "targetHanzi": "从我家走路到学校五分钟就到",
+          "targetMeaning": "Đi bộ từ nhà tôi tới trường, chỉ mất 5 phút là đến rồi.",
+          "pinyin": "Cóng wǒ jiā zǒulù dào xuéxiào, wǔ fēnzhōng jiù dào.",
+          "tokens": [
+            "从",
+            "我",
+            "家",
+            "走路",
+            "到",
+            "学校",
+            "五",
+            "分",
+            "钟",
+            "就",
+            "到"
+          ]
+        },
+        {
+          "id": "ss25_exp_14",
+          "targetHanzi": "晚上好",
+          "targetMeaning": "Chào buổi tối!",
+          "pinyin": "Wǎnshang hǎo",
+          "tokens": [
+            "晚上",
+            "好"
+          ]
         }
       ],
       "translationExercises": [
@@ -50099,6 +64099,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "tā hànyǔ shuō de hěn hǎo",
           "hint": "Gợi ý Pinyin: Tā Hànyǔ shuō de hěn hǎo.",
           "explanation": "Anh ấy nói tiếng Trung rất tốt. → 他汉语说得很好。 (Tā Hànyǔ shuō de hěn hǎo.)"
+        },
+        {
+          "id": "tr25_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Thưa thầy/cô, em gặp một vấn đề muốn hỏi thầy/cô ạ!",
+          "expectedChinese": "老师，我遇到一个问题想问您！",
+          "acceptedPinyin": "lǎoshī wǒ yùdào yí gè wèntí xiǎng wèn nín",
+          "hint": "Gợi ý Pinyin: Lǎoshī, wǒ yùdào yí gè wèntí xiǎng wèn nín!",
+          "explanation": "Thưa thầy/cô, em gặp một vấn đề muốn hỏi thầy/cô ạ! → 老师，我遇到一个问题想问您！ (Lǎoshī, wǒ yùdào yí gè wèntí xiǎng wèn nín!)"
+        },
+        {
+          "id": "tr25_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Em cứ nói đi!",
+          "expectedChinese": "你说吧！",
+          "acceptedPinyin": "nǐ shuō ba",
+          "hint": "Gợi ý Pinyin: Nǐ shuō ba!",
+          "explanation": "Em cứ nói đi! → 你说吧！ (Nǐ shuō ba!)"
+        },
+        {
+          "id": "tr25_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Thầy/cô cũng biết chúng em sang Trung Quốc du học là để học tiếng Hán tốt hơn, nói trôi chảy và chuẩn hơn. Nhưng sau khi đến Trung Quốc, em thấy mình không tiến bộ. Em không biết phải làm sao nên đành đến tìm thầy/cô.",
+          "expectedChinese": "您也知道我们来中国留学是为了想学汉语学得更好，说得更流利更标准。但是来中国以后，我发现自己没有进步。我不知道要怎么办，所以只好来找您。",
+          "acceptedPinyin": "nín yě zhīdao wǒmen lái zhōngguó liúxué shì wèile xiǎng xué hànyǔ xué de gèng hǎo shuō de gèng liúlì gèng biāozhǔn dànshì lái zhōngguó yǐhòu wǒ fāxiàn zìjǐ méiyǒu jìnbù wǒ bù zhīdào yào zěnme bàn suǒyǐ zhǐhǎo lái zhǎo nín",
+          "hint": "Gợi ý Pinyin: Nín yě zhīdao wǒmen lái Zhōngguó liúxué shì wèile xiǎng xué Hànyǔ xué de gèng hǎo, shuō de gèng liúlì gèng biāozhǔn. Dànshì lái Zhōngguó yǐhòu, wǒ fāxiàn zìjǐ méiyǒu jìnbù. Wǒ bù zhīdào yào zěnme bàn, suǒyǐ zhǐhǎo lái zhǎo nín.",
+          "explanation": "Thầy/cô cũng biết chúng em sang Trung Quốc du học là để học tiếng Hán tốt hơn, nói trôi chảy và chuẩn hơn. Nhưng sau khi đến Trung Quốc, em thấy mình không tiến bộ. Em không biết phải làm sao nên đành đến tìm thầy/cô. → 您也知道我们来中国留学是为了想学汉语学得更好，说得更流利更标准。但是来中国以后，我发现自己没有进步。我不知道要怎么办，所以只好来找您。 (Nín yě zhīdao wǒmen lái Zhōngguó liúxué shì wèile xiǎng xué Hànyǔ xué de gèng hǎo, shuō de gèng liúlì gèng biāozhǔn. Dànshì lái Zhōngguó yǐhòu, wǒ fāxiàn zìjǐ méiyǒu jìnbù. Wǒ bù zhīdào yào zěnme bàn, suǒyǐ zhǐhǎo lái zhǎo nín.)"
+        },
+        {
+          "id": "tr25_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Sao em lại nghĩ như vậy?",
+          "expectedChinese": "你为什么这么想？",
+          "acceptedPinyin": "nǐ wèishénme zhème xiǎng",
+          "hint": "Gợi ý Pinyin: Nǐ wèishénme zhème xiǎng?",
+          "explanation": "Sao em lại nghĩ như vậy? → 你为什么这么想？ (Nǐ wèishénme zhème xiǎng?)"
+        },
+        {
+          "id": "tr25_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Khi nói chuyện với bạn bè Trung Quốc, em thấy họ nói gì em cũng hiểu, vì các bạn nói chậm và chọn từ ngữ khá đơn giản. Nhưng nếu hỏi đường ngẫu nhiên một người ngoài phố, họ nói rất nhanh lại dùng nhiều từ em không biết nên em nghe không rõ.",
+          "expectedChinese": "跟中国朋友说话的时候，我觉得他们说什么我都能听懂，因为朋友们说得很慢，还选择比较简单的词语。但是如果在路边随便找一个人问路，他们说得很快，还用很多我不知道的词语，我听不清楚。",
+          "acceptedPinyin": "gēn zhōngguó péngyou shuōhuà de shíhou wǒ juéde tāmen shuō shénme wǒ dōu néng tīng dǒng yīnwèi péngyoumen shuō de hěn màn hái xuǎnzé bǐ jiào jiǎndān de cíyǔ dànshì rúguǒ zài lù biān suíbiàn zhǎo yígè rén wèn lù tāmen shuō de hěn kuài hái yòng hěnduō wǒ bù zhīdao de cíyǔ wǒ tīng bu qīngchu",
+          "hint": "Gợi ý Pinyin: Gēn Zhōngguó péngyou shuōhuà de shíhou, wǒ juéde tāmen shuō shénme wǒ dōu néng tīng dǒng, yīnwèi péngyoumen shuō de hěn màn, hái xuǎnzé bǐ jiào jiǎndān de cíyǔ. Dànshì rúguǒ zài lù biān suíbiàn zhǎo yígè rén wèn lù, tāmen shuō de hěn kuài, hái yòng hěnduō wǒ bù zhīdao de cíyǔ, wǒ tīng bu qīngchu.",
+          "explanation": "Khi nói chuyện với bạn bè Trung Quốc, em thấy họ nói gì em cũng hiểu, vì các bạn nói chậm và chọn từ ngữ khá đơn giản. Nhưng nếu hỏi đường ngẫu nhiên một người ngoài phố, họ nói rất nhanh lại dùng nhiều từ em không biết nên em nghe không rõ. → 跟中国朋友说话的时候，我觉得他们说什么我都能听懂，因为朋友们说得很慢，还选择比较简单的词语。但是如果在路边随便找一个人问路，他们说得很快，还用很多我不知道的词语，我听不清楚。 (Gēn Zhōngguó péngyou shuōhuà de shíhou, wǒ juéde tāmen shuō shénme wǒ dōu néng tīng dǒng, yīnwèi péngyoumen shuō de hěn màn, hái xuǎnzé bǐ jiào jiǎndān de cíyǔ. Dànshì rúguǒ zài lù biān suíbiàn zhǎo yígè rén wèn lù, tāmen shuō de hěn kuài, hái yòng hěnduō wǒ bù zhīdao de cíyǔ, wǒ tīng bu qīngchu.)"
+        },
+        {
+          "id": "tr25_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Đây là khó khăn thường gặp của du học sinh. Em nên ra ngoài đi dạo nhiều hơn, ví dụ buổi tối ra bờ hồ hoặc công viên tản bộ rồi trò chuyện với mọi người ở đó. Nếu nghe chưa rõ thì có thể nhờ họ nói lại lần nữa. Dần dần vấn đề giao tiếp của em sẽ hết thôi.",
+          "expectedChinese": "这是留学生常遇到的困难。你应该多去外面走走，比如晚上你可以到湖边或者公园散步，然后跟那里的人说话。如果你听不清楚的话，也可以让他们再说一遍。慢慢的你的沟通问题就没有了。",
+          "acceptedPinyin": "zhè shì liúxuéshēng cháng yùdào de kùnnan nǐ yīnggāi duō qù wàimian zǒuzou bǐrú wǎnshàng nǐ kěyǐ dào hú biān huòzhě gōngyuán sànbù ránhòu gēn",
+          "hint": "Gợi ý Pinyin: Zhè shì liúxuéshēng cháng yùdào de kùnnan. Nǐ yīnggāi duō qù wàimian zǒuzou, bǐrú wǎnshàng nǐ kěyǐ dào hú biān huòzhě gōngyuán sànbù, ránhòu gēn",
+          "explanation": "Đây là khó khăn thường gặp của du học sinh. Em nên ra ngoài đi dạo nhiều hơn, ví dụ buổi tối ra bờ hồ hoặc công viên tản bộ rồi trò chuyện với mọi người ở đó. Nếu nghe chưa rõ thì có thể nhờ họ nói lại lần nữa. Dần dần vấn đề giao tiếp của em sẽ hết thôi. → 这是留学生常遇到的困难。你应该多去外面走走，比如晚上你可以到湖边或者公园散步，然后跟那里的人说话。如果你听不清楚的话，也可以让他们再说一遍。慢慢的你的沟通问题就没有了。 (Zhè shì liúxuéshēng cháng yùdào de kùnnan. Nǐ yīnggāi duō qù wàimian zǒuzou, bǐrú wǎnshàng nǐ kěyǐ dào hú biān huòzhě gōngyuán sànbù, ránhòu gēn)"
+        },
+        {
+          "id": "tr25_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Nhưng làm như vậy có thể sẽ làm phiền họ ạ.",
+          "expectedChinese": "但是这样做可能会打扰他们。",
+          "acceptedPinyin": "dànshì zhèyàng zuò kěnéng huì dǎrǎo tāmen",
+          "hint": "Gợi ý Pinyin: Dànshì zhèyàng zuò kěnéng huì dǎrǎo tāmen.",
+          "explanation": "Nhưng làm như vậy có thể sẽ làm phiền họ ạ. → 但是这样做可能会打扰他们。 (Dànshì zhèyàng zuò kěnéng huì dǎrǎo tāmen.)"
+        },
+        {
+          "id": "tr25_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Không đâu. Người Trung Quốc rất nhiệt tình, họ nhất định sẽ giúp em. Nhưng em cần chú ý một điều là đừng sợ nói sai. Em là du học sinh, nói sai cũng không ai cười em đâu.",
+          "expectedChinese": "不会的。中国人很热情，他们一定会帮你。可是你要注意一点，就是不要害怕说错。你是留学生，你说错也没有人笑你。",
+          "acceptedPinyin": "bú huì de zhōngguó rén hěn rèqíng tāmen yídìng huì bāng nǐ kěshì nǐ yào zhùyì yīdiǎn jiùshì búyào hàipà shuō cuò nǐ shì liúxuéshēng nǐ shuō cuò yě méiyǒu rén xiào nǐ",
+          "hint": "Gợi ý Pinyin: Bú huì de. Zhōngguó rén hěn rèqíng, tāmen yídìng huì bāng nǐ. Kěshì nǐ yào zhùyì yīdiǎn, jiùshì búyào hàipà shuō cuò. Nǐ shì liúxuéshēng, nǐ shuō cuò yě méiyǒu rén xiào nǐ.",
+          "explanation": "Không đâu. Người Trung Quốc rất nhiệt tình, họ nhất định sẽ giúp em. Nhưng em cần chú ý một điều là đừng sợ nói sai. Em là du học sinh, nói sai cũng không ai cười em đâu. → 不会的。中国人很热情，他们一定会帮你。可是你要注意一点，就是不要害怕说错。你是留学生，你说错也没有人笑你。 (Bú huì de. Zhōngguó rén hěn rèqíng, tāmen yídìng huì bāng nǐ. Kěshì nǐ yào zhùyì yīdiǎn, jiùshì búyào hàipà shuō cuò. Nǐ shì liúxuéshēng, nǐ shuō cuò yě méiyǒu rén xiào nǐ.)"
+        },
+        {
+          "id": "tr25_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Vâng, em hiểu rồi ạ.",
+          "expectedChinese": "老师，我知道了。",
+          "acceptedPinyin": "lǎoshī wǒ zhīdao le",
+          "hint": "Gợi ý Pinyin: Lǎoshī, wǒ zhīdao le.",
+          "explanation": "Vâng, em hiểu rồi ạ. → 老师，我知道了。 (Lǎoshī, wǒ zhīdao le.)"
+        },
+        {
+          "id": "tr25_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Em đừng nóng vội, chúng ta cứ học từ từ. Thực ra bây giờ tiếng Hán của em nói cũng rất trôi chảy rồi đấy.",
+          "expectedChinese": "你不要着急，我们慢慢学。其实现在你汉语说得很流利了。",
+          "acceptedPinyin": "nǐ búyào zháojí wǒmen mànmàn xué qíshí xiànzài nǐ hànyǔ shuō de hěn liúlì le",
+          "hint": "Gợi ý Pinyin: Nǐ búyào zháojí, wǒmen mànmàn xué. Qíshí xiànzài nǐ Hànyǔ shuō de hěn liúlì le.",
+          "explanation": "Em đừng nóng vội, chúng ta cứ học từ từ. Thực ra bây giờ tiếng Hán của em nói cũng rất trôi chảy rồi đấy. → 你不要着急，我们慢慢学。其实现在你汉语说得很流利了。 (Nǐ búyào zháojí, wǒmen mànmàn xué. Qíshí xiànzài nǐ Hànyǔ shuō de hěn liúlì le.)"
         },
         {
           "id": "tr25_zh_1",
@@ -50159,6 +64249,240 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Tā zhège rén zhēn hǎo!",
           "explanation": "他这个人真好！ (Tā zhège rén zhēn hǎo!) nghĩa là: Con người anh ta thật là tốt!"
+        },
+        {
+          "id": "tr25_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "下雨了，我没带伞，只好在学校等着。",
+          "chineseAudioText": "下雨了，我没带伞，只好在学校等着。",
+          "pinyin": "Xià yǔle, wǒ méi dài sǎn, zhǐhǎo zài xuéxiào děngzhe.",
+          "expectedMeaning": "Trời mưa rồi mà tôi không mang ô, chỉ đành đợi ở trường.",
+          "acceptedKeywords": [
+            "trời",
+            "mưa",
+            "rồi",
+            "mà",
+            "tôi",
+            "không",
+            "mang",
+            "chỉ",
+            "đành",
+            "đợi",
+            "trường"
+          ],
+          "hint": "Pinyin: Xià yǔle, wǒ méi dài sǎn, zhǐhǎo zài xuéxiào děngzhe.",
+          "explanation": "下雨了，我没带伞，只好在学校等着。 (Xià yǔle, wǒ méi dài sǎn, zhǐhǎo zài xuéxiào děngzhe.) nghĩa là: Trời mưa rồi mà tôi không mang ô, chỉ đành đợi ở trường."
+        },
+        {
+          "id": "tr25_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "他歌唱得不太好听。",
+          "chineseAudioText": "他歌唱得不太好听。",
+          "pinyin": "Tā gē chàng de bù tài hǎotīng.",
+          "expectedMeaning": "Anh ấy hát không hay lắm.",
+          "acceptedKeywords": [
+            "anh",
+            "ấy",
+            "hát",
+            "không",
+            "hay",
+            "lắm"
+          ],
+          "hint": "Pinyin: Tā gē chàng de bù tài hǎotīng.",
+          "explanation": "他歌唱得不太好听。 (Tā gē chàng de bù tài hǎotīng.) nghĩa là: Anh ấy hát không hay lắm."
+        },
+        {
+          "id": "tr25_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "他吃得不太饱。",
+          "chineseAudioText": "他吃得不太饱。",
+          "pinyin": "Tā chī de bú tài bǎo.",
+          "expectedMeaning": "Anh ấy ăn không no lắm.",
+          "acceptedKeywords": [
+            "anh",
+            "ấy",
+            "ăn",
+            "không",
+            "no",
+            "lắm"
+          ],
+          "hint": "Pinyin: Tā chī de bú tài bǎo.",
+          "explanation": "他吃得不太饱。 (Tā chī de bú tài bǎo.) nghĩa là: Anh ấy ăn không no lắm."
+        },
+        {
+          "id": "tr25_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "他歌唱得很好听。",
+          "chineseAudioText": "他歌唱得很好听。",
+          "pinyin": "Tā gē chàng de hěn hǎotīng.",
+          "expectedMeaning": "Anh ấy hát rất hay.",
+          "acceptedKeywords": [
+            "anh",
+            "ấy",
+            "hát",
+            "rất",
+            "hay"
+          ],
+          "hint": "Pinyin: Tā gē chàng de hěn hǎotīng.",
+          "explanation": "他歌唱得很好听。 (Tā gē chàng de hěn hǎotīng.) nghĩa là: Anh ấy hát rất hay."
+        },
+        {
+          "id": "tr25_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "我起得很早。",
+          "chineseAudioText": "我起得很早。",
+          "pinyin": "Wǒ qǐ de hěn zǎo.",
+          "expectedMeaning": "Tôi dậy rất sớm.",
+          "acceptedKeywords": [
+            "tôi",
+            "dậy",
+            "rất",
+            "sớm"
+          ],
+          "hint": "Pinyin: Wǒ qǐ de hěn zǎo.",
+          "explanation": "我起得很早。 (Wǒ qǐ de hěn zǎo.) nghĩa là: Tôi dậy rất sớm."
+        },
+        {
+          "id": "tr25_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "他跑得很快。",
+          "chineseAudioText": "他跑得很快。",
+          "pinyin": "Tā pǎo de hěn kuài.",
+          "expectedMeaning": "Anh ấy chạy rất nhanh.",
+          "acceptedKeywords": [
+            "anh",
+            "ấy",
+            "chạy",
+            "rất",
+            "nhanh"
+          ],
+          "hint": "Pinyin: Tā pǎo de hěn kuài.",
+          "explanation": "他跑得很快。 (Tā pǎo de hěn kuài.) nghĩa là: Anh ấy chạy rất nhanh."
+        },
+        {
+          "id": "tr25_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "只要礼貌沟通，大家不仅不会笑你，还会帮你快速进步！",
+          "chineseAudioText": "只要礼貌沟通，大家不仅不会笑你，还会帮你快速进步！",
+          "pinyin": "Zhǐyào lǐmào gōutōng, dàjiā bùjǐn bú huì xiào nǐ, hái huì bāng nǐ kuàisù jìnbù!",
+          "expectedMeaning": "Chỉ cần giao tiếp lịch sự, mọi người chẳng những không cười em mà còn giúp em tiến bộ nhanh đấy!",
+          "acceptedKeywords": [
+            "chỉ",
+            "cần",
+            "giao",
+            "tiếp",
+            "lịch",
+            "sự",
+            "mọi",
+            "người",
+            "chẳng",
+            "những",
+            "không",
+            "cười",
+            "em",
+            "mà",
+            "còn",
+            "giúp",
+            "em",
+            "tiến",
+            "bộ",
+            "nhanh",
+            "đấy"
+          ],
+          "hint": "Pinyin: Zhǐyào lǐmào gōutōng, dàjiā bùjǐn bú huì xiào nǐ, hái huì bāng nǐ kuàisù jìnbù!",
+          "explanation": "只要礼貌沟通，大家不仅不会笑你，还会帮你快速进步！ (Zhǐyào lǐmào gōutōng, dàjiā bùjǐn bú huì xiào nǐ, hái huì bāng nǐ kuàisù jìnbù!) nghĩa là: Chỉ cần giao tiếp lịch sự, mọi người chẳng những không cười em mà còn giúp em tiến bộ nhanh đấy!"
+        },
+        {
+          "id": "tr25_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "我可以晚上去湖边找大家聊天儿吗？怕打扰他们。",
+          "chineseAudioText": "我可以晚上去湖边找大家聊天儿吗？怕打扰他们。",
+          "pinyin": "Wǒ kěyǐ wǎnshang qù húbiān zhǎo dàjiā liáotiānr ma? Pà dǎrǎo tāmen.",
+          "expectedMeaning": "Buổi tối em có thể ra bờ hồ bắt chuyện với mọi người không? Em sợ làm phiền họ ạ.",
+          "acceptedKeywords": [
+            "buổi",
+            "tối",
+            "em",
+            "có",
+            "thể",
+            "ra",
+            "bờ",
+            "hồ",
+            "bắt",
+            "chuyện",
+            "với",
+            "mọi",
+            "người",
+            "không",
+            "em",
+            "sợ",
+            "làm",
+            "phiền",
+            "họ"
+          ],
+          "hint": "Pinyin: Wǒ kěyǐ wǎnshang qù húbiān zhǎo dàjiā liáotiānr ma? Pà dǎrǎo tāmen.",
+          "explanation": "我可以晚上去湖边找大家聊天儿吗？怕打扰他们。 (Wǒ kěyǐ wǎnshang qù húbiān zhǎo dàjiā liáotiānr ma? Pà dǎrǎo tāmen.) nghĩa là: Buổi tối em có thể ra bờ hồ bắt chuyện với mọi người không? Em sợ làm phiền họ ạ."
+        },
+        {
+          "id": "tr25_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "别怕！你应该先从简单的词语开始，慢慢就能说清楚。",
+          "chineseAudioText": "别怕！你应该先从简单的词语开始，慢慢就能说清楚。",
+          "pinyin": "Bié pà! Nǐ yīnggāi xiān cóng jiǎndān de cíyǔ kāishǐ, mànmàn jiù néng shuō qīngchu.",
+          "expectedMeaning": "Đừng sợ! Em nên bắt đầu từ những từ ngữ đơn giản trước, dần dần sẽ nói rõ ràng thôi.",
+          "acceptedKeywords": [
+            "đừng",
+            "sợ",
+            "em",
+            "nên",
+            "bắt",
+            "đầu",
+            "từ",
+            "những",
+            "từ",
+            "ngữ",
+            "đơn",
+            "giản",
+            "trước",
+            "dần",
+            "dần",
+            "sẽ",
+            "nói",
+            "rõ",
+            "ràng",
+            "thôi"
+          ],
+          "hint": "Pinyin: Bié pà! Nǐ yīnggāi xiān cóng jiǎndān de cíyǔ kāishǐ, mànmàn jiù néng shuō qīngchu.",
+          "explanation": "别怕！你应该先从简单的词语开始，慢慢就能说清楚。 (Bié pà! Nǐ yīnggāi xiān cóng jiǎndān de cíyǔ kāishǐ, mànmàn jiù néng shuō qīngchu.) nghĩa là: Đừng sợ! Em nên bắt đầu từ những từ ngữ đơn giản trước, dần dần sẽ nói rõ ràng thôi."
+        },
+        {
+          "id": "tr25_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "老师，我发现和中国人交流时，我还是有点儿害怕说错。",
+          "chineseAudioText": "老师，我发现和中国人交流时，我还是有点儿害怕说错。",
+          "pinyin": "Lǎoshī, wǒ fāxiàn hé Zhōngguó rén jiāoliú shí, wǒ háishi yǒudiǎnr hàipà shuō cuò.",
+          "expectedMeaning": "Thưa thầy, em thấy khi giao tiếp với người Trung Quốc em vẫn hơi sợ nói sai.",
+          "acceptedKeywords": [
+            "thưa",
+            "thầy",
+            "em",
+            "thấy",
+            "khi",
+            "giao",
+            "tiếp",
+            "với",
+            "người",
+            "trung",
+            "quốc",
+            "em",
+            "vẫn",
+            "hơi",
+            "sợ",
+            "nói",
+            "sai"
+          ],
+          "hint": "Pinyin: Lǎoshī, wǒ fāxiàn hé Zhōngguó rén jiāoliú shí, wǒ háishi yǒudiǎnr hàipà shuō cuò.",
+          "explanation": "老师，我发现和中国人交流时，我还是有点儿害怕说错。 (Lǎoshī, wǒ fāxiàn hé Zhōngguó rén jiāoliú shí, wǒ háishi yǒudiǎnr hàipà shuō cuò.) nghĩa là: Thưa thầy, em thấy khi giao tiếp với người Trung Quốc em vẫn hơi sợ nói sai."
         }
       ],
       "expandedQuiz": [
@@ -52037,6 +66361,303 @@ const DEFAULT_LESSONS = [
             "很",
             "好"
           ]
+        },
+        {
+          "id": "ss26_exp_1",
+          "targetHanzi": "日明快要毕业了你有什么打算了吗",
+          "targetMeaning": "Nhật Minh, sắp tốt nghiệp rồi, cậu đã có dự định gì chưa?",
+          "pinyin": "Rìmíng, kuàiyào bìyè le, nǐ yǒu shénme dǎsuan le ma?",
+          "tokens": [
+            "日",
+            "明",
+            "快",
+            "要",
+            "毕业",
+            "了",
+            "你",
+            "有",
+            "什么",
+            "打算",
+            "了",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss26_exp_2",
+          "targetHanzi": "我打算继续在这儿学习",
+          "targetMeaning": "Tôi dự định tiếp tục học ở đây.",
+          "pinyin": "Wǒ dǎsuan jìxù zài zhèr xuéxí.",
+          "tokens": [
+            "我",
+            "打算",
+            "继续",
+            "在",
+            "这儿",
+            "学",
+            "习"
+          ]
+        },
+        {
+          "id": "ss26_exp_3",
+          "targetHanzi": "你想学硕士吗",
+          "targetMeaning": "Cậu muốn học thạc sĩ à?",
+          "pinyin": "Nǐ xiǎng xué shuòshì ma?",
+          "tokens": [
+            "你",
+            "想",
+            "学",
+            "硕士",
+            "吗"
+          ]
+        },
+        {
+          "id": "ss26_exp_4",
+          "targetHanzi": "学几年",
+          "targetMeaning": "Học mấy năm?",
+          "pinyin": "Xué jǐ nián?",
+          "tokens": [
+            "学",
+            "几",
+            "年"
+          ]
+        },
+        {
+          "id": "ss26_exp_5",
+          "targetHanzi": "学两年然后我会回国找工作",
+          "targetMeaning": "Học hai năm. Sau đó tôi sẽ về nước tìm việc.",
+          "pinyin": "Xué liǎng nián. Ránhòu wǒ huì huíguó zhǎo gōngzuò.",
+          "tokens": [
+            "学",
+            "两",
+            "年",
+            "然后",
+            "我",
+            "会",
+            "回国",
+            "找",
+            "工作"
+          ]
+        },
+        {
+          "id": "ss26_exp_6",
+          "targetHanzi": "你想做什么工作",
+          "targetMeaning": "Cậu muốn làm công việc gì?",
+          "pinyin": "Nǐ xiǎng zuò shénme gōngzuò?",
+          "tokens": [
+            "你",
+            "想",
+            "做",
+            "什么",
+            "工作"
+          ]
+        },
+        {
+          "id": "ss26_exp_7",
+          "targetHanzi": "因为我的专业是汉语教育所以回国后我想当一位老师我想帮助越南学生学习汉语让他们更了解中国文化更喜欢中国那你呢你有什么打算",
+          "targetMeaning": "Vì chuyên ngành của tôi là Giáo dục Hán ngữ, nên sau khi về nước tôi muốn làm giáo viên. Tôi muốn giúp học sinh Việt Nam học tiếng Hán, giúp các em hiểu hơn về văn hóa Trung Quốc và yêu thích Trung Quốc hơn. Còn cậu thì sao? Cậu có dự định gì?",
+          "pinyin": "Yīnwèi wǒ de zhuānyè shì Hànyǔ jiàoyù, suǒyǐ huíguó hòu wǒ xiǎng dāng yí wèi lǎoshī. Wǒ xiǎng bāngzhù Yuènán xuésheng xuéxí Hànyǔ, ràng tāmen gèng liǎojiě Zhōngguó wénhuà, gèng xǐhuan Zhōngguó. Nà nǐ ne? Nǐ yǒu shén me dǎsuan?",
+          "tokens": [
+            "因为",
+            "我",
+            "的",
+            "专业",
+            "是",
+            "汉语",
+            "教育",
+            "所以",
+            "回国",
+            "后",
+            "我",
+            "想",
+            "当",
+            "一",
+            "位",
+            "老师",
+            "我",
+            "想",
+            "帮助",
+            "越南",
+            "学生",
+            "学",
+            "习",
+            "汉语",
+            "让",
+            "他们",
+            "更",
+            "了解",
+            "中国",
+            "文化",
+            "更",
+            "喜欢",
+            "中国",
+            "那",
+            "你",
+            "呢",
+            "你",
+            "有",
+            "什么",
+            "打算"
+          ]
+        },
+        {
+          "id": "ss26_exp_8",
+          "targetHanzi": "我想找一份好工作不过对我们留学生来说在中国找工作确实很难所以我只好回国希望找到一份合适的工作",
+          "targetMeaning": "Tôi muốn tìm một công việc tốt. Nhưng với du học sinh chúng mình, tìm việc ở Trung Quốc thực sự rất khó, nên tôi đành về nước, hy vọng tìm được một công việc phù hợp.",
+          "pinyin": "Wǒ xiǎng zhǎo yí fèn hǎo gōngzuò. Búguò duì wǒmen liúxuéshēng lái shuō, zài Zhōngguó zhǎo gōngzuò quèshí hěn nán, suǒyǐ wǒ zhǐhǎo huíguó, xīwàng zhǎodào yí fèn héshì de gōngzuò.",
+          "tokens": [
+            "我",
+            "想",
+            "找",
+            "一",
+            "份",
+            "好",
+            "工作",
+            "不过",
+            "对",
+            "我们",
+            "留学生",
+            "来",
+            "说",
+            "在",
+            "中国",
+            "找",
+            "工作",
+            "确实",
+            "很",
+            "难",
+            "所以",
+            "我",
+            "只好",
+            "回国",
+            "希望",
+            "找",
+            "到",
+            "一",
+            "份",
+            "合适",
+            "的",
+            "工作"
+          ]
+        },
+        {
+          "id": "ss26_exp_9",
+          "targetHanzi": "翻译这是我从小的梦想现在我正在一家企业实习虽然工作有点儿累但是在这里我学会了很多技能和经验",
+          "targetMeaning": "Phiên dịch viên. Đây là ước mơ từ nhỏ của tôi. Hiện tôi đang thực tập tại một doanh nghiệp. Tuy công việc hơi vất vả nhưng ở đây tôi học được rất nhiều kỹ năng và kinh nghiệm.",
+          "pinyin": "Fānyì. Zhè shì wǒ cóngxiǎo de mèngxiǎng. Xiànzài wǒ zhèng zài yījiā qǐyè shíxí. Suīrán gōngzuò yǒudiǎnr lèi dànshì zài zhèlǐ wǒ xué huì le hěn duō jìnéng hé jīngyàn.",
+          "tokens": [
+            "翻译",
+            "这",
+            "是",
+            "我",
+            "从",
+            "小",
+            "的",
+            "梦想",
+            "现在",
+            "我",
+            "正在",
+            "一",
+            "家",
+            "企业",
+            "实习",
+            "虽然",
+            "工作",
+            "有点儿",
+            "累",
+            "但是",
+            "在",
+            "这里",
+            "我",
+            "学",
+            "会",
+            "了",
+            "很",
+            "多",
+            "技能",
+            "和",
+            "经验"
+          ]
+        },
+        {
+          "id": "ss26_exp_10",
+          "targetHanzi": "我觉得当翻译也很好很多人都想做这个工作希望你能实现你的梦想",
+          "targetMeaning": "Tôi thấy làm phiên dịch viên cũng rất hay, rất nhiều người muốn làm công việc này. Chúc cậu thực hiện được ước mơ của mình!",
+          "pinyin": "Wǒ juéde dāng fānyì yě hěn hǎo, hěnduō rén dōu xiǎng zuò zhège gōngzuò. Xīwàng nǐ néng shíxiàn nǐ de mèngxiǎng!",
+          "tokens": [
+            "我",
+            "觉得",
+            "当",
+            "翻译",
+            "也",
+            "很",
+            "好",
+            "很",
+            "多",
+            "人",
+            "都",
+            "想",
+            "做",
+            "这",
+            "个",
+            "工作",
+            "希望",
+            "你",
+            "能",
+            "实现",
+            "你",
+            "的",
+            "梦想"
+          ]
+        },
+        {
+          "id": "ss26_exp_11",
+          "targetHanzi": "谢谢希望你也是",
+          "targetMeaning": "Cảm ơn cậu! Chúc cậu cũng vậy nhé!",
+          "pinyin": "Xièxie! Xīwàng nǐ yěshì!",
+          "tokens": [
+            "谢谢",
+            "希望",
+            "你",
+            "也",
+            "是"
+          ]
+        },
+        {
+          "id": "ss26_exp_12",
+          "targetHanzi": "他说汉语说得很好",
+          "targetMeaning": "Anh ấy nói tiếng Trung rất tốt.",
+          "pinyin": "Tā shuō Hànyǔ shuō de hěn hǎo.",
+          "tokens": [
+            "他",
+            "说",
+            "汉语",
+            "说",
+            "得",
+            "很",
+            "好"
+          ]
+        },
+        {
+          "id": "ss26_exp_13",
+          "targetHanzi": "今天星期几啊",
+          "targetMeaning": "Hôm nay là thứ mấy thế?",
+          "pinyin": "Jīntiān xīngqī jǐ a?",
+          "tokens": [
+            "今天",
+            "星期几",
+            "啊"
+          ]
+        },
+        {
+          "id": "ss26_exp_14",
+          "targetHanzi": "她是老师",
+          "targetMeaning": "Cô ấy là giáo viên.",
+          "pinyin": "Tā shì lǎoshī.",
+          "tokens": [
+            "她",
+            "是",
+            "老师"
+          ]
         }
       ],
       "translationExercises": [
@@ -52075,6 +66696,96 @@ const DEFAULT_LESSONS = [
           "acceptedPinyin": "nǐ jīnnián jǐ suì le",
           "hint": "Gợi ý Pinyin: Nǐ jīnnián jǐ suì le? | Từ chưa học: 今 (jīn: hôm nay, nay)",
           "explanation": "Năm nay cháu mấy tuổi rồi (Hỏi trẻ em dưới mười tuổi) → 你今年几岁了？ (Nǐ jīnnián jǐ suì le?)"
+        },
+        {
+          "id": "tr26_vi_exp_1",
+          "direction": "vi_to_zh",
+          "promptText": "Nhật Minh, sắp tốt nghiệp rồi, cậu đã có dự định gì chưa?",
+          "expectedChinese": "日明，快要毕业了，你有什么打算了吗？",
+          "acceptedPinyin": "rìmíng kuàiyào bìyè le nǐ yǒu shénme dǎsuan le ma",
+          "hint": "Gợi ý Pinyin: Rìmíng, kuàiyào bìyè le, nǐ yǒu shénme dǎsuan le ma?",
+          "explanation": "Nhật Minh, sắp tốt nghiệp rồi, cậu đã có dự định gì chưa? → 日明，快要毕业了，你有什么打算了吗？ (Rìmíng, kuàiyào bìyè le, nǐ yǒu shénme dǎsuan le ma?)"
+        },
+        {
+          "id": "tr26_vi_exp_2",
+          "direction": "vi_to_zh",
+          "promptText": "Tôi dự định tiếp tục học ở đây.",
+          "expectedChinese": "我打算继续在这儿学习。",
+          "acceptedPinyin": "wǒ dǎsuan jìxù zài zhèr xuéxí",
+          "hint": "Gợi ý Pinyin: Wǒ dǎsuan jìxù zài zhèr xuéxí.",
+          "explanation": "Tôi dự định tiếp tục học ở đây. → 我打算继续在这儿学习。 (Wǒ dǎsuan jìxù zài zhèr xuéxí.)"
+        },
+        {
+          "id": "tr26_vi_exp_3",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu muốn học thạc sĩ à?",
+          "expectedChinese": "你想学硕士吗？",
+          "acceptedPinyin": "nǐ xiǎng xué shuòshì ma",
+          "hint": "Gợi ý Pinyin: Nǐ xiǎng xué shuòshì ma?",
+          "explanation": "Cậu muốn học thạc sĩ à? → 你想学硕士吗？ (Nǐ xiǎng xué shuòshì ma?)"
+        },
+        {
+          "id": "tr26_vi_exp_4",
+          "direction": "vi_to_zh",
+          "promptText": "Học mấy năm?",
+          "expectedChinese": "学几年？",
+          "acceptedPinyin": "xué jǐ nián",
+          "hint": "Gợi ý Pinyin: Xué jǐ nián?",
+          "explanation": "Học mấy năm? → 学几年？ (Xué jǐ nián?)"
+        },
+        {
+          "id": "tr26_vi_exp_5",
+          "direction": "vi_to_zh",
+          "promptText": "Học hai năm. Sau đó tôi sẽ về nước tìm việc.",
+          "expectedChinese": "学两年。然后我会回国找工作。",
+          "acceptedPinyin": "xué liǎng nián ránhòu wǒ huì huíguó zhǎo gōngzuò",
+          "hint": "Gợi ý Pinyin: Xué liǎng nián. Ránhòu wǒ huì huíguó zhǎo gōngzuò.",
+          "explanation": "Học hai năm. Sau đó tôi sẽ về nước tìm việc. → 学两年。然后我会回国找工作。 (Xué liǎng nián. Ránhòu wǒ huì huíguó zhǎo gōngzuò.)"
+        },
+        {
+          "id": "tr26_vi_exp_6",
+          "direction": "vi_to_zh",
+          "promptText": "Cậu muốn làm công việc gì?",
+          "expectedChinese": "你想做什么工作？",
+          "acceptedPinyin": "nǐ xiǎng zuò shénme gōngzuò",
+          "hint": "Gợi ý Pinyin: Nǐ xiǎng zuò shénme gōngzuò?",
+          "explanation": "Cậu muốn làm công việc gì? → 你想做什么工作？ (Nǐ xiǎng zuò shénme gōngzuò?)"
+        },
+        {
+          "id": "tr26_vi_exp_7",
+          "direction": "vi_to_zh",
+          "promptText": "Vì chuyên ngành của tôi là Giáo dục Hán ngữ, nên sau khi về nước tôi muốn làm giáo viên. Tôi muốn giúp học sinh Việt Nam học tiếng Hán, giúp các em hiểu hơn về văn hóa Trung Quốc và yêu thích Trung Quốc hơn. Còn cậu thì sao? Cậu có dự định gì?",
+          "expectedChinese": "因为我的专业是汉语教育，所以回国后我想当一位老师。我想帮助越南学生学习汉语，让他们更了解中国文化，更喜欢中国。那你呢？你有什么打算？",
+          "acceptedPinyin": "yīnwèi wǒ de zhuānyè shì hànyǔ jiàoyù suǒyǐ huíguó hòu wǒ xiǎng dāng yí wèi lǎoshī wǒ xiǎng bāngzhù yuènán xuésheng xuéxí hànyǔ ràng tāmen gèng liǎojiě zhōngguó wénhuà gèng xǐhuan zhōngguó nà nǐ ne nǐ yǒu shén me dǎsuan",
+          "hint": "Gợi ý Pinyin: Yīnwèi wǒ de zhuānyè shì Hànyǔ jiàoyù, suǒyǐ huíguó hòu wǒ xiǎng dāng yí wèi lǎoshī. Wǒ xiǎng bāngzhù Yuènán xuésheng xuéxí Hànyǔ, ràng tāmen gèng liǎojiě Zhōngguó wénhuà, gèng xǐhuan Zhōngguó. Nà nǐ ne? Nǐ yǒu shén me dǎsuan?",
+          "explanation": "Vì chuyên ngành của tôi là Giáo dục Hán ngữ, nên sau khi về nước tôi muốn làm giáo viên. Tôi muốn giúp học sinh Việt Nam học tiếng Hán, giúp các em hiểu hơn về văn hóa Trung Quốc và yêu thích Trung Quốc hơn. Còn cậu thì sao? Cậu có dự định gì? → 因为我的专业是汉语教育，所以回国后我想当一位老师。我想帮助越南学生学习汉语，让他们更了解中国文化，更喜欢中国。那你呢？你有什么打算？ (Yīnwèi wǒ de zhuānyè shì Hànyǔ jiàoyù, suǒyǐ huíguó hòu wǒ xiǎng dāng yí wèi lǎoshī. Wǒ xiǎng bāngzhù Yuènán xuésheng xuéxí Hànyǔ, ràng tāmen gèng liǎojiě Zhōngguó wénhuà, gèng xǐhuan Zhōngguó. Nà nǐ ne? Nǐ yǒu shén me dǎsuan?)"
+        },
+        {
+          "id": "tr26_vi_exp_8",
+          "direction": "vi_to_zh",
+          "promptText": "Tôi muốn tìm một công việc tốt. Nhưng với du học sinh chúng mình, tìm việc ở Trung Quốc thực sự rất khó, nên tôi đành về nước, hy vọng tìm được một công việc phù hợp.",
+          "expectedChinese": "我想找一份好工作。不过对我们留学生来说，在中国找工作确实很难，所以我只好回国，希望找到一份合适的工作。",
+          "acceptedPinyin": "wǒ xiǎng zhǎo yí fèn hǎo gōngzuò búguò duì wǒmen liúxuéshēng lái shuō zài zhōngguó zhǎo gōngzuò quèshí hěn nán suǒyǐ wǒ zhǐhǎo huíguó xīwàng zhǎodào yí fèn héshì de gōngzuò",
+          "hint": "Gợi ý Pinyin: Wǒ xiǎng zhǎo yí fèn hǎo gōngzuò. Búguò duì wǒmen liúxuéshēng lái shuō, zài Zhōngguó zhǎo gōngzuò quèshí hěn nán, suǒyǐ wǒ zhǐhǎo huíguó, xīwàng zhǎodào yí fèn héshì de gōngzuò.",
+          "explanation": "Tôi muốn tìm một công việc tốt. Nhưng với du học sinh chúng mình, tìm việc ở Trung Quốc thực sự rất khó, nên tôi đành về nước, hy vọng tìm được một công việc phù hợp. → 我想找一份好工作。不过对我们留学生来说，在中国找工作确实很难，所以我只好回国，希望找到一份合适的工作。 (Wǒ xiǎng zhǎo yí fèn hǎo gōngzuò. Búguò duì wǒmen liúxuéshēng lái shuō, zài Zhōngguó zhǎo gōngzuò quèshí hěn nán, suǒyǐ wǒ zhǐhǎo huíguó, xīwàng zhǎodào yí fèn héshì de gōngzuò.)"
+        },
+        {
+          "id": "tr26_vi_exp_9",
+          "direction": "vi_to_zh",
+          "promptText": "Công việc lý tưởng của cậu là gì?",
+          "expectedChinese": "你的理想工作是什么？",
+          "acceptedPinyin": "nǐ de lǐxiǎng gōngzuò shì shénme",
+          "hint": "Gợi ý Pinyin: Nǐ de lǐxiǎng gōngzuò shì shénme?",
+          "explanation": "Công việc lý tưởng của cậu là gì? → 你的理想工作是什么？ (Nǐ de lǐxiǎng gōngzuò shì shénme?)"
+        },
+        {
+          "id": "tr26_vi_exp_10",
+          "direction": "vi_to_zh",
+          "promptText": "Phiên dịch viên. Đây là ước mơ từ nhỏ của tôi. Hiện tôi đang thực tập tại một doanh nghiệp. Tuy công việc hơi vất vả nhưng ở đây tôi học được rất nhiều kỹ năng và kinh nghiệm.",
+          "expectedChinese": "翻译。这是我从小的梦想。现在我正在一家企业实习。虽然工作有点儿累，但是在这里我学会了很多技能和经验。",
+          "acceptedPinyin": "fānyì zhè shì wǒ cóngxiǎo de mèngxiǎng xiànzài wǒ zhèng zài yījiā qǐyè shíxí suīrán gōngzuò yǒudiǎnr lèi dànshì zài zhèlǐ wǒ xué huì le hěn duō jìnéng hé jīngyàn",
+          "hint": "Gợi ý Pinyin: Fānyì. Zhè shì wǒ cóngxiǎo de mèngxiǎng. Xiànzài wǒ zhèng zài yījiā qǐyè shíxí. Suīrán gōngzuò yǒudiǎnr lèi dànshì zài zhèlǐ wǒ xué huì le hěn duō jìnéng hé jīngyàn.",
+          "explanation": "Phiên dịch viên. Đây là ước mơ từ nhỏ của tôi. Hiện tôi đang thực tập tại một doanh nghiệp. Tuy công việc hơi vất vả nhưng ở đây tôi học được rất nhiều kỹ năng và kinh nghiệm. → 翻译。这是我从小的梦想。现在我正在一家企业实习。虽然工作有点儿累，但是在这里我学会了很多技能和经验。 (Fānyì. Zhè shì wǒ cóngxiǎo de mèngxiǎng. Xiànzài wǒ zhèng zài yījiā qǐyè shíxí. Suīrán gōngzuò yǒudiǎnr lèi dànshì zài zhèlǐ wǒ xué huì le hěn duō jìnéng hé jīngyàn.)"
         },
         {
           "id": "tr26_zh_1",
@@ -52135,6 +66846,273 @@ const DEFAULT_LESSONS = [
           ],
           "hint": "Pinyin: Jīntiān xīngqī jǐ a?",
           "explanation": "A: 今天星期几啊？ (Jīntiān xīngqī jǐ a?) nghĩa là: Hôm nay là thứ mấy thế?"
+        },
+        {
+          "id": "tr26_zh_exp_1",
+          "direction": "zh_to_vi",
+          "promptText": "爸爸轻轻地拍我的肩膀，无声地安慰我。",
+          "chineseAudioText": "爸爸轻轻地拍我的肩膀，无声地安慰我。",
+          "pinyin": "Bàba qīngqīng de pāi wǒ de jiānbǎng, wúshēng de ānwèi wǒ.",
+          "expectedMeaning": "Bố nhẹ nhàng vỗ vai tôi, lẳng lặng an ủi tôi.",
+          "acceptedKeywords": [
+            "bố",
+            "nhẹ",
+            "nhàng",
+            "vỗ",
+            "vai",
+            "tôi",
+            "lẳng",
+            "lặng",
+            "an",
+            "ủi",
+            "tôi"
+          ],
+          "hint": "Pinyin: Bàba qīngqīng de pāi wǒ de jiānbǎng, wúshēng de ānwèi wǒ.",
+          "explanation": "爸爸轻轻地拍我的肩膀，无声地安慰我。 (Bàba qīngqīng de pāi wǒ de jiānbǎng, wúshēng de ānwèi wǒ.) nghĩa là: Bố nhẹ nhàng vỗ vai tôi, lẳng lặng an ủi tôi."
+        },
+        {
+          "id": "tr26_zh_exp_2",
+          "direction": "zh_to_vi",
+          "promptText": "刚才我好像看见了她。",
+          "chineseAudioText": "刚才我好像看见了她。",
+          "pinyin": "Gāngcái wǒ hǎoxiàng kànjiàn le tā.",
+          "expectedMeaning": "Hình như ban nãy tôi mới trông thấy cô ấy.",
+          "acceptedKeywords": [
+            "hình",
+            "như",
+            "ban",
+            "nãy",
+            "tôi",
+            "mới",
+            "trông",
+            "thấy",
+            "cô",
+            "ấy"
+          ],
+          "hint": "Pinyin: Gāngcái wǒ hǎoxiàng kànjiàn le tā.",
+          "explanation": "刚才我好像看见了她。 (Gāngcái wǒ hǎoxiàng kànjiàn le tā.) nghĩa là: Hình như ban nãy tôi mới trông thấy cô ấy."
+        },
+        {
+          "id": "tr26_zh_exp_3",
+          "direction": "zh_to_vi",
+          "promptText": "小阳回了家就去做饭。",
+          "chineseAudioText": "小阳回了家就去做饭。",
+          "pinyin": "Xiǎoyáng huí le jiā jiù qù zuò fàn.",
+          "expectedMeaning": "Dương vừa về nhà là đi nấu cơm.",
+          "acceptedKeywords": [
+            "dương",
+            "vừa",
+            "về",
+            "nhà",
+            "là",
+            "đi",
+            "nấu",
+            "cơm"
+          ],
+          "hint": "Pinyin: Xiǎoyáng huí le jiā jiù qù zuò fàn.",
+          "explanation": "小阳回了家就去做饭。 (Xiǎoyáng huí le jiā jiù qù zuò fàn.) nghĩa là: Dương vừa về nhà là đi nấu cơm."
+        },
+        {
+          "id": "tr26_zh_exp_4",
+          "direction": "zh_to_vi",
+          "promptText": "他画了一个上午才画完这幅画儿。",
+          "chineseAudioText": "他画了一个上午才画完这幅画儿。",
+          "pinyin": "Tā huà le yígè shàngwǔ cái huà wán zhè fú huàr.",
+          "expectedMeaning": "Cậu ấy vẽ hết một buổi sáng mới vẽ xong bức tranh này.",
+          "acceptedKeywords": [
+            "cậu",
+            "ấy",
+            "vẽ",
+            "hết",
+            "một",
+            "buổi",
+            "sáng",
+            "mới",
+            "vẽ",
+            "xong",
+            "bức",
+            "tranh",
+            "này"
+          ],
+          "hint": "Pinyin: Tā huà le yígè shàngwǔ cái huà wán zhè fú huàr.",
+          "explanation": "他画了一个上午才画完这幅画儿。 (Tā huà le yígè shàngwǔ cái huà wán zhè fú huàr.) nghĩa là: Cậu ấy vẽ hết một buổi sáng mới vẽ xong bức tranh này."
+        },
+        {
+          "id": "tr26_zh_exp_5",
+          "direction": "zh_to_vi",
+          "promptText": "我去了几家商店才买到她喜欢的玩具。",
+          "chineseAudioText": "我去了几家商店才买到她喜欢的玩具。",
+          "pinyin": "Wǒ qù le jǐ jiā shāngdiàn cái mǎi dào tā xǐhuan de wánjù.",
+          "expectedMeaning": "Tôi đi khắp mấy cửa hàng mới mua được món đồ chơi mà con bé thích.",
+          "acceptedKeywords": [
+            "tôi",
+            "đi",
+            "khắp",
+            "mấy",
+            "cửa",
+            "hàng",
+            "mới",
+            "mua",
+            "được",
+            "món",
+            "đồ",
+            "chơi",
+            "mà",
+            "con",
+            "bé",
+            "thích"
+          ],
+          "hint": "Pinyin: Wǒ qù le jǐ jiā shāngdiàn cái mǎi dào tā xǐhuan de wánjù.",
+          "explanation": "我去了几家商店才买到她喜欢的玩具。 (Wǒ qù le jǐ jiā shāngdiàn cái mǎi dào tā xǐhuan de wánjù.) nghĩa là: Tôi đi khắp mấy cửa hàng mới mua được món đồ chơi mà con bé thích."
+        },
+        {
+          "id": "tr26_zh_exp_6",
+          "direction": "zh_to_vi",
+          "promptText": "你今年几岁了？",
+          "chineseAudioText": "你今年几岁了？",
+          "pinyin": "Nǐ jīnnián jǐ suì le?",
+          "expectedMeaning": "Năm nay cháu mấy tuổi rồi (Hỏi trẻ em dưới mười tuổi)",
+          "acceptedKeywords": [
+            "năm",
+            "nay",
+            "cháu",
+            "mấy",
+            "tuổi",
+            "rồi",
+            "hỏi",
+            "trẻ",
+            "em",
+            "dưới",
+            "mười",
+            "tuổi"
+          ],
+          "hint": "Pinyin: Nǐ jīnnián jǐ suì le?",
+          "explanation": "你今年几岁了？ (Nǐ jīnnián jǐ suì le?) nghĩa là: Năm nay cháu mấy tuổi rồi (Hỏi trẻ em dưới mười tuổi)"
+        },
+        {
+          "id": "tr26_zh_exp_7",
+          "direction": "zh_to_vi",
+          "promptText": "你今年多大了？",
+          "chineseAudioText": "你今年多大了？",
+          "pinyin": "Nǐ jīnnián duōdà le?",
+          "expectedMeaning": "Năm nay cậu bao nhiêu tuổi? (Hỏi chung chung)",
+          "acceptedKeywords": [
+            "năm",
+            "nay",
+            "cậu",
+            "bao",
+            "nhiêu",
+            "tuổi",
+            "hỏi",
+            "chung",
+            "chung"
+          ],
+          "hint": "Pinyin: Nǐ jīnnián duōdà le?",
+          "explanation": "你今年多大了？ (Nǐ jīnnián duōdà le?) nghĩa là: Năm nay cậu bao nhiêu tuổi? (Hỏi chung chung)"
+        },
+        {
+          "id": "tr26_zh_exp_8",
+          "direction": "zh_to_vi",
+          "promptText": "祝我们都能找到理想的工作，继续了解并热爱中国文化！",
+          "chineseAudioText": "祝我们都能找到理想的工作，继续了解并热爱中国文化！",
+          "pinyin": "Zhù wǒmen dōu néng zhǎodào lǐxiǎng de gōngzuò, jìxù liǎojiě bìng rè'ài Zhōngguó wénhuà!",
+          "expectedMeaning": "Chúc hai đứa mình đều tìm được công việc lý tưởng và tiếp tục hiểu biết, yêu mến văn hóa Trung Quốc!",
+          "acceptedKeywords": [
+            "chúc",
+            "hai",
+            "đứa",
+            "mình",
+            "đều",
+            "tìm",
+            "được",
+            "công",
+            "việc",
+            "lý",
+            "tưởng",
+            "và",
+            "tiếp",
+            "tục",
+            "hiểu",
+            "biết",
+            "yêu",
+            "mến",
+            "văn",
+            "hóa",
+            "trung",
+            "quốc"
+          ],
+          "hint": "Pinyin: Zhù wǒmen dōu néng zhǎodào lǐxiǎng de gōngzuò, jìxù liǎojiě bìng rè'ài Zhōngguó wénhuà!",
+          "explanation": "祝我们都能找到理想的工作，继续了解并热爱中国文化！ (Zhù wǒmen dōu néng zhǎodào lǐxiǎng de gōngzuò, jìxù liǎojiě bìng rè'ài Zhōngguó wénhuà!) nghĩa là: Chúc hai đứa mình đều tìm được công việc lý tưởng và tiếp tục hiểu biết, yêu mến văn hóa Trung Quốc!"
+        },
+        {
+          "id": "tr26_zh_exp_9",
+          "direction": "zh_to_vi",
+          "promptText": "真好！我现在在一家企业实习做翻译，积累了很多技能和经验。",
+          "chineseAudioText": "真好！我现在在一家企业实习做翻译，积累了很多技能和经验。",
+          "pinyin": "Zhēn hǎo! Wǒ xiànzài zài yì jiā qǐyè shíxí zuò fānyì, jīlěi le hěnduō jìnéng hé jīngyàn.",
+          "expectedMeaning": "Hay quá! Mình thì đang thực tập biên phiên dịch tại một doanh nghiệp, tích lũy được nhiều kỹ năng và kinh nghiệm.",
+          "acceptedKeywords": [
+            "hay",
+            "quá",
+            "mình",
+            "thì",
+            "đang",
+            "thực",
+            "tập",
+            "biên",
+            "phiên",
+            "dịch",
+            "tại",
+            "một",
+            "doanh",
+            "nghiệp",
+            "tích",
+            "lũy",
+            "được",
+            "nhiều",
+            "kỹ",
+            "năng",
+            "và",
+            "kinh",
+            "nghiệm"
+          ],
+          "hint": "Pinyin: Zhēn hǎo! Wǒ xiànzài zài yì jiā qǐyè shíxí zuò fānyì, jīlěi le hěnduō jìnéng hé jīngyàn.",
+          "explanation": "真好！我现在在一家企业实习做翻译，积累了很多技能和经验。 (Zhēn hǎo! Wǒ xiànzài zài yì jiā qǐyè shíxí zuò fānyì, jīlěi le hěnduō jìnéng hé jīngyàn.) nghĩa là: Hay quá! Mình thì đang thực tập biên phiên dịch tại một doanh nghiệp, tích lũy được nhiều kỹ năng và kinh nghiệm."
+        },
+        {
+          "id": "tr26_zh_exp_10",
+          "direction": "zh_to_vi",
+          "promptText": "我的专业是汉语教育，想先读两年硕士，以后当一位老师。",
+          "chineseAudioText": "我的专业是汉语教育，想先读两年硕士，以后当一位老师。",
+          "pinyin": "Wǒ de zhuānyè shì Hànyǔ jiàoyù, xiǎng xiān dú liǎng nián shuòshì, yǐhòu dāng yí wèi lǎoshī.",
+          "expectedMeaning": "Chuyên ngành của mình là Giáo dục Hán ngữ, mình muốn học thạc sĩ hai năm trước rồi sau này làm giáo viên.",
+          "acceptedKeywords": [
+            "chuyên",
+            "ngành",
+            "của",
+            "mình",
+            "là",
+            "giáo",
+            "dục",
+            "hán",
+            "ngữ",
+            "mình",
+            "muốn",
+            "học",
+            "thạc",
+            "sĩ",
+            "hai",
+            "năm",
+            "trước",
+            "rồi",
+            "sau",
+            "này",
+            "làm",
+            "giáo",
+            "viên"
+          ],
+          "hint": "Pinyin: Wǒ de zhuānyè shì Hànyǔ jiàoyù, xiǎng xiān dú liǎng nián shuòshì, yǐhòu dāng yí wèi lǎoshī.",
+          "explanation": "我的专业是汉语教育，想先读两年硕士，以后当一位老师。 (Wǒ de zhuānyè shì Hànyǔ jiàoyù, xiǎng xiān dú liǎng nián shuòshì, yǐhòu dāng yí wèi lǎoshī.) nghĩa là: Chuyên ngành của mình là Giáo dục Hán ngữ, mình muốn học thạc sĩ hai năm trước rồi sau này làm giáo viên."
         }
       ],
       "expandedQuiz": [

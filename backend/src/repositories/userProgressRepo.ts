@@ -237,8 +237,11 @@ export async function getMarkedVocabCards(userId: string): Promise<MarkedVocabCa
     const userMap = memoryStore.markedByUser.get(userId);
     if (!userMap) return [];
     const cards: MarkedVocabCard[] = [];
+    const orderedLessons = [...memoryStore.lessons].sort(
+      (a, b) => Number(b.isSystem) - Number(a.isSystem)
+    );
 
-    for (const l of memoryStore.lessons) {
+    for (const l of orderedLessons) {
       for (const v of l.vocabulary) {
         const mark = userMap.get(v.id);
         if (mark) {
@@ -252,7 +255,7 @@ export async function getMarkedVocabCards(userId: string): Promise<MarkedVocabCa
         }
       }
     }
-    return cards.sort((a, b) => b.markedAt.localeCompare(a.markedAt));
+    return cards;
   }
 
   const pool = getPool()!;
@@ -266,7 +269,7 @@ export async function getMarkedVocabCards(userId: string): Promise<MarkedVocabCa
      JOIN vocabularies v ON v.id = m.vocab_id
      JOIN lessons l ON l.id = v.lesson_id
      WHERE m.user_id = $1::uuid
-     ORDER BY m.marked_at DESC`,
+     ORDER BY l.is_system DESC, l.sort_order ASC, l.created_at ASC, v.sort_order ASC, m.marked_at DESC`,
     [userId]
   );
 
@@ -297,11 +300,16 @@ export async function saveTestAttempt(
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
     const list = memoryStore.attemptsByUser.get(userId) || [];
-    const lesson = memoryStore.lessons.find((l) => l.id === payload.lessonId);
+    const lesson = payload.lessonId
+      ? memoryStore.lessons.find((l) => l.id === payload.lessonId)
+      : undefined;
+    const resolvedTitle =
+      payload.examTitle || lesson?.title || payload.lessonId || 'Kiểm tra tổng hợp (26 bài)';
     const rec: TestAttemptRecord = {
       id: crypto.randomUUID(),
-      lessonId: payload.lessonId,
-      lessonTitle: lesson?.title || payload.lessonId,
+      lessonId: payload.lessonId || null,
+      lessonTitle: resolvedTitle,
+      examTitle: payload.examTitle || null,
       score: payload.score,
       totalQuestions: payload.totalQuestions,
       correctCount: payload.correctCount,
@@ -316,12 +324,13 @@ export async function saveTestAttempt(
 
   const pool = getPool()!;
   const res = await pool.query<{ id: string; submitted_at: Date }>(
-    `INSERT INTO test_attempts (user_id, lesson_id, score, total_questions, correct_count, duration_seconds, answers)
-     VALUES ($1::uuid, $2, $3, $4, $5, $6, $7::jsonb)
+    `INSERT INTO test_attempts (user_id, lesson_id, exam_title, score, total_questions, correct_count, duration_seconds, answers)
+     VALUES ($1::uuid, $2, $3, $4, $5, $6, $7, $8::jsonb)
      RETURNING id, submitted_at`,
     [
       userId,
-      payload.lessonId,
+      payload.lessonId || null,
+      payload.examTitle || null,
       payload.score,
       payload.totalQuestions,
       payload.correctCount,
@@ -333,7 +342,9 @@ export async function saveTestAttempt(
   const row = res.rows[0];
   return {
     id: row.id,
-    lessonId: payload.lessonId,
+    lessonId: payload.lessonId || null,
+    examTitle: payload.examTitle || null,
+    lessonTitle: payload.examTitle || undefined,
     score: payload.score,
     totalQuestions: payload.totalQuestions,
     correctCount: payload.correctCount,
@@ -351,19 +362,19 @@ export async function listTestAttempts(userId: string): Promise<TestAttemptRecor
 
   const pool = getPool()!;
   const res = await pool.query(
-    `SELECT a.id, a.lesson_id, l.title AS lesson_title, a.score, a.total_questions, a.correct_count, a.duration_seconds, a.answers, a.submitted_at
+    `SELECT a.id, a.lesson_id, a.exam_title, l.title AS lesson_title, a.score, a.total_questions, a.correct_count, a.duration_seconds, a.answers, a.submitted_at
      FROM test_attempts a
-     JOIN lessons l ON l.id = a.lesson_id
+     LEFT JOIN lessons l ON l.id = a.lesson_id
      WHERE a.user_id = $1::uuid
-     ORDER BY a.submitted_at DESC
-     LIMIT 30`,
+     ORDER BY a.submitted_at DESC`,
     [userId]
   );
 
   return res.rows.map((r) => ({
     id: r.id,
     lessonId: r.lesson_id,
-    lessonTitle: r.lesson_title,
+    examTitle: r.exam_title,
+    lessonTitle: r.exam_title || r.lesson_title || 'Kiểm tra tổng hợp (26 bài)',
     score: r.score,
     totalQuestions: r.total_questions,
     correctCount: r.correct_count,

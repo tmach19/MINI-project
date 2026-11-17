@@ -1,4 +1,5 @@
 import type {
+  ComprehensiveExamResponse,
   GlobalVocabHit,
   LessonDetail,
   LessonSummary,
@@ -115,8 +116,14 @@ export const api = {
       body: JSON.stringify({ vocabIds }),
     }),
 
+  getComprehensiveExam: () =>
+    apiFetch<{ exam: ComprehensiveExamResponse }>('/tests/comprehensive-exam'),
+
+  getTestAttempts: () => apiFetch<{ attempts: TestAttemptRecord[] }>('/tests/attempts'),
+
   submitTestAttempt: (payload: {
-    lessonId: string;
+    lessonId: string | null;
+    examTitle?: string | null;
     score: number;
     totalQuestions: number;
     correctCount: number;

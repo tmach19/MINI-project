@@ -90,6 +90,8 @@ export interface ExpandedQuizQuestion {
 
 export interface ComprehensiveQuestion {
   id: string;
+  lessonId?: string | null;
+  lessonTitle?: string | null;
   category?: string | null;
   audioText?: string | null;
   passage?: string | null;
@@ -97,6 +99,14 @@ export interface ComprehensiveQuestion {
   options: string[];
   correctIndex: number;
   explanation?: string | null;
+}
+
+export interface ComprehensiveExamResponse {
+  id: string;
+  title: string;
+  hskLevel: string;
+  description: string;
+  questions: ComprehensiveQuestion[];
 }
 
 export interface LessonSummary {
@@ -155,8 +165,9 @@ export interface MarkedVocabCard extends VocabularyItem {
 
 export interface TestAttemptRecord {
   id: string;
-  lessonId: string;
+  lessonId: string | null;
   lessonTitle?: string;
+  examTitle?: string | null;
   score: number;
   totalQuestions: number;
   correctCount: number;

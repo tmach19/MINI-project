@@ -16,7 +16,13 @@ import {
 } from 'lucide-react';
 import { soundFx, speakChinese } from '../lib/audio';
 import { shuffleArray } from '../lib/constants';
-import type { LessonDetail, VocabularyItem } from '../types';
+import type {
+  ExpandedQuizQuestion,
+  LessonDetail,
+  ScrambleExercise,
+  TranslationExercise,
+  VocabularyItem,
+} from '../types';
 
 interface GamesSectionProps {
   lesson: LessonDetail;
@@ -24,11 +30,101 @@ interface GamesSectionProps {
 
 type GameMode = 'tri_match' | 'scramble' | 'translation' | 'expanded_quiz';
 
+const SCRAMBLE_DECK_SIZE = 6;
+const TRANS_DECK_SIZE = 6;
+const QUIZ_DECK_SIZE = 10;
+
+function pickNextDeck<T extends { id: string }>(
+  pool: T[],
+  prevIds: string[],
+  deckSize: number
+): T[] {
+  if (pool.length === 0) return [];
+  if (pool.length <= deckSize) return shuffleArray(pool);
+
+  const prevSet = new Set(prevIds);
+  const unseen = shuffleArray(pool.filter((item) => !prevSet.has(item.id)));
+  const seen = shuffleArray(pool.filter((item) => prevSet.has(item.id)));
+  return shuffleArray([...unseen, ...seen].slice(0, deckSize));
+}
+
 function normalizeClean(str: string): string {
   return str
     .toLowerCase()
     .replace(/[\s,.;:!?'"“”‘’()（）！？。，、]/g, '')
     .trim();
+}
+
+const PINYIN_TONE_MAP: Record<string, string> = {
+  ā: 'a', á: 'a', ǎ: 'a', à: 'a',
+  ē: 'e', é: 'e', ě: 'e', è: 'e',
+  ī: 'i', í: 'i', ǐ: 'i', ì: 'i',
+  ō: 'o', ó: 'o', ǒ: 'o', ò: 'o',
+  ū: 'u', ú: 'u', ǔ: 'u', ù: 'u',
+  ǖ: 'u', ǘ: 'u', ǚ: 'u', ǜ: 'u', ü: 'u',
+};
+
+function stripPinyinTones(str: string): string {
+  return normalizeClean(str).replace(/[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]/g, (ch) => PINYIN_TONE_MAP[ch] ?? ch);
+}
+
+function tokenizeWords(str: string): string[] {
+  return str
+    .toLowerCase()
+    .replace(/[,.;:!?'"“”‘’()（）！？。，、/]/g, ' ')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+function isZhToViCompleteMatch(
+  userInput: string,
+  expectedMeaning?: string | null,
+  acceptedKeywords?: string[]
+): boolean {
+  const cleanUser = normalizeClean(userInput);
+  if (!cleanUser) return false;
+
+  const expectedClean = normalizeClean(expectedMeaning || '');
+  if (expectedClean && cleanUser === expectedClean) return true;
+
+  const expectedWords = tokenizeWords(expectedMeaning || '');
+  if (expectedWords.length > 0) {
+    const userWords = tokenizeWords(userInput);
+    const minRequiredWords =
+      expectedWords.length <= 4 ? expectedWords.length : Math.ceil(expectedWords.length * 0.8);
+    if (userWords.length < minRequiredWords) return false;
+
+    const remainingCounts = new Map<string, number>();
+    for (const w of userWords) {
+      remainingCounts.set(w, (remainingCounts.get(w) || 0) + 1);
+    }
+
+    let matched = 0;
+    for (const w of expectedWords) {
+      const left = remainingCounts.get(w) || 0;
+      if (left > 0) {
+        matched++;
+        remainingCounts.set(w, left - 1);
+      }
+    }
+
+    if (matched < minRequiredWords) return false;
+
+    // Ensure the user did not stop mid-sentence by checking the tail of longer sentences
+    if (expectedWords.length >= 5) {
+      const userWordSet = new Set(userWords);
+      const tailWords = expectedWords.slice(-2);
+      if (!tailWords.some((w) => userWordSet.has(w))) return false;
+    }
+
+    return true;
+  }
+
+  const keywords = (acceptedKeywords || []).filter(Boolean);
+  if (keywords.length === 0) return false;
+  const userLower = userInput.toLowerCase().trim();
+  return keywords.every((kw) => userLower.includes(kw.toLowerCase()));
 }
 
 export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
@@ -66,17 +162,29 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
 
   useEffect(() => {
     startTriMatch();
+    const scPool = lesson.exercises?.sentenceScramble || [];
+    setScrambleDeck(pickNextDeck(scPool, [], SCRAMBLE_DECK_SIZE));
     setScrambleIdx(0);
     setSelectedTokens([]);
     setScrambleResult(null);
+
+    const trPool = (lesson.exercises?.translationExercises || []).filter(
+      (t) => t.direction === transMode
+    );
+    setTransDeck(pickNextDeck(trPool, [], TRANS_DECK_SIZE));
     setTransIdx(0);
     setTransInput('');
     setTransChecked(false);
+    setShowTransHint(false);
+    setShowTransAnswer(false);
+
+    const qPool = lesson.exercises?.expandedQuiz || [];
+    setQuizDeck(pickNextDeck(qPool, [], QUIZ_DECK_SIZE));
     setQuizIdx(0);
     setQuizAnswers({});
     setQuizDone(false);
     setQuizStreak(0);
-  }, [lesson.id]);
+  }, [lesson.id, lesson.exercises]);
 
   useEffect(() => {
     if (mode !== 'tri_match' || !triStarted || triDone || triWords.length === 0) return;
@@ -118,11 +226,25 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
   }, [triWords]);
 
   // --- Game 2: Sentence Scramble ---
-  const scrambles = lesson.exercises?.sentenceScramble || [];
+  const scramblePool = lesson.exercises?.sentenceScramble || [];
+  const [scrambleDeck, setScrambleDeck] = useState<ScrambleExercise[]>([]);
   const [scrambleIdx, setScrambleIdx] = useState(0);
   const [selectedTokens, setSelectedTokens] = useState<number[]>([]);
   const [scrambleResult, setScrambleResult] = useState<boolean | null>(null);
-  const currScramble = scrambles[scrambleIdx];
+  const currScramble = scrambleDeck[scrambleIdx];
+
+  const refreshScrambleDeck = () => {
+    setScrambleDeck((prev) =>
+      pickNextDeck(
+        scramblePool,
+        prev.map((x) => x.id),
+        SCRAMBLE_DECK_SIZE
+      )
+    );
+    setScrambleIdx(0);
+    setSelectedTokens([]);
+    setScrambleResult(null);
+  };
 
   const shuffledTokens = useMemo(() => {
     if (!currScramble) return [];
@@ -131,8 +253,9 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
       .sort((a, b) => ((a.text.charCodeAt(0) + scrambleIdx) % 7) - ((b.text.charCodeAt(0) + scrambleIdx) % 7));
   }, [currScramble, scrambleIdx]);
 
-  // --- Game 3: Bilingual Translation (Đã sửa bug length > 5) ---
+  // --- Game 3: Bilingual Translation ---
   const [transMode, setTransMode] = useState<'vi_to_zh' | 'zh_to_vi'>('vi_to_zh');
+  const [transDeck, setTransDeck] = useState<TranslationExercise[]>([]);
   const [transIdx, setTransIdx] = useState(0);
   const [transInput, setTransInput] = useState('');
   const [transChecked, setTransChecked] = useState(false);
@@ -140,39 +263,56 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
   const [showTransHint, setShowTransHint] = useState(false);
   const [showTransAnswer, setShowTransAnswer] = useState(false);
 
-  const transList = useMemo(
+  const transPool = useMemo(
     () => (lesson.exercises?.translationExercises || []).filter((t) => t.direction === transMode),
     [lesson.exercises, transMode]
   );
-  const currTrans = transList[transIdx];
+  const currTrans = transDeck[transIdx];
+
+  const refreshTransDeck = (targetDir?: 'vi_to_zh' | 'zh_to_vi') => {
+    const dir = targetDir || transMode;
+    const pool = (lesson.exercises?.translationExercises || []).filter((t) => t.direction === dir);
+    setTransDeck((prev) =>
+      pickNextDeck(
+        pool,
+        targetDir ? [] : prev.map((x) => x.id),
+        TRANS_DECK_SIZE
+      )
+    );
+    setTransIdx(0);
+    setTransInput('');
+    setTransChecked(false);
+    setShowTransHint(false);
+    setShowTransAnswer(false);
+  };
 
   const handleCheckTranslation = () => {
     if (!currTrans) return;
-    setTransChecked(true);
     const cleanUser = normalizeClean(transInput);
+    if (!cleanUser) {
+      setTransChecked(false);
+      return;
+    }
+
+    setTransChecked(true);
 
     if (currTrans.direction === 'vi_to_zh') {
       const cleanZh = normalizeClean(currTrans.expectedChinese || '');
       const cleanPy = normalizeClean(currTrans.acceptedPinyin || '');
+      const cleanUserNoTone = stripPinyinTones(transInput);
+      const cleanPyNoTone = stripPinyinTones(currTrans.acceptedPinyin || '');
       const ok =
-        Boolean(cleanUser) &&
-        (cleanUser === cleanZh || (Boolean(cleanPy) && cleanUser === cleanPy));
+        cleanUser === cleanZh ||
+        (Boolean(cleanPy) && (cleanUser === cleanPy || cleanUserNoTone === cleanPyNoTone));
       setTransCorrect(ok);
       if (ok) soundFx.playCorrect();
       else soundFx.playWrong();
     } else {
-      // zh_to_vi: kiểm tra từ khoá thật (không dùng || userText.length > 5 như code cũ)
-      const userLower = transInput.toLowerCase().trim();
-      const keywords = (currTrans.acceptedKeywords || []).filter(Boolean);
-      const expectedClean = normalizeClean(currTrans.expectedMeaning || '');
-
-      let ok = false;
-      if (cleanUser && expectedClean && cleanUser === expectedClean) {
-        ok = true;
-      } else if (keywords.length > 0) {
-        const hits = keywords.filter((kw) => userLower.includes(kw.toLowerCase())).length;
-        ok = hits >= Math.ceil(keywords.length * 0.6);
-      }
+      const ok = isZhToViCompleteMatch(
+        transInput,
+        currTrans.expectedMeaning,
+        currTrans.acceptedKeywords
+      );
       setTransCorrect(ok);
       if (ok) soundFx.playCorrect();
       else soundFx.playWrong();
@@ -180,12 +320,27 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
   };
 
   // --- Game 4: Expanded Quiz ---
-  const quizList = lesson.exercises?.expandedQuiz || [];
+  const quizPool = lesson.exercises?.expandedQuiz || [];
+  const [quizDeck, setQuizDeck] = useState<ExpandedQuizQuestion[]>([]);
   const [quizIdx, setQuizIdx] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({});
   const [quizStreak, setQuizStreak] = useState(0);
   const [quizDone, setQuizDone] = useState(false);
-  const currQuiz = quizList[quizIdx];
+  const currQuiz = quizDeck[quizIdx];
+
+  const refreshQuizDeck = () => {
+    setQuizDeck((prev) =>
+      pickNextDeck(
+        quizPool,
+        prev.map((x) => x.id),
+        QUIZ_DECK_SIZE
+      )
+    );
+    setQuizIdx(0);
+    setQuizAnswers({});
+    setQuizDone(false);
+    setQuizStreak(0);
+  };
 
   return (
     <div className="space-y-8">
@@ -400,16 +555,32 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
               <p className="text-center text-sm text-gray-500 py-8">Chưa có bài tập sắp xếp câu.</p>
             ) : (
               <div className="max-w-2xl mx-auto space-y-6">
-                <div className="flex items-center justify-between text-xs text-gray-500">
+                <div className="flex items-center justify-between flex-wrap gap-2 text-xs text-gray-500">
                   <span>
-                    Câu {scrambleIdx + 1} / {scrambles.length}
+                    Câu {scrambleIdx + 1} / {scrambleDeck.length}
+                    {scramblePool.length > scrambleDeck.length && (
+                      <span className="ml-1.5 text-gray-400">(Kho {scramblePool.length} câu)</span>
+                    )}
                   </span>
-                  <button
-                    onClick={() => speakChinese(currScramble.targetHanzi)}
-                    className="text-purple-600 font-semibold flex items-center gap-1"
-                  >
-                    <Volume2 className="w-3.5 h-3.5" /> Nghe câu mẫu
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => speakChinese(currScramble.targetHanzi)}
+                      className="text-purple-600 dark:text-purple-400 font-semibold flex items-center gap-1"
+                    >
+                      <Volume2 className="w-3.5 h-3.5" /> Nghe câu mẫu
+                    </button>
+                    {scramblePool.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={refreshScrambleDeck}
+                        className="px-3 py-1.5 rounded-xl border border-stone-200 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 hover:bg-purple-50 dark:hover:bg-purple-900/30 text-xs text-gray-700 dark:text-slate-200 hover:text-purple-600 dark:hover:text-purple-300 dark:hover:border-purple-500 font-semibold flex items-center gap-1 transition active:scale-95"
+                        title="Đổi sang bộ câu sắp xếp khác"
+                      >
+                        <Shuffle className="w-3.5 h-3.5" /> Đổi bộ đề
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 <div className="p-5 rounded-2xl bg-purple-50/60 dark:bg-purple-950/30 border border-purple-100 dark:border-purple-900/40 space-y-1">
@@ -512,6 +683,8 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                   </button>
                   <div className="flex items-center gap-2">
                     <button
+                      type="button"
+                      disabled={selectedTokens.length < shuffledTokens.length}
                       onClick={() => {
                         const built = selectedTokens.map((i) => shuffledTokens[i].text).join('');
                         const ok = normalizeClean(built) === normalizeClean(currScramble.targetHanzi);
@@ -519,13 +692,13 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                         if (ok) soundFx.playCorrect();
                         else soundFx.playWrong();
                       }}
-                      className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold"
+                      className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold transition"
                     >
                       Kiểm tra
                     </button>
                     <button
                       onClick={() => {
-                        setScrambleIdx((i) => (i + 1) % scrambles.length);
+                        setScrambleIdx((i) => (i + 1) % scrambleDeck.length);
                         setSelectedTokens([]);
                         setScrambleResult(null);
                       }}
@@ -548,11 +721,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                 <button
                   onClick={() => {
                     setTransMode('vi_to_zh');
-                    setTransIdx(0);
-                    setTransInput('');
-                    setTransChecked(false);
-                    setShowTransHint(false);
-                    setShowTransAnswer(false);
+                    refreshTransDeck('vi_to_zh');
                   }}
                   className={`px-3 py-1.5 rounded-lg ${
                     transMode === 'vi_to_zh'
@@ -565,11 +734,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                 <button
                   onClick={() => {
                     setTransMode('zh_to_vi');
-                    setTransIdx(0);
-                    setTransInput('');
-                    setTransChecked(false);
-                    setShowTransHint(false);
-                    setShowTransAnswer(false);
+                    refreshTransDeck('zh_to_vi');
                   }}
                   className={`px-3 py-1.5 rounded-lg ${
                     transMode === 'zh_to_vi'
@@ -580,10 +745,23 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                   Trung → Việt
                 </button>
               </div>
-              {transList.length > 0 && (
-                <span className="text-xs font-mono text-gray-400">
-                  {transIdx + 1} / {transList.length}
-                </span>
+              {transDeck.length > 0 && (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-mono text-gray-400">
+                    {transIdx + 1} / {transDeck.length}
+                    {transPool.length > transDeck.length && ` (Kho ${transPool.length})`}
+                  </span>
+                  {transPool.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => refreshTransDeck()}
+                      className="px-3 py-1.5 rounded-xl border border-stone-200 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 hover:bg-purple-50 dark:hover:bg-purple-900/30 text-xs text-gray-700 dark:text-slate-200 hover:text-purple-600 dark:hover:text-purple-300 dark:hover:border-purple-500 font-semibold flex items-center gap-1 transition active:scale-95"
+                      title="Đổi sang bộ câu dịch khác"
+                    >
+                      <Shuffle className="w-3.5 h-3.5" /> Đổi bộ đề
+                    </button>
+                  )}
+                </div>
               )}
             </div>
 
@@ -624,9 +802,15 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                 <input
                   type="text"
                   value={transInput}
-                  onChange={(e) => setTransInput(e.target.value)}
+                  onChange={(e) => {
+                    setTransInput(e.target.value);
+                    if (transChecked) setTransChecked(false);
+                  }}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') handleCheckTranslation();
+                    if (e.key === 'Enter' && !e.nativeEvent.isComposing && e.keyCode !== 229) {
+                      e.preventDefault();
+                      handleCheckTranslation();
+                    }
                   }}
                   placeholder={
                     currTrans.direction === 'vi_to_zh'
@@ -666,14 +850,16 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                   </div>
                   <div className="flex items-center gap-2">
                     <button
+                      type="button"
+                      disabled={!transInput.trim()}
                       onClick={handleCheckTranslation}
-                      className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold"
+                      className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold transition"
                     >
                       Kiểm tra
                     </button>
                     <button
                       onClick={() => {
-                        setTransIdx((i) => (i + 1) % transList.length);
+                        setTransIdx((i) => (i + 1) % transDeck.length);
                         setTransInput('');
                         setTransChecked(false);
                         setShowTransHint(false);
@@ -693,7 +879,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
         {/* GAME 4: EXPANDED QUIZ */}
         {mode === 'expanded_quiz' && (
           <div className="max-w-2xl mx-auto space-y-6">
-            {quizList.length === 0 ? (
+            {quizDeck.length === 0 ? (
               <p className="text-center text-sm text-gray-500 py-8">Chưa có câu hỏi trắc nghiệm mở rộng.</p>
             ) : quizDone ? (
               <div className="text-center py-8 space-y-4 pop-in">
@@ -702,32 +888,60 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                 <p className="text-sm text-gray-600 dark:text-slate-300">
                   Bạn trả lời đúng{' '}
                   <strong className="text-emerald-600">
-                    {quizList.filter((q, i) => quizAnswers[i] === q.correctIndex).length}
+                    {quizDeck.filter((q, i) => quizAnswers[i] === q.correctIndex).length}
                   </strong>{' '}
-                  / {quizList.length} câu.
+                  / {quizDeck.length} câu.
                 </p>
-                <button
-                  onClick={() => {
-                    setQuizIdx(0);
-                    setQuizAnswers({});
-                    setQuizDone(false);
-                    setQuizStreak(0);
-                  }}
-                  className="px-6 py-2.5 bg-purple-600 text-white rounded-xl text-xs font-bold"
-                >
-                  Làm lại
-                </button>
+                <div className="flex items-center justify-center gap-2.5 flex-wrap">
+                  <button
+                    onClick={() => {
+                      setQuizIdx(0);
+                      setQuizAnswers({});
+                      setQuizDone(false);
+                      setQuizStreak(0);
+                    }}
+                    className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold inline-flex items-center gap-1.5"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" /> Làm lại bộ này
+                  </button>
+                  {quizPool.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={refreshQuizDeck}
+                      className="px-6 py-2.5 border border-stone-200 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 hover:bg-purple-50 dark:hover:bg-purple-900/30 text-gray-800 dark:text-slate-100 hover:text-purple-600 dark:hover:text-purple-300 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 transition"
+                    >
+                      <Shuffle className="w-3.5 h-3.5" /> Đổi bộ đề mới
+                    </button>
+                  )}
+                </div>
               </div>
             ) : (
               currQuiz && (
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center justify-between flex-wrap gap-2 text-xs">
                     <span className="font-mono font-bold text-gray-500">
-                      Câu {quizIdx + 1} / {quizList.length}
+                      Câu {quizIdx + 1} / {quizDeck.length}
+                      {quizPool.length > quizDeck.length && (
+                        <span className="ml-1.5 font-sans font-normal text-gray-400">
+                          (Kho {quizPool.length} câu)
+                        </span>
+                      )}
                     </span>
-                    <span className="px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 font-bold">
-                      Chuỗi đúng: {quizStreak}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 font-bold">
+                        Chuỗi đúng: {quizStreak}
+                      </span>
+                      {quizPool.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={refreshQuizDeck}
+                          className="px-3 py-1.5 rounded-xl border border-stone-200 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 hover:bg-purple-50 dark:hover:bg-purple-900/30 text-xs text-gray-700 dark:text-slate-200 hover:text-purple-600 dark:hover:text-purple-300 dark:hover:border-purple-500 font-semibold flex items-center gap-1 transition active:scale-95"
+                          title="Đổi sang bộ câu hỏi trắc nghiệm khác"
+                        >
+                          <Shuffle className="w-3.5 h-3.5" /> Đổi bộ đề
+                        </button>
+                      )}
+                    </div>
                   </div>
 
                   <div className="p-5 rounded-2xl bg-stone-50 dark:bg-slate-800/60 border border-stone-200 dark:border-slate-700 text-base font-bold text-gray-900 dark:text-white">
@@ -779,12 +993,12 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                   <div className="flex justify-end">
                     <button
                       onClick={() => {
-                        if (quizIdx + 1 >= quizList.length) setQuizDone(true);
+                        if (quizIdx + 1 >= quizDeck.length) setQuizDone(true);
                         else setQuizIdx((i) => i + 1);
                       }}
                       className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold"
                     >
-                      {quizIdx + 1 >= quizList.length ? 'Xem kết quả' : 'Câu tiếp →'}
+                      {quizIdx + 1 >= quizDeck.length ? 'Xem kết quả' : 'Câu tiếp →'}
                     </button>
                   </div>
                 </div>

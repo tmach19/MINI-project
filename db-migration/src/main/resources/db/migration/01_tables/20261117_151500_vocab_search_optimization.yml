@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261117_151500_vocab_search_optimization
+      author: chinese-study
+      comment: Them cot tsvector sinh tu dong va GIN index cho tim kiem tu vung nhanh va khong dau
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            stripComments: true
+            sql: |-
+              ALTER TABLE vocabularies
+                ADD COLUMN IF NOT EXISTS search_tsv TSVECTOR
+                GENERATED ALWAYS AS (
+                  setweight(
+                    to_tsvector(
+                      'simple',
+                      translate(
+                        lower(
+                          coalesce(hanzi, '') || ' ' ||
+                          coalesce(pinyin, '') || ' ' ||
+                          coalesce(sino_vietnamese, '') || ' ' ||
+                          coalesce(meaning, '')
+                        ),
+                        'áàảãạăắằẳẵặâấầẩẫậāǎéèẻẽẹêếềểễệēěíìỉĩịīǐóòỏõọôốồổỗộơớờởỡợōǒúùủũụưứừửữựūǔǖǘǚǜüýỳỷỹỵđ',
+                        'aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeeeiiiiiiiooooooooooooooooooouuuuuuuuuuuuuuuuuuyyyyyd'
+                      )
+                    ),
+                    'A'
+                  ) ||
+                  setweight(
+                    to_tsvector(
+                      'simple',
+                      translate(
+                        lower(coalesce(radical, '')),
+                        'áàảãạăắằẳẵặâấầẩẫậāǎéèẻẽẹêếềểễệēěíìỉĩịīǐóòỏõọôốồổỗộơớờởỡợōǒúùủũụưứừửữựūǔǖǘǚǜüýỳỷỹỵđ',
+                        'aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeeeiiiiiiiooooooooooooooooooouuuuuuuuuuuuuuuuuuyyyyyd'
+                      )
+                    ),
+                    'D'
+                  )
+                ) STORED;
+
+              CREATE INDEX IF NOT EXISTS idx_vocabularies_search_tsv
+                ON vocabularies USING GIN (search_tsv);
+      rollback:
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            sql: |-
+              DROP INDEX IF EXISTS idx_vocabularies_search_tsv;
+              ALTER TABLE vocabularies DROP COLUMN IF EXISTS search_tsv;

@@ -707,54 +707,116 @@ export interface GlobalVocabSearchHit extends VocabularyItem {
   hskLevel: string;
 }
 
+const SEARCH_FROM_CHARS =
+  'áàảãạăắằẳẵặâấầẩẫậāǎéèẻẽẹêếềểễệēěíìỉĩịīǐóòỏõọôốồổỗộơớờởỡợōǒúùủũụưứừửữựūǔǖǘǚǜüýỳỷỹỵđ';
+const SEARCH_TO_CHARS =
+  'aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeeeiiiiiiiooooooooooooooooooouuuuuuuuuuuuuuuuuuyyyyyd';
+
+const SEARCH_CHAR_MAP: Record<string, string> = Object.fromEntries(
+  Array.from(SEARCH_FROM_CHARS).map((ch, idx) => [ch, SEARCH_TO_CHARS[idx]])
+);
+
+function normalizeSearchText(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/./g, (ch) => SEARCH_CHAR_MAP[ch] ?? ch);
+}
+
+function escapeRegex(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function scoreVocabMemoryMatch(
+  v: VocabularyItem,
+  qRaw: string,
+  qNorm: string,
+  isCjk: boolean,
+  hasDiacritics: boolean,
+  rxRaw: RegExp | null,
+  rxNorm: RegExp | null
+): number {
+  const hanzi = v.hanzi.toLowerCase();
+  const pinyin = (v.pinyin || '').toLowerCase();
+  const sino = (v.sinoVietnamese || '').toLowerCase();
+  const meaning = (v.meaning || '').toLowerCase();
+  const radical = (v.radical || '').toLowerCase();
+
+  if (isCjk) {
+    if (hanzi === qRaw) return 100;
+    if (hanzi.startsWith(qRaw)) return 85;
+    if (hanzi.includes(qRaw)) return 70;
+    if (radical.includes(qRaw)) return 10;
+    return 0;
+  }
+
+  if (hanzi === qRaw || pinyin === qRaw || meaning === qRaw) return 100;
+  if (sino === qRaw) return 92;
+  if (rxRaw && (rxRaw.test(pinyin) || rxRaw.test(sino) || rxRaw.test(meaning))) return 85;
+
+  if (!hasDiacritics) {
+    const pinyinNorm = normalizeSearchText(pinyin);
+    const sinoNorm = normalizeSearchText(sino);
+    const meaningNorm = normalizeSearchText(meaning);
+    if (pinyinNorm === qNorm || sinoNorm === qNorm || meaningNorm === qNorm) return 65;
+    if (rxNorm && (rxNorm.test(pinyinNorm) || rxNorm.test(sinoNorm) || rxNorm.test(meaningNorm))) {
+      return 50;
+    }
+  }
+
+  if (rxRaw && rxRaw.test(radical)) return 20;
+  if (!hasDiacritics && rxNorm && rxNorm.test(normalizeSearchText(radical))) return 15;
+  return 0;
+}
+
 export async function searchAllVocabulary(query: string, userId?: string): Promise<GlobalVocabSearchHit[]> {
-  const q = query.trim().toLowerCase();
-  if (!q) return [];
+  const qRaw = query.trim().toLowerCase().replace(/\s+/g, ' ');
+  if (!qRaw) return [];
 
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
-    const hits: GlobalVocabSearchHit[] = [];
-    for (const l of memoryStore.lessons) {
-      if (!l.isSystem && l.ownerId !== userId) continue;
-      for (const v of l.vocabulary) {
-        const hay = [v.hanzi, v.pinyin, v.meaning, v.sinoVietnamese, v.radical]
-          .filter(Boolean)
-          .join(' ')
-          .toLowerCase();
-        if (hay.includes(q)) {
-          hits.push({
-            ...v,
-            lessonId: l.id,
-            lessonTitle: l.title,
-            hskLevel: l.hskLevel,
+    const qNorm = normalizeSearchText(qRaw);
+    const isCjk = /[\u4e00-\u9fff]/.test(qRaw);
+    const hasDiacritics = qRaw !== qNorm;
+    const rxRaw = isCjk
+      ? null
+      : new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegex(qRaw).replace(/ /g, '\\s+')}(?![\\p{L}\\p{N}])`, 'iu');
+    const rxNorm = isCjk
+      ? null
+      : new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegex(qNorm).replace(/ /g, '\\s+')}(?![\\p{L}\\p{N}])`, 'iu');
+
+    const ranked: Array<{ hit: GlobalVocabSearchHit; rank: number; lessonIdx: number; vocabIdx: number }> = [];
+    memoryStore.lessons.forEach((l, lessonIdx) => {
+      if (!l.isSystem && l.ownerId !== userId) return;
+      l.vocabulary.forEach((v, vocabIdx) => {
+        const rank = scoreVocabMemoryMatch(v, qRaw, qNorm, isCjk, hasDiacritics, rxRaw, rxNorm);
+        if (rank > 0) {
+          ranked.push({
+            hit: {
+              ...v,
+              lessonId: l.id,
+              lessonTitle: l.title,
+              hskLevel: l.hskLevel,
+            },
+            rank,
+            lessonIdx,
+            vocabIdx,
           });
         }
-        if (hits.length >= 60) return hits;
-      }
-    }
-    return hits;
+      });
+    });
+
+    ranked.sort(
+      (a, b) => b.rank - a.rank || a.lessonIdx - b.lessonIdx || a.vocabIdx - b.vocabIdx
+    );
+    return ranked.slice(0, 60).map((item) => item.hit);
   }
 
   const pool = getPool()!;
-  const like = `%${q}%`;
   const res = await pool.query(
-    `SELECT
-       v.id, v.hanzi, v.pinyin, v.sino_vietnamese, v.meaning, v.word_type,
-       v.radical, v.breakdown, v.mnemonic, v.example_hanzi, v.example_pinyin, v.example_meaning,
-       l.id AS lesson_id, l.title AS lesson_title, l.hsk_level
-     FROM vocabularies v
-     JOIN lessons l ON l.id = v.lesson_id
-     WHERE (l.is_system = TRUE OR ($2::uuid IS NOT NULL AND l.owner_id = $2::uuid))
-       AND (
-         LOWER(v.hanzi) LIKE $1 OR
-         LOWER(v.pinyin) LIKE $1 OR
-         LOWER(v.meaning) LIKE $1 OR
-         LOWER(COALESCE(v.sino_vietnamese, '')) LIKE $1 OR
-         LOWER(COALESCE(v.radical, '')) LIKE $1
-       )
-     ORDER BY l.sort_order ASC, v.sort_order ASC
-     LIMIT 60`,
-    [like, userId || null]
+    `SELECT * FROM fn_search_vocabulary($1, $2::uuid, 60)`,
+    [qRaw, userId || null]
   );
 
   return res.rows.map((r) => ({
@@ -773,5 +835,105 @@ export async function searchAllVocabulary(query: string, userId?: string): Promi
     lessonId: r.lesson_id,
     lessonTitle: r.lesson_title,
     hskLevel: r.hsk_level,
+  }));
+}
+
+const COMPREHENSIVE_QUOTAS: ReadonlyArray<{ bucket: string; count: number; order: number }> = [
+  { bucket: 'l_single', count: 7, order: 1 },
+  { bucket: 'l_tf', count: 6, order: 2 },
+  { bucket: 'l_short', count: 6, order: 3 },
+  { bucket: 'l_long', count: 6, order: 4 },
+  { bucket: 'r_match', count: 3, order: 5 },
+  { bucket: 'translate_zh_vi', count: 3, order: 6 },
+  { bucket: 'fb_cloze', count: 3, order: 7 },
+  { bucket: 'vocab', count: 4, order: 8 },
+  { bucket: 'r_pass', count: 6, order: 9 },
+  { bucket: 'translate_vi_zh', count: 3, order: 10 },
+  { bucket: 'fb_pinyin', count: 3, order: 11 },
+];
+
+function classifySubBucket(q: ComprehensiveQuestion): string {
+  const cat = q.category || 'vocab';
+  if (cat === 'listening') {
+    if ((q.options || []).length === 2) return 'l_tf';
+    const lines = (q.audioText || '').split('\n').filter(Boolean).length;
+    if (lines === 2) return 'l_short';
+    if (lines >= 3 || q.question.includes('đoạn hội thoại') || q.question.includes('tình huống')) {
+      return 'l_long';
+    }
+    return 'l_single';
+  }
+  if (cat === 'reading') {
+    return q.passage && q.passage.trim().length > 0 ? 'r_pass' : 'r_match';
+  }
+  if (cat === 'fill_blank') {
+    return q.question.includes('Pinyin') ? 'fb_pinyin' : 'fb_cloze';
+  }
+  return cat;
+}
+
+export async function getComprehensiveExamQuestions(totalLimit = 50): Promise<ComprehensiveQuestion[]> {
+  if (getDbMode() === 'memory') {
+    memoryStore.ensureLoaded();
+    const systemLessons = memoryStore.lessons.filter((l) => l.isSystem);
+    const factor = Math.max(totalLimit, 1) / 50;
+
+    const bucketMap = new Map<string, Array<{ q: ComprehensiveQuestion; lessonOrder: number }>>();
+    for (const lesson of systemLessons) {
+      const perCatIndex = new Map<string, number>();
+      const shuffledLessonQs = shuffleArray(lesson.comprehensiveTest || []);
+      for (const q of shuffledLessonQs) {
+        const sub = classifySubBucket(q);
+        const catKey = q.category || 'vocab';
+        const rank = (perCatIndex.get(catKey) || 0) + 1;
+        perCatIndex.set(catKey, rank);
+        const list = bucketMap.get(sub) || [];
+        list.push({
+          q: { ...q, lessonId: lesson.id, lessonTitle: lesson.title },
+          lessonOrder: rank,
+        });
+        bucketMap.set(sub, list);
+      }
+    }
+
+    const result: ComprehensiveQuestion[] = [];
+    for (const spec of COMPREHENSIVE_QUOTAS) {
+      const raw = bucketMap.get(spec.bucket) || [];
+      const shuffled = shuffleArray(raw).sort((a, b) => a.lessonOrder - b.lessonOrder);
+      const take = Math.round(spec.count * factor);
+      result.push(...shuffled.slice(0, take).map((x) => x.q));
+    }
+    return result;
+  }
+
+  const pool = getPool()!;
+  const res = await pool.query<{
+    id: string;
+    lesson_id: string;
+    lesson_title: string;
+    category: string | null;
+    audio_text: string | null;
+    passage: string | null;
+    question: string;
+    options: string[];
+    correct_index: number;
+    explanation: string | null;
+  }>(
+    `SELECT id, lesson_id, lesson_title, category, audio_text, passage, question, options, correct_index, explanation
+     FROM fn_get_random_comprehensive_exam($1)`,
+    [totalLimit]
+  );
+
+  return res.rows.map((q) => ({
+    id: q.id,
+    lessonId: q.lesson_id,
+    lessonTitle: q.lesson_title,
+    category: q.category,
+    audioText: q.audio_text,
+    passage: q.passage,
+    question: q.question,
+    options: q.options || [],
+    correctIndex: q.correct_index,
+    explanation: q.explanation,
   }));
 }

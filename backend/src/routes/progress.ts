@@ -67,13 +67,14 @@ router.post('/progress/sync', requireAuth, async (req, res, next) => {
 
 router.post('/tests/attempt', requireAuth, async (req, res, next) => {
   try {
-    const { lessonId, score, totalQuestions, correctCount, durationSeconds, answers } = req.body;
-    if (!lessonId || typeof score !== 'number' || !totalQuestions) {
+    const { lessonId, examTitle, score, totalQuestions, correctCount, durationSeconds, answers } = req.body;
+    if ((!lessonId && !examTitle) || typeof score !== 'number' || !totalQuestions) {
       res.status(400).json({ error: 'Dữ liệu bài kiểm tra không hợp lệ.' });
       return;
     }
     const attempt = await saveTestAttempt(req.user!.userId, {
-      lessonId,
+      lessonId: lessonId || null,
+      examTitle: examTitle || null,
       score,
       totalQuestions,
       correctCount: Number(correctCount || 0),

@@ -1,0 +1,124 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261117_141901_fn_get_random_comprehensive_exam
+      author: chinese-study
+      comment: Function boc ngau nhien 50 cau hoi tong hop rai deu 26 bai theo ti le HSK 3
+      runOnChange: true
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: false
+            sql: |-
+              CREATE OR REPLACE FUNCTION fn_get_random_comprehensive_exam(p_total_limit INTEGER DEFAULT 50)
+              RETURNS TABLE (
+                id TEXT,
+                lesson_id TEXT,
+                lesson_title TEXT,
+                category TEXT,
+                audio_text TEXT,
+                passage TEXT,
+                question TEXT,
+                options JSONB,
+                correct_index INTEGER,
+                explanation TEXT,
+                section_order INTEGER
+              )
+              LANGUAGE sql
+              VOLATILE
+              AS $$
+              WITH scale AS (
+                SELECT GREATEST(COALESCE(p_total_limit, 50), 1)::numeric / 50.0 AS factor
+              ),
+              pool AS (
+                SELECT
+                  q.id,
+                  q.lesson_id,
+                  l.title AS lesson_title,
+                  q.category,
+                  q.audio_text,
+                  q.passage,
+                  q.question,
+                  q.options,
+                  q.correct_index,
+                  q.explanation,
+                  CASE
+                    WHEN q.category = 'listening' AND jsonb_array_length(q.options) = 2 THEN 'l_tf'
+                    WHEN q.category = 'listening' AND COALESCE(array_length(string_to_array(q.audio_text, chr(10)), 1), 1) = 2 THEN 'l_short'
+                    WHEN q.category = 'listening' AND (
+                      COALESCE(array_length(string_to_array(q.audio_text, chr(10)), 1), 1) >= 3
+                      OR q.question LIKE '%đoạn hội thoại%'
+                      OR q.question LIKE '%tình huống%'
+                    ) THEN 'l_long'
+                    WHEN q.category = 'listening' THEN 'l_single'
+                    WHEN q.category = 'reading' AND q.passage IS NOT NULL AND length(btrim(q.passage)) > 0 THEN 'r_pass'
+                    WHEN q.category = 'reading' THEN 'r_match'
+                    WHEN q.category = 'fill_blank' AND q.question LIKE '%Pinyin%' THEN 'fb_pinyin'
+                    WHEN q.category = 'fill_blank' THEN 'fb_cloze'
+                    ELSE COALESCE(q.category, 'vocab')
+                  END AS sub_bucket,
+                  ROW_NUMBER() OVER (
+                    PARTITION BY q.lesson_id, q.category
+                    ORDER BY random()
+                  ) AS lesson_cat_rn
+                FROM quiz_questions q
+                JOIN lessons l ON l.id = q.lesson_id
+                WHERE q.scope = 'comprehensive_test'
+                  AND l.is_system = TRUE
+              ),
+              ranked AS (
+                SELECT
+                  p.*,
+                  ROW_NUMBER() OVER (
+                    PARTITION BY p.sub_bucket
+                    ORDER BY p.lesson_cat_rn ASC, random()
+                  ) AS bucket_rn
+                FROM pool p
+              ),
+              picked AS (
+                SELECT r.*
+                FROM ranked r, scale s
+                WHERE (r.sub_bucket = 'l_single'        AND r.bucket_rn <= ROUND(7 * s.factor)::int)
+                   OR (r.sub_bucket = 'l_tf'            AND r.bucket_rn <= ROUND(6 * s.factor)::int)
+                   OR (r.sub_bucket = 'l_short'         AND r.bucket_rn <= ROUND(6 * s.factor)::int)
+                   OR (r.sub_bucket = 'l_long'          AND r.bucket_rn <= ROUND(6 * s.factor)::int)
+                   OR (r.sub_bucket = 'r_match'         AND r.bucket_rn <= ROUND(3 * s.factor)::int)
+                   OR (r.sub_bucket = 'translate_zh_vi' AND r.bucket_rn <= ROUND(3 * s.factor)::int)
+                   OR (r.sub_bucket = 'fb_cloze'        AND r.bucket_rn <= ROUND(3 * s.factor)::int)
+                   OR (r.sub_bucket = 'vocab'           AND r.bucket_rn <= ROUND(4 * s.factor)::int)
+                   OR (r.sub_bucket = 'r_pass'          AND r.bucket_rn <= ROUND(6 * s.factor)::int)
+                   OR (r.sub_bucket = 'translate_vi_zh' AND r.bucket_rn <= ROUND(3 * s.factor)::int)
+                   OR (r.sub_bucket = 'fb_pinyin'       AND r.bucket_rn <= ROUND(3 * s.factor)::int)
+              )
+              SELECT
+                pk.id,
+                pk.lesson_id,
+                pk.lesson_title,
+                pk.category,
+                pk.audio_text,
+                pk.passage,
+                pk.question,
+                pk.options,
+                pk.correct_index,
+                pk.explanation,
+                CASE pk.sub_bucket
+                  WHEN 'l_single'        THEN 1
+                  WHEN 'l_tf'            THEN 2
+                  WHEN 'l_short'         THEN 3
+                  WHEN 'l_long'          THEN 4
+                  WHEN 'r_match'         THEN 5
+                  WHEN 'translate_zh_vi' THEN 6
+                  WHEN 'fb_cloze'        THEN 7
+                  WHEN 'vocab'           THEN 8
+                  WHEN 'r_pass'          THEN 9
+                  WHEN 'translate_vi_zh' THEN 10
+                  WHEN 'fb_pinyin'       THEN 11
+                  ELSE 99
+                END AS section_order
+              FROM picked pk
+              ORDER BY section_order ASC, random();
+              $$;
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: DROP FUNCTION IF EXISTS fn_get_random_comprehensive_exam(INTEGER);

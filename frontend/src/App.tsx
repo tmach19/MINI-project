@@ -29,12 +29,14 @@ import { GamesSection } from './components/GamesSection';
 import { GlobalSearchModal } from './components/GlobalSearchModal';
 import { GrammarSection } from './components/GrammarSection';
 import { HanziWriterModal } from './components/HanziWriterModal';
+import { HeaderExtensionMenu } from './components/HeaderExtensionMenu';
 import { LessonModal } from './components/LessonModal';
 import { ProfilePage } from './components/ProfilePage';
 import { TestSection } from './components/TestSection';
 import { TextsSection } from './components/TextsSection';
 import { VocabSection } from './components/VocabSection';
 import type {
+  ComprehensiveExamResponse,
   LessonDetail,
   LessonSummary,
   MarkedVocabRecord,
@@ -44,6 +46,15 @@ import type {
   VocabularyItem,
 } from './types';
 
+function getViewFromPath(): 'study' | 'profile' | 'exam' {
+  if (typeof window !== 'undefined') {
+    const p = window.location.pathname.replace(/\/+$/, '');
+    if (p === '/profile') return 'profile';
+    if (p === '/exam') return 'exam';
+  }
+  return 'study';
+}
+
 export default function App() {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     return localStorage.getItem('cs_dark_mode') === 'true';
@@ -51,14 +62,17 @@ export default function App() {
   const [dbMode, setDbMode] = useState<'postgres' | 'memory' | null>(null);
 
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [authChecked, setAuthChecked] = useState<boolean>(() => !getStoredToken());
   const [lessons, setLessons] = useState<LessonSummary[]>([]);
   const [currentLessonId, setCurrentLessonId] = useState<string>(
     () => localStorage.getItem('cs_current_lesson') || 'lesson-1'
   );
   const [currentLesson, setCurrentLesson] = useState<LessonDetail | null>(null);
-  const [activeView, setActiveView] = useState<'study' | 'profile'>('study');
+  const [activeView, setActiveView] = useState<'study' | 'profile' | 'exam'>(() => getViewFromPath());
   const [activeTab, setActiveTab] = useState<TabId>('vocab');
   const [loadingLesson, setLoadingLesson] = useState(false);
+  const [comprehensiveExam, setComprehensiveExam] = useState<ComprehensiveExamResponse | null>(null);
+  const [loadingExam, setLoadingExam] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const [markedMap, setMarkedMap] = useState<Record<string, MarkedVocabRecord>>(() =>
@@ -106,6 +120,52 @@ export default function App() {
     setAttempts(progRes.attempts);
   };
 
+  const navigateView = (nextView: 'study' | 'profile' | 'exam', replace = false) => {
+    setActiveView(nextView);
+    const targetPath = nextView === 'profile' ? '/profile' : nextView === 'exam' ? '/exam' : '/';
+    if (window.location.pathname !== targetPath) {
+      if (replace) window.history.replaceState(null, '', targetPath);
+      else window.history.pushState(null, '', targetPath);
+    }
+  };
+
+  const loadComprehensiveExam = async () => {
+    setLoadingExam(true);
+    setErrorMsg(null);
+    try {
+      const res = await api.getComprehensiveExam();
+      setComprehensiveExam(res.exam);
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : 'Không tải được đề kiểm tra tổng hợp');
+    } finally {
+      setLoadingExam(false);
+    }
+  };
+
+  const openComprehensiveExam = () => {
+    setComprehensiveExam(null);
+    navigateView('exam');
+    void loadComprehensiveExam();
+  };
+
+  useEffect(() => {
+    const onPopState = () => setActiveView(getViewFromPath());
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
+  useEffect(() => {
+    if (activeView === 'exam' && !comprehensiveExam && !loadingExam) {
+      void loadComprehensiveExam();
+    }
+  }, [activeView]);
+
+  useEffect(() => {
+    if (authChecked && activeView === 'profile' && !user) {
+      navigateView('study', true);
+    }
+  }, [authChecked, activeView, user]);
+
   useEffect(() => {
     const init = async () => {
       try {
@@ -127,6 +187,8 @@ export default function App() {
         setErrorMsg(
           `Không kết nối được Backend API (${(err as Error).message}). Hãy chạy backend trước.`
         );
+      } finally {
+        setAuthChecked(true);
       }
     };
     init();
@@ -173,7 +235,7 @@ export default function App() {
   const handleLogout = () => {
     setStoredToken(null);
     setUser(null);
-    setActiveView('study');
+    navigateView('study');
     setMarkedMap(loadGuestMarkedMap());
     setAttempts(loadGuestAttempts());
     refreshLessons();
@@ -207,24 +269,28 @@ export default function App() {
   };
 
   const handleSaveTestAttempt = async (payload: {
-    lessonId: string;
+    lessonId: string | null;
+    examTitle?: string | null;
     score: number;
     totalQuestions: number;
     correctCount: number;
     durationSeconds: number;
     answers: Record<string, number>;
   }) => {
+    const resolvedTitle =
+      payload.examTitle || currentLesson?.title || payload.lessonId || 'Kiểm tra tổng hợp (26 bài)';
     if (user) {
       const res = await api.submitTestAttempt(payload);
       setAttempts((prev) => [
-        { ...res.attempt, lessonTitle: currentLesson?.title || payload.lessonId },
+        { ...res.attempt, lessonTitle: res.attempt.lessonTitle || resolvedTitle },
         ...prev,
       ]);
     } else {
       const rec: TestAttemptRecord = {
         id: `guest_${Date.now()}`,
         lessonId: payload.lessonId,
-        lessonTitle: currentLesson?.title || payload.lessonId,
+        examTitle: payload.examTitle ?? null,
+        lessonTitle: resolvedTitle,
         score: payload.score,
         totalQuestions: payload.totalQuestions,
         correctCount: payload.correctCount,
@@ -288,7 +354,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
           <button
             type="button"
-            onClick={() => setActiveView('study')}
+            onClick={() => navigateView('study')}
             className="flex items-center gap-3 flex-shrink-0 text-left"
           >
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-red-600 to-amber-600 flex items-center justify-center text-white shadow-md">
@@ -312,7 +378,7 @@ export default function App() {
               value={currentLessonId}
               onChange={(e) => {
                 setCurrentLessonId(e.target.value);
-                setActiveView('study');
+                navigateView('study');
               }}
               className="pl-3 pr-7 py-2 bg-stone-100 dark:bg-slate-800 border border-stone-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-gray-800 dark:text-slate-100 max-w-[180px] sm:max-w-xs truncate"
             >
@@ -369,6 +435,20 @@ export default function App() {
               </>
             )}
 
+            <HeaderExtensionMenu
+              items={[
+                {
+                  id: 'comprehensive_exam',
+                  label: 'Kiểm tra tổng hợp',
+                  description: '50 câu ngẫu nhiên',
+                  icon: Award,
+                  iconClassName: 'text-red-500',
+                  active: activeView === 'exam',
+                  onClick: openComprehensiveExam,
+                },
+              ]}
+            />
+
             <button
               onClick={() => setDarkMode((d) => !d)}
               className="p-2 rounded-xl border border-stone-200 dark:border-slate-700 text-gray-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-800"
@@ -381,7 +461,7 @@ export default function App() {
               <div className="flex items-center gap-1.5 pl-1">
                 <button
                   type="button"
-                  onClick={() => setActiveView((v) => (v === 'profile' ? 'study' : 'profile'))}
+                  onClick={() => navigateView(activeView === 'profile' ? 'study' : 'profile')}
                   className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold border transition active:scale-95 ${
                     activeView === 'profile'
                       ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
@@ -412,7 +492,7 @@ export default function App() {
         </div>
       </header>
 
-      {!(activeView === 'profile' && user) && (
+      {activeView === 'study' && (
       <section className="bg-white dark:bg-slate-900/70 border-b border-stone-200/60 dark:border-slate-800 py-4 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           <div>
@@ -480,16 +560,60 @@ export default function App() {
           </div>
         )}
 
-        {activeView === 'profile' && user ? (
-          <ProfilePage
-            user={user}
-            dbMode={dbMode}
-            lessons={lessons}
-            markedMap={markedMap}
+        {activeView === 'exam' ? (
+          <TestSection
+            lesson={{
+              id: comprehensiveExam?.id || 'comprehensive_all_26',
+              title: comprehensiveExam?.title || 'Kiểm tra tổng hợp (26 bài)',
+              unit: 'Tổng hợp 26 bài',
+              hskLevel: comprehensiveExam?.hskLevel || 'HSK 1 - HSK 3',
+              description:
+                comprehensiveExam?.description ||
+                '50 câu hỏi ngẫu nhiên rải đều 26 bài học chuẩn cơ cấu HSK 3.',
+              isSystem: true,
+              vocabulary: [],
+              texts: [],
+              grammar: [],
+              exercises: {
+                sentenceScramble: [],
+                translationExercises: [],
+                expandedQuiz: [],
+              },
+              comprehensiveTest: comprehensiveExam?.questions || [],
+            }}
             attempts={attempts}
-            onBackToStudy={() => setActiveView('study')}
-            onLogout={handleLogout}
+            onSaveAttempt={handleSaveTestAttempt}
+            onGoToVocab={() => navigateView('study')}
+            isComprehensiveExam
+            loadingExam={loadingExam}
+            onRefreshExam={loadComprehensiveExam}
+            onBackToStudy={() => navigateView('study')}
           />
+        ) : activeView === 'profile' ? (
+          user ? (
+            <ProfilePage
+              user={user}
+              dbMode={dbMode}
+              lessons={lessons}
+              markedMap={markedMap}
+              attempts={attempts}
+              onBackToStudy={() => navigateView('study')}
+              onLogout={handleLogout}
+              onToggleMarked={handleToggleMarked}
+              onOpenLesson={(lessonId, tab = 'vocab') => {
+                setCurrentLessonId(lessonId);
+                setActiveTab(tab);
+                navigateView('study');
+              }}
+              onOpenExam={openComprehensiveExam}
+              onOpenWriter={(vocab) => setWriterVocab(vocab)}
+            />
+          ) : (
+            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-stone-200 dark:border-slate-800 p-16 text-center space-y-3">
+              <UserIcon className="w-10 h-10 text-emerald-500 mx-auto animate-pulse" />
+              <p className="text-sm text-gray-500 dark:text-slate-400">Đang tải thông tin tài khoản...</p>
+            </div>
+          )
         ) : loadingLesson || !currentLesson ? (
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-stone-200 dark:border-slate-800 p-16 text-center space-y-3">
             <BookOpen className="w-10 h-10 text-red-500 mx-auto animate-pulse" />
@@ -528,7 +652,7 @@ export default function App() {
           onClose={() => setShowSearchModal(false)}
           onJumpToLesson={(id) => {
             setCurrentLessonId(id);
-            setActiveView('study');
+            navigateView('study');
             setActiveTab('vocab');
           }}
         />
