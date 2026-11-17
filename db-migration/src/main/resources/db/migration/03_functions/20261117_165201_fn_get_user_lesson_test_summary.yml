@@ -1,0 +1,75 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261117_165201_fn_get_user_lesson_test_summary
+      author: chinese-study
+      comment: Function tong hop diem trung binh, so luot thi va trang thai dat/chua dat theo tung bai hoc
+      runOnChange: true
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: false
+            sql: |-
+              CREATE OR REPLACE FUNCTION fn_get_user_lesson_test_summary(p_user_id UUID)
+              RETURNS TABLE (
+                lesson_id TEXT,
+                lesson_title TEXT,
+                attempt_count INTEGER,
+                avg_score INTEGER,
+                score_sum BIGINT,
+                best_score INTEGER,
+                avg_correct INTEGER,
+                total_questions INTEGER,
+                avg_duration_seconds INTEGER,
+                last_submitted_at TIMESTAMPTZ,
+                status TEXT
+              )
+              LANGUAGE sql
+              STABLE
+              AS $$
+              WITH agg AS (
+                SELECT
+                  a.lesson_id,
+                  COUNT(*)::int AS attempt_count,
+                  ROUND(AVG(a.score))::int AS avg_score,
+                  SUM(a.score)::bigint AS score_sum,
+                  MAX(a.score)::int AS best_score,
+                  ROUND(AVG(a.correct_count))::int AS avg_correct,
+                  MAX(a.total_questions)::int AS total_questions,
+                  ROUND(AVG(a.duration_seconds))::int AS avg_duration_seconds,
+                  MAX(a.submitted_at) AS last_submitted_at
+                FROM test_attempts a
+                WHERE a.user_id = p_user_id
+                  AND a.lesson_id IS NOT NULL
+                GROUP BY a.lesson_id
+              )
+              SELECT
+                l.id AS lesson_id,
+                l.title AS lesson_title,
+                COALESCE(agg.attempt_count, 0) AS attempt_count,
+                agg.avg_score,
+                COALESCE(agg.score_sum, 0::bigint) AS score_sum,
+                agg.best_score,
+                agg.avg_correct,
+                agg.total_questions,
+                agg.avg_duration_seconds,
+                agg.last_submitted_at,
+                CASE
+                  WHEN COALESCE(agg.attempt_count, 0) = 0 THEN 'unattempted'
+                  WHEN agg.avg_score >= 60 THEN 'passed'
+                  ELSE 'failed'
+                END AS status
+              FROM lessons l
+              LEFT JOIN agg ON agg.lesson_id = l.id
+              WHERE l.is_system = TRUE OR l.owner_id = p_user_id
+              ORDER BY
+                (COALESCE(agg.attempt_count, 0) > 0) DESC,
+                agg.last_submitted_at DESC NULLS LAST,
+                l.is_system DESC,
+                l.sort_order ASC,
+                l.created_at ASC;
+              $$;
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: DROP FUNCTION IF EXISTS fn_get_user_lesson_test_summary(UUID);

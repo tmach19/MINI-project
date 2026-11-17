@@ -2,6 +2,8 @@ import crypto from 'node:crypto';
 import { getDbMode, getPool } from '../db/pool.js';
 import { memoryStore, type MemoryUser } from '../db/fallbackStore.js';
 import type {
+  LessonAttemptDetailRecord,
+  LessonTestSummaryRecord,
   MarkedVocabCard,
   MarkedVocabRecord,
   TestAttemptRecord,
@@ -380,6 +382,161 @@ export async function listTestAttempts(userId: string): Promise<TestAttemptRecor
     correctCount: r.correct_count,
     durationSeconds: r.duration_seconds,
     answers: r.answers || {},
+    submittedAt: r.submitted_at.toISOString(),
+  }));
+}
+
+export async function getUserLessonTestSummary(userId: string): Promise<LessonTestSummaryRecord[]> {
+  if (getDbMode() === 'memory') {
+    memoryStore.ensureLoaded();
+    const userAttempts = (memoryStore.attemptsByUser.get(userId) || []).filter((a) =>
+      Boolean(a.lessonId)
+    );
+    const byLesson = new Map<string, TestAttemptRecord[]>();
+    userAttempts.forEach((a) => {
+      if (!a.lessonId) return;
+      const arr = byLesson.get(a.lessonId) || [];
+      arr.push(a);
+      byLesson.set(a.lessonId, arr);
+    });
+
+    const visibleLessons = memoryStore.lessons
+      .filter((l) => l.isSystem || l.ownerId === userId)
+      .sort((a, b) => Number(b.isSystem) - Number(a.isSystem));
+
+    const summaries: LessonTestSummaryRecord[] = visibleLessons.map((l) => {
+      const list = byLesson.get(l.id) || [];
+      if (list.length === 0) {
+        return {
+          lessonId: l.id,
+          lessonTitle: l.title,
+          attemptCount: 0,
+          avgScore: null,
+          scoreSum: 0,
+          bestScore: null,
+          avgCorrect: null,
+          totalQuestions: null,
+          avgDurationSeconds: null,
+          lastSubmittedAt: null,
+          status: 'unattempted',
+        };
+      }
+      const attemptCount = list.length;
+      const scoreSum = list.reduce((s, x) => s + x.score, 0);
+      const avgScore = Math.round(scoreSum / attemptCount);
+      const bestScore = Math.max(...list.map((x) => x.score));
+      const avgCorrect = Math.round(list.reduce((s, x) => s + x.correctCount, 0) / attemptCount);
+      const totalQuestions = Math.max(...list.map((x) => x.totalQuestions));
+      const avgDurationSeconds = Math.round(
+        list.reduce((s, x) => s + x.durationSeconds, 0) / attemptCount
+      );
+      const lastSubmittedAt = list.reduce(
+        (max, x) => (x.submittedAt > max ? x.submittedAt : max),
+        list[0].submittedAt
+      );
+      return {
+        lessonId: l.id,
+        lessonTitle: l.title,
+        attemptCount,
+        avgScore,
+        scoreSum,
+        bestScore,
+        avgCorrect,
+        totalQuestions,
+        avgDurationSeconds,
+        lastSubmittedAt,
+        status: avgScore >= 60 ? 'passed' : 'failed',
+      };
+    });
+
+    summaries.sort((a, b) => {
+      const aHas = a.attemptCount > 0 ? 1 : 0;
+      const bHas = b.attemptCount > 0 ? 1 : 0;
+      if (aHas !== bHas) return bHas - aHas;
+      if (a.lastSubmittedAt && b.lastSubmittedAt && a.lastSubmittedAt !== b.lastSubmittedAt) {
+        return b.lastSubmittedAt.localeCompare(a.lastSubmittedAt);
+      }
+      return 0;
+    });
+
+    return summaries;
+  }
+
+  const pool = getPool()!;
+  const res = await pool.query<{
+    lesson_id: string;
+    lesson_title: string;
+    attempt_count: number;
+    avg_score: number | null;
+    score_sum: string | number;
+    best_score: number | null;
+    avg_correct: number | null;
+    total_questions: number | null;
+    avg_duration_seconds: number | null;
+    last_submitted_at: Date | null;
+    status: 'passed' | 'failed' | 'unattempted';
+  }>('SELECT * FROM fn_get_user_lesson_test_summary($1::uuid)', [userId]);
+
+  return res.rows.map((r) => ({
+    lessonId: r.lesson_id,
+    lessonTitle: r.lesson_title,
+    attemptCount: Number(r.attempt_count || 0),
+    avgScore: r.avg_score !== null ? Number(r.avg_score) : null,
+    scoreSum: Number(r.score_sum || 0),
+    bestScore: r.best_score !== null ? Number(r.best_score) : null,
+    avgCorrect: r.avg_correct !== null ? Number(r.avg_correct) : null,
+    totalQuestions: r.total_questions !== null ? Number(r.total_questions) : null,
+    avgDurationSeconds: r.avg_duration_seconds !== null ? Number(r.avg_duration_seconds) : null,
+    lastSubmittedAt: r.last_submitted_at ? r.last_submitted_at.toISOString() : null,
+    status: r.status,
+  }));
+}
+
+export async function getUserLessonAttemptDetails(
+  userId: string,
+  lessonId: string | null,
+  limit = 50
+): Promise<LessonAttemptDetailRecord[]> {
+  if (getDbMode() === 'memory') {
+    memoryStore.ensureLoaded();
+    const list = (memoryStore.attemptsByUser.get(userId) || [])
+      .filter((a) => (lessonId === null ? a.lessonId === null : a.lessonId === lessonId))
+      .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt))
+      .slice(0, Math.max(1, limit));
+
+    return list.map((a) => ({
+      id: a.id,
+      lessonId: a.lessonId,
+      score: a.score,
+      totalQuestions: a.totalQuestions,
+      correctCount: a.correctCount,
+      durationSeconds: a.durationSeconds,
+      submittedAt: a.submittedAt,
+    }));
+  }
+
+  const pool = getPool()!;
+  const res = await pool.query<{
+    id: string;
+    lesson_id: string | null;
+    score: number;
+    total_questions: number;
+    correct_count: number;
+    duration_seconds: number;
+    submitted_at: Date;
+  }>('SELECT * FROM fn_get_user_lesson_attempt_details($1::uuid, $2, $3)', [
+    userId,
+    lessonId,
+    limit,
+  ]);
+
+  return res.rows.map((r) => ({
+    id: r.id,
+    lessonId: r.lesson_id,
+    score: r.score,
+    totalQuestions: r.total_questions,
+    correctCount: r.correct_count,
+    durationSeconds: r.duration_seconds,
     submittedAt: r.submitted_at.toISOString(),
   }));
 }

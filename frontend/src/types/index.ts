@@ -176,6 +176,30 @@ export interface TestAttemptRecord {
   submittedAt: string;
 }
 
+export interface LessonTestSummaryRecord {
+  lessonId: string;
+  lessonTitle: string;
+  attemptCount: number;
+  avgScore: number | null;
+  scoreSum: number;
+  bestScore: number | null;
+  avgCorrect: number | null;
+  totalQuestions: number | null;
+  avgDurationSeconds: number | null;
+  lastSubmittedAt: string | null;
+  status: 'passed' | 'failed' | 'unattempted';
+}
+
+export interface LessonAttemptDetailRecord {
+  id: string;
+  lessonId: string | null;
+  score: number;
+  totalQuestions: number;
+  correctCount: number;
+  durationSeconds: number;
+  submittedAt: string;
+}
+
 export interface UserProfile {
   id: string;
   email: string;

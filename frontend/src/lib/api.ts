@@ -1,8 +1,10 @@
 import type {
   ComprehensiveExamResponse,
   GlobalVocabHit,
+  LessonAttemptDetailRecord,
   LessonDetail,
   LessonSummary,
+  LessonTestSummaryRecord,
   MarkedVocabCard,
   MarkedVocabRecord,
   TestAttemptRecord,
@@ -120,6 +122,14 @@ export const api = {
     apiFetch<{ exam: ComprehensiveExamResponse }>('/tests/comprehensive-exam'),
 
   getTestAttempts: () => apiFetch<{ attempts: TestAttemptRecord[] }>('/tests/attempts'),
+
+  getLessonTestSummary: () =>
+    apiFetch<{ items: LessonTestSummaryRecord[] }>('/tests/lesson-summary'),
+
+  getLessonAttemptDetails: (lessonId: string) =>
+    apiFetch<{ attempts: LessonAttemptDetailRecord[] }>(
+      `/tests/attempts?lessonId=${encodeURIComponent(lessonId)}`
+    ),
 
   submitTestAttempt: (payload: {
     lessonId: string | null;

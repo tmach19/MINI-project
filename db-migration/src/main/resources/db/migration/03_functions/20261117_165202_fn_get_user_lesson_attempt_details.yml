@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261117_165202_fn_get_user_lesson_attempt_details
+      author: chinese-study
+      comment: Function lazy-load chi tiet tung luot kiem tra cua 1 bai hoc (khong keo cot JSONB answers)
+      runOnChange: true
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: false
+            sql: |-
+              CREATE OR REPLACE FUNCTION fn_get_user_lesson_attempt_details(
+                p_user_id UUID,
+                p_lesson_id TEXT,
+                p_limit INTEGER DEFAULT 50
+              )
+              RETURNS TABLE (
+                id UUID,
+                lesson_id TEXT,
+                score INTEGER,
+                total_questions INTEGER,
+                correct_count INTEGER,
+                duration_seconds INTEGER,
+                submitted_at TIMESTAMPTZ
+              )
+              LANGUAGE sql
+              STABLE
+              AS $$
+              SELECT
+                a.id,
+                a.lesson_id,
+                a.score,
+                a.total_questions,
+                a.correct_count,
+                a.duration_seconds,
+                a.submitted_at
+              FROM test_attempts a
+              WHERE a.user_id = p_user_id
+                AND (
+                  (p_lesson_id IS NULL AND a.lesson_id IS NULL)
+                  OR a.lesson_id = p_lesson_id
+                )
+              ORDER BY a.submitted_at DESC
+              LIMIT GREATEST(COALESCE(p_limit, 50), 1);
+              $$;
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: DROP FUNCTION IF EXISTS fn_get_user_lesson_attempt_details(UUID, TEXT, INTEGER);

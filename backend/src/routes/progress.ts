@@ -3,6 +3,8 @@ import { requireAuth } from '../middleware/auth.js';
 import {
   getMarkedVocabCards,
   getMarkedVocabMap,
+  getUserLessonAttemptDetails,
+  getUserLessonTestSummary,
   listTestAttempts,
   saveTestAttempt,
   syncGuestMarkedVocab,
@@ -87,8 +89,26 @@ router.post('/tests/attempt', requireAuth, async (req, res, next) => {
   }
 });
 
+router.get('/tests/lesson-summary', requireAuth, async (req, res, next) => {
+  try {
+    const items = await getUserLessonTestSummary(req.user!.userId);
+    res.json({ items });
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get('/tests/attempts', requireAuth, async (req, res, next) => {
   try {
+    const lessonIdParam = req.query.lessonId;
+    if (typeof lessonIdParam === 'string' && lessonIdParam.trim()) {
+      const details = await getUserLessonAttemptDetails(
+        req.user!.userId,
+        lessonIdParam === '__comprehensive__' ? null : lessonIdParam.trim()
+      );
+      res.json({ attempts: details });
+      return;
+    }
     const attempts = await listTestAttempts(req.user!.userId);
     res.json({ attempts });
   } catch (err) {

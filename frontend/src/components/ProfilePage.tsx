@@ -1,9 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowLeft,
   Award,
   BookOpen,
   Calendar,
+  Check,
+  ChevronDown,
+  ChevronRight,
   Clock,
   ExternalLink,
   Flag,
@@ -16,14 +19,15 @@ import {
   Sliders,
   Sparkles,
   Trash2,
-  TrendingUp,
   User as UserIcon,
   Volume2,
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { speakChinese } from '../lib/audio';
 import type {
+  LessonAttemptDetailRecord,
   LessonSummary,
+  LessonTestSummaryRecord,
   MarkedVocabCard,
   MarkedVocabRecord,
   TestAttemptRecord,
@@ -31,11 +35,11 @@ import type {
   VocabularyItem,
 } from '../types';
 
-type ProfileTab = 'overview' | 'progress' | 'saved_vocab' | 'test_history' | 'settings';
+type ProfileTab = 'overview' | 'saved_vocab' | 'test_history' | 'settings';
+type HistorySubTab = 'comprehensive' | 'lesson';
 
 interface ProfilePageProps {
   user: UserProfile;
-  dbMode: 'postgres' | 'memory' | null;
   lessons: LessonSummary[];
   markedMap: Record<string, MarkedVocabRecord>;
   attempts: TestAttemptRecord[];
@@ -64,7 +68,6 @@ function formatDurationSeconds(totalSeconds: number): string {
 
 export const ProfilePage: React.FC<ProfilePageProps> = ({
   user,
-  dbMode,
   lessons,
   markedMap,
   attempts,
@@ -83,14 +86,75 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   const [lessonFilter, setLessonFilter] = useState<string>('all');
   const [removingId, setRemovingId] = useState<string | null>(null);
 
-  const [dbAttempts, setDbAttempts] = useState<TestAttemptRecord[]>(attempts);
+  const [comprehensiveAttempts, setComprehensiveAttempts] = useState<LessonAttemptDetailRecord[]>(() =>
+    attempts
+      .filter((a) => !a.lessonId)
+      .map((a) => ({
+        id: a.id,
+        lessonId: a.lessonId,
+        score: a.score,
+        totalQuestions: a.totalQuestions,
+        correctCount: a.correctCount,
+        durationSeconds: a.durationSeconds,
+        submittedAt: a.submittedAt,
+      }))
+  );
+  const [lessonTestSummaries, setLessonTestSummaries] = useState<LessonTestSummaryRecord[]>([]);
+  const [expandedLessonIds, setExpandedLessonIds] = useState<Record<string, boolean>>({});
+  const [lessonDetailsCache, setLessonDetailsCache] = useState<
+    Record<string, LessonAttemptDetailRecord[]>
+  >({});
+  const [loadingDetailIds, setLoadingDetailIds] = useState<Record<string, boolean>>({});
   const [loadingAttempts, setLoadingAttempts] = useState(false);
   const [attemptsError, setAttemptsError] = useState<string | null>(null);
-  const [attemptTypeFilter, setAttemptTypeFilter] = useState<'all' | 'lesson' | 'comprehensive'>('all');
-  const [attemptSearch, setAttemptSearch] = useState('');
+  const [historySubTab, setHistorySubTab] = useState<HistorySubTab>('comprehensive');
+  const [historySelectedLessonIds, setHistorySelectedLessonIds] = useState<string[]>(() =>
+    lessons.map((l) => l.id)
+  );
+  const didInitHistoryLessons = useRef(lessons.length > 0);
+  const [lessonDropdownOpen, setLessonDropdownOpen] = useState(false);
+  const lessonDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setDbAttempts(attempts);
+    if (!didInitHistoryLessons.current && lessons.length > 0) {
+      didInitHistoryLessons.current = true;
+      setHistorySelectedLessonIds(lessons.map((l) => l.id));
+    }
+  }, [lessons]);
+
+  useEffect(() => {
+    if (!lessonDropdownOpen) return;
+    const handlePointerDown = (e: MouseEvent) => {
+      if (lessonDropdownRef.current && !lessonDropdownRef.current.contains(e.target as Node)) {
+        setLessonDropdownOpen(false);
+      }
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLessonDropdownOpen(false);
+    };
+    window.addEventListener('mousedown', handlePointerDown);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('mousedown', handlePointerDown);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [lessonDropdownOpen]);
+
+  useEffect(() => {
+    setComprehensiveAttempts(
+      attempts
+        .filter((a) => !a.lessonId)
+        .map((a) => ({
+          id: a.id,
+          lessonId: a.lessonId,
+          score: a.score,
+          totalQuestions: a.totalQuestions,
+          correctCount: a.correctCount,
+          durationSeconds: a.durationSeconds,
+          submittedAt: a.submittedAt,
+        }))
+    );
+    setLessonDetailsCache({});
   }, [attempts]);
 
   const loadMarkedFromDb = useCallback(async () => {
@@ -110,14 +174,37 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
     setLoadingAttempts(true);
     setAttemptsError(null);
     try {
-      const res = await api.getTestAttempts();
-      setDbAttempts(res.attempts);
+      const [summaryRes, compRes] = await Promise.all([
+        api.getLessonTestSummary(),
+        api.getLessonAttemptDetails('__comprehensive__'),
+      ]);
+      setLessonTestSummaries(summaryRes.items);
+      setComprehensiveAttempts(compRes.attempts);
     } catch (err) {
       setAttemptsError(err instanceof Error ? err.message : 'Không tải được lịch sử làm bài');
     } finally {
       setLoadingAttempts(false);
     }
   }, []);
+
+  const handleToggleLessonRow = async (lessonId: string, attemptCount: number) => {
+    if (attemptCount <= 0) return;
+    const nextExpanded = !expandedLessonIds[lessonId];
+    setExpandedLessonIds((prev) => ({ ...prev, [lessonId]: nextExpanded }));
+    if (nextExpanded && !lessonDetailsCache[lessonId] && !loadingDetailIds[lessonId]) {
+      setLoadingDetailIds((prev) => ({ ...prev, [lessonId]: true }));
+      try {
+        const res = await api.getLessonAttemptDetails(lessonId);
+        setLessonDetailsCache((prev) => ({ ...prev, [lessonId]: res.attempts }));
+      } catch (err) {
+        setAttemptsError(
+          err instanceof Error ? err.message : 'Không tải được chi tiết lượt kiểm tra'
+        );
+      } finally {
+        setLoadingDetailIds((prev) => ({ ...prev, [lessonId]: false }));
+      }
+    }
+  };
 
   useEffect(() => {
     if (profileTab === 'saved_vocab') {
@@ -171,35 +258,60 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
     }
   };
 
-  const attemptStats = useMemo(() => {
-    const totalAll = dbAttempts.length;
-    const comprehensiveCount = dbAttempts.filter((a) => !a.lessonId).length;
-    const lessonCount = totalAll - comprehensiveCount;
-    return { totalAll, comprehensiveCount, lessonCount };
-  }, [dbAttempts]);
+  const allLessonsSelected =
+    lessons.length > 0 && lessons.every((l) => historySelectedLessonIds.includes(l.id));
 
-  const filteredAttempts = useMemo(() => {
-    const q = attemptSearch.trim().toLowerCase();
-    return dbAttempts.filter((a) => {
-      const isComprehensive = !a.lessonId;
-      if (attemptTypeFilter === 'comprehensive' && !isComprehensive) return false;
-      if (attemptTypeFilter === 'lesson' && isComprehensive) return false;
-      if (!q) return true;
-      const label = isComprehensive
-        ? `Kiểm tra tổng hợp ${a.examTitle || ''}`
-        : a.lessonTitle || a.lessonId || '';
-      const dateStr = new Date(a.submittedAt).toLocaleString('vi-VN');
-      return label.toLowerCase().includes(q) || dateStr.toLowerCase().includes(q);
-    });
-  }, [dbAttempts, attemptTypeFilter, attemptSearch]);
+  const totalLessonAttemptCount = useMemo(
+    () => lessonTestSummaries.reduce((sum, item) => sum + item.attemptCount, 0),
+    [lessonTestSummaries]
+  );
 
-  const filteredAttemptStats = useMemo(() => {
-    const total = filteredAttempts.length;
-    const avgScore =
-      total > 0 ? Math.round(filteredAttempts.reduce((sum, a) => sum + a.score, 0) / total) : 0;
-    const bestScore = total > 0 ? Math.max(...filteredAttempts.map((a) => a.score)) : 0;
+  const filteredLessonSummaries = useMemo(() => {
+    if (allLessonsSelected || historySelectedLessonIds.length === 0) return lessonTestSummaries;
+    const selectedSet = new Set(historySelectedLessonIds);
+    return lessonTestSummaries.filter((item) => selectedSet.has(item.lessonId));
+  }, [allLessonsSelected, historySelectedLessonIds, lessonTestSummaries]);
+
+  const historyStats = useMemo(() => {
+    if (historySubTab === 'comprehensive') {
+      const total = comprehensiveAttempts.length;
+      const avgScore =
+        total > 0
+          ? Math.round(comprehensiveAttempts.reduce((sum, a) => sum + a.score, 0) / total)
+          : 0;
+      const bestScore = total > 0 ? Math.max(...comprehensiveAttempts.map((a) => a.score)) : 0;
+      return { total, avgScore, bestScore };
+    }
+
+    const total = filteredLessonSummaries.reduce((sum, item) => sum + item.attemptCount, 0);
+    const totalScoreSum = filteredLessonSummaries.reduce((sum, item) => sum + item.scoreSum, 0);
+    const avgScore = total > 0 ? Math.round(totalScoreSum / total) : 0;
+    const bestScores = filteredLessonSummaries
+      .map((item) => item.bestScore)
+      .filter((s): s is number => s !== null);
+    const bestScore = bestScores.length > 0 ? Math.max(...bestScores) : 0;
     return { total, avgScore, bestScore };
-  }, [filteredAttempts]);
+  }, [historySubTab, comprehensiveAttempts, filteredLessonSummaries]);
+
+  const lessonFilterLabel = useMemo(() => {
+    if (allLessonsSelected) return 'Tất cả bài học';
+    if (historySelectedLessonIds.length === 0) return 'Chưa chọn (hiện tất cả)';
+    if (historySelectedLessonIds.length === 1) {
+      const found = lessons.find((l) => l.id === historySelectedLessonIds[0]);
+      return found ? found.title.split(' - ')[0] : '1 bài học';
+    }
+    return `Đã chọn ${historySelectedLessonIds.length} bài học`;
+  }, [allLessonsSelected, historySelectedLessonIds, lessons]);
+
+  const toggleHistoryLesson = (lessonId: string) => {
+    setHistorySelectedLessonIds((prev) =>
+      prev.includes(lessonId) ? prev.filter((id) => id !== lessonId) : [...prev, lessonId]
+    );
+  };
+
+  const toggleAllHistoryLessons = () => {
+    setHistorySelectedLessonIds(allLessonsSelected ? [] : lessons.map((l) => l.id));
+  };
 
   const markedCount = Object.keys(markedMap).length;
   const customLessonCount = lessons.filter((l) => !l.isSystem).length;
@@ -213,7 +325,6 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
   const tabs: ReadonlyArray<{ id: ProfileTab; label: string; icon: React.ComponentType<{ className?: string }> }> = [
     { id: 'overview', label: 'Thông tin chung', icon: UserIcon },
-    { id: 'progress', label: 'Tiến độ học tập', icon: TrendingUp },
     { id: 'saved_vocab', label: 'Từ đã đánh dấu', icon: Flag },
     { id: 'test_history', label: 'Lịch sử làm bài', icon: Award },
     { id: 'settings', label: 'Thiết lập tài khoản', icon: Sliders },
@@ -270,9 +381,6 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-slate-400">
             <span className="px-3 py-1.5 rounded-xl bg-stone-100 dark:bg-slate-800 font-medium inline-flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5 text-red-500" /> Tham gia: {joinedDate}
-            </span>
-            <span className="px-3 py-1.5 rounded-xl bg-stone-100 dark:bg-slate-800 font-mono text-[11px] font-bold">
-              {dbMode === 'postgres' ? 'PostgreSQL' : 'Dev Mode'}
             </span>
           </div>
         </div>
@@ -544,55 +652,135 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 </h2>
 
                 <div className="flex flex-wrap items-center gap-2">
-                  <div className="relative flex-1 sm:w-56">
-                    <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                    <input
-                      type="text"
-                      value={attemptSearch}
-                      onChange={(e) => setAttemptSearch(e.target.value)}
-                      placeholder="Tìm theo tên bài hoặc ngày..."
-                      className="w-full pl-8 pr-3 py-2 rounded-xl border border-stone-200 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 text-xs text-gray-800 dark:text-slate-100 focus:outline-none focus:border-red-500"
-                    />
-                  </div>
+                  {historySubTab === 'lesson' && (
+                    <div ref={lessonDropdownRef} className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setLessonDropdownOpen((prev) => !prev)}
+                        aria-expanded={lessonDropdownOpen}
+                        className={`px-3 py-2 rounded-xl border text-xs font-medium inline-flex items-center justify-between gap-2 min-w-[180px] max-w-[230px] transition ${
+                          lessonDropdownOpen
+                            ? 'border-red-500 bg-red-50/70 dark:bg-red-950/30 text-gray-900 dark:text-white'
+                            : 'border-stone-200 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 text-gray-700 dark:text-slate-200 hover:bg-stone-100 dark:hover:bg-slate-700/70'
+                        }`}
+                      >
+                        <span className="truncate">{lessonFilterLabel}</span>
+                        <ChevronDown
+                          className={`w-3.5 h-3.5 flex-shrink-0 transition-transform ${
+                            lessonDropdownOpen ? 'rotate-180' : ''
+                          }`}
+                        />
+                      </button>
 
-                  <select
-                    value={attemptTypeFilter}
-                    onChange={(e) =>
-                      setAttemptTypeFilter(e.target.value as 'all' | 'lesson' | 'comprehensive')
-                    }
-                    className="px-3 py-2 rounded-xl border border-stone-200 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 text-xs font-medium text-gray-700 dark:text-slate-200"
-                  >
-                    <option value="all">Tất cả ({attemptStats.totalAll})</option>
-                    <option value="lesson">Theo bài học ({attemptStats.lessonCount})</option>
-                    <option value="comprehensive">
-                      Kiểm tra tổng hợp ({attemptStats.comprehensiveCount})
-                    </option>
-                  </select>
+                      {lessonDropdownOpen && (
+                        <div className="absolute left-0 sm:left-auto sm:right-0 mt-1.5 w-72 rounded-2xl border border-stone-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xl z-40 overflow-hidden pop-in">
+                          <div className="p-1.5 border-b border-stone-100 dark:border-slate-800 bg-stone-50/70 dark:bg-slate-800/40">
+                            <button
+                              type="button"
+                              onClick={toggleAllHistoryLessons}
+                              className={`w-full text-left px-2.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2.5 transition ${
+                                allLessonsSelected
+                                  ? 'bg-red-50 dark:bg-red-900/35 text-red-700 dark:text-red-200'
+                                  : 'text-gray-700 dark:text-slate-200 hover:bg-stone-100 dark:hover:bg-slate-800'
+                              }`}
+                            >
+                              <span
+                                className={`w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 ${
+                                  allLessonsSelected
+                                    ? 'bg-red-600 border-red-600 text-white'
+                                    : 'border-stone-300 dark:border-slate-600 bg-white dark:bg-slate-800'
+                                }`}
+                              >
+                                {allLessonsSelected && <Check className="w-3 h-3" />}
+                              </span>
+                              <span>Tất cả bài học</span>
+                            </button>
+                          </div>
+
+                          <div className="max-h-64 overflow-y-auto p-1.5 space-y-0.5">
+                            {lessons.map((l) => {
+                              const checked = historySelectedLessonIds.includes(l.id);
+                              const shortTitle = l.title.split(' - ')[0];
+                              return (
+                                <button
+                                  key={l.id}
+                                  type="button"
+                                  onClick={() => toggleHistoryLesson(l.id)}
+                                  className={`w-full text-left px-2.5 py-1.5 rounded-xl text-xs flex items-center gap-2.5 transition ${
+                                    checked
+                                      ? 'bg-red-50/80 dark:bg-red-900/25 text-red-700 dark:text-red-200 font-semibold'
+                                      : 'text-gray-700 dark:text-slate-200 hover:bg-stone-100 dark:hover:bg-slate-800'
+                                  }`}
+                                >
+                                  <span
+                                    className={`w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 ${
+                                      checked
+                                        ? 'bg-red-600 border-red-600 text-white'
+                                        : 'border-stone-300 dark:border-slate-600 bg-white dark:bg-slate-800'
+                                    }`}
+                                  >
+                                    {checked && <Check className="w-3 h-3" />}
+                                  </span>
+                                  <span className="truncate">{shortTitle}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  <div className="inline-flex bg-stone-100 dark:bg-slate-800 p-1 rounded-xl text-xs font-semibold">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setLessonDropdownOpen(false);
+                        setHistorySubTab('comprehensive');
+                      }}
+                      className={`px-3 py-1.5 rounded-lg transition ${
+                        historySubTab === 'comprehensive'
+                          ? 'bg-red-600 text-white shadow-sm'
+                          : 'text-gray-600 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white'
+                      }`}
+                    >
+                      Kiểm tra tổng hợp ({comprehensiveAttempts.length})
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setHistorySubTab('lesson')}
+                      className={`px-3 py-1.5 rounded-lg transition ${
+                        historySubTab === 'lesson'
+                          ? 'bg-red-600 text-white shadow-sm'
+                          : 'text-gray-600 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white'
+                      }`}
+                    >
+                      Kiểm tra theo bài học ({totalLessonAttemptCount})
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {attemptStats.totalAll > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                  <div className="p-3 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-stone-200/70 dark:border-slate-800">
-                    <span className="text-gray-500 dark:text-slate-400 block">Tổng lượt thi</span>
-                    <span className="text-lg font-black text-gray-900 dark:text-white">
-                      {filteredAttemptStats.total}
-                    </span>
-                  </div>
-                  <div className="p-3 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-stone-200/70 dark:border-slate-800">
-                    <span className="text-gray-500 dark:text-slate-400 block">Điểm trung bình</span>
-                    <span className="text-lg font-black text-blue-600 dark:text-blue-400">
-                      {filteredAttemptStats.avgScore}/100
-                    </span>
-                  </div>
-                  <div className="p-3 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-stone-200/70 dark:border-slate-800">
-                    <span className="text-gray-500 dark:text-slate-400 block">Điểm cao nhất</span>
-                    <span className="text-lg font-black text-emerald-600 dark:text-emerald-400">
-                      {filteredAttemptStats.bestScore}/100
-                    </span>
-                  </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                <div className="p-3 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-stone-200/70 dark:border-slate-800">
+                  <span className="text-gray-500 dark:text-slate-400 block">Tổng lượt thi</span>
+                  <span className="text-lg font-black text-gray-900 dark:text-white">
+                    {historyStats.total}
+                  </span>
                 </div>
-              )}
+                <div className="p-3 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-stone-200/70 dark:border-slate-800">
+                  <span className="text-gray-500 dark:text-slate-400 block">Điểm trung bình</span>
+                  <span className="text-lg font-black text-blue-600 dark:text-blue-400">
+                    {historyStats.avgScore}/100
+                  </span>
+                </div>
+                <div className="p-3 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-stone-200/70 dark:border-slate-800">
+                  <span className="text-gray-500 dark:text-slate-400 block">Điểm cao nhất</span>
+                  <span className="text-lg font-black text-emerald-600 dark:text-emerald-400">
+                    {historyStats.bestScore}/100
+                  </span>
+                </div>
+              </div>
 
               {attemptsError && (
                 <div className="p-3 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/60 text-xs text-red-700 dark:text-red-300">
@@ -600,65 +788,50 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 </div>
               )}
 
-              {loadingAttempts && dbAttempts.length === 0 ? (
+              {loadingAttempts && lessonTestSummaries.length === 0 && comprehensiveAttempts.length === 0 ? (
                 <div className="py-12 text-center text-xs text-gray-500 dark:text-slate-400">
                   Đang tải lịch sử làm bài từ cơ sở dữ liệu...
                 </div>
-              ) : filteredAttempts.length === 0 ? (
-                <div className="py-12 text-center space-y-2 border border-dashed border-stone-200 dark:border-slate-800 rounded-2xl">
-                  <Award className="w-8 h-8 text-red-400 mx-auto opacity-80" />
-                  <p className="text-sm font-bold text-gray-800 dark:text-slate-200">
-                    {attemptStats.totalAll === 0
-                      ? 'Bạn chưa có lượt làm bài kiểm tra nào'
-                      : 'Không tìm thấy lượt làm bài khớp bộ lọc'}
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-slate-400 max-w-md mx-auto">
-                    {attemptStats.totalAll === 0
-                      ? 'Hãy làm bài kiểm tra ở từng buổi học hoặc mục Kiểm tra tổng hợp để theo dõi kết quả tại đây.'
-                      : 'Thử xóa từ khóa tìm kiếm hoặc chọn lại bộ lọc Tất cả.'}
-                  </p>
-                </div>
-              ) : (
+              ) : historySubTab === 'comprehensive' ? (
                 <div className="overflow-x-auto rounded-2xl border border-stone-200 dark:border-slate-800">
                   <table className="w-full text-left border-collapse text-xs">
                     <thead>
                       <tr className="bg-stone-50 dark:bg-slate-800/70 text-gray-500 dark:text-slate-400 uppercase text-[11px] border-b border-stone-200 dark:border-slate-800">
                         <th className="py-3 px-3.5 w-12 text-center">STT</th>
-                        <th className="py-3 px-3.5">Thuộc bài / Loại kiểm tra</th>
+                        <th className="py-3 px-3.5">Loại kiểm tra</th>
                         <th className="py-3 px-3.5 text-center">Điểm số</th>
                         <th className="py-3 px-3.5 text-center">Số câu đúng</th>
                         <th className="py-3 px-3.5 text-center">Thời gian làm</th>
-                        <th className="py-3 px-3.5 text-right">Ngày nộp bài</th>
+                        <th className="py-3 px-3.5 text-center">Ngày nộp bài</th>
+                        <th className="py-3 px-3.5 text-right">Trạng thái</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-stone-100 dark:divide-slate-800">
-                      {filteredAttempts.map((a, idx) => {
-                        const isComprehensive = !a.lessonId;
-                        const fullTitle = a.lessonTitle || a.examTitle || a.lessonId || 'Kiểm tra tổng hợp (26 bài)';
-                        const shortLessonTitle = fullTitle.split(' - ')[0] || fullTitle;
-                        const scoreColor =
-                          a.score >= 80
-                            ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800/70'
-                            : a.score >= 50
-                              ? 'text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-800/70'
-                              : 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 border-red-200 dark:border-red-800/70';
+                      {(comprehensiveAttempts.length === 0 ? [null] : comprehensiveAttempts).map(
+                        (a, idx) => {
+                          const scoreColor = a
+                            ? a.score >= 80
+                              ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800/70'
+                              : a.score >= 60
+                                ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-800/70'
+                                : 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 border-red-200 dark:border-red-800/70'
+                            : '';
 
-                        return (
-                          <tr
-                            key={a.id}
-                            className="hover:bg-stone-50/80 dark:hover:bg-slate-800/40 transition"
-                          >
-                            <td className="py-3 px-3.5 text-center font-mono text-gray-400">
-                              {idx + 1}
-                            </td>
-                            <td className="py-3 px-3.5">
-                              {isComprehensive ? (
+                          return (
+                            <tr
+                              key={a ? a.id : 'comprehensive-empty'}
+                              className="hover:bg-stone-50/80 dark:hover:bg-slate-800/40 transition"
+                            >
+                              <td className="py-3 px-3.5 text-center font-mono text-gray-400">
+                                {idx + 1}
+                              </td>
+                              <td className="py-3 px-3.5">
                                 <button
                                   type="button"
                                   onClick={() => onOpenExam?.()}
                                   disabled={!onOpenExam}
                                   className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-50 hover:bg-purple-100 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 border border-purple-200/80 dark:border-purple-800/70 text-purple-700 dark:text-purple-300 font-semibold transition text-left disabled:cursor-default"
-                                  title={fullTitle}
+                                  title="Kiểm tra tổng hợp (26 bài)"
                                 >
                                   <Award className="w-3.5 h-3.5 flex-shrink-0" />
                                   <span>Kiểm tra tổng hợp</span>
@@ -666,42 +839,268 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                                     <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-75" />
                                   )}
                                 </button>
-                              ) : (
-                                <button
-                                  type="button"
-                                  onClick={() => onOpenLesson?.(a.lessonId!, 'test')}
-                                  disabled={!onOpenLesson}
-                                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-red-50 hover:bg-red-100 dark:bg-red-950/40 dark:hover:bg-red-900/50 border border-red-200/80 dark:border-red-800/70 text-red-700 dark:text-red-300 font-semibold transition text-left disabled:cursor-default"
-                                  title={fullTitle}
-                                >
-                                  <BookOpen className="w-3.5 h-3.5 flex-shrink-0" />
-                                  <span>{shortLessonTitle}</span>
-                                  {onOpenLesson && (
-                                    <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-75" />
+                              </td>
+                              <td className="py-3 px-3.5 text-center">
+                                {a ? (
+                                  <span
+                                    className={`inline-block px-2.5 py-0.5 rounded-lg border font-mono font-bold ${scoreColor}`}
+                                  >
+                                    {a.score}/100
+                                  </span>
+                                ) : (
+                                  <span className="text-gray-400 font-mono">-</span>
+                                )}
+                              </td>
+                              <td className="py-3 px-3.5 text-center font-semibold text-gray-800 dark:text-slate-200">
+                                {a ? (
+                                  `${a.correctCount}/${a.totalQuestions}`
+                                ) : (
+                                  <span className="text-gray-400 font-mono">-</span>
+                                )}
+                              </td>
+                              <td className="py-3 px-3.5 text-center font-mono text-gray-600 dark:text-slate-300">
+                                {a ? (
+                                  <span className="inline-flex items-center gap-1">
+                                    <Clock className="w-3 h-3 text-gray-400" />
+                                    {formatDurationSeconds(a.durationSeconds)}
+                                  </span>
+                                ) : (
+                                  <span className="text-gray-400">-</span>
+                                )}
+                              </td>
+                              <td className="py-3 px-3.5 text-center font-mono text-gray-500 dark:text-slate-400 whitespace-nowrap">
+                                {a ? new Date(a.submittedAt).toLocaleString('vi-VN') : '-'}
+                              </td>
+                              <td className="py-3 px-3.5 text-right whitespace-nowrap">
+                                {!a ? (
+                                  <span className="text-gray-400 font-mono">-</span>
+                                ) : a.score >= 60 ? (
+                                  <span className="inline-block px-2.5 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/70 text-emerald-700 dark:text-emerald-300 font-bold">
+                                    Đạt
+                                  </span>
+                                ) : (
+                                  <span className="inline-block px-2.5 py-0.5 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/70 text-red-600 dark:text-red-400 font-bold">
+                                    Chưa đạt
+                                  </span>
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        }
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="overflow-x-auto rounded-2xl border border-stone-200 dark:border-slate-800">
+                  <table className="w-full text-left border-collapse text-xs">
+                    <thead>
+                      <tr className="bg-stone-50 dark:bg-slate-800/70 text-gray-500 dark:text-slate-400 uppercase text-[11px] border-b border-stone-200 dark:border-slate-800">
+                        <th className="py-3 px-3.5 w-12 text-center">STT</th>
+                        <th className="py-3 px-3.5">Thuộc bài</th>
+                        <th className="py-3 px-3.5 text-center">Điểm TB</th>
+                        <th className="py-3 px-3.5 text-center">Câu đúng TB</th>
+                        <th className="py-3 px-3.5 text-center">Thời gian TB</th>
+                        <th className="py-3 px-3.5 text-center">Gần nhất</th>
+                        <th className="py-3 px-3.5 text-right">Trạng thái</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-stone-100 dark:divide-slate-800">
+                      {filteredLessonSummaries.map((item, idx) => {
+                        const hasAttempts = item.attemptCount > 0;
+                        const isExpanded = Boolean(expandedLessonIds[item.lessonId]);
+                        const isLoadingDetails = Boolean(loadingDetailIds[item.lessonId]);
+                        const details = lessonDetailsCache[item.lessonId] || [];
+                        const shortLessonTitle =
+                          item.lessonTitle.split(' - ')[0] || item.lessonTitle;
+                        const avgScoreColor =
+                          item.avgScore !== null
+                            ? item.avgScore >= 80
+                              ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800/70'
+                              : item.avgScore >= 60
+                                ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-800/70'
+                                : 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 border-red-200 dark:border-red-800/70'
+                            : '';
+
+                        return (
+                          <React.Fragment key={item.lessonId}>
+                            <tr
+                              onClick={() => void handleToggleLessonRow(item.lessonId, item.attemptCount)}
+                              className={`transition ${
+                                hasAttempts
+                                  ? 'cursor-pointer hover:bg-stone-50/90 dark:hover:bg-slate-800/50'
+                                  : 'hover:bg-stone-50/50 dark:hover:bg-slate-800/20'
+                              } ${isExpanded ? 'bg-stone-50/70 dark:bg-slate-800/35' : ''}`}
+                            >
+                              <td className="py-3 px-3.5 text-center font-mono text-gray-400">
+                                {idx + 1}
+                              </td>
+                              <td className="py-3 px-3.5">
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  {hasAttempts ? (
+                                    <ChevronRight
+                                      className={`w-4 h-4 text-gray-400 transition-transform flex-shrink-0 ${
+                                        isExpanded ? 'rotate-90 text-red-500' : ''
+                                      }`}
+                                    />
+                                  ) : (
+                                    <span className="w-4 h-4 inline-block flex-shrink-0" />
                                   )}
-                                </button>
-                              )}
-                            </td>
-                            <td className="py-3 px-3.5 text-center">
-                              <span
-                                className={`inline-block px-2.5 py-0.5 rounded-lg border font-mono font-bold ${scoreColor}`}
-                              >
-                                {a.score}/100
-                              </span>
-                            </td>
-                            <td className="py-3 px-3.5 text-center font-semibold text-gray-800 dark:text-slate-200">
-                              {a.correctCount}/{a.totalQuestions}
-                            </td>
-                            <td className="py-3 px-3.5 text-center font-mono text-gray-600 dark:text-slate-300">
-                              <span className="inline-flex items-center gap-1">
-                                <Clock className="w-3 h-3 text-gray-400" />
-                                {formatDurationSeconds(a.durationSeconds)}
-                              </span>
-                            </td>
-                            <td className="py-3 px-3.5 text-right font-mono text-gray-500 dark:text-slate-400 whitespace-nowrap">
-                              {new Date(a.submittedAt).toLocaleString('vi-VN')}
-                            </td>
-                          </tr>
+
+                                  <span
+                                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200/80 dark:border-red-800/70 text-red-700 dark:text-red-300 font-semibold"
+                                    title={item.lessonTitle}
+                                  >
+                                    <BookOpen className="w-3.5 h-3.5 flex-shrink-0" />
+                                    <span>{shortLessonTitle}</span>
+                                  </span>
+
+                                  {hasAttempts && (
+                                    <span className="px-2 py-0.5 rounded-full bg-stone-100 dark:bg-slate-800 text-gray-600 dark:text-slate-300 text-[11px] font-mono font-bold">
+                                      {item.attemptCount} lượt
+                                    </span>
+                                  )}
+
+                                  {onOpenLesson && (
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        onOpenLesson(item.lessonId, 'test');
+                                      }}
+                                      className="p-1 rounded-md text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition"
+                                      title={`Mở bài kiểm tra ${shortLessonTitle}`}
+                                    >
+                                      <ExternalLink className="w-3.5 h-3.5" />
+                                    </button>
+                                  )}
+                                </div>
+                              </td>
+                              <td className="py-3 px-3.5 text-center">
+                                {item.avgScore !== null ? (
+                                  <span
+                                    className={`inline-block px-2.5 py-0.5 rounded-lg border font-mono font-bold ${avgScoreColor}`}
+                                  >
+                                    {item.avgScore}/100
+                                  </span>
+                                ) : (
+                                  <span className="text-gray-400 font-mono">-</span>
+                                )}
+                              </td>
+                              <td className="py-3 px-3.5 text-center font-semibold text-gray-800 dark:text-slate-200">
+                                {item.avgCorrect !== null && item.totalQuestions ? (
+                                  `${item.avgCorrect}/${item.totalQuestions}`
+                                ) : (
+                                  <span className="text-gray-400 font-mono">-</span>
+                                )}
+                              </td>
+                              <td className="py-3 px-3.5 text-center font-mono text-gray-600 dark:text-slate-300">
+                                {item.avgDurationSeconds !== null ? (
+                                  <span className="inline-flex items-center gap-1">
+                                    <Clock className="w-3 h-3 text-gray-400" />
+                                    {formatDurationSeconds(item.avgDurationSeconds)}
+                                  </span>
+                                ) : (
+                                  <span className="text-gray-400">-</span>
+                                )}
+                              </td>
+                              <td className="py-3 px-3.5 text-center font-mono text-gray-500 dark:text-slate-400 whitespace-nowrap">
+                                {item.lastSubmittedAt
+                                  ? new Date(item.lastSubmittedAt).toLocaleString('vi-VN')
+                                  : '-'}
+                              </td>
+                              <td className="py-3 px-3.5 text-right whitespace-nowrap">
+                                {item.status === 'unattempted' ? (
+                                  <span className="text-gray-400 font-mono">-</span>
+                                ) : item.status === 'passed' ? (
+                                  <span className="inline-block px-2.5 py-0.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/70 text-emerald-700 dark:text-emerald-300 font-bold">
+                                    Đạt
+                                  </span>
+                                ) : (
+                                  <span className="inline-block px-2.5 py-0.5 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/70 text-red-600 dark:text-red-400 font-bold">
+                                    Chưa đạt
+                                  </span>
+                                )}
+                              </td>
+                            </tr>
+
+                            {isExpanded && hasAttempts && (
+                              <tr className="bg-stone-50/60 dark:bg-slate-900/80">
+                                <td colSpan={7} className="px-6 py-3">
+                                  {isLoadingDetails ? (
+                                    <div className="py-3 text-center text-xs text-gray-500 dark:text-slate-400">
+                                      Đang tải chi tiết từng lần kiểm tra...
+                                    </div>
+                                  ) : details.length === 0 ? (
+                                    <div className="py-2 text-center text-xs text-gray-500 dark:text-slate-400">
+                                      Không có dữ liệu chi tiết.
+                                    </div>
+                                  ) : (
+                                    <div className="rounded-xl border border-stone-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 overflow-hidden">
+                                      <table className="w-full text-left border-collapse text-[11px]">
+                                        <thead>
+                                          <tr className="bg-stone-100/80 dark:bg-slate-800/60 text-gray-500 dark:text-slate-400 uppercase border-b border-stone-200 dark:border-slate-800">
+                                            <th className="py-2 px-3 w-20 text-center">Lần thi</th>
+                                            <th className="py-2 px-3 text-center">Điểm số</th>
+                                            <th className="py-2 px-3 text-center">Số câu đúng</th>
+                                            <th className="py-2 px-3 text-center">Thời gian làm</th>
+                                            <th className="py-2 px-3 text-center">Ngày nộp bài</th>
+                                            <th className="py-2 px-3 text-right">Trạng thái</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-stone-100 dark:divide-slate-800/70">
+                                          {details.map((d, dIdx) => {
+                                            const attemptNum = details.length - dIdx;
+                                            const dColor =
+                                              d.score >= 80
+                                                ? 'text-emerald-600 dark:text-emerald-400'
+                                                : d.score >= 60
+                                                  ? 'text-blue-600 dark:text-blue-400'
+                                                  : 'text-red-600 dark:text-red-400';
+                                            return (
+                                              <tr
+                                                key={d.id}
+                                                className="hover:bg-stone-50 dark:hover:bg-slate-800/30"
+                                              >
+                                                <td className="py-2 px-3 text-center font-mono text-gray-500 dark:text-slate-400">
+                                                  Lần {attemptNum}
+                                                </td>
+                                                <td
+                                                  className={`py-2 px-3 text-center font-mono font-bold ${dColor}`}
+                                                >
+                                                  {d.score}/100
+                                                </td>
+                                                <td className="py-2 px-3 text-center font-semibold text-gray-700 dark:text-slate-200">
+                                                  {d.correctCount}/{d.totalQuestions}
+                                                </td>
+                                                <td className="py-2 px-3 text-center font-mono text-gray-600 dark:text-slate-300">
+                                                  {formatDurationSeconds(d.durationSeconds)}
+                                                </td>
+                                                <td className="py-2 px-3 text-center font-mono text-gray-500 dark:text-slate-400">
+                                                  {new Date(d.submittedAt).toLocaleString('vi-VN')}
+                                                </td>
+                                                <td className="py-2 px-3 text-right">
+                                                  {d.score >= 60 ? (
+                                                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+                                                      Đạt
+                                                    </span>
+                                                  ) : (
+                                                    <span className="text-red-600 dark:text-red-400 font-bold">
+                                                      Chưa đạt
+                                                    </span>
+                                                  )}
+                                                </td>
+                                              </tr>
+                                            );
+                                          })}
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  )}
+                                </td>
+                              </tr>
+                            )}
+                          </React.Fragment>
                         );
                       })}
                     </tbody>

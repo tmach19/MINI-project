@@ -59,7 +59,6 @@ export default function App() {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     return localStorage.getItem('cs_dark_mode') === 'true';
   });
-  const [dbMode, setDbMode] = useState<'postgres' | 'memory' | null>(null);
 
   const [user, setUser] = useState<UserProfile | null>(null);
   const [authChecked, setAuthChecked] = useState<boolean>(() => !getStoredToken());
@@ -169,8 +168,7 @@ export default function App() {
   useEffect(() => {
     const init = async () => {
       try {
-        const health = await api.health();
-        setDbMode(health.dbMode);
+        await api.health();
 
         const token = getStoredToken();
         if (token) {
@@ -361,15 +359,8 @@ export default function App() {
               <span className="chinese-serif text-xl font-black">汉</span>
             </div>
             <div className="hidden sm:block">
-              <div className="flex items-center gap-1.5">
-                <h1 className="text-base font-bold text-gray-900 dark:text-white">汉语学堂</h1>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 font-bold font-mono">
-                  {dbMode === 'postgres' ? 'PostgreSQL' : 'Dev Mode'}
-                </span>
-              </div>
-              <p className="text-[11px] text-gray-500 dark:text-slate-400">
-                Học tiếng Trung Full-Stack • HanziWriter • Đánh dấu thẻ
-              </p>
+              <h1 className="text-base font-bold text-gray-900 dark:text-white">汉语学堂</h1>
+              <p className="text-[11px] text-gray-500 dark:text-slate-400">Học tiếng Trung</p>
             </div>
           </button>
 
@@ -593,7 +584,6 @@ export default function App() {
           user ? (
             <ProfilePage
               user={user}
-              dbMode={dbMode}
               lessons={lessons}
               markedMap={markedMap}
               attempts={attempts}
