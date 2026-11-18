@@ -126,12 +126,16 @@ export interface LessonDetail extends Omit<LessonSummary, 'vocabCount' | 'gramma
   texts: TextItem[];
   exercises: ExerciseSet;
   comprehensiveTest: ComprehensiveQuestion[];
+  isDeleted?: 0 | 1;
+  deletedAt?: string | null;
 }
 
 export interface MarkedVocabRecord {
   vocabId: string;
   note?: string | null;
   markedAt: string;
+  isDeleted?: 0 | 1;
+  deletedAt?: string | null;
 }
 
 export interface MarkedVocabCard extends VocabularyItem {

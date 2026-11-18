@@ -385,35 +385,35 @@ export const TestSection: React.FC<TestSectionProps> = ({
           </div>
         )}
 
-        <div className="bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 rounded-3xl p-8 text-white shadow-xl text-center space-y-4">
-          <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md mx-auto flex items-center justify-center">
-            <Award className="w-8 h-8" />
+        <div className="bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 rounded-3xl p-5 sm:p-8 text-white shadow-xl text-center space-y-4">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/20 backdrop-blur-md mx-auto flex items-center justify-center">
+            <Award className="w-7 h-7 sm:w-8 sm:h-8" />
           </div>
           <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-wider">
             {isComprehensiveExam
               ? `${selectedLessonIds.length} bài học • Đề ngẫu nhiên`
               : 'Module 5'}
           </span>
-          <h2 className="text-3xl font-bold">
+          <h2 className="text-2xl sm:text-3xl font-bold">
             {isComprehensiveExam ? lesson.title : 'Bài kiểm tra tổng hợp cả buổi'}
           </h2>
-          <p className="text-white/90 text-sm max-w-lg mx-auto">
+          <p className="text-white/90 text-xs sm:text-sm max-w-lg mx-auto">
             {isComprehensiveExam
               ? lesson.description
               : 'Đánh giá toàn diện từ vựng, nghe HSK, đọc hiểu và dịch nghĩa. Điểm thi được lưu vào lịch sử học tập.'}
           </p>
-          <div className="grid grid-cols-3 gap-4 pt-3 max-w-md mx-auto">
-            <div className="bg-white/10 p-3 rounded-2xl border border-white/20">
-              <span className="text-2xl font-black">{loadingExam ? '...' : questions.length}</span>
-              <p className="text-[11px] uppercase text-white/80">Câu hỏi</p>
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-3 max-w-md mx-auto">
+            <div className="bg-white/10 p-2 sm:p-3 rounded-2xl border border-white/20 min-w-0">
+              <span className="text-lg sm:text-2xl font-black">{loadingExam ? '...' : questions.length}</span>
+              <p className="text-[10px] sm:text-[11px] uppercase text-white/80">Câu hỏi</p>
             </div>
-            <div className="bg-white/10 p-3 rounded-2xl border border-white/20">
-              <span className="text-2xl font-black">100</span>
-              <p className="text-[11px] uppercase text-white/80">Thang điểm</p>
+            <div className="bg-white/10 p-2 sm:p-3 rounded-2xl border border-white/20 min-w-0">
+              <span className="text-lg sm:text-2xl font-black">100</span>
+              <p className="text-[10px] sm:text-[11px] uppercase text-white/80">Thang điểm</p>
             </div>
-            <div className="bg-white/10 p-3 rounded-2xl border border-white/20">
-              <span className="text-2xl font-black">{loadingExam ? '...' : formatDurationMmSs(totalSeconds)}</span>
-              <p className="text-[11px] uppercase text-white/80">Thời gian</p>
+            <div className="bg-white/10 p-2 sm:p-3 rounded-2xl border border-white/20 min-w-0">
+              <span className="text-lg sm:text-2xl font-black">{loadingExam ? '...' : formatDurationMmSs(totalSeconds)}</span>
+              <p className="text-[10px] sm:text-[11px] uppercase text-white/80">Thời gian</p>
             </div>
           </div>
 

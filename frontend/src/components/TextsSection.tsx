@@ -195,33 +195,41 @@ export const TextsSection: React.FC<TextsSectionProps> = ({ lesson }) => {
                 return (
                   <div
                     key={s.id || sIndex}
-                    className={`p-4 rounded-2xl border transition-all flex items-start gap-4 ${
+                    className={`p-3.5 sm:p-4 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-start gap-2.5 sm:gap-4 ${
                       isActive
-                        ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-400 translate-x-1'
+                        ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-400 sm:translate-x-1'
                         : 'border-stone-100 dark:border-slate-800 bg-stone-50/50 dark:bg-slate-800/40'
                     }`}
                   >
-                    <div className="w-24 md:w-32 flex-shrink-0">
+                    <div className="flex items-center justify-between gap-2 sm:w-28 md:w-32 flex-shrink-0">
                       <span className={`inline-block text-xs font-bold px-2.5 py-1 rounded-lg ${badgeClass}`}>
                         {s.speaker || 'Người nói'}
                       </span>
+                      <button
+                        onClick={() => speakChinese(s.hanzi, speechRate, undefined, voiceMap[spKey])}
+                        className="sm:hidden flex-shrink-0 w-8 h-8 rounded-full bg-white dark:bg-slate-800 hover:bg-emerald-600 dark:hover:bg-emerald-600 hover:text-white border border-stone-200 dark:border-slate-700 dark:hover:border-emerald-500 text-gray-600 dark:text-slate-300 flex items-center justify-center transition active:scale-95"
+                        title="Nghe câu này"
+                      >
+                        <Volume2 className="w-3.5 h-3.5" />
+                      </button>
                     </div>
-                    <div className="flex-grow space-y-1">
-                      <div className="chinese-font text-lg md:text-xl font-semibold text-gray-900 dark:text-white">
+                    <div className="flex-grow min-w-0 space-y-1">
+                      <div className="chinese-font text-lg md:text-xl font-semibold text-gray-900 dark:text-white break-words">
                         {s.displayHanzi || s.hanzi}
                       </div>
                       {showPinyin && s.pinyin && (
-                        <div className="font-mono text-xs text-red-600 dark:text-red-400 font-medium">
+                        <div className="font-mono text-xs text-red-600 dark:text-red-400 font-medium break-words">
                           {s.pinyin}
                         </div>
                       )}
                       {showMeaning && s.meaning && (
-                        <div className="text-xs text-gray-600 dark:text-slate-400 italic">{s.meaning}</div>
+                        <div className="text-xs text-gray-600 dark:text-slate-400 italic break-words">{s.meaning}</div>
                       )}
                     </div>
                     <button
                       onClick={() => speakChinese(s.hanzi, speechRate, undefined, voiceMap[spKey])}
-                      className="flex-shrink-0 w-8 h-8 rounded-full bg-white dark:bg-slate-800 hover:bg-emerald-600 dark:hover:bg-emerald-600 hover:text-white border border-stone-200 dark:border-slate-700 dark:hover:border-emerald-500 text-gray-600 dark:text-slate-300 flex items-center justify-center transition active:scale-95"
+                      className="hidden sm:flex flex-shrink-0 w-8 h-8 rounded-full bg-white dark:bg-slate-800 hover:bg-emerald-600 dark:hover:bg-emerald-600 hover:text-white border border-stone-200 dark:border-slate-700 dark:hover:border-emerald-500 text-gray-600 dark:text-slate-300 items-center justify-center transition active:scale-95"
+                      title="Nghe câu này"
                     >
                       <Volume2 className="w-3.5 h-3.5" />
                     </button>

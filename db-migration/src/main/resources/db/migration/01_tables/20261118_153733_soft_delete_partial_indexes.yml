@@ -1,0 +1,89 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261118_153733_soft_delete_partial_indexes
+      author: chinese-study
+      comment: Toi uu Partial Index (WHERE is_deleted = 0 va WHERE is_deleted = 1) giup index gon nhe va truy van nhanh hon
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: false
+            sql: |-
+              DROP INDEX IF EXISTS idx_lessons_active;
+              DROP INDEX IF EXISTS idx_vocabularies_active;
+              DROP INDEX IF EXISTS idx_vocabularies_search_tsv;
+              DROP INDEX IF EXISTS idx_quiz_comprehensive_cat;
+              DROP INDEX IF EXISTS idx_marked_vocab_active;
+
+              CREATE INDEX IF NOT EXISTS idx_lessons_active
+                ON lessons (is_system DESC, sort_order ASC, created_at ASC)
+                WHERE is_deleted = 0;
+
+              CREATE INDEX IF NOT EXISTS idx_vocabularies_active
+                ON vocabularies (lesson_id, sort_order ASC)
+                WHERE is_deleted = 0;
+
+              CREATE INDEX IF NOT EXISTS idx_vocabularies_search_tsv
+                ON vocabularies USING GIN (search_tsv)
+                WHERE is_deleted = 0;
+
+              CREATE INDEX IF NOT EXISTS idx_quiz_comprehensive_cat
+                ON quiz_questions (category, lesson_id)
+                WHERE scope = 'comprehensive_test' AND is_deleted = 0;
+
+              CREATE INDEX IF NOT EXISTS idx_quiz_lesson_active
+                ON quiz_questions (lesson_id, scope, sort_order ASC)
+                WHERE is_deleted = 0;
+
+              CREATE INDEX IF NOT EXISTS idx_marked_vocab_active
+                ON user_marked_vocab (user_id, marked_at DESC)
+                WHERE is_deleted = 0;
+
+              CREATE INDEX IF NOT EXISTS idx_attempts_active
+                ON test_attempts (user_id, lesson_id, submitted_at DESC)
+                WHERE is_deleted = 0;
+
+              CREATE INDEX IF NOT EXISTS idx_role_permissions_active
+                ON role_permissions (role_id, permission_id)
+                WHERE is_deleted = 0;
+
+              CREATE INDEX IF NOT EXISTS idx_user_permissions_active
+                ON user_permissions (user_id, is_excluded)
+                WHERE is_deleted = 0;
+
+              -- Partial index rieng cho tac vu don dep ban ghi xoa mem qua han
+              CREATE INDEX IF NOT EXISTS idx_lessons_purge
+                ON lessons (deleted_at)
+                WHERE is_deleted = 1;
+
+              CREATE INDEX IF NOT EXISTS idx_quiz_purge
+                ON quiz_questions (deleted_at)
+                WHERE is_deleted = 1;
+
+              CREATE INDEX IF NOT EXISTS idx_marked_vocab_purge
+                ON user_marked_vocab (deleted_at)
+                WHERE is_deleted = 1;
+      rollback:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: false
+            sql: |-
+              DROP INDEX IF EXISTS idx_marked_vocab_purge;
+              DROP INDEX IF EXISTS idx_quiz_purge;
+              DROP INDEX IF EXISTS idx_lessons_purge;
+              DROP INDEX IF EXISTS idx_user_permissions_active;
+              DROP INDEX IF EXISTS idx_role_permissions_active;
+              DROP INDEX IF EXISTS idx_attempts_active;
+              DROP INDEX IF EXISTS idx_marked_vocab_active;
+              DROP INDEX IF EXISTS idx_quiz_lesson_active;
+              DROP INDEX IF EXISTS idx_quiz_comprehensive_cat;
+              DROP INDEX IF EXISTS idx_vocabularies_search_tsv;
+              DROP INDEX IF EXISTS idx_vocabularies_active;
+              DROP INDEX IF EXISTS idx_lessons_active;
+
+              CREATE INDEX IF NOT EXISTS idx_lessons_active ON lessons (is_deleted, is_system DESC, sort_order ASC);
+              CREATE INDEX IF NOT EXISTS idx_vocabularies_active ON vocabularies (lesson_id, is_deleted, sort_order ASC);
+              CREATE INDEX IF NOT EXISTS idx_marked_vocab_active ON user_marked_vocab (user_id, is_deleted, marked_at DESC);
+              CREATE INDEX IF NOT EXISTS idx_vocabularies_search_tsv ON vocabularies USING GIN (search_tsv);
+              CREATE INDEX IF NOT EXISTS idx_quiz_comprehensive_cat ON quiz_questions (category, lesson_id) WHERE scope = 'comprehensive_test';

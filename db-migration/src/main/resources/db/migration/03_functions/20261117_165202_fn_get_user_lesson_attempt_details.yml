@@ -41,6 +41,7 @@ databaseChangeLog:
                 a.submitted_at
               FROM test_attempts a
               WHERE a.user_id = p_user_id
+                AND a.is_deleted = 0
                 AND (
                   (p_lesson_id IS NULL AND a.lesson_id IS NULL)
                   OR a.lesson_id = p_lesson_id

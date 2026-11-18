@@ -42,7 +42,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onSuccess }) => {
             {mode === 'login' ? 'Đăng nhập tài khoản' : 'Tạo tài khoản học tập'}
           </h3>
           <p className="text-xs text-gray-500 dark:text-slate-400 mt-0.5">
-            Đồng bộ tiến độ SRS, điểm kiểm tra và bài học tự tạo lên Database.
+            Đồng bộ tiến độ SRS, điểm kiểm tra và bài học tự tạo lên tài khoản của bạn.
           </p>
         </div>
         <ModalCloseButton onClick={onClose} />

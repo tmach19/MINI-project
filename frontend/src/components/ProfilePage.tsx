@@ -507,7 +507,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     disabled={loadingMarked}
                     onClick={() => void loadMarkedFromDb()}
                     className="px-3 py-2 rounded-xl border border-stone-200 dark:border-slate-700 hover:bg-stone-100 dark:hover:bg-slate-800 text-xs font-semibold text-gray-700 dark:text-slate-200 inline-flex items-center gap-1.5 disabled:opacity-50 transition"
-                    title="Tải lại từ cơ sở dữ liệu"
+                    title="Tải lại"
                   >
                     <RefreshCw className={`w-3.5 h-3.5 ${loadingMarked ? 'animate-spin' : ''}`} />
                     Làm mới
@@ -524,7 +524,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               {loadingMarked && markedCards.length === 0 ? (
                 <LoadingCard
                   compact
-                  message="Đang tải danh sách từ đã đánh dấu từ cơ sở dữ liệu..."
+                  message="Đang tải danh sách từ đã đánh dấu..."
                 />
               ) : filteredMarkedCards.length === 0 ? (
                 <div className="py-12 text-center space-y-2 border border-dashed border-stone-200 dark:border-slate-800 rounded-2xl">
@@ -795,7 +795,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               {loadingAttempts && lessonTestSummaries.length === 0 && comprehensiveAttempts.length === 0 ? (
                 <LoadingCard
                   compact
-                  message="Đang tải lịch sử làm bài từ cơ sở dữ liệu..."
+                  message="Đang tải lịch sử làm bài..."
                 />
               ) : historySubTab === 'comprehensive' ? (
                 <div className="overflow-x-auto rounded-2xl border border-stone-200 dark:border-slate-800">

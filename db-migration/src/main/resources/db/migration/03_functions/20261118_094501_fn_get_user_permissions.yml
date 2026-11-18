@@ -21,6 +21,7 @@ databaseChangeLog:
                 SELECT id, role
                 FROM users
                 WHERE id = p_user_id
+                  AND is_deleted = 0
               ),
               admin_perms AS (
                 SELECT p.code, p.sort_order
@@ -33,21 +34,21 @@ databaseChangeLog:
                 SELECT p.id AS permission_id, p.code, p.sort_order
                 FROM target_user u
                 JOIN roles r ON r.code = u.role AND r.active_flg = TRUE
-                JOIN role_permissions rp ON rp.role_id = r.id
+                JOIN role_permissions rp ON rp.role_id = r.id AND rp.is_deleted = 0
                 JOIN permissions p ON p.id = rp.permission_id AND p.active_flg = TRUE
                 WHERE u.role <> 'admin'
               ),
               added_perms AS (
                 SELECT p.id AS permission_id, p.code, p.sort_order
                 FROM target_user u
-                JOIN user_permissions up ON up.user_id = u.id AND up.is_excluded = FALSE
+                JOIN user_permissions up ON up.user_id = u.id AND up.is_excluded = FALSE AND up.is_deleted = 0
                 JOIN permissions p ON p.id = up.permission_id AND p.active_flg = TRUE
                 WHERE u.role <> 'admin'
               ),
               excluded_perms AS (
                 SELECT up.permission_id
                 FROM target_user u
-                JOIN user_permissions up ON up.user_id = u.id AND up.is_excluded = TRUE
+                JOIN user_permissions up ON up.user_id = u.id AND up.is_excluded = TRUE AND up.is_deleted = 0
                 WHERE u.role <> 'admin'
               ),
               combined_user_perms AS (

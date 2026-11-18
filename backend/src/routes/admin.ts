@@ -9,6 +9,7 @@ import {
   updateRolePermissions,
   updateUserRole,
 } from '../repositories/rbacRepo.js';
+import { runSoftDeleteRetentionPurge } from '../services/retentionService.js';
 
 const router = Router();
 
@@ -129,6 +130,22 @@ router.put(
       } catch (err) {
         res.status(400).json({ error: (err as Error).message });
       }
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+router.post(
+  '/maintenance/purge-soft-deleted',
+  requirePermission(PERMISSION_CODES.MENU_ADMIN),
+  async (req, res, next) => {
+    try {
+      const rawDays = Number((req.body as { retentionDays?: number } | undefined)?.retentionDays);
+      const summary = await runSoftDeleteRetentionPurge(
+        Number.isFinite(rawDays) && rawDays >= 1 ? Math.round(rawDays) : undefined
+      );
+      res.json(summary);
     } catch (err) {
       next(err);
     }

@@ -112,7 +112,9 @@ databaseChangeLog:
                 FROM vocabularies v
                 JOIN lessons l ON l.id = v.lesson_id
                 CROSS JOIN rx r
-                WHERE (l.is_system = TRUE OR (p_user_id IS NOT NULL AND l.owner_id = p_user_id))
+                WHERE v.is_deleted = 0
+                  AND l.is_deleted = 0
+                  AND (l.is_system = TRUE OR (p_user_id IS NOT NULL AND l.owner_id = p_user_id))
                   AND (
                     (r.is_cjk AND (
                       lower(v.hanzi) LIKE '%' || r.q_raw || '%'

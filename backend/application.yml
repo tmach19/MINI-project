@@ -32,3 +32,7 @@ ai:
   # Dùng cho openai-compatible (vd DeepSeek/Qwen/OpenRouter/Groq) hoặc custom Gemini endpoint
   baseUrl: ${AI_BASE_URL:}
   timeoutMs: ${AI_TIMEOUT_MS:45000}
+
+retention:
+  softDeleteDays: ${SOFT_DELETE_RETENTION_DAYS:30}
+  purgeIntervalHours: ${SOFT_DELETE_PURGE_INTERVAL_HOURS:24}

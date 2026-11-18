@@ -8,6 +8,7 @@ import aiRouter from './routes/ai.js';
 import lessonsRouter from './routes/lessons.js';
 import progressRouter from './routes/progress.js';
 import ttsRouter from './routes/tts.js';
+import { startRetentionScheduler } from './services/retentionService.js';
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use(
 
 initDatabase()
   .then((mode) => {
+    startRetentionScheduler();
     app.listen(env.port, () => {
       console.log(`[Server] Backend chạy tại http://localhost:${env.port} (DB mode: ${mode})`);
     });

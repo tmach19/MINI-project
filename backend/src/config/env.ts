@@ -36,6 +36,10 @@ interface RawAppConfig {
     baseUrl?: string;
     timeoutMs?: number | string;
   };
+  retention?: {
+    softDeleteDays?: number | string;
+    purgeIntervalHours?: number | string;
+  };
 }
 
 function resolvePlaceholders(value: unknown): unknown {
@@ -115,5 +119,9 @@ export const env = {
     model: String(merged.ai?.model || process.env.AI_MODEL || 'gemini-3.5-flash-lite').trim(),
     baseUrl: String(merged.ai?.baseUrl || '').trim(),
     timeoutMs: Number(merged.ai?.timeoutMs || 45000),
+  },
+  retention: {
+    softDeleteDays: Math.max(1, Number(merged.retention?.softDeleteDays || 30)),
+    purgeIntervalHours: Math.max(1, Number(merged.retention?.purgeIntervalHours || 24)),
   },
 };

@@ -445,15 +445,15 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-stone-200/80 dark:border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+      <header className="relative md:sticky md:top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-stone-200/80 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 min-h-16 py-2 flex flex-wrap items-center justify-between gap-2 sm:gap-3">
           <button
             type="button"
             onClick={() => navigateView('study')}
-            className="flex items-center gap-3 flex-shrink-0 text-left"
+            className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0 text-left"
           >
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-red-600 to-amber-600 flex items-center justify-center text-white shadow-md">
-              <span className="chinese-serif text-xl font-black">汉</span>
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-red-600 to-amber-600 flex items-center justify-center text-white shadow-md">
+              <span className="chinese-serif text-lg sm:text-xl font-black">汉</span>
             </div>
             <div className="hidden sm:block">
               <h1 className="text-base font-bold text-gray-900 dark:text-white">汉语学堂</h1>
@@ -461,14 +461,14 @@ export default function App() {
             </div>
           </button>
 
-          <div className="flex items-center gap-2 flex-wrap justify-end">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-end min-w-0 flex-1">
             <select
               value={currentLessonId}
               onChange={(e) => {
                 setCurrentLessonId(e.target.value);
                 navigateView('study');
               }}
-              className="pl-3 pr-7 py-2 bg-stone-100 dark:bg-slate-800 border border-stone-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-gray-800 dark:text-slate-100 max-w-[180px] sm:max-w-xs truncate"
+              className="pl-2.5 sm:pl-3 pr-6 sm:pr-7 py-2 bg-stone-100 dark:bg-slate-800 border border-stone-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-gray-800 dark:text-slate-100 min-w-0 flex-1 sm:flex-initial max-w-full sm:max-w-[230px] md:max-w-xs truncate"
             >
               {Object.entries(groupedLessons).map(([unit, items]) => (
                 <optgroup key={unit} label={unit}>
@@ -600,7 +600,7 @@ export default function App() {
             ) : (
               <button
                 onClick={() => setShowAuthModal(true)}
-                className="px-3 py-2 rounded-xl border border-stone-200 dark:border-slate-700 text-xs font-bold text-gray-700 dark:text-slate-200 hover:bg-stone-100 dark:hover:bg-slate-800 flex items-center gap-1.5"
+                className="px-2.5 sm:px-3 py-2 rounded-xl border border-stone-200 dark:border-slate-700 text-xs font-bold text-gray-700 dark:text-slate-200 hover:bg-stone-100 dark:hover:bg-slate-800 flex items-center gap-1.5 whitespace-nowrap flex-shrink-0"
               >
                 <LogIn className="w-3.5 h-3.5" /> Đăng nhập
               </button>
@@ -656,11 +656,11 @@ export default function App() {
       </section>
       )}
 
-      <main className="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8">
         {!user && (
           <div className="mb-6 p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-amber-900 dark:text-amber-200">
             <span>
-              Bạn đang ở chế độ <strong>Dùng thử (Khách)</strong> — thẻ đánh dấu tạm lưu trên trình duyệt. Đăng nhập để lưu vào Database PostgreSQL.
+              Bạn đang ở chế độ <strong>Dùng thử (Khách)</strong>.
             </span>
             <button
               onClick={() => setShowAuthModal(true)}
@@ -831,7 +831,7 @@ export default function App() {
           onClick={() => openAiAssistant('dictionary', '')}
           title="Mở Từ điển & Gia sư AI"
           aria-label="Mở Từ điển & Gia sư AI"
-          className="group fixed bottom-5 right-5 z-30 h-11 px-3 hover:px-4 focus-visible:px-4 rounded-full bg-gradient-to-r from-red-600 to-amber-600 hover:opacity-95 text-white text-xs font-bold shadow-lg flex items-center justify-center transition-all duration-300 ease-out active:scale-95"
+          className="group fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-30 h-10 sm:h-11 px-2.5 sm:px-3 hover:px-4 focus-visible:px-4 rounded-full bg-gradient-to-r from-red-600 to-amber-600 hover:opacity-95 text-white text-xs font-bold shadow-lg flex items-center justify-center transition-all duration-300 ease-out active:scale-95"
         >
           <Sparkles className="w-5 h-5 flex-shrink-0" />
           <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-300 ease-out group-hover:max-w-[180px] group-hover:opacity-100 group-hover:ml-2 group-focus-visible:max-w-[180px] group-focus-visible:opacity-100 group-focus-visible:ml-2">

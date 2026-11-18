@@ -34,7 +34,7 @@ export async function findUserByEmail(email: string): Promise<AuthenticatedUserR
     role: 'user' | 'admin';
     created_at: Date;
   }>(
-    'SELECT id, email, password_hash, display_name, role, created_at FROM users WHERE email = $1',
+    'SELECT id, email, password_hash, display_name, role, created_at FROM users WHERE email = $1 AND is_deleted = 0',
     [normalized]
   );
   const r = res.rows[0];
@@ -70,7 +70,7 @@ export async function findUserById(userId: string): Promise<UserProfile | null> 
     role: 'user' | 'admin';
     created_at: Date;
   }>(
-    'SELECT id, email, display_name, role, created_at FROM users WHERE id = $1::uuid',
+    'SELECT id, email, display_name, role, created_at FROM users WHERE id = $1::uuid AND is_deleted = 0',
     [userId]
   );
   const r = res.rows[0];
@@ -142,7 +142,9 @@ export async function getMarkedVocabMap(userId: string): Promise<Record<string, 
     const result: Record<string, MarkedVocabRecord> = {};
     if (map) {
       map.forEach((v, k) => {
-        result[k] = v;
+        if (v.isDeleted !== 1) {
+          result[k] = v;
+        }
       });
     }
     return result;
@@ -154,9 +156,12 @@ export async function getMarkedVocabMap(userId: string): Promise<Record<string, 
     note: string | null;
     marked_at: Date;
   }>(
-    `SELECT vocab_id, note, marked_at
-     FROM user_marked_vocab
-     WHERE user_id = $1::uuid`,
+    `SELECT m.vocab_id, m.note, m.marked_at
+     FROM user_marked_vocab m
+     JOIN vocabularies v ON v.id = m.vocab_id AND v.is_deleted = 0
+     JOIN lessons l ON l.id = v.lesson_id AND l.is_deleted = 0
+     WHERE m.user_id = $1::uuid
+       AND m.is_deleted = 0`,
     [userId]
   );
 
@@ -185,18 +190,27 @@ export async function toggleMarkedVocab(
       memoryStore.markedByUser.set(userId, userMap);
     }
 
-    const currentlyMarked = userMap.has(vocabId);
+    const existing = userMap.get(vocabId);
+    const currentlyMarked = Boolean(existing && existing.isDeleted !== 1);
     const shouldMark = marked !== undefined ? marked : !currentlyMarked;
 
     if (!shouldMark) {
-      userMap.delete(vocabId);
+      if (existing) {
+        userMap.set(vocabId, {
+          ...existing,
+          isDeleted: 1,
+          deletedAt: new Date().toISOString(),
+        });
+      }
       return { marked: false, record: null };
     }
 
     const record: MarkedVocabRecord = {
       vocabId,
-      note: note ?? userMap.get(vocabId)?.note ?? null,
+      note: note ?? existing?.note ?? null,
       markedAt: new Date().toISOString(),
+      isDeleted: 0,
+      deletedAt: null,
     };
     userMap.set(vocabId, record);
     return { marked: true, record };
@@ -206,7 +220,7 @@ export async function toggleMarkedVocab(
   let shouldMark = marked;
   if (shouldMark === undefined) {
     const existing = await pool.query(
-      'SELECT 1 FROM user_marked_vocab WHERE user_id = $1::uuid AND vocab_id = $2',
+      'SELECT 1 FROM user_marked_vocab WHERE user_id = $1::uuid AND vocab_id = $2 AND is_deleted = 0',
       [userId, vocabId]
     );
     shouldMark = existing.rowCount === 0;
@@ -214,18 +228,22 @@ export async function toggleMarkedVocab(
 
   if (!shouldMark) {
     await pool.query(
-      'DELETE FROM user_marked_vocab WHERE user_id = $1::uuid AND vocab_id = $2',
+      `UPDATE user_marked_vocab
+       SET is_deleted = 1, deleted_at = NOW()
+       WHERE user_id = $1::uuid AND vocab_id = $2 AND is_deleted = 0`,
       [userId, vocabId]
     );
     return { marked: false, record: null };
   }
 
   const res = await pool.query<{ vocab_id: string; note: string | null; marked_at: Date }>(
-    `INSERT INTO user_marked_vocab (user_id, vocab_id, note, marked_at)
-     VALUES ($1::uuid, $2, $3, NOW())
+    `INSERT INTO user_marked_vocab (user_id, vocab_id, note, marked_at, is_deleted, deleted_at)
+     VALUES ($1::uuid, $2, $3, NOW(), 0, NULL)
      ON CONFLICT (user_id, vocab_id) DO UPDATE SET
        note = COALESCE(EXCLUDED.note, user_marked_vocab.note),
-       marked_at = NOW()
+       marked_at = NOW(),
+       is_deleted = 0,
+       deleted_at = NULL
      RETURNING vocab_id, note, marked_at`,
     [userId, vocabId, note ?? null]
   );
@@ -263,9 +281,10 @@ export async function getMarkedVocabCards(userId: string): Promise<MarkedVocabCa
     );
 
     for (const l of orderedLessons) {
+      if (l.isDeleted === 1) continue;
       for (const v of l.vocabulary) {
         const mark = userMap.get(v.id);
-        if (mark) {
+        if (mark && mark.isDeleted !== 1) {
           cards.push({
             ...v,
             lessonId: l.id,
@@ -287,9 +306,10 @@ export async function getMarkedVocabCards(userId: string): Promise<MarkedVocabCa
        l.id AS lesson_id, l.title AS lesson_title,
        m.note, m.marked_at
      FROM user_marked_vocab m
-     JOIN vocabularies v ON v.id = m.vocab_id
-     JOIN lessons l ON l.id = v.lesson_id
+     JOIN vocabularies v ON v.id = m.vocab_id AND v.is_deleted = 0
+     JOIN lessons l ON l.id = v.lesson_id AND l.is_deleted = 0
      WHERE m.user_id = $1::uuid
+       AND m.is_deleted = 0
      ORDER BY l.is_system DESC, l.sort_order ASC, l.created_at ASC, v.sort_order ASC, m.marked_at DESC`,
     [userId]
   );
@@ -382,11 +402,12 @@ export async function listTestAttempts(userId: string): Promise<TestAttemptRecor
   }
 
   const pool = getPool()!;
-  const res = await pool.query(
+    const res = await pool.query(
     `SELECT a.id, a.lesson_id, a.exam_title, l.title AS lesson_title, a.score, a.total_questions, a.correct_count, a.duration_seconds, a.answers, a.submitted_at
      FROM test_attempts a
-     LEFT JOIN lessons l ON l.id = a.lesson_id
+     LEFT JOIN lessons l ON l.id = a.lesson_id AND l.is_deleted = 0
      WHERE a.user_id = $1::uuid
+       AND a.is_deleted = 0
      ORDER BY a.submitted_at DESC`,
     [userId]
   );
@@ -420,7 +441,7 @@ export async function getUserLessonTestSummary(userId: string): Promise<LessonTe
     });
 
     const visibleLessons = memoryStore.lessons
-      .filter((l) => l.isSystem || l.ownerId === userId)
+      .filter((l) => l.isDeleted !== 1 && (l.isSystem || l.ownerId === userId))
       .sort((a, b) => Number(b.isSystem) - Number(a.isSystem));
 
     const summaries: LessonTestSummaryRecord[] = visibleLessons.map((l) => {
@@ -548,7 +569,7 @@ export async function getUserLessonAttemptDetails(
   }>(
     `SELECT d.id, d.lesson_id, t.exam_title, d.score, d.total_questions, d.correct_count, d.duration_seconds, d.submitted_at
      FROM fn_get_user_lesson_attempt_details($1::uuid, $2, $3) d
-     LEFT JOIN test_attempts t ON t.id = d.id
+     LEFT JOIN test_attempts t ON t.id = d.id AND t.is_deleted = 0
      ORDER BY d.submitted_at DESC`,
     [userId, lessonId, limit]
   );

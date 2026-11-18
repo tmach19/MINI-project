@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS users (
   password_hash TEXT NOT NULL,
   display_name TEXT NOT NULL,
   role TEXT NOT NULL DEFAULT 'user' CHECK (role IN ('user', 'admin')),
+  is_deleted SMALLINT NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -31,12 +33,16 @@ CREATE TABLE IF NOT EXISTS lessons (
   sort_order INTEGER NOT NULL DEFAULT 0,
   is_system BOOLEAN NOT NULL DEFAULT FALSE,
   owner_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  is_deleted SMALLINT NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX IF NOT EXISTS idx_lessons_sort ON lessons (sort_order, created_at);
 CREATE INDEX IF NOT EXISTS idx_lessons_owner ON lessons (owner_id);
+CREATE INDEX IF NOT EXISTS idx_lessons_active ON lessons (is_system DESC, sort_order ASC, created_at ASC) WHERE is_deleted = 0;
+CREATE INDEX IF NOT EXISTS idx_lessons_purge ON lessons (deleted_at) WHERE is_deleted = 1;
 
 -- ----------------------------------------------------------------------------
 -- 3. Từ vựng & Bộ thủ (Vocabularies)
@@ -85,12 +91,15 @@ CREATE TABLE IF NOT EXISTS vocabularies (
       'D'
     )
   ) STORED,
+  is_deleted SMALLINT NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX IF NOT EXISTS idx_vocabularies_lesson ON vocabularies (lesson_id, sort_order);
 CREATE INDEX IF NOT EXISTS idx_vocabularies_hanzi ON vocabularies (hanzi);
-CREATE INDEX IF NOT EXISTS idx_vocabularies_search_tsv ON vocabularies USING GIN (search_tsv);
+CREATE INDEX IF NOT EXISTS idx_vocabularies_active ON vocabularies (lesson_id, sort_order ASC) WHERE is_deleted = 0;
+CREATE INDEX IF NOT EXISTS idx_vocabularies_search_tsv ON vocabularies USING GIN (search_tsv) WHERE is_deleted = 0;
 
 -- ----------------------------------------------------------------------------
 -- 4. Ngữ pháp trọng tâm (Grammars)
@@ -104,6 +113,8 @@ CREATE TABLE IF NOT EXISTS grammars (
   notes TEXT,
   examples JSONB NOT NULL DEFAULT '[]'::jsonb,
   sort_order INTEGER NOT NULL DEFAULT 0,
+  is_deleted SMALLINT NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -118,6 +129,8 @@ CREATE TABLE IF NOT EXISTS texts (
   title TEXT NOT NULL,
   description TEXT,
   sort_order INTEGER NOT NULL DEFAULT 0,
+  is_deleted SMALLINT NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -131,7 +144,9 @@ CREATE TABLE IF NOT EXISTS text_sentences (
   display_hanzi TEXT,
   pinyin TEXT,
   meaning TEXT,
-  sort_order INTEGER NOT NULL DEFAULT 0
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  is_deleted SMALLINT NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMPTZ
 );
 
 CREATE INDEX IF NOT EXISTS idx_text_sentences_text ON text_sentences (text_id, sort_order);
@@ -147,7 +162,9 @@ CREATE TABLE IF NOT EXISTS sentence_scrambles (
   pinyin TEXT,
   tokens JSONB NOT NULL DEFAULT '[]'::jsonb,
   unlearned_hint TEXT,
-  sort_order INTEGER NOT NULL DEFAULT 0
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  is_deleted SMALLINT NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMPTZ
 );
 
 CREATE INDEX IF NOT EXISTS idx_scrambles_lesson ON sentence_scrambles (lesson_id, sort_order);
@@ -168,7 +185,9 @@ CREATE TABLE IF NOT EXISTS translation_exercises (
   accepted_keywords JSONB NOT NULL DEFAULT '[]'::jsonb,
   hint TEXT,
   explanation TEXT,
-  sort_order INTEGER NOT NULL DEFAULT 0
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  is_deleted SMALLINT NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMPTZ
 );
 
 CREATE INDEX IF NOT EXISTS idx_translations_lesson ON translation_exercises (lesson_id, direction, sort_order);
@@ -188,12 +207,16 @@ CREATE TABLE IF NOT EXISTS quiz_questions (
   options JSONB NOT NULL DEFAULT '[]'::jsonb,
   correct_index INTEGER NOT NULL CHECK (correct_index >= 0),
   explanation TEXT,
-  sort_order INTEGER NOT NULL DEFAULT 0
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  is_deleted SMALLINT NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMPTZ
 );
 
 CREATE INDEX IF NOT EXISTS idx_quiz_lesson_scope ON quiz_questions (lesson_id, scope, sort_order);
 CREATE INDEX IF NOT EXISTS idx_quiz_text ON quiz_questions (text_id);
-CREATE INDEX IF NOT EXISTS idx_quiz_comprehensive_cat ON quiz_questions (category, lesson_id) WHERE scope = 'comprehensive_test';
+CREATE INDEX IF NOT EXISTS idx_quiz_comprehensive_cat ON quiz_questions (category, lesson_id) WHERE scope = 'comprehensive_test' AND is_deleted = 0;
+CREATE INDEX IF NOT EXISTS idx_quiz_lesson_active ON quiz_questions (lesson_id, scope, sort_order ASC) WHERE is_deleted = 0;
+CREATE INDEX IF NOT EXISTS idx_quiz_purge ON quiz_questions (deleted_at) WHERE is_deleted = 1;
 
 -- ----------------------------------------------------------------------------
 -- 9. Từ vựng được đánh dấu / gắn cờ (User Marked Vocab)
@@ -204,10 +227,14 @@ CREATE TABLE IF NOT EXISTS user_marked_vocab (
   vocab_id TEXT NOT NULL REFERENCES vocabularies(id) ON DELETE CASCADE,
   note TEXT,
   marked_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  is_deleted SMALLINT NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMPTZ,
   CONSTRAINT uq_user_marked_vocab UNIQUE (user_id, vocab_id)
 );
 
 CREATE INDEX IF NOT EXISTS idx_marked_vocab_user ON user_marked_vocab (user_id, marked_at DESC);
+CREATE INDEX IF NOT EXISTS idx_marked_vocab_active ON user_marked_vocab (user_id, marked_at DESC) WHERE is_deleted = 0;
+CREATE INDEX IF NOT EXISTS idx_marked_vocab_purge ON user_marked_vocab (deleted_at) WHERE is_deleted = 1;
 
 -- ----------------------------------------------------------------------------
 -- 10. Lịch sử làm bài kiểm tra (Test Attempts)
@@ -222,11 +249,14 @@ CREATE TABLE IF NOT EXISTS test_attempts (
   correct_count INTEGER NOT NULL CHECK (correct_count >= 0),
   duration_seconds INTEGER NOT NULL DEFAULT 0,
   answers JSONB NOT NULL DEFAULT '{}'::jsonb,
-  submitted_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  submitted_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  is_deleted SMALLINT NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMPTZ
 );
 
 CREATE INDEX IF NOT EXISTS idx_attempts_user_lesson ON test_attempts (user_id, lesson_id, submitted_at DESC);
 CREATE INDEX IF NOT EXISTS idx_attempts_user_submitted ON test_attempts (user_id, submitted_at DESC);
+CREATE INDEX IF NOT EXISTS idx_attempts_active ON test_attempts (user_id, lesson_id, submitted_at DESC) WHERE is_deleted = 0;
 
 -- ----------------------------------------------------------------------------
 -- 11. Hệ thống Phân quyền RBAC (Roles, Permissions, Role-Permissions, User Overrides)
@@ -258,6 +288,8 @@ CREATE TABLE IF NOT EXISTS role_permissions (
   role_id TEXT NOT NULL REFERENCES roles(id) ON DELETE CASCADE,
   permission_id TEXT NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  is_deleted SMALLINT NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMPTZ,
   PRIMARY KEY (role_id, permission_id)
 );
 
@@ -267,12 +299,16 @@ CREATE TABLE IF NOT EXISTS user_permissions (
   is_excluded BOOLEAN NOT NULL DEFAULT FALSE,
   updated_by UUID REFERENCES users(id) ON DELETE SET NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  is_deleted SMALLINT NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMPTZ,
   PRIMARY KEY (user_id, permission_id)
 );
 
 CREATE INDEX IF NOT EXISTS idx_permissions_sort ON permissions (sort_order, code);
 CREATE INDEX IF NOT EXISTS idx_role_permissions_role ON role_permissions (role_id);
+CREATE INDEX IF NOT EXISTS idx_role_permissions_active ON role_permissions (role_id, permission_id) WHERE is_deleted = 0;
 CREATE INDEX IF NOT EXISTS idx_user_permissions_user ON user_permissions (user_id, is_excluded);
+CREATE INDEX IF NOT EXISTS idx_user_permissions_active ON user_permissions (user_id, is_excluded) WHERE is_deleted = 0;
 
 CREATE OR REPLACE FUNCTION fn_get_user_permissions(p_user_id UUID)
 RETURNS TABLE (

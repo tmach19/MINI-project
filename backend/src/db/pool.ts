@@ -85,6 +85,8 @@ export async function initDatabase(): Promise<'postgres' | 'memory'> {
         vocab_id TEXT NOT NULL REFERENCES vocabularies(id) ON DELETE CASCADE,
         note TEXT,
         marked_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        is_deleted SMALLINT NOT NULL DEFAULT 0,
+        deleted_at TIMESTAMPTZ,
         CONSTRAINT uq_user_marked_vocab UNIQUE (user_id, vocab_id)
       );
       CREATE INDEX IF NOT EXISTS idx_marked_vocab_user ON user_marked_vocab (user_id, marked_at DESC);

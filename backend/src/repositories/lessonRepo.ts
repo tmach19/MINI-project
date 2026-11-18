@@ -148,7 +148,7 @@ export async function listLessons(userId?: string): Promise<LessonSummary[]> {
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
     return memoryStore.lessons
-      .filter((l) => l.isSystem || (userId && l.ownerId === userId))
+      .filter((l) => l.isDeleted !== 1 && (l.isSystem || (userId && l.ownerId === userId)))
       .map((l) => ({
         id: l.id,
         title: l.title,
@@ -189,12 +189,13 @@ export async function listLessons(userId?: string): Promise<LessonSummary[]> {
        l.date_added::text,
        l.is_system,
        l.owner_id,
-       (SELECT COUNT(*) FROM vocabularies v WHERE v.lesson_id = l.id) AS vocab_count,
-       (SELECT COUNT(*) FROM grammars g WHERE g.lesson_id = l.id) AS grammar_count,
-       (SELECT COUNT(*) FROM texts t WHERE t.lesson_id = l.id) AS text_count,
-       (SELECT COUNT(*) FROM quiz_questions q WHERE q.lesson_id = l.id AND q.scope = 'comprehensive_test') AS test_count
+       (SELECT COUNT(*) FROM vocabularies v WHERE v.lesson_id = l.id AND v.is_deleted = 0) AS vocab_count,
+       (SELECT COUNT(*) FROM grammars g WHERE g.lesson_id = l.id AND g.is_deleted = 0) AS grammar_count,
+       (SELECT COUNT(*) FROM texts t WHERE t.lesson_id = l.id AND t.is_deleted = 0) AS text_count,
+       (SELECT COUNT(*) FROM quiz_questions q WHERE q.lesson_id = l.id AND q.scope = 'comprehensive_test' AND q.is_deleted = 0) AS test_count
      FROM lessons l
-     WHERE l.is_system = TRUE OR ($1::uuid IS NOT NULL AND l.owner_id = $1::uuid)
+     WHERE l.is_deleted = 0
+       AND (l.is_system = TRUE OR ($1::uuid IS NOT NULL AND l.owner_id = $1::uuid))
      ORDER BY l.is_system DESC, l.sort_order ASC, l.created_at ASC`,
     [userId || null]
   );
@@ -218,7 +219,7 @@ export async function listLessons(userId?: string): Promise<LessonSummary[]> {
 export async function getLessonById(lessonId: string, userId?: string): Promise<LessonDetail | null> {
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
-    const found = memoryStore.lessons.find((l) => l.id === lessonId);
+    const found = memoryStore.lessons.find((l) => l.id === lessonId && l.isDeleted !== 1);
     if (!found) return null;
     if (!found.isSystem && found.ownerId !== userId) return null;
     return found;
@@ -237,7 +238,9 @@ export async function getLessonById(lessonId: string, userId?: string): Promise<
   }>(
     `SELECT id, title, hsk_level, unit, description, date_added::text, is_system, owner_id
      FROM lessons
-     WHERE id = $1 AND (is_system = TRUE OR ($2::uuid IS NOT NULL AND owner_id = $2::uuid))`,
+     WHERE id = $1
+       AND is_deleted = 0
+       AND (is_system = TRUE OR ($2::uuid IS NOT NULL AND owner_id = $2::uuid))`,
     [lessonId, userId || null]
   );
 
@@ -248,39 +251,39 @@ export async function getLessonById(lessonId: string, userId?: string): Promise<
     await Promise.all([
       pool.query(
         `SELECT id, hanzi, pinyin, sino_vietnamese, meaning, word_type, radical, breakdown, mnemonic, example_hanzi, example_pinyin, example_meaning
-         FROM vocabularies WHERE lesson_id = $1 ORDER BY sort_order ASC`,
+         FROM vocabularies WHERE lesson_id = $1 AND is_deleted = 0 ORDER BY sort_order ASC`,
         [lessonId]
       ),
       pool.query(
         `SELECT id, title, formula, explanation, notes, examples
-         FROM grammars WHERE lesson_id = $1 ORDER BY sort_order ASC`,
+         FROM grammars WHERE lesson_id = $1 AND is_deleted = 0 ORDER BY sort_order ASC`,
         [lessonId]
       ),
       pool.query(
-        `SELECT id, title, description FROM texts WHERE lesson_id = $1 ORDER BY sort_order ASC`,
+        `SELECT id, title, description FROM texts WHERE lesson_id = $1 AND is_deleted = 0 ORDER BY sort_order ASC`,
         [lessonId]
       ),
       pool.query(
         `SELECT ts.id, ts.text_id, ts.speaker, ts.hanzi, ts.display_hanzi, ts.pinyin, ts.meaning
          FROM text_sentences ts
          JOIN texts t ON t.id = ts.text_id
-         WHERE t.lesson_id = $1
+         WHERE t.lesson_id = $1 AND t.is_deleted = 0 AND ts.is_deleted = 0
          ORDER BY t.sort_order ASC, ts.sort_order ASC`,
         [lessonId]
       ),
       pool.query(
         `SELECT id, target_hanzi, target_meaning, pinyin, tokens, unlearned_hint
-         FROM sentence_scrambles WHERE lesson_id = $1 ORDER BY sort_order ASC`,
+         FROM sentence_scrambles WHERE lesson_id = $1 AND is_deleted = 0 ORDER BY sort_order ASC`,
         [lessonId]
       ),
       pool.query(
         `SELECT id, direction, prompt_text, audio_text, pinyin, expected_chinese, expected_meaning, accepted_pinyin, accepted_keywords, hint, explanation
-         FROM translation_exercises WHERE lesson_id = $1 ORDER BY sort_order ASC`,
+         FROM translation_exercises WHERE lesson_id = $1 AND is_deleted = 0 ORDER BY sort_order ASC`,
         [lessonId]
       ),
       pool.query(
         `SELECT id, text_id, scope, category, audio_text, passage, question, options, correct_index, explanation
-         FROM quiz_questions WHERE lesson_id = $1 ORDER BY sort_order ASC`,
+         FROM quiz_questions WHERE lesson_id = $1 AND is_deleted = 0 ORDER BY sort_order ASC`,
         [lessonId]
       ),
     ]);
@@ -442,8 +445,23 @@ async function insertLessonChildren(
   for (let i = 0; i < vocabulary.length; i++) {
     const v = vocabulary[i];
     await client.query(
-      `INSERT INTO vocabularies (id, lesson_id, hanzi, pinyin, sino_vietnamese, meaning, word_type, radical, breakdown, mnemonic, example_hanzi, example_pinyin, example_meaning, sort_order)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)`,
+      `INSERT INTO vocabularies (id, lesson_id, hanzi, pinyin, sino_vietnamese, meaning, word_type, radical, breakdown, mnemonic, example_hanzi, example_pinyin, example_meaning, sort_order, is_deleted, deleted_at)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,0,NULL)
+       ON CONFLICT (id) DO UPDATE SET
+         hanzi = EXCLUDED.hanzi,
+         pinyin = EXCLUDED.pinyin,
+         sino_vietnamese = EXCLUDED.sino_vietnamese,
+         meaning = EXCLUDED.meaning,
+         word_type = EXCLUDED.word_type,
+         radical = EXCLUDED.radical,
+         breakdown = EXCLUDED.breakdown,
+         mnemonic = EXCLUDED.mnemonic,
+         example_hanzi = EXCLUDED.example_hanzi,
+         example_pinyin = EXCLUDED.example_pinyin,
+         example_meaning = EXCLUDED.example_meaning,
+         sort_order = EXCLUDED.sort_order,
+         is_deleted = 0,
+         deleted_at = NULL`,
       [
         v.id, lessonId, v.hanzi, v.pinyin, v.sinoVietnamese, v.meaning, v.type,
         v.radical, v.breakdown, v.mnemonic, v.example, v.examplePinyin, v.exampleMeaning, i + 1,
@@ -454,8 +472,17 @@ async function insertLessonChildren(
   for (let i = 0; i < grammar.length; i++) {
     const g = grammar[i];
     await client.query(
-      `INSERT INTO grammars (id, lesson_id, title, formula, explanation, notes, examples, sort_order)
-       VALUES ($1,$2,$3,$4,$5,$6,$7::jsonb,$8)`,
+      `INSERT INTO grammars (id, lesson_id, title, formula, explanation, notes, examples, sort_order, is_deleted, deleted_at)
+       VALUES ($1,$2,$3,$4,$5,$6,$7::jsonb,$8,0,NULL)
+       ON CONFLICT (id) DO UPDATE SET
+         title = EXCLUDED.title,
+         formula = EXCLUDED.formula,
+         explanation = EXCLUDED.explanation,
+         notes = EXCLUDED.notes,
+         examples = EXCLUDED.examples,
+         sort_order = EXCLUDED.sort_order,
+         is_deleted = 0,
+         deleted_at = NULL`,
       [g.id, lessonId, g.title, g.formula, g.explanation, g.notes, JSON.stringify(g.examples), i + 1]
     );
   }
@@ -463,8 +490,16 @@ async function insertLessonChildren(
   for (let i = 0; i < exercises.sentenceScramble.length; i++) {
     const sc = exercises.sentenceScramble[i];
     await client.query(
-      `INSERT INTO sentence_scrambles (id, lesson_id, target_hanzi, target_meaning, pinyin, tokens, sort_order)
-       VALUES ($1,$2,$3,$4,$5,$6::jsonb,$7)`,
+      `INSERT INTO sentence_scrambles (id, lesson_id, target_hanzi, target_meaning, pinyin, tokens, sort_order, is_deleted, deleted_at)
+       VALUES ($1,$2,$3,$4,$5,$6::jsonb,$7,0,NULL)
+       ON CONFLICT (id) DO UPDATE SET
+         target_hanzi = EXCLUDED.target_hanzi,
+         target_meaning = EXCLUDED.target_meaning,
+         pinyin = EXCLUDED.pinyin,
+         tokens = EXCLUDED.tokens,
+         sort_order = EXCLUDED.sort_order,
+         is_deleted = 0,
+         deleted_at = NULL`,
       [sc.id, lessonId, sc.targetHanzi, sc.targetMeaning, sc.pinyin, JSON.stringify(sc.tokens), i + 1]
     );
   }
@@ -472,8 +507,22 @@ async function insertLessonChildren(
   for (let i = 0; i < exercises.translationExercises.length; i++) {
     const tr = exercises.translationExercises[i];
     await client.query(
-      `INSERT INTO translation_exercises (id, lesson_id, direction, prompt_text, audio_text, pinyin, expected_chinese, expected_meaning, accepted_pinyin, accepted_keywords, hint, explanation, sort_order)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10::jsonb,$11,$12,$13)`,
+      `INSERT INTO translation_exercises (id, lesson_id, direction, prompt_text, audio_text, pinyin, expected_chinese, expected_meaning, accepted_pinyin, accepted_keywords, hint, explanation, sort_order, is_deleted, deleted_at)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10::jsonb,$11,$12,$13,0,NULL)
+       ON CONFLICT (id) DO UPDATE SET
+         direction = EXCLUDED.direction,
+         prompt_text = EXCLUDED.prompt_text,
+         audio_text = EXCLUDED.audio_text,
+         pinyin = EXCLUDED.pinyin,
+         expected_chinese = EXCLUDED.expected_chinese,
+         expected_meaning = EXCLUDED.expected_meaning,
+         accepted_pinyin = EXCLUDED.accepted_pinyin,
+         accepted_keywords = EXCLUDED.accepted_keywords,
+         hint = EXCLUDED.hint,
+         explanation = EXCLUDED.explanation,
+         sort_order = EXCLUDED.sort_order,
+         is_deleted = 0,
+         deleted_at = NULL`,
       [
         tr.id, lessonId, tr.direction, tr.promptText, tr.chineseAudioText, tr.pinyin,
         tr.expectedChinese, tr.expectedMeaning, tr.acceptedPinyin,
@@ -485,8 +534,17 @@ async function insertLessonChildren(
   for (let i = 0; i < exercises.expandedQuiz.length; i++) {
     const eq = exercises.expandedQuiz[i];
     await client.query(
-      `INSERT INTO quiz_questions (id, lesson_id, scope, category, question, options, correct_index, explanation, sort_order)
-       VALUES ($1,$2,'expanded_quiz',$3,$4,$5::jsonb,$6,$7,$8)`,
+      `INSERT INTO quiz_questions (id, lesson_id, scope, category, question, options, correct_index, explanation, sort_order, is_deleted, deleted_at)
+       VALUES ($1,$2,'expanded_quiz',$3,$4,$5::jsonb,$6,$7,$8,0,NULL)
+       ON CONFLICT (id) DO UPDATE SET
+         category = EXCLUDED.category,
+         question = EXCLUDED.question,
+         options = EXCLUDED.options,
+         correct_index = EXCLUDED.correct_index,
+         explanation = EXCLUDED.explanation,
+         sort_order = EXCLUDED.sort_order,
+         is_deleted = 0,
+         deleted_at = NULL`,
       [eq.id, lessonId, eq.type || 'vocabulary', eq.question, JSON.stringify(eq.options), eq.correctIndex, eq.explanation, i + 1]
     );
   }
@@ -494,8 +552,17 @@ async function insertLessonChildren(
   for (let i = 0; i < comprehensiveTest.length; i++) {
     const ct = comprehensiveTest[i];
     await client.query(
-      `INSERT INTO quiz_questions (id, lesson_id, scope, category, question, options, correct_index, explanation, sort_order)
-       VALUES ($1,$2,'comprehensive_test',$3,$4,$5::jsonb,$6,$7,$8)`,
+      `INSERT INTO quiz_questions (id, lesson_id, scope, category, question, options, correct_index, explanation, sort_order, is_deleted, deleted_at)
+       VALUES ($1,$2,'comprehensive_test',$3,$4,$5::jsonb,$6,$7,$8,0,NULL)
+       ON CONFLICT (id) DO UPDATE SET
+         category = EXCLUDED.category,
+         question = EXCLUDED.question,
+         options = EXCLUDED.options,
+         correct_index = EXCLUDED.correct_index,
+         explanation = EXCLUDED.explanation,
+         sort_order = EXCLUDED.sort_order,
+         is_deleted = 0,
+         deleted_at = NULL`,
       [ct.id, lessonId, ct.category || 'general', ct.question, JSON.stringify(ct.options), ct.correctIndex, ct.explanation, i + 1]
     );
   }
@@ -506,14 +573,14 @@ export async function getLessonOwnership(
 ): Promise<{ id: string; isSystem: boolean; ownerId: string | null } | null> {
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
-    const found = memoryStore.lessons.find((l) => l.id === lessonId);
+    const found = memoryStore.lessons.find((l) => l.id === lessonId && l.isDeleted !== 1);
     if (!found) return null;
     return { id: found.id, isSystem: found.isSystem, ownerId: found.ownerId || null };
   }
 
   const pool = getPool()!;
   const res = await pool.query<{ id: string; is_system: boolean; owner_id: string | null }>(
-    'SELECT id, is_system, owner_id FROM lessons WHERE id = $1',
+    'SELECT id, is_system, owner_id FROM lessons WHERE id = $1 AND is_deleted = 0',
     [lessonId]
   );
   const r = res.rows[0];
@@ -604,7 +671,7 @@ export async function updateLessonById(
 
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
-    const idx = memoryStore.lessons.findIndex((l) => l.id === lessonId);
+    const idx = memoryStore.lessons.findIndex((l) => l.id === lessonId && l.isDeleted !== 1);
     if (idx === -1) return null;
     const existing = memoryStore.lessons[idx];
 
@@ -628,7 +695,7 @@ export async function updateLessonById(
 
   const pool = getPool()!;
   const existingRes = await pool.query<{ is_system: boolean; unit: string | null }>(
-    'SELECT is_system, unit FROM lessons WHERE id = $1',
+    'SELECT is_system, unit FROM lessons WHERE id = $1 AND is_deleted = 0',
     [lessonId]
   );
   const existingRow = existingRes.rows[0];
@@ -640,16 +707,29 @@ export async function updateLessonById(
     await client.query('BEGIN');
     await client.query(
       `UPDATE lessons SET title = $1, hsk_level = $2, unit = $3, description = $4, updated_at = NOW()
-       WHERE id = $5`,
+       WHERE id = $5 AND is_deleted = 0`,
       [input.title.trim(), input.hskLevel || 'HSK 1', input.unit?.trim() || defaultUnit, input.description?.trim() || null, lessonId]
     );
 
-    await client.query('DELETE FROM vocabularies WHERE lesson_id = $1', [lessonId]);
-    await client.query('DELETE FROM grammars WHERE lesson_id = $1', [lessonId]);
-    await client.query('DELETE FROM sentence_scrambles WHERE lesson_id = $1', [lessonId]);
-    await client.query('DELETE FROM translation_exercises WHERE lesson_id = $1', [lessonId]);
     await client.query(
-      `DELETE FROM quiz_questions WHERE lesson_id = $1 AND scope IN ('expanded_quiz', 'comprehensive_test')`,
+      'UPDATE vocabularies SET is_deleted = 1, deleted_at = NOW() WHERE lesson_id = $1 AND is_deleted = 0',
+      [lessonId]
+    );
+    await client.query(
+      'UPDATE grammars SET is_deleted = 1, deleted_at = NOW() WHERE lesson_id = $1 AND is_deleted = 0',
+      [lessonId]
+    );
+    await client.query(
+      'UPDATE sentence_scrambles SET is_deleted = 1, deleted_at = NOW() WHERE lesson_id = $1 AND is_deleted = 0',
+      [lessonId]
+    );
+    await client.query(
+      'UPDATE translation_exercises SET is_deleted = 1, deleted_at = NOW() WHERE lesson_id = $1 AND is_deleted = 0',
+      [lessonId]
+    );
+    await client.query(
+      `UPDATE quiz_questions SET is_deleted = 1, deleted_at = NOW()
+       WHERE lesson_id = $1 AND scope IN ('expanded_quiz', 'comprehensive_test') AND is_deleted = 0`,
       [lessonId]
     );
 
@@ -669,17 +749,83 @@ export async function updateLessonById(
 }
 
 export async function deleteLessonById(lessonId: string): Promise<boolean> {
+  const nowIso = new Date().toISOString();
+
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
-    const idx = memoryStore.lessons.findIndex((l) => l.id === lessonId);
-    if (idx === -1) return false;
-    memoryStore.lessons.splice(idx, 1);
+    const target = memoryStore.lessons.find((l) => l.id === lessonId && l.isDeleted !== 1);
+    if (!target) return false;
+    target.isDeleted = 1;
+    target.deletedAt = nowIso;
     return true;
   }
 
   const pool = getPool()!;
-  const res = await pool.query('DELETE FROM lessons WHERE id = $1', [lessonId]);
-  return (res.rowCount || 0) > 0;
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const res = await client.query(
+      `UPDATE lessons
+       SET is_deleted = 1, deleted_at = NOW(), updated_at = NOW()
+       WHERE id = $1 AND is_deleted = 0`,
+      [lessonId]
+    );
+    if ((res.rowCount || 0) === 0) {
+      await client.query('ROLLBACK');
+      return false;
+    }
+
+    await client.query(
+      `UPDATE vocabularies SET is_deleted = 1, deleted_at = NOW()
+       WHERE lesson_id = $1 AND is_deleted = 0`,
+      [lessonId]
+    );
+    await client.query(
+      `UPDATE grammars SET is_deleted = 1, deleted_at = NOW()
+       WHERE lesson_id = $1 AND is_deleted = 0`,
+      [lessonId]
+    );
+    await client.query(
+      `UPDATE texts SET is_deleted = 1, deleted_at = NOW()
+       WHERE lesson_id = $1 AND is_deleted = 0`,
+      [lessonId]
+    );
+    await client.query(
+      `UPDATE text_sentences ts SET is_deleted = 1, deleted_at = NOW()
+       FROM texts t
+       WHERE ts.text_id = t.id AND t.lesson_id = $1 AND ts.is_deleted = 0`,
+      [lessonId]
+    );
+    await client.query(
+      `UPDATE sentence_scrambles SET is_deleted = 1, deleted_at = NOW()
+       WHERE lesson_id = $1 AND is_deleted = 0`,
+      [lessonId]
+    );
+    await client.query(
+      `UPDATE translation_exercises SET is_deleted = 1, deleted_at = NOW()
+       WHERE lesson_id = $1 AND is_deleted = 0`,
+      [lessonId]
+    );
+    await client.query(
+      `UPDATE quiz_questions SET is_deleted = 1, deleted_at = NOW()
+       WHERE lesson_id = $1 AND is_deleted = 0`,
+      [lessonId]
+    );
+    await client.query(
+      `UPDATE user_marked_vocab m SET is_deleted = 1, deleted_at = NOW()
+       FROM vocabularies v
+       WHERE m.vocab_id = v.id AND v.lesson_id = $1 AND m.is_deleted = 0`,
+      [lessonId]
+    );
+
+    await client.query('COMMIT');
+    return true;
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
 }
 
 export interface GlobalVocabSearchHit extends VocabularyItem {
@@ -769,6 +915,7 @@ export async function searchAllVocabulary(query: string, userId?: string): Promi
 
     const ranked: Array<{ hit: GlobalVocabSearchHit; rank: number; lessonIdx: number; vocabIdx: number }> = [];
     memoryStore.lessons.forEach((l, lessonIdx) => {
+      if (l.isDeleted === 1) return;
       if (!l.isSystem && l.ownerId !== userId) return;
       l.vocabulary.forEach((v, vocabIdx) => {
         const rank = scoreVocabMemoryMatch(v, qRaw, qNorm, isCjk, hasDiacritics, rxRaw, rxNorm);
@@ -867,6 +1014,7 @@ export async function getComprehensiveExamQuestions(
     memoryStore.ensureLoaded();
     const idSet = cleanLessonIds ? new Set(cleanLessonIds) : null;
     const targetLessons = memoryStore.lessons.filter((l) => {
+      if (l.isDeleted === 1) return false;
       const accessible = l.isSystem || (userId && l.ownerId === userId);
       if (!accessible) return false;
       return idSet ? idSet.has(l.id) : l.isSystem;
@@ -931,6 +1079,7 @@ export async function getComprehensiveExamQuestions(
     const allowedRes = await pool.query<{ id: string }>(
       `SELECT id FROM lessons
        WHERE id = ANY($1::text[])
+         AND is_deleted = 0
          AND (is_system = TRUE OR ($2::uuid IS NOT NULL AND owner_id = $2::uuid))`,
       [cleanLessonIds, userId || null]
     );
@@ -971,6 +1120,8 @@ export async function getComprehensiveExamQuestions(
          FROM quiz_questions q
          JOIN lessons l ON l.id = q.lesson_id
          WHERE q.scope = 'comprehensive_test'
+           AND q.is_deleted = 0
+           AND l.is_deleted = 0
            AND (
              ($2::text[] IS NULL AND l.is_system = TRUE)
              OR ($2::text[] IS NOT NULL AND q.lesson_id = ANY($2::text[]))

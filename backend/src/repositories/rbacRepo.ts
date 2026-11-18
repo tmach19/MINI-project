@@ -110,7 +110,8 @@ export async function listRolesWithPermissions(): Promise<RoleWithPermissions[]>
     pool.query<{ role_id: string; permission_id: string }>(
       `SELECT rp.role_id, rp.permission_id
        FROM role_permissions rp
-       JOIN permissions p ON p.id = rp.permission_id AND p.active_flg = TRUE`
+       JOIN permissions p ON p.id = rp.permission_id AND p.active_flg = TRUE
+       WHERE rp.is_deleted = 0`
     ),
   ]);
 
@@ -155,10 +156,15 @@ export async function updateRolePermissions(
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
-    await client.query('DELETE FROM role_permissions WHERE role_id = $1', [roleId]);
+    await client.query(
+      'UPDATE role_permissions SET is_deleted = 1, deleted_at = NOW() WHERE role_id = $1 AND is_deleted = 0',
+      [roleId]
+    );
     for (const permId of cleanIds) {
       await client.query(
-        'INSERT INTO role_permissions (role_id, permission_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+        `INSERT INTO role_permissions (role_id, permission_id, is_deleted, deleted_at)
+         VALUES ($1, $2, 0, NULL)
+         ON CONFLICT (role_id, permission_id) DO UPDATE SET is_deleted = 0, deleted_at = NULL`,
         [roleId, permId]
       );
     }
@@ -222,19 +228,22 @@ export async function listUsersWithRbac(keyword = ''): Promise<AdminUserRbacRow[
     }>(
       `SELECT id, email, display_name, role, created_at
        FROM users
-       WHERE ($1 = '' OR LOWER(email) LIKE '%' || $1 || '%' OR LOWER(display_name) LIKE '%' || $1 || '%')
+       WHERE is_deleted = 0
+         AND ($1 = '' OR LOWER(email) LIKE '%' || $1 || '%' OR LOWER(display_name) LIKE '%' || $1 || '%')
        ORDER BY created_at ASC`,
       [q]
     ),
     pool.query<{ role_id: string; permission_id: string }>(
       `SELECT rp.role_id, rp.permission_id
        FROM role_permissions rp
-       JOIN permissions p ON p.id = rp.permission_id AND p.active_flg = TRUE`
+       JOIN permissions p ON p.id = rp.permission_id AND p.active_flg = TRUE
+       WHERE rp.is_deleted = 0`
     ),
     pool.query<{ user_id: string; permission_id: string; is_excluded: boolean }>(
       `SELECT up.user_id, up.permission_id, up.is_excluded
        FROM user_permissions up
-       JOIN permissions p ON p.id = up.permission_id AND p.active_flg = TRUE`
+       JOIN permissions p ON p.id = up.permission_id AND p.active_flg = TRUE
+       WHERE up.is_deleted = 0`
     ),
     listPermissionsCatalog(),
   ]);
@@ -302,7 +311,7 @@ export async function updateUserRole(
 
   const pool = getPool()!;
   const res = await pool.query(
-    'UPDATE users SET role = $1, updated_at = NOW() WHERE id = $2::uuid RETURNING id',
+    'UPDATE users SET role = $1, updated_at = NOW() WHERE id = $2::uuid AND is_deleted = 0 RETURNING id',
     [nextRole, targetUserId]
   );
   if (res.rowCount === 0) return null;
@@ -347,7 +356,7 @@ export async function saveUserPermissionOverrides(
   try {
     await client.query('BEGIN');
     const userRes = await client.query<{ role: 'admin' | 'user' }>(
-      'SELECT role FROM users WHERE id = $1::uuid',
+      'SELECT role FROM users WHERE id = $1::uuid AND is_deleted = 0',
       [targetUserId]
     );
     const target = userRes.rows[0];
@@ -359,20 +368,35 @@ export async function saveUserPermissionOverrides(
       throw new Error('Tài khoản Quản trị viên (Super Admin) mặc định có toàn quyền, không áp dụng ngoại lệ.');
     }
 
-    await client.query('DELETE FROM user_permissions WHERE user_id = $1::uuid', [targetUserId]);
+    await client.query(
+      'UPDATE user_permissions SET is_deleted = 1, deleted_at = NOW() WHERE user_id = $1::uuid AND is_deleted = 0',
+      [targetUserId]
+    );
 
     for (const permId of cleanAdded) {
       await client.query(
-        `INSERT INTO user_permissions (user_id, permission_id, is_excluded, updated_by, updated_at)
-         VALUES ($1::uuid, $2, FALSE, $3::uuid, NOW())`,
+        `INSERT INTO user_permissions (user_id, permission_id, is_excluded, updated_by, updated_at, is_deleted, deleted_at)
+         VALUES ($1::uuid, $2, FALSE, $3::uuid, NOW(), 0, NULL)
+         ON CONFLICT (user_id, permission_id) DO UPDATE SET
+           is_excluded = FALSE,
+           is_deleted = 0,
+           deleted_at = NULL,
+           updated_by = EXCLUDED.updated_by,
+           updated_at = NOW()`,
         [targetUserId, permId, actorUserId]
       );
     }
 
     for (const permId of finalExcluded) {
       await client.query(
-        `INSERT INTO user_permissions (user_id, permission_id, is_excluded, updated_by, updated_at)
-         VALUES ($1::uuid, $2, TRUE, $3::uuid, NOW())`,
+        `INSERT INTO user_permissions (user_id, permission_id, is_excluded, updated_by, updated_at, is_deleted, deleted_at)
+         VALUES ($1::uuid, $2, TRUE, $3::uuid, NOW(), 0, NULL)
+         ON CONFLICT (user_id, permission_id) DO UPDATE SET
+           is_excluded = TRUE,
+           is_deleted = 0,
+           deleted_at = NULL,
+           updated_by = EXCLUDED.updated_by,
+           updated_at = NOW()`,
         [targetUserId, permId, actorUserId]
       );
     }

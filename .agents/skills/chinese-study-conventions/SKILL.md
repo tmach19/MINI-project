@@ -41,6 +41,7 @@ Tài liệu chuẩn hóa các rule, pattern tối ưu và quy trình kiểm ch�
 - `01_tables/` (versioned): **luôn kèm `rollback`**, ưu tiên `IF NOT EXISTS` / `IF EXISTS` và đồng bộ lại `database/schema.sql`.
 - `03_functions/` (repeatable): **luôn đặt `runOnChange: true`**, `splitStatements: false`, `stripComments: false` cho khối `$$...$$`, kèm `rollback` `DROP FUNCTION IF EXISTS ...`.
 - Khi chỉnh sửa `data.js`, cần chạy generator (`database/generate-seed.mjs`) và đồng bộ `database/seed.sql` lẫn `db-migration/src/main/resources/db/migration/sql/seed_data.sql`.
+- **Quy tắc Xoá mềm (Soft Delete)**: Tuyệt đối không dùng `DELETE FROM` vật lý trong repository; các bảng nghiệp vụ sử dụng cờ `is_deleted SMALLINT NOT NULL DEFAULT 0` (chuyển sang `1` kèm `deleted_at = NOW()` khi xoá, khôi phục về `0` khi upsert trùng khoá) và mọi câu `SELECT` / PostgreSQL function phải lọc `is_deleted = 0`.
 
 ### 2.2. Đẩy logic nặng xuống PostgreSQL Function & Index chuyên biệt
 - **Tránh `Seq Scan` từ `LIKE '%...%'`**:

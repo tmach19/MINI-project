@@ -41,6 +41,7 @@ databaseChangeLog:
                 FROM test_attempts a
                 WHERE a.user_id = p_user_id
                   AND a.lesson_id IS NOT NULL
+                  AND a.is_deleted = 0
                 GROUP BY a.lesson_id
               )
               SELECT
@@ -61,7 +62,8 @@ databaseChangeLog:
                 END AS status
               FROM lessons l
               LEFT JOIN agg ON agg.lesson_id = l.id
-              WHERE l.is_system = TRUE OR l.owner_id = p_user_id
+              WHERE l.is_deleted = 0
+                AND (l.is_system = TRUE OR l.owner_id = p_user_id)
               ORDER BY
                 (COALESCE(agg.attempt_count, 0) > 0) DESC,
                 agg.last_submitted_at DESC NULLS LAST,

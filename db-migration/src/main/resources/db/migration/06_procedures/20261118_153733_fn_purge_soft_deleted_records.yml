@@ -1,0 +1,110 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261118_153733_fn_purge_soft_deleted_records
+      author: chinese-study
+      comment: Don dep dinh ky cac ban ghi da xoa mem (is_deleted = 1) qua han retention (mac dinh 30 ngay) theo dung thu tu FK
+      runOnChange: true
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: false
+            sql: |-
+              CREATE OR REPLACE FUNCTION fn_purge_soft_deleted_records(
+                p_retention_days INTEGER DEFAULT 30
+              )
+              RETURNS TABLE (
+                table_name TEXT,
+                purged_count BIGINT
+              )
+              LANGUAGE plpgsql
+              AS $$
+              DECLARE
+                v_days INTEGER := GREATEST(COALESCE(p_retention_days, 30), 1);
+                v_cutoff TIMESTAMPTZ := NOW() - make_interval(days => v_days);
+                v_cnt BIGINT;
+              BEGIN
+                DELETE FROM user_marked_vocab
+                WHERE is_deleted = 1 AND deleted_at IS NOT NULL AND deleted_at < v_cutoff;
+                GET DIAGNOSTICS v_cnt = ROW_COUNT;
+                table_name := 'user_marked_vocab'; purged_count := v_cnt; RETURN NEXT;
+
+                DELETE FROM role_permissions
+                WHERE is_deleted = 1 AND deleted_at IS NOT NULL AND deleted_at < v_cutoff;
+                GET DIAGNOSTICS v_cnt = ROW_COUNT;
+                table_name := 'role_permissions'; purged_count := v_cnt; RETURN NEXT;
+
+                DELETE FROM user_permissions
+                WHERE is_deleted = 1 AND deleted_at IS NOT NULL AND deleted_at < v_cutoff;
+                GET DIAGNOSTICS v_cnt = ROW_COUNT;
+                table_name := 'user_permissions'; purged_count := v_cnt; RETURN NEXT;
+
+                DELETE FROM text_sentences
+                WHERE is_deleted = 1 AND deleted_at IS NOT NULL AND deleted_at < v_cutoff;
+                GET DIAGNOSTICS v_cnt = ROW_COUNT;
+                table_name := 'text_sentences'; purged_count := v_cnt; RETURN NEXT;
+
+                DELETE FROM quiz_questions
+                WHERE is_deleted = 1 AND deleted_at IS NOT NULL AND deleted_at < v_cutoff;
+                GET DIAGNOSTICS v_cnt = ROW_COUNT;
+                table_name := 'quiz_questions'; purged_count := v_cnt; RETURN NEXT;
+
+                DELETE FROM translation_exercises
+                WHERE is_deleted = 1 AND deleted_at IS NOT NULL AND deleted_at < v_cutoff;
+                GET DIAGNOSTICS v_cnt = ROW_COUNT;
+                table_name := 'translation_exercises'; purged_count := v_cnt; RETURN NEXT;
+
+                DELETE FROM sentence_scrambles
+                WHERE is_deleted = 1 AND deleted_at IS NOT NULL AND deleted_at < v_cutoff;
+                GET DIAGNOSTICS v_cnt = ROW_COUNT;
+                table_name := 'sentence_scrambles'; purged_count := v_cnt; RETURN NEXT;
+
+                DELETE FROM grammars
+                WHERE is_deleted = 1 AND deleted_at IS NOT NULL AND deleted_at < v_cutoff;
+                GET DIAGNOSTICS v_cnt = ROW_COUNT;
+                table_name := 'grammars'; purged_count := v_cnt; RETURN NEXT;
+
+                DELETE FROM texts t
+                WHERE t.is_deleted = 1 AND t.deleted_at IS NOT NULL AND t.deleted_at < v_cutoff
+                  AND NOT EXISTS (SELECT 1 FROM text_sentences ts WHERE ts.text_id = t.id)
+                  AND NOT EXISTS (SELECT 1 FROM quiz_questions q WHERE q.text_id = t.id);
+                GET DIAGNOSTICS v_cnt = ROW_COUNT;
+                table_name := 'texts'; purged_count := v_cnt; RETURN NEXT;
+
+                DELETE FROM vocabularies v
+                WHERE v.is_deleted = 1 AND v.deleted_at IS NOT NULL AND v.deleted_at < v_cutoff
+                  AND NOT EXISTS (SELECT 1 FROM user_marked_vocab m WHERE m.vocab_id = v.id);
+                GET DIAGNOSTICS v_cnt = ROW_COUNT;
+                table_name := 'vocabularies'; purged_count := v_cnt; RETURN NEXT;
+
+                DELETE FROM test_attempts
+                WHERE is_deleted = 1 AND deleted_at IS NOT NULL AND deleted_at < v_cutoff;
+                GET DIAGNOSTICS v_cnt = ROW_COUNT;
+                table_name := 'test_attempts'; purged_count := v_cnt; RETURN NEXT;
+
+                DELETE FROM lessons l
+                WHERE l.is_deleted = 1 AND l.deleted_at IS NOT NULL AND l.deleted_at < v_cutoff
+                  AND NOT EXISTS (SELECT 1 FROM vocabularies v WHERE v.lesson_id = l.id)
+                  AND NOT EXISTS (SELECT 1 FROM grammars g WHERE g.lesson_id = l.id)
+                  AND NOT EXISTS (SELECT 1 FROM texts t WHERE t.lesson_id = l.id)
+                  AND NOT EXISTS (SELECT 1 FROM sentence_scrambles sc WHERE sc.lesson_id = l.id)
+                  AND NOT EXISTS (SELECT 1 FROM translation_exercises tr WHERE tr.lesson_id = l.id)
+                  AND NOT EXISTS (SELECT 1 FROM quiz_questions q WHERE q.lesson_id = l.id)
+                  AND NOT EXISTS (SELECT 1 FROM test_attempts a WHERE a.lesson_id = l.id);
+                GET DIAGNOSTICS v_cnt = ROW_COUNT;
+                table_name := 'lessons'; purged_count := v_cnt; RETURN NEXT;
+
+                DELETE FROM users u
+                WHERE u.is_deleted = 1 AND u.deleted_at IS NOT NULL AND u.deleted_at < v_cutoff
+                  AND NOT EXISTS (SELECT 1 FROM lessons l WHERE l.owner_id = u.id)
+                  AND NOT EXISTS (SELECT 1 FROM user_marked_vocab m WHERE m.user_id = u.id)
+                  AND NOT EXISTS (SELECT 1 FROM test_attempts a WHERE a.user_id = u.id)
+                  AND NOT EXISTS (SELECT 1 FROM user_permissions up WHERE up.user_id = u.id);
+                GET DIAGNOSTICS v_cnt = ROW_COUNT;
+                table_name := 'users'; purged_count := v_cnt; RETURN NEXT;
+              END;
+              $$;
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: DROP FUNCTION IF EXISTS fn_purge_soft_deleted_records(INTEGER);

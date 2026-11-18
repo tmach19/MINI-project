@@ -266,6 +266,7 @@ async function filterAccessibleVocabIds(
     const idSet = new Set(cleanIds);
     const matched: Array<{ id: string; hanzi: string }> = [];
     for (const lesson of memoryStore.lessons) {
+      if (lesson.isDeleted === 1) continue;
       if (!lesson.isSystem && lesson.ownerId !== userId) continue;
       for (const v of lesson.vocabulary) {
         if (idSet.has(v.id)) {
@@ -282,6 +283,8 @@ async function filterAccessibleVocabIds(
      FROM vocabularies v
      JOIN lessons l ON l.id = v.lesson_id
      WHERE v.id = ANY($1::text[])
+       AND v.is_deleted = 0
+       AND l.is_deleted = 0
        AND (l.is_system = TRUE OR l.owner_id = $2::uuid)`,
     [cleanIds, userId]
   );

@@ -1,0 +1,89 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261118_152505_soft_delete_flags
+      author: chinese-study
+      comment: Bo sung co xoa mem (is_deleted DEFAULT 0 -> 1 khi xoa, kem deleted_at) cho toan bo bang du lieu
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: false
+            sql: |-
+              ALTER TABLE users
+                ADD COLUMN IF NOT EXISTS is_deleted SMALLINT NOT NULL DEFAULT 0,
+                ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+              ALTER TABLE lessons
+                ADD COLUMN IF NOT EXISTS is_deleted SMALLINT NOT NULL DEFAULT 0,
+                ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+              ALTER TABLE vocabularies
+                ADD COLUMN IF NOT EXISTS is_deleted SMALLINT NOT NULL DEFAULT 0,
+                ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+              ALTER TABLE grammars
+                ADD COLUMN IF NOT EXISTS is_deleted SMALLINT NOT NULL DEFAULT 0,
+                ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+              ALTER TABLE texts
+                ADD COLUMN IF NOT EXISTS is_deleted SMALLINT NOT NULL DEFAULT 0,
+                ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+              ALTER TABLE text_sentences
+                ADD COLUMN IF NOT EXISTS is_deleted SMALLINT NOT NULL DEFAULT 0,
+                ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+              ALTER TABLE sentence_scrambles
+                ADD COLUMN IF NOT EXISTS is_deleted SMALLINT NOT NULL DEFAULT 0,
+                ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+              ALTER TABLE translation_exercises
+                ADD COLUMN IF NOT EXISTS is_deleted SMALLINT NOT NULL DEFAULT 0,
+                ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+              ALTER TABLE quiz_questions
+                ADD COLUMN IF NOT EXISTS is_deleted SMALLINT NOT NULL DEFAULT 0,
+                ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+              ALTER TABLE user_marked_vocab
+                ADD COLUMN IF NOT EXISTS is_deleted SMALLINT NOT NULL DEFAULT 0,
+                ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+              ALTER TABLE test_attempts
+                ADD COLUMN IF NOT EXISTS is_deleted SMALLINT NOT NULL DEFAULT 0,
+                ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+              ALTER TABLE role_permissions
+                ADD COLUMN IF NOT EXISTS is_deleted SMALLINT NOT NULL DEFAULT 0,
+                ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+              ALTER TABLE user_permissions
+                ADD COLUMN IF NOT EXISTS is_deleted SMALLINT NOT NULL DEFAULT 0,
+                ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+              CREATE INDEX IF NOT EXISTS idx_lessons_active ON lessons (is_deleted, is_system DESC, sort_order ASC);
+              CREATE INDEX IF NOT EXISTS idx_vocabularies_active ON vocabularies (lesson_id, is_deleted, sort_order ASC);
+              CREATE INDEX IF NOT EXISTS idx_marked_vocab_active ON user_marked_vocab (user_id, is_deleted, marked_at DESC);
+      rollback:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: false
+            sql: |-
+              DROP INDEX IF EXISTS idx_marked_vocab_active;
+              DROP INDEX IF EXISTS idx_vocabularies_active;
+              DROP INDEX IF EXISTS idx_lessons_active;
+
+              ALTER TABLE user_permissions DROP COLUMN IF EXISTS deleted_at, DROP COLUMN IF EXISTS is_deleted;
+              ALTER TABLE role_permissions DROP COLUMN IF EXISTS deleted_at, DROP COLUMN IF EXISTS is_deleted;
+              ALTER TABLE test_attempts DROP COLUMN IF EXISTS deleted_at, DROP COLUMN IF EXISTS is_deleted;
+              ALTER TABLE user_marked_vocab DROP COLUMN IF EXISTS deleted_at, DROP COLUMN IF EXISTS is_deleted;
+              ALTER TABLE quiz_questions DROP COLUMN IF EXISTS deleted_at, DROP COLUMN IF EXISTS is_deleted;
+              ALTER TABLE translation_exercises DROP COLUMN IF EXISTS deleted_at, DROP COLUMN IF EXISTS is_deleted;
+              ALTER TABLE sentence_scrambles DROP COLUMN IF EXISTS deleted_at, DROP COLUMN IF EXISTS is_deleted;
+              ALTER TABLE text_sentences DROP COLUMN IF EXISTS deleted_at, DROP COLUMN IF EXISTS is_deleted;
+              ALTER TABLE texts DROP COLUMN IF EXISTS deleted_at, DROP COLUMN IF EXISTS is_deleted;
+              ALTER TABLE grammars DROP COLUMN IF EXISTS deleted_at, DROP COLUMN IF EXISTS is_deleted;
+              ALTER TABLE vocabularies DROP COLUMN IF EXISTS deleted_at, DROP COLUMN IF EXISTS is_deleted;
+              ALTER TABLE lessons DROP COLUMN IF EXISTS deleted_at, DROP COLUMN IF EXISTS is_deleted;
+              ALTER TABLE users DROP COLUMN IF EXISTS deleted_at, DROP COLUMN IF EXISTS is_deleted;

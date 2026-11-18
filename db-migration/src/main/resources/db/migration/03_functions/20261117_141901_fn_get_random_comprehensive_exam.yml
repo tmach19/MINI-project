@@ -70,6 +70,8 @@ databaseChangeLog:
                 FROM quiz_questions q
                 JOIN lessons l ON l.id = q.lesson_id
                 WHERE q.scope = 'comprehensive_test'
+                  AND q.is_deleted = 0
+                  AND l.is_deleted = 0
                   AND (
                     ((p_lesson_ids IS NULL OR cardinality(p_lesson_ids) = 0) AND l.is_system = TRUE)
                     OR (p_lesson_ids IS NOT NULL AND cardinality(p_lesson_ids) > 0 AND q.lesson_id = ANY(p_lesson_ids))
