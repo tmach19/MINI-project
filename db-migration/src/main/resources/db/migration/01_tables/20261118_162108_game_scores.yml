@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261118_162108_game_scores
+      author: chinese-study
+      comment: Tao bang game_scores luu ket qua choi tro choi va bang xep hang cho tat ca user (bao gom admin)
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            stripComments: true
+            sql: |-
+              CREATE TABLE IF NOT EXISTS game_scores (
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                lesson_id TEXT NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
+                game_mode TEXT NOT NULL CHECK (game_mode IN ('tri_match', 'scramble', 'translation', 'expanded_quiz')),
+                score INTEGER NOT NULL CHECK (score >= 0),
+                max_score INTEGER CHECK (max_score IS NULL OR max_score >= 0),
+                duration_seconds INTEGER NOT NULL DEFAULT 0 CHECK (duration_seconds >= 0),
+                played_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                is_deleted SMALLINT NOT NULL DEFAULT 0,
+                deleted_at TIMESTAMPTZ
+              );
+
+              CREATE INDEX IF NOT EXISTS idx_game_scores_leaderboard
+                ON game_scores (lesson_id, game_mode, score DESC, duration_seconds ASC, played_at DESC)
+                WHERE is_deleted = 0;
+
+              CREATE INDEX IF NOT EXISTS idx_game_scores_global_mode
+                ON game_scores (game_mode, score DESC, duration_seconds ASC, played_at DESC)
+                WHERE is_deleted = 0;
+
+              CREATE INDEX IF NOT EXISTS idx_game_scores_user
+                ON game_scores (user_id, played_at DESC)
+                WHERE is_deleted = 0;
+
+              CREATE INDEX IF NOT EXISTS idx_game_scores_purge
+                ON game_scores (deleted_at)
+                WHERE is_deleted = 1;
+      rollback:
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            sql: |-
+              DROP INDEX IF EXISTS idx_game_scores_purge;
+              DROP INDEX IF EXISTS idx_game_scores_user;
+              DROP INDEX IF EXISTS idx_game_scores_global_mode;
+              DROP INDEX IF EXISTS idx_game_scores_leaderboard;
+              DROP TABLE IF EXISTS game_scores;

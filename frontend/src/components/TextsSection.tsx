@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { CheckCircle2, Headphones, HelpCircle, Play, Square, Volume2, XCircle } from 'lucide-react';
+import { CheckCircle2, Headphones, HelpCircle, Lock, Play, Square, Volume2, XCircle } from 'lucide-react';
 import {
   buildSpeakerVoiceMap,
   resolveDialogueTtsText,
@@ -19,10 +19,16 @@ const SPEAKER_BADGE_STYLES = [
 
 interface TextsSectionProps {
   lesson: LessonDetail;
+  canChangeSpeechRate?: boolean;
+  onRequireAuth?: () => void;
 }
 
-export const TextsSection: React.FC<TextsSectionProps> = ({ lesson }) => {
-  const [speechRate, setSpeechRate] = useState(0.9);
+export const TextsSection: React.FC<TextsSectionProps> = ({
+  lesson,
+  canChangeSpeechRate = true,
+  onRequireAuth,
+}) => {
+  const [speechRate, setSpeechRate] = useState(1.0);
   const [showPinyin, setShowPinyin] = useState(true);
   const [showMeaning, setShowMeaning] = useState(true);
   const [playingTextIdx, setPlayingTextIdx] = useState<number | null>(null);
@@ -44,6 +50,12 @@ export const TextsSection: React.FC<TextsSectionProps> = ({ lesson }) => {
     setLqAnswers({});
     return () => stopDialogue();
   }, [lesson.id]);
+
+  useEffect(() => {
+    if (!canChangeSpeechRate) {
+      setSpeechRate(1.0);
+    }
+  }, [canChangeSpeechRate]);
 
   const playFullDialogue = (textIndex: number) => {
     const textItem = lesson.texts[textIndex];
@@ -99,10 +111,22 @@ export const TextsSection: React.FC<TextsSectionProps> = ({ lesson }) => {
 
         <div className="flex flex-wrap items-center gap-3 bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/20 text-xs">
           <div className="flex items-center gap-2">
-            <span>Tốc độ:</span>
+            <span className="inline-flex items-center gap-1">
+              Tốc độ:
+              {!canChangeSpeechRate && (
+                <Lock className="w-3 h-3 text-white/80" />
+              )}
+            </span>
             <select
-              value={speechRate}
-              onChange={(e) => setSpeechRate(parseFloat(e.target.value))}
+              value={canChangeSpeechRate ? speechRate : 1.0}
+              onChange={(e) => {
+                if (!canChangeSpeechRate) {
+                  onRequireAuth?.();
+                  return;
+                }
+                setSpeechRate(parseFloat(e.target.value));
+              }}
+              title={!canChangeSpeechRate ? 'Đăng nhập để thay đổi tốc độ đọc' : undefined}
               className="bg-white text-gray-800 rounded-lg px-2 py-1 font-semibold focus:outline-none"
             >
               <option value={0.7}>Chậm (0.7x)</option>

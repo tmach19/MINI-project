@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   CheckCircle2,
   Clock,
@@ -7,6 +7,7 @@ import {
   Keyboard,
   Layers,
   ListChecks,
+  Medal,
   RotateCcw,
   Shuffle,
   SortAsc,
@@ -15,9 +16,13 @@ import {
   XCircle,
 } from 'lucide-react';
 import { soundFx, speakChinese } from '../lib/audio';
+import { api } from '../lib/api';
 import { shuffleArray } from '../lib/constants';
+import { getAvatarPreset, isImageMediaUrl } from '../lib/profileMedia';
 import type {
   ExpandedQuizQuestion,
+  GameLeaderboardEntry,
+  GameMode,
   LessonDetail,
   ScrambleExercise,
   TranslationExercise,
@@ -26,9 +31,44 @@ import type {
 
 interface GamesSectionProps {
   lesson: LessonDetail;
+  currentUserId?: string;
 }
 
-type GameMode = 'tri_match' | 'scramble' | 'translation' | 'expanded_quiz';
+const GAME_MODE_LABELS: Record<GameMode, string> = {
+  tri_match: '1. Ghép bộ 3',
+  scramble: '2. Sắp xếp câu',
+  translation: '3. Dịch Việt-Trung',
+  expanded_quiz: '4. Trắc nghiệm',
+};
+
+function formatDurationClock(seconds: number): string {
+  const safe = Math.max(0, Math.round(Number(seconds) || 0));
+  const mins = Math.floor(safe / 60);
+  const secs = safe % 60;
+  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+function formatPlayedAt(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleString('vi-VN', {
+    hour: '2-digit',
+    minute: '2-digit',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+}
+
+function getInitials(name: string): string {
+  const clean = name.trim();
+  if (!clean) return 'U';
+  const parts = clean.split(/\s+/);
+  if (parts.length >= 2) {
+    return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+  }
+  return clean.slice(0, 2).toUpperCase();
+}
 
 const SCRAMBLE_DECK_SIZE = 6;
 const TRANS_DECK_SIZE = 6;
@@ -127,8 +167,62 @@ function isZhToViCompleteMatch(
   return keywords.every((kw) => userLower.includes(kw.toLowerCase()));
 }
 
-export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
+export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserId }) => {
   const [mode, setMode] = useState<GameMode>('tri_match');
+
+  // --- Leaderboard ---
+  const [lbMode, setLbMode] = useState<GameMode | 'all'>('tri_match');
+  const [lbEntries, setLbEntries] = useState<GameLeaderboardEntry[]>([]);
+  const [lbLoading, setLbLoading] = useState(false);
+  const [lbError, setLbError] = useState<string | null>(null);
+  const [savedNotice, setSavedNotice] = useState<string | null>(null);
+
+  const fetchLeaderboard = useCallback(async () => {
+    setLbLoading(true);
+    setLbError(null);
+    try {
+      const res = await api.getGameLeaderboard({
+        lessonId: lesson.id,
+        gameMode: lbMode === 'all' ? undefined : lbMode,
+        limit: 30,
+      });
+      setLbEntries(res.entries || []);
+    } catch (err) {
+      setLbError((err as Error).message || 'Không tải được bảng xếp hạng.');
+    } finally {
+      setLbLoading(false);
+    }
+  }, [lesson.id, lbMode]);
+
+  useEffect(() => {
+    fetchLeaderboard();
+  }, [fetchLeaderboard]);
+
+  useEffect(() => {
+    setLbMode(mode);
+  }, [mode]);
+
+  const submitScore = useCallback(
+    async (payload: {
+      gameMode: GameMode;
+      score: number;
+      maxScore?: number | null;
+      durationSeconds: number;
+    }) => {
+      try {
+        await api.submitGameScore({
+          lessonId: lesson.id,
+          ...payload,
+        });
+        setSavedNotice(`Đã lưu kết quả (${payload.score} điểm) lên bảng xếp hạng!`);
+        window.setTimeout(() => setSavedNotice(null), 4000);
+        await fetchLeaderboard();
+      } catch (err) {
+        console.warn('[GamesSection] Không lưu được điểm trò chơi:', err);
+      }
+    },
+    [lesson.id, fetchLeaderboard]
+  );
 
   // --- Game 1: Triple Match ---
   const [triWords, setTriWords] = useState<VocabularyItem[]>([]);
@@ -141,6 +235,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
   const [triTime, setTriTime] = useState(0);
   const [triStarted, setTriStarted] = useState(false);
   const [triDone, setTriDone] = useState(false);
+  const triSubmittedRef = useRef(false);
 
   const resetTriMatch = () => {
     setSelHanzi(null);
@@ -152,6 +247,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
     setTriTime(0);
     setTriStarted(false);
     setTriDone(false);
+    triSubmittedRef.current = false;
   };
 
   const startTriMatch = () => {
@@ -167,6 +263,11 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
     setScrambleIdx(0);
     setSelectedTokens([]);
     setScrambleResult(null);
+    setScrambleScoreMap({});
+    setScrambleStarted(false);
+    setScrambleTime(0);
+    setScrambleDone(false);
+    scrambleSubmittedRef.current = false;
     setDragSource(null);
     setDragOverPos(null);
     setDragOverBox(null);
@@ -180,6 +281,11 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
     setTransChecked(false);
     setShowTransHint(false);
     setShowTransAnswer(false);
+    setTransScoreMap({});
+    setTransStarted(false);
+    setTransTime(0);
+    setTransDone(false);
+    transSubmittedRef.current = false;
 
     const qPool = lesson.exercises?.expandedQuiz || [];
     setQuizDeck(pickNextDeck(qPool, [], QUIZ_DECK_SIZE));
@@ -187,6 +293,9 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
     setQuizAnswers({});
     setQuizDone(false);
     setQuizStreak(0);
+    setQuizStarted(false);
+    setQuizTime(0);
+    quizSubmittedRef.current = false;
   }, [lesson.id, lesson.exercises]);
 
   useEffect(() => {
@@ -194,6 +303,19 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
     const id = window.setInterval(() => setTriTime((t) => t + 1), 1000);
     return () => window.clearInterval(id);
   }, [mode, triStarted, triDone, triWords.length]);
+
+  useEffect(() => {
+    if (!triDone || triWords.length === 0 || triSubmittedRef.current) return;
+    triSubmittedRef.current = true;
+    const n = triWords.length;
+    const maxScore = 75 * n * (n + 1);
+    void submitScore({
+      gameMode: 'tri_match',
+      score: triScore,
+      maxScore,
+      durationSeconds: triTime,
+    });
+  }, [triDone, triWords.length, triScore, triTime, submitScore]);
 
   useEffect(() => {
     if (!selHanzi || !selPinyin || !selMeaning) return;
@@ -234,6 +356,11 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
   const [scrambleIdx, setScrambleIdx] = useState(0);
   const [selectedTokens, setSelectedTokens] = useState<number[]>([]);
   const [scrambleResult, setScrambleResult] = useState<boolean | null>(null);
+  const [scrambleScoreMap, setScrambleScoreMap] = useState<Record<number, boolean>>({});
+  const [scrambleStarted, setScrambleStarted] = useState(false);
+  const [scrambleTime, setScrambleTime] = useState(0);
+  const [scrambleDone, setScrambleDone] = useState(false);
+  const scrambleSubmittedRef = useRef(false);
   const [dragSource, setDragSource] = useState<
     { type: 'selected'; pos: number } | { type: 'pool'; idx: number } | null
   >(null);
@@ -241,6 +368,28 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
   const [dragOverBox, setDragOverBox] = useState<'selected' | 'pool' | null>(null);
   const touchMovedRef = useRef(false);
   const currScramble = scrambleDeck[scrambleIdx];
+
+  useEffect(() => {
+    if (mode !== 'scramble' || !scrambleStarted || scrambleDone || scrambleDeck.length === 0) return;
+    const id = window.setInterval(() => setScrambleTime((t) => t + 1), 1000);
+    return () => window.clearInterval(id);
+  }, [mode, scrambleStarted, scrambleDone, scrambleDeck.length]);
+
+  const scrambleCorrectCount = useMemo(
+    () => Object.values(scrambleScoreMap).filter(Boolean).length,
+    [scrambleScoreMap]
+  );
+
+  useEffect(() => {
+    if (!scrambleDone || scrambleDeck.length === 0 || scrambleSubmittedRef.current) return;
+    scrambleSubmittedRef.current = true;
+    void submitScore({
+      gameMode: 'scramble',
+      score: scrambleCorrectCount * 100,
+      maxScore: scrambleDeck.length * 100,
+      durationSeconds: scrambleTime,
+    });
+  }, [scrambleDone, scrambleDeck.length, scrambleCorrectCount, scrambleTime, submitScore]);
 
   const clearScrambleDrag = () => {
     setDragSource(null);
@@ -297,6 +446,21 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
     clearScrambleDrag();
   };
 
+  const restartScrambleRound = () => {
+    setScrambleIdx(0);
+    setSelectedTokens([]);
+    setScrambleResult(null);
+    setScrambleScoreMap({});
+    setScrambleStarted(false);
+    setScrambleTime(0);
+    setScrambleDone(false);
+    scrambleSubmittedRef.current = false;
+    setDragSource(null);
+    setDragOverPos(null);
+    setDragOverBox(null);
+    clearScrambleDrag();
+  };
+
   const refreshScrambleDeck = () => {
     setScrambleDeck((prev) =>
       pickNextDeck(
@@ -305,13 +469,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
         SCRAMBLE_DECK_SIZE
       )
     );
-    setScrambleIdx(0);
-    setSelectedTokens([]);
-    setScrambleResult(null);
-    setDragSource(null);
-    setDragOverPos(null);
-    setDragOverBox(null);
-    clearScrambleDrag();
+    restartScrambleRound();
   };
 
   const shuffledTokens = useMemo(() => {
@@ -330,12 +488,52 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
   const [transCorrect, setTransCorrect] = useState(false);
   const [showTransHint, setShowTransHint] = useState(false);
   const [showTransAnswer, setShowTransAnswer] = useState(false);
+  const [transScoreMap, setTransScoreMap] = useState<Record<number, boolean>>({});
+  const [transStarted, setTransStarted] = useState(false);
+  const [transTime, setTransTime] = useState(0);
+  const [transDone, setTransDone] = useState(false);
+  const transSubmittedRef = useRef(false);
 
   const transPool = useMemo(
     () => (lesson.exercises?.translationExercises || []).filter((t) => t.direction === transMode),
     [lesson.exercises, transMode]
   );
   const currTrans = transDeck[transIdx];
+
+  useEffect(() => {
+    if (mode !== 'translation' || !transStarted || transDone || transDeck.length === 0) return;
+    const id = window.setInterval(() => setTransTime((t) => t + 1), 1000);
+    return () => window.clearInterval(id);
+  }, [mode, transStarted, transDone, transDeck.length]);
+
+  const transCorrectCount = useMemo(
+    () => Object.values(transScoreMap).filter(Boolean).length,
+    [transScoreMap]
+  );
+
+  useEffect(() => {
+    if (!transDone || transDeck.length === 0 || transSubmittedRef.current) return;
+    transSubmittedRef.current = true;
+    void submitScore({
+      gameMode: 'translation',
+      score: transCorrectCount * 100,
+      maxScore: transDeck.length * 100,
+      durationSeconds: transTime,
+    });
+  }, [transDone, transDeck.length, transCorrectCount, transTime, submitScore]);
+
+  const restartTransRound = () => {
+    setTransIdx(0);
+    setTransInput('');
+    setTransChecked(false);
+    setShowTransHint(false);
+    setShowTransAnswer(false);
+    setTransScoreMap({});
+    setTransStarted(false);
+    setTransTime(0);
+    setTransDone(false);
+    transSubmittedRef.current = false;
+  };
 
   const refreshTransDeck = (targetDir?: 'vi_to_zh' | 'zh_to_vi') => {
     const dir = targetDir || transMode;
@@ -347,11 +545,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
         TRANS_DECK_SIZE
       )
     );
-    setTransIdx(0);
-    setTransInput('');
-    setTransChecked(false);
-    setShowTransHint(false);
-    setShowTransAnswer(false);
+    restartTransRound();
   };
 
   const handleCheckTranslation = () => {
@@ -362,29 +556,30 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
       return;
     }
 
+    setTransStarted(true);
     setTransChecked(true);
 
+    let ok = false;
     if (currTrans.direction === 'vi_to_zh') {
       const cleanZh = normalizeClean(currTrans.expectedChinese || '');
       const cleanPy = normalizeClean(currTrans.acceptedPinyin || '');
       const cleanUserNoTone = stripPinyinTones(transInput);
       const cleanPyNoTone = stripPinyinTones(currTrans.acceptedPinyin || '');
-      const ok =
+      ok =
         cleanUser === cleanZh ||
         (Boolean(cleanPy) && (cleanUser === cleanPy || cleanUserNoTone === cleanPyNoTone));
-      setTransCorrect(ok);
-      if (ok) soundFx.playCorrect();
-      else soundFx.playWrong();
     } else {
-      const ok = isZhToViCompleteMatch(
+      ok = isZhToViCompleteMatch(
         transInput,
         currTrans.expectedMeaning,
         currTrans.acceptedKeywords
       );
-      setTransCorrect(ok);
-      if (ok) soundFx.playCorrect();
-      else soundFx.playWrong();
     }
+
+    setTransCorrect(ok);
+    setTransScoreMap((prev) => ({ ...prev, [transIdx]: ok || Boolean(prev[transIdx]) }));
+    if (ok) soundFx.playCorrect();
+    else soundFx.playWrong();
   };
 
   // --- Game 4: Expanded Quiz ---
@@ -394,7 +589,45 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({});
   const [quizStreak, setQuizStreak] = useState(0);
   const [quizDone, setQuizDone] = useState(false);
+  const [quizStarted, setQuizStarted] = useState(false);
+  const [quizTime, setQuizTime] = useState(0);
+  const quizSubmittedRef = useRef(false);
   const currQuiz = quizDeck[quizIdx];
+
+  useEffect(() => {
+    if (mode !== 'expanded_quiz' || !quizStarted || quizDone || quizDeck.length === 0) return;
+    const id = window.setInterval(() => setQuizTime((t) => t + 1), 1000);
+    return () => window.clearInterval(id);
+  }, [mode, quizStarted, quizDone, quizDeck.length]);
+
+  const quizCorrectCount = useMemo(
+    () =>
+      Object.entries(quizAnswers).filter(
+        ([idx, ans]) => quizDeck[Number(idx)]?.correctIndex === ans
+      ).length,
+    [quizAnswers, quizDeck]
+  );
+
+  useEffect(() => {
+    if (!quizDone || quizDeck.length === 0 || quizSubmittedRef.current) return;
+    quizSubmittedRef.current = true;
+    void submitScore({
+      gameMode: 'expanded_quiz',
+      score: quizCorrectCount * 100,
+      maxScore: quizDeck.length * 100,
+      durationSeconds: quizTime,
+    });
+  }, [quizDone, quizDeck.length, quizCorrectCount, quizTime, submitScore]);
+
+  const restartQuizRound = () => {
+    setQuizIdx(0);
+    setQuizAnswers({});
+    setQuizDone(false);
+    setQuizStreak(0);
+    setQuizStarted(false);
+    setQuizTime(0);
+    quizSubmittedRef.current = false;
+  };
 
   const refreshQuizDeck = () => {
     setQuizDeck((prev) =>
@@ -404,10 +637,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
         QUIZ_DECK_SIZE
       )
     );
-    setQuizIdx(0);
-    setQuizAnswers({});
-    setQuizDone(false);
-    setQuizStreak(0);
+    restartQuizRound();
   };
 
   return (
@@ -619,17 +849,66 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
         {/* GAME 2: SENTENCE SCRAMBLE */}
         {mode === 'scramble' && (
           <div>
-            {!currScramble ? (
+            {scrambleDeck.length === 0 ? (
               <p className="text-center text-sm text-gray-500 py-8">Chưa có bài tập sắp xếp câu.</p>
-            ) : (
+            ) : scrambleDone ? (
+              <div className="text-center py-8 space-y-4 pop-in">
+                <Trophy className="w-12 h-12 text-amber-500 mx-auto" />
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  Hoàn thành Xếp câu Hán tự!
+                </h3>
+                <div className="flex justify-center gap-8 text-center">
+                  <div>
+                    <div className="text-2xl font-black text-purple-600">
+                      {scrambleCorrectCount * 100}
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      Điểm ({scrambleCorrectCount}/{scrambleDeck.length} câu)
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-black text-gray-800 dark:text-white">
+                      {formatDurationClock(scrambleTime)}
+                    </div>
+                    <div className="text-xs text-gray-400">Thời gian</div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center gap-2.5 flex-wrap">
+                  <button
+                    onClick={restartScrambleRound}
+                    className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold inline-flex items-center gap-1.5"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" /> Làm lại bộ này
+                  </button>
+                  {scramblePool.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={refreshScrambleDeck}
+                      className="px-6 py-2.5 border border-stone-200 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 hover:bg-purple-50 dark:hover:bg-purple-900/30 text-gray-800 dark:text-slate-100 hover:text-purple-600 dark:hover:text-purple-300 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 transition"
+                    >
+                      <Shuffle className="w-3.5 h-3.5" /> Đổi bộ đề mới
+                    </button>
+                  )}
+                </div>
+              </div>
+            ) : currScramble ? (
               <div className="max-w-2xl mx-auto space-y-6">
                 <div className="flex items-center justify-between flex-wrap gap-2 text-xs text-gray-500">
-                  <span>
-                    Câu {scrambleIdx + 1} / {scrambleDeck.length}
-                    {scramblePool.length > scrambleDeck.length && (
-                      <span className="ml-1.5 text-gray-400">(Kho {scramblePool.length} câu)</span>
-                    )}
-                  </span>
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span>
+                      Câu {scrambleIdx + 1} / {scrambleDeck.length}
+                      {scramblePool.length > scrambleDeck.length && (
+                        <span className="ml-1.5 text-gray-400">(Kho {scramblePool.length} câu)</span>
+                      )}
+                    </span>
+                    <span className="inline-flex items-center gap-1 font-mono font-bold text-gray-700 dark:text-slate-200">
+                      <Clock className="w-3.5 h-3.5 text-purple-600" />
+                      {formatDurationClock(scrambleTime)}
+                    </span>
+                    <span className="inline-flex items-center gap-1 font-bold text-purple-700 dark:text-purple-400">
+                      <Flame className="w-3.5 h-3.5 text-amber-500" /> {scrambleCorrectCount * 100} điểm
+                    </span>
+                  </div>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
@@ -856,6 +1135,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                         onClick={() => {
                           if (touchMovedRef.current) return;
                           soundFx.playFlip();
+                          setScrambleStarted(true);
                           setScrambleResult(null);
                           setSelectedTokens((list) => [...list, idx]);
                         }}
@@ -917,9 +1197,14 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                       type="button"
                       disabled={selectedTokens.length < shuffledTokens.length}
                       onClick={() => {
+                        setScrambleStarted(true);
                         const built = selectedTokens.map((i) => shuffledTokens[i].text).join('');
                         const ok = normalizeClean(built) === normalizeClean(currScramble.targetHanzi);
                         setScrambleResult(ok);
+                        setScrambleScoreMap((prev) => ({
+                          ...prev,
+                          [scrambleIdx]: ok || Boolean(prev[scrambleIdx]),
+                        }));
                         if (ok) soundFx.playCorrect();
                         else soundFx.playWrong();
                       }}
@@ -929,19 +1214,24 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                     </button>
                     <button
                       onClick={() => {
-                        setScrambleIdx((i) => (i + 1) % scrambleDeck.length);
-                        setSelectedTokens([]);
-                        setScrambleResult(null);
-                        clearScrambleDrag();
+                        if (scrambleIdx + 1 >= scrambleDeck.length) {
+                          setScrambleDone(true);
+                          soundFx.playVictory();
+                        } else {
+                          setScrambleIdx((i) => i + 1);
+                          setSelectedTokens([]);
+                          setScrambleResult(null);
+                          clearScrambleDrag();
+                        }
                       }}
                       className="px-4 py-2 rounded-xl bg-stone-100 dark:bg-slate-800 text-xs font-bold"
                     >
-                      Câu tiếp →
+                      {scrambleIdx + 1 >= scrambleDeck.length ? 'Xem kết quả' : 'Câu tiếp →'}
                     </button>
                   </div>
                 </div>
               </div>
-            )}
+            ) : null}
           </div>
         )}
 
@@ -978,10 +1268,17 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                 </button>
               </div>
               {transDeck.length > 0 && (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3 flex-wrap">
                   <span className="text-xs font-mono text-gray-400">
                     {transIdx + 1} / {transDeck.length}
                     {transPool.length > transDeck.length && ` (Kho ${transPool.length})`}
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-xs font-mono font-bold text-gray-700 dark:text-slate-200">
+                    <Clock className="w-3.5 h-3.5 text-purple-600" />
+                    {formatDurationClock(transTime)}
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-purple-700 dark:text-purple-400">
+                    <Flame className="w-3.5 h-3.5 text-amber-500" /> {transCorrectCount * 100} điểm
                   </span>
                   {transPool.length > 1 && (
                     <button
@@ -997,9 +1294,49 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
               )}
             </div>
 
-            {!currTrans ? (
+            {transDeck.length === 0 ? (
               <p className="text-center text-sm text-gray-500 py-8">Chưa có bài tập dịch cho chiều này.</p>
-            ) : (
+            ) : transDone ? (
+              <div className="text-center py-8 space-y-4 pop-in">
+                <Trophy className="w-12 h-12 text-amber-500 mx-auto" />
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  Hoàn thành Dịch song ngữ!
+                </h3>
+                <div className="flex justify-center gap-8 text-center">
+                  <div>
+                    <div className="text-2xl font-black text-purple-600">
+                      {transCorrectCount * 100}
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      Điểm ({transCorrectCount}/{transDeck.length} câu)
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-black text-gray-800 dark:text-white">
+                      {formatDurationClock(transTime)}
+                    </div>
+                    <div className="text-xs text-gray-400">Thời gian</div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center gap-2.5 flex-wrap">
+                  <button
+                    onClick={restartTransRound}
+                    className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold inline-flex items-center gap-1.5"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" /> Làm lại bộ này
+                  </button>
+                  {transPool.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => refreshTransDeck()}
+                      className="px-6 py-2.5 border border-stone-200 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 hover:bg-purple-50 dark:hover:bg-purple-900/30 text-gray-800 dark:text-slate-100 hover:text-purple-600 dark:hover:text-purple-300 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 transition"
+                    >
+                      <Shuffle className="w-3.5 h-3.5" /> Đổi bộ đề mới
+                    </button>
+                  )}
+                </div>
+              </div>
+            ) : currTrans ? (
               <div className="space-y-4">
                 <div className="p-5 rounded-2xl bg-stone-50 dark:bg-slate-800/60 border border-stone-200 dark:border-slate-700 space-y-2">
                   <div className="flex items-center justify-between">
@@ -1035,6 +1372,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                   type="text"
                   value={transInput}
                   onChange={(e) => {
+                    setTransStarted(true);
                     setTransInput(e.target.value);
                     if (transChecked) setTransChecked(false);
                   }}
@@ -1091,20 +1429,25 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                     </button>
                     <button
                       onClick={() => {
-                        setTransIdx((i) => (i + 1) % transDeck.length);
-                        setTransInput('');
-                        setTransChecked(false);
-                        setShowTransHint(false);
-                        setShowTransAnswer(false);
+                        if (transIdx + 1 >= transDeck.length) {
+                          setTransDone(true);
+                          soundFx.playVictory();
+                        } else {
+                          setTransIdx((i) => i + 1);
+                          setTransInput('');
+                          setTransChecked(false);
+                          setShowTransHint(false);
+                          setShowTransAnswer(false);
+                        }
                       }}
                       className="px-4 py-2 rounded-xl bg-stone-100 dark:bg-slate-800 text-xs font-bold"
                     >
-                      Câu tiếp →
+                      {transIdx + 1 >= transDeck.length ? 'Xem kết quả' : 'Câu tiếp →'}
                     </button>
                   </div>
                 </div>
               </div>
-            )}
+            ) : null}
           </div>
         )}
 
@@ -1117,21 +1460,25 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
               <div className="text-center py-8 space-y-4 pop-in">
                 <Trophy className="w-12 h-12 text-amber-500 mx-auto" />
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Hoàn thành trắc nghiệm!</h3>
-                <p className="text-sm text-gray-600 dark:text-slate-300">
-                  Bạn trả lời đúng{' '}
-                  <strong className="text-emerald-600">
-                    {quizDeck.filter((q, i) => quizAnswers[i] === q.correctIndex).length}
-                  </strong>{' '}
-                  / {quizDeck.length} câu.
-                </p>
+                <div className="flex justify-center gap-8 text-center">
+                  <div>
+                    <div className="text-2xl font-black text-purple-600">
+                      {quizCorrectCount * 100}
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      Điểm ({quizCorrectCount}/{quizDeck.length} câu đúng)
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-black text-gray-800 dark:text-white">
+                      {formatDurationClock(quizTime)}
+                    </div>
+                    <div className="text-xs text-gray-400">Thời gian</div>
+                  </div>
+                </div>
                 <div className="flex items-center justify-center gap-2.5 flex-wrap">
                   <button
-                    onClick={() => {
-                      setQuizIdx(0);
-                      setQuizAnswers({});
-                      setQuizDone(false);
-                      setQuizStreak(0);
-                    }}
+                    onClick={restartQuizRound}
                     className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold inline-flex items-center gap-1.5"
                   >
                     <RotateCcw className="w-3.5 h-3.5" /> Làm lại bộ này
@@ -1159,7 +1506,11 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                         </span>
                       )}
                     </span>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="inline-flex items-center gap-1 font-mono font-bold text-gray-700 dark:text-slate-200">
+                        <Clock className="w-3.5 h-3.5 text-purple-600" />
+                        {formatDurationClock(quizTime)}
+                      </span>
                       <span className="px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 font-bold">
                         Chuỗi đúng: {quizStreak}
                       </span>
@@ -1196,6 +1547,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                           key={optIdx}
                           disabled={answered}
                           onClick={() => {
+                            setQuizStarted(true);
                             setQuizAnswers((prev) => ({ ...prev, [quizIdx]: optIdx }));
                             if (optIdx === currQuiz.correctIndex) {
                               soundFx.playCorrect();
@@ -1225,8 +1577,12 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                   <div className="flex justify-end">
                     <button
                       onClick={() => {
-                        if (quizIdx + 1 >= quizDeck.length) setQuizDone(true);
-                        else setQuizIdx((i) => i + 1);
+                        if (quizIdx + 1 >= quizDeck.length) {
+                          setQuizDone(true);
+                          soundFx.playVictory();
+                        } else {
+                          setQuizIdx((i) => i + 1);
+                        }
                       }}
                       className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold"
                     >
@@ -1236,6 +1592,200 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                 </div>
               )
             )}
+          </div>
+        )}
+      </div>
+
+      {/* BẢNG XẾP HẠNG TRÒ CHƠI */}
+      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-stone-200 dark:border-slate-800 shadow-lg p-5 sm:p-6 space-y-5">
+        <div className="flex items-start gap-3">
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white flex items-center justify-center shadow-md shrink-0">
+            <Trophy className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                Bảng xếp hạng kết quả
+              </h3>
+              {savedNotice && (
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-xs font-semibold">
+                  {savedNotice}
+                </span>
+              )}
+            </div>
+            <p className="text-xs text-gray-500 dark:text-slate-400 mt-0.5">
+              Hiển thị thành tích trong bài học này của tất cả thành viên, sắp xếp theo điểm cao nhất và thời gian hoàn thành nhanh nhất.
+            </p>
+          </div>
+        </div>
+
+        {/* Bộ lọc chế độ trò chơi */}
+        <div className="flex flex-wrap gap-1.5">
+          {(
+            [
+              { id: 'tri_match', label: '1. Ghép bộ 3' },
+              { id: 'scramble', label: '2. Sắp xếp câu' },
+              { id: 'translation', label: '3. Dịch Việt-Trung' },
+              { id: 'expanded_quiz', label: '4. Trắc nghiệm' },
+              { id: 'all', label: 'Tất cả chế độ' },
+            ] as const
+          ).map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => setLbMode(item.id)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition border ${
+                lbMode === item.id
+                  ? 'bg-purple-600 text-white border-purple-600 shadow-sm'
+                  : 'bg-stone-50 dark:bg-slate-800 text-gray-600 dark:text-slate-300 border-stone-200 dark:border-slate-700 hover:border-purple-400'
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+
+        {lbError ? (
+          <div className="p-4 rounded-2xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-xs text-red-700 dark:text-red-300">
+            {lbError}
+          </div>
+        ) : lbLoading && lbEntries.length === 0 ? (
+          <div className="py-10 text-center text-sm text-gray-400">
+            Đang tải bảng xếp hạng...
+          </div>
+        ) : lbEntries.length === 0 ? (
+          <div className="py-10 text-center space-y-2 border border-dashed border-stone-200 dark:border-slate-800 rounded-2xl">
+            <Medal className="w-8 h-8 text-gray-300 dark:text-slate-600 mx-auto" />
+            <p className="text-sm font-semibold text-gray-600 dark:text-slate-300">
+              Chưa có kết quả nào được ghi nhận
+            </p>
+            <p className="text-xs text-gray-400 dark:text-slate-500">
+              Hãy hoàn thành một lượt chơi ở trên để lưu điểm và xuất hiện trên bảng xếp hạng!
+            </p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse min-w-[640px]">
+              <thead>
+                <tr className="border-b border-stone-200 dark:border-slate-800 text-[11px] uppercase tracking-wider text-gray-400 dark:text-slate-500">
+                  <th className="py-2.5 px-3 font-bold w-16 text-center">Hạng</th>
+                  <th className="py-2.5 px-3 font-bold">Người chơi</th>
+                  <th className="py-2.5 px-3 font-bold text-right">Điểm</th>
+                  <th className="py-2.5 px-3 font-bold text-center">Thời gian hoàn thành</th>
+                  <th className="py-2.5 px-3 font-bold text-right">Thời điểm chơi</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-stone-100 dark:divide-slate-800/80 text-sm">
+                {lbEntries.map((entry, idx) => {
+                  const rank = idx + 1;
+                  const isMe = Boolean(currentUserId && entry.userId === currentUserId);
+                  const avatarPreset = getAvatarPreset(entry.avatarUrl);
+                  const hasImageAvatar = isImageMediaUrl(entry.avatarUrl);
+                  const rankBadgeClass =
+                    rank === 1
+                      ? 'bg-amber-100 text-amber-700 border-amber-300 dark:bg-amber-900/40 dark:text-amber-300 dark:border-amber-700'
+                      : rank === 2
+                        ? 'bg-slate-200 text-slate-700 border-slate-300 dark:bg-slate-700 dark:text-slate-200 dark:border-slate-600'
+                        : rank === 3
+                          ? 'bg-orange-100 text-orange-700 border-orange-300 dark:bg-orange-900/40 dark:text-orange-300 dark:border-orange-700'
+                          : 'bg-stone-100 text-gray-600 border-stone-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700';
+
+                  return (
+                    <tr
+                      key={entry.id}
+                      className={`transition ${
+                        isMe
+                          ? 'bg-purple-50/70 dark:bg-purple-950/30'
+                          : 'hover:bg-stone-50/80 dark:hover:bg-slate-800/40'
+                      }`}
+                    >
+                      <td className="py-3 px-3 text-center">
+                        <span
+                          className={`inline-flex items-center justify-center w-8 h-8 rounded-xl border text-xs font-extrabold ${rankBadgeClass}`}
+                        >
+                          {rank <= 3 ? `#${rank}` : rank}
+                        </span>
+                      </td>
+
+                      <td className="py-3 px-3">
+                        <div className="flex items-center gap-3 min-w-0">
+                          {hasImageAvatar ? (
+                            <img
+                              src={entry.avatarUrl!}
+                              alt={entry.displayName}
+                              className="w-10 h-10 rounded-xl object-cover border border-stone-200 dark:border-slate-700 shrink-0 shadow-sm"
+                            />
+                          ) : avatarPreset ? (
+                            <div
+                              className={`w-10 h-10 rounded-xl bg-gradient-to-br ${avatarPreset.gradientClass} text-white flex items-center justify-center font-bold chinese-font text-lg shrink-0 shadow-sm`}
+                            >
+                              {avatarPreset.symbol}
+                            </div>
+                          ) : (
+                            <div
+                              className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 shadow-sm ${
+                                entry.role === 'admin'
+                                  ? 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white'
+                                  : 'bg-gradient-to-br from-red-500 to-amber-500 text-white'
+                              }`}
+                            >
+                              {getInitials(entry.displayName)}
+                            </div>
+                          )}
+
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <span className="font-bold text-gray-900 dark:text-white truncate">
+                                {entry.displayName}
+                              </span>
+                              <span
+                                className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                                  entry.role === 'admin'
+                                    ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300'
+                                    : 'bg-stone-100 text-gray-600 dark:bg-slate-800 dark:text-slate-300'
+                                }`}
+                              >
+                                {entry.role === 'admin' ? 'Quản trị viên' : 'Học viên'}
+                              </span>
+                              {isMe && (
+                                <span className="px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300 text-[10px] font-bold">
+                                  Bạn
+                                </span>
+                              )}
+                            </div>
+                            {lbMode === 'all' && (
+                              <div className="text-[11px] text-gray-400 dark:text-slate-500 truncate mt-0.5">
+                                {GAME_MODE_LABELS[entry.gameMode]}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </td>
+
+                      <td className="py-3 px-3 text-right whitespace-nowrap">
+                        <span className="font-black text-purple-700 dark:text-purple-400">
+                          {entry.score.toLocaleString('vi-VN')}
+                        </span>
+                        <span className="text-xs text-gray-400 dark:text-slate-500 ml-1">
+                          điểm{entry.maxScore ? ` / ${entry.maxScore.toLocaleString('vi-VN')}` : ''}
+                        </span>
+                      </td>
+
+                      <td className="py-3 px-3 text-center whitespace-nowrap">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-stone-100 dark:bg-slate-800 font-mono text-xs font-bold text-gray-700 dark:text-slate-200">
+                          <Clock className="w-3 h-3 text-purple-600" />
+                          {formatDurationClock(entry.durationSeconds)}
+                        </span>
+                      </td>
+
+                      <td className="py-3 px-3 text-right whitespace-nowrap text-xs text-gray-500 dark:text-slate-400 font-mono">
+                        {formatPlayedAt(entry.playedAt)}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         )}
       </div>

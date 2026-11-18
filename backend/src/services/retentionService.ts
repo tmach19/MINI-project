@@ -44,13 +44,21 @@ export async function runSoftDeleteRetentionPurge(
     });
     const lessonsPurged = beforeLessons - memoryStore.lessons.length;
 
+    const beforeGameScores = memoryStore.gameScores.length;
+    memoryStore.gameScores = memoryStore.gameScores.filter((g) => {
+      if (g.isDeleted !== 1 || !g.deletedAt) return true;
+      return new Date(g.deletedAt).getTime() >= cutoffMs;
+    });
+    const gameScoresPurged = beforeGameScores - memoryStore.gameScores.length;
+
     const details: RetentionPurgeItem[] = [
       { tableName: 'user_marked_vocab', purgedCount: markedPurged },
+      { tableName: 'game_scores', purgedCount: gameScoresPurged },
       { tableName: 'lessons', purgedCount: lessonsPurged },
     ];
     return {
       retentionDays: days,
-      totalPurged: markedPurged + lessonsPurged,
+      totalPurged: markedPurged + gameScoresPurged + lessonsPurged,
       details,
       ranAt,
     };

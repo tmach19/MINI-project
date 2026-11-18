@@ -4,10 +4,12 @@ import {
   Award,
   BookOpen,
   Calendar,
+  Camera,
   Check,
   ChevronDown,
   ChevronRight,
   Clock,
+  Edit3,
   ExternalLink,
   Flag,
   LogOut,
@@ -16,15 +18,16 @@ import {
   RefreshCw,
   Search,
   Shield,
-  Sliders,
-  Sparkles,
   Trash2,
   User as UserIcon,
   Volume2,
+  X,
 } from 'lucide-react';
 import { api } from '../lib/api';
 import { speakChinese } from '../lib/audio';
+import { getAvatarPreset, getCoverPreset, isImageMediaUrl } from '../lib/profileMedia';
 import { LoadingCard, LoadingSpinner } from './common/LoadingState';
+import { ProfileMediaModal } from './ProfileMediaModal';
 import type {
   LessonAttemptDetailRecord,
   LessonSummary,
@@ -36,7 +39,7 @@ import type {
   VocabularyItem,
 } from '../types';
 
-type ProfileTab = 'overview' | 'saved_vocab' | 'test_history' | 'settings';
+type ProfileTab = 'overview' | 'saved_vocab' | 'test_history';
 type HistorySubTab = 'comprehensive' | 'lesson';
 
 interface ProfilePageProps {
@@ -50,6 +53,7 @@ interface ProfilePageProps {
   onOpenLesson?: (lessonId: string, tab?: 'vocab' | 'test') => void;
   onOpenExam?: () => void;
   onOpenWriter?: (vocab: VocabularyItem) => void;
+  onUpdateUser?: (updated: UserProfile) => void;
 }
 
 function getInitials(name: string): string {
@@ -78,8 +82,44 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   onOpenLesson,
   onOpenExam,
   onOpenWriter,
+  onUpdateUser,
 }) => {
   const [profileTab, setProfileTab] = useState<ProfileTab>('overview');
+  const [editingDisplayName, setEditingDisplayName] = useState(false);
+  const [displayNameDraft, setDisplayNameDraft] = useState(user.displayName);
+  const [savingDisplayName, setSavingDisplayName] = useState(false);
+  const [displayNameError, setDisplayNameError] = useState<string | null>(null);
+  const [displayNameSavedMsg, setDisplayNameSavedMsg] = useState<string | null>(null);
+  const [mediaModalMode, setMediaModalMode] = useState<'avatar' | 'cover' | null>(null);
+
+  useEffect(() => {
+    setDisplayNameDraft(user.displayName);
+  }, [user.displayName]);
+
+  const handleSaveDisplayName = async () => {
+    const clean = displayNameDraft.trim().replace(/\s+/g, ' ');
+    if (!clean) {
+      setDisplayNameError('Tên hiển thị không được để trống.');
+      return;
+    }
+    if (clean.length > 60) {
+      setDisplayNameError('Tên hiển thị tối đa 60 ký tự.');
+      return;
+    }
+    setSavingDisplayName(true);
+    setDisplayNameError(null);
+    setDisplayNameSavedMsg(null);
+    try {
+      const res = await api.updateProfile({ displayName: clean });
+      onUpdateUser?.(res.user);
+      setEditingDisplayName(false);
+      setDisplayNameSavedMsg('Đã cập nhật tên hiển thị.');
+    } catch (err) {
+      setDisplayNameError(err instanceof Error ? err.message : 'Không cập nhật được tên hiển thị.');
+    } finally {
+      setSavingDisplayName(false);
+    }
+  };
   const [markedCards, setMarkedCards] = useState<MarkedVocabCard[]>([]);
   const [loadingMarked, setLoadingMarked] = useState(false);
   const [markedError, setMarkedError] = useState<string | null>(null);
@@ -330,7 +370,6 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
     { id: 'overview', label: 'Thông tin chung', icon: UserIcon },
     { id: 'saved_vocab', label: 'Từ đã đánh dấu', icon: Flag },
     { id: 'test_history', label: 'Lịch sử làm bài', icon: Award },
-    { id: 'settings', label: 'Thiết lập tài khoản', icon: Sliders },
   ];
 
   return (
@@ -355,39 +394,87 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
       </div>
 
       {/* Header Profile Card */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-stone-200 dark:border-slate-800 shadow-sm overflow-hidden">
-        <div className="h-28 bg-gradient-to-r from-red-600 via-rose-600 to-amber-500 relative">
-          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,#fff,transparent_60%)]" />
-        </div>
-
-        <div className="px-6 pb-6 -mt-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4 relative">
-          <div className="flex items-end gap-4">
-            <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-slate-800 to-slate-950 dark:from-red-600 dark:to-amber-600 border-4 border-white dark:border-slate-900 shadow-lg flex items-center justify-center text-white text-2xl font-black tracking-wide">
-              {getInitials(user.displayName)}
+      {(() => {
+        const avatarPreset = getAvatarPreset(user.avatarUrl);
+        const coverPreset = getCoverPreset(user.coverUrl);
+        return (
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-stone-200 dark:border-slate-800 shadow-sm overflow-hidden">
+            <div className={`h-32 sm:h-36 relative overflow-hidden ${isImageMediaUrl(user.coverUrl) ? 'bg-slate-900' : coverPreset.gradientClass}`}>
+              {isImageMediaUrl(user.coverUrl) ? (
+                <img
+                  src={user.coverUrl!}
+                  alt="Ảnh nền hồ sơ"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,#fff,transparent_60%)]" />
+              )}
+              <button
+                type="button"
+                onClick={() => setMediaModalMode('cover')}
+                className="absolute top-3 right-3 px-3 py-1.5 rounded-xl bg-black/45 hover:bg-black/65 text-white text-[11px] font-bold backdrop-blur-md border border-white/20 inline-flex items-center gap-1.5 transition shadow-sm"
+                title="Chọn ảnh nền hồ sơ"
+              >
+                <Camera className="w-3.5 h-3.5" /> Đổi ảnh nền
+              </button>
             </div>
-            <div className="pb-1 space-y-1">
-              <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white">
-                  {user.displayName}
-                </h1>
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 inline-flex items-center gap-1">
-                  <Shield className="w-3 h-3" />
-                  {user.role === 'admin' ? 'Quản trị viên' : 'Học viên'}
+
+            <div className="px-6 pb-6 -mt-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4 relative">
+              <div className="flex items-end gap-4">
+                <div className="relative flex-shrink-0">
+                  <div className="w-24 h-24 rounded-3xl overflow-hidden bg-gradient-to-br from-slate-800 to-slate-950 dark:from-red-600 dark:to-amber-600 border-4 border-white dark:border-slate-900 shadow-lg flex items-center justify-center text-white text-2xl font-black tracking-wide">
+                    {isImageMediaUrl(user.avatarUrl) ? (
+                      <img
+                        src={user.avatarUrl!}
+                        alt={user.displayName}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : avatarPreset ? (
+                      <div
+                        className={`w-full h-full ${avatarPreset.gradientClass} flex items-center justify-center chinese-serif text-4xl font-black text-white`}
+                      >
+                        {avatarPreset.symbol}
+                      </div>
+                    ) : (
+                      <span>{getInitials(user.displayName)}</span>
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setMediaModalMode('avatar')}
+                    className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-white dark:bg-slate-800 hover:bg-red-50 dark:hover:bg-slate-700 border border-stone-200 dark:border-slate-700 text-gray-700 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-300 shadow-md flex items-center justify-center transition"
+                    title="Đổi ảnh đại diện"
+                    aria-label="Đổi ảnh đại diện"
+                  >
+                    <Camera className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                <div className="pb-1 space-y-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h1 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white">
+                      {user.displayName}
+                    </h1>
+                    <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 inline-flex items-center gap-1">
+                      <Shield className="w-3 h-3" />
+                      {user.role === 'admin' ? 'Quản trị viên' : 'Học viên'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-slate-400 flex items-center gap-1.5">
+                    <Mail className="w-3.5 h-3.5" /> {user.email}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-slate-400">
+                <span className="px-3 py-1.5 rounded-xl bg-stone-100 dark:bg-slate-800 font-medium inline-flex items-center gap-1.5">
+                  <Calendar className="w-3.5 h-3.5 text-red-500" /> Tham gia: {joinedDate}
                 </span>
               </div>
-              <p className="text-xs text-gray-500 dark:text-slate-400 flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5" /> {user.email}
-              </p>
             </div>
           </div>
-
-          <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-slate-400">
-            <span className="px-3 py-1.5 rounded-xl bg-stone-100 dark:bg-slate-800 font-medium inline-flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-red-500" /> Tham gia: {joinedDate}
-            </span>
-          </div>
-        </div>
-      </div>
+        );
+      })()}
 
       {/* Thống kê tổng quan từ state sẵn có */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -450,8 +537,92 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               <h2 className="text-sm font-bold text-gray-900 dark:text-white">Thông tin tài khoản</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 <div className="p-3.5 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-stone-200/70 dark:border-slate-800">
-                  <span className="text-gray-500 dark:text-slate-400 block mb-0.5">Tên hiển thị</span>
-                  <span className="font-bold text-gray-900 dark:text-white">{user.displayName}</span>
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span className="text-gray-500 dark:text-slate-400">Tên hiển thị</span>
+                    {!editingDisplayName && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setDisplayNameDraft(user.displayName);
+                          setDisplayNameError(null);
+                          setDisplayNameSavedMsg(null);
+                          setEditingDisplayName(true);
+                        }}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-[11px] font-semibold text-gray-700 dark:text-slate-200 hover:border-red-400 hover:text-red-600 dark:hover:text-red-300 transition"
+                      >
+                        <Edit3 className="w-3 h-3" /> Sửa
+                      </button>
+                    )}
+                  </div>
+                  {editingDisplayName ? (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <input
+                          type="text"
+                          value={displayNameDraft}
+                          maxLength={60}
+                          autoFocus
+                          disabled={savingDisplayName}
+                          onChange={(e) => setDisplayNameDraft(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.nativeEvent.isComposing || e.keyCode === 229) return;
+                            if (e.key === 'Enter') {
+                              e.preventDefault();
+                              void handleSaveDisplayName();
+                            } else if (e.key === 'Escape') {
+                              setEditingDisplayName(false);
+                              setDisplayNameDraft(user.displayName);
+                              setDisplayNameError(null);
+                            }
+                          }}
+                          placeholder="Nhập tên hiển thị mới..."
+                          className="flex-1 min-w-[140px] px-2.5 py-1.5 rounded-xl border border-stone-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-xs font-semibold text-gray-900 dark:text-white focus:outline-none focus:border-red-500"
+                        />
+                        <button
+                          type="button"
+                          disabled={savingDisplayName}
+                          onClick={() => void handleSaveDisplayName()}
+                          className="px-2.5 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white text-[11px] font-bold inline-flex items-center gap-1 transition"
+                        >
+                          {savingDisplayName ? (
+                            <LoadingSpinner size="sm" />
+                          ) : (
+                            <Check className="w-3.5 h-3.5" />
+                          )}
+                          Lưu
+                        </button>
+                        <button
+                          type="button"
+                          disabled={savingDisplayName}
+                          onClick={() => {
+                            setEditingDisplayName(false);
+                            setDisplayNameDraft(user.displayName);
+                            setDisplayNameError(null);
+                          }}
+                          className="p-1.5 rounded-xl border border-stone-200 dark:border-slate-700 text-gray-500 hover:bg-stone-100 dark:hover:bg-slate-800 transition"
+                          title="Huỷ"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                      {displayNameError && (
+                        <p className="text-[11px] text-red-600 dark:text-red-400 font-medium">
+                          {displayNameError}
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="space-y-1">
+                      <span className="font-bold text-gray-900 dark:text-white block">
+                        {user.displayName}
+                      </span>
+                      {displayNameSavedMsg && (
+                        <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium block">
+                          {displayNameSavedMsg}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <div className="p-3.5 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-stone-200/70 dark:border-slate-800">
                   <span className="text-gray-500 dark:text-slate-400 block mb-0.5">Email đăng nhập</span>
@@ -1130,21 +1301,26 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 </div>
               )}
             </div>
-          ) : (
-            <div className="py-10 text-center space-y-2">
-              <div className="w-11 h-11 rounded-2xl bg-stone-100 dark:bg-slate-800 text-gray-500 dark:text-slate-400 mx-auto flex items-center justify-center">
-                <Sparkles className="w-5 h-5" />
-              </div>
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white">
-                {tabs.find((t) => t.id === profileTab)?.label}
-              </h3>
-              <p className="text-xs text-gray-500 dark:text-slate-400 max-w-md mx-auto">
-                Khu vực này đã dựng sẵn khung giao diện để bạn thiết kế và gắn thêm chức năng chi tiết sau.
-              </p>
-            </div>
-          )}
+          ) : null}
         </div>
       </div>
+
+      {mediaModalMode && (
+        <ProfileMediaModal
+          mode={mediaModalMode}
+          currentValue={mediaModalMode === 'avatar' ? user.avatarUrl : user.coverUrl}
+          initials={getInitials(user.displayName)}
+          onClose={() => setMediaModalMode(null)}
+          onSave={async (nextValue) => {
+            const payload =
+              mediaModalMode === 'avatar'
+                ? { avatarUrl: nextValue }
+                : { coverUrl: nextValue };
+            const res = await api.updateProfile(payload);
+            onUpdateUser?.(res.user);
+          }}
+        />
+      )}
     </div>
   );
 };

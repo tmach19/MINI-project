@@ -6,6 +6,7 @@ import {
   GitBranch,
   Headphones,
   Layers,
+  Lock,
   LogIn,
   LogOut,
   Moon,
@@ -19,12 +20,7 @@ import {
 } from 'lucide-react';
 import { api, getStoredToken, setStoredToken } from './lib/api';
 import { hasPermission, isSuperAdminUser, PERMISSIONS } from './lib/permissions';
-import {
-  loadGuestAttempts,
-  loadGuestMarkedMap,
-  saveGuestAttempts,
-  saveGuestMarkedMap,
-} from './lib/srsLocal';
+import { getAvatarPreset, isImageMediaUrl } from './lib/profileMedia';
 import { AdminRbacPage } from './components/AdminRbacPage';
 import { AiAssistantModal } from './components/AiAssistantModal';
 import { AuthModal } from './components/AuthModal';
@@ -84,10 +80,8 @@ export default function App() {
   const [loadingExam, setLoadingExam] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const [markedMap, setMarkedMap] = useState<Record<string, MarkedVocabRecord>>(() =>
-    loadGuestMarkedMap()
-  );
-  const [attempts, setAttempts] = useState<TestAttemptRecord[]>(() => loadGuestAttempts());
+  const [markedMap, setMarkedMap] = useState<Record<string, MarkedVocabRecord>>({});
+  const [attempts, setAttempts] = useState<TestAttemptRecord[]>([]);
 
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
@@ -163,7 +157,22 @@ export default function App() {
     [selectedExamLessonIds, lessons]
   );
 
+  const canAccessAdmin = hasPermission(user, [
+    PERMISSIONS.MENU_ADMIN,
+    PERMISSIONS.USER_MANAGE,
+    PERMISSIONS.ROLE_MANAGE,
+  ]);
+  const canCreateCustomLesson = hasPermission(user, PERMISSIONS.LESSON_CUSTOM_CRUD);
+  const canCreateSystemLesson = hasPermission(user, PERMISSIONS.LESSON_SYSTEM_CREATE);
+  const canCreateAnyLesson = !user || canCreateCustomLesson || canCreateSystemLesson;
+  const canUseAiAssistant = !user || hasPermission(user, PERMISSIONS.AI_ASSISTANT_USE);
+  const canTakeExam = Boolean(user && hasPermission(user, PERMISSIONS.EXAM_TAKE));
+  const canShowExamEntry = !user || canTakeExam;
+  const canPlayGames = Boolean(user);
+  const canBookmarkVocab = Boolean(user && hasPermission(user, PERMISSIONS.VOCAB_BOOKMARK));
+
   const loadComprehensiveExam = async (lessonIdsOverride?: string[]) => {
+    if (!canTakeExam) return;
     const targetIds = lessonIdsOverride ?? effectiveExamLessonIds;
     if (selectedExamLessonIds !== null && targetIds.length === 0) {
       setComprehensiveExam({
@@ -189,6 +198,14 @@ export default function App() {
   };
 
   const openComprehensiveExam = () => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+    if (!canTakeExam) {
+      setErrorMsg('Tài khoản của bạn hiện không có quyền làm bài kiểm tra.');
+      return;
+    }
     setComprehensiveExam(null);
     navigateView('exam');
     void loadComprehensiveExam(effectiveExamLessonIds);
@@ -201,20 +218,17 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (activeView === 'exam' && !comprehensiveExam && !loadingExam && lessons.length > 0) {
+    if (
+      authChecked &&
+      canTakeExam &&
+      activeView === 'exam' &&
+      !comprehensiveExam &&
+      !loadingExam &&
+      lessons.length > 0
+    ) {
       void loadComprehensiveExam(effectiveExamLessonIds);
     }
-  }, [activeView, lessons.length]);
-
-  const canAccessAdmin = hasPermission(user, [
-    PERMISSIONS.MENU_ADMIN,
-    PERMISSIONS.USER_MANAGE,
-    PERMISSIONS.ROLE_MANAGE,
-  ]);
-  const canCreateCustomLesson = hasPermission(user, PERMISSIONS.LESSON_CUSTOM_CRUD);
-  const canCreateSystemLesson = hasPermission(user, PERMISSIONS.LESSON_SYSTEM_CREATE);
-  const canCreateAnyLesson = !user || canCreateCustomLesson || canCreateSystemLesson;
-  const canUseAiAssistant = !user || hasPermission(user, PERMISSIONS.AI_ASSISTANT_USE);
+  }, [authChecked, canTakeExam, activeView, lessons.length]);
 
   const openAiAssistant = (tab: 'dictionary' | 'chat' = 'dictionary', query = '') => {
     if (!user) {
@@ -236,8 +250,10 @@ export default function App() {
       navigateView('study', true);
     } else if (activeView === 'admin' && !canAccessAdmin) {
       navigateView('study', true);
+    } else if (activeView === 'exam' && user && !canTakeExam) {
+      navigateView('study', true);
     }
-  }, [authChecked, activeView, user, canAccessAdmin]);
+  }, [authChecked, activeView, user, canAccessAdmin, canTakeExam]);
 
   useEffect(() => {
     const init = async () => {
@@ -281,7 +297,7 @@ export default function App() {
         setErrorMsg((err as Error).message);
       })
       .finally(() => setLoadingLesson(false));
-  }, [currentLessonId]);
+  }, [currentLessonId, user?.id]);
 
   const groupedLessons = useMemo(() => {
     const groups: Record<string, LessonSummary[]> = {};
@@ -298,47 +314,39 @@ export default function App() {
     setUser(loggedUser);
     setShowAuthModal(false);
 
-    const guestIds = Object.keys(loadGuestMarkedMap());
-    if (guestIds.length > 0) {
-      await api.syncMarkedVocab(guestIds).catch(() => {});
-    }
     await Promise.all([refreshUserProgress(), refreshLessons()]);
   };
 
   const handleLogout = () => {
     setStoredToken(null);
     setUser(null);
+    setComprehensiveExam(null);
     navigateView('study');
-    setMarkedMap(loadGuestMarkedMap());
-    setAttempts(loadGuestAttempts());
+    setMarkedMap({});
+    setAttempts([]);
     refreshLessons();
   };
 
   const handleToggleMarked = async (vocabId: string) => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+    if (!canBookmarkVocab) {
+      setErrorMsg('Tài khoản của bạn hiện không có quyền đánh dấu từ vựng.');
+      return;
+    }
+
     const isMarked = Boolean(markedMap[vocabId]);
     const nextMarked = !isMarked;
 
-    if (user) {
-      const res = await api.toggleMarkVocab({ vocabId, marked: nextMarked });
-      setMarkedMap((prev) => {
-        const copy = { ...prev };
-        if (res.marked && res.record) copy[vocabId] = res.record;
-        else delete copy[vocabId];
-        return copy;
-      });
-    } else {
-      const nextMap = { ...markedMap };
-      if (nextMarked) {
-        nextMap[vocabId] = {
-          vocabId,
-          markedAt: new Date().toISOString(),
-        };
-      } else {
-        delete nextMap[vocabId];
-      }
-      setMarkedMap(nextMap);
-      saveGuestMarkedMap(nextMap);
-    }
+    const res = await api.toggleMarkVocab({ vocabId, marked: nextMarked });
+    setMarkedMap((prev) => {
+      const copy = { ...prev };
+      if (res.marked && res.record) copy[vocabId] = res.record;
+      else delete copy[vocabId];
+      return copy;
+    });
   };
 
   const handleSaveTestAttempt = async (payload: {
@@ -350,31 +358,17 @@ export default function App() {
     durationSeconds: number;
     answers: Record<string, number>;
   }) => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
     const resolvedTitle =
       payload.examTitle || currentLesson?.title || payload.lessonId || 'Kiểm tra tổng hợp (26 bài)';
-    if (user) {
-      const res = await api.submitTestAttempt(payload);
-      setAttempts((prev) => [
-        { ...res.attempt, lessonTitle: res.attempt.lessonTitle || resolvedTitle },
-        ...prev,
-      ]);
-    } else {
-      const rec: TestAttemptRecord = {
-        id: `guest_${Date.now()}`,
-        lessonId: payload.lessonId,
-        examTitle: payload.examTitle ?? null,
-        lessonTitle: resolvedTitle,
-        score: payload.score,
-        totalQuestions: payload.totalQuestions,
-        correctCount: payload.correctCount,
-        durationSeconds: payload.durationSeconds,
-        answers: payload.answers,
-        submittedAt: new Date().toISOString(),
-      };
-      const next = [rec, ...attempts];
-      setAttempts(next);
-      saveGuestAttempts(next);
-    }
+    const res = await api.submitTestAttempt(payload);
+    setAttempts((prev) => [
+      { ...res.attempt, lessonTitle: res.attempt.lessonTitle || resolvedTitle },
+      ...prev,
+    ]);
   };
 
   const handleSaveLesson = async (payload: {
@@ -435,6 +429,51 @@ export default function App() {
       setDeletingLesson(false);
     }
   };
+
+  const renderFeatureAccessGate = (
+    title: string,
+    description: string,
+    backLabel: string,
+    onBack: () => void
+  ) => (
+    <div className="max-w-xl mx-auto bg-white dark:bg-slate-900 rounded-3xl border border-stone-200 dark:border-slate-800 p-8 text-center space-y-4 shadow-sm">
+      <div className="w-14 h-14 rounded-2xl bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 mx-auto flex items-center justify-center border border-red-200/80 dark:border-red-900/50">
+        <Lock className="w-6 h-6" />
+      </div>
+      <div className="space-y-1.5">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">{title}</h3>
+        <p className="text-xs text-gray-600 dark:text-slate-400 leading-relaxed">{description}</p>
+      </div>
+      <div className="flex items-center justify-center gap-2.5 flex-wrap pt-1">
+        {!user && (
+          <button
+            type="button"
+            onClick={() => setShowAuthModal(true)}
+            className="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-sm transition"
+          >
+            <LogIn className="w-3.5 h-3.5" /> Đăng nhập / Đăng ký
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={onBack}
+          className="px-4 py-2.5 rounded-xl border border-stone-200 dark:border-slate-700 text-xs font-semibold text-gray-700 dark:text-slate-200 hover:bg-stone-100 dark:hover:bg-slate-800 transition"
+        >
+          {backLabel}
+        </button>
+      </div>
+    </div>
+  );
+
+  const renderExamAccessGate = (backLabel: string, onBack: () => void) =>
+    renderFeatureAccessGate(
+      !user ? 'Đăng nhập để làm bài kiểm tra' : 'Bạn chưa được cấp quyền làm bài kiểm tra',
+      !user
+        ? 'Chức năng Kiểm tra từng bài và Kiểm tra tổng hợp chỉ dành cho tài khoản Học viên (user) hoặc Quản trị viên (admin).'
+        : 'Tài khoản của bạn hiện không có quyền làm bài kiểm tra (EXAM_TAKE).',
+      backLabel,
+      onBack
+    );
 
   if (
     initializing ||
@@ -541,15 +580,19 @@ export default function App() {
                       },
                     ]
                   : []),
-                {
-                  id: 'comprehensive_exam',
-                  label: 'Kiểm tra tổng hợp',
-                  description: '50 câu ngẫu nhiên',
-                  icon: Award,
-                  iconClassName: 'text-red-500',
-                  active: activeView === 'exam',
-                  onClick: openComprehensiveExam,
-                },
+                ...(canShowExamEntry
+                  ? [
+                      {
+                        id: 'comprehensive_exam',
+                        label: 'Kiểm tra tổng hợp',
+                        description: !user ? 'Đăng nhập để làm bài thi' : '50 câu ngẫu nhiên',
+                        icon: Award,
+                        iconClassName: 'text-red-500',
+                        active: activeView === 'exam',
+                        onClick: openComprehensiveExam,
+                      },
+                    ]
+                  : []),
                 ...(canAccessAdmin
                   ? [
                       {
@@ -586,7 +629,28 @@ export default function App() {
                   }`}
                   title="Trang cá nhân (Profile)"
                 >
-                  <UserIcon className="w-3.5 h-3.5" />
+                  {(() => {
+                    const miniPreset = getAvatarPreset(user.avatarUrl);
+                    if (isImageMediaUrl(user.avatarUrl)) {
+                      return (
+                        <img
+                          src={user.avatarUrl!}
+                          alt={user.displayName}
+                          className="w-4 h-4 rounded-full object-cover flex-shrink-0"
+                        />
+                      );
+                    }
+                    if (miniPreset) {
+                      return (
+                        <span
+                          className={`w-4 h-4 rounded-full ${miniPreset.gradientClass} text-white chinese-serif text-[10px] font-black flex items-center justify-center flex-shrink-0`}
+                        >
+                          {miniPreset.symbol}
+                        </span>
+                      );
+                    }
+                    return <UserIcon className="w-3.5 h-3.5" />;
+                  })()}
                   <span className="hidden sm:inline">{user.displayName}</span>
                 </button>
                 <button
@@ -637,10 +701,17 @@ export default function App() {
               ] as const
             ).map(([id, label, Icon]) => {
               const active = activeTab === id;
+              const isLockedTab =
+                (id === 'test' && !canTakeExam) || (id === 'games' && !canPlayGames);
               return (
                 <button
                   key={id}
-                  onClick={() => setActiveTab(id)}
+                  onClick={() => {
+                    if ((id === 'test' || id === 'games') && !user) {
+                      setShowAuthModal(true);
+                    }
+                    setActiveTab(id);
+                  }}
                   className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition active:scale-95 ${
                     active
                       ? 'bg-red-600 text-white shadow-md'
@@ -648,6 +719,7 @@ export default function App() {
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" /> {label}
+                  {isLockedTab && <Lock className="w-3 h-3 opacity-80" />}
                 </button>
               );
             })}
@@ -678,7 +750,9 @@ export default function App() {
         )}
 
         {activeView === 'exam' ? (
-          loadingExam && !comprehensiveExam ? (
+          !canTakeExam ? (
+            renderExamAccessGate('Quay lại buổi học', () => navigateView('study'))
+          ) : loadingExam && !comprehensiveExam ? (
             <LoadingCard
               message="Đang bốc 50 câu hỏi ngẫu nhiên..."
               subMessage="Tổng hợp từ 26 bài học theo đúng cơ cấu HSK 3"
@@ -705,6 +779,7 @@ export default function App() {
                 comprehensiveTest: comprehensiveExam?.questions || [],
               }}
               attempts={attempts}
+              currentUserId={user?.id}
               onSaveAttempt={handleSaveTestAttempt}
               onGoToVocab={() => navigateView('study')}
               isComprehensiveExam
@@ -746,6 +821,7 @@ export default function App() {
               }}
               onOpenExam={openComprehensiveExam}
               onOpenWriter={(vocab) => setWriterVocab(vocab)}
+              onUpdateUser={(updatedUser) => setUser(updatedUser)}
             />
           ) : (
             <LoadingCard message="Đang tải thông tin tài khoản..." />
@@ -760,19 +836,49 @@ export default function App() {
                 markedMap={markedMap}
                 onToggleMarked={handleToggleMarked}
                 onOpenWriter={(v) => setWriterVocab(v)}
+                canUseBookmark={canBookmarkVocab}
+                onRequireBookmarkAccess={() => {
+                  if (!user) {
+                    setShowAuthModal(true);
+                  } else {
+                    setErrorMsg('Tài khoản của bạn hiện không có quyền đánh dấu từ vựng.');
+                  }
+                }}
               />
             )}
-            {activeTab === 'texts' && <TextsSection lesson={currentLesson} />}
-            {activeTab === 'grammar' && <GrammarSection lesson={currentLesson} />}
-            {activeTab === 'games' && <GamesSection lesson={currentLesson} />}
-            {activeTab === 'test' && (
-              <TestSection
+            {activeTab === 'texts' && (
+              <TextsSection
                 lesson={currentLesson}
-                attempts={attempts}
-                onSaveAttempt={handleSaveTestAttempt}
-                onGoToVocab={() => setActiveTab('vocab')}
+                canChangeSpeechRate={Boolean(user)}
+                onRequireAuth={() => setShowAuthModal(true)}
               />
             )}
+            {activeTab === 'grammar' && <GrammarSection lesson={currentLesson} />}
+            {activeTab === 'games' ? (
+              !canPlayGames ? (
+                renderFeatureAccessGate(
+                  'Đăng nhập để chơi Trò chơi ôn tập',
+                  'Chức năng Trò chơi sắp xếp câu, luyện dịch và trắc nghiệm mở rộng chỉ dành cho tài khoản Học viên (user) hoặc Quản trị viên (admin).',
+                  'Quay lại Từ vựng',
+                  () => setActiveTab('vocab')
+                )
+              ) : (
+                <GamesSection lesson={currentLesson} currentUserId={user?.id} />
+              )
+            ) : null}
+            {activeTab === 'test' ? (
+              !canTakeExam ? (
+                renderExamAccessGate('Quay lại Từ vựng', () => setActiveTab('vocab'))
+              ) : (
+                <TestSection
+                  lesson={currentLesson}
+                  attempts={attempts}
+                  currentUserId={user?.id}
+                  onSaveAttempt={handleSaveTestAttempt}
+                  onGoToVocab={() => setActiveTab('vocab')}
+                />
+              )
+            ) : null}
           </>
         )}
       </main>

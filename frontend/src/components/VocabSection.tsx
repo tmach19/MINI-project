@@ -19,6 +19,8 @@ interface VocabSectionProps {
   markedMap: Record<string, MarkedVocabRecord>;
   onToggleMarked: (vocabId: string) => void;
   onOpenWriter: (vocab: VocabularyItem) => void;
+  canUseBookmark?: boolean;
+  onRequireBookmarkAccess?: () => void;
 }
 
 export const VocabSection: React.FC<VocabSectionProps> = ({
@@ -26,6 +28,8 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
   markedMap,
   onToggleMarked,
   onOpenWriter,
+  canUseBookmark = true,
+  onRequireBookmarkAccess,
 }) => {
   const [filter, setFilter] = useState<'all' | 'marked'>('all');
   const [tableMarkedOnly, setTableMarkedOnly] = useState(false);
@@ -47,6 +51,13 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
     setFlipped(false);
     setShuffledOrder(null);
   }, [lesson.id]);
+
+  useEffect(() => {
+    if (!canUseBookmark) {
+      setFilter('all');
+      setTableMarkedOnly(false);
+    }
+  }, [canUseBookmark]);
 
   const orderedVocab = useMemo(() => {
     const base = lesson.vocabulary || [];
@@ -168,6 +179,10 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
             </button>
             <button
               onClick={() => {
+                if (!canUseBookmark) {
+                  onRequireBookmarkAccess?.();
+                  return;
+                }
                 setFilter('marked');
                 setCardIndex(0);
                 setFlipped(false);
@@ -407,7 +422,13 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
             </div>
 
             <button
-              onClick={() => setTableMarkedOnly((m) => !m)}
+              onClick={() => {
+                if (!canUseBookmark) {
+                  onRequireBookmarkAccess?.();
+                  return;
+                }
+                setTableMarkedOnly((m) => !m);
+              }}
               className={`px-3 py-2 rounded-xl border text-xs font-semibold flex items-center gap-1.5 flex-shrink-0 transition active:scale-95 ${
                 tableMarkedOnly
                   ? 'bg-amber-100 dark:bg-amber-900/40 border-amber-400 text-amber-700 dark:text-amber-300 shadow-xs'

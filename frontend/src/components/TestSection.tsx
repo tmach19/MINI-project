@@ -5,20 +5,26 @@ import {
   CheckCircle2,
   ChevronDown,
   Clock,
+  History,
   Layers,
+  Medal,
   Play,
   RotateCcw,
   Search,
   Send,
   Shuffle,
+  Trophy,
   Volume2,
 } from 'lucide-react';
+import { api } from '../lib/api';
 import { resolveDialogueTtsText, soundFx, speakChinese } from '../lib/audio';
-import type { LessonDetail, LessonSummary, TestAttemptRecord } from '../types';
+import { getAvatarPreset, isImageMediaUrl } from '../lib/profileMedia';
+import type { LessonDetail, LessonSummary, TestAttemptRecord, TestLeaderboardEntry } from '../types';
 
 interface TestSectionProps {
   lesson: LessonDetail;
   attempts: TestAttemptRecord[];
+  currentUserId?: string;
   onSaveAttempt: (payload: {
     lessonId: string | null;
     examTitle?: string | null;
@@ -36,6 +42,28 @@ interface TestSectionProps {
   availableLessons?: LessonSummary[];
   selectedLessonIds?: string[];
   onChangeSelectedLessons?: (lessonIds: string[]) => void;
+}
+
+function getInitials(name: string): string {
+  const clean = name.trim();
+  if (!clean) return 'U';
+  const parts = clean.split(/\s+/);
+  if (parts.length >= 2) {
+    return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+  }
+  return clean.slice(0, 2).toUpperCase();
+}
+
+function formatSubmittedAt(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleString('vi-VN', {
+    hour: '2-digit',
+    minute: '2-digit',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
 }
 
 function getTestDurationSeconds(questionCount: number): number {
@@ -67,6 +95,7 @@ function getCategoryBadge(cat?: string | null) {
 export const TestSection: React.FC<TestSectionProps> = ({
   lesson,
   attempts,
+  currentUserId,
   onSaveAttempt,
   onGoToVocab,
   isComprehensiveExam = false,
@@ -85,6 +114,34 @@ export const TestSection: React.FC<TestSectionProps> = ({
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [timeRemaining, setTimeRemaining] = useState(totalSeconds);
   const [finalScore, setFinalScore] = useState(0);
+
+  // Tab mini: Lịch sử thi bài này | Bảng xếp hạng
+  const [introPanelTab, setIntroPanelTab] = useState<'history' | 'leaderboard'>('history');
+  const [lbEntries, setLbEntries] = useState<TestLeaderboardEntry[]>([]);
+  const [lbLoading, setLbLoading] = useState(false);
+  const [lbError, setLbError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isActive || isSubmitted) return;
+    let cancelled = false;
+    setLbLoading(true);
+    setLbError(null);
+    const targetLessonKey = isComprehensiveExam ? '__comprehensive__' : lesson.id;
+    api
+      .getTestLeaderboard(targetLessonKey, 30)
+      .then((res) => {
+        if (!cancelled) setLbEntries(res.entries || []);
+      })
+      .catch((err) => {
+        if (!cancelled) setLbError((err as Error).message || 'Không tải được bảng xếp hạng.');
+      })
+      .finally(() => {
+        if (!cancelled) setLbLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [lesson.id, isComprehensiveExam, isActive, isSubmitted, attempts.length]);
 
   // Dropdown chọn bài cho Kiểm tra tổng hợp
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -433,33 +490,216 @@ export const TestSection: React.FC<TestSectionProps> = ({
           </div>
         </div>
 
-        {lessonAttempts.length > 0 && (
-          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-stone-200 dark:border-slate-800 p-6 space-y-3">
-            <h3 className="text-sm font-bold text-gray-900 dark:text-white">Lịch sử thi bài này</h3>
-            <div className="space-y-2">
-              {lessonAttempts.slice(0, 5).map((a) => (
-                <div
-                  key={a.id}
-                  className="flex items-center justify-between gap-3 flex-wrap text-xs p-3 rounded-xl bg-stone-50 dark:bg-slate-800/60"
-                >
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-gray-500 dark:text-slate-400">
-                      {new Date(a.submittedAt).toLocaleString('vi-VN')}
-                    </span>
-                    {isComprehensiveExam && (
-                      <span className="px-2 py-0.5 rounded-md bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-[11px] font-medium text-gray-700 dark:text-slate-300">
-                        {a.examTitle || a.lessonTitle || 'Kiểm tra tổng hợp (26 bài)'}
-                      </span>
-                    )}
-                  </div>
-                  <span className="font-bold text-red-600 dark:text-red-400">
-                    {a.score}/100 ({a.correctCount}/{a.totalQuestions} câu đúng)
+        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-stone-200 dark:border-slate-800 p-5 sm:p-6 space-y-4">
+          <div className="flex items-center justify-between gap-3 flex-wrap border-b border-stone-100 dark:border-slate-800 pb-3">
+            <div className="inline-flex bg-stone-100 dark:bg-slate-800 p-1 rounded-xl text-xs font-semibold">
+              <button
+                type="button"
+                onClick={() => setIntroPanelTab('history')}
+                className={`px-3 py-1.5 rounded-lg inline-flex items-center gap-1.5 transition ${
+                  introPanelTab === 'history'
+                    ? 'bg-white dark:bg-slate-700 text-red-600 dark:text-red-300 shadow-sm'
+                    : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-white'
+                }`}
+              >
+                <History className="w-3.5 h-3.5" />
+                Lịch sử thi bài này
+                {lessonAttempts.length > 0 && (
+                  <span className="px-1.5 py-0.2 rounded-md bg-stone-200/80 dark:bg-slate-900/60 text-[10px] font-bold">
+                    {lessonAttempts.length}
                   </span>
-                </div>
-              ))}
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={() => setIntroPanelTab('leaderboard')}
+                className={`px-3 py-1.5 rounded-lg inline-flex items-center gap-1.5 transition ${
+                  introPanelTab === 'leaderboard'
+                    ? 'bg-white dark:bg-slate-700 text-amber-600 dark:text-amber-300 shadow-sm'
+                    : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-white'
+                }`}
+              >
+                <Trophy className="w-3.5 h-3.5" />
+                Bảng xếp hạng
+              </button>
             </div>
+            {introPanelTab === 'leaderboard' && (
+              <span className="text-[11px] text-gray-400 dark:text-slate-500">
+                Xếp theo điểm cao nhất & thời gian nhanh nhất
+              </span>
+            )}
           </div>
-        )}
+
+          {introPanelTab === 'history' ? (
+            lessonAttempts.length === 0 ? (
+              <p className="text-xs text-gray-400 dark:text-slate-500 py-4 text-center">
+                Bạn chưa có lượt kiểm tra nào cho bài này.
+              </p>
+            ) : (
+              <div className="space-y-2">
+                {lessonAttempts.slice(0, 5).map((a) => (
+                  <div
+                    key={a.id}
+                    className="flex items-center justify-between gap-3 flex-wrap text-xs p-3 rounded-xl bg-stone-50 dark:bg-slate-800/60"
+                  >
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-gray-500 dark:text-slate-400">
+                        {new Date(a.submittedAt).toLocaleString('vi-VN')}
+                      </span>
+                      {isComprehensiveExam && (
+                        <span className="px-2 py-0.5 rounded-md bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-[11px] font-medium text-gray-700 dark:text-slate-300">
+                          {a.examTitle || a.lessonTitle || 'Kiểm tra tổng hợp (26 bài)'}
+                        </span>
+                      )}
+                    </div>
+                    <span className="font-bold text-red-600 dark:text-red-400">
+                      {a.score}/100 ({a.correctCount}/{a.totalQuestions} câu đúng)
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )
+          ) : lbError ? (
+            <div className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-xs text-red-700 dark:text-red-300">
+              {lbError}
+            </div>
+          ) : lbLoading && lbEntries.length === 0 ? (
+            <div className="py-6 text-center text-xs text-gray-400">
+              Đang tải bảng xếp hạng...
+            </div>
+          ) : lbEntries.length === 0 ? (
+            <div className="py-6 text-center space-y-1.5 border border-dashed border-stone-200 dark:border-slate-800 rounded-2xl">
+              <Medal className="w-7 h-7 text-gray-300 dark:text-slate-600 mx-auto" />
+              <p className="text-xs font-semibold text-gray-500 dark:text-slate-400">
+                Chưa có lượt kiểm tra nào được ghi nhận ở bài này.
+              </p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse min-w-[600px]">
+                <thead>
+                  <tr className="border-b border-stone-200 dark:border-slate-800 text-[11px] uppercase tracking-wider text-gray-400 dark:text-slate-500">
+                    <th className="py-2 px-2.5 font-bold w-14 text-center">Hạng</th>
+                    <th className="py-2 px-2.5 font-bold">Người chơi</th>
+                    <th className="py-2 px-2.5 font-bold text-right">Điểm</th>
+                    <th className="py-2 px-2.5 font-bold text-center">Thời gian</th>
+                    <th className="py-2 px-2.5 font-bold text-right">Thời điểm thi</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-stone-100 dark:divide-slate-800/80 text-xs">
+                  {lbEntries.map((entry, idx) => {
+                    const rank = idx + 1;
+                    const isMe = Boolean(currentUserId && entry.userId === currentUserId);
+                    const avatarPreset = getAvatarPreset(entry.avatarUrl);
+                    const hasImageAvatar = isImageMediaUrl(entry.avatarUrl);
+                    const rankBadgeClass =
+                      rank === 1
+                        ? 'bg-amber-100 text-amber-700 border-amber-300 dark:bg-amber-900/40 dark:text-amber-300 dark:border-amber-700'
+                        : rank === 2
+                          ? 'bg-slate-200 text-slate-700 border-slate-300 dark:bg-slate-700 dark:text-slate-200 dark:border-slate-600'
+                          : rank === 3
+                            ? 'bg-orange-100 text-orange-700 border-orange-300 dark:bg-orange-900/40 dark:text-orange-300 dark:border-orange-700'
+                            : 'bg-stone-100 text-gray-600 border-stone-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700';
+
+                    return (
+                      <tr
+                        key={entry.id}
+                        className={`transition ${
+                          isMe
+                            ? 'bg-red-50/60 dark:bg-red-950/25'
+                            : 'hover:bg-stone-50/80 dark:hover:bg-slate-800/40'
+                        }`}
+                      >
+                        <td className="py-2.5 px-2.5 text-center">
+                          <span
+                            className={`inline-flex items-center justify-center w-7 h-7 rounded-lg border text-[11px] font-extrabold ${rankBadgeClass}`}
+                          >
+                            {rank <= 3 ? `#${rank}` : rank}
+                          </span>
+                        </td>
+
+                        <td className="py-2.5 px-2.5">
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            {hasImageAvatar ? (
+                              <img
+                                src={entry.avatarUrl!}
+                                alt={entry.displayName}
+                                className="w-8 h-8 rounded-lg object-cover border border-stone-200 dark:border-slate-700 shrink-0"
+                              />
+                            ) : avatarPreset ? (
+                              <div
+                                className={`w-8 h-8 rounded-lg bg-gradient-to-br ${avatarPreset.gradientClass} text-white flex items-center justify-center font-bold chinese-font text-sm shrink-0`}
+                              >
+                                {avatarPreset.symbol}
+                              </div>
+                            ) : (
+                              <div
+                                className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-[11px] shrink-0 ${
+                                  entry.role === 'admin'
+                                    ? 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white'
+                                    : 'bg-gradient-to-br from-red-500 to-amber-500 text-white'
+                                }`}
+                              >
+                                {getInitials(entry.displayName)}
+                              </div>
+                            )}
+
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-1.5 flex-wrap">
+                                <span className="font-bold text-gray-900 dark:text-white truncate">
+                                  {entry.displayName}
+                                </span>
+                                <span
+                                  className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
+                                    entry.role === 'admin'
+                                      ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300'
+                                      : 'bg-stone-100 text-gray-600 dark:bg-slate-800 dark:text-slate-300'
+                                  }`}
+                                >
+                                  {entry.role === 'admin' ? 'Quản trị viên' : 'Học viên'}
+                                </span>
+                                {isMe && (
+                                  <span className="px-1.5 py-0.5 rounded-full bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300 text-[10px] font-bold">
+                                    Bạn
+                                  </span>
+                                )}
+                              </div>
+                              {isComprehensiveExam && entry.examTitle && (
+                                <div className="text-[11px] text-gray-400 dark:text-slate-500 truncate mt-0.5">
+                                  {entry.examTitle}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+
+                        <td className="py-2.5 px-2.5 text-right whitespace-nowrap">
+                          <span className="font-black text-red-600 dark:text-red-400">
+                            {entry.score}/100
+                          </span>
+                          <span className="text-[11px] text-gray-400 dark:text-slate-500 ml-1">
+                            ({entry.correctCount}/{entry.totalQuestions})
+                          </span>
+                        </td>
+
+                        <td className="py-2.5 px-2.5 text-center whitespace-nowrap">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-stone-100 dark:bg-slate-800 font-mono text-[11px] font-bold text-gray-700 dark:text-slate-200">
+                            <Clock className="w-3 h-3 text-red-500" />
+                            {formatDurationMmSs(entry.durationSeconds)}
+                          </span>
+                        </td>
+
+                        <td className="py-2.5 px-2.5 text-right whitespace-nowrap text-[11px] text-gray-500 dark:text-slate-400 font-mono">
+                          {formatSubmittedAt(entry.submittedAt)}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
     );
   }

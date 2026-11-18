@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261118_164138_idx_attempts_leaderboard
+      author: chinese-study
+      comment: Bo sung partial index ho tro bang xep hang luot kiem tra theo bai hoc va diem/thoi gian
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            stripComments: true
+            sql: |-
+              CREATE INDEX IF NOT EXISTS idx_attempts_leaderboard
+                ON test_attempts (lesson_id, score DESC, correct_count DESC, duration_seconds ASC, submitted_at DESC)
+                WHERE is_deleted = 0;
+      rollback:
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            sql: |-
+              DROP INDEX IF EXISTS idx_attempts_leaderboard;

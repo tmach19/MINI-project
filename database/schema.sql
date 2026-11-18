@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS users (
   password_hash TEXT NOT NULL,
   display_name TEXT NOT NULL,
   role TEXT NOT NULL DEFAULT 'user' CHECK (role IN ('user', 'admin')),
+  avatar_url TEXT,
+  cover_url TEXT,
   is_deleted SMALLINT NOT NULL DEFAULT 0,
   deleted_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -257,6 +259,7 @@ CREATE TABLE IF NOT EXISTS test_attempts (
 CREATE INDEX IF NOT EXISTS idx_attempts_user_lesson ON test_attempts (user_id, lesson_id, submitted_at DESC);
 CREATE INDEX IF NOT EXISTS idx_attempts_user_submitted ON test_attempts (user_id, submitted_at DESC);
 CREATE INDEX IF NOT EXISTS idx_attempts_active ON test_attempts (user_id, lesson_id, submitted_at DESC) WHERE is_deleted = 0;
+CREATE INDEX IF NOT EXISTS idx_attempts_leaderboard ON test_attempts (lesson_id, score DESC, correct_count DESC, duration_seconds ASC, submitted_at DESC) WHERE is_deleted = 0;
 
 -- ----------------------------------------------------------------------------
 -- 11. Hệ thống Phân quyền RBAC (Roles, Permissions, Role-Permissions, User Overrides)
@@ -420,3 +423,35 @@ CREATE TABLE IF NOT EXISTS translation_cache (
 
 CREATE INDEX IF NOT EXISTS idx_translation_cache_updated
   ON translation_cache (updated_at DESC);
+
+-- ----------------------------------------------------------------------------
+-- 13. Bảng xếp hạng trò chơi (Game Scores)
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS game_scores (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  lesson_id TEXT NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
+  game_mode TEXT NOT NULL CHECK (game_mode IN ('tri_match', 'scramble', 'translation', 'expanded_quiz')),
+  score INTEGER NOT NULL CHECK (score >= 0),
+  max_score INTEGER CHECK (max_score IS NULL OR max_score >= 0),
+  duration_seconds INTEGER NOT NULL DEFAULT 0 CHECK (duration_seconds >= 0),
+  played_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  is_deleted SMALLINT NOT NULL DEFAULT 0,
+  deleted_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_game_scores_leaderboard
+  ON game_scores (lesson_id, game_mode, score DESC, duration_seconds ASC, played_at DESC)
+  WHERE is_deleted = 0;
+
+CREATE INDEX IF NOT EXISTS idx_game_scores_global_mode
+  ON game_scores (game_mode, score DESC, duration_seconds ASC, played_at DESC)
+  WHERE is_deleted = 0;
+
+CREATE INDEX IF NOT EXISTS idx_game_scores_user
+  ON game_scores (user_id, played_at DESC)
+  WHERE is_deleted = 0;
+
+CREATE INDEX IF NOT EXISTS idx_game_scores_purge
+  ON game_scores (deleted_at)
+  WHERE is_deleted = 1;

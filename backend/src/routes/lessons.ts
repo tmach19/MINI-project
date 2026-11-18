@@ -1,6 +1,12 @@
 import { Router } from 'express';
 import { PERMISSION_CODES } from '../config/rbacCatalog.js';
-import { hasUserPermission, optionalAuth, requireAuth, resolveCurrentUser } from '../middleware/auth.js';
+import {
+  hasUserPermission,
+  optionalAuth,
+  requireAuth,
+  requirePermission,
+  resolveCurrentUser,
+} from '../middleware/auth.js';
 import {
   createLesson,
   deleteLessonById,
@@ -33,7 +39,10 @@ router.get('/lessons', optionalAuth, async (req, res, next) => {
   }
 });
 
-router.get('/tests/comprehensive-exam', optionalAuth, async (req, res, next) => {
+router.get(
+  '/tests/comprehensive-exam',
+  requirePermission(PERMISSION_CODES.EXAM_TAKE),
+  async (req, res, next) => {
   try {
     const rawIds = req.query.lessonIds;
     const lessonIds =
@@ -83,7 +92,20 @@ router.get('/lessons/:id', optionalAuth, async (req, res, next) => {
       res.status(404).json({ error: 'Không tìm thấy buổi học.' });
       return;
     }
-    res.json({ lesson });
+    const currentUser = await resolveCurrentUser(req);
+    const canTakeExam = Boolean(
+      currentUser && hasUserPermission(currentUser, [PERMISSION_CODES.EXAM_TAKE])
+    );
+    const canPlayGames = Boolean(currentUser);
+    res.json({
+      lesson: {
+        ...lesson,
+        exercises: canPlayGames
+          ? lesson.exercises
+          : { sentenceScramble: [], translationExercises: [], expandedQuiz: [] },
+        comprehensiveTest: canTakeExam ? lesson.comprehensiveTest : [],
+      },
+    });
   } catch (err) {
     next(err);
   }

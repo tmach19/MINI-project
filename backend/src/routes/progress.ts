@@ -6,11 +6,16 @@ import {
   getMarkedVocabMap,
   getUserLessonAttemptDetails,
   getUserLessonTestSummary,
+  listGameLeaderboard,
   listTestAttempts,
+  listTestLeaderboard,
+  saveGameScore,
   saveTestAttempt,
   syncGuestMarkedVocab,
   toggleMarkedVocab,
+  VALID_GAME_MODES,
 } from '../repositories/userProgressRepo.js';
+import type { GameMode } from '../types/domain.js';
 
 const router = Router();
 
@@ -112,6 +117,73 @@ router.get('/tests/attempts', requireAuth, async (req, res, next) => {
     }
     const attempts = await listTestAttempts(req.user!.userId);
     res.json({ attempts });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/tests/leaderboard', requireAuth, async (req, res, next) => {
+  try {
+    const rawLessonId = typeof req.query.lessonId === 'string' ? req.query.lessonId.trim() : '';
+    if (!rawLessonId) {
+      res.status(400).json({ error: 'Thiếu lessonId.' });
+      return;
+    }
+    const limit = typeof req.query.limit === 'string' ? Number(req.query.limit) : 30;
+    const entries = await listTestLeaderboard({
+      lessonId: rawLessonId === '__comprehensive__' ? null : rawLessonId,
+      limit,
+    });
+    res.json({ entries });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/games/leaderboard', requireAuth, async (req, res, next) => {
+  try {
+    const lessonId = typeof req.query.lessonId === 'string' ? req.query.lessonId.trim() : undefined;
+    const rawMode = typeof req.query.gameMode === 'string' ? req.query.gameMode.trim() : undefined;
+    const gameMode =
+      rawMode && (VALID_GAME_MODES as readonly string[]).includes(rawMode)
+        ? (rawMode as GameMode)
+        : undefined;
+    const limit = typeof req.query.limit === 'string' ? Number(req.query.limit) : 30;
+    const entries = await listGameLeaderboard({ lessonId, gameMode, limit });
+    res.json({ entries });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/games/score', requireAuth, async (req, res, next) => {
+  try {
+    const { lessonId, gameMode, score, maxScore, durationSeconds } = req.body as {
+      lessonId?: string;
+      gameMode?: string;
+      score?: number;
+      maxScore?: number | null;
+      durationSeconds?: number;
+    };
+    if (
+      !lessonId ||
+      typeof lessonId !== 'string' ||
+      !gameMode ||
+      !(VALID_GAME_MODES as readonly string[]).includes(gameMode) ||
+      typeof score !== 'number' ||
+      !Number.isFinite(score)
+    ) {
+      res.status(400).json({ error: 'Dữ liệu kết quả trò chơi không hợp lệ.' });
+      return;
+    }
+    const entry = await saveGameScore(req.user!.userId, {
+      lessonId: lessonId.trim(),
+      gameMode: gameMode as GameMode,
+      score,
+      maxScore: maxScore ?? null,
+      durationSeconds: Number(durationSeconds || 0),
+    });
+    res.status(201).json({ entry });
   } catch (err) {
     next(err);
   }

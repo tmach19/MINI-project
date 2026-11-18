@@ -6,6 +6,8 @@ import type {
   AiStatusResponse,
   AiToolExecutionSummary,
   ComprehensiveExamResponse,
+  GameLeaderboardEntry,
+  GameMode,
   GlobalVocabHit,
   LessonAttemptDetailRecord,
   LessonDetail,
@@ -16,6 +18,7 @@ import type {
   PermissionCatalogItem,
   RoleWithPermissions,
   TestAttemptRecord,
+  TestLeaderboardEntry,
   TranslationDirection,
   UserProfile,
 } from '../types';
@@ -63,6 +66,16 @@ export const api = {
     }),
 
   me: () => apiFetch<{ user: UserProfile }>('/auth/me'),
+
+  updateProfile: (payload: {
+    displayName?: string;
+    avatarUrl?: string | null;
+    coverUrl?: string | null;
+  }) =>
+    apiFetch<{ user: UserProfile }>('/auth/profile', {
+      method: 'PATCH',
+      body: JSON.stringify(payload),
+    }),
 
   listLessons: () => apiFetch<{ lessons: LessonSummary[] }>('/lessons'),
 
@@ -156,6 +169,38 @@ export const api = {
     answers: Record<string, number>;
   }) =>
     apiFetch<{ attempt: TestAttemptRecord }>('/tests/attempt', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
+  getTestLeaderboard: (lessonId: string, limit = 30) =>
+    apiFetch<{ entries: TestLeaderboardEntry[] }>(
+      `/tests/leaderboard?lessonId=${encodeURIComponent(lessonId)}&limit=${limit}`
+    ),
+
+  getGameLeaderboard: (params: {
+    lessonId?: string;
+    gameMode?: GameMode;
+    limit?: number;
+  }) => {
+    const sp = new URLSearchParams();
+    if (params.lessonId) sp.set('lessonId', params.lessonId);
+    if (params.gameMode) sp.set('gameMode', params.gameMode);
+    if (params.limit) sp.set('limit', String(params.limit));
+    const qs = sp.toString();
+    return apiFetch<{ entries: GameLeaderboardEntry[] }>(
+      `/games/leaderboard${qs ? `?${qs}` : ''}`
+    );
+  },
+
+  submitGameScore: (payload: {
+    lessonId: string;
+    gameMode: GameMode;
+    score: number;
+    maxScore?: number | null;
+    durationSeconds: number;
+  }) =>
+    apiFetch<{ entry: GameLeaderboardEntry }>('/games/score', {
       method: 'POST',
       body: JSON.stringify(payload),
     }),

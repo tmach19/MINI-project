@@ -201,11 +201,46 @@ export interface LessonAttemptDetailRecord {
   submittedAt: string;
 }
 
+export interface TestLeaderboardEntry {
+  id: string;
+  userId: string;
+  displayName: string;
+  avatarUrl?: string | null;
+  role: 'user' | 'admin';
+  lessonId: string | null;
+  examTitle?: string | null;
+  lessonTitle?: string | null;
+  score: number;
+  totalQuestions: number;
+  correctCount: number;
+  durationSeconds: number;
+  submittedAt: string;
+}
+
+export type GameMode = 'tri_match' | 'scramble' | 'translation' | 'expanded_quiz';
+
+export interface GameLeaderboardEntry {
+  id: string;
+  userId: string;
+  displayName: string;
+  avatarUrl?: string | null;
+  role: 'user' | 'admin';
+  lessonId: string;
+  lessonTitle?: string | null;
+  gameMode: GameMode;
+  score: number;
+  maxScore?: number | null;
+  durationSeconds: number;
+  playedAt: string;
+}
+
 export interface UserProfile {
   id: string;
   email: string;
   displayName: string;
   role: 'user' | 'admin';
+  avatarUrl?: string | null;
+  coverUrl?: string | null;
   isSuperAdmin?: boolean;
   permissions?: string[];
   createdAt: string;

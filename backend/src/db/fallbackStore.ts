@@ -9,6 +9,7 @@ import {
   type RoleCatalogItem,
 } from '../config/rbacCatalog.js';
 import type {
+  GameMode,
   LessonDetail,
   MarkedVocabRecord,
   TestAttemptRecord,
@@ -38,6 +39,19 @@ export interface MemoryUser extends Omit<UserProfile, 'isSuperAdmin' | 'permissi
   passwordHash: string;
 }
 
+export interface MemoryGameScore {
+  id: string;
+  userId: string;
+  lessonId: string;
+  gameMode: GameMode;
+  score: number;
+  maxScore: number | null;
+  durationSeconds: number;
+  playedAt: string;
+  isDeleted: 0 | 1;
+  deletedAt: string | null;
+}
+
 class FallbackMemoryStore {
   private initialized = false;
   lessons: LessonDetail[] = [];
@@ -54,6 +68,7 @@ class FallbackMemoryStore {
   // userId -> Map<vocabId, MarkedVocabRecord>
   markedByUser = new Map<string, Map<string, MarkedVocabRecord>>();
   attemptsByUser = new Map<string, TestAttemptRecord[]>();
+  gameScores: MemoryGameScore[] = [];
 
   resolveUserPermissions(userId: string, role: 'admin' | 'user'): string[] {
     if (role === 'admin') {

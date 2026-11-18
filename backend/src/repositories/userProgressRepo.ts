@@ -3,16 +3,27 @@ import { getDbMode, getPool } from '../db/pool.js';
 import { memoryStore, type MemoryUser } from '../db/fallbackStore.js';
 import { getEffectivePermissions } from './rbacRepo.js';
 import type {
+  GameLeaderboardEntry,
+  GameMode,
   LessonAttemptDetailRecord,
   LessonTestSummaryRecord,
   MarkedVocabCard,
   MarkedVocabRecord,
   TestAttemptRecord,
+  TestLeaderboardEntry,
   UserProfile,
 } from '../types/domain.js';
 
 export interface AuthenticatedUserRecord extends UserProfile {
   passwordHash: string;
+}
+
+function isUndefinedColumnError(err: unknown): boolean {
+  return (err as { code?: string } | null)?.code === '42703';
+}
+
+function isUndefinedTableError(err: unknown): boolean {
+  return (err as { code?: string } | null)?.code === '42P01';
 }
 
 export async function findUserByEmail(email: string): Promise<AuthenticatedUserRecord | null> {
@@ -22,22 +33,44 @@ export async function findUserByEmail(email: string): Promise<AuthenticatedUserR
     const u = memoryStore.users.find((x) => x.email === normalized);
     if (!u) return null;
     const permissions = await getEffectivePermissions(u.id, u.role);
-    return { ...u, isSuperAdmin: u.role === 'admin', permissions };
+    return {
+      ...u,
+      avatarUrl: u.avatarUrl ?? null,
+      coverUrl: u.coverUrl ?? null,
+      isSuperAdmin: u.role === 'admin',
+      permissions,
+    };
   }
 
   const pool = getPool()!;
-  const res = await pool.query<{
-    id: string;
-    email: string;
-    password_hash: string;
-    display_name: string;
-    role: 'user' | 'admin';
-    created_at: Date;
-  }>(
-    'SELECT id, email, password_hash, display_name, role, created_at FROM users WHERE email = $1 AND is_deleted = 0',
-    [normalized]
-  );
-  const r = res.rows[0];
+  let r:
+    | {
+        id: string;
+        email: string;
+        password_hash: string;
+        display_name: string;
+        role: 'user' | 'admin';
+        avatar_url?: string | null;
+        cover_url?: string | null;
+        created_at: Date;
+      }
+    | undefined;
+  try {
+    const res = await pool.query(
+      `SELECT id, email, password_hash, display_name, role, avatar_url, cover_url, created_at
+       FROM users WHERE email = $1 AND is_deleted = 0`,
+      [normalized]
+    );
+    r = res.rows[0];
+  } catch (err) {
+    if (!isUndefinedColumnError(err)) throw err;
+    const res = await pool.query(
+      `SELECT id, email, password_hash, display_name, role, created_at
+       FROM users WHERE email = $1 AND is_deleted = 0`,
+      [normalized]
+    );
+    r = res.rows[0];
+  }
   if (!r) return null;
   const permissions = await getEffectivePermissions(r.id, r.role);
   return {
@@ -46,6 +79,8 @@ export async function findUserByEmail(email: string): Promise<AuthenticatedUserR
     passwordHash: r.password_hash,
     displayName: r.display_name,
     role: r.role,
+    avatarUrl: r.avatar_url ?? null,
+    coverUrl: r.cover_url ?? null,
     isSuperAdmin: r.role === 'admin',
     permissions,
     createdAt: r.created_at.toISOString(),
@@ -59,21 +94,43 @@ export async function findUserById(userId: string): Promise<UserProfile | null> 
     if (!u) return null;
     const { passwordHash: _pw, ...base } = u;
     const permissions = await getEffectivePermissions(base.id, base.role);
-    return { ...base, isSuperAdmin: base.role === 'admin', permissions };
+    return {
+      ...base,
+      avatarUrl: base.avatarUrl ?? null,
+      coverUrl: base.coverUrl ?? null,
+      isSuperAdmin: base.role === 'admin',
+      permissions,
+    };
   }
 
   const pool = getPool()!;
-  const res = await pool.query<{
-    id: string;
-    email: string;
-    display_name: string;
-    role: 'user' | 'admin';
-    created_at: Date;
-  }>(
-    'SELECT id, email, display_name, role, created_at FROM users WHERE id = $1::uuid AND is_deleted = 0',
-    [userId]
-  );
-  const r = res.rows[0];
+  let r:
+    | {
+        id: string;
+        email: string;
+        display_name: string;
+        role: 'user' | 'admin';
+        avatar_url?: string | null;
+        cover_url?: string | null;
+        created_at: Date;
+      }
+    | undefined;
+  try {
+    const res = await pool.query(
+      `SELECT id, email, display_name, role, avatar_url, cover_url, created_at
+       FROM users WHERE id = $1::uuid AND is_deleted = 0`,
+      [userId]
+    );
+    r = res.rows[0];
+  } catch (err) {
+    if (!isUndefinedColumnError(err)) throw err;
+    const res = await pool.query(
+      `SELECT id, email, display_name, role, created_at
+       FROM users WHERE id = $1::uuid AND is_deleted = 0`,
+      [userId]
+    );
+    r = res.rows[0];
+  }
   if (!r) return null;
   const permissions = await getEffectivePermissions(r.id, r.role);
   return {
@@ -81,6 +138,8 @@ export async function findUserById(userId: string): Promise<UserProfile | null> 
     email: r.email,
     displayName: r.display_name,
     role: r.role,
+    avatarUrl: r.avatar_url ?? null,
+    coverUrl: r.cover_url ?? null,
     isSuperAdmin: r.role === 'admin',
     permissions,
     createdAt: r.created_at.toISOString(),
@@ -133,6 +192,110 @@ export async function createUser(
     permissions,
     createdAt: r.created_at.toISOString(),
   };
+}
+
+export interface UpdateUserProfilePatch {
+  displayName?: string;
+  avatarUrl?: string | null;
+  coverUrl?: string | null;
+}
+
+export async function updateUserProfile(
+  userId: string,
+  patch: UpdateUserProfilePatch
+): Promise<UserProfile | null> {
+  const hasDisplayName = patch.displayName !== undefined;
+  const cleanName = hasDisplayName
+    ? String(patch.displayName || '').trim().replace(/\s+/g, ' ')
+    : undefined;
+  if (hasDisplayName && !cleanName) return null;
+
+  if (getDbMode() === 'memory') {
+    memoryStore.ensureLoaded();
+    const u = memoryStore.users.find((x) => x.id === userId);
+    if (!u) return null;
+    if (hasDisplayName && cleanName) u.displayName = cleanName;
+    if (patch.avatarUrl !== undefined) u.avatarUrl = patch.avatarUrl;
+    if (patch.coverUrl !== undefined) u.coverUrl = patch.coverUrl;
+    const { passwordHash: _pw, ...base } = u;
+    const permissions = await getEffectivePermissions(base.id, base.role);
+    return {
+      ...base,
+      avatarUrl: base.avatarUrl ?? null,
+      coverUrl: base.coverUrl ?? null,
+      isSuperAdmin: base.role === 'admin',
+      permissions,
+    };
+  }
+
+  const pool = getPool()!;
+  const sets: string[] = [];
+  const params: unknown[] = [];
+
+  if (hasDisplayName && cleanName) {
+    params.push(cleanName);
+    sets.push(`display_name = $${params.length}`);
+  }
+  if (patch.avatarUrl !== undefined) {
+    params.push(patch.avatarUrl);
+    sets.push(`avatar_url = $${params.length}`);
+  }
+  if (patch.coverUrl !== undefined) {
+    params.push(patch.coverUrl);
+    sets.push(`cover_url = $${params.length}`);
+  }
+
+  if (sets.length === 0) {
+    return findUserById(userId);
+  }
+
+  sets.push('updated_at = NOW()');
+  params.push(userId);
+  const idParamIdx = params.length;
+
+  try {
+    const res = await pool.query<{
+      id: string;
+      email: string;
+      display_name: string;
+      role: 'user' | 'admin';
+      avatar_url: string | null;
+      cover_url: string | null;
+      created_at: Date;
+    }>(
+      `UPDATE users
+       SET ${sets.join(', ')}
+       WHERE id = $${idParamIdx}::uuid AND is_deleted = 0
+       RETURNING id, email, display_name, role, avatar_url, cover_url, created_at`,
+      params
+    );
+    const r = res.rows[0];
+    if (!r) return null;
+    const permissions = await getEffectivePermissions(r.id, r.role);
+    return {
+      id: r.id,
+      email: r.email,
+      displayName: r.display_name,
+      role: r.role,
+      avatarUrl: r.avatar_url ?? null,
+      coverUrl: r.cover_url ?? null,
+      isSuperAdmin: r.role === 'admin',
+      permissions,
+      createdAt: r.created_at.toISOString(),
+    };
+  } catch (err) {
+    if (isUndefinedColumnError(err)) {
+      throw new Error('Cơ sở dữ liệu chưa cập nhật cột ảnh đại diện/ảnh nền. Hãy chạy DbMigration trước.');
+    }
+    throw err;
+  }
+}
+
+export async function updateUserDisplayName(
+  userId: string,
+  displayName: string
+): Promise<UserProfile | null> {
+  return updateUserProfile(userId, { displayName });
 }
 
 export async function getMarkedVocabMap(userId: string): Promise<Record<string, MarkedVocabRecord>> {
@@ -582,6 +745,403 @@ export async function getUserLessonAttemptDetails(
     totalQuestions: r.total_questions,
     correctCount: r.correct_count,
     durationSeconds: r.duration_seconds,
+    submittedAt: r.submitted_at.toISOString(),
+  }));
+}
+
+export const VALID_GAME_MODES: readonly GameMode[] = [
+  'tri_match',
+  'scramble',
+  'translation',
+  'expanded_quiz',
+];
+
+export async function saveGameScore(
+  userId: string,
+  payload: {
+    lessonId: string;
+    gameMode: GameMode;
+    score: number;
+    maxScore?: number | null;
+    durationSeconds: number;
+  }
+): Promise<GameLeaderboardEntry> {
+  const safeScore = Math.max(0, Math.round(Number(payload.score) || 0));
+  const safeMaxScore =
+    payload.maxScore !== undefined && payload.maxScore !== null
+      ? Math.max(0, Math.round(Number(payload.maxScore) || 0))
+      : null;
+  const safeDuration = Math.max(0, Math.round(Number(payload.durationSeconds) || 0));
+
+  if (getDbMode() === 'memory') {
+    memoryStore.ensureLoaded();
+    const id = crypto.randomUUID();
+    const playedAt = new Date().toISOString();
+    memoryStore.gameScores.push({
+      id,
+      userId,
+      lessonId: payload.lessonId,
+      gameMode: payload.gameMode,
+      score: safeScore,
+      maxScore: safeMaxScore,
+      durationSeconds: safeDuration,
+      playedAt,
+      isDeleted: 0,
+      deletedAt: null,
+    });
+    const user = memoryStore.users.find((u) => u.id === userId);
+    const lesson = memoryStore.lessons.find((l) => l.id === payload.lessonId && l.isDeleted !== 1);
+    return {
+      id,
+      userId,
+      displayName: user?.displayName || 'Người học',
+      avatarUrl: user?.avatarUrl ?? null,
+      role: user?.role || 'user',
+      lessonId: payload.lessonId,
+      lessonTitle: lesson?.title ?? null,
+      gameMode: payload.gameMode,
+      score: safeScore,
+      maxScore: safeMaxScore,
+      durationSeconds: safeDuration,
+      playedAt,
+    };
+  }
+
+  const pool = getPool()!;
+  try {
+    const insertRes = await pool.query<{ id: string; played_at: Date }>(
+      `INSERT INTO game_scores (user_id, lesson_id, game_mode, score, max_score, duration_seconds)
+       VALUES ($1::uuid, $2, $3, $4, $5, $6)
+       RETURNING id, played_at`,
+      [userId, payload.lessonId, payload.gameMode, safeScore, safeMaxScore, safeDuration]
+    );
+    const inserted = insertRes.rows[0];
+
+    const mapRow = (row: {
+      display_name: string;
+      avatar_url: string | null;
+      role: 'user' | 'admin';
+      lesson_title: string | null;
+    }): GameLeaderboardEntry => ({
+      id: inserted.id,
+      userId,
+      displayName: row.display_name,
+      avatarUrl: row.avatar_url ?? null,
+      role: row.role,
+      lessonId: payload.lessonId,
+      lessonTitle: row.lesson_title ?? null,
+      gameMode: payload.gameMode,
+      score: safeScore,
+      maxScore: safeMaxScore,
+      durationSeconds: safeDuration,
+      playedAt: inserted.played_at.toISOString(),
+    });
+
+    try {
+      const infoRes = await pool.query<{
+        display_name: string;
+        avatar_url: string | null;
+        role: 'user' | 'admin';
+        lesson_title: string | null;
+      }>(
+        `SELECT u.display_name, u.avatar_url, u.role, l.title AS lesson_title
+         FROM users u
+         LEFT JOIN lessons l ON l.id = $2 AND l.is_deleted = 0
+         WHERE u.id = $1::uuid AND u.is_deleted = 0`,
+        [userId, payload.lessonId]
+      );
+      if (infoRes.rows[0]) return mapRow(infoRes.rows[0]);
+    } catch (err) {
+      if (!isUndefinedColumnError(err)) throw err;
+      const legacyInfoRes = await pool.query<{
+        display_name: string;
+        role: 'user' | 'admin';
+        lesson_title: string | null;
+      }>(
+        `SELECT u.display_name, u.role, l.title AS lesson_title
+         FROM users u
+         LEFT JOIN lessons l ON l.id = $2 AND l.is_deleted = 0
+         WHERE u.id = $1::uuid AND u.is_deleted = 0`,
+        [userId, payload.lessonId]
+      );
+      if (legacyInfoRes.rows[0]) {
+        return mapRow({ ...legacyInfoRes.rows[0], avatar_url: null });
+      }
+    }
+
+    return {
+      id: inserted.id,
+      userId,
+      displayName: 'Người học',
+      avatarUrl: null,
+      role: 'user',
+      lessonId: payload.lessonId,
+      lessonTitle: null,
+      gameMode: payload.gameMode,
+      score: safeScore,
+      maxScore: safeMaxScore,
+      durationSeconds: safeDuration,
+      playedAt: inserted.played_at.toISOString(),
+    };
+  } catch (err) {
+    if (isUndefinedTableError(err)) {
+      throw new Error('Bảng xếp hạng chưa được khởi tạo trên cơ sở dữ liệu. Hãy chạy DbMigration trước.');
+    }
+    throw err;
+  }
+}
+
+export async function listGameLeaderboard(options: {
+  lessonId?: string;
+  gameMode?: GameMode;
+  limit?: number;
+}): Promise<GameLeaderboardEntry[]> {
+  const safeLimit = Math.min(100, Math.max(1, Math.round(Number(options.limit) || 30)));
+  const lessonFilter = options.lessonId && options.lessonId !== 'all' ? options.lessonId : null;
+  const modeFilter = options.gameMode || null;
+
+  if (getDbMode() === 'memory') {
+    memoryStore.ensureLoaded();
+    const userMap = new Map(memoryStore.users.map((u) => [u.id, u]));
+    const lessonMap = new Map(
+      memoryStore.lessons.filter((l) => l.isDeleted !== 1).map((l) => [l.id, l.title])
+    );
+
+    return memoryStore.gameScores
+      .filter((g) => {
+        if (g.isDeleted === 1) return false;
+        if (lessonFilter && g.lessonId !== lessonFilter) return false;
+        if (modeFilter && g.gameMode !== modeFilter) return false;
+        if (!lessonMap.has(g.lessonId)) return false;
+        const user = userMap.get(g.userId);
+        return Boolean(user);
+      })
+      .sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        if (a.durationSeconds !== b.durationSeconds) return a.durationSeconds - b.durationSeconds;
+        return b.playedAt.localeCompare(a.playedAt);
+      })
+      .slice(0, safeLimit)
+      .map((g) => {
+        const user = userMap.get(g.userId)!;
+        return {
+          id: g.id,
+          userId: g.userId,
+          displayName: user.displayName,
+          avatarUrl: user.avatarUrl ?? null,
+          role: user.role,
+          lessonId: g.lessonId,
+          lessonTitle: lessonMap.get(g.lessonId) ?? null,
+          gameMode: g.gameMode,
+          score: g.score,
+          maxScore: g.maxScore,
+          durationSeconds: g.durationSeconds,
+          playedAt: g.playedAt,
+        };
+      });
+  }
+
+  const pool = getPool()!;
+  const params: Array<string | number> = [];
+  const clauses: string[] = ['g.is_deleted = 0', 'u.is_deleted = 0', 'l.is_deleted = 0'];
+  if (lessonFilter) {
+    params.push(lessonFilter);
+    clauses.push(`g.lesson_id = $${params.length}`);
+  }
+  if (modeFilter) {
+    params.push(modeFilter);
+    clauses.push(`g.game_mode = $${params.length}`);
+  }
+  params.push(safeLimit);
+  const limitParam = `$${params.length}`;
+
+  const runQuery = async (includeAvatar: boolean) =>
+    pool.query<{
+      id: string;
+      user_id: string;
+      display_name: string;
+      avatar_url: string | null;
+      role: 'user' | 'admin';
+      lesson_id: string;
+      lesson_title: string | null;
+      game_mode: GameMode;
+      score: number;
+      max_score: number | null;
+      duration_seconds: number;
+      played_at: Date;
+    }>(
+      `SELECT
+         g.id,
+         g.user_id,
+         u.display_name,
+         ${includeAvatar ? 'u.avatar_url' : 'NULL::text AS avatar_url'},
+         u.role,
+         g.lesson_id,
+         l.title AS lesson_title,
+         g.game_mode,
+         g.score,
+         g.max_score,
+         g.duration_seconds,
+         g.played_at
+       FROM game_scores g
+       JOIN users u ON u.id = g.user_id
+       JOIN lessons l ON l.id = g.lesson_id
+       WHERE ${clauses.join(' AND ')}
+       ORDER BY g.score DESC, g.duration_seconds ASC, g.played_at DESC
+       LIMIT ${limitParam}`,
+      params
+    );
+
+  try {
+    let res;
+    try {
+      res = await runQuery(true);
+    } catch (err) {
+      if (!isUndefinedColumnError(err)) throw err;
+      res = await runQuery(false);
+    }
+    return res.rows.map((r) => ({
+      id: r.id,
+      userId: r.user_id,
+      displayName: r.display_name,
+      avatarUrl: r.avatar_url ?? null,
+      role: r.role,
+      lessonId: r.lesson_id,
+      lessonTitle: r.lesson_title ?? null,
+      gameMode: r.game_mode,
+      score: Number(r.score || 0),
+      maxScore: r.max_score !== null ? Number(r.max_score) : null,
+      durationSeconds: Number(r.duration_seconds || 0),
+      playedAt: r.played_at.toISOString(),
+    }));
+  } catch (err) {
+    if (isUndefinedTableError(err)) {
+      return [];
+    }
+    throw err;
+  }
+}
+
+export async function listTestLeaderboard(options: {
+  lessonId: string | null;
+  limit?: number;
+}): Promise<TestLeaderboardEntry[]> {
+  const safeLimit = Math.min(100, Math.max(1, Math.round(Number(options.limit) || 30)));
+  const lessonFilter = options.lessonId;
+
+  if (getDbMode() === 'memory') {
+    memoryStore.ensureLoaded();
+    const userMap = new Map(memoryStore.users.map((u) => [u.id, u]));
+    const lessonMap = new Map(
+      memoryStore.lessons.filter((l) => l.isDeleted !== 1).map((l) => [l.id, l.title])
+    );
+
+    const rows: TestLeaderboardEntry[] = [];
+    for (const [uid, list] of memoryStore.attemptsByUser.entries()) {
+      const user = userMap.get(uid);
+      if (!user) continue;
+      for (const a of list) {
+        if (lessonFilter === null ? a.lessonId !== null : a.lessonId !== lessonFilter) {
+          continue;
+        }
+        if (lessonFilter !== null && !lessonMap.has(lessonFilter)) {
+          continue;
+        }
+        rows.push({
+          id: a.id,
+          userId: uid,
+          displayName: user.displayName,
+          avatarUrl: user.avatarUrl ?? null,
+          role: user.role,
+          lessonId: a.lessonId,
+          examTitle: a.examTitle ?? null,
+          lessonTitle: a.lessonId ? lessonMap.get(a.lessonId) ?? null : null,
+          score: Number(a.score || 0),
+          totalQuestions: Number(a.totalQuestions || 0),
+          correctCount: Number(a.correctCount || 0),
+          durationSeconds: Number(a.durationSeconds || 0),
+          submittedAt: a.submittedAt,
+        });
+      }
+    }
+
+    return rows
+      .sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        if (b.correctCount !== a.correctCount) return b.correctCount - a.correctCount;
+        if (a.durationSeconds !== b.durationSeconds) return a.durationSeconds - b.durationSeconds;
+        return b.submittedAt.localeCompare(a.submittedAt);
+      })
+      .slice(0, safeLimit);
+  }
+
+  const pool = getPool()!;
+  const isComp = lessonFilter === null;
+  const params: Array<string | number> = isComp ? [safeLimit] : [lessonFilter!, safeLimit];
+  const limitParam = isComp ? '$1' : '$2';
+
+  const runQuery = async (includeAvatar: boolean) =>
+    pool.query<{
+      id: string;
+      user_id: string;
+      display_name: string;
+      avatar_url: string | null;
+      role: 'user' | 'admin';
+      lesson_id: string | null;
+      exam_title: string | null;
+      lesson_title: string | null;
+      score: number;
+      total_questions: number;
+      correct_count: number;
+      duration_seconds: number;
+      submitted_at: Date;
+    }>(
+      `SELECT
+         a.id,
+         a.user_id,
+         u.display_name,
+         ${includeAvatar ? 'u.avatar_url' : 'NULL::text AS avatar_url'},
+         u.role,
+         a.lesson_id,
+         a.exam_title,
+         l.title AS lesson_title,
+         a.score,
+         a.total_questions,
+         a.correct_count,
+         a.duration_seconds,
+         a.submitted_at
+       FROM test_attempts a
+       JOIN users u ON u.id = a.user_id
+       ${isComp ? 'LEFT' : ''} JOIN lessons l ON l.id = a.lesson_id AND l.is_deleted = 0
+       WHERE a.is_deleted = 0
+         AND u.is_deleted = 0
+         AND ${isComp ? 'a.lesson_id IS NULL' : 'a.lesson_id = $1'}
+       ORDER BY a.score DESC, a.correct_count DESC, a.duration_seconds ASC, a.submitted_at DESC
+       LIMIT ${limitParam}`,
+      params
+    );
+
+  let res;
+  try {
+    res = await runQuery(true);
+  } catch (err) {
+    if (!isUndefinedColumnError(err)) throw err;
+    res = await runQuery(false);
+  }
+
+  return res.rows.map((r) => ({
+    id: r.id,
+    userId: r.user_id,
+    displayName: r.display_name,
+    avatarUrl: r.avatar_url ?? null,
+    role: r.role,
+    lessonId: r.lesson_id,
+    examTitle: r.exam_title ?? null,
+    lessonTitle: r.lesson_title ?? null,
+    score: Number(r.score || 0),
+    totalQuestions: Number(r.total_questions || 0),
+    correctCount: Number(r.correct_count || 0),
+    durationSeconds: Number(r.duration_seconds || 0),
     submittedAt: r.submitted_at.toISOString(),
   }));
 }

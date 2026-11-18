@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261118_161048_user_profile_media
+      author: chinese-study
+      comment: Bo sung cot avatar_url va cover_url cho bang users (cho phep chon/tai anh dai dien va anh nen ho so)
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: false
+            sql: |-
+              ALTER TABLE users
+                ADD COLUMN IF NOT EXISTS avatar_url TEXT,
+                ADD COLUMN IF NOT EXISTS cover_url TEXT;
+      rollback:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: false
+            sql: |-
+              ALTER TABLE users
+                DROP COLUMN IF EXISTS cover_url,
+                DROP COLUMN IF EXISTS avatar_url;

@@ -1,7 +1,12 @@
-import { Router } from 'express';
+import { Router, type RequestHandler } from 'express';
 import bcrypt from 'bcryptjs';
 import { requireAuth, signToken } from '../middleware/auth.js';
-import { createUser, findUserByEmail, findUserById } from '../repositories/userProgressRepo.js';
+import {
+  createUser,
+  findUserByEmail,
+  findUserById,
+  updateUserProfile,
+} from '../repositories/userProgressRepo.js';
 
 const router = Router();
 
@@ -74,5 +79,88 @@ router.get('/me', requireAuth, async (req, res, next) => {
     next(err);
   }
 });
+
+function parseMediaField(raw: unknown, label: string, maxDataLength: number): string | null | undefined {
+  if (raw === undefined) return undefined;
+  if (raw === null) return null;
+  if (typeof raw !== 'string') {
+    throw new Error(`${label} không hợp lệ.`);
+  }
+  const clean = raw.trim();
+  if (!clean) return null;
+
+  if (clean.startsWith('preset:')) {
+    if (!/^preset:[a-z0-9-]+$/i.test(clean)) {
+      throw new Error(`Mã mẫu ${label.toLowerCase()} không hợp lệ.`);
+    }
+    return clean;
+  }
+
+  if (/^https?:\/\//i.test(clean)) {
+    if (clean.length > 2048) {
+      throw new Error(`Đường dẫn ${label.toLowerCase()} quá dài.`);
+    }
+    return clean;
+  }
+
+  if (/^data:image\/(png|jpeg|jpg|webp|gif);base64,[A-Za-z0-9+/=]+$/i.test(clean)) {
+    if (clean.length > maxDataLength) {
+      throw new Error(`${label} có dung lượng quá lớn, vui lòng chọn ảnh nhẹ hơn.`);
+    }
+    return clean;
+  }
+
+  throw new Error(`${label} phải là ảnh tải lên, mẫu có sẵn hoặc URL http(s) hợp lệ.`);
+}
+
+const handleUpdateProfile: RequestHandler = async (req, res, next) => {
+  try {
+    const body = (req.body || {}) as {
+      displayName?: unknown;
+      avatarUrl?: unknown;
+      coverUrl?: unknown;
+    };
+
+    let cleanName: string | undefined;
+    if (body.displayName !== undefined) {
+      cleanName = String(body.displayName || '').trim().replace(/\s+/g, ' ');
+      if (!cleanName || cleanName.length > 60) {
+        res.status(400).json({ error: 'Tên hiển thị phải từ 1 đến 60 ký tự.' });
+        return;
+      }
+    }
+
+    let avatarUrl: string | null | undefined;
+    let coverUrl: string | null | undefined;
+    try {
+      avatarUrl = parseMediaField(body.avatarUrl, 'Ảnh đại diện', 350_000);
+      coverUrl = parseMediaField(body.coverUrl, 'Ảnh nền', 950_000);
+    } catch (validationErr) {
+      res.status(400).json({ error: (validationErr as Error).message });
+      return;
+    }
+
+    if (cleanName === undefined && avatarUrl === undefined && coverUrl === undefined) {
+      res.status(400).json({ error: 'Chưa có thông tin cần cập nhật.' });
+      return;
+    }
+
+    const updated = await updateUserProfile(req.user!.userId, {
+      displayName: cleanName,
+      avatarUrl,
+      coverUrl,
+    });
+    if (!updated) {
+      res.status(404).json({ error: 'Không tìm thấy tài khoản.' });
+      return;
+    }
+    res.json({ user: updated });
+  } catch (err) {
+    next(err);
+  }
+};
+
+router.patch('/profile', requireAuth, handleUpdateProfile);
+router.put('/profile', requireAuth, handleUpdateProfile);
 
 export default router;

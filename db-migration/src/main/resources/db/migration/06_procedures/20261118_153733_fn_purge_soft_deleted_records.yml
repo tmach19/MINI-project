@@ -82,6 +82,11 @@ databaseChangeLog:
                 GET DIAGNOSTICS v_cnt = ROW_COUNT;
                 table_name := 'test_attempts'; purged_count := v_cnt; RETURN NEXT;
 
+                DELETE FROM game_scores
+                WHERE is_deleted = 1 AND deleted_at IS NOT NULL AND deleted_at < v_cutoff;
+                GET DIAGNOSTICS v_cnt = ROW_COUNT;
+                table_name := 'game_scores'; purged_count := v_cnt; RETURN NEXT;
+
                 DELETE FROM lessons l
                 WHERE l.is_deleted = 1 AND l.deleted_at IS NOT NULL AND l.deleted_at < v_cutoff
                   AND NOT EXISTS (SELECT 1 FROM vocabularies v WHERE v.lesson_id = l.id)
@@ -90,7 +95,8 @@ databaseChangeLog:
                   AND NOT EXISTS (SELECT 1 FROM sentence_scrambles sc WHERE sc.lesson_id = l.id)
                   AND NOT EXISTS (SELECT 1 FROM translation_exercises tr WHERE tr.lesson_id = l.id)
                   AND NOT EXISTS (SELECT 1 FROM quiz_questions q WHERE q.lesson_id = l.id)
-                  AND NOT EXISTS (SELECT 1 FROM test_attempts a WHERE a.lesson_id = l.id);
+                  AND NOT EXISTS (SELECT 1 FROM test_attempts a WHERE a.lesson_id = l.id)
+                  AND NOT EXISTS (SELECT 1 FROM game_scores gs WHERE gs.lesson_id = l.id);
                 GET DIAGNOSTICS v_cnt = ROW_COUNT;
                 table_name := 'lessons'; purged_count := v_cnt; RETURN NEXT;
 
@@ -99,6 +105,7 @@ databaseChangeLog:
                   AND NOT EXISTS (SELECT 1 FROM lessons l WHERE l.owner_id = u.id)
                   AND NOT EXISTS (SELECT 1 FROM user_marked_vocab m WHERE m.user_id = u.id)
                   AND NOT EXISTS (SELECT 1 FROM test_attempts a WHERE a.user_id = u.id)
+                  AND NOT EXISTS (SELECT 1 FROM game_scores gs WHERE gs.user_id = u.id)
                   AND NOT EXISTS (SELECT 1 FROM user_permissions up WHERE up.user_id = u.id);
                 GET DIAGNOSTICS v_cnt = ROW_COUNT;
                 table_name := 'users'; purged_count := v_cnt; RETURN NEXT;
