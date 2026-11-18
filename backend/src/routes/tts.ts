@@ -4,8 +4,36 @@ import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 const router = Router();
 
 const MAX_CACHE_ITEMS = 500;
-const EDGE_FEMALE_VOICE = 'zh-CN-XiaoxiaoNeural';
-const EDGE_MALE_VOICE = 'zh-CN-YunxiNeural';
+const MAX_TTS_TEXT_LENGTH = 1500;
+const MAX_DIALOGUE_SEGMENTS = 16;
+
+const EDGE_VOICES = {
+  female: 'zh-CN-XiaoxiaoNeural',
+  female1: 'zh-CN-XiaoxiaoNeural',
+  female2: 'zh-CN-XiaoyiNeural',
+  male: 'zh-CN-YunxiNeural',
+  male1: 'zh-CN-YunxiNeural',
+  male2: 'zh-CN-YunjianNeural',
+  male3: 'zh-CN-YunyangNeural',
+} as const;
+
+type EdgeVoiceKey = keyof typeof EDGE_VOICES;
+
+const FEMALE_SPEAKER_RE =
+  /^(女|b|2|f|she|her|s2|lan|ngọc lan|范玉兰|兰兰|annie|安妮|tuyết|白茹雪|cô|cô bán|chị|bà|mẹ|em gái|nữ|售货员)/i;
+const SENIOR_MALE_SPEAKER_RE =
+  /^(thầy|thầy lưu|刘老师|老师|bác|ông|bố|cha|ba|doctor|bác sĩ|医生|chú)/i;
+const MALE_SPEAKER_RE =
+  /^(男|a|1|m|he|him|s1|minh|nhật minh|a minh|阮日明|mark|马克|phong|trương phong|张风|nam|anh)/i;
+
+const MULTI_SPEAKER_FALLBACK_ORDER: EdgeVoiceKey[] = [
+  'female1',
+  'male1',
+  'female2',
+  'male2',
+  'male3',
+];
+
 const audioCache = new Map<string, Buffer>();
 
 function setCache(key: string, buf: Buffer): void {
@@ -25,7 +53,42 @@ function escapeXml(str: string): string {
     .replace(/'/g, '&apos;');
 }
 
-function parseDialogueSegments(
+function pickVoiceForSpeaker(speaker: string, speakerVoiceMap: Map<string, string>): string {
+  const clean = speaker.trim();
+  const existing = speakerVoiceMap.get(clean);
+  if (existing) return existing;
+
+  const usedVoices = new Set(speakerVoiceMap.values());
+  const pickFirstUnused = (candidates: EdgeVoiceKey[]): string | null => {
+    for (const k of candidates) {
+      const v = EDGE_VOICES[k];
+      if (!usedVoices.has(v)) return v;
+    }
+    return null;
+  };
+
+  let chosen: string | null = null;
+  if (FEMALE_SPEAKER_RE.test(clean)) {
+    chosen =
+      pickFirstUnused(['female1', 'female2']) ||
+      EDGE_VOICES[speakerVoiceMap.size % 2 === 0 ? 'female1' : 'female2'];
+  } else if (SENIOR_MALE_SPEAKER_RE.test(clean)) {
+    chosen = pickFirstUnused(['male2', 'male3', 'male1']) || EDGE_VOICES.male2;
+  } else if (MALE_SPEAKER_RE.test(clean)) {
+    chosen =
+      pickFirstUnused(['male1', 'male2', 'male3']) ||
+      EDGE_VOICES[speakerVoiceMap.size % 2 === 0 ? 'male1' : 'male2'];
+  } else {
+    chosen =
+      pickFirstUnused(MULTI_SPEAKER_FALLBACK_ORDER) ||
+      EDGE_VOICES[MULTI_SPEAKER_FALLBACK_ORDER[speakerVoiceMap.size % MULTI_SPEAKER_FALLBACK_ORDER.length]];
+  }
+
+  speakerVoiceMap.set(clean, chosen);
+  return chosen;
+}
+
+export function parseDialogueSegments(
   text: string,
   defaultVoice: string
 ): Array<{ voice: string; content: string }> {
@@ -34,40 +97,55 @@ function parseDialogueSegments(
     .map((l) => l.trim())
     .filter(Boolean);
 
-  const speakerRegex = /^\s*([A-Za-z0-9\u4e00-\u9fff]{1,10})\s*[:：]\s*(.+)$/;
+  // Hỗ trợ tên người nói có dấu tiếng Việt, khoảng trắng hoặc chữ Hán (vd: "Thầy Lưu:", "Bác sĩ:", "刘老师:")
+  const speakerRegex = /^\s*([^:：，。！？,.!?]{1,24})\s*[:：]\s*(.+)$/;
   const parsed = lines.map((line) => {
     const match = line.match(speakerRegex);
     return match ? { speaker: match[1].trim(), content: match[2].trim() } : null;
   });
 
+  // 1. Hội thoại nhiều dòng có nhãn người nói rõ ràng -> gán giọng riêng cho 2, 3, 4, 5+ người tham gia
   if (lines.length >= 2 && parsed.filter(Boolean).length >= 2) {
     const speakerVoiceMap = new Map<string, string>();
     const segments: Array<{ voice: string; content: string }> = [];
 
-    for (let i = 0; i < lines.length && segments.length < 8; i++) {
+    for (let i = 0; i < lines.length && segments.length < MAX_DIALOGUE_SEGMENTS; i++) {
       const item = parsed[i];
       if (!item) {
         segments.push({ voice: defaultVoice, content: lines[i] });
         continue;
       }
 
-      let voice = speakerVoiceMap.get(item.speaker);
-      if (!voice) {
-        if (/^(女|b|2|f|she|her|s2)$/i.test(item.speaker)) {
-          voice = EDGE_FEMALE_VOICE;
-        } else if (/^(男|a|1|m|he|him|s1)$/i.test(item.speaker)) {
-          voice = EDGE_MALE_VOICE;
-        } else {
-          voice = speakerVoiceMap.size % 2 === 0 ? EDGE_MALE_VOICE : EDGE_FEMALE_VOICE;
-        }
-        speakerVoiceMap.set(item.speaker, voice);
-      }
+      const voice = pickVoiceForSpeaker(item.speaker, speakerVoiceMap);
       if (item.content) {
         segments.push({ voice, content: item.content });
       }
     }
 
     if (segments.length > 0) return segments;
+  }
+
+  // 2. Hội thoại nhiều dòng không ghi tên người nói (vd đề luyện nghe HSK phân tách bằng xuống dòng) -> luân phiên 2 giọng
+  if (lines.length >= 2) {
+    return lines.slice(0, MAX_DIALOGUE_SEGMENTS).map((line, idx) => ({
+      voice: idx % 2 === 0 ? EDGE_VOICES.female1 : EDGE_VOICES.male1,
+      content: line,
+    }));
+  }
+
+  // 3. Một dòng nhưng các lượt thoại ngăn bằng dấu kết câu + khoảng trắng (vd: "...吗？ 早上好！... 。 是，...")
+  const spaceTurns = text
+    .split(/(?<=[。！？!?])\s+/)
+    .map((t) => t.trim())
+    .filter(Boolean);
+  if (
+    spaceTurns.length >= 2 &&
+    spaceTurns.filter((t) => /[\u4e00-\u9fff]/.test(t)).length >= 2
+  ) {
+    return spaceTurns.slice(0, MAX_DIALOGUE_SEGMENTS).map((turn, idx) => ({
+      voice: idx % 2 === 0 ? EDGE_VOICES.female1 : EDGE_VOICES.male1,
+      content: turn,
+    }));
   }
 
   return [{ voice: defaultVoice, content: text }];
@@ -139,10 +217,12 @@ router.get('/tts', async (req, res) => {
     return;
   }
 
-  const voiceParam = req.query.voice === 'male' ? 'male' : 'female';
-  const defaultVoice = voiceParam === 'male' ? EDGE_MALE_VOICE : EDGE_FEMALE_VOICE;
-  const text = rawText.slice(0, 800);
-  const cacheKey = `${voiceParam}:${text}`;
+  const rawVoice = String(req.query.voice || '').trim().toLowerCase();
+  const voiceKey: EdgeVoiceKey =
+    rawVoice in EDGE_VOICES ? (rawVoice as EdgeVoiceKey) : 'female1';
+  const defaultVoice = EDGE_VOICES[voiceKey];
+  const text = rawText.slice(0, MAX_TTS_TEXT_LENGTH);
+  const cacheKey = `${voiceKey}:${text}`;
   const cached = audioCache.get(cacheKey);
   if (cached) {
     res.setHeader('Content-Type', 'audio/mpeg');
@@ -156,7 +236,10 @@ router.get('/tts', async (req, res) => {
 
   // 2. Fallback: HTTP TTS providers if Edge WebSocket fails
   if (!audioBuf) {
-    const fallbackText = text.slice(0, 220);
+    const cleanSpeech = parseDialogueSegments(text, defaultVoice)
+      .map((s) => s.content)
+      .join(' ');
+    const fallbackText = cleanSpeech.slice(0, 220);
     const encoded = encodeURIComponent(fallbackText);
     const providers: Array<{ url: string; referer?: string }> = [
       {

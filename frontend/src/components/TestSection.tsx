@@ -13,7 +13,7 @@ import {
   Shuffle,
   Volume2,
 } from 'lucide-react';
-import { soundFx, speakChinese } from '../lib/audio';
+import { resolveDialogueTtsText, soundFx, speakChinese } from '../lib/audio';
 import type { LessonDetail, LessonSummary, TestAttemptRecord } from '../types';
 
 interface TestSectionProps {
@@ -611,7 +611,14 @@ export const TestSection: React.FC<TestSectionProps> = ({
 
         {currQ?.audioText && (
           <button
-            onClick={() => speakChinese(currQ.audioText!)}
+            onClick={() =>
+              speakChinese(
+                resolveDialogueTtsText(
+                  currQ.audioText!,
+                  isComprehensiveExam ? undefined : lesson.texts
+                )
+              )
+            }
             className="px-4 py-2 rounded-xl bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 text-xs font-bold inline-flex items-center gap-1.5"
           >
             <Volume2 className="w-4 h-4" /> Bấm để nghe đoạn ghi âm
