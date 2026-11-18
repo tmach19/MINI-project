@@ -440,11 +440,18 @@ export const TestSection: React.FC<TestSectionProps> = ({
               {lessonAttempts.slice(0, 5).map((a) => (
                 <div
                   key={a.id}
-                  className="flex items-center justify-between text-xs p-3 rounded-xl bg-stone-50 dark:bg-slate-800/60"
+                  className="flex items-center justify-between gap-3 flex-wrap text-xs p-3 rounded-xl bg-stone-50 dark:bg-slate-800/60"
                 >
-                  <span className="text-gray-500 dark:text-slate-400">
-                    {new Date(a.submittedAt).toLocaleString('vi-VN')}
-                  </span>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-gray-500 dark:text-slate-400">
+                      {new Date(a.submittedAt).toLocaleString('vi-VN')}
+                    </span>
+                    {isComprehensiveExam && (
+                      <span className="px-2 py-0.5 rounded-md bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-[11px] font-medium text-gray-700 dark:text-slate-300">
+                        {a.examTitle || a.lessonTitle || 'Kiểm tra tổng hợp (26 bài)'}
+                      </span>
+                    )}
+                  </div>
                   <span className="font-bold text-red-600 dark:text-red-400">
                     {a.score}/100 ({a.correctCount}/{a.totalQuestions} câu đúng)
                   </span>

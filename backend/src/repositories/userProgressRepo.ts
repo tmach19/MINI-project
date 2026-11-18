@@ -526,6 +526,7 @@ export async function getUserLessonAttemptDetails(
     return list.map((a) => ({
       id: a.id,
       lessonId: a.lessonId,
+      examTitle: a.examTitle ?? null,
       score: a.score,
       totalQuestions: a.totalQuestions,
       correctCount: a.correctCount,
@@ -538,20 +539,24 @@ export async function getUserLessonAttemptDetails(
   const res = await pool.query<{
     id: string;
     lesson_id: string | null;
+    exam_title: string | null;
     score: number;
     total_questions: number;
     correct_count: number;
     duration_seconds: number;
     submitted_at: Date;
-  }>('SELECT * FROM fn_get_user_lesson_attempt_details($1::uuid, $2, $3)', [
-    userId,
-    lessonId,
-    limit,
-  ]);
+  }>(
+    `SELECT d.id, d.lesson_id, t.exam_title, d.score, d.total_questions, d.correct_count, d.duration_seconds, d.submitted_at
+     FROM fn_get_user_lesson_attempt_details($1::uuid, $2, $3) d
+     LEFT JOIN test_attempts t ON t.id = d.id
+     ORDER BY d.submitted_at DESC`,
+    [userId, lessonId, limit]
+  );
 
   return res.rows.map((r) => ({
     id: r.id,
     lessonId: r.lesson_id,
+    examTitle: r.exam_title,
     score: r.score,
     totalQuestions: r.total_questions,
     correctCount: r.correct_count,

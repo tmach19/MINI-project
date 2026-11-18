@@ -93,6 +93,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
       .map((a) => ({
         id: a.id,
         lessonId: a.lessonId,
+        examTitle: a.examTitle ?? null,
         score: a.score,
         totalQuestions: a.totalQuestions,
         correctCount: a.correctCount,
@@ -148,6 +149,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         .map((a) => ({
           id: a.id,
           lessonId: a.lessonId,
+          examTitle: a.examTitle ?? null,
           score: a.score,
           totalQuestions: a.totalQuestions,
           correctCount: a.correctCount,
@@ -820,6 +822,15 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                                 : 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 border-red-200 dark:border-red-800/70'
                             : '';
 
+                          const rawTitle = a?.examTitle?.trim() || 'Kiểm tra tổng hợp (26 bài)';
+                          const scopeMatch = rawTitle.match(/^(.*?)\s*\((\d+\s*bài[^()]*)\)$/i);
+                          const displayTitle = scopeMatch ? scopeMatch[1].trim() : rawTitle;
+                          const lessonCountNote = scopeMatch
+                            ? `Tổng hợp ${scopeMatch[2].trim()}`
+                            : rawTitle === 'Kiểm tra tổng hợp'
+                              ? 'Tổng hợp 26 bài'
+                              : null;
+
                           return (
                             <tr
                               key={a ? a.id : 'comprehensive-empty'}
@@ -829,19 +840,26 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                                 {idx + 1}
                               </td>
                               <td className="py-3 px-3.5">
-                                <button
-                                  type="button"
-                                  onClick={() => onOpenExam?.()}
-                                  disabled={!onOpenExam}
-                                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-50 hover:bg-purple-100 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 border border-purple-200/80 dark:border-purple-800/70 text-purple-700 dark:text-purple-300 font-semibold transition text-left disabled:cursor-default"
-                                  title="Kiểm tra tổng hợp (26 bài)"
-                                >
-                                  <Award className="w-3.5 h-3.5 flex-shrink-0" />
-                                  <span>Kiểm tra tổng hợp</span>
-                                  {onOpenExam && (
-                                    <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-75" />
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <button
+                                    type="button"
+                                    onClick={() => onOpenExam?.()}
+                                    disabled={!onOpenExam}
+                                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-50 hover:bg-purple-100 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 border border-purple-200/80 dark:border-purple-800/70 text-purple-700 dark:text-purple-300 font-semibold transition text-left disabled:cursor-default"
+                                    title={rawTitle}
+                                  >
+                                    <Award className="w-3.5 h-3.5 flex-shrink-0" />
+                                    <span>{displayTitle}</span>
+                                    {onOpenExam && (
+                                      <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-75" />
+                                    )}
+                                  </button>
+                                  {a && lessonCountNote && (
+                                    <span className="px-2 py-0.5 rounded-md bg-stone-100 dark:bg-slate-800 border border-stone-200/80 dark:border-slate-700 text-[11px] font-medium text-gray-600 dark:text-slate-300">
+                                      {lessonCountNote}
+                                    </span>
                                   )}
-                                </button>
+                                </div>
                               </td>
                               <td className="py-3 px-3.5 text-center">
                                 {a ? (

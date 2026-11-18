@@ -171,6 +171,7 @@ export interface LessonTestSummaryRecord {
 export interface LessonAttemptDetailRecord {
   id: string;
   lessonId: string | null;
+  examTitle?: string | null;
   score: number;
   totalQuestions: number;
   correctCount: number;

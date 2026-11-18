@@ -700,15 +700,18 @@ export async function executeAiTool(
 
       const defaultTitle =
         targetIds.length === 1
-          ? `Ôn tập: ${selectedTitles[0] || targetIds[0]}`
+          ? `Ôn tập: ${selectedTitles[0] || targetIds[0]} (1 bài)`
           : requestedIds.length === 0
           ? `Kiểm tra tổng hợp (${targetIds.length} bài)`
           : `Kiểm tra ôn tập (${targetIds.length} bài chọn)`;
 
-      const title =
-        typeof args.examTitle === 'string' && args.examTitle.trim()
-          ? args.examTitle.trim()
-          : defaultTitle;
+      const customTitle =
+        typeof args.examTitle === 'string' && args.examTitle.trim() ? args.examTitle.trim() : '';
+      const title = customTitle
+        ? /\(\s*\d+\s*bài/i.test(customTitle)
+          ? customTitle
+          : `${customTitle} (${targetIds.length} bài)`
+        : defaultTitle;
 
       const description =
         targetIds.length === 1
