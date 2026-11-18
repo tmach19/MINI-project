@@ -8,18 +8,34 @@ interface LoadingStateProps {
 
 export const LoadingSpinner: React.FC<{ size?: 'sm' | 'md' | 'lg' }> = ({ size = 'md' }) => {
   const sizeMap = {
-    sm: 'w-6 h-6 border-2',
-    md: 'w-11 h-11 border-[3px]',
-    lg: 'w-14 h-14 border-4',
+    sm: 'w-6 h-6',
+    md: 'w-11 h-11',
+    lg: 'w-14 h-14',
   };
 
   return (
-    <div className="relative inline-flex items-center justify-center">
-      <div
-        className={`${sizeMap[size]} rounded-full border-stone-200 dark:border-slate-700 border-t-red-600 dark:border-t-red-500 border-r-amber-500 animate-spin`}
-        role="status"
-        aria-label="Đang tải"
-      />
+    <div className="relative inline-flex items-center justify-center" role="status" aria-label="Đang tải">
+      <svg className={`${sizeMap[size]} animate-spin`} viewBox="0 0 48 48" fill="none">
+        <circle
+          cx="24"
+          cy="24"
+          r="20"
+          className="stroke-stone-200 dark:stroke-slate-700"
+          strokeWidth="4"
+        />
+        <path
+          d="M24 4 A20 20 0 0 1 44 24"
+          stroke="#dc2626"
+          strokeWidth="4"
+          strokeLinecap="round"
+        />
+        <path
+          d="M44 24 A20 20 0 0 1 24 44"
+          stroke="#f59e0b"
+          strokeWidth="4"
+          strokeLinecap="round"
+        />
+      </svg>
     </div>
   );
 };
@@ -28,7 +44,27 @@ export const LoadingScreen: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-stone-50 dark:bg-slate-950">
       <div className="relative flex items-center justify-center pop-in" role="status" aria-label="Đang tải">
-        <div className="w-20 h-20 rounded-full border-4 border-stone-200 dark:border-slate-800 border-t-red-600 border-r-amber-500 animate-spin" />
+        <svg className="w-20 h-20 animate-spin" viewBox="0 0 80 80" fill="none">
+          <circle
+            cx="40"
+            cy="40"
+            r="35"
+            className="stroke-stone-200 dark:stroke-slate-800"
+            strokeWidth="4.5"
+          />
+          <path
+            d="M40 5 A35 35 0 0 1 75 40"
+            stroke="#dc2626"
+            strokeWidth="4.5"
+            strokeLinecap="round"
+          />
+          <path
+            d="M75 40 A35 35 0 0 1 40 75"
+            stroke="#f59e0b"
+            strokeWidth="4.5"
+            strokeLinecap="round"
+          />
+        </svg>
         <div className="absolute w-12 h-12 rounded-2xl bg-gradient-to-br from-red-600 to-amber-600 flex items-center justify-center text-white shadow-lg">
           <span className="chinese-serif text-2xl font-black">汉</span>
         </div>

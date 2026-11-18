@@ -25,6 +25,8 @@ import type { LessonDetail } from '../types';
 
 interface LessonModalProps {
   initialLesson?: LessonDetail | null;
+  canCreateSystemLesson?: boolean;
+  canCreateCustomLesson?: boolean;
   onClose: () => void;
   onSave: (payload: {
     title: string;
@@ -33,6 +35,7 @@ interface LessonModalProps {
     description?: string;
     vocabulary: any[];
     grammar: any[];
+    isSystem?: boolean;
   }) => Promise<void>;
 }
 
@@ -57,11 +60,20 @@ function formatFileSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
 }
 
-export const LessonModal: React.FC<LessonModalProps> = ({ initialLesson, onClose, onSave }) => {
+export const LessonModal: React.FC<LessonModalProps> = ({
+  initialLesson,
+  canCreateSystemLesson = false,
+  canCreateCustomLesson = true,
+  onClose,
+  onSave,
+}) => {
   const [activeTab, setActiveTab] = useState<'manual' | 'import'>('manual');
   const [title, setTitle] = useState(initialLesson?.title || '');
   const [hskLevel, setHskLevel] = useState(initialLesson?.hskLevel || 'HSK 1');
   const [description, setDescription] = useState(initialLesson?.description || '');
+  const [createAsSystem, setCreateAsSystem] = useState<boolean>(
+    Boolean(initialLesson ? initialLesson.isSystem : !canCreateCustomLesson && canCreateSystemLesson)
+  );
   const [vocabRows, setVocabRows] = useState<VocabRow[]>(
     initialLesson?.vocabulary?.length
       ? initialLesson.vocabulary.map((v) => ({
@@ -260,6 +272,7 @@ export const LessonModal: React.FC<LessonModalProps> = ({ initialLesson, onClose
           ? vocab.filter((v) => v.hanzi.trim() && v.meaning.trim())
           : checkedImport.vocabulary,
         grammar: isEditMode ? grammar.filter((g) => g.title.trim()) : checkedImport.grammar,
+        isSystem: initialLesson ? initialLesson.isSystem : createAsSystem,
       });
       onClose();
     } catch (err) {
@@ -303,6 +316,7 @@ export const LessonModal: React.FC<LessonModalProps> = ({ initialLesson, onClose
         description,
         vocabulary: vocabRows.filter((v) => v.hanzi.trim() && v.meaning.trim()),
         grammar: grammarRows.filter((g) => g.title.trim()),
+        isSystem: initialLesson ? initialLesson.isSystem : createAsSystem,
       });
       onClose();
     } catch (err) {
@@ -331,35 +345,62 @@ export const LessonModal: React.FC<LessonModalProps> = ({ initialLesson, onClose
           <ModalCloseButton onClick={onClose} disabled={saving} />
         </div>
 
-        <div className="px-6 py-2.5 bg-stone-100/80 dark:bg-slate-950/60 border-b border-stone-200 dark:border-slate-800 flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => {
-              setError(null);
-              setActiveTab('manual');
-            }}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition ${
-              activeTab === 'manual'
-                ? 'bg-red-600 text-white shadow-sm'
-                : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-stone-200 dark:border-slate-700 hover:bg-stone-50 dark:hover:bg-slate-700'
-            }`}
-          >
-            <FileText className="w-3.5 h-3.5" /> Nhập thủ công
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setError(null);
-              setActiveTab('import');
-            }}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition ${
-              activeTab === 'import'
-                ? 'bg-red-600 text-white shadow-sm'
-                : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-stone-200 dark:border-slate-700 hover:bg-stone-50 dark:hover:bg-slate-700'
-            }`}
-          >
-            <Upload className="w-3.5 h-3.5" /> Import buổi học
-          </button>
+        <div className="px-6 py-2.5 bg-stone-100/80 dark:bg-slate-950/60 border-b border-stone-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setError(null);
+                setActiveTab('manual');
+              }}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition ${
+                activeTab === 'manual'
+                  ? 'bg-red-600 text-white shadow-sm'
+                  : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-stone-200 dark:border-slate-700 hover:bg-stone-50 dark:hover:bg-slate-700'
+              }`}
+            >
+              <FileText className="w-3.5 h-3.5" /> Nhập thủ công
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setError(null);
+                setActiveTab('import');
+              }}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition ${
+                activeTab === 'import'
+                  ? 'bg-red-600 text-white shadow-sm'
+                  : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-stone-200 dark:border-slate-700 hover:bg-stone-50 dark:hover:bg-slate-700'
+              }`}
+            >
+              <Upload className="w-3.5 h-3.5" /> Import buổi học
+            </button>
+          </div>
+
+          {initialLesson ? (
+            <span
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold ${
+                initialLesson.isSystem
+                  ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300'
+                  : 'bg-stone-200 dark:bg-slate-800 text-gray-700 dark:text-slate-300'
+              }`}
+            >
+              {initialLesson.isSystem ? 'Bài học hệ thống (HSK)' : 'Bài học tự tạo'}
+            </span>
+          ) : (
+            canCreateSystemLesson && (
+              <label className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/70 text-xs font-semibold text-amber-900 dark:text-amber-200 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={createAsSystem}
+                  disabled={!canCreateCustomLesson}
+                  onChange={(e) => setCreateAsSystem(e.target.checked)}
+                  className="rounded border-amber-400 text-red-600 focus:ring-red-500"
+                />
+                <span>Lưu làm bài học hệ thống (công khai cho mọi học viên)</span>
+              </label>
+            )
+          )}
         </div>
 
         {activeTab === 'manual' ? (

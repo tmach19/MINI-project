@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   CheckCircle2,
   Clock,
@@ -167,6 +167,9 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
     setScrambleIdx(0);
     setSelectedTokens([]);
     setScrambleResult(null);
+    setDragSource(null);
+    setDragOverPos(null);
+    setDragOverBox(null);
 
     const trPool = (lesson.exercises?.translationExercises || []).filter(
       (t) => t.direction === transMode
@@ -231,7 +234,68 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
   const [scrambleIdx, setScrambleIdx] = useState(0);
   const [selectedTokens, setSelectedTokens] = useState<number[]>([]);
   const [scrambleResult, setScrambleResult] = useState<boolean | null>(null);
+  const [dragSource, setDragSource] = useState<
+    { type: 'selected'; pos: number } | { type: 'pool'; idx: number } | null
+  >(null);
+  const [dragOverPos, setDragOverPos] = useState<number | null>(null);
+  const [dragOverBox, setDragOverBox] = useState<'selected' | 'pool' | null>(null);
+  const touchMovedRef = useRef(false);
   const currScramble = scrambleDeck[scrambleIdx];
+
+  const clearScrambleDrag = () => {
+    setDragSource(null);
+    setDragOverPos(null);
+    setDragOverBox(null);
+    window.setTimeout(() => {
+      touchMovedRef.current = false;
+    }, 50);
+  };
+
+  const handleScrambleDropOnSelected = (targetPos?: number) => {
+    if (!dragSource) return;
+    setScrambleResult(null);
+
+    if (dragSource.type === 'selected') {
+      const fromPos = dragSource.pos;
+      setSelectedTokens((prev) => {
+        if (fromPos < 0 || fromPos >= prev.length) return prev;
+        const next = [...prev];
+        const [moved] = next.splice(fromPos, 1);
+        const dest =
+          targetPos === undefined
+            ? next.length
+            : Math.max(0, Math.min(targetPos, next.length));
+        next.splice(dest, 0, moved);
+        return next;
+      });
+      soundFx.playFlip();
+    } else if (dragSource.type === 'pool') {
+      const poolIdx = dragSource.idx;
+      setSelectedTokens((prev) => {
+        if (prev.includes(poolIdx)) return prev;
+        const next = [...prev];
+        const dest =
+          targetPos === undefined
+            ? next.length
+            : Math.max(0, Math.min(targetPos, next.length));
+        next.splice(dest, 0, poolIdx);
+        return next;
+      });
+      soundFx.playFlip();
+    }
+    clearScrambleDrag();
+  };
+
+  const handleScrambleDropOnPool = () => {
+    if (!dragSource || dragSource.type !== 'selected') {
+      clearScrambleDrag();
+      return;
+    }
+    const removePos = dragSource.pos;
+    setScrambleResult(null);
+    setSelectedTokens((prev) => prev.filter((_, i) => i !== removePos));
+    clearScrambleDrag();
+  };
 
   const refreshScrambleDeck = () => {
     setScrambleDeck((prev) =>
@@ -244,6 +308,10 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
     setScrambleIdx(0);
     setSelectedTokens([]);
     setScrambleResult(null);
+    setDragSource(null);
+    setDragOverPos(null);
+    setDragOverBox(null);
+    clearScrambleDrag();
   };
 
   const shuffledTokens = useMemo(() => {
@@ -597,44 +665,206 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                   )}
                 </div>
 
-                <div className="min-h-[72px] p-4 rounded-2xl border-2 border-dashed border-stone-300 dark:border-slate-700 flex flex-wrap gap-2 items-center">
-                  {selectedTokens.length === 0 ? (
-                    <span className="text-xs text-gray-400">Bấm các mảnh từ bên dưới để ghép thành câu...</span>
-                  ) : (
-                    selectedTokens.map((tokIdx, pos) => {
-                      const tok = shuffledTokens[tokIdx];
-                      return (
-                        <button
-                          key={`${tokIdx}-${pos}`}
-                          onClick={() => {
-                            setScrambleResult(null);
-                            setSelectedTokens((list) => list.filter((_, i) => i !== pos));
-                          }}
-                          className="px-3.5 py-2 rounded-xl bg-purple-600 text-white chinese-font font-bold text-lg shadow-sm"
-                        >
-                          {tok.text}
-                        </button>
-                      );
-                    })
+                <div className="space-y-1.5">
+                  <div
+                    data-scramble-drop-box="selected"
+                    onDragOver={(e) => {
+                      if (!dragSource) return;
+                      e.preventDefault();
+                      e.dataTransfer.dropEffect = 'move';
+                      setDragOverBox('selected');
+                    }}
+                    onDragLeave={(e) => {
+                      if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                        setDragOverBox(null);
+                        setDragOverPos(null);
+                      }
+                    }}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      handleScrambleDropOnSelected();
+                    }}
+                    className={`min-h-[72px] p-4 rounded-2xl border-2 border-dashed flex flex-wrap gap-2 items-center transition ${
+                      dragOverBox === 'selected' && dragOverPos === null
+                        ? 'border-purple-500 bg-purple-50/40 dark:bg-purple-950/20'
+                        : 'border-stone-300 dark:border-slate-700'
+                    }`}
+                  >
+                    {selectedTokens.length === 0 ? (
+                      <span className="text-xs text-gray-400">
+                        Bấm hoặc kéo thả các mảnh từ bên dưới vào đây để ghép câu...
+                      </span>
+                    ) : (
+                      selectedTokens.map((tokIdx, pos) => {
+                        const tok = shuffledTokens[tokIdx];
+                        const isDragging = dragSource?.type === 'selected' && dragSource.pos === pos;
+                        const isHovered = dragOverPos === pos && !isDragging;
+                        return (
+                          <button
+                            key={`${tokIdx}-${pos}`}
+                            type="button"
+                            draggable
+                            data-scramble-pos={pos}
+                            onDragStart={(e) => {
+                              e.dataTransfer.effectAllowed = 'move';
+                              e.dataTransfer.setData('text/plain', String(pos));
+                              setDragSource({ type: 'selected', pos });
+                            }}
+                            onDragOver={(e) => {
+                              if (!dragSource) return;
+                              e.preventDefault();
+                              e.stopPropagation();
+                              e.dataTransfer.dropEffect = 'move';
+                              setDragOverBox('selected');
+                              setDragOverPos(pos);
+                            }}
+                            onDrop={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleScrambleDropOnSelected(pos);
+                            }}
+                            onDragEnd={clearScrambleDrag}
+                            onTouchStart={() => {
+                              touchMovedRef.current = false;
+                              setDragSource({ type: 'selected', pos });
+                            }}
+                            onTouchMove={(e) => {
+                              if (!dragSource) return;
+                              touchMovedRef.current = true;
+                              const touch = e.touches[0];
+                              if (!touch) return;
+                              const el = document.elementFromPoint(touch.clientX, touch.clientY);
+                              const posAttr = el?.closest('[data-scramble-pos]')?.getAttribute('data-scramble-pos');
+                              const boxAttr = el?.closest('[data-scramble-drop-box]')?.getAttribute('data-scramble-drop-box');
+                              setDragOverPos(posAttr !== null && posAttr !== undefined ? Number(posAttr) : null);
+                              setDragOverBox(
+                                boxAttr === 'selected' || boxAttr === 'pool' ? boxAttr : null
+                              );
+                            }}
+                            onTouchEnd={() => {
+                              if (!touchMovedRef.current) {
+                                clearScrambleDrag();
+                                return;
+                              }
+                              if (dragOverPos !== null) {
+                                handleScrambleDropOnSelected(dragOverPos);
+                              } else if (dragOverBox === 'selected') {
+                                handleScrambleDropOnSelected();
+                              } else if (dragOverBox === 'pool') {
+                                handleScrambleDropOnPool();
+                              } else {
+                                clearScrambleDrag();
+                              }
+                            }}
+                            onClick={() => {
+                              if (touchMovedRef.current) return;
+                              setScrambleResult(null);
+                              setSelectedTokens((list) => list.filter((_, i) => i !== pos));
+                            }}
+                            className={`px-3.5 py-2 rounded-xl bg-purple-600 text-white chinese-font font-bold text-lg shadow-sm select-none touch-none cursor-grab active:cursor-grabbing transition ${
+                              isDragging
+                                ? 'opacity-40 scale-95'
+                                : isHovered
+                                  ? 'ring-2 ring-amber-400 scale-105'
+                                  : 'hover:bg-purple-700'
+                            }`}
+                          >
+                            {tok.text}
+                          </button>
+                        );
+                      })
+                    )}
+                  </div>
+                  {selectedTokens.length > 0 && (
+                    <p className="text-[11px] text-gray-400 dark:text-slate-500">
+                      Mẹo: Kéo thả các từ để đổi vị trí, hoặc bấm vào từ để bỏ chọn.
+                    </p>
                   )}
                 </div>
 
-                <div className="flex flex-wrap gap-2 justify-center">
+                <div
+                  data-scramble-drop-box="pool"
+                  onDragOver={(e) => {
+                    if (dragSource?.type !== 'selected') return;
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    setDragOverBox('pool');
+                    setDragOverPos(null);
+                  }}
+                  onDragLeave={(e) => {
+                    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                      setDragOverBox(null);
+                    }
+                  }}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    handleScrambleDropOnPool();
+                  }}
+                  className={`flex flex-wrap gap-2 justify-center p-2 rounded-2xl transition ${
+                    dragOverBox === 'pool' && dragSource?.type === 'selected'
+                      ? 'bg-red-50/50 dark:bg-red-950/20 ring-1 ring-red-300 dark:ring-red-800/60'
+                      : ''
+                  }`}
+                >
                   {shuffledTokens.map((tok, idx) => {
                     const used = selectedTokens.includes(idx);
+                    const isDraggingPool = dragSource?.type === 'pool' && dragSource.idx === idx;
                     return (
                       <button
                         key={idx}
+                        type="button"
                         disabled={used}
+                        draggable={!used}
+                        onDragStart={(e) => {
+                          if (used) return;
+                          e.dataTransfer.effectAllowed = 'move';
+                          e.dataTransfer.setData('text/plain', `pool:${idx}`);
+                          setDragSource({ type: 'pool', idx });
+                        }}
+                        onDragEnd={clearScrambleDrag}
+                        onTouchStart={() => {
+                          if (used) return;
+                          touchMovedRef.current = false;
+                          setDragSource({ type: 'pool', idx });
+                        }}
+                        onTouchMove={(e) => {
+                          if (used || !dragSource) return;
+                          touchMovedRef.current = true;
+                          const touch = e.touches[0];
+                          if (!touch) return;
+                          const el = document.elementFromPoint(touch.clientX, touch.clientY);
+                          const posAttr = el?.closest('[data-scramble-pos]')?.getAttribute('data-scramble-pos');
+                          const boxAttr = el?.closest('[data-scramble-drop-box]')?.getAttribute('data-scramble-drop-box');
+                          setDragOverPos(posAttr !== null && posAttr !== undefined ? Number(posAttr) : null);
+                          setDragOverBox(
+                            boxAttr === 'selected' || boxAttr === 'pool' ? boxAttr : null
+                          );
+                        }}
+                        onTouchEnd={() => {
+                          if (used || !touchMovedRef.current) {
+                            clearScrambleDrag();
+                            return;
+                          }
+                          if (dragOverPos !== null) {
+                            handleScrambleDropOnSelected(dragOverPos);
+                          } else if (dragOverBox === 'selected') {
+                            handleScrambleDropOnSelected();
+                          } else {
+                            clearScrambleDrag();
+                          }
+                        }}
                         onClick={() => {
+                          if (touchMovedRef.current) return;
                           soundFx.playFlip();
                           setScrambleResult(null);
                           setSelectedTokens((list) => [...list, idx]);
                         }}
-                        className={`px-4 py-2 rounded-xl border text-lg chinese-font font-bold transition ${
+                        className={`px-4 py-2 rounded-xl border text-lg chinese-font font-bold select-none touch-none transition ${
                           used
-                            ? 'opacity-30 border-stone-200 dark:border-slate-700'
-                            : 'bg-white dark:bg-slate-800 border-stone-300 dark:border-slate-700 hover:border-purple-500 text-gray-900 dark:text-white'
+                            ? 'opacity-30 border-stone-200 dark:border-slate-700 cursor-default'
+                            : isDraggingPool
+                              ? 'opacity-50 border-purple-500 bg-purple-50 dark:bg-purple-950/30 cursor-grabbing'
+                              : 'bg-white dark:bg-slate-800 border-stone-300 dark:border-slate-700 hover:border-purple-500 text-gray-900 dark:text-white cursor-grab active:cursor-grabbing'
                         }`}
                       >
                         {tok.text}
@@ -676,6 +906,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                     onClick={() => {
                       setSelectedTokens([]);
                       setScrambleResult(null);
+                      clearScrambleDrag();
                     }}
                     className="px-4 py-2 rounded-xl border border-stone-300 dark:border-slate-700 text-xs font-bold"
                   >
@@ -701,6 +932,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson }) => {
                         setScrambleIdx((i) => (i + 1) % scrambleDeck.length);
                         setSelectedTokens([]);
                         setScrambleResult(null);
+                        clearScrambleDrag();
                       }}
                       className="px-4 py-2 rounded-xl bg-stone-100 dark:bg-slate-800 text-xs font-bold"
                     >

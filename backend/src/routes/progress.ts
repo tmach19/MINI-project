@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { requireAuth } from '../middleware/auth.js';
+import { PERMISSION_CODES } from '../config/rbacCatalog.js';
+import { requireAuth, requirePermission } from '../middleware/auth.js';
 import {
   getMarkedVocabCards,
   getMarkedVocabMap,
@@ -36,7 +37,7 @@ router.get('/progress/marked', requireAuth, async (req, res, next) => {
   }
 });
 
-router.post('/progress/mark', requireAuth, async (req, res, next) => {
+router.post('/progress/mark', requirePermission(PERMISSION_CODES.VOCAB_BOOKMARK), async (req, res, next) => {
   try {
     const { vocabId, marked, note } = req.body as {
       vocabId?: string;
@@ -54,7 +55,7 @@ router.post('/progress/mark', requireAuth, async (req, res, next) => {
   }
 });
 
-router.post('/progress/sync', requireAuth, async (req, res, next) => {
+router.post('/progress/sync', requirePermission(PERMISSION_CODES.VOCAB_BOOKMARK), async (req, res, next) => {
   try {
     const { vocabIds } = req.body as { vocabIds?: string[] };
     const markedMap = await syncGuestMarkedVocab(
@@ -67,7 +68,7 @@ router.post('/progress/sync', requireAuth, async (req, res, next) => {
   }
 });
 
-router.post('/tests/attempt', requireAuth, async (req, res, next) => {
+router.post('/tests/attempt', requirePermission(PERMISSION_CODES.EXAM_TAKE), async (req, res, next) => {
   try {
     const { lessonId, examTitle, score, totalQuestions, correctCount, durationSeconds, answers } = req.body;
     if ((!lessonId && !examTitle) || typeof score !== 'number' || !totalQuestions) {

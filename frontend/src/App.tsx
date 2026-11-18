@@ -11,17 +11,20 @@ import {
   Moon,
   Plus,
   Search,
+  ShieldCheck,
   Sun,
   Trash2,
   User as UserIcon,
 } from 'lucide-react';
 import { api, getStoredToken, setStoredToken } from './lib/api';
+import { hasPermission, isSuperAdminUser, PERMISSIONS } from './lib/permissions';
 import {
   loadGuestAttempts,
   loadGuestMarkedMap,
   saveGuestAttempts,
   saveGuestMarkedMap,
 } from './lib/srsLocal';
+import { AdminRbacPage } from './components/AdminRbacPage';
 import { AuthModal } from './components/AuthModal';
 import { ConfirmDeleteModal } from './components/ConfirmDeleteModal';
 import { LoadingCard, LoadingScreen } from './components/common/LoadingState';
@@ -46,11 +49,12 @@ import type {
   VocabularyItem,
 } from './types';
 
-function getViewFromPath(): 'study' | 'profile' | 'exam' {
+function getViewFromPath(): 'study' | 'profile' | 'exam' | 'admin' {
   if (typeof window !== 'undefined') {
     const p = window.location.pathname.replace(/\/+$/, '');
     if (p === '/profile') return 'profile';
     if (p === '/exam') return 'exam';
+    if (p === '/admin') return 'admin';
   }
   return 'study';
 }
@@ -68,7 +72,9 @@ export default function App() {
     () => localStorage.getItem('cs_current_lesson') || 'lesson-1'
   );
   const [currentLesson, setCurrentLesson] = useState<LessonDetail | null>(null);
-  const [activeView, setActiveView] = useState<'study' | 'profile' | 'exam'>(() => getViewFromPath());
+  const [activeView, setActiveView] = useState<'study' | 'profile' | 'exam' | 'admin'>(() =>
+    getViewFromPath()
+  );
   const [activeTab, setActiveTab] = useState<TabId>('vocab');
   const [loadingLesson, setLoadingLesson] = useState(false);
   const [comprehensiveExam, setComprehensiveExam] = useState<ComprehensiveExamResponse | null>(null);
@@ -120,9 +126,26 @@ export default function App() {
     setAttempts(progRes.attempts);
   };
 
-  const navigateView = (nextView: 'study' | 'profile' | 'exam', replace = false) => {
+  const refreshCurrentUserProfile = async () => {
+    if (!getStoredToken()) return;
+    try {
+      const me = await api.me();
+      setUser(me.user);
+    } catch {
+      // Bỏ qua nếu phiên đã hết hạn
+    }
+  };
+
+  const navigateView = (nextView: 'study' | 'profile' | 'exam' | 'admin', replace = false) => {
     setActiveView(nextView);
-    const targetPath = nextView === 'profile' ? '/profile' : nextView === 'exam' ? '/exam' : '/';
+    const targetPath =
+      nextView === 'profile'
+        ? '/profile'
+        : nextView === 'exam'
+        ? '/exam'
+        : nextView === 'admin'
+        ? '/admin'
+        : '/';
     if (window.location.pathname !== targetPath) {
       if (replace) window.history.replaceState(null, '', targetPath);
       else window.history.pushState(null, '', targetPath);
@@ -160,11 +183,23 @@ export default function App() {
     }
   }, [activeView]);
 
+  const canAccessAdmin = hasPermission(user, [
+    PERMISSIONS.MENU_ADMIN,
+    PERMISSIONS.USER_MANAGE,
+    PERMISSIONS.ROLE_MANAGE,
+  ]);
+  const canCreateCustomLesson = hasPermission(user, PERMISSIONS.LESSON_CUSTOM_CRUD);
+  const canCreateSystemLesson = hasPermission(user, PERMISSIONS.LESSON_SYSTEM_CREATE);
+  const canCreateAnyLesson = !user || canCreateCustomLesson || canCreateSystemLesson;
+
   useEffect(() => {
-    if (authChecked && activeView === 'profile' && !user) {
+    if (!authChecked) return;
+    if (activeView === 'profile' && !user) {
+      navigateView('study', true);
+    } else if (activeView === 'admin' && !canAccessAdmin) {
       navigateView('study', true);
     }
-  }, [authChecked, activeView, user]);
+  }, [authChecked, activeView, user, canAccessAdmin]);
 
   useEffect(() => {
     const init = async () => {
@@ -311,6 +346,7 @@ export default function App() {
     description?: string;
     vocabulary: any[];
     grammar: any[];
+    isSystem?: boolean;
   }) => {
     if (lessonModalMode === 'edit' && currentLesson) {
       const res = await api.updateLesson(currentLesson.id, payload);
@@ -323,14 +359,32 @@ export default function App() {
     await refreshLessons();
   };
 
+  const canEditCurrent = Boolean(
+    user &&
+      currentLesson &&
+      (currentLesson.isSystem
+        ? hasPermission(user, PERMISSIONS.LESSON_SYSTEM_EDIT)
+        : isSuperAdminUser(user) ||
+          (currentLesson.ownerId === user.id && canCreateCustomLesson))
+  );
+
+  const canDeleteCurrent = Boolean(
+    user &&
+      currentLesson &&
+      (currentLesson.isSystem
+        ? hasPermission(user, PERMISSIONS.LESSON_SYSTEM_DELETE)
+        : isSuperAdminUser(user) ||
+          (currentLesson.ownerId === user.id && canCreateCustomLesson))
+  );
+
   const handleDeleteCurrentLesson = () => {
-    if (!currentLesson || currentLesson.isSystem) return;
+    if (!currentLesson || !canDeleteCurrent) return;
     setDeleteError(null);
     setShowDeleteConfirm(true);
   };
 
   const handleConfirmDeleteLesson = async () => {
-    if (!currentLesson || currentLesson.isSystem || deletingLesson) return;
+    if (!currentLesson || !canDeleteCurrent || deletingLesson) return;
     setDeletingLesson(true);
     setDeleteError(null);
     try {
@@ -343,10 +397,6 @@ export default function App() {
       setDeletingLesson(false);
     }
   };
-
-  const canEditCurrent = Boolean(
-    user && currentLesson && !currentLesson.isSystem && currentLesson.ownerId === user.id
-  );
 
   if (
     initializing ||
@@ -402,37 +452,40 @@ export default function App() {
               <span className="hidden md:inline">Tìm từ (Ctrl+K)</span>
             </button>
 
-            <button
-              onClick={() => {
-                if (!user) {
-                  setShowAuthModal(true);
-                  return;
-                }
-                setLessonModalMode('create');
-              }}
-              className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm"
-            >
-              <Plus className="w-3.5 h-3.5" />
-              <span className="hidden md:inline">Thêm bài</span>
-            </button>
+            {canCreateAnyLesson && (
+              <button
+                onClick={() => {
+                  if (!user) {
+                    setShowAuthModal(true);
+                    return;
+                  }
+                  setLessonModalMode('create');
+                }}
+                className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span className="hidden md:inline">Thêm bài</span>
+              </button>
+            )}
 
             {canEditCurrent && (
-              <>
-                <button
-                  onClick={() => setLessonModalMode('edit')}
-                  className="p-2 rounded-xl border border-stone-200 dark:border-slate-700 text-gray-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-800"
-                  title="Sửa bài tự tạo"
-                >
-                  <Edit3 className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={handleDeleteCurrentLesson}
-                  className="p-2 rounded-xl border border-stone-200 dark:border-slate-700 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30"
-                  title="Xoá bài tự tạo"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </>
+              <button
+                onClick={() => setLessonModalMode('edit')}
+                className="p-2 rounded-xl border border-stone-200 dark:border-slate-700 text-gray-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-800"
+                title={currentLesson?.isSystem ? 'Sửa bài học hệ thống' : 'Sửa bài tự tạo'}
+              >
+                <Edit3 className="w-4 h-4" />
+              </button>
+            )}
+
+            {canDeleteCurrent && (
+              <button
+                onClick={handleDeleteCurrentLesson}
+                className="p-2 rounded-xl border border-stone-200 dark:border-slate-700 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30"
+                title={currentLesson?.isSystem ? 'Xoá bài học hệ thống' : 'Xoá bài tự tạo'}
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
             )}
 
             <HeaderExtensionMenu
@@ -446,6 +499,19 @@ export default function App() {
                   active: activeView === 'exam',
                   onClick: openComprehensiveExam,
                 },
+                ...(canAccessAdmin
+                  ? [
+                      {
+                        id: 'admin_rbac',
+                        label: 'Quản trị & Phân quyền',
+                        description: 'Vai trò & quyền tài khoản',
+                        icon: ShieldCheck,
+                        iconClassName: 'text-amber-500',
+                        active: activeView === 'admin',
+                        onClick: () => navigateView('admin'),
+                      },
+                    ]
+                  : []),
               ]}
             />
 
@@ -596,6 +662,16 @@ export default function App() {
               onBackToStudy={() => navigateView('study')}
             />
           )
+        ) : activeView === 'admin' ? (
+          user && canAccessAdmin ? (
+            <AdminRbacPage
+              currentUser={user}
+              onBackToStudy={() => navigateView('study')}
+              onRefreshCurrentUser={refreshCurrentUserProfile}
+            />
+          ) : (
+            <LoadingCard message="Đang kiểm tra quyền truy cập..." />
+          )
         ) : activeView === 'profile' ? (
           user ? (
             <ProfilePage
@@ -668,6 +744,8 @@ export default function App() {
       {lessonModalMode && (
         <LessonModal
           initialLesson={lessonModalMode === 'edit' ? currentLesson : null}
+          canCreateSystemLesson={canCreateSystemLesson}
+          canCreateCustomLesson={canCreateCustomLesson}
           onClose={() => setLessonModalMode(null)}
           onSave={handleSaveLesson}
         />

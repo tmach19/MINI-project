@@ -183,5 +183,30 @@ export interface UserProfile {
   email: string;
   displayName: string;
   role: 'user' | 'admin';
+  isSuperAdmin: boolean;
+  permissions: string[];
   createdAt: string;
+}
+
+export interface RoleWithPermissions {
+  id: 'admin' | 'user';
+  code: 'admin' | 'user';
+  name: string;
+  description: string;
+  isSystem: boolean;
+  activeFlg: boolean;
+  permissionIds: string[];
+}
+
+export interface AdminUserRbacRow {
+  id: string;
+  email: string;
+  displayName: string;
+  role: 'user' | 'admin';
+  isSuperAdmin: boolean;
+  createdAt: string;
+  rolePermissions: string[];
+  addedPermissions: string[];
+  excludedPermissions: string[];
+  effectivePermissions: string[];
 }

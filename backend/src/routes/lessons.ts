@@ -1,13 +1,15 @@
 import { Router } from 'express';
-import { optionalAuth, requireAuth } from '../middleware/auth.js';
+import { PERMISSION_CODES } from '../config/rbacCatalog.js';
+import { hasUserPermission, optionalAuth, requireAuth, resolveCurrentUser } from '../middleware/auth.js';
 import {
-  createCustomLesson,
-  deleteCustomLesson,
+  createLesson,
+  deleteLessonById,
   getComprehensiveExamQuestions,
   getLessonById,
+  getLessonOwnership,
   listLessons,
   searchAllVocabulary,
-  updateCustomLesson,
+  updateLessonById,
 } from '../repositories/lessonRepo.js';
 
 const router = Router();
@@ -63,19 +65,42 @@ router.get('/lessons/:id', optionalAuth, async (req, res, next) => {
 
 router.post('/lessons', requireAuth, async (req, res, next) => {
   try {
-    const { title, hskLevel, unit, description, vocabulary, grammar } = req.body;
+    const user = await resolveCurrentUser(req);
+    if (!user) {
+      res.status(401).json({ error: 'Tài khoản không tồn tại.' });
+      return;
+    }
+
+    const { title, hskLevel, unit, description, vocabulary, grammar, isSystem } = req.body;
+    const createAsSystem = Boolean(isSystem);
+
+    if (createAsSystem) {
+      if (!hasUserPermission(user, [PERMISSION_CODES.LESSON_SYSTEM_CREATE])) {
+        res.status(403).json({ error: 'Bạn không có quyền tạo bài học hệ thống.' });
+        return;
+      }
+    } else if (!hasUserPermission(user, [PERMISSION_CODES.LESSON_CUSTOM_CRUD])) {
+      res.status(403).json({ error: 'Bạn đã bị hạn chế quyền tạo buổi học cá nhân.' });
+      return;
+    }
+
     if (!title?.trim()) {
       res.status(400).json({ error: 'Tên buổi học không được để trống.' });
       return;
     }
-    const created = await createCustomLesson(req.user!.userId, {
-      title,
-      hskLevel: hskLevel || 'HSK 1',
-      unit,
-      description,
-      vocabulary: Array.isArray(vocabulary) ? vocabulary : [],
-      grammar: Array.isArray(grammar) ? grammar : [],
-    });
+
+    const created = await createLesson(
+      user.id,
+      {
+        title,
+        hskLevel: hskLevel || 'HSK 1',
+        unit,
+        description,
+        vocabulary: Array.isArray(vocabulary) ? vocabulary : [],
+        grammar: Array.isArray(grammar) ? grammar : [],
+      },
+      createAsSystem
+    );
     res.status(201).json({ lesson: created });
   } catch (err) {
     next(err);
@@ -84,23 +109,51 @@ router.post('/lessons', requireAuth, async (req, res, next) => {
 
 router.put('/lessons/:id', requireAuth, async (req, res, next) => {
   try {
+    const user = await resolveCurrentUser(req);
+    if (!user) {
+      res.status(401).json({ error: 'Tài khoản không tồn tại.' });
+      return;
+    }
+
+    const lessonId = String(req.params.id);
+    const meta = await getLessonOwnership(lessonId);
+    if (!meta) {
+      res.status(404).json({ error: 'Không tìm thấy buổi học.' });
+      return;
+    }
+
+    if (meta.isSystem) {
+      if (!hasUserPermission(user, [PERMISSION_CODES.LESSON_SYSTEM_EDIT])) {
+        res.status(403).json({ error: 'Bạn không có quyền chỉnh sửa bài học hệ thống.' });
+        return;
+      }
+    } else {
+      const isOwner = meta.ownerId === user.id;
+      const canCrudCustom = hasUserPermission(user, [PERMISSION_CODES.LESSON_CUSTOM_CRUD]);
+      if (!user.isSuperAdmin && (!isOwner || !canCrudCustom)) {
+        res.status(403).json({ error: 'Bạn không có quyền sửa bài học này.' });
+        return;
+      }
+    }
+
     const { title, hskLevel, unit, description, vocabulary, grammar } = req.body;
     if (!title?.trim()) {
       res.status(400).json({ error: 'Tên buổi học không được để trống.' });
       return;
     }
-    const updated = await updateCustomLesson(String(req.params.id), req.user!.userId, {
-      title,
-      hskLevel: hskLevel || 'HSK 1',
-      unit,
-      description,
-      vocabulary: Array.isArray(vocabulary) ? vocabulary : [],
-      grammar: Array.isArray(grammar) ? grammar : [],
-    });
-    if (!updated) {
-      res.status(403).json({ error: 'Không thể sửa bài học hệ thống hoặc bài học không thuộc quyền sở hữu của bạn.' });
-      return;
-    }
+
+    const updated = await updateLessonById(
+      lessonId,
+      {
+        title,
+        hskLevel: hskLevel || 'HSK 1',
+        unit,
+        description,
+        vocabulary: Array.isArray(vocabulary) ? vocabulary : [],
+        grammar: Array.isArray(grammar) ? grammar : [],
+      },
+      user.id
+    );
     res.json({ lesson: updated });
   } catch (err) {
     next(err);
@@ -109,11 +162,34 @@ router.put('/lessons/:id', requireAuth, async (req, res, next) => {
 
 router.delete('/lessons/:id', requireAuth, async (req, res, next) => {
   try {
-    const deleted = await deleteCustomLesson(String(req.params.id), req.user!.userId);
-    if (!deleted) {
-      res.status(403).json({ error: 'Không thể xoá bài học hệ thống hoặc bài học không tồn tại.' });
+    const user = await resolveCurrentUser(req);
+    if (!user) {
+      res.status(401).json({ error: 'Tài khoản không tồn tại.' });
       return;
     }
+
+    const lessonId = String(req.params.id);
+    const meta = await getLessonOwnership(lessonId);
+    if (!meta) {
+      res.status(404).json({ error: 'Không tìm thấy buổi học.' });
+      return;
+    }
+
+    if (meta.isSystem) {
+      if (!hasUserPermission(user, [PERMISSION_CODES.LESSON_SYSTEM_DELETE])) {
+        res.status(403).json({ error: 'Bạn không có quyền xoá bài học hệ thống.' });
+        return;
+      }
+    } else {
+      const isOwner = meta.ownerId === user.id;
+      const canCrudCustom = hasUserPermission(user, [PERMISSION_CODES.LESSON_CUSTOM_CRUD]);
+      if (!user.isSuperAdmin && (!isOwner || !canCrudCustom)) {
+        res.status(403).json({ error: 'Bạn không có quyền xoá bài học này.' });
+        return;
+      }
+    }
+
+    await deleteLessonById(lessonId);
     res.json({ ok: true });
   } catch (err) {
     next(err);

@@ -3,6 +3,7 @@ import cors from 'cors';
 import { env } from './config/env.js';
 import { getDbMode, initDatabase } from './db/pool.js';
 import authRouter from './routes/auth.js';
+import adminRouter from './routes/admin.js';
 import lessonsRouter from './routes/lessons.js';
 import progressRouter from './routes/progress.js';
 import ttsRouter from './routes/tts.js';
@@ -22,6 +23,7 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.use('/api/auth', authRouter);
+app.use('/api/admin', adminRouter);
 app.use('/api', ttsRouter);
 app.use('/api', lessonsRouter);
 app.use('/api', progressRouter);

@@ -1,0 +1,75 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261118_094501_fn_get_user_permissions
+      author: chinese-study
+      comment: Tinh danh sach ma quyen hieu luc cua user = (role_permissions + added) - excluded, Admin bypass full quyen
+      runOnChange: true
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: false
+            sql: |-
+              CREATE OR REPLACE FUNCTION fn_get_user_permissions(p_user_id UUID)
+              RETURNS TABLE (
+                code TEXT
+              )
+              LANGUAGE sql
+              STABLE
+              AS $$
+              WITH target_user AS (
+                SELECT id, role
+                FROM users
+                WHERE id = p_user_id
+              ),
+              admin_perms AS (
+                SELECT p.code, p.sort_order
+                FROM permissions p
+                CROSS JOIN target_user u
+                WHERE u.role = 'admin'
+                  AND p.active_flg = TRUE
+              ),
+              role_perms AS (
+                SELECT p.id AS permission_id, p.code, p.sort_order
+                FROM target_user u
+                JOIN roles r ON r.code = u.role AND r.active_flg = TRUE
+                JOIN role_permissions rp ON rp.role_id = r.id
+                JOIN permissions p ON p.id = rp.permission_id AND p.active_flg = TRUE
+                WHERE u.role <> 'admin'
+              ),
+              added_perms AS (
+                SELECT p.id AS permission_id, p.code, p.sort_order
+                FROM target_user u
+                JOIN user_permissions up ON up.user_id = u.id AND up.is_excluded = FALSE
+                JOIN permissions p ON p.id = up.permission_id AND p.active_flg = TRUE
+                WHERE u.role <> 'admin'
+              ),
+              excluded_perms AS (
+                SELECT up.permission_id
+                FROM target_user u
+                JOIN user_permissions up ON up.user_id = u.id AND up.is_excluded = TRUE
+                WHERE u.role <> 'admin'
+              ),
+              combined_user_perms AS (
+                SELECT DISTINCT permission_id, code, sort_order
+                FROM (
+                  SELECT permission_id, code, sort_order FROM role_perms
+                  UNION ALL
+                  SELECT permission_id, code, sort_order FROM added_perms
+                ) raw_perms
+                WHERE permission_id NOT IN (SELECT permission_id FROM excluded_perms)
+              )
+              SELECT code
+              FROM (
+                SELECT code, sort_order FROM admin_perms
+                UNION ALL
+                SELECT code, sort_order FROM combined_user_perms
+              ) final_perms
+              ORDER BY sort_order ASC, code ASC;
+              $$;
+      rollback:
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            sql: |-
+              DROP FUNCTION IF EXISTS fn_get_user_permissions(UUID);

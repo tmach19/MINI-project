@@ -1,4 +1,5 @@
 import type {
+  AdminUserRbacRow,
   ComprehensiveExamResponse,
   GlobalVocabHit,
   LessonAttemptDetailRecord,
@@ -7,6 +8,8 @@ import type {
   LessonTestSummaryRecord,
   MarkedVocabCard,
   MarkedVocabRecord,
+  PermissionCatalogItem,
+  RoleWithPermissions,
   TestAttemptRecord,
   UserProfile,
 } from '../types';
@@ -66,6 +69,7 @@ export const api = {
     description?: string;
     vocabulary: any[];
     grammar: any[];
+    isSystem?: boolean;
   }) =>
     apiFetch<{ lesson: LessonDetail }>('/lessons', {
       method: 'POST',
@@ -144,4 +148,38 @@ export const api = {
       method: 'POST',
       body: JSON.stringify(payload),
     }),
+
+  getRbacCatalog: () =>
+    apiFetch<{ permissions: PermissionCatalogItem[]; roles: RoleWithPermissions[] }>(
+      '/admin/rbac/catalog'
+    ),
+
+  updateRolePermissions: (roleId: 'admin' | 'user', permissionIds: string[]) =>
+    apiFetch<{ role: RoleWithPermissions }>(`/admin/roles/${roleId}/permissions`, {
+      method: 'PUT',
+      body: JSON.stringify({ permissionIds }),
+    }),
+
+  listAdminUsers: (q = '') =>
+    apiFetch<{ users: AdminUserRbacRow[] }>(
+      `/admin/users${q.trim() ? `?q=${encodeURIComponent(q.trim())}` : ''}`
+    ),
+
+  updateAdminUserRole: (userId: string, role: 'admin' | 'user') =>
+    apiFetch<{ user: AdminUserRbacRow }>(`/admin/users/${encodeURIComponent(userId)}/role`, {
+      method: 'PUT',
+      body: JSON.stringify({ role }),
+    }),
+
+  saveAdminUserPermissions: (
+    userId: string,
+    payload: { addedPermissions: string[]; excludedPermissions: string[] }
+  ) =>
+    apiFetch<{ user: AdminUserRbacRow }>(
+      `/admin/users/${encodeURIComponent(userId)}/permissions`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+      }
+    ),
 };

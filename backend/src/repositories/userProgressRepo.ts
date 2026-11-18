@@ -1,6 +1,7 @@
 import crypto from 'node:crypto';
 import { getDbMode, getPool } from '../db/pool.js';
 import { memoryStore, type MemoryUser } from '../db/fallbackStore.js';
+import { getEffectivePermissions } from './rbacRepo.js';
 import type {
   LessonAttemptDetailRecord,
   LessonTestSummaryRecord,
@@ -10,11 +11,18 @@ import type {
   UserProfile,
 } from '../types/domain.js';
 
-export async function findUserByEmail(email: string): Promise<MemoryUser | null> {
+export interface AuthenticatedUserRecord extends UserProfile {
+  passwordHash: string;
+}
+
+export async function findUserByEmail(email: string): Promise<AuthenticatedUserRecord | null> {
   const normalized = email.trim().toLowerCase();
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
-    return memoryStore.users.find((u) => u.email === normalized) || null;
+    const u = memoryStore.users.find((x) => x.email === normalized);
+    if (!u) return null;
+    const permissions = await getEffectivePermissions(u.id, u.role);
+    return { ...u, isSuperAdmin: u.role === 'admin', permissions };
   }
 
   const pool = getPool()!;
@@ -31,12 +39,15 @@ export async function findUserByEmail(email: string): Promise<MemoryUser | null>
   );
   const r = res.rows[0];
   if (!r) return null;
+  const permissions = await getEffectivePermissions(r.id, r.role);
   return {
     id: r.id,
     email: r.email,
     passwordHash: r.password_hash,
     displayName: r.display_name,
     role: r.role,
+    isSuperAdmin: r.role === 'admin',
+    permissions,
     createdAt: r.created_at.toISOString(),
   };
 }
@@ -46,8 +57,9 @@ export async function findUserById(userId: string): Promise<UserProfile | null> 
     memoryStore.ensureLoaded();
     const u = memoryStore.users.find((x) => x.id === userId);
     if (!u) return null;
-    const { passwordHash: _pw, ...profile } = u;
-    return profile;
+    const { passwordHash: _pw, ...base } = u;
+    const permissions = await getEffectivePermissions(base.id, base.role);
+    return { ...base, isSuperAdmin: base.role === 'admin', permissions };
   }
 
   const pool = getPool()!;
@@ -63,11 +75,14 @@ export async function findUserById(userId: string): Promise<UserProfile | null> 
   );
   const r = res.rows[0];
   if (!r) return null;
+  const permissions = await getEffectivePermissions(r.id, r.role);
   return {
     id: r.id,
     email: r.email,
     displayName: r.display_name,
     role: r.role,
+    isSuperAdmin: r.role === 'admin',
+    permissions,
     createdAt: r.created_at.toISOString(),
   };
 }
@@ -89,8 +104,9 @@ export async function createUser(
       createdAt: new Date().toISOString(),
     };
     memoryStore.users.push(user);
-    const { passwordHash: _pw, ...profile } = user;
-    return profile;
+    const { passwordHash: _pw, ...base } = user;
+    const permissions = await getEffectivePermissions(base.id, base.role);
+    return { ...base, isSuperAdmin: false, permissions };
   }
 
   const pool = getPool()!;
@@ -107,11 +123,14 @@ export async function createUser(
     [normalized, passwordHash, displayName.trim()]
   );
   const r = res.rows[0];
+  const permissions = await getEffectivePermissions(r.id, r.role);
   return {
     id: r.id,
     email: r.email,
     displayName: r.display_name,
     role: r.role,
+    isSuperAdmin: r.role === 'admin',
+    permissions,
     createdAt: r.created_at.toISOString(),
   };
 }

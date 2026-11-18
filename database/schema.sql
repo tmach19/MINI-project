@@ -227,3 +227,140 @@ CREATE TABLE IF NOT EXISTS test_attempts (
 
 CREATE INDEX IF NOT EXISTS idx_attempts_user_lesson ON test_attempts (user_id, lesson_id, submitted_at DESC);
 CREATE INDEX IF NOT EXISTS idx_attempts_user_submitted ON test_attempts (user_id, submitted_at DESC);
+
+-- ----------------------------------------------------------------------------
+-- 11. Hệ thống Phân quyền RBAC (Roles, Permissions, Role-Permissions, User Overrides)
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS roles (
+  id TEXT PRIMARY KEY,
+  code TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  description TEXT,
+  is_system BOOLEAN NOT NULL DEFAULT TRUE,
+  active_flg BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS permissions (
+  id TEXT PRIMARY KEY,
+  code TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  type TEXT NOT NULL CHECK (type IN ('MENU', 'ACTION')),
+  parent_code TEXT,
+  description TEXT,
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  active_flg BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS role_permissions (
+  role_id TEXT NOT NULL REFERENCES roles(id) ON DELETE CASCADE,
+  permission_id TEXT NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (role_id, permission_id)
+);
+
+CREATE TABLE IF NOT EXISTS user_permissions (
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  permission_id TEXT NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
+  is_excluded BOOLEAN NOT NULL DEFAULT FALSE,
+  updated_by UUID REFERENCES users(id) ON DELETE SET NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (user_id, permission_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_permissions_sort ON permissions (sort_order, code);
+CREATE INDEX IF NOT EXISTS idx_role_permissions_role ON role_permissions (role_id);
+CREATE INDEX IF NOT EXISTS idx_user_permissions_user ON user_permissions (user_id, is_excluded);
+
+CREATE OR REPLACE FUNCTION fn_get_user_permissions(p_user_id UUID)
+RETURNS TABLE (
+  code TEXT
+)
+LANGUAGE sql
+STABLE
+AS $$
+WITH target_user AS (
+  SELECT id, role
+  FROM users
+  WHERE id = p_user_id
+),
+admin_perms AS (
+  SELECT p.code, p.sort_order
+  FROM permissions p
+  CROSS JOIN target_user u
+  WHERE u.role = 'admin'
+    AND p.active_flg = TRUE
+),
+role_perms AS (
+  SELECT p.id AS permission_id, p.code, p.sort_order
+  FROM target_user u
+  JOIN roles r ON r.code = u.role AND r.active_flg = TRUE
+  JOIN role_permissions rp ON rp.role_id = r.id
+  JOIN permissions p ON p.id = rp.permission_id AND p.active_flg = TRUE
+  WHERE u.role <> 'admin'
+),
+added_perms AS (
+  SELECT p.id AS permission_id, p.code, p.sort_order
+  FROM target_user u
+  JOIN user_permissions up ON up.user_id = u.id AND up.is_excluded = FALSE
+  JOIN permissions p ON p.id = up.permission_id AND p.active_flg = TRUE
+  WHERE u.role <> 'admin'
+),
+excluded_perms AS (
+  SELECT up.permission_id
+  FROM target_user u
+  JOIN user_permissions up ON up.user_id = u.id AND up.is_excluded = TRUE
+  WHERE u.role <> 'admin'
+),
+combined_user_perms AS (
+  SELECT DISTINCT permission_id, code, sort_order
+  FROM (
+    SELECT permission_id, code, sort_order FROM role_perms
+    UNION ALL
+    SELECT permission_id, code, sort_order FROM added_perms
+  ) raw_perms
+  WHERE permission_id NOT IN (SELECT permission_id FROM excluded_perms)
+)
+SELECT code
+FROM (
+  SELECT code, sort_order FROM admin_perms
+  UNION ALL
+  SELECT code, sort_order FROM combined_user_perms
+) final_perms
+ORDER BY sort_order ASC, code ASC;
+$$;
+
+INSERT INTO roles (id, code, name, description, is_system, active_flg)
+VALUES
+  ('admin', 'admin', 'Quản trị viên', 'Toàn quyền quản trị hệ thống, bài học HSK và phân quyền tài khoản (Super Admin)', TRUE, TRUE),
+  ('user', 'user', 'Học viên', 'Học tập, làm bài kiểm tra, đánh dấu từ vựng và quản lý buổi học tự tạo', TRUE, TRUE)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO permissions (id, code, name, type, parent_code, description, sort_order, active_flg)
+VALUES
+  ('MENU_SYSTEM', 'MENU_SYSTEM', 'Quản lý bài học hệ thống', 'MENU', NULL, 'Nhóm quyền thao tác với các bài học HSK chuẩn hệ thống', 10, TRUE),
+  ('LESSON_SYSTEM_CREATE', 'LESSON_SYSTEM_CREATE', 'Tạo bài học hệ thống', 'ACTION', 'MENU_SYSTEM', 'Cho phép tạo mới bài học hệ thống (is_system = true)', 11, TRUE),
+  ('LESSON_SYSTEM_EDIT', 'LESSON_SYSTEM_EDIT', 'Sửa bài học hệ thống', 'ACTION', 'MENU_SYSTEM', 'Cho phép chỉnh sửa nội dung bài học hệ thống', 12, TRUE),
+  ('LESSON_SYSTEM_DELETE', 'LESSON_SYSTEM_DELETE', 'Xoá bài học hệ thống', 'ACTION', 'MENU_SYSTEM', 'Cho phép xoá bài học hệ thống', 13, TRUE),
+  ('MENU_LEARNING', 'MENU_LEARNING', 'Học tập & Bài cá nhân', 'MENU', NULL, 'Nhóm quyền học tập cơ bản của học viên', 20, TRUE),
+  ('LESSON_CUSTOM_CRUD', 'LESSON_CUSTOM_CRUD', 'Quản lý buổi học tự tạo', 'ACTION', 'MENU_LEARNING', 'Tạo, sửa và xoá buổi học cá nhân do chính mình sở hữu', 21, TRUE),
+  ('VOCAB_BOOKMARK', 'VOCAB_BOOKMARK', 'Đánh dấu từ vựng', 'ACTION', 'MENU_LEARNING', 'Lưu và đồng bộ từ vựng cần ôn tập vào hồ sơ cá nhân', 22, TRUE),
+  ('EXAM_TAKE', 'EXAM_TAKE', 'Làm bài kiểm tra & lưu điểm', 'ACTION', 'MENU_LEARNING', 'Nộp bài kiểm tra và lưu lịch sử điểm số', 23, TRUE),
+  ('MENU_ADMIN', 'MENU_ADMIN', 'Quản trị hệ thống', 'MENU', NULL, 'Truy cập màn hình Quản trị & Phân quyền', 30, TRUE),
+  ('USER_MANAGE', 'USER_MANAGE', 'Quản lý người dùng', 'ACTION', 'MENU_ADMIN', 'Xem danh sách tài khoản và thay đổi vai trò user/admin', 31, TRUE),
+  ('ROLE_MANAGE', 'ROLE_MANAGE', 'Quản lý phân quyền', 'ACTION', 'MENU_ADMIN', 'Cấu hình quyền cho vai trò và tinh chỉnh cấp thêm / hạn chế từng user', 32, TRUE)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO role_permissions (role_id, permission_id)
+SELECT 'admin', p.id FROM permissions p
+ON CONFLICT (role_id, permission_id) DO NOTHING;
+
+INSERT INTO role_permissions (role_id, permission_id)
+VALUES
+  ('user', 'MENU_LEARNING'),
+  ('user', 'LESSON_CUSTOM_CRUD'),
+  ('user', 'VOCAB_BOOKMARK'),
+  ('user', 'EXAM_TAKE')
+ON CONFLICT (role_id, permission_id) DO NOTHING;
