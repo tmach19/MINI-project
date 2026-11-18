@@ -29,6 +29,13 @@ interface RawAppConfig {
   legacy?: {
     dataPath?: string;
   };
+  ai?: {
+    provider?: string;
+    apiKey?: string;
+    model?: string;
+    baseUrl?: string;
+    timeoutMs?: number | string;
+  };
 }
 
 function resolvePlaceholders(value: unknown): unknown {
@@ -102,4 +109,11 @@ export const env = {
   jwtSecret: String(merged.security?.jwtSecret || 'dev-chinese-study-jwt-secret-key'),
   jwtExpiresIn: String(merged.security?.jwtExpiresIn || '7d'),
   legacyDataPath: path.resolve(backendRoot, merged.legacy?.dataPath || '../data.js'),
+  ai: {
+    provider: String(merged.ai?.provider || 'gemini').trim().toLowerCase(),
+    apiKey: String(merged.ai?.apiKey || process.env.AI_API_KEY || '').trim(),
+    model: String(merged.ai?.model || process.env.AI_MODEL || 'gemini-3.5-flash-lite').trim(),
+    baseUrl: String(merged.ai?.baseUrl || '').trim(),
+    timeoutMs: Number(merged.ai?.timeoutMs || 45000),
+  },
 };

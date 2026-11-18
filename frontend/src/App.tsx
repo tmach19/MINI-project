@@ -12,6 +12,7 @@ import {
   Plus,
   Search,
   ShieldCheck,
+  Sparkles,
   Sun,
   Trash2,
   User as UserIcon,
@@ -25,6 +26,7 @@ import {
   saveGuestMarkedMap,
 } from './lib/srsLocal';
 import { AdminRbacPage } from './components/AdminRbacPage';
+import { AiAssistantModal } from './components/AiAssistantModal';
 import { AuthModal } from './components/AuthModal';
 import { ConfirmDeleteModal } from './components/ConfirmDeleteModal';
 import { LoadingCard, LoadingScreen } from './components/common/LoadingState';
@@ -78,6 +80,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('vocab');
   const [loadingLesson, setLoadingLesson] = useState(false);
   const [comprehensiveExam, setComprehensiveExam] = useState<ComprehensiveExamResponse | null>(null);
+  const [selectedExamLessonIds, setSelectedExamLessonIds] = useState<string[] | null>(null);
   const [loadingExam, setLoadingExam] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -88,6 +91,9 @@ export default function App() {
 
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
+  const [showAiModal, setShowAiModal] = useState(false);
+  const [aiInitialTab, setAiInitialTab] = useState<'dictionary' | 'chat'>('dictionary');
+  const [aiInitialQuery, setAiInitialQuery] = useState('');
   const [writerVocab, setWriterVocab] = useState<VocabularyItem | null>(null);
   const [lessonModalMode, setLessonModalMode] = useState<'create' | 'edit' | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -152,11 +158,28 @@ export default function App() {
     }
   };
 
-  const loadComprehensiveExam = async () => {
+  const effectiveExamLessonIds = useMemo(
+    () => (selectedExamLessonIds === null ? lessons.map((l) => l.id) : selectedExamLessonIds),
+    [selectedExamLessonIds, lessons]
+  );
+
+  const loadComprehensiveExam = async (lessonIdsOverride?: string[]) => {
+    const targetIds = lessonIdsOverride ?? effectiveExamLessonIds;
+    if (selectedExamLessonIds !== null && targetIds.length === 0) {
+      setComprehensiveExam({
+        id: 'comprehensive_empty',
+        title: 'Kiểm tra tổng hợp (0 bài)',
+        hskLevel: 'HSK 1 - HSK 3',
+        description: 'Vui lòng chọn ít nhất 1 buổi học trong danh sách để bốc câu hỏi ngẫu nhiên.',
+        questions: [],
+      });
+      return;
+    }
+
     setLoadingExam(true);
     setErrorMsg(null);
     try {
-      const res = await api.getComprehensiveExam();
+      const res = await api.getComprehensiveExam(targetIds.length > 0 ? targetIds : undefined);
       setComprehensiveExam(res.exam);
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : 'Không tải được đề kiểm tra tổng hợp');
@@ -168,7 +191,7 @@ export default function App() {
   const openComprehensiveExam = () => {
     setComprehensiveExam(null);
     navigateView('exam');
-    void loadComprehensiveExam();
+    void loadComprehensiveExam(effectiveExamLessonIds);
   };
 
   useEffect(() => {
@@ -178,10 +201,10 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (activeView === 'exam' && !comprehensiveExam && !loadingExam) {
-      void loadComprehensiveExam();
+    if (activeView === 'exam' && !comprehensiveExam && !loadingExam && lessons.length > 0) {
+      void loadComprehensiveExam(effectiveExamLessonIds);
     }
-  }, [activeView]);
+  }, [activeView, lessons.length]);
 
   const canAccessAdmin = hasPermission(user, [
     PERMISSIONS.MENU_ADMIN,
@@ -191,6 +214,21 @@ export default function App() {
   const canCreateCustomLesson = hasPermission(user, PERMISSIONS.LESSON_CUSTOM_CRUD);
   const canCreateSystemLesson = hasPermission(user, PERMISSIONS.LESSON_SYSTEM_CREATE);
   const canCreateAnyLesson = !user || canCreateCustomLesson || canCreateSystemLesson;
+  const canUseAiAssistant = !user || hasPermission(user, PERMISSIONS.AI_ASSISTANT_USE);
+
+  const openAiAssistant = (tab: 'dictionary' | 'chat' = 'dictionary', query = '') => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+    if (!hasPermission(user, PERMISSIONS.AI_ASSISTANT_USE)) {
+      setErrorMsg('Tài khoản của bạn hiện không có quyền sử dụng Trợ lý AI & Từ điển.');
+      return;
+    }
+    setAiInitialTab(tab);
+    setAiInitialQuery(query);
+    setShowAiModal(true);
+  };
 
   useEffect(() => {
     if (!authChecked) return;
@@ -490,6 +528,19 @@ export default function App() {
 
             <HeaderExtensionMenu
               items={[
+                ...(canUseAiAssistant
+                  ? [
+                      {
+                        id: 'ai_dictionary',
+                        label: 'Từ điển & Trợ lý AI',
+                        description: 'Dịch Trung ⇄ Việt & Gia sư',
+                        icon: Sparkles,
+                        iconClassName: 'text-amber-500',
+                        active: showAiModal,
+                        onClick: () => openAiAssistant('dictionary', ''),
+                      },
+                    ]
+                  : []),
                 {
                   id: 'comprehensive_exam',
                   label: 'Kiểm tra tổng hợp',
@@ -658,8 +709,14 @@ export default function App() {
               onGoToVocab={() => navigateView('study')}
               isComprehensiveExam
               loadingExam={loadingExam}
-              onRefreshExam={loadComprehensiveExam}
+              onRefreshExam={() => void loadComprehensiveExam(effectiveExamLessonIds)}
               onBackToStudy={() => navigateView('study')}
+              availableLessons={lessons}
+              selectedLessonIds={effectiveExamLessonIds}
+              onChangeSelectedLessons={(ids) => {
+                setSelectedExamLessonIds(ids);
+                void loadComprehensiveExam(ids);
+              }}
             />
           )
         ) : activeView === 'admin' ? (
@@ -731,7 +788,56 @@ export default function App() {
             navigateView('study');
             setActiveTab('vocab');
           }}
+          onOpenAiDictionary={
+            canUseAiAssistant ? (q) => openAiAssistant('dictionary', q) : undefined
+          }
         />
+      )}
+      {showAiModal && (
+        <AiAssistantModal
+          initialTab={aiInitialTab}
+          initialQuery={aiInitialQuery}
+          currentLesson={currentLesson}
+          lessons={lessons}
+          onClose={() => setShowAiModal(false)}
+          onJumpToLesson={(id, tab = 'vocab') => {
+            setCurrentLessonId(id);
+            navigateView('study');
+            setActiveTab(tab);
+          }}
+          onNavigateView={(view) => {
+            if (view === 'exam') {
+              openComprehensiveExam();
+            } else {
+              navigateView(view);
+            }
+          }}
+          onStartReviewExam={(exam, lessonIds) => {
+            setSelectedExamLessonIds(lessonIds);
+            setComprehensiveExam(exam);
+            navigateView('exam');
+          }}
+          onOpenWriter={(v) => setWriterVocab(v)}
+          onProgressChanged={refreshUserProgress}
+          onLessonsChanged={async (focusId) => {
+            await refreshLessons();
+            if (focusId) setCurrentLessonId(focusId);
+          }}
+        />
+      )}
+      {canUseAiAssistant && (
+        <button
+          type="button"
+          onClick={() => openAiAssistant('dictionary', '')}
+          title="Mở Từ điển & Gia sư AI"
+          aria-label="Mở Từ điển & Gia sư AI"
+          className="group fixed bottom-5 right-5 z-30 h-11 px-3 hover:px-4 focus-visible:px-4 rounded-full bg-gradient-to-r from-red-600 to-amber-600 hover:opacity-95 text-white text-xs font-bold shadow-lg flex items-center justify-center transition-all duration-300 ease-out active:scale-95"
+        >
+          <Sparkles className="w-5 h-5 flex-shrink-0" />
+          <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-300 ease-out group-hover:max-w-[180px] group-hover:opacity-100 group-hover:ml-2 group-focus-visible:max-w-[180px] group-focus-visible:opacity-100 group-focus-visible:ml-2">
+            Từ điển &amp; Gia sư AI
+          </span>
+        </button>
       )}
       {writerVocab && (
         <HanziWriterModal

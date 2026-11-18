@@ -1,7 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { ArrowLeft, Award, CheckCircle2, Clock, Play, RotateCcw, Send, Shuffle, Volume2 } from 'lucide-react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  ArrowLeft,
+  Award,
+  CheckCircle2,
+  ChevronDown,
+  Clock,
+  Layers,
+  Play,
+  RotateCcw,
+  Search,
+  Send,
+  Shuffle,
+  Volume2,
+} from 'lucide-react';
 import { soundFx, speakChinese } from '../lib/audio';
-import type { LessonDetail, TestAttemptRecord } from '../types';
+import type { LessonDetail, LessonSummary, TestAttemptRecord } from '../types';
 
 interface TestSectionProps {
   lesson: LessonDetail;
@@ -20,6 +33,9 @@ interface TestSectionProps {
   loadingExam?: boolean;
   onRefreshExam?: () => void;
   onBackToStudy?: () => void;
+  availableLessons?: LessonSummary[];
+  selectedLessonIds?: string[];
+  onChangeSelectedLessons?: (lessonIds: string[]) => void;
 }
 
 function getTestDurationSeconds(questionCount: number): number {
@@ -57,6 +73,9 @@ export const TestSection: React.FC<TestSectionProps> = ({
   loadingExam = false,
   onRefreshExam,
   onBackToStudy,
+  availableLessons = [],
+  selectedLessonIds = [],
+  onChangeSelectedLessons,
 }) => {
   const questions = lesson.comprehensiveTest || [];
   const totalSeconds = getTestDurationSeconds(questions.length);
@@ -66,6 +85,98 @@ export const TestSection: React.FC<TestSectionProps> = ({
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [timeRemaining, setTimeRemaining] = useState(totalSeconds);
   const [finalScore, setFinalScore] = useState(0);
+
+  // Dropdown chọn bài cho Kiểm tra tổng hợp
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [lessonSearch, setLessonSearch] = useState('');
+  const [draftIds, setDraftIds] = useState<string[]>(selectedLessonIds);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const selectAllRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setDraftIds(selectedLessonIds);
+  }, [selectedLessonIds]);
+
+  const filteredLessons = useMemo(() => {
+    const q = lessonSearch.trim().toLowerCase();
+    if (!q) return availableLessons;
+    return availableLessons.filter(
+      (l) =>
+        l.title.toLowerCase().includes(q) ||
+        l.hskLevel.toLowerCase().includes(q) ||
+        (l.unit || '').toLowerCase().includes(q)
+    );
+  }, [availableLessons, lessonSearch]);
+
+  const allFilteredSelected =
+    filteredLessons.length > 0 && filteredLessons.every((l) => draftIds.includes(l.id));
+  const someFilteredSelected =
+    filteredLessons.some((l) => draftIds.includes(l.id)) && !allFilteredSelected;
+
+  useEffect(() => {
+    if (selectAllRef.current) {
+      selectAllRef.current.indeterminate = someFilteredSelected;
+    }
+  }, [someFilteredSelected, dropdownOpen]);
+
+  const commitDraftIfChanged = (nextIds: string[]) => {
+    const prevSet = new Set(selectedLessonIds);
+    const changed =
+      nextIds.length !== prevSet.size || nextIds.some((id) => !prevSet.has(id));
+    if (changed && onChangeSelectedLessons) {
+      onChangeSelectedLessons(nextIds);
+    }
+  };
+
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    const handlePointerDown = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+        commitDraftIfChanged(draftIds);
+      }
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setDropdownOpen(false);
+        setDraftIds(selectedLessonIds);
+      }
+    };
+    window.addEventListener('mousedown', handlePointerDown);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('mousedown', handlePointerDown);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [dropdownOpen, draftIds, selectedLessonIds]);
+
+  const toggleDraftLesson = (id: string) => {
+    setDraftIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  };
+
+  const toggleSelectAllDraft = () => {
+    const visibleIds = filteredLessons.map((l) => l.id);
+    if (visibleIds.length === 0) return;
+    if (allFilteredSelected) {
+      const visibleSet = new Set(visibleIds);
+      setDraftIds((prev) => prev.filter((id) => !visibleSet.has(id)));
+    } else {
+      setDraftIds((prev) => Array.from(new Set([...prev, ...visibleIds])));
+    }
+  };
+
+  const selectedScopeSummary = useMemo(() => {
+    if (availableLessons.length === 0) return 'Tất cả bài học';
+    if (selectedLessonIds.length === 0) return 'Chưa chọn bài nào';
+    if (selectedLessonIds.length === availableLessons.length) {
+      return `Tất cả buổi học (${availableLessons.length} bài)`;
+    }
+    if (selectedLessonIds.length === 1) {
+      const one = availableLessons.find((l) => l.id === selectedLessonIds[0]);
+      return one ? one.title : '1 bài học';
+    }
+    return `Đã chọn ${selectedLessonIds.length} / ${availableLessons.length} bài`;
+  }, [availableLessons, selectedLessonIds]);
 
   useEffect(() => {
     setIsActive(false);
@@ -141,15 +252,136 @@ export const TestSection: React.FC<TestSectionProps> = ({
   if (!isActive && !isSubmitted) {
     return (
       <div className="max-w-2xl mx-auto space-y-6">
-        {isComprehensiveExam && onBackToStudy && (
-          <div className="flex items-center justify-between">
-            <button
-              type="button"
-              onClick={onBackToStudy}
-              className="px-3.5 py-2 rounded-xl border border-stone-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-stone-100 dark:hover:bg-slate-800 text-xs font-bold text-gray-700 dark:text-slate-200 inline-flex items-center gap-1.5 transition"
-            >
-              <ArrowLeft className="w-4 h-4" /> Quay lại buổi học
-            </button>
+        {isComprehensiveExam && (
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            {onBackToStudy ? (
+              <button
+                type="button"
+                onClick={onBackToStudy}
+                className="px-3.5 py-2 rounded-xl border border-stone-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-stone-100 dark:hover:bg-slate-800 text-xs font-bold text-gray-700 dark:text-slate-200 inline-flex items-center gap-1.5 transition"
+              >
+                <ArrowLeft className="w-4 h-4" /> Quay lại buổi học
+              </button>
+            ) : (
+              <div />
+            )}
+
+            {availableLessons.length > 0 && onChangeSelectedLessons && (
+              <div ref={dropdownRef} className="relative">
+                <button
+                  type="button"
+                  onClick={() => setDropdownOpen((prev) => !prev)}
+                  className={`px-3.5 py-2 rounded-xl border text-xs font-bold inline-flex items-center gap-2 transition shadow-sm ${
+                    dropdownOpen
+                      ? 'border-red-500 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-200'
+                      : 'border-stone-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-stone-100 dark:hover:bg-slate-800 text-gray-800 dark:text-slate-100'
+                  }`}
+                >
+                  <Layers className="w-3.5 h-3.5 text-red-600 dark:text-red-400 flex-shrink-0" />
+                  <span className="max-w-[230px] truncate">{selectedScopeSummary}</span>
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 transition-transform ${
+                      dropdownOpen ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl border border-stone-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xl z-40 p-3 space-y-2.5 pop-in">
+                    <div className="relative">
+                      <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                      <input
+                        type="text"
+                        value={lessonSearch}
+                        onChange={(e) => setLessonSearch(e.target.value)}
+                        placeholder="Tìm buổi học muốn ôn tập..."
+                        className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-stone-200 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 text-xs text-gray-900 dark:text-white focus:outline-none"
+                      />
+                    </div>
+
+                    {filteredLessons.length > 0 && (
+                      <label className="px-2.5 py-2 rounded-xl bg-stone-50 dark:bg-slate-800/80 border border-stone-200/80 dark:border-slate-700 flex items-center justify-between gap-2 text-xs cursor-pointer select-none">
+                        <div className="flex items-center gap-2">
+                          <input
+                            ref={selectAllRef}
+                            type="checkbox"
+                            checked={allFilteredSelected}
+                            onChange={toggleSelectAllDraft}
+                            className="rounded border-stone-300 dark:border-slate-600 text-red-600 focus:ring-red-500"
+                          />
+                          <span className="font-bold text-gray-900 dark:text-white">
+                            {lessonSearch.trim() ? 'Chọn tất cả kết quả lọc' : 'Chọn tất cả'}
+                          </span>
+                        </div>
+                        <span className="text-[11px] font-semibold text-gray-500 dark:text-slate-400">
+                          {draftIds.length}/{availableLessons.length} bài
+                        </span>
+                      </label>
+                    )}
+
+                    <div className="max-h-60 overflow-y-auto divide-y divide-stone-100 dark:divide-slate-800">
+                      {filteredLessons.length === 0 ? (
+                        <p className="py-6 text-center text-xs text-gray-400 dark:text-slate-500">
+                          Không tìm thấy buổi học phù hợp.
+                        </p>
+                      ) : (
+                        filteredLessons.map((item) => {
+                          const checked = draftIds.includes(item.id);
+                          return (
+                            <label
+                              key={item.id}
+                              className="py-2 px-2 flex items-center justify-between gap-2 text-xs rounded-lg cursor-pointer hover:bg-stone-50 dark:hover:bg-slate-800/60"
+                            >
+                              <div className="flex items-center gap-2 min-w-0">
+                                <input
+                                  type="checkbox"
+                                  checked={checked}
+                                  onChange={() => toggleDraftLesson(item.id)}
+                                  className="rounded border-stone-300 dark:border-slate-600 text-red-600 focus:ring-red-500"
+                                />
+                                <span className="font-semibold text-gray-800 dark:text-slate-200 truncate">
+                                  {item.title}
+                                </span>
+                              </div>
+                              <span
+                                className={`px-2 py-0.5 rounded text-[10px] font-bold flex-shrink-0 ${
+                                  item.isSystem
+                                    ? 'bg-stone-100 dark:bg-slate-800 text-gray-500 dark:text-slate-400'
+                                    : 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
+                                }`}
+                              >
+                                {item.isSystem ? item.hskLevel : 'Tự tạo'}
+                              </span>
+                            </label>
+                          );
+                        })
+                      )}
+                    </div>
+
+                    <div className="pt-2 border-t border-stone-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setDraftIds([])}
+                        disabled={draftIds.length === 0}
+                        className="px-2.5 py-1.5 rounded-lg text-[11px] font-semibold text-gray-600 dark:text-slate-300 hover:text-red-600 disabled:opacity-40"
+                      >
+                        Bỏ chọn hết
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setDropdownOpen(false);
+                          commitDraftIfChanged(draftIds);
+                        }}
+                        className="px-3.5 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-sm"
+                      >
+                        <Shuffle className="w-3.5 h-3.5" /> Áp dụng &amp; Bốc đề
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
 
@@ -158,14 +390,16 @@ export const TestSection: React.FC<TestSectionProps> = ({
             <Award className="w-8 h-8" />
           </div>
           <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-wider">
-            {isComprehensiveExam ? '26 bài học • Đề ngẫu nhiên' : 'Module 5'}
+            {isComprehensiveExam
+              ? `${selectedLessonIds.length} bài học • Đề ngẫu nhiên`
+              : 'Module 5'}
           </span>
           <h2 className="text-3xl font-bold">
-            {isComprehensiveExam ? 'Kiểm tra tổng hợp (26 bài)' : 'Bài kiểm tra tổng hợp cả buổi'}
+            {isComprehensiveExam ? lesson.title : 'Bài kiểm tra tổng hợp cả buổi'}
           </h2>
           <p className="text-white/90 text-sm max-w-lg mx-auto">
             {isComprehensiveExam
-              ? '50 câu ngẫu nhiên tổng hợp từ 26 bài học theo đúng cơ cấu đề thi HSK 3.'
+              ? lesson.description
               : 'Đánh giá toàn diện từ vựng, nghe HSK, đọc hiểu và dịch nghĩa. Điểm thi được lưu vào lịch sử học tập.'}
           </p>
           <div className="grid grid-cols-3 gap-4 pt-3 max-w-md mx-auto">
@@ -269,7 +503,7 @@ export const TestSection: React.FC<TestSectionProps> = ({
                 onClick={onRefreshExam}
                 className="px-6 py-2.5 bg-amber-600 hover:bg-amber-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold inline-flex items-center gap-1.5"
               >
-                <Shuffle className="w-3.5 h-3.5" /> Bốc bộ 50 câu khác
+                <Shuffle className="w-3.5 h-3.5" /> Bốc bộ đề khác
               </button>
             )}
             <button

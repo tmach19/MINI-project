@@ -853,14 +853,32 @@ function classifySubBucket(q: ComprehensiveQuestion): string {
   return cat;
 }
 
-export async function getComprehensiveExamQuestions(totalLimit = 50): Promise<ComprehensiveQuestion[]> {
+export async function getComprehensiveExamQuestions(
+  totalLimit = 50,
+  lessonIds?: string[],
+  userId?: string
+): Promise<ComprehensiveQuestion[]> {
+  const cleanLessonIds =
+    Array.isArray(lessonIds) && lessonIds.length > 0
+      ? Array.from(new Set(lessonIds.map((id) => id.trim()).filter(Boolean)))
+      : null;
+
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
-    const systemLessons = memoryStore.lessons.filter((l) => l.isSystem);
+    const idSet = cleanLessonIds ? new Set(cleanLessonIds) : null;
+    const targetLessons = memoryStore.lessons.filter((l) => {
+      const accessible = l.isSystem || (userId && l.ownerId === userId);
+      if (!accessible) return false;
+      return idSet ? idSet.has(l.id) : l.isSystem;
+    });
+
+    if (targetLessons.length === 0) return [];
     const factor = Math.max(totalLimit, 1) / 50;
 
     const bucketMap = new Map<string, Array<{ q: ComprehensiveQuestion; lessonOrder: number }>>();
-    for (const lesson of systemLessons) {
+    const allItems: Array<{ q: ComprehensiveQuestion; lessonOrder: number }> = [];
+
+    for (const lesson of targetLessons) {
       const perCatIndex = new Map<string, number>();
       const shuffledLessonQs = shuffleArray(lesson.comprehensiveTest || []);
       for (const q of shuffledLessonQs) {
@@ -868,27 +886,59 @@ export async function getComprehensiveExamQuestions(totalLimit = 50): Promise<Co
         const catKey = q.category || 'vocab';
         const rank = (perCatIndex.get(catKey) || 0) + 1;
         perCatIndex.set(catKey, rank);
-        const list = bucketMap.get(sub) || [];
-        list.push({
+        const item = {
           q: { ...q, lessonId: lesson.id, lessonTitle: lesson.title },
           lessonOrder: rank,
-        });
+        };
+        allItems.push(item);
+        const list = bucketMap.get(sub) || [];
+        list.push(item);
         bucketMap.set(sub, list);
       }
     }
 
     const result: ComprehensiveQuestion[] = [];
+    const pickedIds = new Set<string>();
     for (const spec of COMPREHENSIVE_QUOTAS) {
       const raw = bucketMap.get(spec.bucket) || [];
       const shuffled = shuffleArray(raw).sort((a, b) => a.lessonOrder - b.lessonOrder);
       const take = Math.round(spec.count * factor);
-      result.push(...shuffled.slice(0, take).map((x) => x.q));
+      for (const item of shuffled.slice(0, take)) {
+        if (!pickedIds.has(item.q.id)) {
+          pickedIds.add(item.q.id);
+          result.push(item.q);
+        }
+      }
     }
-    return result;
+
+    if (result.length < totalLimit) {
+      const remaining = shuffleArray(allItems.filter((x) => !pickedIds.has(x.q.id))).sort(
+        (a, b) => a.lessonOrder - b.lessonOrder
+      );
+      for (const item of remaining) {
+        if (result.length >= totalLimit) break;
+        pickedIds.add(item.q.id);
+        result.push(item.q);
+      }
+    }
+
+    return result.slice(0, totalLimit);
   }
 
   const pool = getPool()!;
-  const res = await pool.query<{
+  let allowedIds: string[] | null = null;
+  if (cleanLessonIds) {
+    const allowedRes = await pool.query<{ id: string }>(
+      `SELECT id FROM lessons
+       WHERE id = ANY($1::text[])
+         AND (is_system = TRUE OR ($2::uuid IS NOT NULL AND owner_id = $2::uuid))`,
+      [cleanLessonIds, userId || null]
+    );
+    allowedIds = allowedRes.rows.map((r) => r.id);
+    if (allowedIds.length === 0) return [];
+  }
+
+  type ExamRow = {
     id: string;
     lesson_id: string;
     lesson_title: string;
@@ -899,13 +949,43 @@ export async function getComprehensiveExamQuestions(totalLimit = 50): Promise<Co
     options: string[];
     correct_index: number;
     explanation: string | null;
-  }>(
-    `SELECT id, lesson_id, lesson_title, category, audio_text, passage, question, options, correct_index, explanation
-     FROM fn_get_random_comprehensive_exam($1)`,
-    [totalLimit]
-  );
+  };
 
-  return res.rows.map((q) => ({
+  let rows: ExamRow[];
+  try {
+    const res = await pool.query<ExamRow>(
+      `SELECT id, lesson_id, lesson_title, category, audio_text, passage, question, options, correct_index, explanation
+       FROM fn_get_random_comprehensive_exam($1, $2::text[])`,
+      [totalLimit, allowedIds]
+    );
+    rows = res.rows;
+  } catch (err) {
+    const code = (err as { code?: string } | null)?.code;
+    if (code !== '42883') throw err;
+    // Fallback an toàn nếu PostgreSQL chưa chạy Liquibase cập nhật fn_get_random_comprehensive_exam 2 tham số
+    const res = await pool.query<ExamRow>(
+      `WITH pool AS (
+         SELECT q.id, q.lesson_id, l.title AS lesson_title, q.category, q.audio_text, q.passage,
+                q.question, q.options, q.correct_index, q.explanation,
+                ROW_NUMBER() OVER (PARTITION BY q.lesson_id, q.category ORDER BY random()) AS rn
+         FROM quiz_questions q
+         JOIN lessons l ON l.id = q.lesson_id
+         WHERE q.scope = 'comprehensive_test'
+           AND (
+             ($2::text[] IS NULL AND l.is_system = TRUE)
+             OR ($2::text[] IS NOT NULL AND q.lesson_id = ANY($2::text[]))
+           )
+       )
+       SELECT id, lesson_id, lesson_title, category, audio_text, passage, question, options, correct_index, explanation
+       FROM pool
+       ORDER BY rn ASC, random()
+       LIMIT $1`,
+      [totalLimit, allowedIds]
+    );
+    rows = res.rows;
+  }
+
+  return rows.slice(0, totalLimit).map((q) => ({
     id: q.id,
     lessonId: q.lesson_id,
     lessonTitle: q.lesson_title,

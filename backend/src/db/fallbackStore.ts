@@ -12,6 +12,7 @@ import type {
   LessonDetail,
   MarkedVocabRecord,
   TestAttemptRecord,
+  TranslationCacheRecord,
   UserProfile,
 } from '../types/domain.js';
 
@@ -49,6 +50,7 @@ class FallbackMemoryStore {
   ]);
   // userId -> Map<permissionId, isExcluded>
   userOverrides = new Map<string, Map<string, boolean>>();
+  translationCache = new Map<string, TranslationCacheRecord>();
   // userId -> Map<vocabId, MarkedVocabRecord>
   markedByUser = new Map<string, Map<string, MarkedVocabRecord>>();
   attemptsByUser = new Map<string, TestAttemptRecord[]>();

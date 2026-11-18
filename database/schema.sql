@@ -348,6 +348,7 @@ VALUES
   ('LESSON_CUSTOM_CRUD', 'LESSON_CUSTOM_CRUD', 'Quản lý buổi học tự tạo', 'ACTION', 'MENU_LEARNING', 'Tạo, sửa và xoá buổi học cá nhân do chính mình sở hữu', 21, TRUE),
   ('VOCAB_BOOKMARK', 'VOCAB_BOOKMARK', 'Đánh dấu từ vựng', 'ACTION', 'MENU_LEARNING', 'Lưu và đồng bộ từ vựng cần ôn tập vào hồ sơ cá nhân', 22, TRUE),
   ('EXAM_TAKE', 'EXAM_TAKE', 'Làm bài kiểm tra & lưu điểm', 'ACTION', 'MENU_LEARNING', 'Nộp bài kiểm tra và lưu lịch sử điểm số', 23, TRUE),
+  ('AI_ASSISTANT_USE', 'AI_ASSISTANT_USE', 'Trợ lý AI & Từ điển Trung-Việt', 'ACTION', 'MENU_LEARNING', 'Sử dụng Từ điển dịch AI Trung-Việt và chat hỏi đáp với Gia sư AI HSK', 24, TRUE),
   ('MENU_ADMIN', 'MENU_ADMIN', 'Quản trị hệ thống', 'MENU', NULL, 'Truy cập màn hình Quản trị & Phân quyền', 30, TRUE),
   ('USER_MANAGE', 'USER_MANAGE', 'Quản lý người dùng', 'ACTION', 'MENU_ADMIN', 'Xem danh sách tài khoản và thay đổi vai trò user/admin', 31, TRUE),
   ('ROLE_MANAGE', 'ROLE_MANAGE', 'Quản lý phân quyền', 'ACTION', 'MENU_ADMIN', 'Cấu hình quyền cho vai trò và tinh chỉnh cấp thêm / hạn chế từng user', 32, TRUE)
@@ -362,5 +363,24 @@ VALUES
   ('user', 'MENU_LEARNING'),
   ('user', 'LESSON_CUSTOM_CRUD'),
   ('user', 'VOCAB_BOOKMARK'),
-  ('user', 'EXAM_TAKE')
+  ('user', 'EXAM_TAKE'),
+  ('user', 'AI_ASSISTANT_USE')
 ON CONFLICT (role_id, permission_id) DO NOTHING;
+
+-- ----------------------------------------------------------------------------
+-- 12. Bộ nhớ đệm Từ điển & Dịch AI (Translation Cache)
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS translation_cache (
+  cache_key TEXT PRIMARY KEY,
+  direction TEXT NOT NULL CHECK (direction IN ('auto', 'zh_vi', 'vi_zh')),
+  query_text TEXT NOT NULL,
+  source TEXT NOT NULL DEFAULT 'ai',
+  model TEXT,
+  payload JSONB NOT NULL,
+  hit_count INTEGER NOT NULL DEFAULT 1,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_translation_cache_updated
+  ON translation_cache (updated_at DESC);

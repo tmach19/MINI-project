@@ -33,15 +33,41 @@ router.get('/lessons', optionalAuth, async (req, res, next) => {
   }
 });
 
-router.get('/tests/comprehensive-exam', optionalAuth, async (_req, res, next) => {
+router.get('/tests/comprehensive-exam', optionalAuth, async (req, res, next) => {
   try {
-    const questions = await getComprehensiveExamQuestions(50);
+    const rawIds = req.query.lessonIds;
+    const lessonIds =
+      typeof rawIds === 'string'
+        ? rawIds
+            .split(',')
+            .map((s) => s.trim())
+            .filter(Boolean)
+        : Array.isArray(rawIds)
+        ? rawIds.map((s) => String(s).trim()).filter(Boolean)
+        : undefined;
+
+    const rawLimit = Number(req.query.limit || 50);
+    const limit = Number.isFinite(rawLimit) ? Math.min(Math.max(Math.round(rawLimit), 5), 100) : 50;
+
+    const questions = await getComprehensiveExamQuestions(
+      limit,
+      lessonIds,
+      req.user?.userId
+    );
+    const count = lessonIds?.length || 0;
+
     res.json({
       exam: {
-        id: 'comprehensive_all_26',
-        title: 'Kiểm tra tổng hợp (26 bài)',
+        id: count > 0 ? `comprehensive_custom_${count}` : 'comprehensive_all_26',
+        title:
+          count > 0
+            ? `Kiểm tra tổng hợp (${count} bài chọn)`
+            : 'Kiểm tra tổng hợp (26 bài)',
         hskLevel: 'HSK 1 - HSK 3',
-        description: '50 câu ngẫu nhiên tổng hợp từ 26 bài học theo tỉ lệ đề thi HSK 3.',
+        description:
+          count > 0
+            ? `${questions.length} câu ngẫu nhiên tổng hợp từ ${count} bài học đã chọn.`
+            : `${questions.length} câu ngẫu nhiên tổng hợp từ 26 bài học theo tỉ lệ đề thi HSK 3.`,
         questions,
       },
     });

@@ -2,7 +2,7 @@ databaseChangeLog:
   - changeSet:
       id: 20261117_141901_fn_get_random_comprehensive_exam
       author: chinese-study
-      comment: Function boc ngau nhien 50 cau hoi tong hop rai deu 26 bai theo ti le HSK 3
+      comment: Function boc ngau nhien 50 cau hoi tong hop theo danh sach bai chon hoac toan bo bai he thong
       runOnChange: true
       changes:
         - sql:
@@ -10,7 +10,12 @@ databaseChangeLog:
             splitStatements: false
             stripComments: false
             sql: |-
-              CREATE OR REPLACE FUNCTION fn_get_random_comprehensive_exam(p_total_limit INTEGER DEFAULT 50)
+              DROP FUNCTION IF EXISTS fn_get_random_comprehensive_exam(INTEGER);
+
+              CREATE OR REPLACE FUNCTION fn_get_random_comprehensive_exam(
+                p_total_limit INTEGER DEFAULT 50,
+                p_lesson_ids TEXT[] DEFAULT NULL
+              )
               RETURNS TABLE (
                 id TEXT,
                 lesson_id TEXT,
@@ -28,7 +33,8 @@ databaseChangeLog:
               VOLATILE
               AS $$
               WITH scale AS (
-                SELECT GREATEST(COALESCE(p_total_limit, 50), 1)::numeric / 50.0 AS factor
+                SELECT GREATEST(COALESCE(p_total_limit, 50), 1)::numeric / 50.0 AS factor,
+                       GREATEST(COALESCE(p_total_limit, 50), 1)::int AS total_limit
               ),
               pool AS (
                 SELECT
@@ -64,7 +70,10 @@ databaseChangeLog:
                 FROM quiz_questions q
                 JOIN lessons l ON l.id = q.lesson_id
                 WHERE q.scope = 'comprehensive_test'
-                  AND l.is_system = TRUE
+                  AND (
+                    ((p_lesson_ids IS NULL OR cardinality(p_lesson_ids) = 0) AND l.is_system = TRUE)
+                    OR (p_lesson_ids IS NOT NULL AND cardinality(p_lesson_ids) > 0 AND q.lesson_id = ANY(p_lesson_ids))
+                  )
               ),
               ranked AS (
                 SELECT
@@ -75,7 +84,7 @@ databaseChangeLog:
                   ) AS bucket_rn
                 FROM pool p
               ),
-              picked AS (
+              picked_quota AS (
                 SELECT r.*
                 FROM ranked r, scale s
                 WHERE (r.sub_bucket = 'l_single'        AND r.bucket_rn <= ROUND(7 * s.factor)::int)
@@ -89,6 +98,18 @@ databaseChangeLog:
                    OR (r.sub_bucket = 'r_pass'          AND r.bucket_rn <= ROUND(6 * s.factor)::int)
                    OR (r.sub_bucket = 'translate_vi_zh' AND r.bucket_rn <= ROUND(3 * s.factor)::int)
                    OR (r.sub_bucket = 'fb_pinyin'       AND r.bucket_rn <= ROUND(3 * s.factor)::int)
+              ),
+              topup AS (
+                SELECT r.*
+                FROM ranked r, scale s
+                WHERE r.id NOT IN (SELECT pq.id FROM picked_quota pq)
+                ORDER BY r.lesson_cat_rn ASC, random()
+                LIMIT GREATEST(0, (SELECT total_limit FROM scale) - (SELECT COUNT(*)::int FROM picked_quota))
+              ),
+              picked AS (
+                SELECT * FROM picked_quota
+                UNION ALL
+                SELECT * FROM topup
               )
               SELECT
                 pk.id,
@@ -121,4 +142,4 @@ databaseChangeLog:
       rollback:
         - sql:
             dbms: postgresql
-            sql: DROP FUNCTION IF EXISTS fn_get_random_comprehensive_exam(INTEGER);
+            sql: DROP FUNCTION IF EXISTS fn_get_random_comprehensive_exam(INTEGER, TEXT[]);

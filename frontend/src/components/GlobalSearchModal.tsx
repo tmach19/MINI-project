@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, Search, Volume2, X } from 'lucide-react';
+import { ArrowRight, Search, Sparkles, Volume2, X } from 'lucide-react';
 import { api } from '../lib/api';
 import { speakChinese } from '../lib/audio';
 import { ModalShell } from './common/ModalShell';
@@ -8,11 +8,13 @@ import type { GlobalVocabHit } from '../types';
 interface GlobalSearchModalProps {
   onClose: () => void;
   onJumpToLesson: (lessonId: string) => void;
+  onOpenAiDictionary?: (initialQuery: string) => void;
 }
 
 export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
   onClose,
   onJumpToLesson,
+  onOpenAiDictionary,
 }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<GlobalVocabHit[]>([]);
@@ -70,8 +72,20 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
           )}
 
           {!loading && query.trim() && results.length === 0 && (
-            <div className="p-8 text-center text-xs text-gray-500 dark:text-slate-400">
-              Không tìm thấy từ vựng khớp với “{query}”.
+            <div className="p-8 text-center space-y-3 text-xs text-gray-500 dark:text-slate-400">
+              <p>Không tìm thấy từ vựng khớp với “{query}” trong 26 bài HSK.</p>
+              {onOpenAiDictionary && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onOpenAiDictionary(query.trim());
+                  }}
+                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-amber-600 hover:opacity-95 text-white font-bold inline-flex items-center gap-1.5 shadow-sm"
+                >
+                  <Sparkles className="w-3.5 h-3.5" /> Tra &amp; dịch “{query.trim()}” bằng Từ điển AI
+                </button>
+              )}
             </div>
           )}
 
@@ -118,6 +132,24 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
               </button>
             </div>
           ))}
+
+          {!loading && query.trim() && results.length > 0 && onOpenAiDictionary && (
+            <div className="p-3 bg-stone-50/70 dark:bg-slate-800/40 flex items-center justify-between gap-2 text-xs">
+              <span className="text-gray-500 dark:text-slate-400">
+                Muốn dịch câu dài hoặc xem giải thích mở rộng?
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  onOpenAiDictionary(query.trim());
+                }}
+                className="px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold inline-flex items-center gap-1.5 flex-shrink-0"
+              >
+                <Sparkles className="w-3.5 h-3.5" /> Tra với Trợ lý AI
+              </button>
+            </div>
+          )}
         </div>
     </ModalShell>
   );

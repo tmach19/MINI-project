@@ -1,5 +1,10 @@
 import type {
   AdminUserRbacRow,
+  AiChatMessage,
+  AiDictionaryResponse,
+  AiPendingAction,
+  AiStatusResponse,
+  AiToolExecutionSummary,
   ComprehensiveExamResponse,
   GlobalVocabHit,
   LessonAttemptDetailRecord,
@@ -11,6 +16,7 @@ import type {
   PermissionCatalogItem,
   RoleWithPermissions,
   TestAttemptRecord,
+  TranslationDirection,
   UserProfile,
 } from '../types';
 
@@ -122,8 +128,13 @@ export const api = {
       body: JSON.stringify({ vocabIds }),
     }),
 
-  getComprehensiveExam: () =>
-    apiFetch<{ exam: ComprehensiveExamResponse }>('/tests/comprehensive-exam'),
+  getComprehensiveExam: (lessonIds?: string[]) => {
+    const query =
+      lessonIds && lessonIds.length > 0
+        ? `?lessonIds=${encodeURIComponent(lessonIds.join(','))}`
+        : '';
+    return apiFetch<{ exam: ComprehensiveExamResponse }>(`/tests/comprehensive-exam${query}`);
+  },
 
   getTestAttempts: () => apiFetch<{ attempts: TestAttemptRecord[] }>('/tests/attempts'),
 
@@ -182,4 +193,34 @@ export const api = {
         body: JSON.stringify(payload),
       }
     ),
+
+  aiStatus: () => apiFetch<AiStatusResponse>('/ai/status'),
+
+  aiDictionary: (payload: {
+    query: string;
+    direction?: TranslationDirection;
+    forceAi?: boolean;
+  }) =>
+    apiFetch<AiDictionaryResponse>('/ai/dictionary', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
+  aiChat: (payload: {
+    message: string;
+    history?: Array<Pick<AiChatMessage, 'role' | 'content'>>;
+    lessonIds?: string[];
+  }) =>
+    apiFetch<{
+      reply: string;
+      model: string;
+      lessonTitle: string | null;
+      lessonTitles?: string[];
+      toolExecutions?: AiToolExecutionSummary[];
+      pendingActions?: AiPendingAction[];
+      effects?: { progressUpdated?: boolean; lessonsUpdated?: boolean };
+    }>('/ai/chat', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
 };

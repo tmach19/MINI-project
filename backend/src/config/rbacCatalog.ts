@@ -28,6 +28,7 @@ export const PERMISSION_CODES = {
   LESSON_CUSTOM_CRUD: 'LESSON_CUSTOM_CRUD',
   VOCAB_BOOKMARK: 'VOCAB_BOOKMARK',
   EXAM_TAKE: 'EXAM_TAKE',
+  AI_ASSISTANT_USE: 'AI_ASSISTANT_USE',
 
   MENU_ADMIN: 'MENU_ADMIN',
   USER_MANAGE: 'USER_MANAGE',
@@ -135,6 +136,16 @@ export const DEFAULT_PERMISSIONS: PermissionCatalogItem[] = [
     activeFlg: true,
   },
   {
+    id: 'AI_ASSISTANT_USE',
+    code: 'AI_ASSISTANT_USE',
+    name: 'Trợ lý AI & Từ điển Trung-Việt',
+    type: 'ACTION',
+    parentCode: 'MENU_LEARNING',
+    description: 'Sử dụng Từ điển dịch AI Trung-Việt và chat hỏi đáp với Gia sư AI HSK',
+    sortOrder: 24,
+    activeFlg: true,
+  },
+  {
     id: 'MENU_ADMIN',
     code: 'MENU_ADMIN',
     name: 'Quản trị hệ thống',
@@ -168,5 +179,11 @@ export const DEFAULT_PERMISSIONS: PermissionCatalogItem[] = [
 
 export const DEFAULT_ROLE_PERMISSION_MAP: Record<'admin' | 'user', string[]> = {
   admin: DEFAULT_PERMISSIONS.map((p) => p.code),
-  user: ['MENU_LEARNING', 'LESSON_CUSTOM_CRUD', 'VOCAB_BOOKMARK', 'EXAM_TAKE'],
+  user: [
+    'MENU_LEARNING',
+    'LESSON_CUSTOM_CRUD',
+    'VOCAB_BOOKMARK',
+    'EXAM_TAKE',
+    'AI_ASSISTANT_USE',
+  ],
 };

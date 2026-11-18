@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261118_105002_seed_ai_permission
+      author: chinese-study
+      comment: Bo sung quyen AI_ASSISTANT_USE cho Tro ly AI va Tu dien Trung-Viet
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            stripComments: true
+            sql: |-
+              INSERT INTO permissions (id, code, name, type, parent_code, description, sort_order, active_flg)
+              VALUES (
+                'AI_ASSISTANT_USE',
+                'AI_ASSISTANT_USE',
+                'Trợ lý AI & Từ điển Trung-Việt',
+                'ACTION',
+                'MENU_LEARNING',
+                'Sử dụng Từ điển dịch AI Trung-Việt và chat hỏi đáp với Gia sư AI HSK',
+                24,
+                TRUE
+              )
+              ON CONFLICT (id) DO NOTHING;
+
+              INSERT INTO role_permissions (role_id, permission_id)
+              VALUES
+                ('admin', 'AI_ASSISTANT_USE'),
+                ('user', 'AI_ASSISTANT_USE')
+              ON CONFLICT (role_id, permission_id) DO NOTHING;
+      rollback:
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            sql: |-
+              DELETE FROM role_permissions WHERE permission_id = 'AI_ASSISTANT_USE';
+              DELETE FROM permissions WHERE id = 'AI_ASSISTANT_USE';

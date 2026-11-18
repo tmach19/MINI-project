@@ -23,3 +23,12 @@ security:
 
 legacy:
   dataPath: ../data.js
+
+ai:
+  # gemini | openai-compatible
+  provider: ${AI_PROVIDER:gemini}
+  apiKey: ${GEMINI_API_KEY:}
+  model: ${GEMINI_MODEL:gemini-3.5-flash-lite}
+  # Dùng cho openai-compatible (vd DeepSeek/Qwen/OpenRouter/Groq) hoặc custom Gemini endpoint
+  baseUrl: ${AI_BASE_URL:}
+  timeoutMs: ${AI_TIMEOUT_MS:45000}

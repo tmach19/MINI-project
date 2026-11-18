@@ -243,3 +243,115 @@ export interface AdminUserRbacRow {
   excludedPermissions: string[];
   effectivePermissions: string[];
 }
+
+export type TranslationDirection = 'auto' | 'zh_vi' | 'vi_zh';
+
+export interface AiStatusResponse {
+  configured: boolean;
+  provider: string;
+  model: string;
+}
+
+export interface AiDictionaryExample {
+  hanzi: string;
+  pinyin: string;
+  meaning: string;
+}
+
+export interface AiDictionaryEntry {
+  query: string;
+  direction: TranslationDirection;
+  detectedLanguage: 'zh' | 'vi' | 'mixed';
+  isSentence: boolean;
+  hanzi: string;
+  pinyin: string;
+  sinoVietnamese: string | null;
+  wordType: string | null;
+  meaning: string;
+  meanings: string[];
+  radical: string | null;
+  breakdown: string | null;
+  mnemonic: string | null;
+  grammarNote: string | null;
+  examples: AiDictionaryExample[];
+}
+
+export interface AiDictionaryResponse {
+  query: string;
+  direction: TranslationDirection;
+  localHits: GlobalVocabHit[];
+  aiResult: AiDictionaryEntry | null;
+  source: 'local_exact' | 'cache' | 'ai' | 'local_only';
+  model: string | null;
+  aiConfigured: boolean;
+  notice?: string;
+}
+
+export interface AiToolExecutionSummary {
+  name: string;
+  summary: string;
+}
+
+export interface AiLessonDraftVocab {
+  hanzi: string;
+  pinyin: string;
+  sinoVietnamese?: string | null;
+  meaning: string;
+  radical?: string | null;
+  breakdown?: string | null;
+  example?: string | null;
+}
+
+export interface AiLessonDraftGrammar {
+  title: string;
+  formula: string;
+  explanation?: string | null;
+}
+
+export type AiPendingAction =
+  | {
+      id: string;
+      type: 'create_lesson';
+      title: string;
+      hskLevel: string;
+      unit?: string;
+      description?: string;
+      isSystem: boolean;
+      vocabulary: AiLessonDraftVocab[];
+      grammar: AiLessonDraftGrammar[];
+    }
+  | {
+      id: string;
+      type: 'update_lesson';
+      lessonId: string;
+      title: string;
+      hskLevel: string;
+      unit?: string;
+      description?: string;
+      isSystem: boolean;
+      vocabulary: AiLessonDraftVocab[];
+      grammar: AiLessonDraftGrammar[];
+    }
+  | {
+      id: string;
+      type: 'navigate';
+      label: string;
+      view: 'study' | 'profile' | 'exam';
+      lessonId?: string;
+      tab?: TabId;
+    }
+  | {
+      id: string;
+      type: 'start_review_exam';
+      title: string;
+      description: string;
+      lessonIds: string[];
+      questions: ComprehensiveQuestion[];
+    };
+
+export interface AiChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+  toolExecutions?: AiToolExecutionSummary[];
+  pendingActions?: AiPendingAction[];
+}
