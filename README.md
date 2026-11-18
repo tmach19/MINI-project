@@ -39,6 +39,7 @@ Các quy ước kỹ thuật của dự án được chuẩn hóa tại [SKILL.m
 - **Frontend & UX (`frontend/src/`)**:
   - Định tuyến SPA (`/`, `/profile`, `/exam`) bằng History API kết hợp `frontend/vercel.json`.
   - Tái sử dụng UI chuẩn (`ModalShell`, `LessonMetaFields`, `ConfirmDeleteModal`, `LoadingState`, `TestSection`, `HeaderExtensionMenu`).
+  - **Không hiển thị ghi chú/trạng thái kỹ thuật nội bộ lên UI người dùng**: Không render lên giao diện các badge hoặc hướng dẫn dành cho developer (như `chưa có AI key`, tên biến `.env`, tên model nội bộ, đường dẫn `backend/.env`). Thiếu cấu hình chỉ log ở backend và trả thông báo thân thiện cho người dùng cuối.
   - **Lưu ý Dark Mode (Tailwind v3 specificity)**: Tránh kết hợp `dark:border-<color>` chung cho cả 4 cạnh với `border-t-*` / `border-r-*` không có `dark:`, vì `.dark .dark\:border-*` sẽ đè màu các cạnh riêng trong Dark Mode; ưu tiên SVG cho spinner (`LoadingState.tsx`) hoặc khai báo kèm `dark:border-t-*` / `dark:border-r-*`.
   - Thống kê trên `/profile` (**Tổng lượt thi**, **Điểm trung bình**, **Điểm cao nhất**) luôn tính động theo bộ lọc đang chọn.
   - Mọi ô nhập liệu hỗ trợ tiếng Trung / Telex bắt `Enter` đều kiểm tra `!e.nativeEvent.isComposing` để tránh nộp nhầm khi đang gõ IME; phần chấm dịch `zh_to_vi` đối chiếu đủ toàn câu đáp án thay vì chỉ khớp vài từ đầu.

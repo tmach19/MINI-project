@@ -293,7 +293,8 @@ async function generateAiResponse(options: {
   temperature?: number;
 }): Promise<{ text: string; usedModel: string }> {
   if (!isAiConfigured()) {
-    throw new Error('Chưa cấu hình GEMINI_API_KEY (hoặc AI_API_KEY) trong backend/.env.');
+    console.warn('[AI] Chưa cấu hình GEMINI_API_KEY hoặc AI_API_KEY trong backend/.env.');
+    throw new Error('Dịch vụ trợ lý AI hiện đang tạm thời gián đoạn. Vui lòng thử lại sau.');
   }
 
   const cleanHistory = (options.history || []).slice(-10);
@@ -456,6 +457,7 @@ export async function lookupDictionary(options: {
   }
 
   if (!aiConfigured) {
+    console.warn('[AI] Chưa cấu hình AI key -> chỉ trả về kết quả từ giáo trình HSK.');
     return {
       query,
       direction,
@@ -464,8 +466,6 @@ export async function lookupDictionary(options: {
       source: 'local_only',
       model: null,
       aiConfigured: false,
-      notice:
-        'Chưa cấu hình GEMINI_API_KEY trong backend/.env nên hệ thống chỉ hiển thị kết quả từ giáo trình HSK.',
     };
   }
 
@@ -602,7 +602,8 @@ Quy tắc trình bày & gọi tool khi trong phạm vi:
   }
 
   if (!isAiConfigured()) {
-    throw new Error('Chưa cấu hình GEMINI_API_KEY (hoặc AI_API_KEY) trong backend/.env.');
+    console.warn('[AI] Chưa cấu hình GEMINI_API_KEY hoặc AI_API_KEY trong backend/.env.');
+    throw new Error('Dịch vụ trợ lý AI hiện đang tạm thời gián đoạn. Vui lòng thử lại sau.');
   }
 
   const cleanHistory = (options.history || []).slice(-10);

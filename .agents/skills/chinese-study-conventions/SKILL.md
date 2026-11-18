@@ -76,6 +76,7 @@ Tài liệu chuẩn hóa các rule, pattern tối ưu và quy trình kiểm ch�
   - Các màn `/`, `/profile`, `/exam` đồng bộ qua `window.history.pushState`/`replaceState` và lắng nghe `popstate` (kết hợp `frontend/vercel.json`).
   - `HeaderExtensionMenu`: truyền danh sách `ExtensionMenuItem`; đặt `active: true` khi đang đứng tại màn tương ứng để highlight trạng thái đang chọn và khóa click lặp (nhưng không làm mờ bằng `opacity-40` như disabled thường).
   - Giữ mô tả UI gọn theo đúng yêu cầu (ví dụ mục Kiểm tra tổng hợp chỉ mô tả `"50 câu ngẫu nhiên"`).
+  - **Không để lộ thông tin cấu hình / trạng thái kỹ thuật nội bộ lên giao diện người dùng (UI)**: Tuyệt đối không hiển thị các nhãn hay thông báo nhắc tới trạng thái key/môi trường (`chưa có AI key`, `AI sẵn sàng (model...)`, tên biến môi trường như `GEMINI_API_KEY`/`AI_API_KEY`, đường dẫn `backend/.env`, `schema.sql` hay hướng dẫn setup cho developer) trên màn hình hoặc thông báo trả về cho user cuối. Nếu thiếu cấu hình trên server, ghi log qua `console.warn` ở backend và hiển thị thông báo thân thiện cho người dùng.
 - **Trang cá nhân (`ProfilePage.tsx`)**:
   - Dữ liệu tab **Từ đã đánh dấu** và **Lịch sử làm bài** lấy mới trực tiếp từ DB qua API (`/api/progress/marked`, `/api/tests/attempts`) khi mở tab.
   - Mọi thẻ thống kê (**Tổng lượt thi**, **Điểm trung bình**, **Điểm cao nhất**) phải tính từ tập dữ liệu **đã áp dụng bộ lọc (`filteredAttempts`)**, đồng bộ tức thì với bộ lọc loại bài & từ khóa.

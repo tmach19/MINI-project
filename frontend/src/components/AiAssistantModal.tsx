@@ -25,7 +25,6 @@ import type {
   AiChatMessage,
   AiDictionaryResponse,
   AiPendingAction,
-  AiStatusResponse,
   ComprehensiveExamResponse,
   LessonDetail,
   LessonSummary,
@@ -114,7 +113,6 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
   onLessonsChanged,
 }) => {
   const [activeTab, setActiveTab] = useState<'dictionary' | 'chat'>(initialTab);
-  const [aiStatus, setAiStatus] = useState<AiStatusResponse | null>(null);
 
   // Dictionary state
   const [dictQuery, setDictQuery] = useState(initialQuery);
@@ -144,13 +142,6 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
   >({});
   const chatEndRef = useRef<HTMLDivElement>(null);
   const selectAllCheckboxRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    api
-      .aiStatus()
-      .then(setAiStatus)
-      .catch(() => {});
-  }, []);
 
   useEffect(() => {
     if (initialQuery.trim()) {
@@ -374,22 +365,9 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
             <Sparkles className="w-5 h-5" />
           </div>
           <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                Từ điển &amp; Trợ lý AI Tiếng Trung
-              </h3>
-              {aiStatus && (
-                <span
-                  className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                    aiStatus.configured
-                      ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
-                      : 'bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300'
-                  }`}
-                >
-                  {aiStatus.configured ? `AI sẵn sàng (${aiStatus.model})` : 'Chế độ giáo trình (chưa có AI key)'}
-                </span>
-              )}
-            </div>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+              Từ điển &amp; Trợ lý AI Tiếng Trung
+            </h3>
             <p className="text-xs text-gray-500 dark:text-slate-400">
               Tra từ vựng Trung ⇄ Việt, dịch câu, luyện hội thoại &amp; giải thích ngữ pháp HSK.
             </p>
@@ -502,7 +480,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
 
           {dictResult && dictResult.localHits.length === 0 && !dictResult.aiResult && !dictLoading && (
             <div className="p-6 rounded-2xl border border-dashed border-stone-200 dark:border-slate-800 text-center text-xs text-gray-500 dark:text-slate-400">
-              Không tìm thấy “<strong>{dictResult.query}</strong>” trong 26 bài HSK hiện có. Hãy cấu hình <code className="px-1.5 py-0.5 rounded bg-stone-100 dark:bg-slate-800">GEMINI_API_KEY</code> trong <code className="px-1.5 py-0.5 rounded bg-stone-100 dark:bg-slate-800">backend/.env</code> để dịch bằng AI.
+              Không tìm thấy “<strong>{dictResult.query}</strong>” trong giáo trình HSK hiện có.
             </div>
           )}
 
@@ -606,9 +584,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
               <div className="px-5 py-3 bg-gradient-to-r from-red-50 to-amber-50/70 dark:from-red-950/30 dark:to-amber-950/20 border-b border-stone-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2 text-xs font-bold text-gray-800 dark:text-slate-200">
                   <Sparkles className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
-                  <span>
-                    Từ điển AI ({dictResult.model || 'Gemini'})
-                  </span>
+                  <span>Từ điển AI</span>
                 </div>
 
                 <div className="flex items-center gap-1.5">
