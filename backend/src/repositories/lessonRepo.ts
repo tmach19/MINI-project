@@ -2,6 +2,7 @@ import crypto from 'node:crypto';
 import type { PoolClient } from 'pg';
 import { getDbMode, getPool } from '../db/pool.js';
 import { memoryStore } from '../db/fallbackStore.js';
+import { enrichVocabularyRadicals } from '../utils/hanziRadicals.js';
 import type {
   ComprehensiveQuestion,
   ExpandedQuizQuestion,
@@ -442,20 +443,34 @@ function normalizeVocabularyInput(
 ): VocabularyItem[] {
   return items
     .filter((v) => v.hanzi?.trim() && v.meaning?.trim())
-    .map((v, idx) => ({
-      id: v.id?.trim() || `vc_${lessonId}_${suffix}${idx + 1}`,
-      hanzi: v.hanzi.trim(),
-      pinyin: (v.pinyin || v.hanzi).trim(),
-      sinoVietnamese: v.sinoVietnamese?.trim() || null,
-      meaning: v.meaning.trim(),
-      type: v.type?.trim() || 'Từ vựng',
-      radical: v.radical?.trim() || null,
-      breakdown: v.breakdown?.trim() || null,
-      mnemonic: v.mnemonic?.trim() || null,
-      example: v.example?.trim() || null,
-      examplePinyin: v.examplePinyin?.trim() || null,
-      exampleMeaning: v.exampleMeaning?.trim() || null,
-    }));
+    .map((v, idx) => {
+      const hanzi = v.hanzi.trim();
+      const pinyin = (v.pinyin || v.hanzi).trim();
+      const meaning = v.meaning.trim();
+      const enriched = enrichVocabularyRadicals({
+        hanzi,
+        pinyin,
+        meaning,
+        radical: v.radical,
+        breakdown: v.breakdown,
+        mnemonic: v.mnemonic,
+      });
+
+      return {
+        id: v.id?.trim() || `vc_${lessonId}_${suffix}${idx + 1}`,
+        hanzi,
+        pinyin,
+        sinoVietnamese: v.sinoVietnamese?.trim() || null,
+        meaning,
+        type: v.type?.trim() || 'Từ vựng',
+        radical: enriched.radical,
+        breakdown: enriched.breakdown,
+        mnemonic: enriched.mnemonic,
+        example: v.example?.trim() || null,
+        examplePinyin: v.examplePinyin?.trim() || null,
+        exampleMeaning: v.exampleMeaning?.trim() || null,
+      };
+    });
 }
 
 function normalizeGrammarInput(

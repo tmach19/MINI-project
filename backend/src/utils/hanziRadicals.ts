@@ -1,0 +1,3141 @@
+/**
+ * Bộ từ điển Bộ thủ Kangxi (giản thể) & Chiết tự thành phần chữ Hán dùng tại runtime
+ * để tự động bổ sung radical / breakdown / mnemonic cho ~9.574 chữ Hán (bao phủ HSK 1–6+)
+ * khi thêm mới hoặc chỉnh sửa từ vựng còn thiếu.
+ */
+
+import { EXTENDED_CHAR_MAP } from './hanziExtendedData.js';
+
+export const RADICALS: Record<string, string> = {
+  "一": "一 (Nhất) (Số một, nền tảng, nét ngang cơ bản)",
+  "丨": "丨 (Cổn) (Nét sổ thẳng, xuyên suốt)",
+  "丶": "丶 (Chủ) (Điểm chấm, khởi đầu)",
+  "丿": "丿 (Phiệt) (Nét phẩy nghiêng)",
+  "乙": "乙 (Ất) (Uốn cong, số thứ tự, chồi non)",
+  "亅": "亅 (Quyết) (Nét móc đứng)",
+  "二": "二 (Nhị) (Số hai, cặp đôi, trên dưới)",
+  "亠": "亠 (Đầu) (Nóc, đỉnh đầu)",
+  "人": "人/亻 (Nhân) (Con người, nhân loại, hành động)",
+  "亻": "人/亻 (Nhân) (Con người, nhân loại, hành động)",
+  "儿": "儿 (Nhi) (Trẻ nhỏ, phần chân nâng đỡ)",
+  "入": "入 (Nhập) (Đi vào, thu nhận)",
+  "八": "八 (Bát) (Số tám, phân chia, mở rộng)",
+  "冂": "冂 (Quynh) (Vùng biên giới, khung bao)",
+  "冖": "冖 (Mịch) (Khăn phủ, mái che)",
+  "冫": "冫 (Băng) (Nước đá, lạnh giá)",
+  "几": "几 (Kỷ) (Cái bàn nhỏ, mấy/bao nhiêu)",
+  "凵": "凵 (Khảm) (Há miệng, hố trũng)",
+  "刀": "刀/刂 (Đao) (Con dao, cắt xẻ, phân chia)",
+  "刂": "刀/刂 (Đao) (Con dao, cắt xẻ, phân chia)",
+  "力": "力 (Lực) (Sức mạnh, động lực)",
+  "勹": "勹 (Bao) (Bao bọc, ôm lấy)",
+  "匕": "匕 (Chủy) (Cái thìa, dao găm)",
+  "匚": "匚 (Phương) (Hộp đựng, vật chứa)",
+  "十": "十 (Thập) (Số mười, hoàn chỉnh, giao nhau)",
+  "卜": "卜 (Bốc) (Xem bói, dự đoán)",
+  "卩": "卩 (Tiết) (Đốt tre, ấn tín, quỳ gối)",
+  "厂": "厂 (Hán) (Vách đá, mái che, công xưởng)",
+  "厶": "厶 (Tư) (Riêng tư, cuộn tròn)",
+  "又": "又 (Hựu) (Bàn tay phải, lặp lại, lại nữa)",
+  "口": "口 (Khẩu) (Miệng, ăn uống, lời nói, âm thanh phát ra)",
+  "囗": "囗 (Vi) (Vây quanh, không gian kín, lãnh thổ)",
+  "土": "土 (Thổ) (Đất đai, vị trí, công trình)",
+  "士": "士 (Sĩ) (Người học thức, kẻ sĩ)",
+  "夂": "夂 (Trĩ) (Bước đi chậm, quay trở lại)",
+  "夕": "夕 (Tịch) (Buổi chiều tối, đêm tối)",
+  "大": "大 (Đại) (To lớn, vĩ đại)",
+  "女": "女 (Nữ) (Phụ nữ, gia đình, tình cảm)",
+  "子": "子 (Tử) (Đứa con, trẻ nhỏ, người trí thức)",
+  "宀": "宀 (Miên) (Mái nhà, che chở, nơi ở)",
+  "寸": "寸 (Thốn) (Đo lường, bàn tay, phép tắc)",
+  "小": "小 (Tiểu) (Nhỏ bé, ít ỏi)",
+  "尤": "尤/尢 (Uông) (Đặc biệt, khuyết tật)",
+  "尢": "尤/尢 (Uông) (Đặc biệt, khuyết tật)",
+  "尸": "尸 (Thi) (Thân người, mái nhà, nơi ở)",
+  "山": "山 (Sơn) (Núi non, đồi núi)",
+  "巛": "巛 (Xuyên) (Dòng sông chảy)",
+  "工": "工 (Công) (Công việc, kỹ thuật, thợ thủ công)",
+  "己": "己 (Kỷ) (Bản thân, chính mình)",
+  "巾": "巾 (Cân) (Khăn vải, mũ nón, vải vóc)",
+  "干": "干 (Can) (Can thiệp, khô ráo, làm việc)",
+  "幺": "幺 (Yêu) (Nhỏ bé, sợi tơ nhỏ)",
+  "广": "广 (Nghiễm) (Mái nhà rộng, nơi công cộng)",
+  "廴": "廴 (Dẫn) (Bước dài, kéo dài)",
+  "廾": "廾 (Củng) (Hai tay chắp, nâng đỡ)",
+  "弓": "弓 (Cung) (Cây cung, độ căng, uốn cong)",
+  "彐": "彐 (Kệ) (Đầu nhím, bàn tay nắm)",
+  "彡": "彡 (Sam) (Hoa văn, lông tóc, nét trang trí)",
+  "彳": "彳 (Xích) (Bước chân trái, con đường, hành động)",
+  "心": "心/忄 (Tâm) (Trái tim, tình cảm, suy nghĩ, tâm lý)",
+  "忄": "心/忄 (Tâm) (Trái tim, tình cảm, suy nghĩ, tâm lý)",
+  "戈": "戈 (Qua) (Cây giáo, vũ khí, chiến tranh)",
+  "户": "户 (Hộ) (Cánh cửa, gia đình, nhà cửa)",
+  "手": "手/扌 (Thủ) (Bàn tay, động tác, thao tác)",
+  "扌": "手/扌 (Thủ) (Bàn tay, động tác, thao tác)",
+  "支": "支 (Chi) (Nhành cây, nâng đỡ, chi trả)",
+  "攵": "攴/攵 (Phộc) (Đánh khẽ, hành động, dạy dỗ)",
+  "文": "文 (Văn) (Văn chương, chữ viết, hoa văn)",
+  "斗": "斗 (Đẩu) (Cái đấu đong lường, chiến đấu)",
+  "斤": "斤 (Cân) (Cái rìu, đơn vị cân nặng)",
+  "方": "方 (Phương) (Vuông vức, phương hướng)",
+  "无": "无 (Vô) (Không có, phủ định)",
+  "日": "日 (Nhật) (Mặt trời, ban ngày, thời gian, ánh sáng)",
+  "曰": "曰 (Viết) (Nói rằng, lời nói)",
+  "月": "月 (Nguyệt/Nhục) (Mặt trăng hoặc các bộ phận thân thể người)",
+  "木": "木 (Mộc) (Cây cối, gỗ, thực vật)",
+  "欠": "欠 (Khiếm) (Ngáp, thiếu thốn, hơi thở)",
+  "止": "止 (Chỉ) (Dừng lại, bàn chân bước)",
+  "歹": "歹 (Ngạt) (Xấu xa, xương tàn, nguy hiểm)",
+  "毋": "毋/母 (Vô/Mẫu) (Mẹ, nuôi dưỡng, ngăn cấm)",
+  "比": "比 (Tỷ) (So sánh, kề bên)",
+  "毛": "毛 (Mao) (Lông tóc, sợi mảnh)",
+  "气": "气 (Khí) (Hơi thở, không khí, thời tiết)",
+  "水": "水/氵 (Thủy) (Nước, chất lỏng, sông ngòi)",
+  "氵": "水/氵 (Thủy) (Nước, chất lỏng, sông ngòi)",
+  "火": "火/灬 (Hỏa) (Lửa, nhiệt độ, nấu nướng, nóng bức)",
+  "灬": "火/灬 (Hỏa) (Lửa, nhiệt độ, nấu nướng, nóng bức)",
+  "爪": "爪/爫 (Trảo) (Móng vuốt, bàn tay chụp lấy)",
+  "爫": "爪/爫 (Trảo) (Móng vuốt, bàn tay chụp lấy)",
+  "父": "父 (Phụ) (Người cha)",
+  "片": "片 (Phiến) (Mảnh, tấm, lát mỏng)",
+  "牛": "牛/牜 (Ngưu) (Con trâu, bò, gia súc)",
+  "犬": "犬/犭 (Khuyển) (Con chó, loài thú)",
+  "犭": "犬/犭 (Khuyển) (Con chó, loài thú)",
+  "玉": "玉/王 (Ngọc) (Đá quý, châu báu)",
+  "王": "玉/王 (Ngọc) (Đá quý, vua chúa)",
+  "瓜": "瓜 (Qua) (Quả dưa, cây leo)",
+  "瓦": "瓦 (Ngõa) (Ngói, đồ gốm sứ)",
+  "甘": "甘 (Cam) (Vị ngọt, hài lòng)",
+  "生": "生 (Sinh) (Sinh sôi, sự sống, mới mẻ)",
+  "用": "用 (Dụng) (Sử dụng, công dụng)",
+  "田": "田 (Điền) (Ruộng đất, khu vực, mặt)",
+  "疋": "疋/⺪ (Thất) (Cuộn vải, bàn chân)",
+  "疒": "疒 (Nạch) (Bệnh tật, đau ốm, sức khỏe)",
+  "白": "白 (Bạch) (Màu trắng, sáng tỏ)",
+  "皮": "皮 (Bì) (Da dẻ, vỏ ngoài)",
+  "皿": "皿 (Mãnh) (Bát đĩa, đồ đựng)",
+  "目": "目 (Mục) (Con mắt, nhìn ngắm, thị giác)",
+  "矛": "矛 (Mâu) (Cây giáo, mâu thuẫn)",
+  "矢": "矢 (Thỉ) (Mũi tên, thẳng thắn, hiểu biết)",
+  "石": "石 (Thạch) (Hòn đá, vật cứng)",
+  "示": "示/礻 (Thị) (Thần linh, nghi lễ, tỏ bày)",
+  "礻": "示/礻 (Thị) (Thần linh, nghi lễ, tỏ bày)",
+  "禾": "禾 (Hòa) (Cây lúa, ngũ cốc, thời vụ)",
+  "穴": "穴 (Huyệt) (Hang động, khoảng trống, nơi ở)",
+  "立": "立 (Lập) (Đứng vững, thiết lập)",
+  "竹": "竹/⺮ (Trúc) (Tre trúc, đồ đan, sách vở)",
+  "⺮": "竹/⺮ (Trúc) (Tre trúc, đồ đan, sách vở)",
+  "米": "米 (Mễ) (Hạt gạo, tinh bột)",
+  "糸": "糸/纟 (Mịch) (Sợi tơ, gắn kết, màu sắc)",
+  "纟": "糸/纟 (Mịch) (Sợi tơ, gắn kết, màu sắc)",
+  "网": "网/罒 (Võng) (Tấm lưới, che phủ)",
+  "羊": "羊 (Dương) (Con dê, cừu, tốt đẹp)",
+  "羽": "羽 (Vũ) (Lông chim, đôi cánh)",
+  "老": "老/耂 (Lão) (Người già, lâu năm, tôn kính)",
+  "耂": "老/耂 (Lão) (Người già, lâu năm, tôn kính)",
+  "而": "而 (Nhi) (Mà, râu ria)",
+  "耳": "耳 (Nhĩ) (Cái tai, lắng nghe)",
+  "肉": "肉/月 (Nhục) (Thịt, bộ phận cơ thể)",
+  "自": "自 (Tự) (Cái mũi, bản thân, tự mình)",
+  "至": "至 (Chí) (Đến nơi, cực điểm)",
+  "舌": "舌 (Thiệt) (Cái lưỡi, lời nói, nếm vị)",
+  "舟": "舟 (Chu) (Con thuyền)",
+  "艮": "艮 (Cấn) (Dừng lại, cứng rắn)",
+  "色": "色 (Sắc) (Màu sắc, vẻ mặt)",
+  "艹": "艹 (Thảo) (Cỏ cây, hoa lá, thảo mộc)",
+  "虫": "虫 (Trùng) (Côn trùng, sâu bọ, bò sát)",
+  "行": "行 (Hành) (Đi lại, đường phố, thực hiện)",
+  "衣": "衣/衤 (Y) (Áo quần, y phục)",
+  "衤": "衣/衤 (Y) (Áo quần, y phục)",
+  "西": "西/覀 (Tây) (Phương tây, che đậy)",
+  "见": "见 (Kiến) (Nhìn thấy, gặp gỡ)",
+  "言": "言/讠 (Ngôn) (Lời nói, ngôn ngữ, giao tiếp)",
+  "讠": "言/讠 (Ngôn) (Lời nói, ngôn ngữ, giao tiếp)",
+  "豆": "豆 (Đậu) (Hạt đậu, chén cổ)",
+  "豕": "豕 (Thỉ) (Con lợn, loài heo)",
+  "贝": "贝 (Bối) (Vỏ sò, tiền bạc, giá trị)",
+  "走": "走 (Tẩu) (Chạy, đi lại, rời đi)",
+  "足": "足/⻊ (Túc) (Bàn chân, bước chân, đá bóng, chạy)",
+  "⻊": "足/⻊ (Túc) (Bàn chân, bước chân, đá bóng, chạy)",
+  "身": "身 (Thân) (Thân thể, vóc dáng)",
+  "车": "车 (Xa) (Xe cộ, phương tiện giao thông)",
+  "辛": "辛 (Tân) (Cay đắng, vất vả)",
+  "辶": "辶 (Sước) (Bước đi, di chuyển, khoảng cách)",
+  "阝": "阝 (Phụ/Ấp) (Gò đất hoặc vùng đất, thành ấp)",
+  "酉": "酉 (Dậu) (Bình rượu, lên men, chưng cất)",
+  "里": "里 (Lý) (Làng xóm, bên trong, dặm đường)",
+  "金": "金/钅 (Kim) (Kim loại, tiền bạc, đồ dùng kim khí)",
+  "钅": "金/钅 (Kim) (Kim loại, tiền bạc, đồ dùng kim khí)",
+  "长": "长 (Trường) (Dài lâu, phát triển)",
+  "门": "门 (Môn) (Cánh cửa, lối ra vào)",
+  "隹": "隹 (Chuy) (Chim đuôi ngắn)",
+  "雨": "雨 (Vũ) (Mưa, sương, tuyết, hiện tượng thời tiết)",
+  "青": "青 (Thanh) (Màu xanh, tươi trẻ)",
+  "非": "非 (Phi) (Không phải, trái ngược)",
+  "面": "面 (Diện) (Khuôn mặt, bề mặt, mì sợi)",
+  "革": "革 (Cách) (Da thú, thay đổi)",
+  "音": "音 (Âm) (Âm thanh, tiếng vang)",
+  "页": "页 (Hiệt) (Đầu mặt, trang giấy)",
+  "风": "风 (Phong) (Cơn gió, phong cách)",
+  "飞": "飞 (Phi) (Bay lượn)",
+  "食": "食/饣 (Thực) (Đồ ăn, ẩm thực)",
+  "饣": "食/饣 (Thực) (Đồ ăn, ẩm thực)",
+  "首": "首 (Thủ) (Cái đầu, đứng đầu)",
+  "香": "香 (Hương) (Mùi thơm, hương vị)",
+  "马": "马 (Mã) (Con ngựa, chạy nhanh)",
+  "高": "高 (Cao) (Cao lớn, tầng cao)",
+  "鱼": "鱼 (Ngư) (Con cá, thủy sản)",
+  "鸟": "鸟 (Điểu) (Chim chóc, loài có cánh)",
+  "麦": "麦 (Mạch) (Lúa mạch, bột mì)",
+  "黄": "黄 (Hoàng) (Màu vàng)",
+  "黑": "黑 (Hắc) (Màu đen, tối tăm)",
+  "鼻": "鼻 (Tỵ) (Cái mũi)",
+  "龙": "龙 (Long) (Con rồng)",
+  "齐": "齐 (Tề) (Đều đặn, ngay ngắn)",
+  "兀": "儿 (Nhi) (Chân người, nâng đỡ)",
+  "㔾": "卩 (Tiết) (Đốt tre, ấn tín, quỳ gối)",
+  "尣": "尤/尢 (Uông) (Đặc biệt, khuyết tật)",
+  "孑": "子 (Tử) (Đứa con, trẻ nhỏ, người trí thức)",
+  "屮": "屮 (Triệt) (Mầm cây non)",
+  "巳": "己 (Kỷ) (Bản thân, chính mình)",
+  "彑": "彐 (Kệ) (Đầu nhím, bàn tay nắm)",
+  "攴": "攴/攵 (Phộc) (Đánh khẽ, hành động, dạy dỗ)",
+  "旡": "无 (Vô) (Không có, nghẹn hơi)",
+  "歺": "歹 (Ngạt) (Xấu xa, xương tàn, nguy hiểm)",
+  "殳": "殳 (Thù) (Binh khí dài, đánh đập)",
+  "母": "毋/母 (Mẫu) (Người mẹ, nuôi dưỡng)",
+  "氏": "氏 (Thị) (Họ tộc, danh xưng)",
+  "民": "氏 (Thị) (Người dân, dân tộc)",
+  "氺": "水/氵 (Thủy) (Nước, chất lỏng, sông ngòi)",
+  "炏": "火/灬 (Hỏa) (Lửa, nhiệt độ, nấu nướng, nóng bức)",
+  "爻": "爻 (Hào) (Quẻ hào, đan xen)",
+  "爿": "爿/丬 (Tường) (Tấm ván, khung giường)",
+  "丬": "爿/丬 (Tường) (Tấm ván, khung giường)",
+  "玄": "玄 (Huyền) (Sâu thẳm, màu đen huyền)",
+  "癶": "癶 (Bát) (Bước chân trèo lên)",
+  "禸": "禸 (Nhựu) (Dấu chân thú)",
+  "罓": "网/罒 (Võng) (Tấm lưới, che phủ)",
+  "罒": "网/罒 (Võng) (Tấm lưới, che phủ)",
+  "⺳": "网/罒 (Võng) (Tấm lưới, che phủ)",
+  "羋": "羊 (Dương) (Con dê, cừu, tốt đẹp)",
+  "耒": "耒 (Lỗi) (Cái cày làm ruộng)",
+  "聿": "聿 (Duật) (Cây bút viết)",
+  "肀": "聿 (Duật) (Cây bút viết)",
+  "⺼": "月 (Nguyệt/Nhục) (Mặt trăng hoặc các bộ phận thân thể người)",
+  "臼": "臼 (Cữu) (Cái cối giã gạo)",
+  "舛": "舛 (Suyễn) (Sai lệch, trái ngược)",
+  "艸": "艹 (Thảo) (Cỏ cây, hoa lá, thảo mộc)",
+  "虍": "虍 (Hô) (Vằn con hổ)",
+  "虎": "虍 (Hô) (Con hổ, uy mãnh)",
+  "血": "血 (Huyết) (Máu, huyết thống)",
+  "襾": "西/覀 (Tây) (Phương tây, che đậy)",
+  "覀": "西/覀 (Tây) (Phương tây, che đậy)",
+  "見": "见 (Kiến) (Nhìn thấy, gặp gỡ)",
+  "角": "角 (Giác) (Cái sừng, góc cạnh)",
+  "訁": "言/讠 (Ngôn) (Lời nói, ngôn ngữ, giao tiếp)",
+  "谷": "谷 (Cốc) (Thung lũng, khe núi)",
+  "豸": "豸 (Trĩ) (Loài thú chân ngắn)",
+  "貝": "贝 (Bối) (Vỏ sò, tiền bạc, giá trị)",
+  "赤": "赤 (Xích) (Màu đỏ thẫm, trống không)",
+  "車": "车 (Xa) (Xe cộ, phương tiện giao thông)",
+  "辰": "辰 (Thần) (Thời gian, nông nghiệp)",
+  "辵": "辶 (Sước) (Bước đi, di chuyển, khoảng cách)",
+  "邑": "阝 (Phụ/Ấp) (Vùng đất, thành ấp)",
+  "釆": "釆 (Biện) (Phân biệt, dấu chân thú)",
+  "釒": "金/钅 (Kim) (Kim loại, tiền bạc, đồ dùng kim khí)",
+  "長": "长 (Trường) (Dài lâu, phát triển)",
+  "镸": "长 (Trường) (Dài lâu, phát triển)",
+  "門": "门 (Môn) (Cánh cửa, lối ra vào)",
+  "阜": "阝 (Phụ/Ấp) (Gò đất hoặc vùng đất, thành ấp)",
+  "靑": "青 (Thanh) (Màu xanh, tươi trẻ)",
+  "韋": "韦 (Vi) (Da thuộc mềm, bao quanh)",
+  "韦": "韦 (Vi) (Da thuộc mềm, bao quanh)",
+  "韭": "韭 (Cửu) (Cây hẹ)",
+  "頁": "页 (Hiệt) (Đầu mặt, trang giấy)",
+  "風": "风 (Phong) (Cơn gió, phong cách)",
+  "飛": "飞 (Phi) (Bay lượn)",
+  "飠": "食/饣 (Thực) (Đồ ăn, ẩm thực)",
+  "馬": "马 (Mã) (Con ngựa, chạy nhanh)",
+  "骨": "骨 (Cốt) (Xương cốt, cứng rắn)",
+  "髟": "髟 (Bưu) (Mái tóc dài)",
+  "鬥": "鬥 (Đấu) (Chiến đấu, tranh giành)",
+  "鬯": "鬯 (Sưởng) (Rượu thơm cúng tế)",
+  "鬼": "鬼 (Quỷ) (Ma quỷ, linh hồn)",
+  "魚": "鱼 (Ngư) (Con cá, thủy sản)",
+  "鳥": "鸟 (Điểu) (Chim chóc, loài có cánh)",
+  "鹵": "卤 (Lỗ) (Muối mặn, đất mặn)",
+  "卤": "卤 (Lỗ) (Muối mặn, đất mặn)",
+  "麥": "麦 (Mạch) (Lúa mạch, bột mì)",
+  "麻": "麻 (Ma) (Cây gai dầu, sợi lanh)",
+  "黃": "黄 (Hoàng) (Màu vàng)",
+  "黍": "黍 (Thử) (Cây kê, nếp)",
+  "黹": "黹 (Chỉ) (Thêu thùa, may vá)",
+  "黽": "黾 (Mãnh) (Con cóc, ếch, cố gắng)",
+  "黾": "黾 (Mãnh) (Con cóc, ếch, cố gắng)",
+  "鼎": "鼎 (Đỉnh) (Cái đỉnh ba chân)",
+  "鼓": "鼓 (Cổ) (Cái trống, cổ vũ)",
+  "鼠": "鼠 (Thử) (Con chuột)",
+  "齊": "齐 (Tề) (Đều đặn, ngay ngắn)",
+  "齒": "齿 (Xỉ) (Răng, tuổi tác)",
+  "齿": "齿 (Xỉ) (Răng, tuổi tác)",
+  "龍": "龙 (Long) (Con rồng)",
+  "龜": "龟 (Quy) (Con rùa)",
+  "龟": "龟 (Quy) (Con rùa)",
+  "龠": "龠 (Dược) (Ống sáo cổ)",
+  "鬲": "鬲 (Cách) (Cái vạc ba chân)",
+  "鹿": "鹿 (Lộc) (Con hươu, nai)",
+  "臣": "臣 (Thần) (Bề tôi, quan lại)",
+  "川": "巛 (Xuyên) (Dòng sông chảy)",
+  "糹": "糸/纟 (Mịch) (Sợi tơ, gắn kết, màu sắc)",
+  "匸": "匚 (Phương) (Hộp đựng, che giấu)",
+  "弋": "弋 (Dặc) (Cái cọc, bắn tên)",
+  "牙": "牙 (Nha) (Răng nanh)",
+  "刁": "刀/刂 (Đao) (Con dao, xảo quyệt)",
+  "⺀": "冫 (Băng) (Nước đá, lạnh giá)",
+  "⺈": "刀/刂 (Đao) (Con dao, cắt xẻ, phân chia)",
+  "⺊": "卜 (Bốc) (Xem bói, dự đoán)",
+  "⺌": "小 (Tiểu) (Nhỏ bé, ít ỏi)",
+  "⺍": "小 (Tiểu) (Nhỏ bé, ít ỏi)",
+  "⺗": "心/忄 (Tâm) (Trái tim, tình cảm, suy nghĩ, tâm lý)",
+  "乚": "乙 (Ất) (Uốn cong, số thứ tự, chồi non)",
+  "乛": "乙 (Ất) (Uốn cong, số thứ tự, chồi non)",
+  "龶": "玉/王 (Ngọc) (Đá quý, châu báu)",
+  "缶": "缶 (Phẫu) (Vò sành, bình gốm)",
+  "丷": "八 (Bát) (Phân chia, mở rộng)",
+  "夊": "夂/夊 (Tuy/Trĩ) (Bước đi chậm, quay trở lại)",
+  "隶": "隶 (Lệ) (Đuổi kịp, nắm giữ)"
+};
+
+export const CHAR_MAP: Record<string, { r: string; d: string }> = {
+  "学": {
+    "r": "子",
+    "d": "⺍ + 冖 (Mịch: mái che) + 子 (Tử: trẻ nhỏ)"
+  },
+  "校": {
+    "r": "木",
+    "d": "木 (Mộc: cây gỗ) + 交 (Giao: giao nhau)"
+  },
+  "老": {
+    "r": "耂",
+    "d": "耂 (Lão: người già) + 匕 (Chủy)"
+  },
+  "师": {
+    "r": "巾",
+    "d": "𠂤 + 巾 (Cân: khăn vải)"
+  },
+  "同": {
+    "r": "口",
+    "d": "冂 (Quynh: khung bao) + 一 + 口 (Khẩu: cùng chung một tiếng)"
+  },
+  "生": {
+    "r": "生",
+    "d": "Bộ 生 (Sinh - mầm cây nảy từ đất, chữ độc thể)"
+  },
+  "留": {
+    "r": "田",
+    "d": "卯 (biến thể) + 田 (Điền: ruộng đất)"
+  },
+  "刘": {
+    "r": "刂",
+    "d": "文 (Văn) + 刂 (Đao)"
+  },
+  "范": {
+    "r": "艹",
+    "d": "艹 (Thảo: cỏ) + 氵 (Thủy) + 卩 (Tiết)"
+  },
+  "玉": {
+    "r": "玉",
+    "d": "Bộ 玉 (Ngọc - ba mảnh ngọc xâu dây kèm chấm, chữ độc thể)"
+  },
+  "兰": {
+    "r": "八",
+    "d": "丷 (Bát) + 三 (Ba nét ngang)"
+  },
+  "阮": {
+    "r": "阝",
+    "d": "阝 (Phụ: gò đất) + 元 (Nguyên)"
+  },
+  "日": {
+    "r": "日",
+    "d": "Bộ 日 (Nhật - mặt trời, chữ độc thể)"
+  },
+  "明": {
+    "r": "日",
+    "d": "日 (Nhật: mặt trời) + 月 (Nguyệt: mặt trăng)"
+  },
+  "早": {
+    "r": "日",
+    "d": "日 (Nhật: mặt trời mọc) + 十 (Thập: ngọn cây)"
+  },
+  "上": {
+    "r": "一",
+    "d": "Nét đứng 丨 và nét chấm chỉ hướng phía trên gạch ngang 一"
+  },
+  "中": {
+    "r": "丨",
+    "d": "口 (Khẩu: khung vuông) + 丨 (Cổn: vạch chính giữa)"
+  },
+  "午": {
+    "r": "十",
+    "d": "𠂉 + 十 (Thập)"
+  },
+  "下": {
+    "r": "一",
+    "d": "Nét ngang 一 phía trên nét sổ 丨 và chấm chỉ hướng xuống dưới"
+  },
+  "晚": {
+    "r": "日",
+    "d": "日 (Nhật: mặt trời) + 免 (Miễn: khuất bóng)"
+  },
+  "是": {
+    "r": "日",
+    "d": "日 (Nhật: sáng rõ) + 𤴓 (biến thể của 正/疋: ngay thẳng)"
+  },
+  "好": {
+    "r": "女",
+    "d": "女 (Nữ: người mẹ) + 子 (Tử: đứa con)"
+  },
+  "您": {
+    "r": "心",
+    "d": "你 (Nhĩ: bạn) + 心 (Tâm: đặt trong lòng để kính trọng)"
+  },
+  "你": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 尔 (Nhĩ)"
+  },
+  "们": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 门 (Môn: cửa)"
+  },
+  "我": {
+    "r": "戈",
+    "d": "手 (Thủ: tay biến thể) + 戈 (Qua: binh khí)"
+  },
+  "吗": {
+    "r": "口",
+    "d": "口 (Khẩu: lời nói) + 马 (Mã: mượn âm)"
+  },
+  "也": {
+    "r": "乙",
+    "d": "Bộ 乙 (Ất - nét uốn cong) + 丨 (chữ độc thể)"
+  },
+  "贵": {
+    "r": "贝",
+    "d": "中 (Trung biến thể) + 一 + 贝 (Bối: tiền bạc quý giá)"
+  },
+  "姓": {
+    "r": "女",
+    "d": "女 (Nữ: mẹ) + 生 (Sinh: sinh ra dòng họ)"
+  },
+  "名": {
+    "r": "口",
+    "d": "夕 (Tịch: chiều tối) + 口 (Khẩu: gọi tên trong đêm)"
+  },
+  "字": {
+    "r": "子",
+    "d": "宀 (Miên: mái nhà) + 子 (Tử: con cái, sinh sôi chữ nghĩa)"
+  },
+  "马": {
+    "r": "马",
+    "d": "Bộ 马 (Mã - hình dáng con ngựa, chữ độc thể)"
+  },
+  "克": {
+    "r": "儿",
+    "d": "十 (Thập) + 口 (Khẩu) + 儿 (Nhi)"
+  },
+  "张": {
+    "r": "弓",
+    "d": "弓 (Cung: cây cung) + 长 (Trường: kéo dài dây cung)"
+  },
+  "风": {
+    "r": "风",
+    "d": "Bộ 风 (Phong - khung gió và nét phẩy chấm, chữ độc thể)"
+  },
+  "白": {
+    "r": "白",
+    "d": "Bộ 白 (Bạch - ánh sáng trắng, chữ độc thể)"
+  },
+  "茹": {
+    "r": "艹",
+    "d": "艹 (Thảo: cỏ cây) + 如 (Như)"
+  },
+  "雪": {
+    "r": "雨",
+    "d": "雨 (Vũ: mưa) + 彐 (Kệ: kết thành bông tuyết)"
+  },
+  "天": {
+    "r": "大",
+    "d": "一 (Nhất: bầu trời cao) + 大 (Đại: con người dang tay)"
+  },
+  "现": {
+    "r": "王",
+    "d": "王 (Ngọc: viên ngọc sáng) + 见 (Kiến: nhìn thấy)"
+  },
+  "在": {
+    "r": "土",
+    "d": "𠂇 + 土 (Thổ: tồn tại trên mặt đất)"
+  },
+  "她": {
+    "r": "女",
+    "d": "女 (Nữ: phụ nữ) + 也 (Dã)"
+  },
+  "什": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng) + 十 (Thập)"
+  },
+  "么": {
+    "r": "丿",
+    "d": "丿 (Phiệt) + 厶 (Tư)"
+  },
+  "叫": {
+    "r": "口",
+    "d": "口 (Khẩu: miệng) + 丩 (Cưu: tiếng kêu)"
+  },
+  "课": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời giảng) + 果 (Quả: kết quả)"
+  },
+  "见": {
+    "r": "见",
+    "d": "Bộ 见 (Kiến - con mắt phía trên đôi chân, nhìn thấy)"
+  },
+  "再": {
+    "r": "冂",
+    "d": "一 + 冂 (Quynh) + 土 (Thổ)"
+  },
+  "要": {
+    "r": "西",
+    "d": "覀 (Tây biến thể) + 女 (Nữ)"
+  },
+  "回": {
+    "r": "囗",
+    "d": "囗 (Vi: vòng ngoài) + 口 (Khẩu: vòng trong, quay về)"
+  },
+  "宿": {
+    "r": "宀",
+    "d": "宀 (Miên: mái nhà) + 亻 (Nhân) + 百 (Bách: trăm người nghỉ)"
+  },
+  "舍": {
+    "r": "舌",
+    "d": "人 (Nhân: mái chóp) + 舌 (Thiệt)"
+  },
+  "了": {
+    "r": "亅",
+    "d": "Bộ 亅 (Quyết - nét móc kết thúc, chữ độc thể)"
+  },
+  "朋": {
+    "r": "月",
+    "d": "月 (Nguyệt) + 月 (Nguyệt: hai người kề vai)"
+  },
+  "友": {
+    "r": "又",
+    "d": "𠂇 + 又 (Hựu: hai bàn tay nắm lấy nhau)"
+  },
+  "人": {
+    "r": "人",
+    "d": "Bộ 人 (Nhân - dáng người đứng bước, chữ độc thể)"
+  },
+  "安": {
+    "r": "宀",
+    "d": "宀 (Miên: mái nhà) + 女 (Nữ: người phụ nữ bình yên trong nhà)"
+  },
+  "妮": {
+    "r": "女",
+    "d": "女 (Nữ) + 尼 (Ni)"
+  },
+  "国": {
+    "r": "囗",
+    "d": "囗 (Vi: biên giới) + 玉 (Ngọc: báu vật quốc gia)"
+  },
+  "家": {
+    "r": "宀",
+    "d": "宀 (Miên: mái nhà) + 豕 (Thỉ: lợn nuôi dưới mái nhà)"
+  },
+  "越": {
+    "r": "走",
+    "d": "走 (Tẩu: đi qua) + 戉 (Việt)"
+  },
+  "南": {
+    "r": "十",
+    "d": "十 (Thập) + 冂 (Quynh) + 羊 (biến thể)"
+  },
+  "加": {
+    "r": "力",
+    "d": "力 (Lực: sức) + 口 (Khẩu: lời thêm vào)"
+  },
+  "拿": {
+    "r": "手",
+    "d": "合 (Hợp) + 手 (Thủ: bàn tay cầm nắm)"
+  },
+  "大": {
+    "r": "大",
+    "d": "Bộ 大 (Đại - người dang rộng tay chân, chữ độc thể)"
+  },
+  "美": {
+    "r": "羊",
+    "d": "羊 (Dương: cừu béo) + 大 (Đại: to lớn là đẹp)"
+  },
+  "活": {
+    "r": "氵",
+    "d": "氵 (Thủy: nước) + 舌 (Thiệt: nước thấm đầu lưỡi là sống)"
+  },
+  "认": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời nói) + 人 (Nhân: con người)"
+  },
+  "识": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời nói) + 只 (Chỉ: ghi nhớ)"
+  },
+  "来": {
+    "r": "木",
+    "d": "一 + 米 (Mễ biến thể / cây lúa)"
+  },
+  "自": {
+    "r": "自",
+    "d": "Bộ 自 (Tự - hình cái mũi, chỉ bản thân)"
+  },
+  "高": {
+    "r": "高",
+    "d": "Bộ 高 (Cao - tháp lầu nhiều tầng cao)"
+  },
+  "兴": {
+    "r": "八",
+    "d": "⺍ + 一 + 八 (Bát: nhiều người nâng lên)"
+  },
+  "他": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 也 (Dã)"
+  },
+  "谁": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời hỏi) + 隹 (Chuy)"
+  },
+  "哪": {
+    "r": "口",
+    "d": "口 (Khẩu: hỏi) + 那 (Na)"
+  },
+  "这": {
+    "r": "辶",
+    "d": "文 (Văn) + 辶 (Sước: bước đi gần đây)"
+  },
+  "那": {
+    "r": "阝",
+    "d": "𠃌 + 二 + 阝 (Ấp: vùng đất xa)"
+  },
+  "很": {
+    "r": "彳",
+    "d": "彳 (Xích: bước chân) + 艮 (Cấn)"
+  },
+  "个": {
+    "r": "人",
+    "d": "人 (Nhân) + 丨 (Cổn)"
+  },
+  "的": {
+    "r": "白",
+    "d": "白 (Bạch) + 勺 (Thược)"
+  },
+  "食": {
+    "r": "食",
+    "d": "Bộ 食 (Thực - mâm cơm, đồ ăn)"
+  },
+  "堂": {
+    "r": "土",
+    "d": "尚 (Thượng: phần trên) + 土 (Thổ: nền đất, sảnh lớn)"
+  },
+  "图": {
+    "r": "囗",
+    "d": "囗 (Vi: khung tranh) + 冬 (Đông: bản vẽ bên trong)"
+  },
+  "书": {
+    "r": "乙",
+    "d": "Nét gấp 乛 + 乛 + 丨 + 丶 (cuốn sách, bút viết)"
+  },
+  "馆": {
+    "r": "饣",
+    "d": "饣 (Thực) + 官 (Quan: nơi công cộng)"
+  },
+  "楼": {
+    "r": "木",
+    "d": "木 (Mộc: cột gỗ) + 娄 (Lâu)"
+  },
+  "教": {
+    "r": "攵",
+    "d": "孝 (Hiếu) + 攵 (Phộc: thầy cầm roi dạy bảo)"
+  },
+  "饭": {
+    "r": "饣",
+    "d": "饣 (Thực: thức ăn) + 反 (Phản)"
+  },
+  "前": {
+    "r": "刂",
+    "d": "丷 + 一 + 月 (Nguyệt/Thuyền) + 刂 (Đao)"
+  },
+  "面": {
+    "r": "面",
+    "d": "Bộ 面 (Diện - khuôn mặt, bề mặt)"
+  },
+  "左": {
+    "r": "工",
+    "d": "𠂇 (bàn tay trái) + 工 (Công: thước thợ)"
+  },
+  "边": {
+    "r": "辶",
+    "d": "力 (Lực) + 辶 (Sước: đi ven mép)"
+  },
+  "右": {
+    "r": "口",
+    "d": "𠂇 (bàn tay phải) + 口 (Khẩu: miệng)"
+  },
+  "地": {
+    "r": "土",
+    "d": "土 (Thổ: đất) + 也 (Dã)"
+  },
+  "方": {
+    "r": "方",
+    "d": "Bộ 方 (Phương - hình vuông, phương hướng)"
+  },
+  "附": {
+    "r": "阝",
+    "d": "阝 (Phụ: gò đất) + 付 (Phó: kề bên)"
+  },
+  "近": {
+    "r": "辶",
+    "d": "斤 (Cân) + 辶 (Sước: đi lại gần)"
+  },
+  "请": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời nói lịch sự) + 青 (Thanh)"
+  },
+  "问": {
+    "r": "门",
+    "d": "门 (Môn: cánh cửa) + 口 (Khẩu: mở miệng hỏi ngoài cửa)"
+  },
+  "知": {
+    "r": "矢",
+    "d": "矢 (Thỉ: mũi tên, nhanh chóng) + 口 (Khẩu: nói ra điều biết)"
+  },
+  "道": {
+    "r": "辶",
+    "d": "首 (Thủ: cái đầu dẫn hướng) + 辶 (Sước: bước đi trên đường)"
+  },
+  "谢": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời nói) + 射 (Xạ: cúi mình cảm tạ)"
+  },
+  "看": {
+    "r": "目",
+    "d": "手 (Thủ biến thể: tay che trán) + 目 (Mục: mắt nhìn)"
+  },
+  "去": {
+    "r": "厶",
+    "d": "土 (Thổ: đất) + 厶 (Tư)"
+  },
+  "吃": {
+    "r": "口",
+    "d": "口 (Khẩu: miệng) + 乞 (Khất)"
+  },
+  "儿": {
+    "r": "儿",
+    "d": "Bộ 儿 (Nhi - nét cong, chữ độc thể)"
+  },
+  "里": {
+    "r": "里",
+    "d": "日 (Nhật) + 土 (Thổ: ruộng đất làng xóm)"
+  },
+  "啊": {
+    "r": "口",
+    "d": "口 (Khẩu: tiếng thốt ra) + 阿 (A)"
+  },
+  "座": {
+    "r": "广",
+    "d": "广 (Nghiễm: mái nhà) + 坐 (Tọa: ngồi)"
+  },
+  "不": {
+    "r": "一",
+    "d": "一 (Nhất) + 丿 + 丨 + 丶 (chữ độc thể phủ định)"
+  },
+  "客": {
+    "r": "宀",
+    "d": "宀 (Miên: mái nhà) + 各 (Các: người tới nhà)"
+  },
+  "气": {
+    "r": "气",
+    "d": "Bộ 气 (Khí - làn hơi bốc lên, chữ độc thể)"
+  },
+  "时": {
+    "r": "日",
+    "d": "日 (Nhật: mặt trời) + 寸 (Thốn: đo thời gian)"
+  },
+  "间": {
+    "r": "门",
+    "d": "门 (Môn: khe cửa) + 日 (Nhật: ánh nắng lọt qua)"
+  },
+  "候": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng) + 丨 + 矢 (Thỉ)"
+  },
+  "点": {
+    "r": "灬",
+    "d": "占 (Chiếm) + 灬 (Hỏa: ngọn lửa chấm sáng)"
+  },
+  "钟": {
+    "r": "钅",
+    "d": "钅 (Kim: kim loại đúc chuông/đồng hồ) + 中 (Trung)"
+  },
+  "分": {
+    "r": "刀",
+    "d": "八 (Bát: chia đôi) + 刀 (Đao: con dao cắt chia)"
+  },
+  "刻": {
+    "r": "刂",
+    "d": "亥 (Hợi) + 刂 (Đao: dao khắc vạch giờ)"
+  },
+  "昨": {
+    "r": "日",
+    "d": "日 (Nhật: ngày) + 乍 (Sạ)"
+  },
+  "零": {
+    "r": "雨",
+    "d": "雨 (Vũ: giọt mưa) + 令 (Lệnh)"
+  },
+  "半": {
+    "r": "十",
+    "d": "丷 + 二 + 丨 (bổ đôi ở giữa thành một nửa)"
+  },
+  "一": {
+    "r": "一",
+    "d": "Bộ 一 (Nhất - 1 nét ngang, số 1)"
+  },
+  "二": {
+    "r": "二",
+    "d": "Bộ 二 (Nhị - 2 nét ngang, số 2)"
+  },
+  "三": {
+    "r": "一",
+    "d": "3 nét ngang chồng lên nhau (số 3)"
+  },
+  "四": {
+    "r": "囗",
+    "d": "囗 (Vi: khung ngoài) + 儿 (Nhi bên trong)"
+  },
+  "五": {
+    "r": "二",
+    "d": "Hai nét ngang 二 nối bằng nét sổ gãy ở giữa (số 5)"
+  },
+  "六": {
+    "r": "八",
+    "d": "亠 (Đầu) + 八 (Bát)"
+  },
+  "七": {
+    "r": "一",
+    "d": "一 (Nhất) + 乚 (Ất: nét ngang cắt cong)"
+  },
+  "八": {
+    "r": "八",
+    "d": "Bộ 八 (Bát - hai nét tách sang hai bên, số 8)"
+  },
+  "九": {
+    "r": "乙",
+    "d": "丿 (Phiệt) + 乙 (Ất: nét cong móc)"
+  },
+  "十": {
+    "r": "十",
+    "d": "Bộ 十 (Thập - nét ngang cắt nét dọc, số 10)"
+  },
+  "门": {
+    "r": "门",
+    "d": "Bộ 门 (Môn - hình hai cánh cửa)"
+  },
+  "室": {
+    "r": "宀",
+    "d": "宀 (Miên: mái nhà) + 至 (Chí: nơi đi vào nghỉ)"
+  },
+  "电": {
+    "r": "田",
+    "d": "日/田 (biến thể) + 乚 (tia sét phóng xuống)"
+  },
+  "话": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời nói) + 舌 (Thiệt: cái lưỡi)"
+  },
+  "号": {
+    "r": "口",
+    "d": "口 (Khẩu: miệng hô to) + 丂 (Khảo)"
+  },
+  "码": {
+    "r": "石",
+    "d": "石 (Thạch: hòn đá đếm số) + 马 (Mã: mượn âm)"
+  },
+  "借": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 昔 (Tích)"
+  },
+  "关": {
+    "r": "八",
+    "d": "丷 + 天 (Thiên: then cài cửa)"
+  },
+  "想": {
+    "r": "心",
+    "d": "相 (Tương: hình ảnh) + 心 (Tâm: lòng suy nghĩ)"
+  },
+  "差": {
+    "r": "工",
+    "d": "羊 (Dương biến thể) + 工 (Công)"
+  },
+  "给": {
+    "r": "纟",
+    "d": "纟 (Mịch: sợi dây trao nối) + 合 (Hợp)"
+  },
+  "打": {
+    "r": "扌",
+    "d": "扌 (Thủ: bàn tay) + 丁 (Đinh)"
+  },
+  "几": {
+    "r": "几",
+    "d": "Bộ 几 (Kỷ - chiếc bàn nhỏ, chữ độc thể)"
+  },
+  "怎": {
+    "r": "心",
+    "d": "乍 (Sạ) + 心 (Tâm: băn khoăn trong lòng)"
+  },
+  "店": {
+    "r": "广",
+    "d": "广 (Nghiễm: mái hiên) + 占 (Chiếm: quầy hàng)"
+  },
+  "影": {
+    "r": "彡",
+    "d": "景 (Cảnh: ánh sáng) + 彡 (Sam: bóng rọi)"
+  },
+  "院": {
+    "r": "阝",
+    "d": "阝 (Phụ: tường thành) + 完 (Hoàn: khu nhà khép kín)"
+  },
+  "术": {
+    "r": "木",
+    "d": "木 (Mộc: cây cối) + 丶 (Chủ)"
+  },
+  "路": {
+    "r": "足",
+    "d": "⻊ (Túc: bàn chân bước đi) + 各 (Các)"
+  },
+  "东": {
+    "r": "一",
+    "d": "Mặt trời mọc sau thân cây (七 + 小)"
+  },
+  "西": {
+    "r": "西",
+    "d": "Bộ 西 (Tây - chim về tổ lúc mặt trời lặn)"
+  },
+  "北": {
+    "r": "匕",
+    "d": "Hai người quay lưng vào nhau (sóng đôi ngược chiều)"
+  },
+  "走": {
+    "r": "走",
+    "d": "土 (Thổ) + 龰 (Chân bước nhanh trên đất)"
+  },
+  "到": {
+    "r": "刂",
+    "d": "至 (Chí: đi tới) + 刂 (Đao)"
+  },
+  "拐": {
+    "r": "扌",
+    "d": "扌 (Thủ: tay rẽ hướng) + 另 (Lệnh)"
+  },
+  "离": {
+    "r": "亠",
+    "d": "亠 + 凶 (Hung) + 禸"
+  },
+  "有": {
+    "r": "月",
+    "d": "𠂇 (bàn tay) + 月 (Nguyệt/Nhục: cầm miếng thịt là có)"
+  },
+  "买": {
+    "r": "乙",
+    "d": "乛 (nét gập) + 头 (Đầu)"
+  },
+  "远": {
+    "r": "辶",
+    "d": "元 (Nguyên) + 辶 (Sước: bước đường xa)"
+  },
+  "米": {
+    "r": "米",
+    "d": "Bộ 米 (Mễ - các hạt gạo vây quanh chữ thập)"
+  },
+  "往": {
+    "r": "彳",
+    "d": "彳 (Xích: bước chân đi) + 主 (Chủ)"
+  },
+  "从": {
+    "r": "人",
+    "d": "人 (Nhân) + 人 (Nhân: người này đi theo người kia)"
+  },
+  "直": {
+    "r": "目",
+    "d": "十 (Thập) + 目 (Mục: mắt nhìn thẳng) + 乚"
+  },
+  "每": {
+    "r": "毋",
+    "d": "𠂉 + 母 (Mẫu: người mẹ sinh nở mỗi lần)"
+  },
+  "都": {
+    "r": "阝",
+    "d": "者 (Giả) + 阝 (Ấp: thành thị)"
+  },
+  "就": {
+    "r": "尢",
+    "d": "京 (Kinh: kinh đô) + 尤 (Uông)"
+  },
+  "常": {
+    "r": "巾",
+    "d": "尚 (Thượng) + 巾 (Cân: mảnh vải mặc thường ngày)"
+  },
+  "呢": {
+    "r": "口",
+    "d": "口 (Khẩu: tiếng hỏi) + 尼 (Ni)"
+  },
+  "和": {
+    "r": "口",
+    "d": "禾 (Hòa: cây lúa) + 口 (Khẩu: ai cũng có cơm ăn là hòa bình)"
+  },
+  "色": {
+    "r": "色",
+    "d": "Bộ 色 (Sắc - ⺈ + 巴, sắc mặt, màu sắc)"
+  },
+  "周": {
+    "r": "口",
+    "d": "冂 (Quynh) + 土 (Thổ) + 口 (Khẩu)"
+  },
+  "末": {
+    "r": "木",
+    "d": "木 (Mộc) + 一 ở phần ngọn (chỉ ngọn cây, phần cuối)"
+  },
+  "对": {
+    "r": "寸",
+    "d": "又 (Hựu) + 寸 (Thốn: đối chiếu cân xứng)"
+  },
+  "包": {
+    "r": "勹",
+    "d": "勹 (Bao: bọc lại) + 巳 (Tỵ: thai nhi bên trong)"
+  },
+  "圆": {
+    "r": "囗",
+    "d": "囗 (Vi: vòng tròn ngoài) + 员 (Viên)"
+  },
+  "珠": {
+    "r": "王",
+    "d": "王 (Ngọc: viên ngọc) + 朱 (Chu)"
+  },
+  "笔": {
+    "r": "竹",
+    "d": "⺮ (Trúc: thân bút bằng tre) + 毛 (Mao: đầu lông bút)"
+  },
+  "尺": {
+    "r": "尸",
+    "d": "Bộ 尸 (Thi) + nét mác (cây thước đo xưa)"
+  },
+  "子": {
+    "r": "子",
+    "d": "Bộ 子 (Tử - đứa trẻ dang tay, chữ độc thể)"
+  },
+  "记": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời nói) + 己 (Kỷ: tự mình ghi nhớ)"
+  },
+  "本": {
+    "r": "木",
+    "d": "木 (Mộc: cây) + nét gạch ngang 一 dưới gốc (gốc rễ, quyển sách)"
+  },
+  "铅": {
+    "r": "钅",
+    "d": "钅 (Kim: kim loại chì) + 沿 (biến thể: 几 + 口)"
+  },
+  "词": {
+    "r": "讠",
+    "d": "讠 (Ngôn: ngôn từ) + 司 (Tư)"
+  },
+  "典": {
+    "r": "八",
+    "d": "曲 (Khúc: quyển sách quý) + 八 (Bát: giá đỡ sách)"
+  },
+  "汉": {
+    "r": "氵",
+    "d": "氵 (Thủy: sông Hán) + 又 (Hựu)"
+  },
+  "语": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời nói) + 吾 (Ngô)"
+  },
+  "商": {
+    "r": "口",
+    "d": "亠 + 丷 + 冂 + 八 + 口 (buôn bán, thương lượng)"
+  },
+  "今": {
+    "r": "人",
+    "d": "人 (Nhân: mái che) + 丶 + 乛 (hiện tại hôm nay)"
+  },
+  "蓝": {
+    "r": "艹",
+    "d": "艹 (Thảo: cây chàm nhuộm xanh) + 监 (Giám)"
+  },
+  "黄": {
+    "r": "黄",
+    "d": "Bộ 黄 (Hoàng - màu vàng đất)"
+  },
+  "等": {
+    "r": "竹",
+    "d": "⺮ (Trúc: thẻ tre ghi thứ bậc) + 寺 (Tự)"
+  },
+  "觉": {
+    "r": "见",
+    "d": "⺍ + 冖 (Mịch) + 见 (Kiến: nhận thấy, cảm giác)"
+  },
+  "得": {
+    "r": "彳",
+    "d": "彳 (Xích: bước đi) + 旦 (Đán) + 寸 (Thốn: tay nắm được)"
+  },
+  "漂": {
+    "r": "氵",
+    "d": "氵 (Thủy: nước) + 票 (Phiếu)"
+  },
+  "亮": {
+    "r": "亠",
+    "d": "亠 + 口 + 冖 + 几 (sáng tỏ, đẹp đẽ)"
+  },
+  "支": {
+    "r": "支",
+    "d": "十 (Thập) + 又 (Hựu: tay cầm cành tre)"
+  },
+  "把": {
+    "r": "扌",
+    "d": "扌 (Thủ: bàn tay) + 巴 (Ba: nắm giữ)"
+  },
+  "太": {
+    "r": "大",
+    "d": "大 (Đại: to lớn) + 丶 (Chủ: quá mức)"
+  },
+  "真": {
+    "r": "目",
+    "d": "十 (Thập) + 目 (Mục) + 一 + 八 (mắt nhìn thật rõ)"
+  },
+  "起": {
+    "r": "走",
+    "d": "走 (Tẩu: bước chạy) + 己 (Kỷ: tự đứng dậy)"
+  },
+  "样": {
+    "r": "木",
+    "d": "木 (Mộc: khuôn gỗ) + 羊 (Dương)"
+  },
+  "水": {
+    "r": "水",
+    "d": "Bộ 水 (Thủy - dòng nước chảy, chữ độc thể)"
+  },
+  "果": {
+    "r": "木",
+    "d": "田 (Điền: trái tròn) + 木 (Mộc: trên ngọn cây)"
+  },
+  "苹": {
+    "r": "艹",
+    "d": "艹 (Thảo: thực vật) + 平 (Bình)"
+  },
+  "芒": {
+    "r": "艹",
+    "d": "艹 (Thảo: thực vật) + 亡 (Vong)"
+  },
+  "瓜": {
+    "r": "瓜",
+    "d": "Bộ 瓜 (Qua - trái dưa treo trên giàn leo)"
+  },
+  "草": {
+    "r": "艹",
+    "d": "艹 (Thảo: cây cỏ) + 早 (Tảo)"
+  },
+  "莓": {
+    "r": "艹",
+    "d": "艹 (Thảo: cây dâu) + 每 (Mỗi)"
+  },
+  "汁": {
+    "r": "氵",
+    "d": "氵 (Thủy: chất lỏng) + 十 (Thập)"
+  },
+  "阿": {
+    "r": "阝",
+    "d": "阝 (Phụ) + 可 (Khả)"
+  },
+  "姨": {
+    "r": "女",
+    "d": "女 (Nữ: phụ nữ) + 夷 (Di)"
+  },
+  "钱": {
+    "r": "钅",
+    "d": "钅 (Kim: tiền xu kim loại) + 戋 (Tiên)"
+  },
+  "卖": {
+    "r": "十",
+    "d": "十 (Thập) + 买 (Mãi: mang hàng ra bán)"
+  },
+  "找": {
+    "r": "扌",
+    "d": "扌 (Thủ: tay lần tìm) + 戈 (Qua)"
+  },
+  "甜": {
+    "r": "甘",
+    "d": "舌 (Thiệt: đầu lưỡi) + 甘 (Cam: nếm vị ngọt)"
+  },
+  "酸": {
+    "r": "酉",
+    "d": "酉 (Dậu: bình rượu lên men) + 夋 (Thuân: vị chua)"
+  },
+  "多": {
+    "r": "夕",
+    "d": "夕 (Tịch) + 夕 (Tịch: nhiều lớp chồng nhau)"
+  },
+  "少": {
+    "r": "小",
+    "d": "小 (Tiểu: nhỏ) + 丿 (Phiệt: cắt bớt còn ít)"
+  },
+  "杯": {
+    "r": "木",
+    "d": "木 (Mộc: chén gỗ xưa) + 不 (Bất)"
+  },
+  "斤": {
+    "r": "斤",
+    "d": "Bộ 斤 (Cân - lưỡi rìu, đơn vị cân)"
+  },
+  "块": {
+    "r": "土",
+    "d": "土 (Thổ: cục đất) + 夬 (Quái)"
+  },
+  "总": {
+    "r": "心",
+    "d": "丷 + 口 + 心 (Tâm: gom chung lại)"
+  },
+  "共": {
+    "r": "八",
+    "d": "廿 (Nhấp) + 一 + 八 (Bát: hai tay cùng nâng)"
+  },
+  "超": {
+    "r": "走",
+    "d": "走 (Tẩu: chạy) + 召 (Triệu: vượt qua)"
+  },
+  "市": {
+    "r": "巾",
+    "d": "亠 (Đầu) + 巾 (Cân: lều vải nơi chợ búa)"
+  },
+  "售": {
+    "r": "口",
+    "d": "隹 (Chuy) + 口 (Khẩu: rao bán hàng)"
+  },
+  "货": {
+    "r": "贝",
+    "d": "化 (Hóa) + 贝 (Bối: hàng hóa quy thành tiền)"
+  },
+  "员": {
+    "r": "口",
+    "d": "口 (Khẩu) + 贝 (Bối: người làm công việc)"
+  },
+  "衣": {
+    "r": "衣",
+    "d": "Bộ 衣 (Y - cổ áo và vạt áo, chữ độc thể)"
+  },
+  "服": {
+    "r": "月",
+    "d": "月 (Nguyệt) + 卩 + 又 (trang phục vừa vặn)"
+  },
+  "裤": {
+    "r": "衤",
+    "d": "衤 (Y: áo quần) + 库 (Khố: mượn âm)"
+  },
+  "裙": {
+    "r": "衤",
+    "d": "衤 (Y: áo quần) + 君 (Quân: mượn âm)"
+  },
+  "颜": {
+    "r": "页",
+    "d": "彦 (Ngạn) + 页 (Hiệt: khuôn mặt, sắc diện)"
+  },
+  "绿": {
+    "r": "纟",
+    "d": "纟 (Mịch: sợi tơ nhuộm màu) + 录 (Lục)"
+  },
+  "红": {
+    "r": "纟",
+    "d": "纟 (Mịch: sợi tơ nhuộm đỏ) + 工 (Công)"
+  },
+  "粉": {
+    "r": "米",
+    "d": "米 (Mễ: hạt gạo) + 分 (Phân: nghiền nhỏ thành bột/phấn)"
+  },
+  "试": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời hỏi) + 式 (Thức: phép thử)"
+  },
+  "结": {
+    "r": "纟",
+    "d": "纟 (Mịch: sợi dây buộc lại) + 吉 (Cát)"
+  },
+  "账": {
+    "r": "贝",
+    "d": "贝 (Bối: tiền bạc sổ sách) + 长 (Trường)"
+  },
+  "喜": {
+    "r": "口",
+    "d": "壴 (Trú: tiếng trống) + 口 (Khẩu: miệng cười vui)"
+  },
+  "欢": {
+    "r": "欠",
+    "d": "又 (Hựu) + 欠 (Khiếm: reo vui)"
+  },
+  "错": {
+    "r": "钅",
+    "d": "钅 (Kim) + 昔 (Tích)"
+  },
+  "合": {
+    "r": "口",
+    "d": "人 (Nhân) + 一 + 口 (Khẩu: nắp đậy vừa khít)"
+  },
+  "适": {
+    "r": "辶",
+    "d": "舌 (Thiệt) + 辶 (Sước: đi đến nơi phù hợp)"
+  },
+  "便": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng) + 更 (Canh)"
+  },
+  "宜": {
+    "r": "宀",
+    "d": "宀 (Miên: mái nhà) + 且 (Thả: thích hợp)"
+  },
+  "新": {
+    "r": "斤",
+    "d": "立 + 木 (Tân) + 斤 (Cân: rìu chặt gỗ mới)"
+  },
+  "旧": {
+    "r": "日",
+    "d": "丨 (Cổn) + 日 (Nhật: đồ cũ lâu ngày)"
+  },
+  "最": {
+    "r": "日",
+    "d": "日 (Nhật) + 取 (Thủ: đoạt giải nhất)"
+  },
+  "条": {
+    "r": "木",
+    "d": "夂 (Trĩ) + 木 (Mộc: nhánh cây thuôn dài)"
+  },
+  "吧": {
+    "r": "口",
+    "d": "口 (Khẩu: ngữ khí cuối câu) + 巴 (Ba)"
+  },
+  "网": {
+    "r": "网",
+    "d": "Bộ 网 (Võng - mắt lưới đan chéo)"
+  },
+  "脑": {
+    "r": "月",
+    "d": "月 (Nhục: cơ quan cơ thể) + 亠 + 凶 (Não bộ)"
+  },
+  "手": {
+    "r": "手",
+    "d": "Bộ 手 (Thủ - hình bàn tay 5 ngón)"
+  },
+  "机": {
+    "r": "木",
+    "d": "木 (Mộc: khung máy) + 几 (Kỷ)"
+  },
+  "表": {
+    "r": "衣",
+    "d": "三 + 丨 + 衣 (phần ngoài áo, biểu hiện, đồng hồ)"
+  },
+  "眼": {
+    "r": "目",
+    "d": "目 (Mục: con mắt) + 艮 (Cấn)"
+  },
+  "镜": {
+    "r": "钅",
+    "d": "钅 (Kim: gương đồng/gọng kim loại) + 竟 (Cánh)"
+  },
+  "价": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng) + 介 (Giới: giá trị)"
+  },
+  "格": {
+    "r": "木",
+    "d": "木 (Mộc: khung gỗ kẻ ô) + 各 (Các)"
+  },
+  "质": {
+    "r": "贝",
+    "d": "厂 (Hán) + 十 + 贝 (Bối: đem vật cầm cố đánh giá)"
+  },
+  "量": {
+    "r": "里",
+    "d": "旦 (Đán) + 里 (Lý: đong đếm khối lượng)"
+  },
+  "告": {
+    "r": "口",
+    "d": "牛 (Ngưu: biến thể) + 口 (Khẩu: báo tin)"
+  },
+  "诉": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời nói) + 斥 (Xích: kể lại)"
+  },
+  "比": {
+    "r": "比",
+    "d": "Bộ 比 (Tỷ - hai người đứng cạnh so sánh)"
+  },
+  "如": {
+    "r": "女",
+    "d": "女 (Nữ) + 口 (Khẩu)"
+  },
+  "购": {
+    "r": "贝",
+    "d": "贝 (Bối: tiền bạc mua sắm) + 勾 (Câu)"
+  },
+  "物": {
+    "r": "牛",
+    "d": "牜 (Ngưu: con vật) + 勿 (Vật)"
+  },
+  "小": {
+    "r": "小",
+    "d": "Bộ 小 (Tiểu - hạt cát nhỏ bé)"
+  },
+  "心": {
+    "r": "心",
+    "d": "Bộ 心 (Tâm - hình trái tim)"
+  },
+  "出": {
+    "r": "凵",
+    "d": "山 (Sơn) chồng hai tầng bước ra ngoài"
+  },
+  "容": {
+    "r": "宀",
+    "d": "宀 (Miên: mái nhà) + 谷 (Cốc: thung lũng rộng chứa đựng)"
+  },
+  "易": {
+    "r": "日",
+    "d": "日 (Nhật: mặt trời) + 勿 (Vật: thay đổi dễ dàng)"
+  },
+  "可": {
+    "r": "口",
+    "d": "丁 (Đinh) + 口 (Khẩu: đồng ý)"
+  },
+  "以": {
+    "r": "人",
+    "d": "乚 + 丶 + 人 (Nhân)"
+  },
+  "能": {
+    "r": "月",
+    "d": "厶 + 月 (Nhục) + 匕 + 匕 (gấu mạnh mẽ có khả năng)"
+  },
+  "但": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng) + 旦 (Đán)"
+  },
+  "或": {
+    "r": "戈",
+    "d": "戈 (Qua: vũ khí bảo vệ) + 口 + 一"
+  },
+  "者": {
+    "r": "耂",
+    "d": "耂 (Lão) + 日 (Nhật)"
+  },
+  "还": {
+    "r": "辶",
+    "d": "不 (Bất) + 辶 (Sước: quay đi rồi vẫn quay lại)"
+  },
+  "经": {
+    "r": "纟",
+    "d": "纟 (Mịch: sợi dọc khung cửi) + 圣"
+  },
+  "挺": {
+    "r": "扌",
+    "d": "扌 (Thủ: tay giơ thẳng) + 廷 (Đình)"
+  },
+  "全": {
+    "r": "人",
+    "d": "人 (Nhân: mái che) + 王 (Ngọc: viên ngọc nguyên vẹn)"
+  },
+  "照": {
+    "r": "灬",
+    "d": "昭 (Chiêu: ánh sáng) + 灬 (Hỏa: ngọn lửa soi chiếu)"
+  },
+  "片": {
+    "r": "片",
+    "d": "Bộ 片 (Phiến - nửa thân gỗ xẻ mỏng)"
+  },
+  "爷": {
+    "r": "父",
+    "d": "父 (Phụ: cha) + 卩 (Tiết)"
+  },
+  "奶": {
+    "r": "女",
+    "d": "女 (Nữ: phụ nữ) + 乃 (Nãi)"
+  },
+  "爸": {
+    "r": "父",
+    "d": "父 (Phụ: người cha) + 巴 (Ba)"
+  },
+  "妈": {
+    "r": "女",
+    "d": "女 (Nữ: phụ nữ) + 马 (Mã: mượn âm)"
+  },
+  "姐": {
+    "r": "女",
+    "d": "女 (Nữ: phụ nữ) + 且 (Thả)"
+  },
+  "哥": {
+    "r": "口",
+    "d": "可 (Khả) + 可 (Khả: anh trai)"
+  },
+  "弟": {
+    "r": "弓",
+    "d": "丷 + 弓 (Cung) + 丨 + 丿 (em trai)"
+  },
+  "己": {
+    "r": "己",
+    "d": "Bộ 己 (Kỷ - bản thân, chữ độc thể)"
+  },
+  "岁": {
+    "r": "山",
+    "d": "山 (Sơn) + 夕 (Tịch: năm tháng trôi qua)"
+  },
+  "年": {
+    "r": "干",
+    "d": "𠂉 + 干/土 (mùa màng thu hoạch một năm)"
+  },
+  "狗": {
+    "r": "犭",
+    "d": "犭 (Khuyển: loài chó) + 句 (Cú)"
+  },
+  "猫": {
+    "r": "犭",
+    "d": "犭 (Khuyển: loài thú) + 苗 (Miêu: tiếng mèo kêu meo)"
+  },
+  "部": {
+    "r": "阝",
+    "d": "咅 (Thôi) + 阝 (Ấp)"
+  },
+  "爱": {
+    "r": "爫",
+    "d": "爫 (Trảo: tay vuốt ve) + 冖 + 友 (Hựu: tình bạn yêu thương)"
+  },
+  "矮": {
+    "r": "矢",
+    "d": "矢 (Thỉ: thước đo) + 委 (Ủy)"
+  },
+  "像": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 象 (Tượng: hình dáng)"
+  },
+  "只": {
+    "r": "口",
+    "d": "口 (Khẩu) + 八 (Bát)"
+  },
+  "它": {
+    "r": "宀",
+    "d": "宀 (Miên) + 匕 (Chủy)"
+  },
+  "当": {
+    "r": "彐",
+    "d": "⺌ + 彐 (Kệ)"
+  },
+  "然": {
+    "r": "灬",
+    "d": "肰 (Nhiên) + 灬 (Hỏa: ngọn lửa đốt)"
+  },
+  "说": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời nói) + 兑 (Đoài)"
+  },
+  "茶": {
+    "r": "艹",
+    "d": "艹 (Thảo: lá chè) + 人 (Nhân) + 木 (Mộc: cây cỏ hái bởi người)"
+  },
+  "咖": {
+    "r": "口",
+    "d": "口 (Khẩu: thức uống) + 加 (Gia: phiên âm ca)"
+  },
+  "啡": {
+    "r": "口",
+    "d": "口 (Khẩu: thức uống) + 非 (Phi: phiên âm phê)"
+  },
+  "牛": {
+    "r": "牛",
+    "d": "Bộ 牛 (Ngưu - đầu và sừng con bò/trâu)"
+  },
+  "肉": {
+    "r": "肉",
+    "d": "Bộ 肉 (Nhục - miếng thịt có thớ)"
+  },
+  "鱼": {
+    "r": "鱼",
+    "d": "Bộ 鱼 (Ngư - đầu, thân vảy và đuôi con cá)"
+  },
+  "次": {
+    "r": "欠",
+    "d": "冫 (Băng) + 欠 (Khiếm)"
+  },
+  "做": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 故 (Cố: làm việc)"
+  },
+  "迎": {
+    "r": "辶",
+    "d": "卬 (Ngưỡng) + 辶 (Sước: bước ra đón)"
+  },
+  "接": {
+    "r": "扌",
+    "d": "扌 (Thủ: bàn tay đưa ra) + 妾 (Thiếp)"
+  },
+  "待": {
+    "r": "彳",
+    "d": "彳 (Xích: dừng chân chờ đợi) + 寺 (Tự)"
+  },
+  "介": {
+    "r": "人",
+    "d": "人 (Nhân) + 儿 (những vạch phân chia)"
+  },
+  "绍": {
+    "r": "纟",
+    "d": "纟 (Mịch: sợi dây kết nối) + 召 (Triệu)"
+  },
+  "聊": {
+    "r": "耳",
+    "d": "耳 (Nhĩ: tai nghe) + 卯 (Mão)"
+  },
+  "喝": {
+    "r": "口",
+    "d": "口 (Khẩu: miệng uống) + 曷 (Hạt)"
+  },
+  "听": {
+    "r": "口",
+    "d": "口 (Khẩu) + 斤 (Cân)"
+  },
+  "音": {
+    "r": "音",
+    "d": "立 (Lập) + 日 (Nhật: tiếng vang phát ra)"
+  },
+  "乐": {
+    "r": "丿",
+    "d": "Nét phẩy trên nhạc cụ dây/trống gỗ (vui vẻ, âm nhạc)"
+  },
+  "游": {
+    "r": "氵",
+    "d": "氵 (Thủy: bơi lội trong nước) + 斿"
+  },
+  "戏": {
+    "r": "戈",
+    "d": "又 (Hựu) + 戈 (Qua: diễn trò)"
+  },
+  "玩": {
+    "r": "王",
+    "d": "王 (Ngọc: viên ngọc cầm chơi) + 元 (Nguyên)"
+  },
+  "准": {
+    "r": "冫",
+    "d": "冫 (Băng) + 隹 (Chuy)"
+  },
+  "备": {
+    "r": "夂",
+    "d": "夂 (Trĩ) + 田 (Điền)"
+  },
+  "聚": {
+    "r": "耳",
+    "d": "取 (Thủ: gom lấy) + 𠂊/众 (nhiều người tụ họp)"
+  },
+  "会": {
+    "r": "人",
+    "d": "人 (Nhân: mái tụ họp) + 云 (Vân)"
+  },
+  "决": {
+    "r": "冫",
+    "d": "冫 (Băng) + 夬 (Quái)"
+  },
+  "定": {
+    "r": "宀",
+    "d": "宀 (Miên: mái nhà yên ổn) + 疋 (Thất)"
+  },
+  "热": {
+    "r": "灬",
+    "d": "执 (Chấp) + 灬 (Hỏa: ngọn lửa nóng rực)"
+  },
+  "闹": {
+    "r": "门",
+    "d": "门 (Môn: cổng chợ) + 市 (Thị: phố chợ đông đúc)"
+  },
+  "快": {
+    "r": "忄",
+    "d": "忄 (Tâm đứng: cảm xúc) + 夬 (Quái: nhanh, vui)"
+  },
+  "紧": {
+    "r": "糸",
+    "d": "臤 (Hiền rút gọn) + 糸 (Mịch: sợi dây kéo căng)"
+  },
+  "情": {
+    "r": "忄",
+    "d": "忄 (Tâm đứng: trái tim) + 青 (Thanh: tình cảm tươi trẻ)"
+  },
+  "轻": {
+    "r": "车",
+    "d": "车 (Xa: xe cộ) + 圣 (xe nhỏ chạy nhẹ nhàng)"
+  },
+  "死": {
+    "r": "歹",
+    "d": "一 + 歹 (Ngạt: xương tàn) + 匕 (Chủy)"
+  },
+  "意": {
+    "r": "心",
+    "d": "音 (Âm: tiếng nói) + 心 (Tâm: ý nghĩ trong lòng)"
+  },
+  "思": {
+    "r": "心",
+    "d": "田 (Điền: hộp sọ/não) + 心 (Tâm: trái tim suy nghĩ)"
+  },
+  "月": {
+    "r": "月",
+    "d": "Bộ 月 (Nguyệt - hình vầng trăng khuyết)"
+  },
+  "星": {
+    "r": "日",
+    "d": "日 (Nhật: tinh tú phát sáng) + 生 (Sinh: muôn ngàn vì sao)"
+  },
+  "期": {
+    "r": "月",
+    "d": "其 (Kỳ) + 月 (Nguyệt: chu kỳ trăng tròn)"
+  },
+  "礼": {
+    "r": "礻",
+    "d": "礻 (Thị: tế lễ thần linh) + 乚"
+  },
+  "鞋": {
+    "r": "革",
+    "d": "革 (Cách: da thuộc) + 圭 (Khuê: đôi giày khâu bằng da)"
+  },
+  "帽": {
+    "r": "巾",
+    "d": "巾 (Cân: khăn vải) + 冒 (Mạo: đội lên đầu)"
+  },
+  "妹": {
+    "r": "女",
+    "d": "女 (Nữ: phụ nữ) + 未 (Vị: em gái còn nhỏ)"
+  },
+  "干": {
+    "r": "干",
+    "d": "Bộ 干 (Can - làm việc, khô ráo)"
+  },
+  "算": {
+    "r": "竹",
+    "d": "⺮ (Trúc: que tính tre) + 目 (Mục) + 廾 (Củng: hai tay tính toán)"
+  },
+  "送": {
+    "r": "辶",
+    "d": "关 (Quan) + 辶 (Sước: bước đi tiễn/tặng)"
+  },
+  "选": {
+    "r": "辶",
+    "d": "先 (Tiên) + 辶 (Sước: chọn lựa bước đi)"
+  },
+  "顶": {
+    "r": "页",
+    "d": "丁 (Đinh) + 页 (Hiệt: đỉnh đầu)"
+  },
+  "些": {
+    "r": "二",
+    "d": "此 (Thử) + 二 (Nhị)"
+  },
+  "双": {
+    "r": "又",
+    "d": "又 (Hựu) + 又 (Hựu: hai bàn tay thành một đôi)"
+  },
+  "感": {
+    "r": "心",
+    "d": "咸 (Hàm) + 心 (Tâm: rung động trong lòng)"
+  },
+  "动": {
+    "r": "力",
+    "d": "云 (Vân) + 力 (Lực: dùng sức chuyển động)"
+  },
+  "又": {
+    "r": "又",
+    "d": "Bộ 又 (Hựu - bàn tay phải)"
+  },
+  "正": {
+    "r": "止",
+    "d": "一 (Nhất) + 止 (Chỉ: dừng đúng vạch là ngay thẳng)"
+  },
+  "足": {
+    "r": "足",
+    "d": "Bộ 足 (Túc - đầu gối và bàn chân)"
+  },
+  "球": {
+    "r": "王",
+    "d": "王 (Ngọc: quả cầu tròn như ngọc) + 求 (Cầu)"
+  },
+  "迷": {
+    "r": "辶",
+    "d": "米 (Mễ: hạt gạo vãi khắp) + 辶 (Sước: lạc lối / say mê)"
+  },
+  "园": {
+    "r": "囗",
+    "d": "囗 (Vi: tường rào bao quanh) + 元 (Nguyên: khu vườn)"
+  },
+  "树": {
+    "r": "木",
+    "d": "木 (Mộc: cây cối) + 对 (Đối: trồng cây)"
+  },
+  "花": {
+    "r": "艹",
+    "d": "艹 (Thảo: thực vật) + 化 (Hóa: nở thành hoa)"
+  },
+  "公": {
+    "r": "八",
+    "d": "八 (Bát: chia đều) + 厶 (Tư: không giữ riêng, công cộng)"
+  },
+  "赛": {
+    "r": "贝",
+    "d": "宀 + 共 biến thể + 贝 (Bối: phần thưởng thi đấu)"
+  },
+  "画": {
+    "r": "田",
+    "d": "一 + 田 (Điền: khung tranh chia ô) + 凵"
+  },
+  "报": {
+    "r": "扌",
+    "d": "扌 (Thủ) + 卩 + 又"
+  },
+  "纸": {
+    "r": "纟",
+    "d": "纟 (Mịch: sợi xơ làm giấy) + 氏 (Thị)"
+  },
+  "种": {
+    "r": "禾",
+    "d": "禾 (Hòa: cây lúa) + 中 (Trung: gieo hạt giống)"
+  },
+  "唱": {
+    "r": "口",
+    "d": "口 (Khẩu: miệng hát) + 昌 (Xương: vang xa)"
+  },
+  "歌": {
+    "r": "欠",
+    "d": "哥 (Ca) + 欠 (Khiếm: mở miệng ngân nga)"
+  },
+  "散": {
+    "r": "攵",
+    "d": "龷 + 月 (Nhục) + 攵 (Phộc)"
+  },
+  "步": {
+    "r": "止",
+    "d": "止 (Chỉ: bước chân trên) + 少 biến thể (bước chân dưới)"
+  },
+  "讲": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời nói) + 井 (Tỉnh: nói rành mạch)"
+  },
+  "故": {
+    "r": "攵",
+    "d": "古 (Cổ: chuyện xưa) + 攵 (Phộc)"
+  },
+  "事": {
+    "r": "亅",
+    "d": "一 + 口 + 彐 + 亅 (tay cầm sổ ghi công việc)"
+  },
+  "踢": {
+    "r": "足",
+    "d": "⻊ (Túc: bàn chân) + 易 (Dịch: động tác đá)"
+  },
+  "参": {
+    "r": "厶",
+    "d": "厶 (Tư) + 大 (Đại) + 彡 (Sam)"
+  },
+  "空": {
+    "r": "穴",
+    "d": "穴 (Huyệt: hang trống) + 工 (Công: đào rỗng)"
+  },
+  "京": {
+    "r": "亠",
+    "d": "亠 + 口 + 小 (lầu cao kinh thành)"
+  },
+  "季": {
+    "r": "子",
+    "d": "禾 (Hòa: cây lúa non) + 子 (Tử: mùa màng non trẻ)"
+  },
+  "节": {
+    "r": "艹",
+    "d": "艹 (Thảo: đốt trúc/cỏ cây) + 卩 (Tiết)"
+  },
+  "春": {
+    "r": "日",
+    "d": "𡗗 (cây cỏ đâm chồi) + 日 (Nhật: nắng ấm mùa xuân)"
+  },
+  "夏": {
+    "r": "夂",
+    "d": "一 + 自 (Tự) + 夂 (Trĩ)"
+  },
+  "秋": {
+    "r": "禾",
+    "d": "禾 (Hòa: mùa lúa chín) + 火 (Hỏa: nắng gặt vàng rực)"
+  },
+  "冬": {
+    "r": "夂",
+    "d": "夂 (Trĩ) + 冫 (Băng: giá lạnh mùa đông)"
+  },
+  "度": {
+    "r": "广",
+    "d": "广 (Nghiễm) + 廿 + 又 (Hựu)"
+  },
+  "冷": {
+    "r": "冫",
+    "d": "冫 (Băng: nước đá) + 令 (Lệnh)"
+  },
+  "舒": {
+    "r": "舌",
+    "d": "舍 (Xá) + 予 (Dư)"
+  },
+  "暖": {
+    "r": "日",
+    "d": "日 (Nhật: ánh nắng) + 爰 (Viên: ấm áp)"
+  },
+  "刮": {
+    "r": "刂",
+    "d": "舌 (Thiệt) + 刂 (Đao: lưỡi dao cạo/gió thổi rát)"
+  },
+  "雨": {
+    "r": "雨",
+    "d": "Bộ 雨 (Vũ - bầu trời và bốn giọt mưa rơi)"
+  },
+  "泳": {
+    "r": "氵",
+    "d": "氵 (Thủy: nước) + 永 (Vĩnh: bơi lội lâu dài)"
+  },
+  "滑": {
+    "r": "氵",
+    "d": "氵 (Thủy: nước) + 骨 (Cốt: trơn trượt)"
+  },
+  "冰": {
+    "r": "冫",
+    "d": "冫 (Băng: kết tinh băng giá) + 水 (Thủy: nước)"
+  },
+  "较": {
+    "r": "车",
+    "d": "车 (Xa: xe) + 交 (Giao)"
+  },
+  "特": {
+    "r": "牛",
+    "d": "牜 (Ngưu: con bò tế lễ riêng) + 寺 (Tự)"
+  },
+  "别": {
+    "r": "刂",
+    "d": "口 (Khẩu) + 力 (Lực) + 刂 (Đao: cắt phân biệt)"
+  },
+  "因": {
+    "r": "囗",
+    "d": "囗 (Vi: khung bao) + 大 (Đại: người nằm trong)"
+  },
+  "为": {
+    "r": "丶",
+    "d": "丶 + 丿 + 𠃌 + 丶 (làm việc, vì)"
+  },
+  "假": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng) + 叚 (Giả)"
+  },
+  "健": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: con người) + 建 (Kiến: vững mạnh)"
+  },
+  "身": {
+    "r": "身",
+    "d": "Bộ 身 (Thân - thân người đứng thẳng)"
+  },
+  "房": {
+    "r": "户",
+    "d": "户 (Hộ: cánh cửa nhà) + 方 (Phương: gian phòng vuông vức)"
+  },
+  "闻": {
+    "r": "门",
+    "d": "门 (Môn: cánh cửa) + 耳 (Nhĩ: ghé tai nghe tin)"
+  },
+  "作": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 乍 (Sạ: làm việc)"
+  },
+  "业": {
+    "r": "一",
+    "d": "业 (hai cặp nhánh đứng trên vạch ngang: công việc, sự nghiệp)"
+  },
+  "功": {
+    "r": "力",
+    "d": "工 (Công: công việc) + 力 (Lực: bỏ sức ra)"
+  },
+  "锅": {
+    "r": "钅",
+    "d": "钅 (Kim: nồi kim loại) + 咼 (Qua)"
+  },
+  "逛": {
+    "r": "辶",
+    "d": "狂 (Cuồng) + 辶 (Sước: đi dạo lang thang)"
+  },
+  "街": {
+    "r": "行",
+    "d": "彳 (Xích) + 圭 (Khuê) + 亍 (trên đại lộ đường phố)"
+  },
+  "相": {
+    "r": "目",
+    "d": "木 (Mộc: cây) + 目 (Mục: mắt quan sát)"
+  },
+  "休": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 木 (Mộc: tựa gốc cây nghỉ ngơi)"
+  },
+  "息": {
+    "r": "心",
+    "d": "自 (Tự: cái mũi thở) + 心 (Tâm: nhịp tim lắng xuống nghỉ ngơi)"
+  },
+  "帮": {
+    "r": "巾",
+    "d": "邦 (Bang) + 巾 (Cân)"
+  },
+  "忙": {
+    "r": "忄",
+    "d": "忄 (Tâm đứng: lòng) + 亡 (Vong: lo tất bật, bận rộn)"
+  },
+  "助": {
+    "r": "力",
+    "d": "且 (Thả) + 力 (Lực: góp thêm sức giúp đỡ)"
+  },
+  "排": {
+    "r": "扌",
+    "d": "扌 (Thủ: bàn tay xếp hàng) + 非 (Phi)"
+  },
+  "复": {
+    "r": "夂",
+    "d": "𠂉 + 日 (Nhật) + 夂 (Trĩ: quay lại làm lần nữa)"
+  },
+  "习": {
+    "r": "乙",
+    "d": "乛 (cánh chim) + 冫 (chim non tập bay nhiều lần)"
+  },
+  "考": {
+    "r": "耂",
+    "d": "耂 (Lão) + 丂 (Khảo)"
+  },
+  "浪": {
+    "r": "氵",
+    "d": "氵 (Thủy: dòng nước) + 良 (Lương: sóng cuộn)"
+  },
+  "费": {
+    "r": "贝",
+    "d": "弗 (Phất) + 贝 (Bối: tiêu tốn tiền bạc)"
+  },
+  "无": {
+    "r": "无",
+    "d": "Bộ 无 (Vô - không có gì)"
+  },
+  "乖": {
+    "r": "丿",
+    "d": "千 (Thiên) + 北 (Bắc: ngoan ngoãn, khéo léo)"
+  },
+  "非": {
+    "r": "非",
+    "d": "Bộ 非 (Phi - hai cánh quay ngược nhau)"
+  },
+  "简": {
+    "r": "竹",
+    "d": "⺮ (Trúc: thẻ tre ghi chép) + 间 (Gian: giản lược)"
+  },
+  "除": {
+    "r": "阝",
+    "d": "阝 (Phụ: bậc thềm) + 余 (Dư: quét dọn loại trừ)"
+  },
+  "夕": {
+    "r": "夕",
+    "d": "Bộ 夕 (Tịch - vầng trăng khuyết buổi chiều tối)"
+  },
+  "饺": {
+    "r": "饣",
+    "d": "饣 (Thực: thức ăn) + 交 (Giao: gói sủi cảo)"
+  },
+  "粽": {
+    "r": "米",
+    "d": "米 (Mễ: gạo nếp gói bánh) + 宗 (Tông)"
+  },
+  "夜": {
+    "r": "夕",
+    "d": "亠 + 亻 + 夕 (Tịch: màn đêm tối)"
+  },
+  "联": {
+    "r": "耳",
+    "d": "耳 (Nhĩ) + 关 (Quan: nối liền kề)"
+  },
+  "鞭": {
+    "r": "革",
+    "d": "革 (Cách: dây da) + 便 (Tiện: roi/pháo nổ)"
+  },
+  "炮": {
+    "r": "火",
+    "d": "火 (Hỏa: lửa châm ngòi nổ) + 包 (Bao)"
+  },
+  "亲": {
+    "r": "立",
+    "d": "立 (Lập) + 木 (Mộc: cây đứng gần bên, người thân)"
+  },
+  "戚": {
+    "r": "戈",
+    "d": "厂 (Hán) + 尗 + 戈 (Qua: họ hàng thân thích)"
+  },
+  "过": {
+    "r": "辶",
+    "d": "寸 (Thốn) + 辶 (Sước: bước đi qua)"
+  },
+  "庆": {
+    "r": "广",
+    "d": "广 (Nghiễm) + 大 (Đại: mở rộng lòng ăn mừng)"
+  },
+  "祝": {
+    "r": "礻",
+    "d": "礻 (Thị: cầu khấn thần linh) + 兄 (Huynh: miệng chúc phúc)"
+  },
+  "团": {
+    "r": "囗",
+    "d": "囗 (Vi: vòng tròn) + 才 (Tài: quây quần)"
+  },
+  "拜": {
+    "r": "手",
+    "d": "Hai bàn tay chắp vái lạy"
+  },
+  "扫": {
+    "r": "扌",
+    "d": "扌 (Thủ: tay cầm chổi) + 彐 (Kệ: đầu chổi quét)"
+  },
+  "贴": {
+    "r": "贝",
+    "d": "贝 (Bối) + 占 (Chiếm: dán dính vào)"
+  },
+  "放": {
+    "r": "攵",
+    "d": "方 (Phương) + 攵 (Phộc: buông thả ra)"
+  },
+  "传": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 专 (Chuyên: truyền lại)"
+  },
+  "统": {
+    "r": "纟",
+    "d": "纟 (Mịch: sợi dây xâu chuỗi) + 充 (Sung)"
+  },
+  "重": {
+    "r": "里",
+    "d": "千 (Thiên) + 里 (Lý: nặng nề, trùng lặp)"
+  },
+  "开": {
+    "r": "廾",
+    "d": "一 + 廾 (Củng: hai tay mở rộng)"
+  },
+  "先": {
+    "r": "儿",
+    "d": "𠂉 + 土 + 儿 (Nhi: người bước đi trước)"
+  },
+  "后": {
+    "r": "口",
+    "d": "厂 + 一 + 口 (Khẩu: phía sau)"
+  },
+  "象": {
+    "r": "豕",
+    "d": "⺈ + 口 + 豕 (hình dáng con voi)"
+  },
+  "征": {
+    "r": "彳",
+    "d": "彳 (Xích: bước đi) + 正 (Chính: đi chinh phục)"
+  },
+  "景": {
+    "r": "日",
+    "d": "日 (Nhật: mặt trời chiếu) + 京 (Kinh: phong cảnh)"
+  },
+  "颐": {
+    "r": "页",
+    "d": "𦣞 + 页 (Hiệt: khuôn mặt, dưỡng sinh)"
+  },
+  "宫": {
+    "r": "宀",
+    "d": "宀 (Miên: mái cung điện) + 吕 (Lữ: hai gian nối nhau)"
+  },
+  "万": {
+    "r": "一",
+    "d": "一 + 𠃌 + 丿 (con số hàng vạn)"
+  },
+  "长": {
+    "r": "长",
+    "d": "Bộ 长 (Trường - mái tóc dài, kéo dài)"
+  },
+  "城": {
+    "r": "土",
+    "d": "土 (Thổ: tường đất đắp thành) + 成 (Thành)"
+  },
+  "菜": {
+    "r": "艹",
+    "d": "艹 (Thảo: rau cỏ) + 采 (Thái: hái rau)"
+  },
+  "烤": {
+    "r": "火",
+    "d": "火 (Hỏa: lửa nướng) + 考 (Khảo)"
+  },
+  "鸭": {
+    "r": "鸟",
+    "d": "甲 (Giáp) + 鸟 (Điểu: loài chim vịt)"
+  },
+  "历": {
+    "r": "厂",
+    "d": "厂 (Hán) + 力 (Lực: trải qua lịch sử)"
+  },
+  "史": {
+    "r": "口",
+    "d": "口 + 又 biến thể (bàn tay cầm bút chép sử)"
+  },
+  "文": {
+    "r": "文",
+    "d": "Bộ 文 (Văn - nét giao chéo tạo chữ nghĩa)"
+  },
+  "化": {
+    "r": "匕",
+    "d": "亻 (Nhân đứng) + 匕 (Chủy: người thay đổi biến hóa)"
+  },
+  "暑": {
+    "r": "日",
+    "d": "日 (Nhật: nắng nóng) + 者 (Giả: mùa hè oi bức)"
+  },
+  "旅": {
+    "r": "方",
+    "d": "方 (Phương: lá cờ) + 从 (lữ đoàn đi xa)"
+  },
+  "行": {
+    "r": "行",
+    "d": "Bộ 行 (Hành - ngã tư đường đi lại)"
+  },
+  "爬": {
+    "r": "爪",
+    "d": "爪 (Trảo: tay chân bám víu) + 巴 (Ba: trèo leo)"
+  },
+  "山": {
+    "r": "山",
+    "d": "Bộ 山 (Sơn - ba ngọn núi nhấp nhô)"
+  },
+  "拍": {
+    "r": "扌",
+    "d": "扌 (Thủ: tay) + 白 (Bạch: vỗ, chụp ảnh)"
+  },
+  "羡": {
+    "r": "羊",
+    "d": "羊 (Dương) + 次 (Thứ: thèm muốn ngưỡng mộ)"
+  },
+  "慕": {
+    "r": "心",
+    "d": "艹 + 日 + 大 + 㣺 (Tâm nhỏ: tấm lòng ngưỡng mộ)"
+  },
+  "雄": {
+    "r": "隹",
+    "d": "厷 (Quăng) + 隹 (Chuy: chim trống mạnh mẽ)"
+  },
+  "伟": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 韦 (Vi: vĩ đại)"
+  },
+  "壮": {
+    "r": "士",
+    "d": "丬 + 士 (Sĩ: tráng sĩ cường tráng)"
+  },
+  "丽": {
+    "r": "一",
+    "d": "一 + nét song song cân đối (đẹp đẽ, tráng lệ)"
+  },
+  "而": {
+    "r": "而",
+    "d": "Bộ 而 (Nhi - chòm râu, liên từ nối ý)"
+  },
+  "且": {
+    "r": "一",
+    "d": "Khung chồng tầng (vả lại, hơn nữa)"
+  },
+  "药": {
+    "r": "艹",
+    "d": "艹 (Thảo: cỏ cây thảo mộc) + 约 (Ước: phần biểu âm)"
+  },
+  "粥": {
+    "r": "米",
+    "d": "弓 (Cung) + 米 (Mễ: hạt gạo nấu nhừ ở giữa) + 弓 (Cung)"
+  },
+  "脸": {
+    "r": "月",
+    "d": "月 (Nhục: cơ thể) + 佥 (Thiêm: khuôn mặt)"
+  },
+  "病": {
+    "r": "疒",
+    "d": "疒 (Nạch: nằm giường bệnh) + 丙 (Bính)"
+  },
+  "冒": {
+    "r": "目",
+    "d": "曰 (Viết/che) + 目 (Mục)"
+  },
+  "头": {
+    "r": "大",
+    "d": "丷 + 大 (Đại: phần đầu phía trên)"
+  },
+  "疼": {
+    "r": "疒",
+    "d": "疒 (Nạch: bệnh tật) + 冬 (Đông: đau nhức buốt)"
+  },
+  "发": {
+    "r": "又",
+    "d": "𠃋 + 又 (Hựu: phóng ra, phát sinh)"
+  },
+  "烧": {
+    "r": "火",
+    "d": "火 (Hỏa: lửa nóng) + 尧 (Nghiêu: đốt cháy, sốt cao)"
+  },
+  "咳": {
+    "r": "口",
+    "d": "口 (Khẩu: miệng ho) + 亥 (Hợi)"
+  },
+  "嗽": {
+    "r": "口",
+    "d": "口 (Khẩu: miệng) + 束 (Thúc) + 欠 (Khiếm: bật hơi ra)"
+  },
+  "喉": {
+    "r": "口",
+    "d": "口 (Khẩu: cổ họng) + 侯 (Hầu)"
+  },
+  "咙": {
+    "r": "口",
+    "d": "口 (Khẩu: cuống họng) + 龙 (Long)"
+  },
+  "炎": {
+    "r": "火",
+    "d": "火 (Hỏa) + 火 (Hỏa: hai ngọn lửa chồng lên gây nóng/viêm)"
+  },
+  "累": {
+    "r": "糸",
+    "d": "田 (Điền: ruộng đồng) + 糸 (Mịch: vất vả mệt mỏi)"
+  },
+  "戒": {
+    "r": "戈",
+    "d": "戈 (Qua: vũ khí) + 廾 (Củng: hai tay giữ gìn, kiêng cữ)"
+  },
+  "恢": {
+    "r": "忄",
+    "d": "忄 (Tâm đứng: tinh thần) + 灰 (Hôi: tàn tro gồm 厂 + 火)"
+  },
+  "辛": {
+    "r": "辛",
+    "d": "Bộ 辛 (Tân - cái dùi xăm, vất vả cay đắng)"
+  },
+  "苦": {
+    "r": "艹",
+    "d": "艹 (Thảo: cây cỏ đắng) + 古 (Cổ)"
+  },
+  "顺": {
+    "r": "页",
+    "d": "川 (Xuyên: dòng chảy suôn sẻ) + 页 (Hiệt)"
+  },
+  "已": {
+    "r": "己",
+    "d": "Bộ 己 (Kỷ - biến thể khép nửa, đã xong)"
+  },
+  "没": {
+    "r": "氵",
+    "d": "氵 (Thủy: nước) + 殳 (Thù: chìm mất, không có)"
+  },
+  "体": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 本 (Bản: gốc thân thể)"
+  },
+  "疾": {
+    "r": "疒",
+    "d": "疒 (Nạch: bệnh tật) + 矢 (Thỉ: mũi tên đâm nhanh)"
+  },
+  "处": {
+    "r": "夂",
+    "d": "夂 (Trĩ) + 卜 (Bốc)"
+  },
+  "育": {
+    "r": "月",
+    "d": "亠 + 厶 + 月 (Nhục: nuôi dưỡng con lớn lên)"
+  },
+  "篮": {
+    "r": "竹",
+    "d": "⺮ (Trúc: giỏ đan bằng tre) + 监 (Giám)"
+  },
+  "武": {
+    "r": "止",
+    "d": "一 + 止 (Chỉ: dừng lại) + 弋 (Dặc: vũ khí dừng chiến)"
+  },
+  "跑": {
+    "r": "足",
+    "d": "⻊ (Túc: bàn chân) + 包 (Bao: chạy nhanh)"
+  },
+  "锻": {
+    "r": "钅",
+    "d": "钅 (Kim: rèn kim loại) + 段 (Đoạn)"
+  },
+  "炼": {
+    "r": "火",
+    "d": "火 (Hỏa: lửa nung rèn luyện) + 东 biến thể"
+  },
+  "运": {
+    "r": "辶",
+    "d": "云 (Vân) + 辶 (Sước: di chuyển vận động)"
+  },
+  "享": {
+    "r": "亠",
+    "d": "亠 + 口 + 子 (dâng lễ hưởng thụ)"
+  },
+  "受": {
+    "r": "又",
+    "d": "爫 (Trảo: tay đưa) + 冖 + 又 (Hựu: tay nhận lấy)"
+  },
+  "预": {
+    "r": "页",
+    "d": "予 (Dư) + 页 (Hiệt: tính toán chuẩn bị trước)"
+  },
+  "防": {
+    "r": "阝",
+    "d": "阝 (Phụ: lũy đất phòng thủ) + 方 (Phương)"
+  },
+  "床": {
+    "r": "广",
+    "d": "广 (Nghiễm: mái nhà) + 木 (Mộc: giường bằng gỗ)"
+  },
+  "睡": {
+    "r": "目",
+    "d": "目 (Mục: mắt nhắm rủ xuống) + 垂 (Thùy)"
+  },
+  "鲜": {
+    "r": "鱼",
+    "d": "鱼 (Ngư: cá) + 羊 (Dương: thịt dê tươi ngon)"
+  },
+  "坚": {
+    "r": "土",
+    "d": "刂 + 又 + 土 (Thổ: nền đất cứng chắc)"
+  },
+  "持": {
+    "r": "扌",
+    "d": "扌 (Thủ: bàn tay giữ vững) + 寺 (Tự)"
+  },
+  "棒": {
+    "r": "木",
+    "d": "木 (Mộc: gậy gỗ) + 奉 (Phụng: tuyệt vời, vững vàng)"
+  },
+  "弱": {
+    "r": "弓",
+    "d": "弓 (Cung) + 冫 + 弓 (Cung) + 冫 (hai cây cung mềm yếu)"
+  },
+  "康": {
+    "r": "广",
+    "d": "广 (Nghiễm) + 隶 (Lệ: thóc gạo đầy đủ, khỏe mạnh)"
+  },
+  "概": {
+    "r": "木",
+    "d": "木 (Mộc: thanh gạt đong thóc) + 既 (Ký)"
+  },
+  "应": {
+    "r": "广",
+    "d": "广 (Nghiễm) + ⺍ + 一 (ứng đáp)"
+  },
+  "该": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời nói) + 亥 (Hợi)"
+  },
+  "医": {
+    "r": "匚",
+    "d": "匚 (Phương: hộp đựng dụng cụ) + 矢 (Thỉ: mũi tên chữa thương)"
+  },
+  "护": {
+    "r": "扌",
+    "d": "扌 (Thủ: bàn tay) + 户 (Hộ: che chở bảo vệ)"
+  },
+  "士": {
+    "r": "士",
+    "d": "Bộ 士 (Sĩ - nét trên dài hơn nét dưới, người có học)"
+  },
+  "疗": {
+    "r": "疒",
+    "d": "疒 (Nạch: bệnh tật) + 了 (Liễu: chữa cho khỏi)"
+  },
+  "保": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người lớn) + 呆 (bồng ẵm bảo vệ)"
+  },
+  "险": {
+    "r": "阝",
+    "d": "阝 (Phụ: vách núi hiểm trở) + 佥 (Thiêm)"
+  },
+  "用": {
+    "r": "用",
+    "d": "Bộ 用 (Dụng - chiếc gàu/đồ dùng có ích)"
+  },
+  "胃": {
+    "r": "月",
+    "d": "田 (Điền: túi chứa thức ăn) + 月 (Nhục: cơ quan dạ dày)"
+  },
+  "眠": {
+    "r": "目",
+    "d": "目 (Mục: mắt nhắm) + 民 (Dân: ngủ yên)"
+  },
+  "症": {
+    "r": "疒",
+    "d": "疒 (Nạch: bệnh) + 正 (Chính: triệu chứng bệnh)"
+  },
+  "状": {
+    "r": "犬",
+    "d": "丬 + 犬 (Khuyển: hình dáng, trạng thái)"
+  },
+  "晕": {
+    "r": "日",
+    "d": "日 (Nhật: mặt trời chói) + 军 (Quân: quay cuồng chóng mặt)"
+  },
+  "敏": {
+    "r": "攵",
+    "d": "每 (Mỗi) + 攵 (Phộc: phản ứng nhanh nhạy)"
+  },
+  "检": {
+    "r": "木",
+    "d": "木 (Mộc: hòm thẻ gỗ kiểm tra) + 佥 (Thiêm)"
+  },
+  "查": {
+    "r": "木",
+    "d": "木 (Mộc) + 旦 (Đán: rà soát kiểm tra)"
+  },
+  "治": {
+    "r": "氵",
+    "d": "氵 (Thủy: trị thủy) + 台 (Đài: quản lý, chữa trị)"
+  },
+  "针": {
+    "r": "钅",
+    "d": "钅 (Kim: kim loại nhọn) + 十 (Thập: cây kim)"
+  },
+  "陪": {
+    "r": "阝",
+    "d": "阝 (Phụ) + 咅 (Thôi: đứng cạnh bầu bạn)"
+  },
+  "减": {
+    "r": "冫",
+    "d": "冫 (Băng) + 咸 (Hàm: giảm bớt đi)"
+  },
+  "其": {
+    "r": "八",
+    "d": "甘 biến thể + 一 + 八 (cái sàng, đại từ chỉ định)"
+  },
+  "实": {
+    "r": "宀",
+    "d": "宀 (Miên: mái nhà) + 头 (Đầu: đầy đủ chân thật)"
+  },
+  "并": {
+    "r": "干",
+    "d": "丷 + 开 (hai thứ gộp chung lại)"
+  },
+  "压": {
+    "r": "厂",
+    "d": "厂 (Hán: vách đá) + 土 (Thổ) + 丶 (đè nặng xuống)"
+  },
+  "困": {
+    "r": "囗",
+    "d": "囗 (Vi: vây kín) + 木 (Mộc: cây bị nhốt trong khung là khốn khó)"
+  },
+  "难": {
+    "r": "隹",
+    "d": "又 (Hựu) + 隹 (Chuy)"
+  },
+  "题": {
+    "r": "页",
+    "d": "是 (Thị) + 页 (Hiệt: trán, đầu đề câu hỏi)"
+  },
+  "法": {
+    "r": "氵",
+    "d": "氵 (Thủy: dòng nước phẳng bằng) + 去 (Khứ: phép tắc, phương pháp)"
+  },
+  "环": {
+    "r": "王",
+    "d": "王 (Ngọc: vòng ngọc tròn) + 不 (Bất)"
+  },
+  "境": {
+    "r": "土",
+    "d": "土 (Thổ: vùng đất) + 竟 (Cánh: ranh giới, hoàn cảnh)"
+  },
+  "乡": {
+    "r": "乙",
+    "d": "𠂋 + 𠂋 + 丿 (quê hương)"
+  },
+  "纪": {
+    "r": "纟",
+    "d": "纟 (Mịch: đầu mối sợi tơ) + 己 (Kỷ)"
+  },
+  "遇": {
+    "r": "辶",
+    "d": "禺 (Ngu) + 辶 (Sước: đi trên đường gặp gỡ)"
+  },
+  "练": {
+    "r": "纟",
+    "d": "纟 (Mịch: sợi tơ) + 东 biến thể (rèn luyện)"
+  },
+  "懂": {
+    "r": "忄",
+    "d": "忄 (Tâm đứng: tâm trí) + 董 (Đổng: hiểu thấu)"
+  },
+  "哭": {
+    "r": "口",
+    "d": "口 + 口 (hai mắt) + 犬 (Khuyển: khóc nức nở)"
+  },
+  "希": {
+    "r": "巾",
+    "d": "乂 (Ngải) + 布 biến thể (mong ước)"
+  },
+  "望": {
+    "r": "月",
+    "d": "亡 (Vong) + 月 (Nguyệt: ngắm trăng) + 王 (Vương: mong ngóng)"
+  },
+  "信": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 言 (Ngôn: lời nói giữ chữ tín)"
+  },
+  "惯": {
+    "r": "忄",
+    "d": "忄 (Tâm đứng: thói quen tâm lý) + 贯 (Quán: quen suốt)"
+  },
+  "抓": {
+    "r": "扌",
+    "d": "扌 (Thủ: bàn tay) + 爪 (Trảo: móng vuốt nắm bắt)"
+  },
+  "继": {
+    "r": "纟",
+    "d": "纟 (Mịch: sợi tơ nối dài) + 㡭"
+  },
+  "续": {
+    "r": "纟",
+    "d": "纟 (Mịch: sợi dây nối tiếp) + 卖 (Mại)"
+  },
+  "解": {
+    "r": "刀",
+    "d": "角 (Giác: sừng) + 刀 (Đao: dao) + 牛 (Ngưu: mổ phân tích)"
+  },
+  "努": {
+    "r": "力",
+    "d": "奴 (Nô) + 力 (Lực: dốc hết sức lực)"
+  },
+  "幸": {
+    "r": "干",
+    "d": "土 (Thổ) + 丷 + 干 (may mắn, hạnh phúc)"
+  },
+  "福": {
+    "r": "礻",
+    "d": "礻 (Thị: thần ban lộc) + 畐 (Phúc: nhà đầy đủ)"
+  },
+  "糟": {
+    "r": "米",
+    "d": "米 (Mễ: gạo ủ bã rượu) + 曹 (Tào)"
+  },
+  "糕": {
+    "r": "米",
+    "d": "米 (Mễ: bột gạo làm bánh) + 羔 (Cao)"
+  },
+  "验": {
+    "r": "马",
+    "d": "马 (Mã: xem xét ngựa) + 佥 (Thiêm: kiểm nghiệm)"
+  },
+  "慢": {
+    "r": "忄",
+    "d": "忄 (Tâm đứng: tâm trạng) + 曼 (Mạn: từ tốn chậm rãi)"
+  },
+  "虽": {
+    "r": "虫",
+    "d": "口 (Khẩu) + 虫 (Trùng)"
+  },
+  "系": {
+    "r": "糸",
+    "d": "丿 (Phiệt) + 糸 (Mịch: sợi dây liên hệ)"
+  },
+  "饮": {
+    "r": "饣",
+    "d": "饣 (Thực: ăn uống) + 欠 (Khiếm: há miệng uống)"
+  },
+  "料": {
+    "r": "斗",
+    "d": "米 (Mễ: gạo đong đếm) + 斗 (Đẩu: cái đấu đong nguyên liệu)"
+  },
+  "主": {
+    "r": "丶",
+    "d": "丶 (Chủ: ngọn đèn) + 王 (Vương: trụ cột chính)"
+  },
+  "味": {
+    "r": "口",
+    "d": "口 (Khẩu: miệng nếm) + 未 (Vị)"
+  },
+  "馒": {
+    "r": "饣",
+    "d": "饣 (Thực: thức ăn) + 曼 (Mạn: bánh hấp)"
+  },
+  "麦": {
+    "r": "麦",
+    "d": "Bộ 麦 (Mạch - cây lúa mì có rễ)"
+  },
+  "臭": {
+    "r": "自",
+    "d": "自 (Tự: cái mũi) + 犬 (Khuyển: chó đánh hơi mùi)"
+  },
+  "豆": {
+    "r": "豆",
+    "d": "Bộ 豆 (Đậu - chén đựng thực phẩm/hạt đậu)"
+  },
+  "腐": {
+    "r": "肉",
+    "d": "府 (Phủ) + 肉 (Nhục: đậu phụ mềm như thịt)"
+  },
+  "碗": {
+    "r": "石",
+    "d": "石 (Thạch: cái bát bằng gốm đá) + 宛 (Uyển)"
+  },
+  "酒": {
+    "r": "氵",
+    "d": "氵 (Thủy: chất lỏng) + 酉 (Dậu: bình rượu)"
+  },
+  "啤": {
+    "r": "口",
+    "d": "口 (Khẩu: thức uống) + 卑 (Ti: bia)"
+  },
+  "外": {
+    "r": "夕",
+    "d": "夕 (Tịch: buổi tối) + 卜 (Bốc: ở bên ngoài)"
+  },
+  "煮": {
+    "r": "灬",
+    "d": "者 (Giả) + 灬 (Hỏa: ngọn lửa đun nấu)"
+  },
+  "代": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 弋 (Dặc: thay thế, thế hệ)"
+  },
+  "替": {
+    "r": "日",
+    "d": "夫 + 夫 (hai người) + 日 (Nhật: thay thế nhau)"
+  },
+  "辣": {
+    "r": "辛",
+    "d": "辛 (Tân: vị cay) + 束 (Thúc)"
+  },
+  "咸": {
+    "r": "口",
+    "d": "戌 (Tuất) + 口 (Khẩu: vị mặn)"
+  },
+  "交": {
+    "r": "亠",
+    "d": "亠 + 父 (giao chéo, trao đổi qua lại)"
+  },
+  "通": {
+    "r": "辶",
+    "d": "甬 (Dũng) + 辶 (Sước: đi thông suốt)"
+  },
+  "车": {
+    "r": "车",
+    "d": "Bộ 车 (Xa - khung xe và trục bánh xe)"
+  },
+  "摩": {
+    "r": "手",
+    "d": "麻 (Ma) + 手 (Thủ: tay xoa bóp / phiên âm mô)"
+  },
+  "托": {
+    "r": "扌",
+    "d": "扌 (Thủ: tay đỡ) + 乇 (Thác)"
+  },
+  "汽": {
+    "r": "氵",
+    "d": "氵 (Thủy: hơi nước) + 气 (Khí: khí hơi)"
+  },
+  "租": {
+    "r": "禾",
+    "d": "禾 (Hòa: thóc thuế thuê ruộng) + 且 (Thả)"
+  },
+  "司": {
+    "r": "口",
+    "d": "𠃌 + 一 + 口 (Khẩu: người điều hành, cầm lái)"
+  },
+  "警": {
+    "r": "言",
+    "d": "敬 (Kính: cẩn trọng) + 言 (Ngôn: lời cảnh báo)"
+  },
+  "察": {
+    "r": "宀",
+    "d": "宀 (Miên) + 祭 (Tế: quan sát kỹ lưỡng)"
+  },
+  "乘": {
+    "r": "丿",
+    "d": "禾 + 北 biến thể (leo lên xe/ngựa)"
+  },
+  "灯": {
+    "r": "火",
+    "d": "火 (Hỏa: ánh lửa đèn) + 丁 (Đinh)"
+  },
+  "标": {
+    "r": "木",
+    "d": "木 (Mộc: cột mốc gỗ) + 示 (Thị: chỉ dấu hiệu)"
+  },
+  "志": {
+    "r": "心",
+    "d": "士 (Sĩ) + 心 (Tâm: chí hướng, ký hiệu)"
+  },
+  "规": {
+    "r": "见",
+    "d": "夫 (Phu) + 见 (Kiến: thước đo chuẩn mực)"
+  },
+  "则": {
+    "r": "刂",
+    "d": "贝 (Bối) + 刂 (Đao: quy tắc định sẵn)"
+  },
+  "峰": {
+    "r": "山",
+    "d": "山 (Sơn: đỉnh núi) + 夆 (Phong)"
+  },
+  "骑": {
+    "r": "马",
+    "d": "马 (Mã: con ngựa) + 奇 (Kỳ: cưỡi ngựa/xe)"
+  },
+  "坐": {
+    "r": "土",
+    "d": "从 (hai người) + 土 (Thổ: hai người ngồi trên đất)"
+  },
+  "遵": {
+    "r": "辶",
+    "d": "尊 (Tôn: tôn trọng) + 辶 (Sước: đi theo đúng phép tắc)"
+  },
+  "守": {
+    "r": "宀",
+    "d": "宀 (Miên: mái nhà) + 寸 (Thốn: giữ gìn tuân thủ)"
+  },
+  "堵": {
+    "r": "土",
+    "d": "土 (Thổ: đắp tường đất chặn) + 者 (Giả)"
+  },
+  "停": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 亭 (Đình: dừng nghỉ ở đình trạm)"
+  },
+  "拥": {
+    "r": "扌",
+    "d": "扌 (Thủ: tay ôm giữ) + 用 (Dụng)"
+  },
+  "挤": {
+    "r": "扌",
+    "d": "扌 (Thủ: tay xô đẩy) + 齐 (Tề: chen chúc)"
+  },
+  "辆": {
+    "r": "车",
+    "d": "车 (Xa: xe cộ) + 两 (Lưỡng: lượng từ xe)"
+  },
+  "湖": {
+    "r": "氵",
+    "d": "氵 (Thủy: mặt nước hồ) + 胡 (Hồ)"
+  },
+  "进": {
+    "r": "辶",
+    "d": "井 (Tỉnh) + 辶 (Sước: bước tiến vào)"
+  },
+  "沟": {
+    "r": "氵",
+    "d": "氵 (Thủy: rãnh nước) + 勾 (Câu)"
+  },
+  "择": {
+    "r": "扌",
+    "d": "扌 (Thủ: tay lựa chọn) + 𠬤"
+  },
+  "注": {
+    "r": "氵",
+    "d": "氵 (Thủy: dòng nước đổ vào) + 主 (Chủ: tập trung chú ý)"
+  },
+  "扰": {
+    "r": "扌",
+    "d": "扌 (Thủ: tay quấy phá) + 尤 (Uông)"
+  },
+  "让": {
+    "r": "讠",
+    "d": "讠 (Ngôn: lời nói nhường nhịn) + 上 (Thượng)"
+  },
+  "笑": {
+    "r": "竹",
+    "d": "⺮ (Trúc) + 夭 (Yêu: người nghiêng mình cười vui)"
+  },
+  "害": {
+    "r": "宀",
+    "d": "宀 (Miên) + 丰 + 口 (lời nói gây tổn hại dưới mái nhà)"
+  },
+  "怕": {
+    "r": "忄",
+    "d": "忄 (Tâm đứng: cảm xúc) + 白 (Bạch: mặt tái nhợt vì sợ)"
+  },
+  "清": {
+    "r": "氵",
+    "d": "氵 (Thủy: nước trong) + 青 (Thanh: trong sạch)"
+  },
+  "楚": {
+    "r": "木",
+    "d": "林 (Lâm: rừng cây) + 疋 (Thất: rõ ràng)"
+  },
+  "单": {
+    "r": "十",
+    "d": "丷 + 甲 biến thể (đơn chiếc, tờ đơn)"
+  },
+  "流": {
+    "r": "氵",
+    "d": "氵 (Thủy: dòng nước) + 㐬 (dòng chảy trôi chảy)"
+  },
+  "利": {
+    "r": "刂",
+    "d": "禾 (Hòa: cây lúa) + 刂 (Đao: liềm sắc gặt nhanh, thuận lợi)"
+  },
+  "着": {
+    "r": "目",
+    "d": "羊 biến thể + 目 (Mục: nhìn chăm chú, trạng thái tiếp diễn)"
+  },
+  "急": {
+    "r": "心",
+    "d": "⺈ + 彐 + 心 (Tâm: lòng nôn nóng vội vã)"
+  },
+  "更": {
+    "r": "曰",
+    "d": "一 + 曰 + 乂 (thay đổi, càng hơn)"
+  },
+  "随": {
+    "r": "阝",
+    "d": "阝 (Phụ) + 有 biến thể + 辶 (Sước: đi theo)"
+  },
+  "遍": {
+    "r": "辶",
+    "d": "扁 (Biển) + 辶 (Sước: đi khắp một lượt)"
+  },
+  "专": {
+    "r": "一",
+    "d": "二 + 乚 + 丶 (chuyên tâm một việc)"
+  },
+  "硕": {
+    "r": "石",
+    "d": "石 (Thạch: đá lớn) + 页 (Hiệt: to lớn, thạc sĩ)"
+  },
+  "理": {
+    "r": "王",
+    "d": "王 (Ngọc: mài giũa đường vân ngọc) + 里 (Lý: đạo lý)"
+  },
+  "梦": {
+    "r": "夕",
+    "d": "林 (Lâm: rừng tối) + 夕 (Tịch: buổi đêm nằm mơ)"
+  },
+  "工": {
+    "r": "工",
+    "d": "Bộ 工 (Công - dụng cụ thợ, công việc)"
+  },
+  "翻": {
+    "r": "羽",
+    "d": "番 (Phiên: lật qua) + 羽 (Vũ: đôi cánh bay lật)"
+  },
+  "译": {
+    "r": "讠",
+    "d": "讠 (Ngôn: ngôn ngữ) + 𠬤 (dịch chuyển nghĩa)"
+  },
+  "技": {
+    "r": "扌",
+    "d": "扌 (Thủ: bàn tay khéo) + 支 (Chi: kỹ năng)"
+  },
+  "企": {
+    "r": "人",
+    "d": "人 (Nhân: người đứng kiễng chân) + 止 (Chỉ: mong ngóng, xí nghiệp)"
+  },
+  "毕": {
+    "r": "比",
+    "d": "比 (Tỷ) + 十 (Thập: hoàn thành tốt nghiệp)"
+  },
+  "份": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: phần của mỗi người) + 分 (Phân)"
+  },
+  "位": {
+    "r": "亻",
+    "d": "亻 (Nhân đứng: người) + 立 (Lập: vị trí đứng)"
+  },
+  "确": {
+    "r": "石",
+    "d": "石 (Thạch: vững như đá) + 角 biến thể (chính xác)"
+  },
+  "口": {
+    "r": "口",
+    "d": "Bộ 口 (Khẩu - hình cái miệng mở, chữ độc thể)"
+  },
+  "木": {
+    "r": "木",
+    "d": "Bộ 木 (Mộc - thân cây, cành và rễ, chữ độc thể)"
+  },
+  "火": {
+    "r": "火",
+    "d": "Bộ 火 (Hỏa - ngọn lửa bốc lên, chữ độc thể)"
+  },
+  "龙": {
+    "r": "龙",
+    "d": "Bộ 龙 (Long - hình con rồng uốn lượn, chữ độc thể)"
+  },
+  "力": {
+    "r": "力",
+    "d": "Bộ 力 (Lực - bắp tay/cái cày thể hiện sức mạnh, chữ độc thể)"
+  }
+};
+
+const SUFFIX_CHARS = new Set([
+  '子', '头', '儿', '们', '的', '了', '着', '过', '吗', '呢', '吧', '啊', '个', '么',
+]);
+
+function isMissingOrPlaceholder(value: string | null | undefined): boolean {
+  const s = (value || '').trim();
+  if (!s) return true;
+  return (
+    s.includes('Bộ cấu tạo [') ||
+    s.includes('Thành phần biểu ý/biểu âm cơ bản') ||
+    s.includes('Ghép từ các chữ Hán:') ||
+    s.includes('gồm Bộ cấu tạo') ||
+    s.includes('Kết hợp các thành tố [')
+  );
+}
+
+function cleanVocabChars(hanzi: string): string[] {
+  const cleaned = String(hanzi || '')
+    .replace(/[（(][^）)]*[)）]/g, '')
+    .split('/')[0];
+  return Array.from(cleaned).filter((ch) => /[\u4e00-\u9fff]/.test(ch));
+}
+
+function extractShortRadicalLabel(radKey: string): string | null {
+  const full = RADICALS[radKey];
+  if (!full) return null;
+  const m = full.match(/\(([^)]+)\)/);
+  return m ? m[1] : null;
+}
+
+function formatIdsDecomposition(
+  radKey: string,
+  ids: string,
+  phonetic?: string
+): string {
+  const tokens: string[] = [];
+  const seen = new Set<string>();
+  for (const ch of Array.from(ids)) {
+    const code = ch.codePointAt(0) ?? 0;
+    // Bỏ toán tử cấu trúc IDS Unicode (U+2FF0..U+2FFF) và ký tự thiếu '？' / '?'
+    if ((code >= 0x2ff0 && code <= 0x2fff) || ch === '？' || ch === '?' || ch.trim() === '') {
+      continue;
+    }
+    if (!seen.has(ch)) {
+      seen.add(ch);
+      tokens.push(ch);
+    }
+  }
+
+  if (tokens.length === 0) {
+    const label = extractShortRadicalLabel(radKey);
+    return label ? `Bộ ${radKey} (${label}) (chữ độc thể)` : `Bộ ${radKey} (chữ độc thể)`;
+  }
+
+  return tokens
+    .map((comp) => {
+      const label = extractShortRadicalLabel(comp);
+      if (label && phonetic && comp === phonetic) {
+        return `${comp} (${label}, biểu âm)`;
+      }
+      if (label) {
+        return `${comp} (${label})`;
+      }
+      if (phonetic && comp === phonetic) {
+        return `${comp} (biểu âm)`;
+      }
+      return comp;
+    })
+    .join(' + ');
+}
+
+function resolveCharEntry(ch: string): { r: string; d: string } | null {
+  if (CHAR_MAP[ch]) return CHAR_MAP[ch];
+  const ext = EXTENDED_CHAR_MAP[ch];
+  if (!ext) return null;
+  const [radKey, ids, phonetic] = ext;
+  return {
+    r: radKey,
+    d: formatIdsDecomposition(radKey, ids, phonetic),
+  };
+}
+
+export function enrichVocabularyRadicals(input: {
+  hanzi: string;
+  pinyin: string;
+  meaning: string;
+  radical?: string | null;
+  breakdown?: string | null;
+  mnemonic?: string | null;
+}): {
+  radical: string | null;
+  breakdown: string | null;
+  mnemonic: string | null;
+} {
+  const chars = cleanVocabChars(input.hanzi);
+  const currentRadical = isMissingOrPlaceholder(input.radical) ? null : input.radical!.trim();
+  const currentBreakdown = isMissingOrPlaceholder(input.breakdown) ? null : input.breakdown!.trim();
+  const currentMnemonic = isMissingOrPlaceholder(input.mnemonic) ? null : input.mnemonic!.trim();
+
+  if (chars.length === 0) {
+    return { radical: currentRadical, breakdown: currentBreakdown, mnemonic: currentMnemonic };
+  }
+
+  const resolvedMap = new Map<string, { r: string; d: string }>();
+  for (const ch of chars) {
+    if (!resolvedMap.has(ch)) {
+      const entry = resolveCharEntry(ch);
+      if (entry) resolvedMap.set(ch, entry);
+    }
+  }
+
+  if (resolvedMap.size === 0) {
+    return { radical: currentRadical, breakdown: currentBreakdown, mnemonic: currentMnemonic };
+  }
+
+  const substantiveChars = chars.filter((ch) => !SUFFIX_CHARS.has(ch));
+  const candidates = substantiveChars.length > 0 ? substantiveChars : chars;
+  const knownPrimary = candidates.find((ch) => {
+    const entry = resolvedMap.get(ch);
+    return Boolean(entry && RADICALS[entry.r]);
+  });
+
+  const computedRadical = knownPrimary ? RADICALS[resolvedMap.get(knownPrimary)!.r] : null;
+  const computedBreakdown =
+    chars.length === 1
+      ? resolvedMap.has(chars[0])
+        ? `${chars[0]} = ${resolvedMap.get(chars[0])!.d}.`
+        : null
+      : chars
+          .map((ch) => {
+            const entry = resolvedMap.get(ch);
+            return entry ? `${ch}: ${entry.d}` : ch;
+          })
+          .join(' • ');
+
+  let computedMnemonic: string | null = null;
+  if (computedRadical) {
+    const radShort = computedRadical.split(') (')[0] + ')';
+    const meaningClean = String(input.meaning || '').replace(/^\[[^\]]+\]\s*/, '').trim();
+    if (chars.length === 1 && resolvedMap.has(chars[0])) {
+      computedMnemonic = `Chữ ${chars[0]} (${input.pinyin}) mang nghĩa "${meaningClean}", bộ chính ${radShort}; cấu tạo: ${resolvedMap.get(chars[0])!.d}.`;
+    } else if (chars.length > 1) {
+      const summary = chars
+        .map((c) => {
+          const entry = resolvedMap.get(c);
+          return entry ? `${c} [bộ ${entry.r}]` : c;
+        })
+        .join(' + ');
+      computedMnemonic = `Ghép ${summary} để nhớ từ ${input.hanzi} (${input.pinyin}): "${meaningClean}".`;
+    }
+  }
+
+  return {
+    radical: currentRadical ?? computedRadical,
+    breakdown: currentBreakdown ?? computedBreakdown,
+    mnemonic: currentMnemonic ?? computedMnemonic,
+  };
+}
