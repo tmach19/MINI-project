@@ -9,9 +9,8 @@ import {
   History,
   Languages,
   MessageSquare,
-  Paperclip,
+  MessageSquarePlus,
   PenTool,
-  Plus,
   Search,
   Send,
   Sparkles,
@@ -36,21 +35,102 @@ import { LoadingSpinner } from './common/LoadingState';
 import { ErrorBanner, ModalCloseButton, ModalShell } from './common/ModalShell';
 
 interface AiAssistantModalProps {
+  userId?: string | null;
   initialTab?: 'dictionary' | 'chat';
   initialQuery?: string;
   currentLesson?: LessonDetail | null;
   lessons?: LessonSummary[];
   onClose: () => void;
   onJumpToLesson: (lessonId: string, tab?: TabId) => void;
-  onNavigateView?: (view: 'study' | 'profile' | 'exam') => void;
+  onNavigateView?: (
+    view: 'dashboard' | 'study' | 'profile' | 'exam' | 'saved_vocab' | 'history'
+  ) => void;
   onStartReviewExam?: (exam: ComprehensiveExamResponse, lessonIds: string[]) => void;
   onOpenWriter: (vocab: VocabularyItem) => void;
   onProgressChanged?: () => Promise<void> | void;
   onLessonsChanged?: (focusLessonId?: string) => Promise<void> | void;
 }
 
+interface AiChatSession {
+  id: string;
+  title: string;
+  messages: AiChatMessage[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 const HISTORY_STORAGE_KEY = 'cs_ai_dict_history';
 const MAX_HISTORY_ITEMS = 12;
+const MAX_CHAT_SESSIONS = 30;
+const MAX_MESSAGES_PER_SESSION = 60;
+
+function getChatSessionsKey(userScope: string): string {
+  return `cs_ai_chat_sessions_v1_${userScope}`;
+}
+
+function getActiveSessionKey(userScope: string): string {
+  return `cs_ai_chat_active_v1_${userScope}`;
+}
+
+function loadSavedSessions(userScope: string): AiChatSession[] {
+  try {
+    const raw = localStorage.getItem(getChatSessionsKey(userScope));
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(
+      (s): s is AiChatSession =>
+        Boolean(s) &&
+        typeof s.id === 'string' &&
+        typeof s.title === 'string' &&
+        Array.isArray(s.messages) &&
+        s.messages.length > 0
+    );
+  } catch {
+    return [];
+  }
+}
+
+function saveSessionsToStorage(userScope: string, sessions: AiChatSession[]): void {
+  try {
+    localStorage.setItem(
+      getChatSessionsKey(userScope),
+      JSON.stringify(sessions.slice(0, MAX_CHAT_SESSIONS))
+    );
+  } catch {
+    // Bỏ qua lỗi quota storage
+  }
+}
+
+function loadActiveSessionId(userScope: string): string | null {
+  try {
+    return localStorage.getItem(getActiveSessionKey(userScope));
+  } catch {
+    return null;
+  }
+}
+
+function saveActiveSessionId(userScope: string, sessionId: string | null): void {
+  try {
+    if (sessionId) localStorage.setItem(getActiveSessionKey(userScope), sessionId);
+    else localStorage.removeItem(getActiveSessionKey(userScope));
+  } catch {
+    // Bỏ qua lỗi quota storage
+  }
+}
+
+function deriveSessionTitle(messages: AiChatMessage[]): string {
+  const firstUser = messages.find((m) => m.role === 'user');
+  const raw = (firstUser?.content || 'Cuộc trò chuyện mới').replace(/\s+/g, ' ').trim();
+  return raw.length > 52 ? `${raw.slice(0, 52)}...` : raw;
+}
+
+function createSessionId(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return `chat_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+}
 
 function loadDictHistory(): string[] {
   try {
@@ -100,10 +180,9 @@ function extractChineseSnippets(text: string): string[] {
 }
 
 export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
+  userId,
   initialTab = 'dictionary',
   initialQuery = '',
-  currentLesson,
-  lessons = [],
   onClose,
   onJumpToLesson,
   onNavigateView,
@@ -112,6 +191,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
   onProgressChanged,
   onLessonsChanged,
 }) => {
+  const userScope = userId || 'guest';
   const [activeTab, setActiveTab] = useState<'dictionary' | 'chat'>(initialTab);
 
   // Dictionary state
@@ -122,12 +202,22 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
   const [dictHistory, setDictHistory] = useState<string[]>(() => loadDictHistory());
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
-  // Tutor chat state — mặc định không đính kèm bài học nào
-  const [selectedLessonIds, setSelectedLessonIds] = useState<string[]>([]);
-  const [showLessonPicker, setShowLessonPicker] = useState(false);
-  const [lessonSearch, setLessonSearch] = useState('');
+  // Tutor chat state — tự động lưu & lịch sử các cuộc trò chuyện
+  const [sessions, setSessions] = useState<AiChatSession[]>(() => loadSavedSessions(userScope));
+  const [activeSessionId, setActiveSessionId] = useState<string>(() => {
+    const saved = loadSavedSessions(userScope);
+    const storedId = loadActiveSessionId(userScope);
+    return storedId || saved[0]?.id || createSessionId();
+  });
   const [chatInput, setChatInput] = useState('');
-  const [chatMessages, setChatMessages] = useState<AiChatMessage[]>([]);
+  const [chatMessages, setChatMessages] = useState<AiChatMessage[]>(() => {
+    const saved = loadSavedSessions(userScope);
+    const storedId = loadActiveSessionId(userScope);
+    const targetId = storedId || saved[0]?.id;
+    const found = targetId ? saved.find((s) => s.id === targetId) : undefined;
+    return found ? found.messages : [];
+  });
+  const [showHistoryDrawer, setShowHistoryDrawer] = useState(false);
   const [chatLoading, setChatLoading] = useState(false);
   const [chatError, setChatError] = useState<string | null>(null);
   const [actionStates, setActionStates] = useState<
@@ -141,7 +231,6 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
     >
   >({});
   const chatEndRef = useRef<HTMLDivElement>(null);
-  const selectAllCheckboxRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (initialQuery.trim()) {
@@ -152,6 +241,73 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatMessages, chatLoading]);
+
+  const upsertSavedSession = (sessionId: string, messages: AiChatMessage[]) => {
+    if (messages.length === 0) return;
+    const nowIso = new Date().toISOString();
+    const trimmedMessages = messages.slice(-MAX_MESSAGES_PER_SESSION);
+    const title = deriveSessionTitle(trimmedMessages);
+    setSessions((prev) => {
+      const existing = prev.find((s) => s.id === sessionId);
+      const updatedSession: AiChatSession = {
+        id: sessionId,
+        title,
+        messages: trimmedMessages,
+        createdAt: existing?.createdAt || nowIso,
+        updatedAt: nowIso,
+      };
+      const next = [updatedSession, ...prev.filter((s) => s.id !== sessionId)].slice(
+        0,
+        MAX_CHAT_SESSIONS
+      );
+      saveSessionsToStorage(userScope, next);
+      return next;
+    });
+    saveActiveSessionId(userScope, sessionId);
+  };
+
+  const handleNewChat = () => {
+    const nextId = createSessionId();
+    setActiveSessionId(nextId);
+    setChatMessages([]);
+    setChatError(null);
+    setShowHistoryDrawer(false);
+    saveActiveSessionId(userScope, nextId);
+  };
+
+  const handleSelectSession = (session: AiChatSession) => {
+    setActiveSessionId(session.id);
+    setChatMessages(session.messages);
+    setChatError(null);
+    setShowHistoryDrawer(false);
+    saveActiveSessionId(userScope, session.id);
+  };
+
+  const handleDeleteSession = (sessionId: string) => {
+    setSessions((prev) => {
+      const next = prev.filter((s) => s.id !== sessionId);
+      saveSessionsToStorage(userScope, next);
+      return next;
+    });
+    if (sessionId === activeSessionId) {
+      const freshId = createSessionId();
+      setActiveSessionId(freshId);
+      setChatMessages([]);
+      setChatError(null);
+      saveActiveSessionId(userScope, freshId);
+    }
+  };
+
+  const handleClearAllSessions = () => {
+    setSessions([]);
+    saveSessionsToStorage(userScope, []);
+    const freshId = createSessionId();
+    setActiveSessionId(freshId);
+    setChatMessages([]);
+    setChatError(null);
+    setShowHistoryDrawer(false);
+    saveActiveSessionId(userScope, freshId);
+  };
 
   const pushHistory = (q: string) => {
     const clean = q.trim();
@@ -189,89 +345,28 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
     }
   };
 
-  const availableLessons = useMemo(() => {
-    if (lessons.length > 0) return lessons;
-    if (!currentLesson) return [];
-    return [
-      {
-        id: currentLesson.id,
-        title: currentLesson.title,
-        hskLevel: currentLesson.hskLevel,
-        unit: currentLesson.unit,
-        description: currentLesson.description,
-        isSystem: currentLesson.isSystem,
-        ownerId: currentLesson.ownerId,
-        vocabCount: currentLesson.vocabulary.length,
-        grammarCount: currentLesson.grammar.length,
-        textCount: currentLesson.texts.length,
-        testCount: currentLesson.comprehensiveTest.length,
-      },
-    ] as LessonSummary[];
-  }, [lessons, currentLesson]);
-
-  const selectedLessons = useMemo(
-    () => availableLessons.filter((l) => selectedLessonIds.includes(l.id)),
-    [availableLessons, selectedLessonIds]
-  );
-
-  const filteredPickerLessons = useMemo(() => {
-    const q = lessonSearch.trim().toLowerCase();
-    if (!q) return availableLessons;
-    return availableLessons.filter(
-      (l) =>
-        l.title.toLowerCase().includes(q) ||
-        l.hskLevel.toLowerCase().includes(q) ||
-        (l.unit || '').toLowerCase().includes(q)
-    );
-  }, [availableLessons, lessonSearch]);
-
-  const allFilteredSelected =
-    filteredPickerLessons.length > 0 &&
-    filteredPickerLessons.every((l) => selectedLessonIds.includes(l.id));
-  const someFilteredSelected =
-    filteredPickerLessons.some((l) => selectedLessonIds.includes(l.id)) && !allFilteredSelected;
-
-  useEffect(() => {
-    if (selectAllCheckboxRef.current) {
-      selectAllCheckboxRef.current.indeterminate = someFilteredSelected;
-    }
-  }, [someFilteredSelected, showLessonPicker]);
-
-  const toggleAttachedLesson = (lessonId: string) => {
-    setSelectedLessonIds((prev) =>
-      prev.includes(lessonId) ? prev.filter((id) => id !== lessonId) : [...prev, lessonId]
-    );
-  };
-
-  const toggleSelectAllFiltered = () => {
-    const visibleIds = filteredPickerLessons.map((l) => l.id);
-    if (visibleIds.length === 0) return;
-    if (allFilteredSelected) {
-      const visibleSet = new Set(visibleIds);
-      setSelectedLessonIds((prev) => prev.filter((id) => !visibleSet.has(id)));
-    } else {
-      setSelectedLessonIds((prev) => Array.from(new Set([...prev, ...visibleIds])));
-    }
-  };
-
   const sendChatMessage = async (rawPrompt?: string) => {
     const text = (rawPrompt ?? chatInput).trim();
     if (!text || chatLoading) return;
     setChatError(null);
+    setShowHistoryDrawer(false);
 
+    const sessionId = activeSessionId;
+    const priorMessages = chatMessages;
     const nextUserMsg: AiChatMessage = { role: 'user', content: text };
-    const nextHistory = [...chatMessages, nextUserMsg];
+    const nextHistory = [...priorMessages, nextUserMsg];
     setChatMessages(nextHistory);
+    upsertSavedSession(sessionId, nextHistory);
     if (!rawPrompt) setChatInput('');
     setChatLoading(true);
 
     try {
       const res = await api.aiChat({
         message: text,
-        history: chatMessages.slice(-10).map((m) => ({ role: m.role, content: m.content })),
-        lessonIds: selectedLessonIds,
+        history: priorMessages.slice(-10).map((m) => ({ role: m.role, content: m.content })),
+        lessonIds: [],
       });
-      setChatMessages([
+      const completedMessages: AiChatMessage[] = [
         ...nextHistory,
         {
           role: 'assistant',
@@ -279,7 +374,9 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
           toolExecutions: res.toolExecutions,
           pendingActions: res.pendingActions,
         },
-      ]);
+      ];
+      setChatMessages(completedMessages);
+      upsertSavedSession(sessionId, completedMessages);
       if (res.effects?.progressUpdated) {
         await onProgressChanged?.();
       }
@@ -325,31 +422,12 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
     }
   };
 
-  const quickPrompts = useMemo(() => {
-    if (selectedLessons.length === 1) {
-      const target = selectedLessons[0];
-      return [
-        `Giải thích các điểm ngữ pháp trọng tâm trong ${target.title}`,
-        `Tạo đề kiểm tra ôn tập 20 câu cho ${target.title}`,
-        `Tạo 1 đoạn hội thoại ngắn (4 câu) dùng từ vựng của ${target.title}`,
-        `Đánh dấu giúp mình 5 từ quan trọng nhất trong ${target.title}`,
-      ];
-    }
-    if (selectedLessons.length > 1) {
-      return [
-        `Tổng hợp và so sánh ngữ pháp chính trong ${selectedLessons.length} bài đã chọn`,
-        `Tạo đề kiểm tra ôn tập 25 câu tổng hợp từ ${selectedLessons.length} bài đã chọn`,
-        `Tạo 1 đoạn hội thoại ngắn kết hợp từ vựng từ các bài đã chọn`,
-        `Kiểm tra tiến độ thi của mình ở các bài này và gợi ý phần cần ôn`,
-      ];
-    }
-    return [
-      'Xem tiến độ thi & tạo đề kiểm tra ôn tập 20 câu từ các bài mình cần ôn lại',
-      'Tạo giúp mình 1 bài tự tạo chủ đề Đi ăn nhà hàng (HSK 2, 6 từ vựng)',
-      'Tìm và đánh dấu các từ có nghĩa liên quan đến "thời gian" để ôn tập',
-      'Phân biệt 有点儿 (yǒudiǎnr) và 一点儿 (yīdiǎnr)',
-    ];
-  }, [selectedLessons]);
+  const quickPrompts = [
+    'Xem tiến độ Dashboard, các kỹ năng yếu & gợi ý ôn tập cho mình',
+    'Tổng hợp lịch sử làm bài kiểm tra của mình gần đây',
+    'Tìm và đánh dấu các từ có nghĩa liên quan đến "thời gian" để ôn tập',
+    'Phân biệt 有点儿 (yǒudiǎnr) và 一点儿 (yīdiǎnr)',
+  ];
 
   const aiHanziChars = useMemo(
     () => (dictResult?.aiResult?.hanzi ? extractHanziChars(dictResult.aiResult.hanzi) : []),
@@ -403,17 +481,32 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
           </button>
         </div>
 
-        {activeTab === 'chat' && chatMessages.length > 0 && (
-          <button
-            type="button"
-            onClick={() => {
-              setChatMessages([]);
-              setChatError(null);
-            }}
-            className="text-[11px] font-semibold text-gray-500 dark:text-slate-400 hover:text-red-600 inline-flex items-center gap-1"
-          >
-            <Trash2 className="w-3.5 h-3.5" /> Xoá cuộc trò chuyện
-          </button>
+        {activeTab === 'chat' && (
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <button
+              type="button"
+              onClick={() => setShowHistoryDrawer((v) => !v)}
+              className={`px-2.5 py-1.5 rounded-xl border text-[11px] font-semibold inline-flex items-center gap-1.5 transition ${
+                showHistoryDrawer
+                  ? 'bg-slate-900 dark:bg-slate-700 border-slate-900 dark:border-slate-600 text-white'
+                  : 'bg-white dark:bg-slate-800 border-stone-200 dark:border-slate-700 text-gray-700 dark:text-slate-200 hover:bg-stone-50 dark:hover:bg-slate-700'
+              }`}
+              title="Xem lịch sử các cuộc trò chuyện đã lưu"
+            >
+              <History className="w-3.5 h-3.5" />
+              <span>Lịch sử ({sessions.length})</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleNewChat}
+              className="px-2.5 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold inline-flex items-center gap-1 shadow-sm transition"
+              title="Bắt đầu cuộc trò chuyện mới"
+            >
+              <MessageSquarePlus className="w-3.5 h-3.5" />
+              <span>Trò chuyện mới</span>
+            </button>
+          </div>
         )}
       </div>
 
@@ -793,170 +886,90 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
       ) : (
         /* Tab 2: Gia sư AI HSK */
         <div className="flex flex-col flex-grow min-h-[420px] max-h-[70vh]">
-          <div className="px-5 py-2.5 bg-stone-50 dark:bg-slate-800/40 border-b border-stone-200 dark:border-slate-800 space-y-2">
-            <div className="flex items-center justify-between gap-2 flex-wrap">
-              <div className="flex items-center gap-2 flex-wrap text-xs">
-                <span className="font-semibold text-gray-600 dark:text-slate-300 inline-flex items-center gap-1.5">
-                  <Paperclip className="w-3.5 h-3.5 text-red-500" />
-                  Ngữ cảnh bài học:
-                </span>
-                {selectedLessons.length === 0 ? (
-                  <span className="text-[11px] text-gray-500 dark:text-slate-400">
-                    Không đính kèm bài nào (hỏi đáp tự do)
+          {showHistoryDrawer && (
+            <div className="px-5 py-3 bg-stone-50 dark:bg-slate-800/60 border-b border-stone-200 dark:border-slate-800 space-y-2.5">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <History className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
+                  <span className="text-xs font-bold text-gray-900 dark:text-white">
+                    Lịch sử các cuộc trò chuyện ({sessions.length})
                   </span>
-                ) : (
-                  <span className="px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 text-[11px] font-bold">
-                    Đã chọn {selectedLessons.length}/{availableLessons.length} bài
-                  </span>
-                )}
-              </div>
-
-              <div className="flex items-center gap-1.5 flex-wrap">
-                {currentLesson && !selectedLessonIds.includes(currentLesson.id) && (
-                  <button
-                    type="button"
-                    onClick={() => toggleAttachedLesson(currentLesson.id)}
-                    className="px-2.5 py-1 rounded-lg border border-stone-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-red-400 text-[11px] font-semibold text-gray-700 dark:text-slate-200"
-                  >
-                    + Bài đang mở
-                  </button>
-                )}
-                {selectedLessonIds.length > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => setSelectedLessonIds([])}
-                    className="px-2.5 py-1 rounded-lg border border-stone-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:text-red-600 text-[11px] font-semibold text-gray-600 dark:text-slate-300"
-                  >
-                    Bỏ chọn hết
-                  </button>
-                )}
-                <button
-                  type="button"
-                  onClick={() => setShowLessonPicker((s) => !s)}
-                  className={`px-2.5 py-1 rounded-lg text-[11px] font-bold inline-flex items-center gap-1 border transition ${
-                    showLessonPicker
-                      ? 'bg-red-600 text-white border-red-600'
-                      : 'bg-white dark:bg-slate-800 border-stone-200 dark:border-slate-700 text-gray-700 dark:text-slate-200 hover:border-red-400'
-                  }`}
-                >
-                  <Plus className="w-3 h-3" />
-                  {showLessonPicker ? 'Đóng chọn bài' : 'Chọn bài đính kèm'}
-                </button>
-              </div>
-            </div>
-
-            {selectedLessons.length > 0 && (
-              <div className="flex items-center gap-1.5 flex-wrap max-h-20 overflow-y-auto">
-                {selectedLessons.length === availableLessons.length && availableLessons.length > 3 ? (
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white dark:bg-slate-800 border border-red-200 dark:border-red-800/70 text-[11px] font-semibold text-gray-800 dark:text-slate-200">
-                    <span>Tất cả buổi học ({selectedLessons.length} bài)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {sessions.length > 0 && (
                     <button
                       type="button"
-                      onClick={() => setSelectedLessonIds([])}
-                      className="text-gray-400 hover:text-red-600"
-                      title="Bỏ chọn tất cả"
+                      onClick={handleClearAllSessions}
+                      className="text-[11px] font-semibold text-gray-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 inline-flex items-center gap-1 transition"
                     >
-                      <X className="w-3 h-3" />
+                      <Trash2 className="w-3 h-3" /> Xoá tất cả
                     </button>
-                  </span>
-                ) : (
-                  selectedLessons.map((lesson) => (
-                    <span
-                      key={lesson.id}
-                      className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white dark:bg-slate-800 border border-red-200 dark:border-red-800/70 text-[11px] font-semibold text-gray-800 dark:text-slate-200"
-                    >
-                      <span className="max-w-[200px] truncate">{lesson.title}</span>
-                      <button
-                        type="button"
-                        onClick={() => toggleAttachedLesson(lesson.id)}
-                        className="text-gray-400 hover:text-red-600"
-                        title="Gỡ bài học này"
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  ))
-                )}
-              </div>
-            )}
-
-            {showLessonPicker && (
-              <div className="p-3 rounded-2xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 shadow-lg space-y-2.5">
-                <div className="flex items-center justify-between gap-2">
-                  <div className="relative flex-1">
-                    <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                    <input
-                      type="text"
-                      value={lessonSearch}
-                      onChange={(e) => setLessonSearch(e.target.value)}
-                      placeholder="Tìm buổi học để đính kèm..."
-                      className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-stone-200 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 text-xs text-gray-900 dark:text-white focus:outline-none"
-                    />
-                  </div>
+                  )}
                   <button
                     type="button"
-                    onClick={() => setShowLessonPicker(false)}
-                    className="px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold"
+                    onClick={() => setShowHistoryDrawer(false)}
+                    aria-label="Đóng"
+                    title="Đóng"
+                    className="p-1 rounded-lg text-gray-500 dark:text-slate-400 hover:bg-stone-200/70 dark:hover:bg-slate-700 transition"
                   >
-                    Xong
+                    <X className="w-3.5 h-3.5" />
                   </button>
                 </div>
-
-                {filteredPickerLessons.length > 0 && (
-                  <label className="px-2 py-1.5 rounded-lg bg-stone-50 dark:bg-slate-800/70 border border-stone-200/80 dark:border-slate-700/80 flex items-center justify-between gap-2 text-xs cursor-pointer select-none">
-                    <div className="flex items-center gap-2">
-                      <input
-                        ref={selectAllCheckboxRef}
-                        type="checkbox"
-                        checked={allFilteredSelected}
-                        onChange={toggleSelectAllFiltered}
-                        className="rounded border-stone-300 dark:border-slate-600 text-red-600 focus:ring-red-500"
-                      />
-                      <span className="font-bold text-gray-800 dark:text-slate-100">
-                        {lessonSearch.trim() ? 'Chọn tất cả kết quả đang lọc' : 'Chọn tất cả buổi học'}
-                      </span>
-                    </div>
-                    <span className="text-[11px] font-semibold text-gray-500 dark:text-slate-400">
-                      {filteredPickerLessons.length} bài
-                    </span>
-                  </label>
-                )}
-
-                <div className="max-h-44 overflow-y-auto divide-y divide-stone-100 dark:divide-slate-800">
-                  {filteredPickerLessons.length === 0 ? (
-                    <p className="py-4 text-center text-[11px] text-gray-400 dark:text-slate-500">
-                      Không tìm thấy buổi học phù hợp.
-                    </p>
-                  ) : (
-                    filteredPickerLessons.map((lesson) => {
-                      const checked = selectedLessonIds.includes(lesson.id);
-                      return (
-                        <label
-                          key={lesson.id}
-                          className="py-2 px-2 flex items-center justify-between gap-2 text-xs rounded-lg cursor-pointer hover:bg-stone-50 dark:hover:bg-slate-800/60"
-                        >
-                          <div className="flex items-center gap-2 min-w-0">
-                            <input
-                              type="checkbox"
-                              checked={checked}
-                              onChange={() => toggleAttachedLesson(lesson.id)}
-                              className="rounded border-stone-300 dark:border-slate-600 text-red-600 focus:ring-red-500"
-                            />
-                            <span className="font-semibold text-gray-800 dark:text-slate-200 truncate">
-                              {lesson.title}
-                            </span>
-                          </div>
-                          <span className="px-2 py-0.5 rounded bg-stone-100 dark:bg-slate-800 text-[10px] font-bold text-gray-500 dark:text-slate-400 flex-shrink-0">
-                            {lesson.hskLevel}
-                          </span>
-                        </label>
-                      );
-                    })
-                  )}
-                </div>
               </div>
-            )}
-          </div>
+
+              {sessions.length === 0 ? (
+                <p className="py-3 text-center text-xs text-gray-500 dark:text-slate-400">
+                  Chưa có cuộc trò chuyện nào được lưu.
+                </p>
+              ) : (
+                <div className="max-h-48 overflow-y-auto space-y-1.5 pr-1">
+                  {sessions.map((session) => {
+                    const isActive = session.id === activeSessionId;
+                    return (
+                      <div
+                        key={session.id}
+                        className={`flex items-center justify-between gap-2 p-2.5 rounded-xl border transition ${
+                          isActive
+                            ? 'bg-red-50/80 dark:bg-red-950/30 border-red-300 dark:border-red-800'
+                            : 'bg-white dark:bg-slate-900 border-stone-200 dark:border-slate-700 hover:border-red-300 dark:hover:border-red-700'
+                        }`}
+                      >
+                        <button
+                          type="button"
+                          onClick={() => handleSelectSession(session)}
+                          className="min-w-0 flex-1 text-left"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-semibold text-gray-900 dark:text-white truncate">
+                              {session.title}
+                            </span>
+                            {isActive && (
+                              <span className="px-1.5 py-0.5 rounded-md bg-red-600 text-white text-[10px] font-bold shrink-0">
+                                Đang mở
+                              </span>
+                            )}
+                          </div>
+                          <div className="text-[11px] text-gray-500 dark:text-slate-400 mt-0.5 tabular-nums">
+                            {session.messages.length} tin nhắn •{' '}
+                            {new Date(session.updatedAt).toLocaleString('vi-VN')}
+                          </div>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteSession(session.id)}
+                          aria-label="Xoá cuộc trò chuyện"
+                          title="Xoá cuộc trò chuyện này"
+                          className="p-1.5 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 shrink-0 transition"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="flex-grow overflow-y-auto p-5 space-y-4">
             {chatMessages.length === 0 ? (

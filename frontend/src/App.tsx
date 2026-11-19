@@ -979,6 +979,7 @@ export default function App() {
       )}
       {showAiModal && (
         <AiAssistantModal
+          userId={user?.id}
           initialTab={aiInitialTab}
           initialQuery={aiInitialQuery}
           currentLesson={currentLesson}

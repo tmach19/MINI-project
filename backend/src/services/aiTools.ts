@@ -11,7 +11,9 @@ import {
   searchAllVocabulary,
 } from '../repositories/lessonRepo.js';
 import {
+  getDashboardSummary,
   getMarkedVocabCards,
+  getUserLessonAttemptDetails,
   getUserLessonTestSummary,
   listTestAttempts,
   toggleMarkedVocab,
@@ -38,10 +40,16 @@ export const AI_TOOL_DECLARATIONS = [
   {
     name: 'get_study_progress_summary',
     description:
-      'Lấy tổng hợp tiến độ học tập của người dùng hiện tại: điểm thi theo từng buổi học, các bài đạt/chưa đạt/chưa thi, các lượt thi tổng hợp 26 bài gần đây, và danh sách từ vựng đang được đánh dấu cần ôn.',
+      'Lấy tổng hợp thống kê Dashboard và lịch sử làm bài kiểm tra của người dùng hiện tại: số bài đạt (mốc điểm cao nhất >70%), bài chưa đạt/chưa thi, chuỗi ngày học (streak), hoạt động hôm nay, tỷ lệ 4 kỹ năng (Từ vựng, Ngữ pháp, Nghe, Đọc hiểu) của buổi học đang xét, lịch sử chi tiết các lần kiểm tra theo bài và kiểm tra tổng hợp, cùng danh sách từ đang đánh dấu ôn tập.',
     parameters: {
       type: 'OBJECT',
-      properties: {},
+      properties: {
+        lessonId: {
+          type: 'STRING',
+          description:
+            'ID buổi học cụ thể muốn kiểm tra chi tiết điểm đạt, 4 kỹ năng và lịch sử thi (ví dụ lesson-1). Bỏ trống để lấy theo bài học gần nhất trên Dashboard.',
+        },
+      },
     },
   },
   {
@@ -206,14 +214,15 @@ export const AI_TOOL_DECLARATIONS = [
   {
     name: 'open_study_target',
     description:
-      'Tạo nút điều hướng nhanh trên giao diện để người dùng bấm mở một buổi học, sang tab Kiểm tra/Trò chơi/Từ vựng, mở trang Profile hoặc Kiểm tra tổng hợp 50 câu.',
+      'Tạo nút điều hướng nhanh trên giao diện để người dùng bấm mở màn hình Tổng quan Dashboard, Từ đã đánh dấu, Lịch sử làm bài kiểm tra, một buổi học (tab Từ vựng/Bài khóa/Ngữ pháp/Trò chơi/Kiểm tra), Hồ sơ hoặc Kiểm tra tổng hợp 50 câu.',
     parameters: {
       type: 'OBJECT',
       properties: {
         label: { type: 'STRING', description: 'Nhãn hiển thị trên nút bấm' },
         view: {
           type: 'STRING',
-          description: 'Màn hình đích: study | profile | exam',
+          description:
+            'Màn hình đích: dashboard | saved_vocab | history | study | profile | exam',
         },
         lessonId: { type: 'STRING', description: 'ID bài học nếu view = study' },
         tab: {
@@ -330,47 +339,114 @@ export async function executeAiTool(
 
   switch (name) {
     case 'get_study_progress_summary': {
-      const [lessonSummary, markedCards, attempts] = await Promise.all([
-        getUserLessonTestSummary(ctx.user.id),
-        getMarkedVocabCards(ctx.user.id),
-        listTestAttempts(ctx.user.id),
-      ]);
+      const targetLessonId =
+        typeof args.lessonId === 'string' && args.lessonId.trim()
+          ? args.lessonId.trim()
+          : undefined;
 
+      const [dashboard, lessonSummary, markedCards, attempts, targetLessonAttempts] =
+        await Promise.all([
+          getDashboardSummary(ctx.user.id, targetLessonId),
+          getUserLessonTestSummary(ctx.user.id),
+          getMarkedVocabCards(ctx.user.id),
+          listTestAttempts(ctx.user.id),
+          targetLessonId
+            ? getUserLessonAttemptDetails(ctx.user.id, targetLessonId, 15)
+            : Promise.resolve([]),
+        ]);
+
+      const passThreshold = dashboard.continueLesson?.passThreshold ?? 70;
+      const lessonTitleMap = new Map(lessonSummary.map((l) => [l.lessonId, l.lessonTitle]));
       const attempted = lessonSummary.filter((l) => l.attemptCount > 0);
-      const passed = attempted.filter((l) => l.status === 'passed');
-      const failed = attempted.filter((l) => l.status === 'failed');
+      const passedByDashboard = attempted.filter((l) => (l.bestScore ?? 0) > passThreshold);
+      const failedByDashboard = attempted.filter((l) => (l.bestScore ?? 0) <= passThreshold);
       const unattempted = lessonSummary.filter((l) => l.attemptCount === 0);
       const comprehensiveAttempts = attempts.filter((a) => !a.lessonId).slice(0, 10);
+      const recentLessonAttempts = attempts
+        .filter((a) => Boolean(a.lessonId))
+        .slice(0, 10)
+        .map((a) => ({
+          lessonId: a.lessonId,
+          lessonTitle: a.lessonId ? lessonTitleMap.get(a.lessonId) || a.lessonId : null,
+          score: a.score,
+          correctCount: a.correctCount,
+          totalQuestions: a.totalQuestions,
+          durationSeconds: a.durationSeconds,
+          submittedAt: a.submittedAt,
+        }));
 
       const weakest = [...attempted]
-        .sort((a, b) => (a.avgScore ?? 0) - (b.avgScore ?? 0))
+        .sort((a, b) => (a.bestScore ?? 0) - (b.bestScore ?? 0))
         .slice(0, 5)
         .map((l) => ({
           lessonId: l.lessonId,
           lessonTitle: l.lessonTitle,
-          avgScore: l.avgScore,
           bestScore: l.bestScore,
+          avgScore: l.avgScore,
           attemptCount: l.attemptCount,
-          status: l.status,
+          passed: (l.bestScore ?? 0) > passThreshold,
+          lastSubmittedAt: l.lastSubmittedAt,
         }));
+
+      const attemptedLessonsSummary = attempted.map((l) => ({
+        lessonId: l.lessonId,
+        lessonTitle: l.lessonTitle,
+        attemptCount: l.attemptCount,
+        bestScore: l.bestScore,
+        avgScore: l.avgScore,
+        avgCorrect: l.avgCorrect,
+        totalQuestions: l.totalQuestions,
+        avgDurationSeconds: l.avgDurationSeconds,
+        lastSubmittedAt: l.lastSubmittedAt,
+        passed: (l.bestScore ?? 0) > passThreshold,
+      }));
 
       ctx.executions.push({
         name,
-        summary: `Đọc tiến độ (${attempted.length}/${lessonSummary.length} bài đã thi, ${markedCards.length} từ đánh dấu)`,
+        summary: `Đọc Dashboard & lịch sử (${passedByDashboard.length}/${lessonSummary.length} bài đạt >${passThreshold}%, ${attempts.length} lượt thi)`,
       });
 
       return {
+        dashboardPassRule: `Đạt bài học khi điểm cao nhất (bestScore) > ${passThreshold}%`,
+        dashboard: {
+          streakDays: dashboard.streakDays,
+          bestStreakDays: dashboard.bestStreakDays,
+          studiedToday: dashboard.studiedToday,
+          today: dashboard.today,
+          overallProgress: dashboard.overallProgress,
+          vocabReview: dashboard.vocabReview,
+        },
+        focusLesson: dashboard.continueLesson
+          ? {
+              ...dashboard.continueLesson,
+              skills: dashboard.skills.map((s) => ({
+                id: s.id,
+                label: s.label,
+                score: s.score,
+                correctCount: s.correctCount,
+                totalCount: s.totalCount,
+                passed: s.passed,
+                detail: s.detail,
+              })),
+            }
+          : null,
         stats: {
           totalLessons: lessonSummary.length,
           attemptedLessons: attempted.length,
-          passedLessons: passed.length,
-          failedLessons: failed.length,
+          passedLessons: passedByDashboard.length,
+          failedLessons: failedByDashboard.length,
           unattemptedLessons: unattempted.length,
+          passThreshold,
           markedVocabCount: markedCards.length,
-          totalAttempts: attempts.length,
+          totalTestAttempts: attempts.length,
+          comprehensiveExamCount: attempts.filter((a) => !a.lessonId).length,
+          lessonTestAttemptCount: attempts.filter((a) => Boolean(a.lessonId)).length,
         },
+        attemptedLessonsSummary,
         weakestLessons: weakest,
-        unattemptedSample: unattempted.slice(0, 8).map((l) => ({
+        targetLessonAttemptHistory: targetLessonId ? targetLessonAttempts : undefined,
+        recentLessonAttempts,
+        unattemptedSample: unattempted.slice(0, 10).map((l) => ({
           lessonId: l.lessonId,
           lessonTitle: l.lessonTitle,
         })),
@@ -384,10 +460,13 @@ export async function executeAiTool(
           note: m.note || null,
         })),
         recentComprehensiveExams: comprehensiveAttempts.map((a) => ({
+          examTitle: a.examTitle || null,
           score: a.score,
           correctCount: a.correctCount,
           totalQuestions: a.totalQuestions,
+          durationSeconds: a.durationSeconds,
           submittedAt: a.submittedAt,
+          passed: a.score > passThreshold,
         })),
       };
     }
@@ -624,8 +703,22 @@ export async function executeAiTool(
     }
 
     case 'open_study_target': {
-      const view =
-        args.view === 'profile' || args.view === 'exam' ? args.view : ('study' as const);
+      const allowedViews = new Set([
+        'dashboard',
+        'saved_vocab',
+        'history',
+        'study',
+        'profile',
+        'exam',
+      ]);
+      const rawView = typeof args.view === 'string' ? args.view.trim() : '';
+      const view = (allowedViews.has(rawView) ? rawView : 'study') as
+        | 'dashboard'
+        | 'saved_vocab'
+        | 'history'
+        | 'study'
+        | 'profile'
+        | 'exam';
       const tabRaw = String(args.tab || '');
       const validTab =
         tabRaw === 'vocab' ||

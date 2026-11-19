@@ -435,7 +435,7 @@ export type AiPendingAction =
       id: string;
       type: 'navigate';
       label: string;
-      view: 'study' | 'profile' | 'exam';
+      view: 'dashboard' | 'study' | 'profile' | 'exam' | 'saved_vocab' | 'history';
       lessonId?: string;
       tab?: TabId;
     }

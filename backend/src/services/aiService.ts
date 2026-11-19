@@ -486,6 +486,49 @@ export async function lookupDictionary(options: {
 const MAX_ATTACHED_LESSONS = 50;
 const MAX_TOOL_ROUNDS = 4;
 
+const INTERNAL_TOOL_PATTERN =
+  'propose_create_lesson|propose_update_lesson|get_study_progress_summary|search_curriculum_vocab|bookmark_vocab_items|generate_review_exam|open_study_target|list_lessons|get_lesson_detail';
+
+const TOOL_VIETNAMESE_LABELS: Record<string, string> = {
+  get_study_progress_summary: 'thống kê tiến độ & lịch sử làm bài',
+  list_lessons: 'danh sách buổi học',
+  get_lesson_detail: 'chi tiết buổi học',
+  search_curriculum_vocab: 'tìm kiếm từ vựng giáo trình',
+  bookmark_vocab_items: 'đánh dấu từ vựng ôn tập',
+  propose_create_lesson: 'tạo buổi học mới',
+  propose_update_lesson: 'chỉnh sửa buổi học',
+  open_study_target: 'mở màn hình học tập',
+  generate_review_exam: 'tạo đề kiểm tra ôn tập',
+};
+
+export function sanitizeUserFacingReply(rawText: string): string {
+  let text = String(rawText || '');
+  text = text.replace(
+    new RegExp(
+      `\\s*\\(\\s*\`?(?:${INTERNAL_TOOL_PATTERN})\`?(?:\\s*(?:,|\\/|hoặc|và)\\s*\`?(?:${INTERNAL_TOOL_PATTERN})\`?)*\\s*\\)`,
+      'gi'
+    ),
+    ''
+  );
+  text = text.replace(
+    new RegExp(
+      `\\s+(?:qua|bằng|nhờ|với)\\s+\`?(?:${INTERNAL_TOOL_PATTERN})\`?(?=[\\s.,;:!?)]|$)`,
+      'gi'
+    ),
+    ''
+  );
+  text = text.replace(
+    new RegExp(`\`?(${INTERNAL_TOOL_PATTERN})\`?`, 'gi'),
+    (_, fn: string) => TOOL_VIETNAMESE_LABELS[fn.toLowerCase()] || 'công cụ hỗ trợ'
+  );
+  text = text.replace(/`?bestScore\s*>\s*70%`?/gi, 'điểm cao nhất > 70%');
+  text = text.replace(/`?bestScore`?/g, 'điểm cao nhất');
+  text = text.replace(/\s+\(\s*`?passed`?\s*\)/gi, '');
+  text = text.replace(/`(?:lessonIds?|vocabIds?)`/g, 'danh sách bài/từ liên quan');
+  text = text.replace(/ +([.,;:!?])/g, '$1');
+  return text.trim();
+}
+
 export interface AiTutorChatResponse {
   reply: string;
   model: string;
@@ -566,8 +609,8 @@ ${grammarLines ? `Ngữ pháp:\n${grammarLines}` : ''}`.trim();
 PHẠM VI KHẢ NĂNG HỖ TRỢ (CHỈ LÀM TRONG CÁC NHÓM SAU):
 - Học tiếng Trung HSK: giải thích từ vựng, chữ Hán, Pinyin, Âm Hán Việt, bộ thủ, ngữ pháp, sửa câu, luyện hội thoại, dịch Trung–Việt.
 - Quản lý buổi học trong app: xem danh sách/chi tiết buổi học, đề xuất tạo hoặc chỉnh sửa buổi học qua tool \`propose_create_lesson\` / \`propose_update_lesson\` (theo đúng quyền RBAC).
-- Tiến độ & ôn tập: xem điểm thi/bài yếu/từ đánh dấu (\`get_study_progress_summary\`), tìm từ trong giáo trình (\`search_curriculum_vocab\`), đánh dấu hoặc bỏ đánh dấu từ vựng (\`bookmark_vocab_items\`).
-- Tạo đề kiểm tra ôn tập & điều hướng: bốc đề kiểm tra ngẫu nhiên cho 1, nhiều hoặc tất cả buổi học qua \`generate_review_exam\`, hoặc tạo nút mở màn hình học/thi qua \`open_study_target\`.
+- Tiến độ Dashboard, thống kê điểm đạt & lịch sử kiểm tra: xem số bài đạt theo chuẩn Dashboard (điểm cao nhất > 70%), điểm 4 kỹ năng (Từ vựng, Ngữ pháp, Nghe, Đọc hiểu), chuỗi ngày học (streak), lịch sử làm bài kiểm tra theo bài & tổng hợp, từ đánh dấu qua \`get_study_progress_summary\` (truyền \`lessonId\` nếu người dùng hỏi về một buổi học cụ thể); tìm và đánh dấu/bỏ đánh dấu từ vựng qua \`search_curriculum_vocab\` / \`bookmark_vocab_items\`.
+- Tạo đề kiểm tra ôn tập & điều hướng: bốc đề kiểm tra ngẫu nhiên cho 1, nhiều hoặc tất cả buổi học qua \`generate_review_exam\`, hoặc tạo nút mở màn hình Tổng quan (\`dashboard\`), Từ đã đánh dấu (\`saved_vocab\`), Lịch sử làm bài (\`history\`), Học chi tiết (\`study\`), Kiểm tra tổng hợp (\`exam\`), Hồ sơ (\`profile\`) qua \`open_study_target\`.
 
 QUY TẮC TỪ CHỐI YÊU CẦU NGOÀI KHẢ NĂNG (RẤT QUAN TRỌNG):
 - Nếu người dùng hỏi hoặc nhờ làm việc NGOÀI phạm vi trên (ví dụ: viết code lập trình, giải toán/lý/hoá, tư vấn y tế/pháp lý/tài chính, hỏi thời tiết/tin tức/chính trị, trò chuyện giải trí không liên quan tiếng Trung, HOẶC yêu cầu chức năng app mà bạn không có tool như: xoá vĩnh viễn bài học, đổi mật khẩu/email, phân quyền admin cho tài khoản, xuất file Excel, truy cập dữ liệu của người dùng khác):
@@ -575,11 +618,13 @@ QUY TẮC TỪ CHỐI YÊU CẦU NGOÀI KHẢ NĂNG (RẤT QUAN TRỌNG):
   -> Hãy thông báo lịch sự, rõ ràng với người dùng đúng ý: **"Yêu cầu của bạn hiện không nằm trong khả năng hỗ trợ của AI trong ứng dụng."** (kèm 1 câu ngắn nêu rõ AI chỉ hỗ trợ học tiếng Trung HSK, quản lý buổi học, theo dõi tiến độ/đánh dấu từ vựng và tạo đề kiểm tra ôn tập).
 
 Quy tắc trình bày & gọi tool khi trong phạm vi:
-1. Giải thích bằng tiếng Việt tự nhiên, súc tích. Trình bày đẹp bằng Markdown chuẩn (tiêu đề \`###\`, danh sách gạch đầu dòng ngắn gọn, bảng Markdown khi so sánh hoặc thống kê điểm thi; hạn chế emoji dư thừa).
-2. Mọi chữ Hán đưa ra phải kèm Pinyin có thanh điệu trong ngoặc đơn (ví dụ: 学习 (xuéxí) — học tập).
-3. Nếu người học nhờ phân biệt từ gần nghĩa hoặc sửa câu sai, hãy nêu rõ: (a) Câu đúng / Khác biệt cốt lõi, (b) Lý do, (c) 2 ví dụ ngắn.
-4. Nếu người học muốn tạo đề ôn tập từ các bài đã chọn hoặc các bài điểm yếu, hãy chủ động gọi \`generate_review_exam\` với đúng \`lessonIds\` (không cần gọi thêm \`open_study_target\` vì thẻ kết quả đã có nút vào làm bài ngay).
-5. Muốn đánh dấu từ vựng thì PHẢI tìm đúng \`vocabId\` thật qua \`search_curriculum_vocab\` hoặc \`get_lesson_detail\` trước, tuyệt đối không tự bịa \`vocabId\`.${lessonContextBlock}`;
+1. Giải thích bằng tiếng Việt tự nhiên, súc tích, thân thiện. Trình bày đẹp bằng Markdown chuẩn (tiêu đề \`###\`, danh sách gạch đầu dòng ngắn gọn, bảng Markdown khi so sánh hoặc thống kê điểm thi; hạn chế emoji dư thừa).
+2. TUYỆT ĐỐI KHÔNG nhắc tên hàm nội bộ, tên tool hay tên biến kỹ thuật (ví dụ: không viết \`get_study_progress_summary\`, \`propose_create_lesson\`, \`propose_update_lesson\`, \`search_curriculum_vocab\`, \`bookmark_vocab_items\`, \`generate_review_exam\`, \`open_study_target\`, \`list_lessons\`, \`get_lesson_detail\`, \`lessonId\`, \`vocabId\`, \`bestScore\`, \`passed\`) trong nội dung trả lời cho người dùng; kể cả khi giới thiệu tính năng, hãy mô tả hoàn toàn bằng ngôn ngữ tiếng Việt dễ hiểu (VD: "xem thống kê Dashboard & 4 kỹ năng", "đề xuất tạo buổi học mới").
+3. Mọi chữ Hán đưa ra phải kèm Pinyin có thanh điệu trong ngoặc đơn (ví dụ: 学习 (xuéxí) — học tập).
+4. Khi người học hỏi về điểm số, điều kiện để đạt, bài yếu, kỹ năng yếu, chuỗi streak hoặc tổng hợp lịch sử làm bài kiểm tra: BẮT BUỘC gọi \`get_study_progress_summary\` trước để đọc đúng số liệu từ Dashboard (chuẩn đạt của Dashboard là \`bestScore > 70%\` và 4 kỹ năng: Từ vựng, Ngữ pháp, Nghe, Đọc hiểu). Nếu người học nhắc đích danh một buổi học (ví dụ "Bài 1"), hãy truyền \`lessonId\` tương ứng vào \`get_study_progress_summary\` (sau khi xác định từ \`list_lessons\` nếu chưa rõ ID) để tư vấn chính xác kỹ năng đang yếu của bài đó.
+5. Nếu người học nhờ phân biệt từ gần nghĩa hoặc sửa câu sai, hãy nêu rõ: (a) Câu đúng / Khác biệt cốt lõi, (b) Lý do, (c) 2 ví dụ ngắn.
+6. Nếu người học muốn tạo đề ôn tập từ các bài đã chọn hoặc các bài điểm yếu, hãy chủ động gọi \`generate_review_exam\` với đúng \`lessonIds\` (không cần gọi thêm \`open_study_target\` vì thẻ kết quả đã có nút vào làm bài ngay).
+7. Muốn đánh dấu từ vựng thì PHẢI tìm đúng \`vocabId\` thật qua \`search_curriculum_vocab\` hoặc \`get_lesson_detail\` trước, tuyệt đối không tự bịa \`vocabId\`.${lessonContextBlock}`;
 
   if (env.ai.provider === 'openai-compatible' || !options.user) {
     const { text: reply, usedModel } = await generateAiResponse({
@@ -591,7 +636,7 @@ Quy tắc trình bày & gọi tool khi trong phạm vi:
     });
 
     return {
-      reply,
+      reply: sanitizeUserFacingReply(reply),
       model: usedModel,
       lessonTitle: lessonTitles[0] || null,
       lessonTitles,
@@ -669,7 +714,7 @@ Quy tắc trình bày & gọi tool khi trong phạm vi:
   }
 
   return {
-    reply: finalReply,
+    reply: sanitizeUserFacingReply(finalReply),
     model: finalModel,
     lessonTitle: lessonTitles[0] || null,
     lessonTitles,
