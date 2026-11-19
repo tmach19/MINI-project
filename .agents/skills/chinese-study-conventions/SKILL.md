@@ -69,6 +69,7 @@ Tài liệu chuẩn hóa các rule, pattern tối ưu và quy trình kiểm ch�
 
 - **Tái sử dụng UI primitives & Tailwind Dark Mode**:
   - Modal dùng `components/common/ModalShell.tsx` và `ConfirmDeleteModal.tsx`.
+  - Mọi nút đóng (close button) trên modal/popup **bắt buộc dùng icon dấu `X`** (`ModalCloseButton` từ `components/common/ModalShell.tsx` hoặc `<X />` kèm `aria-label="Đóng"`), không dùng nút chữ `"Đóng"` hay `"Close"`.
   - Metadata buổi học dùng `components/common/LessonMetaFields.tsx`; trạng thái loading dùng `components/common/LoadingState.tsx` (`LoadingScreen`, `LoadingCard`, `LoadingSpinner`).
   - **Cảnh báo specificity của Tailwind v3 Dark Mode (`dark:border-*`)**: Class `dark:border-slate-800` sinh selector `.dark .dark\:border-*` có độ ưu tiên CSS cao hơn `border-t-*` / `border-r-*` (khi không có tiền tố `dark:`), nên sẽ đè mất màu cạnh riêng của spinner/viền trong Dark Mode. Khi dùng border theo cạnh kết hợp `dark:border-*`, luôn phải kèm `dark:border-t-*` / `dark:border-r-*` tương ứng — hoặc dùng SVG (`LoadingState.tsx`).
   - Hằng số dùng `lib/constants.ts`; kiểm tra HSK / Import Excel 3 sheet dùng `lib/lessonImport.ts` (`xlsx-js-style`).

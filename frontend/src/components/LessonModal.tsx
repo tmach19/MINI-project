@@ -40,18 +40,27 @@ interface LessonModalProps {
 }
 
 interface VocabRow {
+  id?: string;
   hanzi: string;
   pinyin: string;
+  sinoVietnamese?: string | null;
   meaning: string;
+  type?: string | null;
   radical: string;
   breakdown: string;
+  mnemonic?: string | null;
   example: string;
+  examplePinyin?: string | null;
+  exampleMeaning?: string | null;
 }
 
 interface GrammarRow {
+  id?: string;
   title: string;
   formula: string;
   explanation: string;
+  notes?: string | null;
+  examples?: any[];
 }
 
 function formatFileSize(bytes: number): string {
@@ -77,12 +86,18 @@ export const LessonModal: React.FC<LessonModalProps> = ({
   const [vocabRows, setVocabRows] = useState<VocabRow[]>(
     initialLesson?.vocabulary?.length
       ? initialLesson.vocabulary.map((v) => ({
+          id: v.id,
           hanzi: v.hanzi,
           pinyin: v.pinyin,
+          sinoVietnamese: v.sinoVietnamese ?? null,
           meaning: v.meaning,
+          type: v.type ?? null,
           radical: v.radical || '',
           breakdown: v.breakdown || '',
+          mnemonic: v.mnemonic ?? null,
           example: v.example || '',
+          examplePinyin: v.examplePinyin ?? null,
+          exampleMeaning: v.exampleMeaning ?? null,
         }))
       : [
           { hanzi: '', pinyin: '', meaning: '', radical: '', breakdown: '', example: '' },
@@ -92,9 +107,12 @@ export const LessonModal: React.FC<LessonModalProps> = ({
   const [grammarRows, setGrammarRows] = useState<GrammarRow[]>(
     initialLesson?.grammar?.length
       ? initialLesson.grammar.map((g) => ({
+          id: g.id,
           title: g.title,
           formula: g.formula || '',
           explanation: g.explanation || '',
+          notes: g.notes ?? null,
+          examples: g.examples || [],
         }))
       : [{ title: '', formula: '', explanation: '' }]
   );
@@ -196,6 +214,7 @@ export const LessonModal: React.FC<LessonModalProps> = ({
       if (idx >= 0) {
         const old = mergedVocab[idx];
         mergedVocab[idx] = {
+          ...old,
           hanzi: item.hanzi,
           pinyin: item.pinyin || old.pinyin,
           meaning: item.meaning || old.meaning,
@@ -214,6 +233,7 @@ export const LessonModal: React.FC<LessonModalProps> = ({
       if (idx >= 0) {
         const old = mergedGrammar[idx];
         mergedGrammar[idx] = {
+          ...old,
           title: g.title,
           formula: g.formula || old.formula,
           explanation: g.explanation || old.explanation,

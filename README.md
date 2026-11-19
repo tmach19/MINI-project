@@ -43,4 +43,5 @@ Các quy ước kỹ thuật của dự án được chuẩn hóa tại [SKILL.m
   - **Lưu ý Dark Mode (Tailwind v3 specificity)**: Tránh kết hợp `dark:border-<color>` chung cho cả 4 cạnh với `border-t-*` / `border-r-*` không có `dark:`, vì `.dark .dark\:border-*` sẽ đè màu các cạnh riêng trong Dark Mode; ưu tiên SVG cho spinner (`LoadingState.tsx`) hoặc khai báo kèm `dark:border-t-*` / `dark:border-r-*`.
   - Thống kê trên `/profile` (**Tổng lượt thi**, **Điểm trung bình**, **Điểm cao nhất**) luôn tính động theo bộ lọc đang chọn.
   - Mọi ô nhập liệu hỗ trợ tiếng Trung / Telex bắt `Enter` đều kiểm tra `!e.nativeEvent.isComposing` để tránh nộp nhầm khi đang gõ IME; phần chấm dịch `zh_to_vi` đối chiếu đủ toàn câu đáp án thay vì chỉ khớp vài từ đầu.
+  - Mọi nút đóng trên modal/popup đều dùng icon dấu `X` (`ModalCloseButton` từ `frontend/src/components/common/ModalShell.tsx`), thống nhất không dùng nút chữ `Đóng`.
 - **Kiểm chứng bắt buộc sau khi sửa code**: Chạy `npm run typecheck` và `npm run build` cho từng package (`backend`, `frontend`) sau lần chỉnh sửa cuối cùng.

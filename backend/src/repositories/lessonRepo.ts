@@ -48,17 +48,21 @@ function shuffleArray<T>(items: T[]): T[] {
  */
 function buildAutoExercises(
   lessonId: string,
-  vocabList: VocabularyItem[]
+  vocabList: VocabularyItem[],
+  poolSource: VocabularyItem[] = vocabList
 ): {
   exercises: LessonDetail['exercises'];
   comprehensiveTest: ComprehensiveQuestion[];
 } {
   const ts = Date.now();
   const meaningPool = Array.from(
-    new Set([...vocabList.map((v) => v.meaning), ...FALLBACK_MEANING_POOL])
+    new Set([...poolSource.map((v) => v.meaning), ...vocabList.map((v) => v.meaning), ...FALLBACK_MEANING_POOL])
   );
   const hanziPool = Array.from(
-    new Set([...vocabList.map((v) => v.hanzi), '学校', '老师', '同学', '你好'])
+    new Set([...poolSource.map((v) => v.hanzi), ...vocabList.map((v) => v.hanzi), '学校', '老师', '同学', '你好'])
+  );
+  const pinyinPool = Array.from(
+    new Set([...poolSource.map((v) => v.pinyin), ...vocabList.map((v) => v.pinyin), 'nǐ hǎo', 'lǎoshī', 'xuéxiào'])
   );
 
   const sentenceScramble: ScrambleExercise[] = vocabList
@@ -118,14 +122,28 @@ function buildAutoExercises(
     const distractorsHanzi = shuffleArray(hanziPool.filter((h) => h !== v.hanzi)).slice(0, 3);
     const optHanzi = shuffleArray([v.hanzi, ...distractorsHanzi]);
 
-    return [
+    const distractorsPinyin = shuffleArray(pinyinPool.filter((p) => p !== v.pinyin)).slice(0, 3);
+    const optPinyin = shuffleArray([v.pinyin, ...distractorsPinyin]);
+
+    const items: ComprehensiveQuestion[] = [
       {
-        id: `ct_zh_${lessonId}_${ts}_${i}`,
-        category: 'translate_zh_vi',
-        question: `Chọn nghĩa đúng cho từ/câu: “${v.hanzi}”`,
+        id: `ct_ls_${lessonId}_${ts}_${i}`,
+        category: 'listening',
+        audioText: v.example?.trim() || v.hanzi,
+        question: v.example?.trim()
+          ? 'Nghe câu ví dụ và chọn nghĩa phù hợp với từ trọng tâm trong câu:'
+          : 'Nghe phát âm và chọn nghĩa tiếng Việt đúng:',
         options: optMeaning,
         correctIndex: optMeaning.indexOf(v.meaning),
         explanation: `${v.hanzi} (${v.pinyin}) → ${v.meaning}`,
+      },
+      {
+        id: `ct_vb_${lessonId}_${ts}_${i}`,
+        category: 'vocab',
+        question: `Từ Hán tự “${v.hanzi}” (${v.meaning}) có phiên âm Pinyin đúng là gì?`,
+        options: optPinyin,
+        correctIndex: optPinyin.indexOf(v.pinyin),
+        explanation: `${v.hanzi} đọc là “${v.pinyin}”, nghĩa là: ${v.meaning}.`,
       },
       {
         id: `ct_vi_${lessonId}_${ts}_${i}`,
@@ -136,6 +154,29 @@ function buildAutoExercises(
         explanation: `${v.meaning} → ${v.hanzi} (${v.pinyin})`,
       },
     ];
+
+    if (v.example && v.example.includes(v.hanzi)) {
+      const masked = v.example.replace(v.hanzi, '____');
+      items.push({
+        id: `ct_fb_${lessonId}_${ts}_${i}`,
+        category: 'fill_blank',
+        question: `Chọn từ thích hợp điền vào chỗ trống:\n“${masked}”\n(Gợi ý: ${v.meaning})`,
+        options: optHanzi,
+        correctIndex: optHanzi.indexOf(v.hanzi),
+        explanation: `Từ cần điền là “${v.hanzi}” (${v.pinyin}). Câu đầy đủ: ${v.example}`,
+      });
+    } else {
+      items.push({
+        id: `ct_zh_${lessonId}_${ts}_${i}`,
+        category: 'translate_zh_vi',
+        question: `Chọn nghĩa đúng cho từ/câu: “${v.hanzi}”`,
+        options: optMeaning,
+        correctIndex: optMeaning.indexOf(v.meaning),
+        explanation: `${v.hanzi} (${v.pinyin}) → ${v.meaning}`,
+      });
+    }
+
+    return items;
   });
 
   return {
@@ -440,7 +481,8 @@ async function insertLessonChildren(
   vocabulary: VocabularyItem[],
   grammar: GrammarItem[],
   exercises: ReturnType<typeof buildAutoExercises>['exercises'],
-  comprehensiveTest: ReturnType<typeof buildAutoExercises>['comprehensiveTest']
+  comprehensiveTest: ReturnType<typeof buildAutoExercises>['comprehensiveTest'],
+  offsets: { tr?: number; eq?: number; ct?: number } = {}
 ): Promise<void> {
   for (let i = 0; i < vocabulary.length; i++) {
     const v = vocabulary[i];
@@ -526,7 +568,7 @@ async function insertLessonChildren(
       [
         tr.id, lessonId, tr.direction, tr.promptText, tr.chineseAudioText, tr.pinyin,
         tr.expectedChinese, tr.expectedMeaning, tr.acceptedPinyin,
-        JSON.stringify(tr.acceptedKeywords || []), tr.hint, tr.explanation, i + 1,
+        JSON.stringify(tr.acceptedKeywords || []), tr.hint, tr.explanation, (offsets.tr ?? 0) + i + 1,
       ]
     );
   }
@@ -545,17 +587,19 @@ async function insertLessonChildren(
          sort_order = EXCLUDED.sort_order,
          is_deleted = 0,
          deleted_at = NULL`,
-      [eq.id, lessonId, eq.type || 'vocabulary', eq.question, JSON.stringify(eq.options), eq.correctIndex, eq.explanation, i + 1]
+      [eq.id, lessonId, eq.type || 'vocabulary', eq.question, JSON.stringify(eq.options), eq.correctIndex, eq.explanation, (offsets.eq ?? 0) + i + 1]
     );
   }
 
   for (let i = 0; i < comprehensiveTest.length; i++) {
     const ct = comprehensiveTest[i];
     await client.query(
-      `INSERT INTO quiz_questions (id, lesson_id, scope, category, question, options, correct_index, explanation, sort_order, is_deleted, deleted_at)
-       VALUES ($1,$2,'comprehensive_test',$3,$4,$5::jsonb,$6,$7,$8,0,NULL)
+      `INSERT INTO quiz_questions (id, lesson_id, scope, category, audio_text, passage, question, options, correct_index, explanation, sort_order, is_deleted, deleted_at)
+       VALUES ($1,$2,'comprehensive_test',$3,$4,$5,$6,$7::jsonb,$8,$9,$10,0,NULL)
        ON CONFLICT (id) DO UPDATE SET
          category = EXCLUDED.category,
+         audio_text = EXCLUDED.audio_text,
+         passage = EXCLUDED.passage,
          question = EXCLUDED.question,
          options = EXCLUDED.options,
          correct_index = EXCLUDED.correct_index,
@@ -563,7 +607,18 @@ async function insertLessonChildren(
          sort_order = EXCLUDED.sort_order,
          is_deleted = 0,
          deleted_at = NULL`,
-      [ct.id, lessonId, ct.category || 'general', ct.question, JSON.stringify(ct.options), ct.correctIndex, ct.explanation, i + 1]
+      [
+        ct.id,
+        lessonId,
+        ct.category || 'general',
+        ct.audioText || null,
+        ct.passage || null,
+        ct.question,
+        JSON.stringify(ct.options),
+        ct.correctIndex,
+        ct.explanation,
+        (offsets.ct ?? 0) + i + 1,
+      ]
     );
   }
 }
@@ -662,6 +717,51 @@ export async function createLesson(
   }
 }
 
+function hasCuratedTestQuestions(
+  isSystem: boolean,
+  questions: Array<{ id: string; category?: string | null }>
+): boolean {
+  if (questions.length === 0) return false;
+  if (isSystem) return true;
+  return questions.some((q) => {
+    const cat = (q.category || '').toLowerCase();
+    const isAutoId =
+      q.id.startsWith('ct_zh_') ||
+      q.id.startsWith('ct_vi_') ||
+      q.id.startsWith('ct_ls_') ||
+      q.id.startsWith('ct_vb_') ||
+      q.id.startsWith('ct_fb_');
+    return !isAutoId || cat === 'reading' || cat === 'grammar';
+  });
+}
+
+function hasCuratedScrambleExercises(
+  isSystem: boolean,
+  scrambles: Array<{ id: string }>
+): boolean {
+  if (scrambles.length === 0) return false;
+  if (isSystem) return true;
+  return scrambles.some((s) => !s.id.startsWith('ss_'));
+}
+
+function hasCuratedTranslationExercises(
+  isSystem: boolean,
+  items: Array<{ id: string }>
+): boolean {
+  if (items.length === 0) return false;
+  if (isSystem) return true;
+  return items.some((t) => !t.id.startsWith('tr_vi_') && !t.id.startsWith('tr_zh_'));
+}
+
+function hasCuratedExpandedQuiz(
+  isSystem: boolean,
+  items: Array<{ id: string }>
+): boolean {
+  if (items.length === 0) return false;
+  if (isSystem) return true;
+  return items.some((q) => !q.id.startsWith('eq_'));
+}
+
 export async function updateLessonById(
   lessonId: string,
   input: CreateLessonInput,
@@ -675,9 +775,43 @@ export async function updateLessonById(
     if (idx === -1) return null;
     const existing = memoryStore.lessons[idx];
 
-    const updatedVocab = normalizeVocabularyInput(lessonId, input.vocabulary, suffix);
+    // Giữ nguyên ID từ vựng cũ theo id hoặc hanzi để không mất lịch sử đánh dấu
+    const existingByHanzi = new Map<string, string>();
+    for (const oldV of existing.vocabulary) {
+      if (!existingByHanzi.has(oldV.hanzi)) existingByHanzi.set(oldV.hanzi, oldV.id);
+    }
+    const existingHanziSet = new Set(existing.vocabulary.map((v) => v.hanzi));
+
+    const updatedVocab = normalizeVocabularyInput(lessonId, input.vocabulary, suffix).map((v) => {
+      if (v.id.startsWith(`vc_${lessonId}_${suffix}`)) {
+        const matchedId = existingByHanzi.get(v.hanzi);
+        if (matchedId) return { ...v, id: matchedId };
+      }
+      return v;
+    });
     const updatedGrammar = normalizeGrammarInput(lessonId, input.grammar, suffix);
-    const { exercises, comprehensiveTest } = buildAutoExercises(lessonId, updatedVocab);
+    const remainingHanziSet = new Set(updatedVocab.map((v) => v.hanzi));
+    const newlyAddedVocab = updatedVocab.filter((v) => !existingHanziSet.has(v.hanzi));
+
+    const keepScramble = hasCuratedScrambleExercises(existing.isSystem, existing.exercises.sentenceScramble);
+    const keepTrans = hasCuratedTranslationExercises(existing.isSystem, existing.exercises.translationExercises);
+    const keepExpanded = hasCuratedExpandedQuiz(existing.isSystem, existing.exercises.expandedQuiz);
+    const keepCompTest = hasCuratedTestQuestions(existing.isSystem, existing.comprehensiveTest);
+
+    const retainedTrans = existing.exercises.translationExercises.filter((t) => {
+      if (!t.id.startsWith('tr_vi_') && !t.id.startsWith('tr_zh_')) return true;
+      const hanzi = t.direction === 'vi_to_zh' ? t.expectedChinese : t.promptText;
+      return hanzi ? remainingHanziSet.has(hanzi) : true;
+    });
+    const retainedExpanded = existing.exercises.expandedQuiz.filter((q) => {
+      if (!q.id.startsWith('eq_')) return true;
+      const m = q.question.match(/“([^”]+)”/);
+      return m ? remainingHanziSet.has(m[1]) : true;
+    });
+
+    const fullAuto = buildAutoExercises(lessonId, updatedVocab);
+    const deltaAuto =
+      newlyAddedVocab.length > 0 ? buildAutoExercises(lessonId, newlyAddedVocab, updatedVocab) : null;
 
     memoryStore.lessons[idx] = {
       ...existing,
@@ -687,8 +821,16 @@ export async function updateLessonById(
       description: input.description?.trim() || null,
       vocabulary: updatedVocab,
       grammar: updatedGrammar,
-      exercises,
-      comprehensiveTest,
+      exercises: {
+        sentenceScramble: keepScramble ? existing.exercises.sentenceScramble : fullAuto.exercises.sentenceScramble,
+        translationExercises: keepTrans
+          ? [...retainedTrans, ...(deltaAuto?.exercises.translationExercises || [])]
+          : fullAuto.exercises.translationExercises,
+        expandedQuiz: keepExpanded
+          ? [...retainedExpanded, ...(deltaAuto?.exercises.expandedQuiz || [])]
+          : fullAuto.exercises.expandedQuiz,
+      },
+      comprehensiveTest: keepCompTest ? existing.comprehensiveTest : fullAuto.comprehensiveTest,
     };
     return memoryStore.lessons[idx];
   }
@@ -705,6 +847,48 @@ export async function updateLessonById(
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
+
+    // Đọc hiện trạng từ vựng + bài tập/đề kiểm tra trước khi cập nhật
+    const [curVocabRes, curScrambleRes, curTransRes, curQuizRes] = await Promise.all([
+      client.query<{ id: string; hanzi: string }>(
+        'SELECT id, hanzi FROM vocabularies WHERE lesson_id = $1 AND is_deleted = 0',
+        [lessonId]
+      ),
+      client.query<{ id: string }>(
+        'SELECT id FROM sentence_scrambles WHERE lesson_id = $1 AND is_deleted = 0',
+        [lessonId]
+      ),
+      client.query<{
+        id: string;
+        direction: 'vi_to_zh' | 'zh_to_vi';
+        prompt_text: string;
+        expected_chinese: string | null;
+        sort_order: number;
+      }>(
+        'SELECT id, direction, prompt_text, expected_chinese, sort_order FROM translation_exercises WHERE lesson_id = $1 AND is_deleted = 0',
+        [lessonId]
+      ),
+      client.query<{ id: string; scope: string; category: string | null; question: string; sort_order: number }>(
+        `SELECT id, scope, category, question, sort_order FROM quiz_questions
+         WHERE lesson_id = $1 AND scope IN ('expanded_quiz', 'comprehensive_test') AND is_deleted = 0`,
+        [lessonId]
+      ),
+    ]);
+
+    const existingVocabByHanzi = new Map<string, string>();
+    for (const r of curVocabRes.rows) {
+      if (!existingVocabByHanzi.has(r.hanzi)) existingVocabByHanzi.set(r.hanzi, r.id);
+    }
+    const existingHanziSet = new Set(curVocabRes.rows.map((r) => r.hanzi));
+
+    const curExpanded = curQuizRes.rows.filter((q) => q.scope === 'expanded_quiz');
+    const curCompTest = curQuizRes.rows.filter((q) => q.scope === 'comprehensive_test');
+
+    const keepScramble = hasCuratedScrambleExercises(existingRow.is_system, curScrambleRes.rows);
+    const keepTrans = hasCuratedTranslationExercises(existingRow.is_system, curTransRes.rows);
+    const keepExpanded = hasCuratedExpandedQuiz(existingRow.is_system, curExpanded);
+    const keepCompTest = hasCuratedTestQuestions(existingRow.is_system, curCompTest);
+
     await client.query(
       `UPDATE lessons SET title = $1, hsk_level = $2, unit = $3, description = $4, updated_at = NOW()
        WHERE id = $5 AND is_deleted = 0`,
@@ -719,25 +903,106 @@ export async function updateLessonById(
       'UPDATE grammars SET is_deleted = 1, deleted_at = NOW() WHERE lesson_id = $1 AND is_deleted = 0',
       [lessonId]
     );
-    await client.query(
-      'UPDATE sentence_scrambles SET is_deleted = 1, deleted_at = NOW() WHERE lesson_id = $1 AND is_deleted = 0',
-      [lessonId]
-    );
-    await client.query(
-      'UPDATE translation_exercises SET is_deleted = 1, deleted_at = NOW() WHERE lesson_id = $1 AND is_deleted = 0',
-      [lessonId]
-    );
-    await client.query(
-      `UPDATE quiz_questions SET is_deleted = 1, deleted_at = NOW()
-       WHERE lesson_id = $1 AND scope IN ('expanded_quiz', 'comprehensive_test') AND is_deleted = 0`,
-      [lessonId]
-    );
+    if (!keepScramble) {
+      await client.query(
+        'UPDATE sentence_scrambles SET is_deleted = 1, deleted_at = NOW() WHERE lesson_id = $1 AND is_deleted = 0',
+        [lessonId]
+      );
+    }
+    if (!keepTrans) {
+      await client.query(
+        'UPDATE translation_exercises SET is_deleted = 1, deleted_at = NOW() WHERE lesson_id = $1 AND is_deleted = 0',
+        [lessonId]
+      );
+    }
+    if (!keepExpanded) {
+      await client.query(
+        `UPDATE quiz_questions SET is_deleted = 1, deleted_at = NOW()
+         WHERE lesson_id = $1 AND scope = 'expanded_quiz' AND is_deleted = 0`,
+        [lessonId]
+      );
+    }
+    if (!keepCompTest) {
+      await client.query(
+        `UPDATE quiz_questions SET is_deleted = 1, deleted_at = NOW()
+         WHERE lesson_id = $1 AND scope = 'comprehensive_test' AND is_deleted = 0`,
+        [lessonId]
+      );
+    }
 
-    const vocabulary = normalizeVocabularyInput(lessonId, input.vocabulary, suffix);
+    const vocabulary = normalizeVocabularyInput(lessonId, input.vocabulary, suffix).map((v) => {
+      if (v.id.startsWith(`vc_${lessonId}_${suffix}`)) {
+        const matchedId = existingVocabByHanzi.get(v.hanzi);
+        if (matchedId) return { ...v, id: matchedId };
+      }
+      return v;
+    });
     const grammar = normalizeGrammarInput(lessonId, input.grammar, suffix);
-    const { exercises, comprehensiveTest } = buildAutoExercises(lessonId, vocabulary);
+    const remainingHanziSet = new Set(vocabulary.map((v) => v.hanzi));
+    const newlyAddedVocab = vocabulary.filter((v) => !existingHanziSet.has(v.hanzi));
 
-    await insertLessonChildren(client, lessonId, vocabulary, grammar, exercises, comprehensiveTest);
+    // Nếu người dùng xoá bớt từ từng thêm sau này, dọn mềm bài tập tự sinh của từ bị xoá
+    if (keepTrans) {
+      const staleTrIds = curTransRes.rows
+        .filter((t) => {
+          if (!t.id.startsWith('tr_vi_') && !t.id.startsWith('tr_zh_')) return false;
+          const hanzi = t.direction === 'vi_to_zh' ? t.expected_chinese : t.prompt_text;
+          return Boolean(hanzi && !remainingHanziSet.has(hanzi));
+        })
+        .map((t) => t.id);
+      if (staleTrIds.length > 0) {
+        await client.query(
+          `UPDATE translation_exercises SET is_deleted = 1, deleted_at = NOW()
+           WHERE lesson_id = $1 AND id = ANY($2::text[]) AND is_deleted = 0`,
+          [lessonId, staleTrIds]
+        );
+      }
+    }
+    if (keepExpanded) {
+      const staleEqIds = curExpanded
+        .filter((q) => {
+          if (!q.id.startsWith('eq_')) return false;
+          const m = q.question.match(/“([^”]+)”/);
+          return Boolean(m && !remainingHanziSet.has(m[1]));
+        })
+        .map((q) => q.id);
+      if (staleEqIds.length > 0) {
+        await client.query(
+          `UPDATE quiz_questions SET is_deleted = 1, deleted_at = NOW()
+           WHERE lesson_id = $1 AND scope = 'expanded_quiz' AND id = ANY($2::text[]) AND is_deleted = 0`,
+          [lessonId, staleEqIds]
+        );
+      }
+    }
+
+    const fullAuto = buildAutoExercises(lessonId, vocabulary);
+    const deltaAuto =
+      newlyAddedVocab.length > 0 ? buildAutoExercises(lessonId, newlyAddedVocab, vocabulary) : null;
+
+    const maxTrOrder = curTransRes.rows.reduce((m, r) => Math.max(m, Number(r.sort_order || 0)), 0);
+    const maxEqOrder = curExpanded.reduce((m, r) => Math.max(m, Number(r.sort_order || 0)), 0);
+
+    await insertLessonChildren(
+      client,
+      lessonId,
+      vocabulary,
+      grammar,
+      {
+        sentenceScramble: keepScramble ? [] : fullAuto.exercises.sentenceScramble,
+        translationExercises: keepTrans
+          ? deltaAuto?.exercises.translationExercises || []
+          : fullAuto.exercises.translationExercises,
+        expandedQuiz: keepExpanded
+          ? deltaAuto?.exercises.expandedQuiz || []
+          : fullAuto.exercises.expandedQuiz,
+      },
+      keepCompTest ? [] : fullAuto.comprehensiveTest,
+      {
+        tr: keepTrans ? maxTrOrder : 0,
+        eq: keepExpanded ? maxEqOrder : 0,
+        ct: 0,
+      }
+    );
     await client.query('COMMIT');
     return getLessonById(lessonId, actorId);
   } catch (err) {

@@ -12,9 +12,9 @@
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: #fcfaf7;
-    color: #1f2937;
-    background-image: radial-gradient(#e5e0d8 1px, transparent 1px);
+    background-color: #eef2f6;
+    color: #1e293b;
+    background-image: radial-gradient(#d5dde7 1px, transparent 1px);
     background-size: 24px 24px;
   }
 

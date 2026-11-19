@@ -6,6 +6,7 @@ import type {
   AiStatusResponse,
   AiToolExecutionSummary,
   ComprehensiveExamResponse,
+  DashboardSummary,
   GameLeaderboardEntry,
   GameMode,
   GlobalVocabHit,
@@ -126,6 +127,11 @@ export const api = {
       markedCards: MarkedVocabCard[];
       attempts: TestAttemptRecord[];
     }>('/progress'),
+
+  getDashboard: (lessonId?: string) =>
+    apiFetch<{ dashboard: DashboardSummary }>(
+      `/dashboard${lessonId ? `?lessonId=${encodeURIComponent(lessonId)}` : ''}`
+    ),
 
   getMarkedCards: () => apiFetch<{ cards: MarkedVocabCard[] }>('/progress/marked'),
 

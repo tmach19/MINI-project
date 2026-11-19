@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { PERMISSION_CODES } from '../config/rbacCatalog.js';
 import { requireAuth, requirePermission } from '../middleware/auth.js';
 import {
+  getDashboardSummary,
   getMarkedVocabCards,
   getMarkedVocabMap,
   getUserLessonAttemptDetails,
@@ -28,6 +29,19 @@ router.get('/progress', requireAuth, async (req, res, next) => {
       listTestAttempts(userId),
     ]);
     res.json({ markedMap, markedCount: markedCards.length, markedCards, attempts });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/dashboard', requireAuth, async (req, res, next) => {
+  try {
+    const preferredLessonId =
+      typeof req.query.lessonId === 'string' && req.query.lessonId.trim()
+        ? req.query.lessonId.trim()
+        : undefined;
+    const summary = await getDashboardSummary(req.user!.userId, preferredLessonId);
+    res.json({ dashboard: summary });
   } catch (err) {
     next(err);
   }

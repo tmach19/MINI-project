@@ -234,6 +234,69 @@ export interface GameLeaderboardEntry {
   playedAt: string;
 }
 
+export interface DashboardActivityDay {
+  date: string;
+  count: number;
+  minutes: number;
+  level: 0 | 1 | 2 | 3 | 4;
+}
+
+export interface DashboardSkillItem {
+  id: 'vocab' | 'grammar' | 'listening' | 'reading';
+  label: string;
+  score: number | null;
+  correctCount: number;
+  totalCount: number;
+  passed: boolean;
+  detail: string;
+  targetTab: TabId;
+  targetLessonId: string;
+}
+
+export interface DashboardSummary {
+  streakDays: number;
+  bestStreakDays: number;
+  studiedToday: boolean;
+  today: {
+    minutesStudied: number;
+    dailyGoalMinutes: number;
+    testsCompleted: number;
+    gamesCompleted: number;
+    vocabMarkedToday: number;
+  };
+  vocabReview: {
+    totalVocab: number;
+    dueCount: number;
+    newCount: number;
+    learningCount: number;
+    masteredCount: number;
+  };
+  skills: DashboardSkillItem[];
+  activityLast28Days: DashboardActivityDay[];
+  continueLesson: {
+    lessonId: string;
+    title: string;
+    hskLevel: string;
+    unit: string | null;
+    progressPercent: number;
+    passed: boolean;
+    passThreshold: number;
+    vocabCount: number;
+    grammarCount: number;
+    textCount: number;
+    estimatedMinutesLeft: number;
+    bestScore: number | null;
+    attemptCount: number;
+  } | null;
+  overallProgress: {
+    completedLessons: number;
+    totalLessons: number;
+    averageTestScore: number | null;
+    totalTests: number;
+    totalGames: number;
+  };
+}
+
 export interface UserProfile {
   id: string;
   email: string;

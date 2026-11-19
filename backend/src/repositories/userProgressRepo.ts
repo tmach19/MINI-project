@@ -3,6 +3,9 @@ import { getDbMode, getPool } from '../db/pool.js';
 import { memoryStore, type MemoryUser } from '../db/fallbackStore.js';
 import { getEffectivePermissions } from './rbacRepo.js';
 import type {
+  DashboardActivityDay,
+  DashboardSkillItem,
+  DashboardSummary,
   GameLeaderboardEntry,
   GameMode,
   LessonAttemptDetailRecord,
@@ -1144,4 +1147,550 @@ export async function listTestLeaderboard(options: {
     durationSeconds: Number(r.duration_seconds || 0),
     submittedAt: r.submitted_at.toISOString(),
   }));
+}
+
+function toLocalDateKey(input: Date | string): string {
+  const d = typeof input === 'string' ? new Date(input) : input;
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function computeStreaks(activeDateKeys: Set<string>): {
+  streakDays: number;
+  bestStreakDays: number;
+  studiedToday: boolean;
+} {
+  const now = new Date();
+  const todayKey = toLocalDateKey(now);
+  const studiedToday = activeDateKeys.has(todayKey);
+
+  // Current streak: count backwards starting from today if studied today, else yesterday
+  let streakDays = 0;
+  const cursor = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  if (!studiedToday) {
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  while (activeDateKeys.has(toLocalDateKey(cursor))) {
+    streakDays += 1;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+
+  // Best streak across sorted unique dates
+  const sortedDates = Array.from(activeDateKeys).sort();
+  let bestStreakDays = 0;
+  let running = 0;
+  let prevMs: number | null = null;
+  for (const key of sortedDates) {
+    const [y, m, d] = key.split('-').map(Number);
+    const curMs = Date.UTC(y, m - 1, d);
+    if (prevMs !== null && curMs - prevMs === 86400 * 1000) {
+      running += 1;
+    } else {
+      running = 1;
+    }
+    if (running > bestStreakDays) bestStreakDays = running;
+    prevMs = curMs;
+  }
+
+  return { streakDays, bestStreakDays, studiedToday };
+}
+
+function clampPct(value: number): number {
+  return Math.max(0, Math.min(100, Math.round(value)));
+}
+
+const LESSON_PASS_THRESHOLD = 70; // > 70% là đạt
+
+function mapCategoryToSkill(
+  category?: string | null
+): 'vocab' | 'grammar' | 'listening' | 'reading' {
+  const cat = (category || '').trim().toLowerCase();
+  if (cat === 'listening') return 'listening';
+  if (cat === 'reading') return 'reading';
+  if (cat === 'grammar' || cat === 'fill_blank') return 'grammar';
+  return 'vocab';
+}
+
+export async function getDashboardSummary(
+  userId: string,
+  preferredLessonId?: string
+): Promise<DashboardSummary> {
+  interface LessonMeta {
+    id: string;
+    title: string;
+    hskLevel: string;
+    unit: string | null;
+    vocabCount: number;
+    grammarCount: number;
+    textCount: number;
+  }
+  interface AttemptLite {
+    lessonId: string | null;
+    score: number;
+    durationSeconds: number;
+    answers: Record<string, number>;
+    submittedAt: string;
+  }
+  interface QuestionLite {
+    id: string;
+    category: string | null;
+    correctIndex: number;
+  }
+  interface GameLite {
+    lessonId: string;
+    gameMode: GameMode;
+    score: number;
+    maxScore: number | null;
+    durationSeconds: number;
+    playedAt: string;
+  }
+  interface MarkLite {
+    vocabId: string;
+    lessonId: string;
+    markedAt: string;
+  }
+
+  let lessons: LessonMeta[] = [];
+  let attempts: AttemptLite[] = [];
+  let games: GameLite[] = [];
+  let marks: MarkLite[] = [];
+
+  if (getDbMode() === 'memory') {
+    memoryStore.ensureLoaded();
+    const visibleLessons = memoryStore.lessons.filter(
+      (l) => l.isDeleted !== 1 && (l.isSystem || l.ownerId === userId)
+    );
+    lessons = visibleLessons.map((l) => ({
+      id: l.id,
+      title: l.title,
+      hskLevel: l.hskLevel || 'HSK 1',
+      unit: l.unit ?? null,
+      vocabCount: l.vocabulary.length,
+      grammarCount: l.grammar.length,
+      textCount: l.texts.length,
+    }));
+
+    const vocabToLesson = new Map<string, string>();
+    for (const l of visibleLessons) {
+      for (const v of l.vocabulary) vocabToLesson.set(v.id, l.id);
+    }
+
+    attempts = (memoryStore.attemptsByUser.get(userId) || []).map((a) => ({
+      lessonId: a.lessonId,
+      score: a.score,
+      durationSeconds: a.durationSeconds,
+      answers: a.answers || {},
+      submittedAt: a.submittedAt,
+    }));
+
+    games = memoryStore.gameScores
+      .filter((g) => g.userId === userId && g.isDeleted !== 1)
+      .map((g) => ({
+        lessonId: g.lessonId,
+        gameMode: g.gameMode,
+        score: g.score,
+        maxScore: g.maxScore,
+        durationSeconds: g.durationSeconds,
+        playedAt: g.playedAt,
+      }));
+
+    const markMap = memoryStore.markedByUser.get(userId);
+    if (markMap) {
+      for (const m of markMap.values()) {
+        if (m.isDeleted === 1) continue;
+        const lid = vocabToLesson.get(m.vocabId);
+        if (lid) {
+          marks.push({ vocabId: m.vocabId, lessonId: lid, markedAt: m.markedAt });
+        }
+      }
+    }
+  } else {
+    const pool = getPool()!;
+    const [lessonsRes, attemptsRes, marksRes] = await Promise.all([
+      pool.query<{
+        id: string;
+        title: string;
+        hsk_level: string;
+        unit: string | null;
+        vocab_count: string;
+        grammar_count: string;
+        text_count: string;
+      }>(
+        `SELECT
+           l.id,
+           l.title,
+           l.hsk_level,
+           l.unit,
+           (SELECT COUNT(*) FROM vocabularies v WHERE v.lesson_id = l.id AND v.is_deleted = 0) AS vocab_count,
+           (SELECT COUNT(*) FROM grammars g WHERE g.lesson_id = l.id AND g.is_deleted = 0) AS grammar_count,
+           (SELECT COUNT(*) FROM texts t WHERE t.lesson_id = l.id AND t.is_deleted = 0) AS text_count
+         FROM lessons l
+         WHERE l.is_deleted = 0 AND (l.is_system = TRUE OR l.owner_id = $1::uuid)
+         ORDER BY l.is_system DESC, l.sort_order ASC, l.created_at ASC`,
+        [userId]
+      ),
+      pool.query<{
+        lesson_id: string | null;
+        score: number;
+        duration_seconds: number;
+        answers: Record<string, number> | null;
+        submitted_at: Date;
+      }>(
+        `SELECT lesson_id, score, duration_seconds, answers, submitted_at
+         FROM test_attempts
+         WHERE user_id = $1::uuid AND is_deleted = 0
+         ORDER BY submitted_at DESC`,
+        [userId]
+      ),
+      pool.query<{
+        vocab_id: string;
+        lesson_id: string;
+        marked_at: Date;
+      }>(
+        `SELECT m.vocab_id, v.lesson_id, m.marked_at
+         FROM user_marked_vocab m
+         JOIN vocabularies v ON v.id = m.vocab_id AND v.is_deleted = 0
+         JOIN lessons l ON l.id = v.lesson_id AND l.is_deleted = 0
+         WHERE m.user_id = $1::uuid AND m.is_deleted = 0`,
+        [userId]
+      ),
+    ]);
+
+    lessons = lessonsRes.rows.map((r) => ({
+      id: r.id,
+      title: r.title,
+      hskLevel: r.hsk_level || 'HSK 1',
+      unit: r.unit,
+      vocabCount: Number(r.vocab_count || 0),
+      grammarCount: Number(r.grammar_count || 0),
+      textCount: Number(r.text_count || 0),
+    }));
+
+    attempts = attemptsRes.rows.map((r) => ({
+      lessonId: r.lesson_id,
+      score: Number(r.score || 0),
+      durationSeconds: Number(r.duration_seconds || 0),
+      answers: (r.answers && typeof r.answers === 'object' ? r.answers : {}) as Record<
+        string,
+        number
+      >,
+      submittedAt: r.submitted_at.toISOString(),
+    }));
+
+    marks = marksRes.rows.map((r) => ({
+      vocabId: r.vocab_id,
+      lessonId: r.lesson_id,
+      markedAt: r.marked_at.toISOString(),
+    }));
+
+    try {
+      const gamesRes = await pool.query<{
+        lesson_id: string;
+        game_mode: GameMode;
+        score: number;
+        max_score: number | null;
+        duration_seconds: number;
+        played_at: Date;
+      }>(
+        `SELECT lesson_id, game_mode, score, max_score, duration_seconds, played_at
+         FROM game_scores
+         WHERE user_id = $1::uuid AND is_deleted = 0
+         ORDER BY played_at DESC`,
+        [userId]
+      );
+      games = gamesRes.rows.map((r) => ({
+        lessonId: r.lesson_id,
+        gameMode: r.game_mode,
+        score: Number(r.score || 0),
+        maxScore: r.max_score !== null ? Number(r.max_score) : null,
+        durationSeconds: Number(r.duration_seconds || 0),
+        playedAt: r.played_at.toISOString(),
+      }));
+    } catch (err) {
+      if (!isUndefinedTableError(err)) throw err;
+      games = [];
+    }
+  }
+
+  // Activity aggregation by date
+  const activityByDate = new Map<string, { count: number; seconds: number }>();
+  const addActivity = (iso: string, seconds: number) => {
+    const key = toLocalDateKey(iso);
+    const prev = activityByDate.get(key) || { count: 0, seconds: 0 };
+    prev.count += 1;
+    prev.seconds += Math.max(0, seconds);
+    activityByDate.set(key, prev);
+  };
+
+  const todayKey = toLocalDateKey(new Date());
+  let todayTests = 0;
+  let todayGames = 0;
+  let todayMarks = 0;
+  let todaySeconds = 0;
+
+  for (const a of attempts) {
+    const secs = Math.max(60, a.durationSeconds || 0);
+    addActivity(a.submittedAt, secs);
+    if (toLocalDateKey(a.submittedAt) === todayKey) {
+      todayTests += 1;
+      todaySeconds += secs;
+    }
+  }
+  for (const g of games) {
+    const secs = Math.max(30, g.durationSeconds || 0);
+    addActivity(g.playedAt, secs);
+    if (toLocalDateKey(g.playedAt) === todayKey) {
+      todayGames += 1;
+      todaySeconds += secs;
+    }
+  }
+  for (const m of marks) {
+    addActivity(m.markedAt, 20);
+    if (toLocalDateKey(m.markedAt) === todayKey) {
+      todayMarks += 1;
+      todaySeconds += 20;
+    }
+  }
+
+  const { streakDays, bestStreakDays, studiedToday } = computeStreaks(
+    new Set(activityByDate.keys())
+  );
+
+  // Build last 28 days timeline
+  const activityLast28Days: DashboardActivityDay[] = [];
+  const baseDate = new Date();
+  for (let i = 27; i >= 0; i -= 1) {
+    const d = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate() - i);
+    const key = toLocalDateKey(d);
+    const entry = activityByDate.get(key);
+    const count = entry?.count || 0;
+    const minutes = entry ? Math.max(1, Math.round(entry.seconds / 60)) : 0;
+    const level: 0 | 1 | 2 | 3 | 4 =
+      count === 0 ? 0 : count === 1 ? 1 : count <= 3 ? 2 : count <= 6 ? 3 : 4;
+    activityLast28Days.push({ date: key, count, minutes, level });
+  }
+
+  // Per-lesson test best attempt & attempt count
+  const bestAttemptByLesson = new Map<string, AttemptLite>();
+  const attemptCountByLesson = new Map<string, number>();
+  for (const a of attempts) {
+    if (!a.lessonId) continue;
+    attemptCountByLesson.set(a.lessonId, (attemptCountByLesson.get(a.lessonId) || 0) + 1);
+    const prevBest = bestAttemptByLesson.get(a.lessonId);
+    // attempts is ordered submitted_at DESC -> strictly > keeps latest on tie
+    if (!prevBest || a.score > prevBest.score) {
+      bestAttemptByLesson.set(a.lessonId, a);
+    }
+  }
+
+  const gameCountByLesson = new Map<string, number>();
+  for (const g of games) {
+    gameCountByLesson.set(g.lessonId, (gameCountByLesson.get(g.lessonId) || 0) + 1);
+  }
+
+  const markCountByLesson = new Map<string, number>();
+  for (const m of marks) {
+    markCountByLesson.set(m.lessonId, (markCountByLesson.get(m.lessonId) || 0) + 1);
+  }
+
+  // Overall progress & Vocab Spaced Repetition breakdown (> 70% = Đạt)
+  let completedLessons = 0;
+  let totalVocab = 0;
+  let masteredCount = 0;
+  let learningCount = 0;
+  const dueCount = marks.length;
+
+  for (const l of lessons) {
+    totalVocab += l.vocabCount;
+    const best = bestAttemptByLesson.get(l.id)?.score;
+    const lMarks = markCountByLesson.get(l.id) || 0;
+    const lGames = gameCountByLesson.get(l.id) || 0;
+    if (best !== undefined && best > LESSON_PASS_THRESHOLD) {
+      completedLessons += 1;
+      masteredCount += Math.max(0, l.vocabCount - lMarks);
+      learningCount += Math.min(l.vocabCount, lMarks);
+    } else if (best !== undefined || lGames > 0 || lMarks > 0) {
+      learningCount += l.vocabCount;
+    }
+  }
+  const newCount = Math.max(0, totalVocab - masteredCount - learningCount);
+
+  // Pick continueLesson: prefer preferredLessonId if exists, else first lesson with best score <= 70%, else first lesson
+  const preferredLesson = preferredLessonId
+    ? lessons.find((l) => l.id === preferredLessonId)
+    : undefined;
+  const firstUnfinished = lessons.find(
+    (l) => (bestAttemptByLesson.get(l.id)?.score ?? 0) <= LESSON_PASS_THRESHOLD
+  );
+  const chosen = preferredLesson || firstUnfinished || lessons[0] || null;
+
+  // Load comprehensive_test questions for the chosen lesson to compute exact 4-skill ratios
+  let chosenQuestions: QuestionLite[] = [];
+  if (chosen) {
+    if (getDbMode() === 'memory') {
+      const memLesson = memoryStore.lessons.find(
+        (l) => l.id === chosen.id && l.isDeleted !== 1
+      );
+      chosenQuestions = (memLesson?.comprehensiveTest || []).map((q) => ({
+        id: q.id,
+        category: q.category ?? null,
+        correctIndex: q.correctIndex,
+      }));
+    } else {
+      const pool = getPool()!;
+      const qRes = await pool.query<{
+        id: string;
+        category: string | null;
+        correct_index: number;
+      }>(
+        `SELECT id, category, correct_index
+         FROM quiz_questions
+         WHERE lesson_id = $1 AND scope = 'comprehensive_test' AND is_deleted = 0
+         ORDER BY sort_order ASC`,
+        [chosen.id]
+      );
+      chosenQuestions = qRes.rows.map((r) => ({
+        id: r.id,
+        category: r.category,
+        correctIndex: Number(r.correct_index),
+      }));
+    }
+  }
+
+  const chosenBestAttempt = chosen ? bestAttemptByLesson.get(chosen.id) || null : null;
+
+  const skillBuckets: Record<
+    'vocab' | 'grammar' | 'listening' | 'reading',
+    { correct: number; total: number }
+  > = {
+    vocab: { correct: 0, total: 0 },
+    grammar: { correct: 0, total: 0 },
+    listening: { correct: 0, total: 0 },
+    reading: { correct: 0, total: 0 },
+  };
+
+  chosenQuestions.forEach((q, idx) => {
+    const skillKey = mapCategoryToSkill(q.category);
+    skillBuckets[skillKey].total += 1;
+    if (chosenBestAttempt) {
+      const ans = chosenBestAttempt.answers;
+      const picked =
+        ans[String(idx)] !== undefined
+          ? ans[String(idx)]
+          : ans[q.id] !== undefined
+            ? ans[q.id]
+            : undefined;
+      if (picked === q.correctIndex) {
+        skillBuckets[skillKey].correct += 1;
+      }
+    }
+  });
+
+  const continueLesson = chosen
+    ? (() => {
+        const best = chosenBestAttempt ? chosenBestAttempt.score : null;
+        const attCnt = attemptCountByLesson.get(chosen.id) || 0;
+        const progressPercent = best !== null ? clampPct(best) : 0;
+        const passed = best !== null && best > LESSON_PASS_THRESHOLD;
+        const totalEstMins = Math.max(
+          10,
+          Math.round(chosen.vocabCount * 0.8 + chosen.textCount * 4)
+        );
+        const estimatedMinutesLeft = passed
+          ? 0
+          : Math.max(2, Math.round((totalEstMins * (100 - progressPercent)) / 100));
+        return {
+          lessonId: chosen.id,
+          title: chosen.title,
+          hskLevel: chosen.hskLevel,
+          unit: chosen.unit,
+          progressPercent,
+          passed,
+          passThreshold: LESSON_PASS_THRESHOLD,
+          vocabCount: chosen.vocabCount,
+          grammarCount: chosen.grammarCount,
+          textCount: chosen.textCount,
+          estimatedMinutesLeft,
+          bestScore: best,
+          attemptCount: attCnt,
+        };
+      })()
+    : null;
+
+  const averageTestScore =
+    attempts.length > 0
+      ? Math.round(attempts.reduce((sum, a) => sum + a.score, 0) / attempts.length)
+      : null;
+
+  const fallbackLessonId = chosen?.id || lessons[0]?.id || 'lesson-1';
+  const buildSkillItem = (
+    id: 'vocab' | 'grammar' | 'listening' | 'reading',
+    label: string,
+    targetTab: 'vocab' | 'texts' | 'grammar' | 'games' | 'test'
+  ): DashboardSkillItem => {
+    const bucket = skillBuckets[id];
+    const hasQuestions = bucket.total > 0;
+    const score = hasQuestions
+      ? chosenBestAttempt
+        ? clampPct((bucket.correct / bucket.total) * 100)
+        : 0
+      : null;
+    const passed = score !== null && score > LESSON_PASS_THRESHOLD;
+    const detail = !hasQuestions
+      ? 'Bài này chưa có câu hỏi'
+      : !chosenBestAttempt
+        ? `0/${bucket.total} câu (chưa làm kiểm tra)`
+        : `${bucket.correct}/${bucket.total} câu đúng`;
+
+    return {
+      id,
+      label,
+      score,
+      correctCount: bucket.correct,
+      totalCount: bucket.total,
+      passed,
+      detail,
+      targetTab,
+      targetLessonId: fallbackLessonId,
+    };
+  };
+
+  const skills: DashboardSkillItem[] = [
+    buildSkillItem('vocab', 'Từ vựng', 'vocab'),
+    buildSkillItem('grammar', 'Ngữ pháp', 'grammar'),
+    buildSkillItem('listening', 'Nghe', 'texts'),
+    buildSkillItem('reading', 'Đọc hiểu', 'games'),
+  ];
+
+  return {
+    streakDays,
+    bestStreakDays,
+    studiedToday,
+    today: {
+      minutesStudied: Math.round(todaySeconds / 60),
+      dailyGoalMinutes: 30,
+      testsCompleted: todayTests,
+      gamesCompleted: todayGames,
+      vocabMarkedToday: todayMarks,
+    },
+    vocabReview: {
+      totalVocab,
+      dueCount,
+      newCount,
+      learningCount,
+      masteredCount,
+    },
+    skills,
+    activityLast28Days,
+    continueLesson,
+    overallProgress: {
+      completedLessons,
+      totalLessons: lessons.length,
+      averageTestScore,
+      totalTests: attempts.length,
+      totalGames: games.length,
+    },
+  };
 }

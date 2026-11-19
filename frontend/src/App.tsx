@@ -6,6 +6,7 @@ import {
   GitBranch,
   Headphones,
   Layers,
+  LayoutDashboard,
   Lock,
   LogIn,
   LogOut,
@@ -25,6 +26,7 @@ import { AdminRbacPage } from './components/AdminRbacPage';
 import { AiAssistantModal } from './components/AiAssistantModal';
 import { AuthModal } from './components/AuthModal';
 import { ConfirmDeleteModal } from './components/ConfirmDeleteModal';
+import { DashboardPage } from './components/DashboardPage';
 import { LoadingCard, LoadingScreen } from './components/common/LoadingState';
 import { GamesSection } from './components/GamesSection';
 import { GlobalSearchModal } from './components/GlobalSearchModal';
@@ -47,14 +49,20 @@ import type {
   VocabularyItem,
 } from './types';
 
-function getViewFromPath(): 'study' | 'profile' | 'exam' | 'admin' {
+type AppView = 'dashboard' | 'saved_vocab' | 'history' | 'study' | 'profile' | 'exam' | 'admin';
+
+function getViewFromPath(): AppView {
   if (typeof window !== 'undefined') {
     const p = window.location.pathname.replace(/\/+$/, '');
+    if (p === '/study') return 'study';
+    if (p === '/saved-vocab') return 'saved_vocab';
+    if (p === '/history') return 'history';
     if (p === '/profile') return 'profile';
     if (p === '/exam') return 'exam';
     if (p === '/admin') return 'admin';
+    if (p === '/dashboard') return 'dashboard';
   }
-  return 'study';
+  return 'dashboard';
 }
 
 export default function App() {
@@ -70,7 +78,7 @@ export default function App() {
     () => localStorage.getItem('cs_current_lesson') || 'lesson-1'
   );
   const [currentLesson, setCurrentLesson] = useState<LessonDetail | null>(null);
-  const [activeView, setActiveView] = useState<'study' | 'profile' | 'exam' | 'admin'>(() =>
+  const [activeView, setActiveView] = useState<AppView>(() =>
     getViewFromPath()
   );
   const [activeTab, setActiveTab] = useState<TabId>('vocab');
@@ -136,10 +144,16 @@ export default function App() {
     }
   };
 
-  const navigateView = (nextView: 'study' | 'profile' | 'exam' | 'admin', replace = false) => {
+  const navigateView = (nextView: AppView, replace = false) => {
     setActiveView(nextView);
     const targetPath =
-      nextView === 'profile'
+      nextView === 'study'
+        ? '/study'
+        : nextView === 'saved_vocab'
+        ? '/saved-vocab'
+        : nextView === 'history'
+        ? '/history'
+        : nextView === 'profile'
         ? '/profile'
         : nextView === 'exam'
         ? '/exam'
@@ -247,11 +261,11 @@ export default function App() {
   useEffect(() => {
     if (!authChecked) return;
     if (activeView === 'profile' && !user) {
-      navigateView('study', true);
+      navigateView('dashboard', true);
     } else if (activeView === 'admin' && !canAccessAdmin) {
-      navigateView('study', true);
+      navigateView('dashboard', true);
     } else if (activeView === 'exam' && user && !canTakeExam) {
-      navigateView('study', true);
+      navigateView('dashboard', true);
     }
   }, [authChecked, activeView, user, canAccessAdmin, canTakeExam]);
 
@@ -484,21 +498,71 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {activeView === 'dashboard' || activeView === 'saved_vocab' || activeView === 'history' ? (
+        <DashboardPage
+          user={user}
+          lessons={lessons}
+          attempts={attempts}
+          currentLessonId={currentLessonId}
+          activeSection={
+            activeView === 'saved_vocab'
+              ? 'saved_vocab'
+              : activeView === 'history'
+                ? 'history'
+                : 'overview'
+          }
+          darkMode={darkMode}
+          canAccessAdmin={canAccessAdmin}
+          canUseAiAssistant={canUseAiAssistant}
+          onChangeSection={(section) =>
+            navigateView(section === 'overview' ? 'dashboard' : section)
+          }
+          onSelectLesson={(lessonId) => setCurrentLessonId(lessonId)}
+          onToggleDarkMode={() => setDarkMode((d) => !d)}
+          onOpenLesson={(lessonId, tab = 'vocab') => {
+            setCurrentLessonId(lessonId);
+            setActiveTab(tab);
+            navigateView('study');
+          }}
+          onOpenExam={openComprehensiveExam}
+          onOpenProfile={() => navigateView('profile')}
+          onOpenAdmin={() => navigateView('admin')}
+          onOpenSearch={() => setShowSearchModal(true)}
+          onOpenAiDictionary={() => openAiAssistant('dictionary', '')}
+          onToggleMarked={handleToggleMarked}
+          onOpenWriter={(vocab) => setWriterVocab(vocab)}
+          onRequireAuth={() => setShowAuthModal(true)}
+        />
+      ) : (
+      <>
       <header className="relative md:sticky md:top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-stone-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 min-h-16 py-2 flex flex-wrap items-center justify-between gap-2 sm:gap-3">
-          <button
-            type="button"
-            onClick={() => navigateView('study')}
-            className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0 text-left"
-          >
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-red-600 to-amber-600 flex items-center justify-center text-white shadow-md">
-              <span className="chinese-serif text-lg sm:text-xl font-black">汉</span>
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="text-base font-bold text-gray-900 dark:text-white">汉语学堂</h1>
-              <p className="text-[11px] text-gray-500 dark:text-slate-400">Học tiếng Trung</p>
-            </div>
-          </button>
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <button
+              type="button"
+              onClick={() => navigateView('dashboard')}
+              className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0 text-left"
+              title="Về trang Tổng quan (Dashboard)"
+            >
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-red-600 to-amber-600 flex items-center justify-center text-white shadow-md">
+                <span className="chinese-serif text-lg sm:text-xl font-black">汉</span>
+              </div>
+              <div className="hidden sm:block">
+                <h1 className="text-base font-bold text-gray-900 dark:text-white">汉语学堂</h1>
+                <p className="text-[11px] text-gray-500 dark:text-slate-400">Học tiếng Trung</p>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigateView('dashboard')}
+              className="px-2.5 sm:px-3 py-2 rounded-xl bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-950/70 border border-red-200/80 dark:border-red-900/60 text-xs font-bold text-red-700 dark:text-red-300 flex items-center gap-1.5 transition active:scale-95"
+              title="Mở trang Tổng quan học tập (Dashboard)"
+            >
+              <LayoutDashboard className="w-3.5 h-3.5" />
+              <span className="hidden md:inline">Tổng quan</span>
+            </button>
+          </div>
 
           <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-end min-w-0 flex-1">
             <select
@@ -811,16 +875,10 @@ export default function App() {
               lessons={lessons}
               markedMap={markedMap}
               attempts={attempts}
-              onBackToStudy={() => navigateView('study')}
+              onBackToStudy={() => navigateView('dashboard')}
               onLogout={handleLogout}
-              onToggleMarked={handleToggleMarked}
-              onOpenLesson={(lessonId, tab = 'vocab') => {
-                setCurrentLessonId(lessonId);
-                setActiveTab(tab);
-                navigateView('study');
-              }}
-              onOpenExam={openComprehensiveExam}
-              onOpenWriter={(vocab) => setWriterVocab(vocab)}
+              onOpenSavedVocab={() => navigateView('saved_vocab')}
+              onOpenTestHistory={() => navigateView('history')}
               onUpdateUser={(updatedUser) => setUser(updatedUser)}
             />
           ) : (
@@ -882,6 +940,8 @@ export default function App() {
           </>
         )}
       </main>
+      </>
+      )}
 
       {showAuthModal && (
         <AuthModal onClose={() => setShowAuthModal(false)} onSuccess={handleAuthSuccess} />
