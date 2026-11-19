@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   Award,
+  BarChart3,
+  Bookmark,
   Edit3,
   Gamepad2,
   GitBranch,
@@ -335,7 +337,6 @@ export default function App() {
     setStoredToken(null);
     setUser(null);
     setComprehensiveExam(null);
-    navigateView('study');
     setMarkedMap({});
     setAttempts([]);
     refreshLessons();
@@ -532,6 +533,7 @@ export default function App() {
           onToggleMarked={handleToggleMarked}
           onOpenWriter={(vocab) => setWriterVocab(vocab)}
           onRequireAuth={() => setShowAuthModal(true)}
+          onLogout={handleLogout}
         />
       ) : (
       <>
@@ -657,6 +659,22 @@ export default function App() {
                       },
                     ]
                   : []),
+                {
+                  id: 'saved_vocab',
+                  label: 'Từ đã đánh dấu',
+                  description: !user ? 'Đăng nhập để xem từ đánh dấu' : 'Sổ tay từ vựng cần ôn tập',
+                  icon: Bookmark,
+                  iconClassName: 'text-amber-500',
+                  onClick: () => (user ? navigateView('saved_vocab') : setShowAuthModal(true)),
+                },
+                {
+                  id: 'test_history',
+                  label: 'Lịch sử làm bài',
+                  description: !user ? 'Đăng nhập để xem lịch sử thi' : 'Tổng hợp kết quả kiểm tra',
+                  icon: BarChart3,
+                  iconClassName: 'text-blue-500',
+                  onClick: () => (user ? navigateView('history') : setShowAuthModal(true)),
+                },
                 ...(canAccessAdmin
                   ? [
                       {

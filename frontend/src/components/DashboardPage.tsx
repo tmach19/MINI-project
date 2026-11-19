@@ -14,6 +14,7 @@ import {
   GitBranch,
   LayoutDashboard,
   LogIn,
+  LogOut,
   Moon,
   Play,
   Search,
@@ -61,6 +62,7 @@ interface DashboardPageProps {
   onToggleMarked?: (vocabId: string) => Promise<void> | void;
   onOpenWriter?: (vocab: VocabularyItem) => void;
   onRequireAuth: () => void;
+  onLogout: () => void;
 }
 
 const DAILY_GOAL_OPTIONS = [15, 30, 45, 60] as const;
@@ -238,6 +240,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   onToggleMarked,
   onOpenWriter,
   onRequireAuth,
+  onLogout,
 }) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showRoadmapModal, setShowRoadmapModal] = useState(false);
@@ -623,28 +626,44 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           {/* Bottom User Profile */}
           <div className="p-3 border-t border-slate-100 dark:border-slate-800 shrink-0">
             {user ? (
-              <button
-                type="button"
-                onClick={onOpenProfile}
-                className="w-full h-12 flex items-center rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-left"
-                title="Mở trang cá nhân"
-              >
-                <span className="w-[51px] shrink-0 flex items-center justify-center">
-                  {renderUserAvatar('w-8 h-8')}
-                </span>
-                <span
-                  className={`min-w-0 flex-1 pr-3 overflow-hidden whitespace-nowrap transition-opacity duration-150 ${
-                    sidebarCollapsed ? 'opacity-0 pointer-events-none' : 'opacity-100'
+              <div className="flex items-center">
+                <button
+                  type="button"
+                  onClick={onOpenProfile}
+                  className="min-w-0 flex-1 h-12 flex items-center rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-left"
+                  title="Mở trang cá nhân"
+                >
+                  <span className="w-[51px] shrink-0 flex items-center justify-center">
+                    {renderUserAvatar('w-8 h-8')}
+                  </span>
+                  <span
+                    className={`min-w-0 flex-1 pr-2 overflow-hidden whitespace-nowrap transition-opacity duration-150 ${
+                      sidebarCollapsed ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                    }`}
+                  >
+                    <span className="block text-xs font-bold text-slate-900 dark:text-white truncate">
+                      {user.displayName}
+                    </span>
+                    <span className="block text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                      {user.role === 'admin' ? 'Quản trị viên' : 'Học viên'}
+                    </span>
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={onLogout}
+                  title="Đăng xuất"
+                  aria-label="Đăng xuất"
+                  className={`shrink-0 h-9 flex items-center justify-center rounded-xl text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition-all duration-150 ${
+                    sidebarCollapsed
+                      ? 'w-0 ml-0 border-0 opacity-0 pointer-events-none overflow-hidden'
+                      : 'w-9 ml-1.5 border border-slate-200 dark:border-slate-700 hover:border-red-200 dark:hover:border-red-800 opacity-100'
                   }`}
                 >
-                  <span className="block text-xs font-bold text-slate-900 dark:text-white truncate">
-                    {user.displayName}
-                  </span>
-                  <span className="block text-[11px] text-slate-500 dark:text-slate-400 truncate">
-                    {user.role === 'admin' ? 'Quản trị viên' : 'Học viên'}
-                  </span>
-                </span>
-              </button>
+                  <LogOut className="w-4 h-4 shrink-0" />
+                </button>
+              </div>
             ) : (
               <button
                 type="button"
@@ -923,16 +942,18 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               <div className="space-y-4 relative">
                 <div className="flex items-center justify-between gap-3 flex-wrap">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-red-50 dark:bg-red-950/60 text-red-600 dark:text-red-400 text-[11px] font-bold uppercase tracking-wider">
-                      <BookOpen className="w-3.5 h-3.5" />
-                      Tiếp tục bài đang học
-                    </span>
-                    {heroLesson && (
-                      <span className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px] font-semibold">
-                        {heroLesson.hskLevel}
-                        {heroLesson.unit ? ` • ${heroLesson.unit}` : ''}
-                      </span>
-                    )}
+                    {heroLesson &&
+                      (heroLesson.attemptCount > 0 ? (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-red-50 dark:bg-red-950/60 text-red-600 dark:text-red-400 text-[11px] font-bold uppercase tracking-wider">
+                          <BookOpen className="w-3.5 h-3.5" />
+                          Tiếp tục bài đang học
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px] font-bold uppercase tracking-wider">
+                          <BookOpen className="w-3.5 h-3.5" />
+                          Chưa kiểm tra
+                        </span>
+                      ))}
                   </div>
 
                   <select
