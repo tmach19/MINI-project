@@ -1148,7 +1148,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     className="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white text-sm font-bold shadow-sm hover:shadow-md inline-flex items-center gap-2 transition active:scale-[0.98]"
                   >
                     <Play className="w-4 h-4 fill-current" />
-                    Học tiếp ngay
+                    {heroLesson && heroLesson.attemptCount > 0 ? 'Học tiếp ngay' : 'Bắt đầu học ngay'}
                   </button>
                   {heroLesson && (
                     <button
