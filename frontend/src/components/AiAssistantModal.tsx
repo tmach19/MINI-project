@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
+  ArrowLeft,
   ArrowRight,
   BookOpen,
   Bot,
@@ -8,6 +9,7 @@ import {
   GraduationCap,
   History,
   Languages,
+  Loader2,
   MessageSquare,
   MessageSquarePlus,
   PenTool,
@@ -31,7 +33,7 @@ import type {
   VocabularyItem,
 } from '../types';
 import { ChatMarkdown } from './common/ChatMarkdown';
-import { LoadingSpinner } from './common/LoadingState';
+import { LoadingCard, LoadingSpinner } from './common/LoadingState';
 import { ErrorBanner, ModalCloseButton, ModalShell } from './common/ModalShell';
 
 interface AiAssistantModalProps {
@@ -197,10 +199,15 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
   // Dictionary state
   const [dictQuery, setDictQuery] = useState(initialQuery);
   const [dictLoading, setDictLoading] = useState(false);
+  const [dictLoadingQuery, setDictLoadingQuery] = useState<string | null>(null);
   const [dictError, setDictError] = useState<string | null>(null);
   const [dictResult, setDictResult] = useState<AiDictionaryResponse | null>(null);
+  const [dictBackStack, setDictBackStack] = useState<
+    Array<{ query: string; result: AiDictionaryResponse }>
+  >([]);
   const [dictHistory, setDictHistory] = useState<string[]>(() => loadDictHistory());
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const dictBodyRef = useRef<HTMLDivElement | null>(null);
 
   // Tutor chat state — tự động lưu & lịch sử các cuộc trò chuyện
   const [sessions, setSessions] = useState<AiChatSession[]>(() => loadSavedSessions(userScope));
@@ -322,17 +329,39 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
   const runDictionaryLookup = async (rawQuery = dictQuery, forceAi = false) => {
     const trimmed = rawQuery.trim();
     if (!trimmed || dictLoading) return;
+    const prevSnapshot =
+      dictResult && dictResult.query.trim().toLowerCase() !== trimmed.toLowerCase()
+        ? { query: dictResult.query, result: dictResult }
+        : null;
+
     setDictError(null);
     setDictLoading(true);
+    setDictLoadingQuery(trimmed);
+    dictBodyRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+
     try {
       const res = await api.aiDictionary({ query: trimmed, direction: 'auto', forceAi });
+      if (prevSnapshot) {
+        setDictBackStack((prev) => [...prev.slice(-14), prevSnapshot]);
+      }
       setDictResult(res);
       pushHistory(trimmed);
     } catch (err) {
       setDictError((err as Error).message || 'Không tra cứu được từ điển AI.');
     } finally {
       setDictLoading(false);
+      setDictLoadingQuery(null);
     }
+  };
+
+  const handleDictGoBack = () => {
+    if (dictLoading || dictBackStack.length === 0) return;
+    const previous = dictBackStack[dictBackStack.length - 1];
+    setDictBackStack((prev) => prev.slice(0, -1));
+    setDictError(null);
+    setDictQuery(previous.query);
+    setDictResult(previous.result);
+    dictBodyRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleCopy = async (text: string, key: string) => {
@@ -512,7 +541,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
 
       {/* Body */}
       {activeTab === 'dictionary' ? (
-        <div className="p-6 overflow-y-auto space-y-5 flex-grow">
+        <div ref={dictBodyRef} className="p-6 overflow-y-auto space-y-5 flex-grow">
           {/* Search Box */}
           <div className="space-y-3">
             <div className="flex flex-col sm:flex-row gap-2">
@@ -565,7 +594,40 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
 
           <ErrorBanner message={dictError} />
 
-          {dictResult?.notice && (
+          {dictBackStack.length > 0 && (
+            <div className="flex items-center justify-between gap-2">
+              <button
+                type="button"
+                disabled={dictLoading}
+                onClick={handleDictGoBack}
+                className="px-3 py-1.5 rounded-xl bg-stone-100 dark:bg-slate-800 hover:bg-purple-50 dark:hover:bg-purple-900/30 border border-stone-200 dark:border-slate-700 hover:border-purple-400 dark:hover:border-purple-500/70 text-xs font-bold text-gray-700 dark:text-slate-200 hover:text-purple-700 dark:hover:text-purple-300 inline-flex items-center gap-1.5 disabled:opacity-40 transition"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>
+                  Quay lại “
+                  <span className="chinese-serif">
+                    {dictBackStack[dictBackStack.length - 1].query}
+                  </span>
+                  ”
+                </span>
+              </button>
+              {dictBackStack.length > 1 && (
+                <span className="text-[11px] text-gray-400 dark:text-slate-500">
+                  {dictBackStack.length} bước trước đó
+                </span>
+              )}
+            </div>
+          )}
+
+          {dictLoading && (
+            <LoadingCard
+              compact
+              message={`Đang tra cứu “${dictLoadingQuery || dictQuery}”...`}
+              subMessage="Đang tải nghĩa, chiết tự, từ ghép phổ biến và ví dụ song ngữ"
+            />
+          )}
+
+          {dictResult?.notice && !dictLoading && (
             <div className="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 text-xs text-amber-900 dark:text-amber-200">
               {dictResult.notice}
             </div>
@@ -589,23 +651,13 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
           )}
 
           {/* Local HSK hits */}
-          {dictResult && dictResult.localHits.length > 0 && (
+          {!dictLoading && dictResult && dictResult.localHits.length > 0 && (
             <div className="space-y-2.5">
               <div className="flex items-center justify-between gap-2 flex-wrap">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 flex items-center gap-1.5">
                   <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
                   Khớp trong giáo trình HSK / Bài của bạn ({dictResult.localHits.length})
                 </h4>
-                {dictResult.source === 'local_exact' && dictResult.aiConfigured && (
-                  <button
-                    type="button"
-                    disabled={dictLoading}
-                    onClick={() => void runDictionaryLookup(dictResult.query, true)}
-                    className="px-3 py-1 rounded-xl bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 text-[11px] font-bold hover:bg-amber-100 dark:hover:bg-amber-900/50 inline-flex items-center gap-1"
-                  >
-                    <Sparkles className="w-3 h-3" /> Phân tích mở rộng &amp; ví dụ bằng AI
-                  </button>
-                )}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
@@ -672,7 +724,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
           )}
 
           {/* AI / Cache Structured Dictionary Result */}
-          {dictResult?.aiResult && (
+          {!dictLoading && dictResult?.aiResult && (
             <div className="rounded-3xl border border-stone-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden">
               <div className="px-5 py-3 bg-gradient-to-r from-red-50 to-amber-50/70 dark:from-red-950/30 dark:to-amber-950/20 border-b border-stone-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2 text-xs font-bold text-gray-800 dark:text-slate-200">
@@ -814,6 +866,59 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                         </span>
                       </div>
                     )}
+                  </div>
+                )}
+
+                {/* Compounds (Từ ghép phổ biến) */}
+                {dictResult.aiResult.compounds && dictResult.aiResult.compounds.length > 0 && (
+                  <div className="space-y-2 pt-1">
+                    <h5 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400">
+                      Từ ghép phổ biến
+                    </h5>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {dictResult.aiResult.compounds.map((comp, idx) => (
+                        <div
+                          key={`${comp.hanzi}-${idx}`}
+                          className="p-2.5 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-stone-200/70 dark:border-slate-800 hover:border-purple-400 dark:hover:border-purple-500/70 flex items-center justify-between gap-2 transition group"
+                        >
+                          <button
+                            type="button"
+                            disabled={dictLoading}
+                            onClick={() => {
+                              setDictQuery(comp.hanzi);
+                              void runDictionaryLookup(comp.hanzi, false);
+                            }}
+                            title={`Tra chi tiết từ "${comp.hanzi}"`}
+                            className="text-left min-w-0 flex-1 disabled:opacity-60"
+                          >
+                            <div className="flex items-baseline gap-1.5 flex-wrap">
+                              <span className="chinese-serif text-sm font-bold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition">
+                                {comp.hanzi}
+                              </span>
+                              {dictLoading && dictLoadingQuery === comp.hanzi && (
+                                <Loader2 className="w-3 h-3 animate-spin text-purple-500" />
+                              )}
+                              {comp.pinyin && (
+                                <span className="text-[11px] font-mono text-red-600 dark:text-red-400">
+                                  {comp.pinyin}
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs text-gray-600 dark:text-slate-300 truncate">
+                              {comp.meaning}
+                            </p>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => speakChinese(comp.hanzi)}
+                            className="p-1.5 rounded-lg bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-gray-500 hover:text-red-600 flex-shrink-0"
+                            title={`Nghe phát âm ${comp.hanzi}`}
+                          >
+                            <Volume2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
 

@@ -101,7 +101,6 @@ const EXAM_SPEECH_RATES = [
   { value: 0.7, label: '0.7x', title: 'Chậm (0.7x)' },
   { value: 0.85, label: '0.85x', title: 'Hơi chậm (0.85x)' },
   { value: 1.0, label: '1.0x', title: 'Tự nhiên (1.0x)' },
-  { value: 1.15, label: '1.15x', title: 'Nhanh (1.15x)' },
 ] as const;
 
 export const TestSection: React.FC<TestSectionProps> = ({

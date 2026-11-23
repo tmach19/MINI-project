@@ -359,6 +359,12 @@ export interface AiDictionaryExample {
   meaning: string;
 }
 
+export interface AiDictionaryCompound {
+  hanzi: string;
+  pinyin: string;
+  meaning: string;
+}
+
 export interface AiDictionaryEntry {
   query: string;
   direction: TranslationDirection;
@@ -374,6 +380,7 @@ export interface AiDictionaryEntry {
   breakdown: string | null;
   mnemonic: string | null;
   grammarNote: string | null;
+  compounds?: AiDictionaryCompound[];
   examples: AiDictionaryExample[];
 }
 

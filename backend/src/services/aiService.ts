@@ -12,6 +12,7 @@ import {
   type GlobalVocabSearchHit,
 } from '../repositories/lessonRepo.js';
 import type {
+  AiDictionaryCompound,
   AiDictionaryEntry,
   AiDictionaryExample,
   AiPendingAction,
@@ -352,6 +353,23 @@ function normalizeExamples(raw: unknown): AiDictionaryExample[] {
     .filter((ex) => ex.hanzi && ex.meaning);
 }
 
+function normalizeCompounds(raw: unknown, selfHanzi: string): AiDictionaryCompound[] {
+  if (!Array.isArray(raw)) return [];
+  const seen = new Set<string>([selfHanzi.trim()]);
+  const out: AiDictionaryCompound[] = [];
+  for (const item of raw) {
+    if (!item || typeof item !== 'object') continue;
+    const hanzi = String((item as any).hanzi || '').trim();
+    const pinyin = String((item as any).pinyin || '').trim();
+    const meaning = String((item as any).meaning || '').trim();
+    if (!hanzi || !meaning || seen.has(hanzi)) continue;
+    seen.add(hanzi);
+    out.push({ hanzi, pinyin, meaning });
+    if (out.length >= 6) break;
+  }
+  return out;
+}
+
 async function generateDictionaryEntryWithAi(
   query: string,
   direction: TranslationDirection
@@ -379,6 +397,9 @@ Luôn trả về DUY NHẤT một JSON object hợp lệ (không markdown dư th
   "breakdown": "Chiết tự ngắn gọn các thành phần chữ Hán để dễ nhớ (nếu là từ), ngược lại null",
   "mnemonic": "Mẹo ghi nhớ ngắn gọn bằng tiếng Việt (nếu phù hợp), ngược lại null",
   "grammarNote": "Lưu ý ngữ pháp, cách dùng hoặc phân biệt từ gần nghĩa (1-3 câu tiếng Việt)",
+  "compounds": [
+    { "hanzi": "Từ ghép thông dụng tạo thành khi ghép chữ/từ này với chữ khác (4-6 từ HSK phổ biến nếu isSentence=false, mảng rỗng [] nếu là câu dài)", "pinyin": "Pinyin có dấu", "meaning": "Nghĩa tiếng Việt ngắn gọn" }
+  ],
   "examples": [
     { "hanzi": "Câu ví dụ tiếng Trung ngắn tự nhiên", "pinyin": "Pinyin có dấu", "meaning": "Nghĩa tiếng Việt" }
   ]
@@ -395,6 +416,8 @@ Luôn trả về DUY NHẤT một JSON object hợp lệ (không markdown dư th
   const meaningsArr = Array.isArray(parsed.meanings)
     ? parsed.meanings.map((m: unknown) => String(m || '').trim()).filter(Boolean)
     : [];
+  const hanzi = String(parsed.hanzi || query).trim();
+  const isSentence = Boolean(parsed.isSentence);
 
   return {
     usedModel,
@@ -405,8 +428,8 @@ Luôn trả về DUY NHẤT một JSON object hợp lệ (không markdown dư th
         parsed.detectedLanguage === 'zh' || parsed.detectedLanguage === 'vi'
           ? parsed.detectedLanguage
           : detectLanguageHeuristic(query),
-      isSentence: Boolean(parsed.isSentence),
-      hanzi: String(parsed.hanzi || query).trim(),
+      isSentence,
+      hanzi,
       pinyin: String(parsed.pinyin || '').trim(),
       sinoVietnamese: parsed.sinoVietnamese ? String(parsed.sinoVietnamese).trim() : null,
       wordType: parsed.wordType ? String(parsed.wordType).trim() : null,
@@ -416,20 +439,10 @@ Luôn trả về DUY NHẤT một JSON object hợp lệ (không markdown dư th
       breakdown: parsed.breakdown ? String(parsed.breakdown).trim() : null,
       mnemonic: parsed.mnemonic ? String(parsed.mnemonic).trim() : null,
       grammarNote: parsed.grammarNote ? String(parsed.grammarNote).trim() : null,
+      compounds: isSentence ? [] : normalizeCompounds(parsed.compounds, hanzi),
       examples: normalizeExamples(parsed.examples),
     },
   };
-}
-
-function hasExactLocalMatch(hits: GlobalVocabSearchHit[], query: string): boolean {
-  const q = query.trim().toLowerCase();
-  if (!q || hits.length === 0) return false;
-  return hits.some(
-    (h) =>
-      h.hanzi.trim().toLowerCase() === q ||
-      (h.pinyin || '').trim().toLowerCase() === q ||
-      (h.meaning || '').trim().toLowerCase() === q
-  );
 }
 
 export async function lookupDictionary(options: {
@@ -445,7 +458,13 @@ export async function lookupDictionary(options: {
   const localHits = await searchAllVocabulary(query, options.userId);
   const cached = await getCachedTranslation(direction, query);
 
-  if (cached && !options.forceAi) {
+  const needsCompoundsRefresh =
+    Boolean(cached) &&
+    aiConfigured &&
+    !cached!.payload.isSentence &&
+    cached!.payload.compounds === undefined;
+
+  if (cached && !options.forceAi && !needsCompoundsRefresh) {
     return {
       query,
       direction,
@@ -453,19 +472,6 @@ export async function lookupDictionary(options: {
       aiResult: cached.payload,
       source: 'cache',
       model: cached.model,
-      aiConfigured,
-    };
-  }
-
-  const exactLocal = hasExactLocalMatch(localHits, query);
-  if (exactLocal && !options.forceAi) {
-    return {
-      query,
-      direction,
-      localHits,
-      aiResult: null,
-      source: 'local_exact',
-      model: null,
       aiConfigured,
     };
   }
@@ -483,18 +489,34 @@ export async function lookupDictionary(options: {
     };
   }
 
-  const { entry: aiResult, usedModel } = await generateDictionaryEntryWithAi(query, direction);
-  await saveCachedTranslation(direction, query, usedModel, aiResult);
+  try {
+    const { entry: aiResult, usedModel } = await generateDictionaryEntryWithAi(query, direction);
+    await saveCachedTranslation(direction, query, usedModel, aiResult);
 
-  return {
-    query,
-    direction,
-    localHits,
-    aiResult,
-    source: 'ai',
-    model: usedModel,
-    aiConfigured: true,
-  };
+    return {
+      query,
+      direction,
+      localHits,
+      aiResult,
+      source: 'ai',
+      model: usedModel,
+      aiConfigured: true,
+    };
+  } catch (err) {
+    if (localHits.length > 0) {
+      console.warn('[AI Dictionary] Lỗi gọi AI, fallback kết quả giáo trình:', err);
+      return {
+        query,
+        direction,
+        localHits,
+        aiResult: cached?.payload || null,
+        source: cached ? 'cache' : 'local_only',
+        model: cached?.model || null,
+        aiConfigured: true,
+      };
+    }
+    throw err;
+  }
 }
 
 const MAX_ATTACHED_LESSONS = 50;
