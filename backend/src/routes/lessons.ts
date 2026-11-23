@@ -13,12 +13,22 @@ import {
   getComprehensiveExamQuestions,
   getLessonById,
   getLessonOwnership,
+  getVocabGlossary,
   listLessons,
   searchAllVocabulary,
   updateLessonById,
 } from '../repositories/lessonRepo.js';
 
 const router = Router();
+
+router.get('/vocab/glossary', optionalAuth, async (req, res, next) => {
+  try {
+    const items = await getVocabGlossary(req.user?.userId);
+    res.json({ items });
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.get('/vocab/search', optionalAuth, async (req, res, next) => {
   try {

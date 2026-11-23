@@ -61,6 +61,7 @@ export interface ScrambleExercise {
   pinyin?: string | null;
   tokens: string[];
   unlearnedHint?: string | null;
+  acceptedVariants?: string[];
 }
 
 export interface TranslationExercise {
@@ -73,6 +74,7 @@ export interface TranslationExercise {
   expectedMeaning?: string | null;
   acceptedPinyin?: string | null;
   acceptedKeywords?: string[];
+  acceptedVariants?: string[];
   hint?: string | null;
   explanation?: string | null;
 }
@@ -349,6 +351,45 @@ export interface TranslationCacheRecord {
   payload: AiDictionaryEntry;
   hitCount: number;
   updatedAt: string;
+}
+
+export type GameGradeMode = 'scramble' | 'translation';
+export type GameGradeDirection = 'vi_to_zh' | 'zh_to_vi';
+
+export interface GameGradingCacheRecord {
+  cacheKey: string;
+  gameMode: GameGradeMode;
+  direction: GameGradeDirection | null;
+  exerciseId: string;
+  userAnswer: string;
+  isCorrect: boolean;
+  feedback: string;
+  suggestion: string | null;
+  model: string | null;
+  hitCount: number;
+  updatedAt: string;
+}
+
+export interface GameGradeResult {
+  isCorrect: boolean;
+  feedback: string;
+  suggestion: string | null;
+  source: 'local' | 'cache' | 'ai' | 'local_fallback';
+  aiUsed: boolean;
+}
+
+export interface VocabGlossaryItem {
+  hanzi: string;
+  pinyin: string;
+  sinoVietnamese: string | null;
+  meaning: string;
+  wordType: string | null;
+  source: 'db' | 'cache' | 'ai';
+}
+
+export interface QuickLookupResult {
+  entry: VocabGlossaryItem | null;
+  source: 'db' | 'cache' | 'ai' | 'unavailable';
 }
 
 export interface AiToolExecutionSummary {

@@ -455,3 +455,27 @@ CREATE INDEX IF NOT EXISTS idx_game_scores_user
 CREATE INDEX IF NOT EXISTS idx_game_scores_purge
   ON game_scores (deleted_at)
   WHERE is_deleted = 1;
+
+-- ----------------------------------------------------------------------------
+-- 14. Bộ nhớ đệm AI chấm đáp án trò chơi (Game Grading Cache)
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS game_grading_cache (
+  cache_key TEXT PRIMARY KEY,
+  game_mode TEXT NOT NULL CHECK (game_mode IN ('scramble', 'translation')),
+  direction TEXT CHECK (direction IS NULL OR direction IN ('vi_to_zh', 'zh_to_vi')),
+  exercise_id TEXT NOT NULL,
+  user_answer TEXT NOT NULL,
+  is_correct BOOLEAN NOT NULL,
+  feedback TEXT NOT NULL,
+  suggestion TEXT,
+  model TEXT,
+  hit_count INTEGER NOT NULL DEFAULT 1,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_game_grading_cache_exercise
+  ON game_grading_cache (exercise_id, updated_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_game_grading_cache_updated
+  ON game_grading_cache (updated_at DESC);

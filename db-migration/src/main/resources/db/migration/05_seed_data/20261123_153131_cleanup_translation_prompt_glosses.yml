@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261123_153131_cleanup_translation_prompt_glosses
+      author: chinese-study
+      comment: Don sach chu thich ngoac inline thua, goi y tu chua hoc bi gan nham va tien to [Mo rong] / [On tap Bai] / [Doc hieu mo rong]
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            stripComments: true
+            sql: |-
+              UPDATE translation_exercises SET prompt_text = '请问，您贵姓？', hint = 'Pinyin: Qǐngwèn, nín guìxìng?' WHERE id = 'tr2_zh_2';
+              UPDATE translation_exercises SET prompt_text = '你的前面是城市图书馆。', hint = 'Pinyin: Nǐ de qiánmian shì chéngshì túshūguǎn.' WHERE id = 'tr4_zh_3';
+              UPDATE translation_exercises SET prompt_text = '食堂十一点五十分开门吗？', hint = 'Pinyin: Shítáng shíyī diǎn wǔshí fēn kāimén ma?' WHERE id = 'tr5_zh_2';
+              UPDATE translation_exercises SET prompt_text = '王老师的房间是几号？', hint = 'Pinyin: Wáng lǎoshī de fángjiān shì jǐ hào?' WHERE id = 'tr5_zh_3';
+              UPDATE translation_exercises SET prompt_text = '到前面那个十字路口往右拐。', hint = 'Pinyin: Dào qiánmian nàge shízìlùkǒu wǎng yòu guǎi.' WHERE id = 'tr6_zh_2';
+              UPDATE translation_exercises SET prompt_text = '每天他都去图书馆借书。', hint = 'Pinyin: Měitiān tā dōu qù túshūguǎn jiè shū.' WHERE id = 'tr6_zh_3';
+              UPDATE translation_exercises SET prompt_text = '我想买两支蓝色圆珠笔。', hint = 'Pinyin: Wǒ xiǎng mǎi liǎng zhī lán sè yuánzhūbǐ.' WHERE id = 'tr7_zh_2';
+              UPDATE translation_exercises SET prompt_text = '这里的水果怎么卖？', hint = 'Pinyin: Zhèlǐ de shuǐguǒ zěnme mài?' WHERE id = 'tr8_zh_1';
+              UPDATE translation_exercises SET prompt_text = '草莓果汁十块钱两杯。', hint = 'Pinyin: Cǎoméi guǒzhī shí kuài qián liǎng bēi.' WHERE id = 'tr8_zh_2';
+              UPDATE translation_exercises SET prompt_text = '我觉得粉红色的裙子更合适。', hint = 'Pinyin: Wǒ juéde fěnhóngsè de qúnzi gèng héshì.' WHERE id = 'tr9_zh_1';
+              UPDATE translation_exercises SET prompt_text = '请问，在哪儿结账？', hint = 'Pinyin: Qǐngwèn, zài nǎr jiézhàng?' WHERE id = 'tr9_zh_2';
+              UPDATE translation_exercises SET prompt_text = '我们一起去那边吧！', hint = 'Pinyin: Wǒmen yīqǐ qù nàbian ba!' WHERE id = 'tr9_zh_3';
+              UPDATE translation_exercises SET prompt_text = '用手机上网购物非常方便。', hint = 'Pinyin: Yòng shǒujī shàngwǎng gòuwù fēicháng fāngbiàn.' WHERE id = 'tr10_zh_2';
+              UPDATE translation_exercises SET prompt_text = '天气太舒服了！', hint = 'Pinyin: Tiānqì tài shūfu le!' WHERE id = 'tr10_zh_3';
+              UPDATE translation_exercises SET prompt_text = '这张全家的照片真好看！', hint = 'Pinyin: Zhè zhāng quánjiā de zhàopiàn zhēn hǎokàn!' WHERE id = 'tr11_zh_1';
+              UPDATE translation_exercises SET prompt_text = '我姐姐比弟弟大五岁。', hint = 'Pinyin: Wǒ jiějie bǐ dìdi dà wǔ suì.' WHERE id = 'tr11_zh_2';
+              UPDATE translation_exercises SET prompt_text = '下次我们再一起聊天儿吧！', hint = 'Pinyin: Xiàcì wǒmen zài yīqǐ liáotiānr ba!' WHERE id = 'tr12_zh_1';
+              UPDATE translation_exercises SET prompt_text = '妈妈做了一盘很好吃的牛肉和鱼。', hint = 'Pinyin: Māma zuò le yì pán hěn hǎochī de niúròu hé yú.' WHERE id = 'tr12_zh_2';
+              UPDATE translation_exercises SET prompt_text = 'B: 他是日本人。', hint = 'Pinyin: Tā shì Rìběn rén.' WHERE id = 'tr12_zh_3';
+              UPDATE translation_exercises SET prompt_text = '请问，今天是几月几号，星期几？', hint = 'Pinyin: Qǐngwèn, jīntiān shì jǐ yuè jǐ hào, xīngqī jǐ?' WHERE id = 'tr13_zh_1';
+              UPDATE translation_exercises SET prompt_text = '星期三下午我们没有汉语课。', hint = 'Pinyin: Xīngqīsān xiàwǔ wǒmen méiyǒu Hànyǔ kè.' WHERE id = 'tr13_zh_2';
+              UPDATE translation_exercises SET prompt_text = '爸爸在园子里种了很多漂亮的花和树。', hint = 'Pinyin: Bàba zài yuánzi lǐ zhòng le hěnduō piàoliang de huā hé shù.' WHERE id = 'tr14_zh_1';
+              UPDATE translation_exercises SET prompt_text = '哥哥是个足球迷，喜欢看足球比赛。', hint = 'Pinyin: Gēge shì gè zúqiúmí, xǐhuan kàn zúqiú bǐsài.' WHERE id = 'tr14_zh_2';
+              UPDATE translation_exercises SET prompt_text = '北京的冬天很冷，常常下雪。', hint = 'Pinyin: Běijīng de dōngtiān hěn lěng, chángcháng xiàxuě.' WHERE id = 'tr15_zh_1';
+              UPDATE translation_exercises SET prompt_text = '谢谢你经常在学习上帮助我。', hint = 'Pinyin: Xièxie nǐ jīngcháng zài xuéxí shàng bāngzhù wǒ.' WHERE id = 'tr16_zh_1';
+              UPDATE translation_exercises SET prompt_text = '我哥哥每周都去健身房锻炼。', hint = 'Pinyin: Wǒ gēge měi zhōu dōu qù jiànshēnfáng duànliàn.' WHERE id = 'tr16_zh_2';
+              UPDATE translation_exercises SET prompt_text = '春节是中国最重要、最热闹的传统节日。', hint = 'Pinyin: Chūnjié shì Zhōngguó zuì zhòngyào, zuì rènao de chuántǒng jiérì.' WHERE id = 'tr17_zh_1';
+              UPDATE translation_exercises SET prompt_text = '我很喜欢了解中国的历史和文化。', hint = 'Pinyin: Wǒ hěn xǐhuan liǎojiě Zhōngguó de lìshǐ hé wénhuà.' WHERE id = 'tr18_zh_1';
+              UPDATE translation_exercises SET prompt_text = '去颐和园旅行的时候我们拍了很多照片。', hint = 'Pinyin: Qù Yíhéyuán lǚxíng de shíhou wǒmen pāi le hěnduō zhàopiàn.' WHERE id = 'tr18_zh_2';
+              UPDATE translation_exercises SET prompt_text = '你太累了，喝完这碗肉粥就好好休息吧。', hint = 'Pinyin: Nǐ tài lèi le, hēwán zhè wǎn ròuzhōu jiù hǎohāo xiūxi ba.' WHERE id = 'tr19_zh_2';
+              UPDATE translation_exercises SET prompt_text = '她不来了吧。', hint = 'Pinyin: Tā bù lái le ba.' WHERE id = 'tr19_zh_3';
+              UPDATE translation_exercises SET prompt_text = '我喜欢在公园一边锻炼一边享受新鲜空气。', hint = 'Pinyin: Wǒ xǐhuan zài gōngyuán yìbiān duànliàn yìbiān xiǎngshòu xīnxiān kōngqì.' WHERE id = 'tr20_zh_1';
+              UPDATE translation_exercises SET prompt_text = '下午我去体育馆打篮球和打网球。', hint = 'Pinyin: Xiàwǔ wǒ qù tǐyùguǎn dǎ lánqiú hé dǎ wǎngqiú.' WHERE id = 'tr20_zh_2';
+              UPDATE translation_exercises SET prompt_text = '刚出国留学的时候，我遇到了一些生活困难。', hint = 'Pinyin: Gāng chūguó liúxué de shíhou, wǒ yùdào le yìxiē shēnghuó kùnnan.' WHERE id = 'tr22_zh_1';
+              UPDATE translation_exercises SET prompt_text = '我非常想念家乡的菜和那里的气候。', hint = 'Pinyin: Wǒ fēicháng xiǎngniàn jiāxiāng de cài hé nàlǐ de qìhòu.' WHERE id = 'tr22_zh_2';
+              UPDATE translation_exercises SET prompt_text = '我没吃饭。', hint = 'Pinyin: Wǒ méi chīfàn.' WHERE id = 'tr22_zh_3';
+              UPDATE translation_exercises SET prompt_text = '爸爸喜欢喝一点儿啤酒或者红酒。', hint = 'Pinyin: Bàba xǐhuan hē yìdiǎnr píjiǔ huòzhě hóngjiǔ.' WHERE id = 'tr23_zh_1';
+              UPDATE translation_exercises SET prompt_text = '你更喜欢喝什么饮料：茶还是果汁？', hint = 'Pinyin: Nǐ gèng xǐhuan hē shénme yǐnliào: chá háishi guǒzhī?' WHERE id = 'tr23_zh_2';
+              UPDATE translation_exercises SET prompt_text = '大家都要遵守交通规则，注意红绿灯标志。', hint = 'Pinyin: Dàjiā dōu yào zūnshǒu jiāotōng guīzé, zhùyì hónglǜdēng biāozhì.' WHERE id = 'tr24_zh_1';
+              UPDATE translation_exercises SET prompt_text = '骑摩托车的时候一定要戴好安全帽。', hint = 'Pinyin: Qí mótuōchē de shíhou yídìng yào dài hǎo ānquán mào.' WHERE id = 'tr24_zh_2';
+              UPDATE translation_exercises SET prompt_text = '不要害怕说错，没有人会笑你的。', hint = 'Pinyin: Búyào hàipà shuō cuò, méiyǒu rén huì xiào nǐ de.' WHERE id = 'tr25_zh_1';
+              UPDATE translation_exercises SET prompt_text = '晚上在湖边散步时，我发现很多人都在练习说话。', hint = 'Pinyin: Wǎnshang zài húbiān sànbù shí, wǒ fāxiàn hěnduō rén dōu zài liànxí shuōhuà.' WHERE id = 'tr25_zh_2';
+              UPDATE translation_exercises SET prompt_text = '大学毕业以后，我想继续读汉语教育硕士。', hint = 'Pinyin: Dàxué bìyè yǐhòu, wǒ xiǎng jìxù dú Hànyǔ jiàoyù shuòshì.' WHERE id = 'tr26_zh_1';
+              UPDATE translation_exercises SET prompt_text = '希望你早日找到一份理想的工作，实现梦想！', hint = 'Pinyin: Xīwàng nǐ zǎorì zhǎodào yí fèn lǐxiǎng de gōngzuò, shíxiàn mèngxiǎng!' WHERE id = 'tr26_zh_2';
+              UPDATE translation_exercises SET prompt_text = '你今年多大年纪了？', hint = 'Pinyin: Nǐ jīnnián duōdà niánjì le?' WHERE id = 'tr26_zh_3';
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: |-
+              -- Seed cleanup migration (khong rollback du lieu loi cu)
+              SELECT 1;

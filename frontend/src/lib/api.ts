@@ -7,6 +7,7 @@ import type {
   AiToolExecutionSummary,
   ComprehensiveExamResponse,
   DashboardSummary,
+  GameGradeResponse,
   GameLeaderboardEntry,
   GameMode,
   GlobalVocabHit,
@@ -17,11 +18,13 @@ import type {
   MarkedVocabCard,
   MarkedVocabRecord,
   PermissionCatalogItem,
+  QuickLookupResponse,
   RoleWithPermissions,
   TestAttemptRecord,
   TestLeaderboardEntry,
   TranslationDirection,
   UserProfile,
+  VocabGlossaryItem,
 } from '../types';
 
 const API_BASE = import.meta.env.VITE_API_BASE || '/api';
@@ -119,6 +122,8 @@ export const api = {
 
   searchVocab: (q: string) =>
     apiFetch<{ items: GlobalVocabHit[] }>(`/vocab/search?q=${encodeURIComponent(q)}`),
+
+  getVocabGlossary: () => apiFetch<{ items: VocabGlossaryItem[] }>('/vocab/glossary'),
 
   getProgress: () =>
     apiFetch<{
@@ -273,5 +278,30 @@ export const api = {
     }>('/ai/chat', {
       method: 'POST',
       body: JSON.stringify(payload),
+    }),
+
+  aiGradeGame: (payload: {
+    mode: 'scramble' | 'translation';
+    direction?: 'vi_to_zh' | 'zh_to_vi';
+    exerciseId: string;
+    promptText: string;
+    expectedChinese?: string | null;
+    expectedPinyin?: string | null;
+    expectedMeaning?: string | null;
+    userAnswer: string;
+  }) =>
+    apiFetch<GameGradeResponse>('/ai/grade-game', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
+  aiQuickLookup: (
+    payload: { word: string; context?: string },
+    signal?: AbortSignal
+  ) =>
+    apiFetch<QuickLookupResponse>('/ai/quick-lookup', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      signal,
     }),
 };

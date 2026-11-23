@@ -315,7 +315,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "刘老师",
             "hanzi": "同学们，早上好！",
-            "displayHanzi": "同学们 (tóngxuémen: các bạn học)，早上好 (zǎoshang hǎo: chào buổi sáng)！",
+            "displayHanzi": "同学们，早上好！",
             "pinyin": "Tóngxuémen, zǎoshang hǎo!",
             "meaning": "Các em học sinh, chào buổi sáng!"
           },
@@ -375,7 +375,7 @@ const DEFAULT_LESSONS = [
               "下午好！",
               "你是日明吗？",
               "老师好！",
-              "中午好，同学们 (tóngxuémen: các bạn học)！"
+              "中午好，同学们！"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 老师好！ (Lǎoshī hǎo!) → Em chào thầy/cô ạ!"
@@ -398,8 +398,8 @@ const DEFAULT_LESSONS = [
             "options": [
               "你也是留学生吗？",
               "中午好！",
-              "她 (tā: cô ấy, bà ấy)不 (bù: không)是学生吗？",
-              "刘老师是学校的 (de: của)老师。"
+              "她不是学生吗？",
+              "刘老师是学校的老师。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 你也是留学生吗？ (Nǐ yě shì liúxuéshēng ma?) → Bạn cũng là du học sinh à?"
@@ -427,7 +427,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Mẫu 3",
             "hanzi": "早上好！",
-            "displayHanzi": "早上好 (zǎoshang hǎo: chào buổi sáng)！",
+            "displayHanzi": "早上好！",
             "pinyin": "Zǎoshang hǎo",
             "meaning": "Chào buổi sáng!"
           },
@@ -449,7 +449,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "老师好",
-            "question": "[Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cậu ấy không đi nên tôi đành phải đi.",
               "một người",
@@ -461,7 +461,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "老师您好！",
-            "question": "[Bài 1] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "老师您好！",
               "下午好！",
@@ -473,7 +473,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "早上好！",
-            "question": "[Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Buổi chiều chúng ta đi nhé!",
               "Chào buổi sáng!",
@@ -485,11 +485,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "中午好！",
-            "question": "[Bài 1] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "中午好！",
               "你是日明吗？",
-              "张红 (Zhāng Hóng: Trương Hồng)是老师吗？",
+              "张红是老师吗？",
               "阮日明也是学生吗？"
             ],
             "correctIndex": 0,
@@ -504,28 +504,28 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Minh",
             "hanzi": "老师，早上好！您是刘老师吗？",
-            "displayHanzi": "老师，早上好 (zǎoshang hǎo: chào buổi sáng)！您是刘老师吗？",
+            "displayHanzi": "老师，早上好！您是刘老师吗？",
             "pinyin": "Lǎoshī, zǎoshang hǎo! Nín shì Liú lǎoshī ma?",
             "meaning": "Thưa thầy, chào buổi sáng ạ! Thầy có phải thầy Lưu không ạ?"
           },
           {
             "speaker": "Thầy Lưu",
             "hanzi": "早上好！我是刘老师。你是阮日明吗？",
-            "displayHanzi": "早上好 (zǎoshang hǎo: chào buổi sáng)！我是刘老师。你是阮日明吗？",
+            "displayHanzi": "早上好！我是刘老师。你是阮日明吗？",
             "pinyin": "Zǎoshang hǎo! Wǒ shì Liú lǎoshī. Nǐ shì Ruǎn Rìmíng ma?",
             "meaning": "Chào buổi sáng! Tôi là thầy Lưu. Em là Nguyễn Nhật Minh phải không?"
           },
           {
             "speaker": "Minh",
             "hanzi": "是，我是阮日明，我是学校的新留学生。",
-            "displayHanzi": "是，我是阮日明，我是学校的 (de: của)新 (xīn: mới)留学生。",
+            "displayHanzi": "是，我是阮日明，我是学校的新留学生。",
             "pinyin": "Shì, wǒ shì Ruǎn Rìmíng, wǒ shì xuéxiào de xīn liúxuéshēng.",
             "meaning": "Vâng, em là Nguyễn Nhật Minh, em là du học sinh mới của trường."
           },
           {
             "speaker": "Thầy Lưu",
             "hanzi": "欢迎！范玉兰也是留学生吗？",
-            "displayHanzi": "欢迎 (huānyíng: chào mừng, chào đón)！范玉兰也是留学生吗？",
+            "displayHanzi": "欢迎！范玉兰也是留学生吗？",
             "pinyin": "Huānyíng! Fàn Yùlán yě shì liúxuéshēng ma?",
             "meaning": "Hoan nghênh em! Phạm Ngọc Lan cũng là du học sinh à?"
           }
@@ -533,7 +533,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "老师，早上好！您是刘老师吗？ 早上好！我是刘老师。你是阮日明吗？ 是，我是阮日明，我是学校的新留学生。 欢迎！范玉兰也是留学生吗？",
-            "question": "[Nghe hiểu tình huống mới] Theo đoạn hội thoại mở rộng trên, ai là giáo viên?",
+            "question": "Theo đoạn hội thoại mở rộng trên, ai là giáo viên?",
             "options": [
               "Phạm Ngọc Lan",
               "Thầy Lưu (刘老师)",
@@ -545,7 +545,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "老师，早上好！您是刘老师吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Thưa thầy, chào buổi sáng ạ! Thầy có phải thầy Lưu không ạ?",
               "Một con đường",
@@ -557,19 +557,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "早上好！我是刘老师。你是阮日明吗？",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "我也很 (hěn: rất)高兴 (gāoxìng: vui mừng)。",
-              "三 (sān: ba)个 (gè: cái, chiếc)朋友 (péngyou: bạn bè)",
-              "她 (tā: cô ấy, bà ấy)不 (bù: không)是兰兰 (Lánlan: Lan Lan)。",
-              "早上好 (zǎoshang hǎo: chào buổi sáng)！我是刘老师。你是阮日明吗？"
+              "我也很高兴。",
+              "三个朋友",
+              "她不是兰兰。",
+              "早上好！我是刘老师。你是阮日明吗？"
             ],
             "correctIndex": 3,
             "explanation": "Câu vừa đọc: 早上好！我是刘老师。你是阮日明吗？ (Zǎoshang hǎo! Wǒ shì Liú lǎoshī. Nǐ shì Ruǎn Rìmíng ma?) → Chào buổi sáng! Tôi là thầy Lưu. Em là Nguyễn Nhật Minh phải không?"
           },
           {
             "audioText": "是，我是阮日明，我是学校的新留学生。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Các bạn học sinh",
               "Nếu cậu gặp khó khăn thì tớ sẽ giúp đỡ.",
@@ -661,7 +661,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss1_1",
           "targetHanzi": "刘老师下午好",
-          "targetMeaning": "[Mở rộng] Em chào thầy Lưu buổi chiều ạ!",
+          "targetMeaning": "Em chào thầy Lưu buổi chiều ạ!",
           "pinyin": "Liú lǎoshī, xiàwǔ hǎo!",
           "tokens": [
             "刘",
@@ -673,7 +673,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss1_2",
           "targetHanzi": "你们晚上好",
-          "targetMeaning": "[Mở rộng] Chào buổi tối các bạn!",
+          "targetMeaning": "Chào buổi tối các bạn!",
           "pinyin": "Nǐmen wǎnshang hǎo!",
           "tokens": [
             "你们",
@@ -684,7 +684,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss1_3",
           "targetHanzi": "范玉兰是留学生吗",
-          "targetMeaning": "[Mở rộng] Phạm Ngọc Lan là du học sinh phải không?",
+          "targetMeaning": "Phạm Ngọc Lan là du học sinh phải không?",
           "pinyin": "Fàn Yùlán shì liúxuéshēng ma?",
           "tokens": [
             "范玉兰",
@@ -912,7 +912,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr1_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Em chào thầy Lưu buổi chiều ạ!",
+          "promptText": "Em chào thầy Lưu buổi chiều ạ!",
           "expectedChinese": "刘老师，下午好！",
           "acceptedPinyin": "liú lǎoshī xiàwǔ hǎo",
           "hint": "Gợi ý Pinyin: Liú lǎoshī, xiàwǔ hǎo!",
@@ -921,7 +921,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr1_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Chào buổi tối các bạn!",
+          "promptText": "Chào buổi tối các bạn!",
           "expectedChinese": "你们晚上好！",
           "acceptedPinyin": "nǐmen wǎnshang hǎo",
           "hint": "Gợi ý Pinyin: Nǐmen wǎnshang hǎo!",
@@ -1038,7 +1038,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr1_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 范玉兰是留学生吗？",
+          "promptText": "范玉兰是留学生吗？",
           "chineseAudioText": "范玉兰是留学生吗？",
           "pinyin": "Fàn Yùlán shì liúxuéshēng ma?",
           "expectedMeaning": "Phạm Ngọc Lan là du học sinh phải không?",
@@ -1053,7 +1053,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr1_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 阮日明也是学生吗？",
+          "promptText": "阮日明也是学生吗？",
           "chineseAudioText": "阮日明也是学生吗？",
           "pinyin": "Ruǎn Rìmíng yě shì xuésheng ma?",
           "expectedMeaning": "Nguyễn Nhật Minh cũng là học sinh à?",
@@ -1505,7 +1505,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq1_17",
           "type": "reading",
-          "question": "[Mở rộng] Câu “刘老师，下午好！” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “刘老师，下午好！” có nghĩa tiếng Việt là gì?",
           "options": [
             "học sinh tiểu học",
             "Ba người bạn (cách dùng đúng)",
@@ -1518,7 +1518,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq1_18",
           "type": "reading",
-          "question": "[Mở rộng] Câu “你们晚上好！” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “你们晚上好！” có nghĩa tiếng Việt là gì?",
           "options": [
             "Chào buổi tối các bạn!",
             "Đây là sách gì?",
@@ -1531,7 +1531,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq1_19",
           "type": "reading",
-          "question": "[Mở rộng] Câu “范玉兰是留学生吗？” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “范玉兰是留学生吗？” có nghĩa tiếng Việt là gì?",
           "options": [
             "môi trường làm việc",
             "Anh ấy là ai?",
@@ -1544,7 +1544,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq1_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “阮日明也是学生吗？” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “阮日明也是学生吗？” có nghĩa tiếng Việt là gì?",
           "options": [
             "Nữ sinh phía sau",
             "Nguyễn Nhật Minh cũng là học sinh à?",
@@ -1557,7 +1557,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq1_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nMinh: 老师，早上好 (zǎoshang hǎo: chào buổi sáng)！您是刘老师吗？\nThầy Lưu: 早上好 (zǎoshang hǎo: chào buổi sáng)！我是刘老师。你是阮日明吗？\nMinh: 是，我是阮日明，我是学校的 (de: của)新 (xīn: mới)留学生。\nThầy Lưu: 欢迎 (huānyíng: chào mừng, chào đón)！范玉兰也是留学生吗？\n\nTheo đoạn hội thoại mở rộng trên, ai là giáo viên?",
+          "question": "Đọc đoạn hội thoại:\nMinh: 老师，早上好！您是刘老师吗？\nThầy Lưu: 早上好！我是刘老师。你是阮日明吗？\nMinh: 是，我是阮日明，我是学校的新留学生。\nThầy Lưu: 欢迎！范玉兰也是留学生吗？\n\nTheo đoạn hội thoại mở rộng trên, ai là giáo viên?",
           "options": [
             "Nguyễn Nhật Minh",
             "Thầy Lưu (刘老师)",
@@ -2002,7 +2002,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct1_32",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____们，早上好！”\n(Gợi ý nghĩa: Các em học sinh, chào buổi sáng!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____们，早上好！”",
         "options": [
           "下午",
           "早上",
@@ -2015,7 +2015,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct1_33",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____好！”\n(Gợi ý nghĩa: Chào buổi trưa!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____好！”",
         "options": [
           "老师",
           "中午",
@@ -2028,7 +2028,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct1_34",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我是大____。”\n(Gợi ý nghĩa: Tôi là sinh viên.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我是大____。”",
         "options": [
           "学生",
           "学校",
@@ -2054,7 +2054,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct1_36",
         "category": "vocab",
-        "question": "Từ Hán tự “中午” (buổi trưa) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “中午” có phiên âm Pinyin đúng là gì?",
         "options": [
           "ma",
           "nǐ",
@@ -2080,7 +2080,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct1_38",
         "category": "vocab",
-        "question": "Từ Hán tự “留学生” (du học sinh) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “留学生” có phiên âm Pinyin đúng là gì?",
         "options": [
           "nǐ",
           "zhōngwǔ",
@@ -2177,7 +2177,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct1_45",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 你  /  日明  /  吗  /  是\n(Nghĩa: “Cậu là Nhật Minh phải không?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n你  /  日明  /  吗  /  是",
         "options": [
           "是你日明吗。",
           "是日明吗你。",
@@ -2190,7 +2190,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct1_46",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 晚上  /  你们  /  好\n(Nghĩa: “Chào buổi tối các bạn!”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n晚上  /  你们  /  好",
         "options": [
           "你们晚上好。",
           "晚上好你们。",
@@ -2203,7 +2203,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct1_47",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 您  /  老师  /  好\n(Nghĩa: “Em chào thầy/cô ạ”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n您  /  老师  /  好",
         "options": [
           "您好老师。",
           "老师您好。",
@@ -2216,7 +2216,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct1_48",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“你是____ (liúxuéshēng)吗？”\n(Nghĩa: Bạn là du học sinh phải không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你是____吗？”",
         "options": [
           "范玉兰",
           "阮日明",
@@ -2229,7 +2229,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct1_49",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“是，____ (wǒ)也是留学生。”\n(Nghĩa: Vâng, tôi cũng là du học sinh.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是，____也是留学生。”",
         "options": [
           "好",
           "我",
@@ -2242,7 +2242,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct1_50",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“老师____ (nín)好！”\n(Nghĩa: Em chào thầy/cô ạ)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“老师____好！”",
         "options": [
           "您",
           "也",
@@ -2573,8 +2573,8 @@ const DEFAULT_LESSONS = [
             "audioText": "你好！你也是学生吗？",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "B: 我叫陈英 (Chén Yīng: Trần Anh)。",
-              "B: 我姓林 (Lín: Lâm)。",
+              "B: 我叫陈英。",
+              "B: 我姓林。",
               "我姓范，叫范玉兰。",
               "你好！你也是学生吗？"
             ],
@@ -2645,7 +2645,7 @@ const DEFAULT_LESSONS = [
             "options": [
               "马克，明天早上见！",
               "好，明天见！",
-              "你说 (shuō: nói)什么？",
+              "你说什么？",
               "她叫什么名字？"
             ],
             "correctIndex": 1,
@@ -2667,7 +2667,7 @@ const DEFAULT_LESSONS = [
             "audioText": "明天见！",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "你说 (shuō: nói)什么？",
+              "你说什么？",
               "你好！",
               "明天见！",
               "她叫什么名字？"
@@ -2741,7 +2741,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "你是日明吗？",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cậu là Nhật Minh phải không?",
               "tiếng gõ cửa",
@@ -2753,19 +2753,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "再见！",
-            "question": "[Bài 2] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "她是白茹雪。",
               "再见！",
               "她叫什么名字？",
-              "你说 (shuō: nói)什么？"
+              "你说什么？"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 再见！ (Zàijiàn!) → Tạm biệt!"
           },
           {
             "audioText": "老师好",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "thời gian bắt đầu cuộc họp",
               "Tôi có một cậu em trai.",
@@ -2777,9 +2777,9 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "明天见！",
-            "question": "[Bài 2] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "B: 我姓林 (Lín: Lâm)。",
+              "B: 我姓林。",
               "她叫什么名字？",
               "明天见！",
               "你好！你也是学生吗？"
@@ -2789,7 +2789,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "晚上好！",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Chào buổi tối!",
               "Cô ấy là Bạch Như Tuyết.",
@@ -2808,21 +2808,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Lan",
             "hanzi": "你好，同学！请问你贵姓？",
-            "displayHanzi": "你好，同学！请问 (qǐngwèn: xin hỏi)你贵姓？",
+            "displayHanzi": "你好，同学！请问你贵姓？",
             "pinyin": "Nǐ hǎo, tóngxué! Qǐngwèn nín guìxìng?",
             "meaning": "Chào bạn! Xin hỏi bạn họ gì vậy?"
           },
           {
             "speaker": "Phong",
             "hanzi": "我姓张，叫张风。现在我要去上课了。",
-            "displayHanzi": "我姓张 (zhāng: tờ, tấm, chiếc)，叫张风。现在我要去 (qù: đi)上课了。",
+            "displayHanzi": "我姓张，叫张风。现在我要去上课了。",
             "pinyin": "Wǒ xìng Zhāng, jiào Zhāng Fēng. Xiànzài wǒ yào qù shàngkè le.",
             "meaning": "Tôi họ Trương, tên là Trương Phong. Bây giờ tôi phải đi học rồi."
           },
           {
             "speaker": "Lan",
             "hanzi": "我也去上课。明天我们什么时候见？",
-            "displayHanzi": "我也去 (qù: đi)上课。明天我们什么时候 (shíhou: thời gian, lúc)见？",
+            "displayHanzi": "我也去上课。明天我们什么时候见？",
             "pinyin": "Wǒ yě qù shàngkè. Míngtiān wǒmen shénme shíhou jiàn?",
             "meaning": "Tôi cũng đi học đây. Ngày mai chúng ta gặp nhau lúc nào?"
           },
@@ -2837,7 +2837,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "你好，同学！请问你贵姓？ 我姓张，叫张风。现在我要去上课了。 我也去上课。明天我们什么时候见？ 明天早上见，再见！",
-            "question": "[Nghe hiểu tình huống mới] Bạn nam họ Trương tên đầy đủ là gì và hẹn gặp lại khi nào?",
+            "question": "Bạn nam họ Trương tên đầy đủ là gì và hẹn gặp lại khi nào?",
             "options": [
               "Mark, hẹn gặp tuần sau",
               "Trương Minh, hẹn gặp vào tối nay",
@@ -2849,7 +2849,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你好，同学！请问你贵姓？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Chào buổi sáng!",
               "Chào bạn! Xin hỏi bạn họ gì vậy?",
@@ -2861,19 +2861,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我姓张，叫张风。现在我要去上课了。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "她是白茹雪。",
               "好，明天见！",
-              "这 (zhè: đây, này)是什么书 (shū: sách)？",
-              "我姓张 (zhāng: tờ, tấm, chiếc)，叫张风。现在我要去 (qù: đi)上课了。"
+              "这是什么书？",
+              "我姓张，叫张风。现在我要去上课了。"
             ],
             "correctIndex": 3,
             "explanation": "Câu vừa đọc: 我姓张，叫张风。现在我要去上课了。 (Wǒ xìng Zhāng, jiào Zhāng Fēng. Xiànzài wǒ yào qù shàngkè le.) → Tôi họ Trương, tên là Trương Phong. Bây giờ tôi phải đi học rồi."
           },
           {
             "audioText": "我也去上课。明天我们什么时候见？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Thành tích kiểm tra của anh ấy chẳng ra làm sao. (Ý nói kết quả kém)",
               "thành tích kiểm tra",
@@ -2965,7 +2965,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss2_1",
           "targetHanzi": "现在我要上课了",
-          "targetMeaning": "[Mở rộng] Bây giờ tôi phải vào lớp học rồi.",
+          "targetMeaning": "Bây giờ tôi phải vào lớp học rồi.",
           "pinyin": "Xiànzài wǒ yào shàngkè le.",
           "tokens": [
             "现在",
@@ -2978,7 +2978,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss2_2",
           "targetHanzi": "马克明天早上见",
-          "targetMeaning": "[Mở rộng] Mark, sáng mai gặp lại nhé!",
+          "targetMeaning": "Mark, sáng mai gặp lại nhé!",
           "pinyin": "Mǎkè, míngtiān zǎoshang jiàn!",
           "tokens": [
             "马克",
@@ -3012,7 +3012,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss2_5",
           "targetHanzi": "刘老师是学校的老师",
-          "targetMeaning": "[Ôn tập Bài 1] Thầy Lưu là giáo viên của trường.",
+          "targetMeaning": "Thầy Lưu là giáo viên của trường.",
           "pinyin": "Liú lǎoshī shì xuéxiào de lǎoshī.",
           "tokens": [
             "刘",
@@ -3021,13 +3021,12 @@ const DEFAULT_LESSONS = [
             "学校",
             "的",
             "老师"
-          ],
-          "unlearnedHint": "Từ chưa học: 的 (de: của)"
+          ]
         },
         {
           "id": "ss2_6",
           "targetHanzi": "阮日明也是学生吗",
-          "targetMeaning": "[Ôn tập Bài 1] Nguyễn Nhật Minh cũng là học sinh à?",
+          "targetMeaning": "Nguyễn Nhật Minh cũng là học sinh à?",
           "pinyin": "Ruǎn Rìmíng yě shì xuésheng ma?",
           "tokens": [
             "阮日明",
@@ -3227,7 +3226,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr2_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Bây giờ tôi phải vào lớp học rồi.",
+          "promptText": "Bây giờ tôi phải vào lớp học rồi.",
           "expectedChinese": "现在我要上课了。",
           "acceptedPinyin": "xiànzài wǒ yào shàngkè le",
           "hint": "Gợi ý Pinyin: Xiànzài wǒ yào shàngkè le.",
@@ -3236,7 +3235,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr2_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Mark, sáng mai gặp lại nhé!",
+          "promptText": "Mark, sáng mai gặp lại nhé!",
           "expectedChinese": "马克，明天早上见！",
           "acceptedPinyin": "mǎkè míngtiān zǎoshang jiàn",
           "hint": "Gợi ý Pinyin: Mǎkè, míngtiān zǎoshang jiàn!",
@@ -3353,7 +3352,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr2_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 她叫什么名字？",
+          "promptText": "她叫什么名字？",
           "chineseAudioText": "她叫什么名字？",
           "pinyin": "Tā jiào shénme míngzi?",
           "expectedMeaning": "Cô ấy tên là gì?",
@@ -3368,7 +3367,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr2_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 请问 (qǐngwèn: xin hỏi)，您贵姓？",
+          "promptText": "请问，您贵姓？",
           "chineseAudioText": "请问，您贵姓？",
           "pinyin": "Qǐngwèn, nín guìxìng?",
           "expectedMeaning": "Xin hỏi ngài họ gì ạ?",
@@ -3398,7 +3397,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr2_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 1] 她是老师。",
+          "promptText": "她是老师。",
           "chineseAudioText": "她是老师。",
           "pinyin": "Tā shì lǎoshī.",
           "expectedMeaning": "Cô ấy là giáo viên.",
@@ -3814,7 +3813,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq2_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 1] Từ đã học “您” (nín) có nghĩa là gì?",
+          "question": "Từ đã học “您” (nín) có nghĩa là gì?",
           "options": [
             "hiện tại, bây giờ",
             "ngài, ông, bà... (cách gọi tôn trọng và lịch sự dành cho những người có địa vị cao...)",
@@ -3827,7 +3826,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq2_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 1] Từ đã học “是” (shì) có nghĩa là gì?",
+          "question": "Từ đã học “是” (shì) có nghĩa là gì?",
           "options": [
             "phải",
             "là, thì...",
@@ -3840,7 +3839,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq2_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 1] Từ đã học “好” (hǎo) có nghĩa là gì?",
+          "question": "Từ đã học “好” (hǎo) có nghĩa là gì?",
           "options": [
             "rồi",
             "tốt, khỏe, hay, ngon...",
@@ -3853,7 +3852,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq2_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “现在我要上课了。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “现在我要上课了。” có nghĩa tiếng Việt là gì?",
           "options": [
             "cây thước kẻ của anh ấy",
             "Tôi đợi các bạn ở cổng trường.",
@@ -3866,7 +3865,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq2_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nLan: 你好，同学！请问 (qǐngwèn: xin hỏi)你贵姓？\nPhong: 我姓张 (zhāng: tờ, tấm, chiếc)，叫张风。现在我要去 (qù: đi)上课了。\nLan: 我也去 (qù: đi)上课。明天我们什么时候 (shíhou: thời gian, lúc)见？\nPhong: 明天早上见，再见！\n\nBạn nam họ Trương tên đầy đủ là gì và hẹn gặp lại khi nào?",
+          "question": "Đọc đoạn hội thoại:\nLan: 你好，同学！请问你贵姓？\nPhong: 我姓张，叫张风。现在我要去上课了。\nLan: 我也去上课。明天我们什么时候见？\nPhong: 明天早上见，再见！\n\nBạn nam họ Trương tên đầy đủ là gì và hẹn gặp lại khi nào?",
           "options": [
             "Bạch Như Tuyết, không hẹn gặp",
             "Trương Phong, hẹn gặp lại vào sáng mai",
@@ -4311,7 +4310,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct2_32",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你好，同学！请问你____？”\n(Gợi ý nghĩa: Chào bạn! Xin hỏi bạn họ gì vậy?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你好，同学！请问你____？”",
         "options": [
           "贵姓",
           "下午",
@@ -4324,7 +4323,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct2_33",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“马克明天早上____”\n(Gợi ý nghĩa: Mark, sáng mai gặp lại nhé!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“马克明天早上____”",
         "options": [
           "叫",
           "见",
@@ -4337,7 +4336,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct2_34",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我要____宿舍了。再见!”\n(Gợi ý nghĩa: Tôi phải về ký túc xá rồi. Tạm biệt!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我要____宿舍了。再见!”",
         "options": [
           "好",
           "叫",
@@ -4363,7 +4362,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct2_36",
         "category": "vocab",
-        "question": "Từ Hán tự “见” (nhìn thấy, gặp) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “见” có phiên âm Pinyin đúng là gì?",
         "options": [
           "jiàn",
           "Liú",
@@ -4389,7 +4388,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct2_38",
         "category": "vocab",
-        "question": "Từ Hán tự “名字” (tên) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “名字” có phiên âm Pinyin đúng là gì?",
         "options": [
           "nín",
           "míngzi",
@@ -4486,7 +4485,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct2_45",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 吗  /  学生  /  是  /  阮日明  /  也\n(Nghĩa: “Nguyễn Nhật Minh cũng là học sinh à?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n吗  /  学生  /  是  /  阮日明  /  也",
         "options": [
           "阮日明也是学生吗。",
           "也是学生吗阮日明。",
@@ -4499,7 +4498,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct2_46",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 她  /  是  /  白茹雪\n(Nghĩa: “Cô ấy là Bạch Như Tuyết.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n她  /  是  /  白茹雪",
         "options": [
           "是她白茹雪。",
           "是白茹雪她。",
@@ -4512,7 +4511,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct2_47",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 见  /  好  /  明天\n(Nghĩa: “Được, ngày mai gặp lại nhé!”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n见  /  好  /  明天",
         "options": [
           "好明天见。",
           "明天好见。",
@@ -4525,7 +4524,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct2_48",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“你叫什么____ (míngzi)？”\n(Nghĩa: Bạn tên là gì?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你叫什么____？”",
         "options": [
           "中午",
           "同学",
@@ -4538,7 +4537,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct2_49",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“她是____ (Bái Rúxuě)。”\n(Nghĩa: Cô ấy là Bạch Như Tuyết.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“她是____。”",
         "options": [
           "留学生",
           "白茹雪",
@@ -4551,7 +4550,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct2_50",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“我____ (jiào)陈英。”\n(Nghĩa: Tôi là Trần Anh.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我____陈英。”",
         "options": [
           "你",
           "吗",
@@ -4853,7 +4852,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "阮日明",
             "hanzi": "安妮同学！你好！这是谁啊？",
-            "displayHanzi": "安妮同学！你好！这是谁啊 (a: dùng cuối câu)？",
+            "displayHanzi": "安妮同学！你好！这是谁啊？",
             "pinyin": "Ānnī tóngxué nǐ hǎo! Zhè shì shéi a?",
             "meaning": "Chào bạn Annie! Đây là ai vậy?"
           },
@@ -4874,7 +4873,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "马克",
             "hanzi": "不是。我是美国人。你来自哪个国家？",
-            "displayHanzi": "不 (bù: không)是。我是美国人。你来自哪个国家？",
+            "displayHanzi": "不是。我是美国人。你来自哪个国家？",
             "pinyin": "Bú shì. Wǒ shì Měiguó rén. Nǐ láizì nǎ gè guójiā?",
             "meaning": "Không phải. Tôi là người Mỹ. Bạn đến từ nước nào?"
           },
@@ -4918,8 +4917,8 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "你认识阮日明吗？",
-              "张风不 (bù: không)是美国人，他是中国 (Zhōngguó: Trung Quốc)人。",
-              "安妮同学！你好！这是谁啊 (a: dùng cuối câu)？",
+              "张风不是美国人，他是中国人。",
+              "安妮同学！你好！这是谁啊？",
               "日明同学！你好！"
             ],
             "correctIndex": 2,
@@ -4941,7 +4940,7 @@ const DEFAULT_LESSONS = [
             "audioText": "马克同学你好！你也是加拿大人吗？",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "张风不 (bù: không)是美国人，他是中国 (Zhōngguó: Trung Quốc)人。",
+              "张风不是美国人，他是中国人。",
               "这是我的好朋友，他叫马克。",
               "马克同学你好！你也是加拿大人吗？",
               "认识刘老师我很高兴。"
@@ -5015,7 +5014,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "明天见！",
-            "question": "[Ôn tập Bài 2] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cô ấy đã ăn 3 cái sủi cảo.",
               "Hẹn gặp lại vào ngày mai! (Hoặc “Mai gặp nhé!”)",
@@ -5027,19 +5026,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "他是我的老师。",
-            "question": "[Bài 3] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "马克同学你好！你也是加拿大人吗？",
               "他是我的老师。",
               "这是我的好朋友，他叫马克。",
-              "这本 (běn: cuốn, vở)书 (shū: sách)是我的书。"
+              "这本书是我的书。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 他是我的老师。 (Tā shì wǒ de lǎoshī.) → Thầy ấy là thầy giáo của tớ."
           },
           {
             "audioText": "中午好！",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Chào buổi trưa!",
               "Hai người",
@@ -5051,19 +5050,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "她是哪个学校的学生？",
-            "question": "[Bài 3] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "谁啊 (a: dùng cuối câu)？",
+              "谁啊？",
               "她是哪个学校的学生？",
               "安妮是我的好朋友。",
-              "这本 (běn: cuốn, vở)书 (shū: sách)是我的书。"
+              "这本书是我的书。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 她是哪个学校的学生？ (Tā shì nǎ gè xuéxiào de xuésheng?) → Cô ấy là học sinh trường nào?"
           },
           {
             "audioText": "A: 你叫什么名字？",
-            "question": "[Ôn tập Bài 2] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Bạn tên là gì?",
               "bút bi của cô ấy",
@@ -5082,7 +5081,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Annie",
             "hanzi": "日明，这位是我的朋友，他叫马克。",
-            "displayHanzi": "日明，这位 (wèi: vị)是我的朋友，他叫马克。",
+            "displayHanzi": "日明，这位是我的朋友，他叫马克。",
             "pinyin": "Rìmíng, zhè wèi shì wǒ de péngyou, tā jiào Mǎkè.",
             "meaning": "Nhật Minh, vị này là bạn tôi, cậu ấy tên là Mark."
           },
@@ -5096,14 +5095,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Mark",
             "hanzi": "不是，我来自美国。安妮是加拿大人。",
-            "displayHanzi": "不 (bù: không)是，我来自美国。安妮是加拿大人。",
+            "displayHanzi": "不是，我来自美国。安妮是加拿大人。",
             "pinyin": "Bú shì, wǒ láizì Měiguó. Ānnī shì Jiānádà rén.",
             "meaning": "Không phải, tôi đến từ Mỹ. Annie là người Canada."
           },
           {
             "speaker": "Minh",
             "hanzi": "我来自越南，现在生活在这里。",
-            "displayHanzi": "我来自越南，现在生活在 (zài: ở)这里 (lǐ: trong)。",
+            "displayHanzi": "我来自越南，现在生活在这里。",
             "pinyin": "Wǒ láizì Yuènán, xiànzài shēnghuó zài zhèlǐ.",
             "meaning": "Tôi đến từ Việt Nam, hiện đang sống ở đây."
           }
@@ -5111,7 +5110,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "日明，这位是我的朋友，他叫马克。 很高兴认识你！你来自加拿大吗？ 不是，我来自美国。安妮是加拿大人。 我来自越南，现在生活在这里。",
-            "question": "[Nghe hiểu tình huống mới] Theo đoạn hội thoại, quốc tịch của Mark và Annie lần lượt là gì?",
+            "question": "Theo đoạn hội thoại, quốc tịch của Mark và Annie lần lượt là gì?",
             "options": [
               "Cả hai đều là người Canada",
               "Mark là người Mỹ, Annie là người Canada",
@@ -5123,7 +5122,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "日明，这位是我的朋友，他叫马克。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Nhật Minh, vị này là bạn tôi, cậu ấy tên là Mark.",
               "Mẹ gõ nhẹ vào đầu tôi.",
@@ -5135,11 +5134,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "很高兴认识你！你来自加拿大吗？",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "很高兴认识你！你来自加拿大吗？",
-              "谁啊 (a: dùng cuối câu)？",
-              "张风不 (bù: không)是美国人，他是中国 (Zhōngguó: Trung Quốc)人。",
+              "谁啊？",
+              "张风不是美国人，他是中国人。",
               "她是哪个学校的学生？"
             ],
             "correctIndex": 0,
@@ -5147,7 +5146,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "不是，我来自美国。安妮是加拿大人。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cậu ấy không đi nên tôi đành phải đi.",
               "Sao bố vẫn chưa tan làm, con sắp đói chết rồi!",
@@ -5239,7 +5238,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss3_1",
           "targetHanzi": "安妮是我的好朋友",
-          "targetMeaning": "[Mở rộng] Annie là bạn thân của tôi.",
+          "targetMeaning": "Annie là bạn thân của tôi.",
           "pinyin": "Ānnī shì wǒ de hǎo péngyou.",
           "tokens": [
             "安妮",
@@ -5253,7 +5252,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss3_2",
           "targetHanzi": "你认识阮日明吗",
-          "targetMeaning": "[Mở rộng] Bạn có quen biết Nguyễn Nhật Minh không?",
+          "targetMeaning": "Bạn có quen biết Nguyễn Nhật Minh không?",
           "pinyin": "Nǐ rènshi Ruǎn Rìmíng ma?",
           "tokens": [
             "你",
@@ -5292,7 +5291,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss3_5",
           "targetHanzi": "刘老师是学校的老师",
-          "targetMeaning": "[Ôn tập Bài 1] Thầy Lưu là giáo viên của trường.",
+          "targetMeaning": "Thầy Lưu là giáo viên của trường.",
           "pinyin": "Liú lǎoshī shì xuéxiào de lǎoshī.",
           "tokens": [
             "刘",
@@ -5306,7 +5305,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss3_6",
           "targetHanzi": "阮日明也是学生吗",
-          "targetMeaning": "[Ôn tập Bài 1] Nguyễn Nhật Minh cũng là học sinh à?",
+          "targetMeaning": "Nguyễn Nhật Minh cũng là học sinh à?",
           "pinyin": "Ruǎn Rìmíng yě shì xuésheng ma?",
           "tokens": [
             "阮日明",
@@ -5509,7 +5508,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr3_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Annie là bạn thân của tôi.",
+          "promptText": "Annie là bạn thân của tôi.",
           "expectedChinese": "安妮是我的好朋友。",
           "acceptedPinyin": "ānnī shì wǒ de hǎo péngyou",
           "hint": "Gợi ý Pinyin: Ānnī shì wǒ de hǎo péngyou.",
@@ -5518,7 +5517,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr3_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Bạn có quen biết Nguyễn Nhật Minh không?",
+          "promptText": "Bạn có quen biết Nguyễn Nhật Minh không?",
           "expectedChinese": "你认识阮日明吗？",
           "acceptedPinyin": "nǐ rènshi ruǎn rìmíng ma",
           "hint": "Gợi ý Pinyin: Nǐ rènshi Ruǎn Rìmíng ma?",
@@ -5635,7 +5634,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr3_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 他来自哪个国家？",
+          "promptText": "他来自哪个国家？",
           "chineseAudioText": "他来自哪个国家？",
           "pinyin": "Tā láizì nǎ gè guójiā?",
           "expectedMeaning": "Anh ấy đến từ đất nước nào?",
@@ -5650,7 +5649,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr3_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 认识刘老师我很高兴。",
+          "promptText": "认识刘老师我很高兴。",
           "chineseAudioText": "认识刘老师我很高兴。",
           "pinyin": "Rènshi Liú lǎoshī wǒ hěn gāoxìng.",
           "expectedMeaning": "Được quen biết thầy Lưu em rất vui.",
@@ -5680,7 +5679,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr3_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 1] 晚上好！",
+          "promptText": "晚上好！",
           "chineseAudioText": "晚上好！",
           "pinyin": "Wǎnshang hǎo",
           "expectedMeaning": "Chào buổi tối!",
@@ -6098,7 +6097,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq3_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 1] Từ đã học “刘” (Liú) có nghĩa là gì?",
+          "question": "Từ đã học “刘” (Liú) có nghĩa là gì?",
           "options": [
             "ngài, ông, bà... (cách gọi tôn trọng và lịch sự dành cho những người có địa vị cao...)",
             "Lưu (họ người)",
@@ -6111,7 +6110,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq3_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 2] Từ đã học “回” (huí) có nghĩa là gì?",
+          "question": "Từ đã học “回” (huí) có nghĩa là gì?",
           "options": [
             "rồi",
             "quốc gia, đất nước",
@@ -6124,7 +6123,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq3_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 2] Từ đã học “再见” (zàijiàn) có nghĩa là gì?",
+          "question": "Từ đã học “再见” (zàijiàn) có nghĩa là gì?",
           "options": [
             "ngài, ông, bà... (cách gọi tôn trọng và lịch sự dành cho những người có địa vị cao...)",
             "tạm biệt, hẹn gặp lại",
@@ -6137,7 +6136,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq3_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “安妮是我的好朋友。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “安妮是我的好朋友。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Annie là bạn thân của tôi.",
             "Câu phía dưới",
@@ -6150,7 +6149,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq3_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nAnnie: 日明，这位 (wèi: vị)是我的朋友，他叫马克。\nMinh: 很高兴认识你！你来自加拿大吗？\nMark: 不 (bù: không)是，我来自美国。安妮是加拿大人。\nMinh: 我来自越南，现在生活在 (zài: ở)这里 (lǐ: trong)。\n\nTheo đoạn hội thoại, quốc tịch của Mark và Annie lần lượt là gì?",
+          "question": "Đọc đoạn hội thoại:\nAnnie: 日明，这位是我的朋友，他叫马克。\nMinh: 很高兴认识你！你来自加拿大吗？\nMark: 不是，我来自美国。安妮是加拿大人。\nMinh: 我来自越南，现在生活在这里。\n\nTheo đoạn hội thoại, quốc tịch của Mark và Annie lần lượt là gì?",
           "options": [
             "Mark là người Mỹ, Annie là người Canada",
             "Mark người Việt Nam, Annie người Mỹ",
@@ -6595,7 +6594,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct3_32",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我____越南，现在生活在这里。”\n(Gợi ý nghĩa: Tôi đến từ Việt Nam, hiện đang sống ở đây.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我____越南，现在生活在这里。”",
         "options": [
           "朋友",
           "生活",
@@ -6608,7 +6607,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct3_33",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____啊？”\n(Gợi ý nghĩa: Ai đấy?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____啊？”",
         "options": [
           "那",
           "回",
@@ -6621,7 +6620,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct3_34",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“那____人是王老师。”\n(Gợi ý nghĩa: Người đó là thầy Vương.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“那____人是王老师。”",
         "options": [
           "的",
           "姓",
@@ -6647,7 +6646,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct3_36",
         "category": "vocab",
-        "question": "Từ Hán tự “谁” (ai) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “谁” có phiên âm Pinyin đúng là gì?",
         "options": [
           "shuí / shéi",
           "shēnghuó",
@@ -6673,7 +6672,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct3_38",
         "category": "vocab",
-        "question": "Từ Hán tự “这” (đây, này) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “这” có phiên âm Pinyin đúng là gì?",
         "options": [
           "gāoxìng",
           "yě",
@@ -6770,7 +6769,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct3_45",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 学生  /  个  /  学校  /  的  /  哪  /  她是\n(Nghĩa: “Cô ấy là học sinh trường nào?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n学生  /  个  /  学校  /  的  /  哪  /  她是",
         "options": [
           "哪个学校的学生她是。",
           "学生的学校个哪她是。",
@@ -6783,7 +6782,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct3_46",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 你  /  认识  /  吗  /  阮日明\n(Nghĩa: “Bạn có quen biết Nguyễn Nhật Minh không?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n你  /  认识  /  吗  /  阮日明",
         "options": [
           "吗阮日明认识你。",
           "认识你阮日明吗。",
@@ -6796,7 +6795,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct3_47",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 老师  /  的  /  他  /  是  /  我\n(Nghĩa: “Thầy ấy là thầy giáo của tớ.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n老师  /  的  /  他  /  是  /  我",
         "options": [
           "是他我的老师。",
           "他是我的老师。",
@@ -6809,7 +6808,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct3_48",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“____ (zhè)是我的书。”\n(Nghĩa: Đây là sách của tôi.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____是我的书。”",
         "options": [
           "这",
           "人",
@@ -6822,7 +6821,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct3_49",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“你是哪国____ (rén)？”\n(Nghĩa: Bạn là người nước nào?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你是哪国____？”",
         "options": [
           "的",
           "很",
@@ -6835,7 +6834,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct3_50",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“她是____ (nǎ)个学校的学生？”\n(Nghĩa: Cô ấy là học sinh trường nào?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“她是____个学校的学生？”",
         "options": [
           "很",
           "哪",
@@ -7200,14 +7199,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "马克",
             "hanzi": "你好。请问，学校的食堂在哪儿？",
-            "displayHanzi": "你好。请问 (qǐngwèn: xin hỏi)，学校的食堂在哪儿？",
+            "displayHanzi": "你好。请问，学校的食堂在哪儿？",
             "pinyin": "Nǐ hǎo. Qǐngwèn, xuéxiào de shítáng zài nǎr?",
             "meaning": "Xin chào. Xin hỏi nhà ăn của trường ở đâu vậy?"
           },
           {
             "speaker": "张风",
             "hanzi": "后面的那座楼是宿舍，食堂在宿舍的左边。",
-            "displayHanzi": "后面 (hòumian: phía sau)的那座楼是宿舍，食堂在宿舍的左边。",
+            "displayHanzi": "后面的那座楼是宿舍，食堂在宿舍的左边。",
             "pinyin": "Hòumian de nà zuò lóu shì sùshè, shítáng zài sùshè de zuǒbian.",
             "meaning": "Tòa nhà phía sau kia là ký túc xá, nhà ăn nằm ở bên trái ký túc xá."
           },
@@ -7257,10 +7256,10 @@ const DEFAULT_LESSONS = [
             "audioText": "后面的那座楼是宿舍，食堂在宿舍的左边。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "下面 (xiàmian: bên dưới)的句子 (jùzi: câu)",
-              "老师在外面 (wàimian: bên ngoài)等 (děng: đợi)你。",
-              "后面 (hòumian: phía sau)的那座楼是宿舍，食堂在宿舍的左边。",
-              "我在外交部 (wàijiāobù: Bộ Ngoại giao)当 (dāng: đảm nhiệm, làm)翻译 (fānyì: dịch, phiên dịch)。"
+              "下面的句子",
+              "老师在外面等你。",
+              "后面的那座楼是宿舍，食堂在宿舍的左边。",
+              "我在外交部当翻译。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 后面的那座楼是宿舍，食堂在宿舍的左边。 (Hòumian de nà zuò lóu shì sùshè, shítáng zài sùshè de zuǒbian.) → Tòa nhà phía sau kia là ký túc xá, nhà ăn nằm ở bên trái ký túc xá."
@@ -7282,9 +7281,9 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "教学楼的右边是图书馆。你去图书馆看书吗？",
-              "食堂在教学楼旁边 (pángbiān: bên cạnh)。",
-              "爸爸 (bàba: bố)在洗手间 (xǐshǒujiān: nhà vệ sinh)里 (lǐ: trong)吗？",
-              "桌子 (zhuōzi: cái bàn)下面 (xiàmian: bên dưới)"
+              "食堂在教学楼旁边。",
+              "爸爸在洗手间里吗？",
+              "桌子下面"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 教学楼的右边是图书馆。你去图书馆看书吗？ (Jiàoxué lóu de yòubian shì túshūguǎn. Nǐ qù túshūguǎn kànshū ma?) → Bên phải tòa nhà giảng đường là thư viện. Bạn đi thư viện đọc sách à?"
@@ -7355,7 +7354,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "他是谁？",
-            "question": "[Ôn tập Bài 3] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Anh ấy là ai?",
               "Cậu đi gì đến siêu thị thế?",
@@ -7367,11 +7366,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "食堂左边",
-            "question": "[Bài 4] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "请问 (qǐngwèn: xin hỏi)，马克在那个楼吗？",
+              "请问，马克在那个楼吗？",
               "好的，我去食堂吃饭。啊，你知道图书馆在哪里吗？",
-              "你的前面是城市 (chéngshì: thành phố)图书馆。",
+              "你的前面是城市图书馆。",
               "食堂左边"
             ],
             "correctIndex": 3,
@@ -7379,7 +7378,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "A: 你叫什么名字？",
-            "question": "[Ôn tập Bài 2] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Nếu có gì không biết thì cậu cứ hỏi tớ.",
               "Tôi đang đọc sách.",
@@ -7391,19 +7390,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "好的，我去食堂吃饭。啊，你知道图书馆在哪里吗？",
-            "question": "[Bài 4] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "好的，我去食堂吃饭。啊，你知道图书馆在哪里吗？",
-              "后边 (hòubian: phía sau)的女生 (nǚshēng: nữ sinh)",
+              "后边的女生",
               "学校的图书馆在哪儿？",
-              "我的左边不 (bù: không)是教学楼。"
+              "我的左边不是教学楼。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 好的，我去食堂吃饭。啊，你知道图书馆在哪里吗？ (Hǎo de, wǒ qù shítáng chīfàn. A, nǐ zhīdào túshūguǎn zài nǎli ma?) → Vâng, tôi đến nhà ăn ăn cơm. À, bạn có biết thư viện ở đâu không?"
           },
           {
             "audioText": "老师们",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "quyển sách này",
               "Thử qua một chút.",
@@ -7422,14 +7421,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Lan",
             "hanzi": "请问，附近有食堂吗？",
-            "displayHanzi": "请问 (qǐngwèn: xin hỏi)，附近有 (yǒu: có)食堂吗？",
+            "displayHanzi": "请问，附近有食堂吗？",
             "pinyin": "Qǐngwèn, fùjìn yǒu shítáng ma?",
             "meaning": "Xin hỏi quanh đây có nhà ăn không ạ?"
           },
           {
             "speaker": "Minh",
             "hanzi": "有，食堂在教学楼的右边。",
-            "displayHanzi": "有 (yǒu: có)，食堂在教学楼的右边。",
+            "displayHanzi": "有，食堂在教学楼的右边。",
             "pinyin": "Yǒu, shítáng zài jiàoxué lóu de yòubian.",
             "meaning": "Có, nhà ăn nằm ở bên phải tòa nhà giảng đường."
           },
@@ -7443,7 +7442,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Minh",
             "hanzi": "不是，图书馆在教学楼的左边，我们一起去吧！",
-            "displayHanzi": "不 (bù: không)是，图书馆在教学楼的左边，我们一起 (yīqǐ: cùng nhau)去吧 (ba: đi, nhé)！",
+            "displayHanzi": "不是，图书馆在教学楼的左边，我们一起去吧！",
             "pinyin": "Bú shì, túshūguǎn zài jiàoxué lóu de zuǒbian, wǒmen yīqǐ qù ba!",
             "meaning": "Không, thư viện ở bên trái tòa giảng đường, chúng ta cùng đi nhé!"
           }
@@ -7451,7 +7450,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "请问，附近有食堂吗？ 有，食堂在教学楼的右边。 图书馆也在教学楼前面吗？ 不是，图书馆在教学楼的左边，我们一起去吧！",
-            "question": "[Nghe hiểu tình huống mới] Theo chỉ dẫn của Minh, thư viện nằm ở phía nào so với tòa giảng đường?",
+            "question": "Theo chỉ dẫn của Minh, thư viện nằm ở phía nào so với tòa giảng đường?",
             "options": [
               "Ở bên trái tòa nhà giảng đường",
               "Ở bên phải tòa nhà giảng đường",
@@ -7463,7 +7462,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "请问，附近有食堂吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Xin hỏi quanh đây có nhà ăn không ạ?",
               "Bố có trong nhà vệ sinh không?",
@@ -7475,11 +7474,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "有，食堂在教学楼的右边。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "请问 (qǐngwèn: xin hỏi)，马克在那个楼吗？",
+              "请问，马克在那个楼吗？",
               "好的，我去食堂吃饭。啊，你知道图书馆在哪里吗？",
-              "有 (yǒu: có)，食堂在教学楼的右边。",
+              "有，食堂在教学楼的右边。",
               "你去学校附近的地方吗？"
             ],
             "correctIndex": 2,
@@ -7487,7 +7486,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "图书馆也在教学楼前面吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Trương Hồng là giáo viên à?",
               "Thư viện cũng ở phía trước tòa giảng đường à?",
@@ -7579,7 +7578,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss4_1",
           "targetHanzi": "学校的图书馆在哪儿",
-          "targetMeaning": "[Mở rộng] Thư viện của trường ở đâu vậy?",
+          "targetMeaning": "Thư viện của trường ở đâu vậy?",
           "pinyin": "Xuéxiào de túshūguǎn zài nǎr?",
           "tokens": [
             "学校",
@@ -7592,7 +7591,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss4_2",
           "targetHanzi": "我的朋友在食堂吃饭",
-          "targetMeaning": "[Mở rộng] Bạn của tôi đang ăn cơm ở nhà ăn.",
+          "targetMeaning": "Bạn của tôi đang ăn cơm ở nhà ăn.",
           "pinyin": "Wǒ de péngyou zài shítáng chīfàn.",
           "tokens": [
             "我的",
@@ -7628,7 +7627,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss4_5",
           "targetHanzi": "你认识阮日明吗",
-          "targetMeaning": "[Ôn tập Bài 3] Bạn có quen biết Nguyễn Nhật Minh không?",
+          "targetMeaning": "Bạn có quen biết Nguyễn Nhật Minh không?",
           "pinyin": "Nǐ rènshi Ruǎn Rìmíng ma?",
           "tokens": [
             "你",
@@ -7640,7 +7639,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss4_6",
           "targetHanzi": "范玉兰是留学生吗",
-          "targetMeaning": "[Ôn tập Bài 1] Phạm Ngọc Lan là du học sinh phải không?",
+          "targetMeaning": "Phạm Ngọc Lan là du học sinh phải không?",
           "pinyin": "Fàn Yùlán shì liúxuéshēng ma?",
           "tokens": [
             "范玉兰",
@@ -7867,7 +7866,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr4_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Thư viện của trường ở đâu vậy?",
+          "promptText": "Thư viện của trường ở đâu vậy?",
           "expectedChinese": "学校的图书馆在哪儿？",
           "acceptedPinyin": "xuéxiào de túshūguǎn zài nǎr",
           "hint": "Gợi ý Pinyin: Xuéxiào de túshūguǎn zài nǎr?",
@@ -7876,7 +7875,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr4_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Bạn của tôi đang ăn cơm ở nhà ăn.",
+          "promptText": "Bạn của tôi đang ăn cơm ở nhà ăn.",
           "expectedChinese": "我的朋友在食堂吃饭。",
           "acceptedPinyin": "wǒ de péngyou zài shítáng chīfàn",
           "hint": "Gợi ý Pinyin: Wǒ de péngyou zài shítáng chīfàn.",
@@ -7897,7 +7896,7 @@ const DEFAULT_LESSONS = [
           "promptText": "Bệnh viện ở bên phải trường học của chúng ta.",
           "expectedChinese": "医院在我们学校的右边。",
           "acceptedPinyin": "yīyuàn zài wǒmen xuéxiào de yòubian",
-          "hint": "Gợi ý Pinyin: Yīyuàn zài wǒmen xuéxiào de yòubian. | Từ chưa học: 医院 (yīyuàn: bệnh viện)",
+          "hint": "Gợi ý Pinyin: Yīyuàn zài wǒmen xuéxiào de yòubian.",
           "explanation": "Bệnh viện ở bên phải trường học của chúng ta. → 医院在我们学校的右边。 (Yīyuàn zài wǒmen xuéxiào de yòubian.)"
         },
         {
@@ -7993,7 +7992,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr4_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 教学楼在图书馆的左边。",
+          "promptText": "教学楼在图书馆的左边。",
           "chineseAudioText": "教学楼在图书馆的左边。",
           "pinyin": "Jiàoxué lóu zài túshūguǎn de zuǒbian.",
           "expectedMeaning": "Tòa nhà giảng đường nằm ở bên trái thư viện.",
@@ -8008,7 +8007,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr4_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 你去学校附近的地方吗？",
+          "promptText": "你去学校附近的地方吗？",
           "chineseAudioText": "你去学校附近的地方吗？",
           "pinyin": "Nǐ qù xuéxiào fùjìn de dìfang ma?",
           "expectedMeaning": "Bạn có đi đến chỗ gần trường không?",
@@ -8023,7 +8022,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr4_zh_3",
           "direction": "zh_to_vi",
-          "promptText": "你的前面是城市 (chéngshì: thành phố)图书馆。",
+          "promptText": "你的前面是城市图书馆。",
           "chineseAudioText": "你的前面是城市图书馆。",
           "pinyin": "Nǐ de qiánmian shì chéngshì túshūguǎn.",
           "expectedMeaning": "Trước mặt bạn là thư viện thành phố.",
@@ -8038,7 +8037,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr4_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 2] 这是什么书？",
+          "promptText": "这是什么书？",
           "chineseAudioText": "这是什么书？",
           "pinyin": "Zhè shì shénme shū?",
           "expectedMeaning": "Đây là sách gì?",
@@ -8465,7 +8464,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq4_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 1] Từ đã học “学生” (xuésheng) có nghĩa là gì?",
+          "question": "Từ đã học “学生” (xuésheng) có nghĩa là gì?",
           "options": [
             "quen biết, biết",
             "học sinh",
@@ -8478,7 +8477,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq4_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 3] Từ đã học “哪” (nǎ) có nghĩa là gì?",
+          "question": "Từ đã học “哪” (nǎ) có nghĩa là gì?",
           "options": [
             "bạn, cậu, anh, chị... (ngôi thứ hai số ít)",
             "buổi sáng",
@@ -8491,7 +8490,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq4_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 2] Từ đã học “马克” (Mǎkè) có nghĩa là gì?",
+          "question": "Từ đã học “马克” (Mǎkè) có nghĩa là gì?",
           "options": [
             "sách",
             "Mark (du học sinh Mỹ)",
@@ -8504,7 +8503,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq4_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “学校的图书馆在哪儿？” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “学校的图书馆在哪儿？” có nghĩa tiếng Việt là gì?",
           "options": [
             "Cô ấy là học sinh trường nào?",
             "Tôi rất thích cô ấy.",
@@ -8517,7 +8516,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq4_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nLan: 请问 (qǐngwèn: xin hỏi)，附近有 (yǒu: có)食堂吗？\nMinh: 有 (yǒu: có)，食堂在教学楼的右边。\nLan: 图书馆也在教学楼前面吗？\nMinh: 不 (bù: không)是，图书馆在教学楼的左边，我们一起 (yīqǐ: cùng nhau)去吧 (ba: đi, nhé)！\n\nTheo chỉ dẫn của Minh, thư viện nằm ở phía nào so với tòa giảng đường?",
+          "question": "Đọc đoạn hội thoại:\nLan: 请问，附近有食堂吗？\nMinh: 有，食堂在教学楼的右边。\nLan: 图书馆也在教学楼前面吗？\nMinh: 不是，图书馆在教学楼的左边，我们一起去吧！\n\nTheo chỉ dẫn của Minh, thư viện nằm ở phía nào so với tòa giảng đường?",
           "options": [
             "Ở bên phải tòa nhà giảng đường",
             "Ở ngoài trường học",
@@ -9015,7 +9014,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct4_36",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你的____是城市图书馆。”\n(Gợi ý nghĩa: Trước mặt bạn là thư viện thành phố.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你的____是城市图书馆。”",
         "options": [
           "美国",
           "右边",
@@ -9028,7 +9027,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct4_37",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“后面的那座楼是宿舍，食堂在宿舍的____。”\n(Gợi ý nghĩa: Tòa nhà phía sau kia là ký túc xá, nhà ăn nằm ở bên trái ký túc xá.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“后面的那座楼是宿舍，食堂在宿舍的____。”",
         "options": [
           "左边",
           "高兴",
@@ -9041,7 +9040,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct4_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你好。请____，学校的食堂在哪儿？”\n(Gợi ý nghĩa: Xin chào. Xin hỏi nhà ăn của trường ở đâu vậy?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你好。请____，学校的食堂在哪儿？”",
         "options": [
           "要",
           "问",
@@ -9054,7 +9053,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct4_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“学校的____在哪儿”\n(Gợi ý nghĩa: Thư viện của trường ở đâu vậy?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“学校的____在哪儿”",
         "options": [
           "范玉兰",
           "图书馆",
@@ -9080,7 +9079,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct4_41",
         "category": "vocab",
-        "question": "Từ Hán tự “左边” (bên trái) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “左边” có phiên âm Pinyin đúng là gì?",
         "options": [
           "zuǒbian",
           "nǎlǐ",
@@ -9204,7 +9203,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct4_50",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 你  /  谢谢  /  是  /  啊\n(Nghĩa: “Đúng vậy, cảm ơn bạn!”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n你  /  谢谢  /  是  /  啊",
         "options": [
           "啊是谢谢你。",
           "啊谢谢你是。",
@@ -9217,7 +9216,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct4_51",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 食堂  /  左边\n(Nghĩa: “Phía bên trái nhà ăn”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n食堂  /  左边",
         "options": [
           "你的前面是城市图书馆。",
           "食堂在教学楼旁边。",
@@ -9230,7 +9229,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct4_52",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 阮日明  /  你  /  吗  /  认识\n(Nghĩa: “Bạn có quen biết Nguyễn Nhật Minh không?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n阮日明  /  你  /  吗  /  认识",
         "options": [
           "你认识阮日明吗。",
           "认识你阮日明吗。",
@@ -9243,7 +9242,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct4_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 食堂  /  我的  /  吃  /  在  /  饭  /  朋友\n(Nghĩa: “Bạn của tôi đang ăn cơm ở nhà ăn.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n食堂  /  我的  /  吃  /  在  /  饭  /  朋友",
         "options": [
           "饭吃食堂在朋友我的。",
           "朋友我的在食堂吃饭。",
@@ -9256,7 +9255,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct4_54",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“有，食堂在教学楼的____ (yòubian)。”\n(Nghĩa: Có, nhà ăn nằm ở bên phải tòa nhà giảng đường.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“有，食堂在教学楼的____。”",
         "options": [
           "老师",
           "学生",
@@ -9269,7 +9268,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct4_55",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“____ (qǐng)问，附近有食堂吗？”\n(Nghĩa: Xin hỏi quanh đây có nhà ăn không ạ?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____问，附近有食堂吗？”",
         "options": [
           "请",
           "个",
@@ -9282,7 +9281,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct4_56",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“好的，我去食堂吃饭。啊，你____ (zhīdào)图书馆在哪里吗？”\n(Nghĩa: Vâng, tôi đến nhà ăn ăn cơm. À, bạn có biết thư viện ở đâu không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“好的，我去食堂吃饭。啊，你____图书馆在哪里吗？”",
         "options": [
           "越南",
           "老师",
@@ -9773,14 +9772,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "安妮",
             "hanzi": "对。你知道图书馆在几楼吗？",
-            "displayHanzi": "对 (duì: đúng, phải)。你知道图书馆在几楼吗？",
+            "displayHanzi": "对。你知道图书馆在几楼吗？",
             "pinyin": "Dùi. Nǐ zhīdào túshūguǎn zài jǐ lóu ma?",
             "meaning": "Đúng rồi. Bạn có biết thư viện ở tầng mấy không?"
           },
           {
             "speaker": "白茹雪",
             "hanzi": "三楼，202 号。",
-            "displayHanzi": "三楼，202 号 (hào: ngày)。",
+            "displayHanzi": "三楼，202 号。",
             "pinyin": "Sān lóu, èr líng èr hào.",
             "meaning": "Tầng 3, phòng 202."
           },
@@ -9818,7 +9817,7 @@ const DEFAULT_LESSONS = [
             "options": [
               "小白，现在几点了？",
               "昨天下午你去图书馆了吗？",
-              "三楼，202 号 (hào: ngày)。",
+              "三楼，202 号。",
               "四点二十分了！怎么了？"
             ],
             "correctIndex": 3,
@@ -9864,7 +9863,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "马克",
             "hanzi": "上午要上课，下午不上。",
-            "displayHanzi": "上午要上课，下午不 (bù: không)上 (shàng: trên / lên)。",
+            "displayHanzi": "上午要上课，下午不上。",
             "pinyin": "Shàngwǔ yào shàngkè, xiàwǔ bú shàng.",
             "meaning": "Buổi sáng phải lên lớp, buổi chiều không học."
           },
@@ -9885,7 +9884,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "张风",
             "hanzi": "我也是。这是我的电话号码 0322110012。明天去上课的时候你给我打电话，好吗？",
-            "displayHanzi": "我也是。这是我的电话号码 0322110012。明天去上课的时候你给我打 (dǎ: đánh, gọi, chơi)电话，好吗？",
+            "displayHanzi": "我也是。这是我的电话号码 0322110012。明天去上课的时候你给我打电话，好吗？",
             "pinyin": "Wǒ yě shì. Zhè shì wǒ de diànhuà hàomǎ líng sān èr èr yāo yāo líng líng yāo èr. Míngtiān qù shàngkè de shíhou nǐ gěi wǒ dǎ diànhuà, hǎo ma?",
             "meaning": "Tôi cũng vậy. Đây là số điện thoại của tôi: 0322110012. Ngày mai lúc đi học bạn gọi điện cho tôi nhé, được không?"
           },
@@ -9915,9 +9914,9 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "小白，现在几点了？",
-              "上午要上课，下午不 (bù: không)上 (shàng: trên / lên)。",
+              "上午要上课，下午不上。",
               "不客气！",
-              "小兰，你房间 (fángjiān: căn phòng)号 (hào: ngày)码 (mǎ: số, cỡ)是多少 (duōshao: bao nhiêu)？"
+              "小兰，你房间号码是多少？"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 上午要上课，下午不上。 (Shàngwǔ yào shàngkè, xiàwǔ bú shàng.) → Buổi sáng phải lên lớp, buổi chiều không học."
@@ -9940,7 +9939,7 @@ const DEFAULT_LESSONS = [
             "options": [
               "三点一刻。你什么时候去？",
               "现在是上午八点一刻。",
-              "王 (Wáng: họ Vương)老师的房间 (fángjiān: căn phòng)是几号 (hào: ngày)？",
+              "王老师的房间是几号？",
               "五点半！你想借书吗？"
             ],
             "correctIndex": 0,
@@ -10012,7 +10011,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "食堂左边",
-            "question": "[Ôn tập Bài 4] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Phía bên trái nhà ăn",
               "từ điển tiếng Trung",
@@ -10024,11 +10023,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我明天上午八点上课。",
-            "question": "[Bài 5] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "我明天上午八点上课。",
-              "王 (Wáng: họ Vương)老师的房间 (fángjiān: căn phòng)是几号 (hào: ngày)？",
-              "你什么时候去买 (mǎi: mua)书？",
+              "王老师的房间是几号？",
+              "你什么时候去买书？",
               "昨天下午你去图书馆了吗？"
             ],
             "correctIndex": 0,
@@ -10036,7 +10035,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "明天见！",
-            "question": "[Ôn tập Bài 2] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Hôm qua anh ấy không đến.",
               "Hẹn gặp lại vào ngày mai! (Hoặc “Mai gặp nhé!”)",
@@ -10048,19 +10047,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你昨天去学校了吗？",
-            "question": "[Bài 5] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "你昨天去学校了吗？",
-              "食堂十一点五十分开 (kāi: mở, lái)门吗？",
-              "你什么时候去买 (mǎi: mua)书？",
-              "我也是。这是我的电话号码 0322110012。明天去上课的时候你给我打 (dǎ: đánh, gọi, chơi)电话，好吗？"
+              "食堂十一点五十分开门吗？",
+              "你什么时候去买书？",
+              "我也是。这是我的电话号码 0322110012。明天去上课的时候你给我打电话，好吗？"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 你昨天去学校了吗？ (Nǐ zuótiān qù xuéxiào le ma?) → Hôm qua cậu đã đến trường chưa?"
           },
           {
             "audioText": "老师好",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Chào thầy/Chào cô",
               "Muốn đạt kết quả tốt thì phải cố gắng học tập.",
@@ -10093,14 +10092,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Mark",
             "hanzi": "上午九点半我有一节汉语课，十一点半去食堂。",
-            "displayHanzi": "上午九点半我有 (yǒu: có)一节汉语 (Hànyǔ: tiếng Trung Quốc)课 (kè: tiết học, bài học)，十一点半去食堂。",
+            "displayHanzi": "上午九点半我有一节汉语课，十一点半去食堂。",
             "pinyin": "Shàngwǔ jiǔ diǎn bàn wǒ yǒu yì jié Hànyǔ kè, shíyī diǎn bàn qù shítáng.",
             "meaning": "9 giờ 30 sáng tôi có một tiết tiếng Hán, 11 giờ rưỡi đi nhà ăn."
           },
           {
             "speaker": "Phong",
             "hanzi": "太好了，十一点半我也在食堂等你。",
-            "displayHanzi": "太 (tài: quá, lắm)好了，十一点半我也在食堂等 (děng: đợi)你。",
+            "displayHanzi": "太好了，十一点半我也在食堂等你。",
             "pinyin": "Tài hǎo le, shíyī diǎn bàn wǒ yě zài shítáng děng nǐ.",
             "meaning": "Hay quá, 11 giờ rưỡi tớ cũng đợi cậu ở nhà ăn."
           }
@@ -10108,7 +10107,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "张风，现在几点了？ 现在八点一刻，你要去哪儿？ 上午九点半我有一节汉语课，十一点半去食堂。 太好了，十一点半我也在食堂等你。",
-            "question": "[Nghe hiểu tình huống mới] Hai bạn hẹn gặp nhau ở nhà ăn vào lúc mấy giờ?",
+            "question": "Hai bạn hẹn gặp nhau ở nhà ăn vào lúc mấy giờ?",
             "options": [
               "9 giờ 30 phút",
               "12 giờ trưa",
@@ -10120,7 +10119,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "张风，现在几点了？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Anh ta thật sự nói như thế.",
               "Tôi học tiếng Hán được 3 năm.",
@@ -10132,11 +10131,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "现在八点一刻，你要去哪儿？",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "我下午两 (liǎng: hai (số lượng))点零五分在宿舍。",
+              "我下午两点零五分在宿舍。",
               "好！",
-              "我也是。这是我的电话号码 0322110012。明天去上课的时候你给我打 (dǎ: đánh, gọi, chơi)电话，好吗？",
+              "我也是。这是我的电话号码 0322110012。明天去上课的时候你给我打电话，好吗？",
               "现在八点一刻，你要去哪儿？"
             ],
             "correctIndex": 3,
@@ -10144,7 +10143,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "上午九点半我有一节汉语课，十一点半去食堂。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Bố mẹ tôi đã kết hôn được 25 năm rồi!",
               "9 giờ 30 sáng tôi có một tiết tiếng Hán, 11 giờ rưỡi đi nhà ăn.",
@@ -10226,7 +10225,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss5_1",
           "targetHanzi": "现在是上午八点一刻",
-          "targetMeaning": "[Mở rộng] Bây giờ là 8 giờ 15 phút sáng.",
+          "targetMeaning": "Bây giờ là 8 giờ 15 phút sáng.",
           "pinyin": "Xiànzài shì shàngwǔ bā diǎn yí kè.",
           "tokens": [
             "现在",
@@ -10240,7 +10239,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss5_2",
           "targetHanzi": "昨天下午你去图书馆了吗",
-          "targetMeaning": "[Mở rộng] Chiều hôm qua bạn có đi thư viện không?",
+          "targetMeaning": "Chiều hôm qua bạn có đi thư viện không?",
           "pinyin": "Zuótiān xiàwǔ nǐ qù túshūguǎn le ma?",
           "tokens": [
             "昨天",
@@ -10282,7 +10281,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss5_5",
           "targetHanzi": "我姓范叫范玉兰",
-          "targetMeaning": "[Ôn tập Bài 2] Tôi họ Phạm, tên là Phạm Ngọc Lan.",
+          "targetMeaning": "Tôi họ Phạm, tên là Phạm Ngọc Lan.",
           "pinyin": "Wǒ xìng Fàn, jiào Fàn Yùlán.",
           "tokens": [
             "我",
@@ -10295,14 +10294,13 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss5_6",
           "targetHanzi": "中午好同学们",
-          "targetMeaning": "[Ôn tập Bài 1] Chào buổi trưa các bạn học sinh!",
+          "targetMeaning": "Chào buổi trưa các bạn học sinh!",
           "pinyin": "Zhōngwǔ hǎo, tóngxuémen!",
           "tokens": [
             "中午",
             "好",
             "同学们"
-          ],
-          "unlearnedHint": "Từ chưa học: 同学们 (tóngxuémen: các bạn học)"
+          ]
         },
         {
           "id": "ss5_exp_1",
@@ -10511,7 +10509,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr5_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Bây giờ là 8 giờ 15 phút sáng.",
+          "promptText": "Bây giờ là 8 giờ 15 phút sáng.",
           "expectedChinese": "现在是上午八点一刻。",
           "acceptedPinyin": "xiànzài shì shàngwǔ bā diǎn yí kè",
           "hint": "Gợi ý Pinyin: Xiànzài shì shàngwǔ bā diǎn yí kè.",
@@ -10520,7 +10518,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr5_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Chiều hôm qua bạn có đi thư viện không?",
+          "promptText": "Chiều hôm qua bạn có đi thư viện không?",
           "expectedChinese": "昨天下午你去图书馆了吗？",
           "acceptedPinyin": "zuótiān xiàwǔ nǐ qù túshūguǎn le ma",
           "hint": "Gợi ý Pinyin: Zuótiān xiàwǔ nǐ qù túshūguǎn le ma?",
@@ -10637,7 +10635,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr5_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 我们九点半去教学楼上课。",
+          "promptText": "我们九点半去教学楼上课。",
           "chineseAudioText": "我们九点半去教学楼上课。",
           "pinyin": "Wǒmen jiǔ diǎn bàn qù jiàoxué lóu shàngkè.",
           "expectedMeaning": "Chúng tôi đến tòa giảng đường lên lớp lúc 9 giờ rưỡi.",
@@ -10652,7 +10650,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr5_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 食堂十一点五十分开 (kāi: mở, lái)门吗？",
+          "promptText": "食堂十一点五十分开门吗？",
           "chineseAudioText": "食堂十一点五十分开门吗？",
           "pinyin": "Shítáng shíyī diǎn wǔshí fēn kāimén ma?",
           "expectedMeaning": "Nhà ăn mở cửa lúc 11 giờ 50 phút phải không?",
@@ -10667,7 +10665,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr5_zh_3",
           "direction": "zh_to_vi",
-          "promptText": "王 (Wáng: họ Vương)老师的房间 (fángjiān: căn phòng)是几号 (hào: ngày)？",
+          "promptText": "王老师的房间是几号？",
           "chineseAudioText": "王老师的房间是几号？",
           "pinyin": "Wáng lǎoshī de fángjiān shì jǐ hào?",
           "expectedMeaning": "Phòng của thầy Vương là số mấy?",
@@ -10682,7 +10680,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr5_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 2] 这是什么书？",
+          "promptText": "这是什么书？",
           "chineseAudioText": "这是什么书？",
           "pinyin": "Zhè shì shénme shū?",
           "expectedMeaning": "Đây là sách gì?",
@@ -11116,7 +11114,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq5_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 4] Từ đã học “附近” (fùjìn) có nghĩa là gì?",
+          "question": "Từ đã học “附近” (fùjìn) có nghĩa là gì?",
           "options": [
             "chín",
             "ăn",
@@ -11129,7 +11127,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq5_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 3] Từ đã học “的” (de) có nghĩa là gì?",
+          "question": "Từ đã học “的” (de) có nghĩa là gì?",
           "options": [
             "một",
             "của (trợ từ)",
@@ -11142,7 +11140,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq5_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 1] Từ đã học “阮日明” (Ruǎn Rìmíng) có nghĩa là gì?",
+          "question": "Từ đã học “阮日明” (Ruǎn Rìmíng) có nghĩa là gì?",
           "options": [
             "cho gọi điện thoại cho ai đó",
             "năm",
@@ -11155,7 +11153,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq5_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “现在是上午八点一刻。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “现在是上午八点一刻。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Cô ấy là giáo viên.",
             "cây thước kẻ của anh ấy",
@@ -11168,7 +11166,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq5_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nMark: 张风，现在几点了？\nPhong: 现在八点一刻，你要去哪儿？\nMark: 上午九点半我有 (yǒu: có)一节汉语 (Hànyǔ: tiếng Trung Quốc)课 (kè: tiết học, bài học)，十一点半去食堂。\nPhong: 太 (tài: quá, lắm)好了，十一点半我也在食堂等 (děng: đợi)你。\n\nHai bạn hẹn gặp nhau ở nhà ăn vào lúc mấy giờ?",
+          "question": "Đọc đoạn hội thoại:\nMark: 张风，现在几点了？\nPhong: 现在八点一刻，你要去哪儿？\nMark: 上午九点半我有一节汉语课，十一点半去食堂。\nPhong: 太好了，十一点半我也在食堂等你。\n\nHai bạn hẹn gặp nhau ở nhà ăn vào lúc mấy giờ?",
           "options": [
             "11 giờ 30 phút (十一点半)",
             "12 giờ trưa",
@@ -11733,7 +11731,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct5_41",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____点半！你想借书吗？”\n(Gợi ý nghĩa: 5 giờ rưỡi! Bạn muốn mượn sách à?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____点半！你想借书吗？”",
         "options": [
           "是",
           "六",
@@ -11746,7 +11744,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct5_42",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“三点一刻。你什么____去？”\n(Gợi ý nghĩa: 3 giờ 15 phút. Khi nào bạn đi?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“三点一刻。你什么____去？”",
         "options": [
           "谢谢",
           "时候",
@@ -11759,7 +11757,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct5_43",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我也是。这是我的____号码 0322110012。明天去上课的时候你给我打电话，好吗？”\n(Gợi ý nghĩa: Tôi cũng vậy. Đây là số điện thoại của tôi: 0322110012. Ngày mai lúc đi học bạn gọi điện cho tôi nhé, được không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我也是。这是我的____号码 0322110012。明天去上课的时候你给我打电话，好吗？”",
         "options": [
           "左边",
           "越南",
@@ -11772,7 +11770,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct5_44",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“太好了，十一点____我也在食堂等你。”\n(Gợi ý nghĩa: Hay quá, 11 giờ rưỡi tớ cũng đợi cậu ở nhà ăn.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“太好了，十一点____我也在食堂等你。”",
         "options": [
           "您",
           "八",
@@ -11798,7 +11796,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct5_46",
         "category": "vocab",
-        "question": "Từ Hán tự “时候” (thời gian, lúc, khi) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “时候” có phiên âm Pinyin đúng là gì?",
         "options": [
           "mén",
           "jiàoshì",
@@ -11949,7 +11947,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct5_57",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 中午  /  好  /  同学们\n(Nghĩa: “Chào buổi trưa các bạn học sinh!”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n中午  /  好  /  同学们",
         "options": [
           "中午好同学们。",
           "好同学们中午。",
@@ -11962,7 +11960,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct5_58",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 叫  /  我  /  姓  /  范玉兰  /  范\n(Nghĩa: “Tôi họ Phạm, tên là Phạm Ngọc Lan.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n叫  /  我  /  姓  /  范玉兰  /  范",
         "options": [
           "姓范叫范玉兰我。",
           "姓我范叫范玉兰。",
@@ -11975,7 +11973,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct5_59",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 点  /  明天  /  上午  /  我  /  八  /  上课\n(Nghĩa: “Tám giờ sáng ngày mai tớ đi học.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n点  /  明天  /  上午  /  我  /  八  /  上课",
         "options": [
           "明天上午八点上课我。",
           "上课点八上午明天我。",
@@ -11988,7 +11986,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct5_60",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 上午  /  八点  /  一  /  现在  /  是  /  刻\n(Nghĩa: “Bây giờ là 8 giờ 15 phút sáng.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n上午  /  八点  /  一  /  现在  /  是  /  刻",
         "options": [
           "是现在上午八点一刻。",
           "是上午八点一刻现在。",
@@ -12001,7 +11999,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct5_61",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“图书馆几点关____ (mén)？”\n(Nghĩa: Thư viện mấy giờ đóng cửa?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“图书馆几点关____？”",
         "options": [
           "是",
           "门",
@@ -12014,7 +12012,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct5_62",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“现在是上午____ (bā)点一刻”\n(Nghĩa: Bây giờ là 8 giờ 15 phút sáng.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“现在是上午____点一刻”",
         "options": [
           "门",
           "看",
@@ -12027,7 +12025,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct5_63",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“四点二十____ (fēn/fēnzhōng)了！怎么了？”\n(Nghĩa: 4 giờ 20 phút rồi! Có chuyện gì thế?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“四点二十____了！怎么了？”",
         "options": [
           "分",
           "半",
@@ -12040,7 +12038,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct5_64",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“____ (zuótiān)下午你去图书馆了吗”\n(Nghĩa: Chiều hôm qua bạn có đi thư viện không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____下午你去图书馆了吗”",
         "options": [
           "上午",
           "晚上",
@@ -12566,7 +12564,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "张风",
             "hanzi": "不远，很近。从这儿到那儿有二百米。",
-            "displayHanzi": "不 (bù: không)远，很近。从这儿到那儿有二百 (bǎi: trăm)米。",
+            "displayHanzi": "不远，很近。从这儿到那儿有二百米。",
             "pinyin": "Bù yuǎn，hěn jìn. Cóng zhèr dào nàr yǒu èrbǎi mǐ.",
             "meaning": "Không xa, rất gần. Từ đây đến đó khoảng 200 mét."
           },
@@ -12580,7 +12578,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "张风",
             "hanzi": "你从这儿一直往东走，到十字路口往左拐，马路西边有一座白色的大楼，那就是书店。",
-            "displayHanzi": "你从这儿一直往东 (dōng: phía Đông)走，到十字路口往左 (zuǒ: trái)拐，马路西边有一座白色的大 (dà: to, lớn)楼，那就是书店。",
+            "displayHanzi": "你从这儿一直往东走，到十字路口往左拐，马路西边有一座白色的大楼，那就是书店。",
             "pinyin": "Nǐ cóng zhèr yīzhí wǎng dōng zǒu, dào shízìlùkǒu wǎng zuǒ guǎi, mǎlù xībian yǒu yízuò báisè de dàlóu, nà jiùshì shūdiàn.",
             "meaning": "Bạn đi thẳng về phía đông từ đây, đến ngã tư thì rẽ trái, phía tây con đường có một tòa nhà lớn màu trắng, đó chính là hiệu sách."
           },
@@ -12618,7 +12616,7 @@ const DEFAULT_LESSONS = [
             "options": [
               "是，每个周末我都到那儿买书。",
               "怎么走呢？",
-              "每一个学生都坐 (zuò: ngồi)公共汽车 (gōnggòng qìchē: xe buýt)上课。",
+              "每一个学生都坐公共汽车上课。",
               "书店在西边，在美术馆和电影院中间。"
             ],
             "correctIndex": 3,
@@ -12642,8 +12640,8 @@ const DEFAULT_LESSONS = [
             "options": [
               "怎么走呢？",
               "张风，你知道书店在哪儿吗？",
-              "A: 请问 (qǐngwèn: xin hỏi)，去医院 (yīyuàn: bệnh viện)怎么走呢？",
-              "不 (bù: không)远，很近。从这儿到那儿有二百 (bǎi: trăm)米。"
+              "A: 请问，去医院怎么走呢？",
+              "不远，很近。从这儿到那儿有二百米。"
             ],
             "correctIndex": 3,
             "explanation": "Câu vừa đọc: 不远，很近。从这儿到那儿有二百米。 (Bù yuǎn，hěn jìn. Cóng zhèr dào nàr yǒu èrbǎi mǐ.) → Không xa, rất gần. Từ đây đến đó khoảng 200 mét."
@@ -12714,7 +12712,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "你昨天去学校了吗？",
-            "question": "[Ôn tập Bài 5] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Năm nay cháu mấy tuổi rồi (Hỏi trẻ em dưới mười tuổi)",
               "người Trung Quốc",
@@ -12726,11 +12724,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "张风，你知道书店在哪儿吗？",
-            "question": "[Bài 6] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "B: 你一直往前 (qián: trước)走，然后 (ránhòu: đầu tiên... sau đó...)右 (yòu: phải)拐就看到医院 (yīyuàn: bệnh viện)在你左边。",
+              "B: 你一直往前走，然后右拐就看到医院在你左边。",
               "张风，你知道书店在哪儿吗？",
-              "B: 我打算 (dǎsuan: dự định)坐 (zuò: ngồi)公共汽车 (gōnggòng qìchē: xe buýt)。",
+              "B: 我打算坐公共汽车。",
               "离这儿远吗？"
             ],
             "correctIndex": 1,
@@ -12738,7 +12736,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "他是谁？",
-            "question": "[Ôn tập Bài 3] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Anh ấy là ai?",
               "Ngày mai có lẽ là ngày nắng.",
@@ -12750,19 +12748,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "书店在西边，在美术馆和电影院中间。",
-            "question": "[Bài 6] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "书店在西边，在美术馆和电影院中间。",
               "图书馆南边是什么地方？",
-              "B: 我不 (bù: không)知道。",
-              "到前面那个十字路口往右 (yòu: phải)拐。"
+              "B: 我不知道。",
+              "到前面那个十字路口往右拐。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 书店在西边，在美术馆和电影院中间。 (Shūdiàn zài xībian, zài měishùguǎn hé diànyǐngyuàn zhōngjiān.) → Hiệu sách ở phía tây, nằm giữa bảo tàng mỹ thuật và rạp chiếu phim."
           },
           {
             "audioText": "你是日明吗？",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cậu là Nhật Minh phải không?",
               "đất nước (quốc gia) của chúng tôi",
@@ -12781,14 +12779,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Annie",
             "hanzi": "请问，电影院附近有书店吗？",
-            "displayHanzi": "请问 (qǐngwèn: xin hỏi)，电影院附近有书店吗？",
+            "displayHanzi": "请问，电影院附近有书店吗？",
             "pinyin": "Qǐngwèn, diànyǐngyuàn fùjìn yǒu shūdiàn ma?",
             "meaning": "Xin hỏi quanh rạp chiếu phim có hiệu sách không?"
           },
           {
             "speaker": "Phong",
             "hanzi": "有，书店在电影院和美术馆中间，离这儿只有三百米。",
-            "displayHanzi": "有，书店在电影院和美术馆中间，离这儿只 (zhī: con)有三百 (bǎi: trăm)米。",
+            "displayHanzi": "有，书店在电影院和美术馆中间，离这儿只有三百米。",
             "pinyin": "Yǒu, shūdiàn zài diànyǐngyuàn hé měishùguǎn zhōngjiān, lí zhèr zhǐyǒu sānbǎi mǐ.",
             "meaning": "Có, hiệu sách nằm giữa rạp chiếu phim và bảo tàng mỹ thuật, cách đây chỉ 300 mét."
           },
@@ -12802,7 +12800,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Phong",
             "hanzi": "你一直往北走，到十字路口往右拐就到了。",
-            "displayHanzi": "你一直往北 (běi: phía Bắc)走，到十字路口往右 (yòu: phải)拐就到了。",
+            "displayHanzi": "你一直往北走，到十字路口往右拐就到了。",
             "pinyin": "Nǐ yīzhí wǎng běi zǒu, dào shízìlùkǒu wǎng yòu guǎi jiù dào le.",
             "meaning": "Bạn cứ đi thẳng về phía bắc, đến ngã tư rẽ phải là tới."
           }
@@ -12810,7 +12808,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "请问，电影院附近有书店吗？ 有，书店在电影院和美术馆中间，离这儿只有三百米。 从这儿到书店怎么走？ 你一直往北走，到十字路口往右拐就到了。",
-            "question": "[Nghe hiểu tình huống mới] Để đến được hiệu sách từ chỗ hiện tại, Annie cần đi hướng nào?",
+            "question": "Để đến được hiệu sách từ chỗ hiện tại, Annie cần đi hướng nào?",
             "options": [
               "Đi thẳng hướng bắc rồi rẽ phải ở ngã tư",
               "Đi hướng nam rồi rẽ trái",
@@ -12822,7 +12820,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "请问，电影院附近有书店吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Con ăn nhiều rau chút, có lợi cho sức khỏe!",
               "Chào buổi tối!",
@@ -12834,11 +12832,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "有，书店在电影院和美术馆中间，离这儿只有三百米。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "A: 你知道这个字 (zì: chữ)怎么写 (xiě: viết)吗？",
-              "有，书店在电影院和美术馆中间，离这儿只 (zhī: con)有三百 (bǎi: trăm)米。",
-              "B: 你一直往前 (qián: trước)走，然后 (ránhòu: đầu tiên... sau đó...)右 (yòu: phải)拐就看到医院 (yīyuàn: bệnh viện)在你左边。",
+              "A: 你知道这个字怎么写吗？",
+              "有，书店在电影院和美术馆中间，离这儿只有三百米。",
+              "B: 你一直往前走，然后右拐就看到医院在你左边。",
               "怎么走呢？"
             ],
             "correctIndex": 1,
@@ -12846,7 +12844,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "从这儿到书店怎么走？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cậu là ai thế?",
               "Từ đây đến hiệu sách đi như thế nào?",
@@ -12920,7 +12918,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss6_1",
           "targetHanzi": "电影院在美术馆的东边",
-          "targetMeaning": "[Mở rộng] Rạp chiếu phim nằm ở phía đông bảo tàng mỹ thuật.",
+          "targetMeaning": "Rạp chiếu phim nằm ở phía đông bảo tàng mỹ thuật.",
           "pinyin": "Diànyǐngyuàn zài měishùguǎn de dōngbian.",
           "tokens": [
             "电影院",
@@ -12933,7 +12931,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss6_2",
           "targetHanzi": "从宿舍到食堂怎么走",
-          "targetMeaning": "[Mở rộng] Từ ký túc xá đến nhà ăn đi như thế nào?",
+          "targetMeaning": "Từ ký túc xá đến nhà ăn đi như thế nào?",
           "pinyin": "Cóng sùshè dào shítáng zěnme zǒu?",
           "tokens": [
             "从",
@@ -12973,7 +12971,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss6_5",
           "targetHanzi": "我的朋友在食堂吃饭",
-          "targetMeaning": "[Ôn tập Bài 4] Bạn của tôi đang ăn cơm ở nhà ăn.",
+          "targetMeaning": "Bạn của tôi đang ăn cơm ở nhà ăn.",
           "pinyin": "Wǒ de péngyou zài shítáng chīfàn.",
           "tokens": [
             "我的",
@@ -12987,14 +12985,13 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss6_6",
           "targetHanzi": "中午好同学们",
-          "targetMeaning": "[Ôn tập Bài 1] Chào buổi trưa các bạn học sinh!",
+          "targetMeaning": "Chào buổi trưa các bạn học sinh!",
           "pinyin": "Zhōngwǔ hǎo, tóngxuémen!",
           "tokens": [
             "中午",
             "好",
             "同学们"
-          ],
-          "unlearnedHint": "Từ chưa học: 同学们 (tóngxuémen: các bạn học)"
+          ]
         },
         {
           "id": "ss6_exp_1",
@@ -13234,7 +13231,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr6_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Rạp chiếu phim nằm ở phía đông bảo tàng mỹ thuật.",
+          "promptText": "Rạp chiếu phim nằm ở phía đông bảo tàng mỹ thuật.",
           "expectedChinese": "电影院在美术馆的东边。",
           "acceptedPinyin": "diànyǐngyuàn zài měishùguǎn de dōngbian",
           "hint": "Gợi ý Pinyin: Diànyǐngyuàn zài měishùguǎn de dōngbian.",
@@ -13243,7 +13240,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr6_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Từ ký túc xá đến nhà ăn đi như thế nào?",
+          "promptText": "Từ ký túc xá đến nhà ăn đi như thế nào?",
           "expectedChinese": "从宿舍到食堂怎么走？",
           "acceptedPinyin": "cóng sùshè dào shítáng zěnme zǒu",
           "hint": "Gợi ý Pinyin: Cóng sùshè dào shítáng zěnme zǒu?",
@@ -13255,7 +13252,7 @@ const DEFAULT_LESSONS = [
           "promptText": "Mình không biết.",
           "expectedChinese": "B: 我不知道。",
           "acceptedPinyin": "wǒ bù zhīdào",
-          "hint": "Gợi ý Pinyin: Wǒ bù zhīdào. | Từ chưa học: 不 (bù: không)",
+          "hint": "Gợi ý Pinyin: Wǒ bù zhīdào.",
           "explanation": "Mình không biết. → B: 我不知道。 (Wǒ bù zhīdào.)"
         },
         {
@@ -13264,7 +13261,7 @@ const DEFAULT_LESSONS = [
           "promptText": "Cậu đi gì đến siêu thị thế?",
           "expectedChinese": "A: 你怎么去超市呢？",
           "acceptedPinyin": "nǐ zěnme qù chāoshì ne",
-          "hint": "Gợi ý Pinyin: Nǐ zěnme qù chāoshì ne? | Từ chưa học: 超市 (chāoshì: siêu thị)",
+          "hint": "Gợi ý Pinyin: Nǐ zěnme qù chāoshì ne?",
           "explanation": "Cậu đi gì đến siêu thị thế? → A: 你怎么去超市呢？ (Nǐ zěnme qù chāoshì ne?)"
         },
         {
@@ -13360,7 +13357,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr6_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 图书馆南边是什么地方？",
+          "promptText": "图书馆南边是什么地方？",
           "chineseAudioText": "图书馆南边是什么地方？",
           "pinyin": "Túshūguǎn nánbian shì shénme dìfang?",
           "expectedMeaning": "Phía nam thư viện là địa điểm nào vậy?",
@@ -13375,7 +13372,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr6_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 到前面那个十字路口往右 (yòu: phải)拐。",
+          "promptText": "到前面那个十字路口往右拐。",
           "chineseAudioText": "到前面那个十字路口往右拐。",
           "pinyin": "Dào qiánmian nàge shízìlùkǒu wǎng yòu guǎi.",
           "expectedMeaning": "Đến ngã tư phía trước kia thì rẽ phải.",
@@ -13390,7 +13387,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr6_zh_3",
           "direction": "zh_to_vi",
-          "promptText": "每天 (tiān: ngày, trời)他都去图书馆借书。",
+          "promptText": "每天他都去图书馆借书。",
           "chineseAudioText": "每天他都去图书馆借书。",
           "pinyin": "Měitiān tā dōu qù túshūguǎn jiè shū.",
           "expectedMeaning": "Mỗi ngày anh ấy đều đến thư viện mượn sách.",
@@ -13405,7 +13402,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr6_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 3] 他是我的老师。",
+          "promptText": "他是我的老师。",
           "chineseAudioText": "他是我的老师。",
           "pinyin": "Tā shì wǒ de lǎoshī.",
           "expectedMeaning": "Thầy ấy là thầy giáo của tớ.",
@@ -13847,7 +13844,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq6_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 4] Từ đã học “去” (qù) có nghĩa là gì?",
+          "question": "Từ đã học “去” (qù) có nghĩa là gì?",
           "options": [
             "Mark (du học sinh Mỹ)",
             "biết",
@@ -13860,7 +13857,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq6_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 2] Từ đã học “张风” (Zhāng Fēng) có nghĩa là gì?",
+          "question": "Từ đã học “张风” (Zhāng Fēng) có nghĩa là gì?",
           "options": [
             "cửa, cổng",
             "Trương Phong (sinh viên người Trung Quốc đại học Thanh Hoa)",
@@ -13873,7 +13870,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq6_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 1] Từ đã học “你们” (nǐmen) có nghĩa là gì?",
+          "question": "Từ đã học “你们” (nǐmen) có nghĩa là gì?",
           "options": [
             "có",
             "thời gian",
@@ -13886,7 +13883,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq6_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “电影院在美术馆的东边。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “电影院在美术馆的东边。” có nghĩa tiếng Việt là gì?",
           "options": [
             "con đường này",
             "hai quyển sách",
@@ -13899,7 +13896,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq6_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nAnnie: 请问 (qǐngwèn: xin hỏi)，电影院附近有书店吗？\nPhong: 有，书店在电影院和美术馆中间，离这儿只 (zhī: con)有三百 (bǎi: trăm)米。\nAnnie: 从这儿到书店怎么走？\nPhong: 你一直往北 (běi: phía Bắc)走，到十字路口往右 (yòu: phải)拐就到了。\n\nĐể đến được hiệu sách từ chỗ hiện tại, Annie cần đi hướng nào?",
+          "question": "Đọc đoạn hội thoại:\nAnnie: 请问，电影院附近有书店吗？\nPhong: 有，书店在电影院和美术馆中间，离这儿只有三百米。\nAnnie: 从这儿到书店怎么走？\nPhong: 你一直往北走，到十字路口往右拐就到了。\n\nĐể đến được hiệu sách từ chỗ hiện tại, Annie cần đi hướng nào?",
           "options": [
             "Đi hướng nam rồi rẽ trái",
             "Quay lại cổng trường",
@@ -13912,7 +13909,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq6_22",
           "type": "reading",
-          "question": "Câu “B: 我不 (bù: không)知道。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “B: 我不知道。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Tôi là Trần Anh.",
             "Bệnh viện ở bên phải trường học của chúng ta.",
@@ -14464,7 +14461,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct6_41",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____这儿远吗？”\n(Gợi ý nghĩa: Cách đây có xa không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____这儿远吗？”",
         "options": [
           "拐",
           "那",
@@ -14477,7 +14474,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct6_42",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“谢谢，你常到那儿____书吗？”\n(Gợi ý nghĩa: Cảm ơn, bạn có hay đến đó mua sách không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“谢谢，你常到那儿____书吗？”",
         "options": [
           "了",
           "差",
@@ -14490,7 +14487,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct6_43",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是，每个____我都到那儿买书。”\n(Gợi ý nghĩa: Có, cuối tuần nào tôi cũng đến đó mua sách.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是，每个____我都到那儿买书。”",
         "options": [
           "老师",
           "周末",
@@ -14503,7 +14500,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct6_44",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“书店在西边，在美术馆和____中间。”\n(Gợi ý nghĩa: Hiệu sách ở phía tây, nằm giữa bảo tàng mỹ thuật và rạp chiếu phim.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“书店在西边，在美术馆和____中间。”",
         "options": [
           "电影院",
           "阮日明",
@@ -14529,7 +14526,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct6_46",
         "category": "vocab",
-        "question": "Từ Hán tự “买” (mua) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “买” có phiên âm Pinyin đúng là gì?",
         "options": [
           "duì",
           "wǔ",
@@ -14555,7 +14552,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct6_48",
         "category": "vocab",
-        "question": "Từ Hán tự “电影院” (rạp chiếu phim) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “电影院” có phiên âm Pinyin đúng là gì?",
         "options": [
           "diànyǐngyuàn",
           "chī",
@@ -14680,7 +14677,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct6_57",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 吃  /  在  /  我的  /  饭  /  朋友  /  食堂\n(Nghĩa: “Bạn của tôi đang ăn cơm ở nhà ăn.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n吃  /  在  /  我的  /  饭  /  朋友  /  食堂",
         "options": [
           "我的朋友在食堂吃饭。",
           "朋友在食堂吃饭我的。",
@@ -14693,7 +14690,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct6_58",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 美术馆  /  电影院  /  在  /  的  /  东边\n(Nghĩa: “Rạp chiếu phim nằm ở phía đông bảo tàng mỹ thuật.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n美术馆  /  电影院  /  在  /  的  /  东边",
         "options": [
           "东边的美术馆在电影院。",
           "在电影院美术馆的东边。",
@@ -14706,7 +14703,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct6_59",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 张风  /  在  /  你  /  哪儿吗  /  书店  /  知道\n(Nghĩa: “Trương Phong, bạn có biết hiệu sách ở đâu không?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n张风  /  在  /  你  /  哪儿吗  /  书店  /  知道",
         "options": [
           "你知道书店在哪儿吗张风。",
           "哪儿吗在书店知道你张风。",
@@ -14719,7 +14716,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct6_60",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 好  /  同学们  /  中午\n(Nghĩa: “Chào buổi trưa các bạn học sinh!”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n好  /  同学们  /  中午",
         "options": [
           "好同学们中午。",
           "好中午同学们。",
@@ -14732,7 +14729,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct6_61",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“你从这儿____ (yīzhí)往东走，到十字路口往左拐，马路西边有一座白色的大楼，那就是书店。”\n(Nghĩa: Bạn đi thẳng về phía đông từ đây, đến ngã tư thì rẽ trái, phía tây con đường có một tòa nhà lớn màu trắng, đó chính là hiệu sách.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你从这儿____往东走，到十字路口往左拐，马路西边有一座白色的大楼，那就是书店。”",
         "options": [
           "一直",
           "我们",
@@ -14745,7 +14742,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct6_62",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“请问，超市怎么____ (zǒu)呢？”\n(Nghĩa: Xin hỏi đến siêu thị đi thế nào vậy?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“请问，超市怎么____呢？”",
         "options": [
           "买",
           "米",
@@ -14758,7 +14755,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct6_63",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“____ (cóng)这儿到书店怎么走？”\n(Nghĩa: Từ đây đến hiệu sách đi như thế nào?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____这儿到书店怎么走？”",
         "options": [
           "你",
           "七",
@@ -14771,7 +14768,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct6_64",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“你一直往北走，到____ (shízìlùkǒu)往右拐就到了。”\n(Nghĩa: Bạn cứ đi thẳng về phía bắc, đến ngã tư rẽ phải là tới.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你一直往北走，到____往右拐就到了。”",
         "options": [
           "晚上",
           "中午",
@@ -15129,7 +15126,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "马克",
             "hanzi": "我想去商店买两支圆珠笔、一把尺子和三本笔记本。你想去吗？",
-            "displayHanzi": "我想去商店买两 (liǎng: hai (số lượng))支圆珠笔、一把尺子和三本笔记本。你想去吗？",
+            "displayHanzi": "我想去商店买两支圆珠笔、一把尺子和三本笔记本。你想去吗？",
             "pinyin": "Wǒ xiǎng qù shāngdiàn mǎi liǎng zhī yuánzhūbǐ, yī bǎ chǐzi hé sān běn bǐjìběn. Nǐ xiǎng qù ma?",
             "meaning": "Tôi muốn đi cửa hàng mua hai cây bút bi, một cây thước kẻ và ba quyển vở ghi chép. Bạn có muốn đi không?"
           },
@@ -15143,7 +15140,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "马克",
             "hanzi": "那今天下午四点我在学校门口等你。我们一起去，好吗？",
-            "displayHanzi": "那今天下午四点我在学校门口 (kǒu: khẩu, người)等你。我们一起去，好吗？",
+            "displayHanzi": "那今天下午四点我在学校门口等你。我们一起去，好吗？",
             "pinyin": "Nà jīntiān xiàwǔ sìdiǎn wǒ zài xuéxiào ménkǒu děng nǐ. Wǒmen yīqǐ qù, hǎo ma?",
             "meaning": "Vậy chiều nay 4 giờ tôi đợi bạn ở cổng trường. Chúng ta cùng đi nhé, được không?"
           },
@@ -15172,10 +15169,10 @@ const DEFAULT_LESSONS = [
             "audioText": "我想去商店买两支圆珠笔、一把尺子和三本笔记本。你想去吗？",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "一个故事 (shì: việc, chuyện)",
-              "我想去商店买两 (liǎng: hai (số lượng))支圆珠笔、一把尺子和三本笔记本。你想去吗？",
+              "一个故事",
+              "我想去商店买两支圆珠笔、一把尺子和三本笔记本。你想去吗？",
               "汉语老师",
-              "好兄弟 (xiōngdì: anh em)"
+              "好兄弟"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 我想去商店买两支圆珠笔、一把尺子和三本笔记本。你想去吗？ (Wǒ xiǎng qù shāngdiàn mǎi liǎng zhī yuánzhūbǐ, yī bǎ chǐzi hé sān běn bǐjìběn. Nǐ xiǎng qù ma?) → Tôi muốn đi cửa hàng mua hai cây bút bi, một cây thước kẻ và ba quyển vở ghi chép. Bạn có muốn đi không?"
@@ -15196,10 +15193,10 @@ const DEFAULT_LESSONS = [
             "audioText": "那今天下午四点我在学校门口等你。我们一起去，好吗？",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "今天下午我买了一把新 (xīn: mới)尺子。",
-              "那今天下午四点我在学校门口 (kǒu: khẩu, người)等你。我们一起去，好吗？",
+              "今天下午我买了一把新尺子。",
+              "那今天下午四点我在学校门口等你。我们一起去，好吗？",
               "那本词典",
-              "这条 (tiáo: cái, chiếc)路 (lù: đường)"
+              "这条路"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 那今天下午四点我在学校门口等你。我们一起去，好吗？ (Nà jīntiān xiàwǔ sìdiǎn wǒ zài xuéxiào ménkǒu děng nǐ. Wǒmen yīqǐ qù, hǎo ma?) → Vậy chiều nay 4 giờ tôi đợi bạn ở cổng trường. Chúng ta cùng đi nhé, được không?"
@@ -15220,14 +15217,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "白茹雪",
             "hanzi": "哇，真好看啊！你买的那家商店有蓝色的书包吗？",
-            "displayHanzi": "哇 (wa: oa, chà (cảm thán))，真好看啊！你买的那家商店有蓝色的书包吗？",
+            "displayHanzi": "哇，真好看啊！你买的那家商店有蓝色的书包吗？",
             "pinyin": "Wa, zhēn hǎokàn a! Nǐ mǎi de nà jiā shāngdiàn yǒu lán sè de shūbāo ma?",
             "meaning": "Chà, đẹp quá đi mất! Cửa hàng bạn mua có cặp sách màu xanh dương không?"
           },
           {
             "speaker": "范玉兰",
             "hanzi": "有啊，还有黄色和白色的书包。",
-            "displayHanzi": "有啊，还 (hái: còn, vẫn)有黄色和白色的书包。",
+            "displayHanzi": "有啊，还有黄色和白色的书包。",
             "pinyin": "Yǒu a, hái yǒu huángsè hé báisè de shūbāo.",
             "meaning": "Có chứ, còn có cả cặp màu vàng và màu trắng nữa."
           },
@@ -15241,7 +15238,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "那家商店就在学校门口前面。",
-            "displayHanzi": "那家商店就在学校门口 (kǒu: khẩu, người)前面。",
+            "displayHanzi": "那家商店就在学校门口前面。",
             "pinyin": "Nà jiā shāngdiàn jiù zài xuéxiào ménkǒu qiánmian.",
             "meaning": "Cửa hàng đó nằm ngay phía trước cổng trường đấy."
           },
@@ -15271,9 +15268,9 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "那本词典",
-              "哇 (wa: oa, chà (cảm thán))，真好看啊！你买的那家商店有蓝色的书包吗？",
+              "哇，真好看啊！你买的那家商店有蓝色的书包吗？",
               "这个书包",
-              "我想买两 (liǎng: hai (số lượng))支蓝色圆珠笔。"
+              "我想买两支蓝色圆珠笔。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 哇，真好看啊！你买的那家商店有蓝色的书包吗？ (Wa, zhēn hǎokàn a! Nǐ mǎi de nà jiā shāngdiàn yǒu lán sè de shūbāo ma?) → Chà, đẹp quá đi mất! Cửa hàng bạn mua có cặp sách màu xanh dương không?"
@@ -15294,7 +15291,7 @@ const DEFAULT_LESSONS = [
             "audioText": "太漂亮了！我下午也想去买一个。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "我想买两 (liǎng: hai (số lượng))支蓝色圆珠笔。",
+              "我想买两支蓝色圆珠笔。",
               "你觉得这支铅笔好看吗？",
               "太漂亮了！我下午也想去买一个。",
               "在书店前面等我五分钟。"
@@ -15311,7 +15308,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Ôn Bài 6",
             "hanzi": "A: 你怎么去超市呢？",
-            "displayHanzi": "A: 你怎么去超市 (chāoshì: siêu thị)呢？",
+            "displayHanzi": "A: 你怎么去超市呢？",
             "pinyin": "Nǐ zěnme qù chāoshì ne?",
             "meaning": "Cậu đi gì đến siêu thị thế?"
           },
@@ -15368,7 +15365,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "A: 你怎么去超市呢？",
-            "question": "[Ôn tập Bài 6] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Anh ấy kể chuyện cho tôi nghe một cách hạnh phúc.",
               "Nếu cậu ấy tham gia cuộc thi lần này thì tôi sẽ tham gia.",
@@ -15380,11 +15377,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "好学生",
-            "question": "[Bài 7] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "好学生",
               "汉语词典",
-              "今天下午我买了一把新 (xīn: mới)尺子。",
+              "今天下午我买了一把新尺子。",
               "三支铅笔"
             ],
             "correctIndex": 0,
@@ -15392,7 +15389,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "谁啊？",
-            "question": "[Ôn tập Bài 3] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Hôm qua chúng tôi đi hiệu sách, anh ấy đã mua một cuốn từ điển.",
               "Ai đấy?",
@@ -15404,19 +15401,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "汉语老师",
-            "question": "[Bài 7] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "汉语老师",
               "一个人",
-              "今天下午我买了一把新 (xīn: mới)尺子。",
-              "我想买两 (liǎng: hai (số lượng))支蓝色圆珠笔。"
+              "今天下午我买了一把新尺子。",
+              "我想买两支蓝色圆珠笔。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 汉语老师 (Hànyǔ lǎoshī) → giáo viên tiếng Trung"
           },
           {
             "audioText": "三个朋友",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "chi phí sinh hoạt",
               "Con người anh ta thật là tốt!",
@@ -15442,7 +15439,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Mark",
             "hanzi": "我想买两本笔记本、一支铅笔和一本汉语词典。",
-            "displayHanzi": "我想买两 (liǎng: hai (số lượng))本笔记本、一支铅笔和一本汉语词典。",
+            "displayHanzi": "我想买两本笔记本、一支铅笔和一本汉语词典。",
             "pinyin": "Wǒ xiǎng mǎi liǎng běn bǐjìběn, yì zhī qiānbǐ hé yì běn Hànyǔ cídiǎn.",
             "meaning": "Tôi muốn mua hai quyển vở ghi, một cây bút chì và một quyển từ điển Hán ngữ."
           },
@@ -15464,7 +15461,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "马克，今天你想去商店买什么？ 我想买两本笔记本、一支铅笔和一本汉语词典。 你看这个蓝色的书包，好看吗？ 真漂亮！我也想买一个黄色的。",
-            "question": "[Nghe hiểu tình huống mới] Mark dự định mua chiếc cặp sách màu gì?",
+            "question": "Mark dự định mua chiếc cặp sách màu gì?",
             "options": [
               "Màu xanh dương",
               "Màu vàng (黄色)",
@@ -15476,7 +15473,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "马克，今天你想去商店买什么？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cô ấy tự tin tham gia cuộc thi.",
               "Bệnh viện ở bên phải trường học của chúng ta.",
@@ -15488,11 +15485,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我想买两本笔记本、一支铅笔和一本汉语词典。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "今天下午我买了一把新 (xīn: mới)尺子。",
-              "我想买两 (liǎng: hai (số lượng))本笔记本、一支铅笔和一本汉语词典。",
-              "我想买两 (liǎng: hai (số lượng))支蓝色圆珠笔。",
+              "今天下午我买了一把新尺子。",
+              "我想买两本笔记本、一支铅笔和一本汉语词典。",
+              "我想买两支蓝色圆珠笔。",
               "那本词典"
             ],
             "correctIndex": 1,
@@ -15500,7 +15497,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你看这个蓝色的书包，好看吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tốt nhất bạn nên tiếp tục rèn luyện sức khỏe đi!",
               "Chúng ta cùng qua bên đó xem đi!",
@@ -15592,7 +15589,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss7_1",
           "targetHanzi": "那个黄色的书包真漂亮",
-          "targetMeaning": "[Mở rộng] Chiếc cặp sách màu vàng kia đẹp thật đấy!",
+          "targetMeaning": "Chiếc cặp sách màu vàng kia đẹp thật đấy!",
           "pinyin": "Nàge huángsè de shūbāo zhēn piàoliang!",
           "tokens": [
             "那个",
@@ -15606,7 +15603,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss7_2",
           "targetHanzi": "在书店前面等我五分钟",
-          "targetMeaning": "[Mở rộng] Đợi tôi năm phút ở phía trước hiệu sách nhé.",
+          "targetMeaning": "Đợi tôi năm phút ở phía trước hiệu sách nhé.",
           "pinyin": "Zài shūdiàn qiánmian děng wǒ wǔ fēnzhōng.",
           "tokens": [
             "在",
@@ -15640,7 +15637,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss7_5",
           "targetHanzi": "到前面那个十字路口往右拐",
-          "targetMeaning": "[Ôn tập Bài 6] Đến ngã tư phía trước kia thì rẽ phải.",
+          "targetMeaning": "Đến ngã tư phía trước kia thì rẽ phải.",
           "pinyin": "Dào qiánmian nàge shízìlùkǒu wǎng yòu guǎi.",
           "tokens": [
             "到",
@@ -15649,13 +15646,12 @@ const DEFAULT_LESSONS = [
             "十字路口",
             "往右",
             "拐"
-          ],
-          "unlearnedHint": "Từ chưa học: 右 (yòu: phải)"
+          ]
         },
         {
           "id": "ss7_6",
           "targetHanzi": "你去学校附近的地方吗",
-          "targetMeaning": "[Ôn tập Bài 4] Bạn có đi đến chỗ gần trường không?",
+          "targetMeaning": "Bạn có đi đến chỗ gần trường không?",
           "pinyin": "Nǐ qù xuéxiào fùjìn de dìfang ma?",
           "tokens": [
             "你去",
@@ -15910,7 +15906,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr7_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Chiếc cặp sách màu vàng kia đẹp thật đấy!",
+          "promptText": "Chiếc cặp sách màu vàng kia đẹp thật đấy!",
           "expectedChinese": "那个黄色的书包真漂亮！",
           "acceptedPinyin": "nàge huángsè de shūbāo zhēn piàoliang",
           "hint": "Gợi ý Pinyin: Nàge huángsè de shūbāo zhēn piàoliang!",
@@ -15919,7 +15915,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr7_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Đợi tôi năm phút ở phía trước hiệu sách nhé.",
+          "promptText": "Đợi tôi năm phút ở phía trước hiệu sách nhé.",
           "expectedChinese": "在书店前面等我五分钟。",
           "acceptedPinyin": "zài shūdiàn qiánmian děng wǒ wǔ fēnzhōng",
           "hint": "Gợi ý Pinyin: Zài shūdiàn qiánmian děng wǒ wǔ fēnzhōng.",
@@ -16036,7 +16032,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr7_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 你觉得这支铅笔好看吗？",
+          "promptText": "你觉得这支铅笔好看吗？",
           "chineseAudioText": "你觉得这支铅笔好看吗？",
           "pinyin": "Nǐ juéde zhè zhī qiānbǐ hǎokàn ma?",
           "expectedMeaning": "Bạn thấy cây bút chì này có đẹp không?",
@@ -16051,7 +16047,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr7_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 我想买两 (liǎng: hai (số lượng))支蓝色圆珠笔。",
+          "promptText": "我想买两支蓝色圆珠笔。",
           "chineseAudioText": "我想买两支蓝色圆珠笔。",
           "pinyin": "Wǒ xiǎng mǎi liǎng zhī lán sè yuánzhūbǐ.",
           "expectedMeaning": "Tôi muốn mua hai cây bút bi màu xanh dương.",
@@ -16081,7 +16077,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr7_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 3] 他是我的老师。",
+          "promptText": "他是我的老师。",
           "chineseAudioText": "他是我的老师。",
           "pinyin": "Tā shì wǒ de lǎoshī.",
           "expectedMeaning": "Thầy ấy là thầy giáo của tớ.",
@@ -16482,7 +16478,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq7_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 4] Từ đã học “知道” (zhīdào) có nghĩa là gì?",
+          "question": "Từ đã học “知道” (zhīdào) có nghĩa là gì?",
           "options": [
             "vào học, lên lớp",
             "biết",
@@ -16495,7 +16491,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq7_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 5] Từ đã học “七” (qī) có nghĩa là gì?",
+          "question": "Từ đã học “七” (qī) có nghĩa là gì?",
           "options": [
             "màu vàng",
             "hỏi",
@@ -16508,7 +16504,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq7_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 1] Từ đã học “学生” (xuésheng) có nghĩa là gì?",
+          "question": "Từ đã học “学生” (xuésheng) có nghĩa là gì?",
           "options": [
             "buổi sáng, sáng",
             "kia, đó",
@@ -16521,7 +16517,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq7_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “那个黄色的书包真漂亮！” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “那个黄色的书包真漂亮！” có nghĩa tiếng Việt là gì?",
           "options": [
             "Chiếc cặp sách màu vàng kia đẹp thật đấy!",
             "Tôi là Trần Anh.",
@@ -16534,7 +16530,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq7_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nLan: 马克，今天你想去商店买什么？\nMark: 我想买两 (liǎng: hai (số lượng))本笔记本、一支铅笔和一本汉语词典。\nLan: 你看这个蓝色的书包，好看吗？\nMark: 真漂亮！我也想买一个黄色的。\n\nMark dự định mua chiếc cặp sách màu gì?",
+          "question": "Đọc đoạn hội thoại:\nLan: 马克，今天你想去商店买什么？\nMark: 我想买两本笔记本、一支铅笔和一本汉语词典。\nLan: 你看这个蓝色的书包，好看吗？\nMark: 真漂亮！我也想买一个黄色的。\n\nMark dự định mua chiếc cặp sách màu gì?",
           "options": [
             "Màu vàng (黄色)",
             "Không mua cặp sách",
@@ -17032,7 +17028,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct7_36",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我也想去买一支铅笔和一本汉语____。”\n(Gợi ý nghĩa: Tôi cũng muốn đi mua một cây bút chì và một quyển từ điển tiếng Hán.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我也想去买一支铅笔和一本汉语____。”",
         "options": [
           "左边",
           "词典",
@@ -17045,7 +17041,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct7_37",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我想买两本笔记本、一支铅笔和一本____词典。”\n(Gợi ý nghĩa: Tôi muốn mua hai quyển vở ghi, một cây bút chì và một quyển từ điển Hán ngữ.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我想买两本笔记本、一支铅笔和一本____词典。”",
         "options": [
           "尺子",
           "食堂",
@@ -17058,7 +17054,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct7_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你看这个蓝色的书包，____吗？”\n(Gợi ý nghĩa: Cậu xem chiếc cặp màu xanh dương này có đẹp không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你看这个蓝色的书包，____吗？”",
         "options": [
           "商店",
           "好看",
@@ -17071,7 +17067,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct7_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____漂亮了！我下午也想去买一个。”\n(Gợi ý nghĩa: Đẹp quá! Chiều nay tôi cũng muốn đi mua một cái.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____漂亮了！我下午也想去买一个。”",
         "options": [
           "零",
           "刻",
@@ -17097,7 +17093,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct7_41",
         "category": "vocab",
-        "question": "Từ Hán tự “汉语” (tiếng Trung Quốc) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “汉语” có phiên âm Pinyin đúng là gì?",
         "options": [
           "Hànyǔ",
           "jiā",
@@ -17221,7 +17217,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct7_50",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 前面  /  分钟  /  书店  /  等我  /  在  /  五\n(Nghĩa: “Đợi tôi năm phút ở phía trước hiệu sách nhé.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n前面  /  分钟  /  书店  /  等我  /  在  /  五",
         "options": [
           "书店在前面等我五分钟。",
           "分钟五等我前面书店在。",
@@ -17234,7 +17230,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct7_51",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 词典  /  汉语\n(Nghĩa: “từ điển tiếng Trung”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n词典  /  汉语",
         "options": [
           "她的圆珠笔",
           "这个书包",
@@ -17247,7 +17243,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct7_52",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 汉语  /  老师\n(Nghĩa: “giáo viên tiếng Trung”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n汉语  /  老师",
         "options": [
           "她的圆珠笔",
           "他的尺子",
@@ -17260,7 +17256,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct7_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 书包  /  那个  /  黄色  /  的  /  真  /  漂亮\n(Nghĩa: “Chiếc cặp sách màu vàng kia đẹp thật đấy!”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n书包  /  那个  /  黄色  /  的  /  真  /  漂亮",
         "options": [
           "那个黄色的书包真漂亮。",
           "黄色的书包真漂亮那个。",
@@ -17273,7 +17269,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct7_54",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“这____ (běn)书”\n(Nghĩa: quyển sách này)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“这____书”",
         "options": [
           "那",
           "书",
@@ -17286,7 +17282,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct7_55",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“有啊，还有黄色和白色的____ (shūbāo)。”\n(Nghĩa: Có chứ, còn có cả cặp màu vàng và màu trắng nữa.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“有啊，还有黄色和白色的____。”",
         "options": [
           "一起",
           "书包",
@@ -17299,7 +17295,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct7_56",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“后面的姑娘很____ (piàoliang)。”\n(Nghĩa: Cô gái ở phía sau rất xinh đẹp.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“后面的姑娘很____。”",
         "options": [
           "时候",
           "马克",
@@ -17650,14 +17646,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "阮日明",
             "hanzi": "阿姨，请问，一斤苹果多少钱？",
-            "displayHanzi": "阿姨，请问 (qǐngwèn: xin hỏi)，一斤苹果多少钱？",
+            "displayHanzi": "阿姨，请问，一斤苹果多少钱？",
             "pinyin": "Āyí, qǐngwèn, yī jīn píngguǒ duōshao qián?",
             "meaning": "Cô ơi, cho cháu hỏi một cân táo bao nhiêu tiền ạ?"
           },
           {
             "speaker": "服务员",
             "hanzi": "苹果很甜，一斤两块。你想买几斤？",
-            "displayHanzi": "苹果很甜，一斤两 (liǎng: hai (số lượng))块。你想买几斤？",
+            "displayHanzi": "苹果很甜，一斤两块。你想买几斤？",
             "pinyin": "Píngguǒ hěn tián, yī jīn liǎng kuài. Nǐ xiǎng mǎi jǐ jīn?",
             "meaning": "Táo ngọt lắm, một cân 2 tệ. Cháu muốn mua mấy cân?"
           },
@@ -17685,7 +17681,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "服务员",
             "hanzi": "不太酸, 很好吃。还有木瓜和火龙果很甜，你要买什么吗？",
-            "displayHanzi": "不 (bù: không)太酸, 很好吃。还 (hái: còn, vẫn)有木瓜和火龙果很甜，你要买什么吗？",
+            "displayHanzi": "不太酸, 很好吃。还有木瓜和火龙果很甜，你要买什么吗？",
             "pinyin": "Bú tài suān, hěn hǎo chī. Hái yǒu mùguā hé huǒlóng guǒ hěn tián, nǐ yào mǎi shénme ma?",
             "meaning": "Không chua lắm, ngon lắm. Còn có đu đủ và thanh long rất ngọt, cháu muốn mua thêm gì không?"
           },
@@ -17706,7 +17702,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "阮日明",
             "hanzi": "这里有果汁吗？",
-            "displayHanzi": "这里 (lǐ: trong)有果汁吗？",
+            "displayHanzi": "这里有果汁吗？",
             "pinyin": "Zhè li yǒu guǒzhī ma?",
             "meaning": "Ở đây có nước ép trái cây không ạ?"
           },
@@ -17734,7 +17730,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "阮日明",
             "hanzi": "那我买三斤苹果、两个木瓜、一个西瓜和三杯草莓果汁。",
-            "displayHanzi": "那我买三斤苹果、两 (liǎng: hai (số lượng))个木瓜、一个西瓜和三杯草莓果汁。",
+            "displayHanzi": "那我买三斤苹果、两个木瓜、一个西瓜和三杯草莓果汁。",
             "pinyin": "Nà wǒ mǎi sān jīn píngguǒ, liǎng gè mùguā, yí gè xīguā hé sān bēi cǎoméi guǒzhī.",
             "meaning": "Vậy cháu mua ba cân táo, hai quả đu đủ, một quả dưa hấu và ba cốc nước ép dâu tây ạ."
           },
@@ -17784,10 +17780,10 @@ const DEFAULT_LESSONS = [
             "audioText": "苹果很甜，一斤两块。你想买几斤？",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "这里 (lǐ: trong)的水果怎么卖？",
+              "这里的水果怎么卖？",
               "你买几个西瓜？",
-              "草莓果汁十块钱两 (liǎng: hai (số lượng))杯。",
-              "苹果很甜，一斤两 (liǎng: hai (số lượng))块。你想买几斤？"
+              "草莓果汁十块钱两杯。",
+              "苹果很甜，一斤两块。你想买几斤？"
             ],
             "correctIndex": 3,
             "explanation": "Câu vừa đọc: 苹果很甜，一斤两块。你想买几斤？ (Píngguǒ hěn tián, yī jīn liǎng kuài. Nǐ xiǎng mǎi jǐ jīn?) → Táo ngọt lắm, một cân 2 tệ. Cháu muốn mua mấy cân?"
@@ -17809,9 +17805,9 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "西瓜一个十五块。芒果一斤七块。",
-              "一个面包 (miànbāo: bánh mì)",
+              "一个面包",
               "一个人",
-              "我要一个西瓜，一共 (yígòng: tổng cộng)多少钱？"
+              "我要一个西瓜，一共多少钱？"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 西瓜一个十五块。芒果一斤七块。 (Xīguā yí gè shíwǔ kuài. Mángguǒ yī jīn qī kuài.) → Dưa hấu 15 tệ một quả. Xoài 7 tệ một cân."
@@ -17882,7 +17878,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "汉语词典",
-            "question": "[Ôn tập Bài 7] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "từ điển tiếng Trung",
               "Anh ta không cho tôi đi.",
@@ -17894,19 +17890,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你买几个西瓜？",
-            "question": "[Bài 8] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "一头 (tóu: con (trâu, bò) / đầu)牛 (niú: con bò)",
+              "一头牛",
               "你买几个西瓜？",
-              "一件 (jiàn: cái, chiếc (áo, việc))礼物 (lǐwù: quà)",
-              "小 (xiǎo: nhỏ, bé)姑娘 (gūniang: cô gái)，你今 (jīn: hôm nay, nay)年 (nián: năm)几岁 (suì: tuổi)？"
+              "一件礼物",
+              "小姑娘，你今年几岁？"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 你买几个西瓜？ (Nǐ mǎi jǐ gè xīguā?) → Cậu mua mấy quả dưa hấu thế?"
           },
           {
             "audioText": "食堂左边",
-            "question": "[Ôn tập Bài 4] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Phía bên trái nhà ăn",
               "Anh đừng đi! Có được không?",
@@ -17918,19 +17914,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你家有多少人？",
-            "question": "[Bài 8] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "你家有多少人？",
-              "你们班 (bān: lớp học)有多少学生？",
-              "一件 (jiàn: cái, chiếc (áo, việc))礼物 (lǐwù: quà)",
-              "一件 (jiàn: cái, chiếc (áo, việc))事 (shì: việc, chuyện)"
+              "你们班有多少学生？",
+              "一件礼物",
+              "一件事"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 你家有多少人？ (Nǐ jiā yǒu duōshao rén?) → Nhà cậu có bao nhiêu người?"
           },
           {
             "audioText": "你是日明吗？",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Anh ấy đi du học ở Bắc Kinh.",
               "Cậu là Nhật Minh phải không?",
@@ -17949,7 +17945,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Lan",
             "hanzi": "阿姨，请问西瓜和火龙果怎么卖？",
-            "displayHanzi": "阿姨，请问 (qǐngwèn: xin hỏi)西瓜和火龙果怎么卖？",
+            "displayHanzi": "阿姨，请问西瓜和火龙果怎么卖？",
             "pinyin": "Āyí, qǐngwèn xīguā hé huǒlóngguǒ zěnme mài?",
             "meaning": "Cô ơi, cho cháu hỏi dưa hấu và thanh long bán thế nào ạ?"
           },
@@ -17963,14 +17959,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Lan",
             "hanzi": "给我一个西瓜和两斤火龙果，还要两杯草莓果汁。",
-            "displayHanzi": "给我一个西瓜和两 (liǎng: hai (số lượng))斤火龙果，还 (hái: còn, vẫn)要两杯草莓果汁。",
+            "displayHanzi": "给我一个西瓜和两斤火龙果，还要两杯草莓果汁。",
             "pinyin": "Gěi wǒ yígè xīguā hé liǎng jīn huǒlóngguǒ, hái yào liǎng bēi cǎoméi guǒzhī.",
             "meaning": "Lấy cho cháu một quả dưa hấu, hai cân thanh long và hai cốc nước ép dâu."
           },
           {
             "speaker": "Cô bán",
             "hanzi": "果汁五块钱一杯，一共三十八块钱。",
-            "displayHanzi": "果汁五块钱一杯，一共 (yígòng: tổng cộng)三十八块钱。",
+            "displayHanzi": "果汁五块钱一杯，一共三十八块钱。",
             "pinyin": "Guǒzhī wǔ kuài qián yì bēi, yígòng sānshíbā kuài qián.",
             "meaning": "Nước ép 5 tệ một cốc, tổng cộng hết 38 tệ nhé."
           }
@@ -17978,7 +17974,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "阿姨，请问西瓜和火龙果怎么卖？ 西瓜十二块钱一个，火龙果八块钱一斤。 给我一个西瓜和两斤火龙果，还要两杯草莓果汁。 果汁五块钱一杯，一共三十八块钱。",
-            "question": "[Nghe hiểu tình huống mới] Lan đã mua tất cả những thứ gì?",
+            "question": "Lan đã mua tất cả những thứ gì?",
             "options": [
               "Chỉ mua 2 cân xoài",
               "2 quả đu đủ và 1 cốc nước ép",
@@ -17990,7 +17986,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "阿姨，请问西瓜和火龙果怎么卖？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cô ơi, cho cháu hỏi dưa hấu và thanh long bán thế nào ạ?",
               "Việc đó là thật.",
@@ -18002,19 +17998,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "西瓜十二块钱一个，火龙果八块钱一斤。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "一斤苹果多少钱？",
               "西瓜十二块钱一个，火龙果八块钱一斤。",
-              "今天星期几 (xīngqī jǐ: ngày thứ mấy)？",
-              "一个面包 (miànbāo: bánh mì)"
+              "今天星期几？",
+              "一个面包"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 西瓜十二块钱一个，火龙果八块钱一斤。 (Xīguā shí'èr kuài qián yígè, huǒlóngguǒ bā kuài qián yì jīn.) → Dưa hấu 12 tệ một quả, thanh long 8 tệ một cân."
           },
           {
             "audioText": "给我一个西瓜和两斤火龙果，还要两杯草莓果汁。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Rất nhiều người đi siêu thị mua đồ.",
               "Tôi đợi anh ấy về rồi nói chuyện này với anh ấy.",
@@ -18106,7 +18102,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss8_1",
           "targetHanzi": "阿姨今天的苹果甜不甜",
-          "targetMeaning": "[Mở rộng] Cô ơi, táo hôm nay có ngọt không ạ?",
+          "targetMeaning": "Cô ơi, táo hôm nay có ngọt không ạ?",
           "pinyin": "Āyí, jīntiān de píngguǒ tián bu tián?",
           "tokens": [
             "阿姨",
@@ -18115,13 +18111,12 @@ const DEFAULT_LESSONS = [
             "甜",
             "不",
             "甜"
-          ],
-          "unlearnedHint": "Từ chưa học: 不 (bù: không)"
+          ]
         },
         {
           "id": "ss8_2",
           "targetHanzi": "我想买两斤火龙果和一斤芒果",
-          "targetMeaning": "[Mở rộng] Cháu muốn mua hai cân thanh long và một cân xoài.",
+          "targetMeaning": "Cháu muốn mua hai cân thanh long và một cân xoài.",
           "pinyin": "Wǒ xiǎng mǎi liǎng jīn huǒlóngguǒ hé yì jīn mángguǒ.",
           "tokens": [
             "我想",
@@ -18130,8 +18125,7 @@ const DEFAULT_LESSONS = [
             "和一",
             "斤",
             "芒果"
-          ],
-          "unlearnedHint": "Từ chưa học: 两 (liǎng: hai (số lượng))"
+          ]
         },
         {
           "id": "ss8_3",
@@ -18162,7 +18156,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss8_5",
           "targetHanzi": "在书店前面等我五分钟",
-          "targetMeaning": "[Ôn tập Bài 7] Đợi tôi năm phút ở phía trước hiệu sách nhé.",
+          "targetMeaning": "Đợi tôi năm phút ở phía trước hiệu sách nhé.",
           "pinyin": "Zài shūdiàn qiánmian děng wǒ wǔ fēnzhōng.",
           "tokens": [
             "在",
@@ -18176,7 +18170,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss8_6",
           "targetHanzi": "我的朋友在食堂吃饭",
-          "targetMeaning": "[Ôn tập Bài 4] Bạn của tôi đang ăn cơm ở nhà ăn.",
+          "targetMeaning": "Bạn của tôi đang ăn cơm ở nhà ăn.",
           "pinyin": "Wǒ de péngyou zài shítáng chīfàn.",
           "tokens": [
             "我的",
@@ -18417,19 +18411,19 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr8_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Cô ơi, táo hôm nay có ngọt không ạ?",
+          "promptText": "Cô ơi, táo hôm nay có ngọt không ạ?",
           "expectedChinese": "阿姨，今天的苹果甜不甜？",
           "acceptedPinyin": "āyí jīntiān de píngguǒ tián bu tián",
-          "hint": "Gợi ý Pinyin: Āyí, jīntiān de píngguǒ tián bu tián? | Từ chưa học: 不 (bù: không)",
+          "hint": "Gợi ý Pinyin: Āyí, jīntiān de píngguǒ tián bu tián?",
           "explanation": "Cô ơi, táo hôm nay có ngọt không ạ? → 阿姨，今天的苹果甜不甜？ (Āyí, jīntiān de píngguǒ tián bu tián?)"
         },
         {
           "id": "tr8_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Cháu muốn mua hai cân thanh long và một cân xoài.",
+          "promptText": "Cháu muốn mua hai cân thanh long và một cân xoài.",
           "expectedChinese": "我想买两斤火龙果和一斤芒果。",
           "acceptedPinyin": "wǒ xiǎng mǎi liǎng jīn huǒlóngguǒ hé yì jīn mángguǒ",
-          "hint": "Gợi ý Pinyin: Wǒ xiǎng mǎi liǎng jīn huǒlóngguǒ hé yì jīn mángguǒ. | Từ chưa học: 两 (liǎng: hai (số lượng))",
+          "hint": "Gợi ý Pinyin: Wǒ xiǎng mǎi liǎng jīn huǒlóngguǒ hé yì jīn mángguǒ.",
           "explanation": "Cháu muốn mua hai cân thanh long và một cân xoài. → 我想买两斤火龙果和一斤芒果。 (Wǒ xiǎng mǎi liǎng jīn huǒlóngguǒ hé yì jīn mángguǒ.)"
         },
         {
@@ -18543,7 +18537,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr8_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 这里 (lǐ: trong)的水果怎么卖？",
+          "promptText": "这里的水果怎么卖？",
           "chineseAudioText": "这里的水果怎么卖？",
           "pinyin": "Zhèlǐ de shuǐguǒ zěnme mài?",
           "expectedMeaning": "Hoa quả ở đây bán thế nào vậy ạ?",
@@ -18558,7 +18552,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr8_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 草莓果汁十块钱两 (liǎng: hai (số lượng))杯。",
+          "promptText": "草莓果汁十块钱两杯。",
           "chineseAudioText": "草莓果汁十块钱两杯。",
           "pinyin": "Cǎoméi guǒzhī shí kuài qián liǎng bēi.",
           "expectedMeaning": "Nước ép dâu tây 10 tệ hai cốc.",
@@ -18588,7 +18582,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr8_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 4] 食堂左边",
+          "promptText": "食堂左边",
           "chineseAudioText": "食堂左边",
           "pinyin": "shítáng zuǒbian",
           "expectedMeaning": "Phía bên trái nhà ăn",
@@ -19025,7 +19019,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq8_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 7] Từ đã học “蓝色” (lán sè) có nghĩa là gì?",
+          "question": "Từ đã học “蓝色” (lán sè) có nghĩa là gì?",
           "options": [
             "hỏi",
             "màu xanh lam",
@@ -19038,7 +19032,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq8_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 5] Từ đã học “八” (bā) có nghĩa là gì?",
+          "question": "Từ đã học “八” (bā) có nghĩa là gì?",
           "options": [
             "anh ấy, cậu ấy... (ngôi thứ ba số ít chỉ nam)",
             "chua",
@@ -19051,7 +19045,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq8_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 5] Từ đã học “门” (mén) có nghĩa là gì?",
+          "question": "Từ đã học “门” (mén) có nghĩa là gì?",
           "options": [
             "cửa, cổng",
             "Canada",
@@ -19064,7 +19058,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq8_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “阿姨，今天的苹果甜不 (bù: không)甜？” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “阿姨，今天的苹果甜不甜？” có nghĩa tiếng Việt là gì?",
           "options": [
             "Cô ơi, táo hôm nay có ngọt không ạ?",
             "Lớp cậu có bao nhiêu học sinh?",
@@ -19077,7 +19071,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq8_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nLan: 阿姨，请问 (qǐngwèn: xin hỏi)西瓜和火龙果怎么卖？\nCô bán: 西瓜十二块钱一个，火龙果八块钱一斤。\nLan: 给我一个西瓜和两 (liǎng: hai (số lượng))斤火龙果，还 (hái: còn, vẫn)要两杯草莓果汁。\nCô bán: 果汁五块钱一杯，一共 (yígòng: tổng cộng)三十八块钱。\n\nLan đã mua tất cả những thứ gì?",
+          "question": "Đọc đoạn hội thoại:\nLan: 阿姨，请问西瓜和火龙果怎么卖？\nCô bán: 西瓜十二块钱一个，火龙果八块钱一斤。\nLan: 给我一个西瓜和两斤火龙果，还要两杯草莓果汁。\nCô bán: 果汁五块钱一杯，一共三十八块钱。\n\nLan đã mua tất cả những thứ gì?",
           "options": [
             "2 quả đu đủ và 1 cốc nước ép",
             "3 cân táo và 1 quả dưa hấu",
@@ -19575,7 +19569,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct8_36",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“那我买三斤苹果、两个____、一个西瓜和三杯草莓果汁。”\n(Gợi ý nghĩa: Vậy cháu mua ba cân táo, hai quả đu đủ, một quả dưa hấu và ba cốc nước ép dâu tây ạ.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“那我买三斤苹果、两个____、一个西瓜和三杯草莓果汁。”",
         "options": [
           "中间",
           "东边",
@@ -19588,7 +19582,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct8_37",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我买三斤。啊，阿姨，西瓜和芒果怎么____？”\n(Gợi ý nghĩa: Cháu mua ba cân ạ. À cô ơi, dưa hấu và xoài bán thế nào ạ?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我买三斤。啊，阿姨，西瓜和芒果怎么____？”",
         "options": [
           "支",
           "我",
@@ -19601,7 +19595,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct8_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“草莓果汁多少钱一____？”\n(Gợi ý nghĩa: Nước ép dâu tây bao nhiêu tiền một cốc ạ?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“草莓果汁多少钱一____？”",
         "options": [
           "去",
           "那",
@@ -19614,7 +19608,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct8_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你买几个____？”\n(Gợi ý nghĩa: Cậu mua mấy quả dưa hấu thế?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你买几个____？”",
         "options": [
           "西瓜",
           "右边",
@@ -19640,7 +19634,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct8_41",
         "category": "vocab",
-        "question": "Từ Hán tự “水果” (hoa quả, trái cây) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “水果” có phiên âm Pinyin đúng là gì?",
         "options": [
           "cháng",
           "guǎi",
@@ -19764,7 +19758,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct8_50",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 芒果  /  斤  /  和一  /  我想  /  买两斤  /  火龙果\n(Nghĩa: “Cháu muốn mua hai cân thanh long và một cân xoài.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n芒果  /  斤  /  和一  /  我想  /  买两斤  /  火龙果",
         "options": [
           "买两斤火龙果和一斤芒果我想。",
           "买两斤我想火龙果和一斤芒果。",
@@ -19777,7 +19771,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct8_51",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 阿姨  /  今天的  /  甜  /  甜  /  苹果  /  不\n(Nghĩa: “Cô ơi, táo hôm nay có ngọt không ạ?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n阿姨  /  今天的  /  甜  /  甜  /  苹果  /  不",
         "options": [
           "今天的阿姨苹果甜不甜。",
           "今天的苹果甜不甜阿姨。",
@@ -19790,7 +19784,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct8_52",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 五  /  等我  /  前面  /  书店  /  在  /  分钟\n(Nghĩa: “Đợi tôi năm phút ở phía trước hiệu sách nhé.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n五  /  等我  /  前面  /  书店  /  在  /  分钟",
         "options": [
           "分钟五等我前面书店在。",
           "在书店前面等我五分钟。",
@@ -19803,7 +19797,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct8_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 买  /  几  /  个  /  你  /  西瓜\n(Nghĩa: “Cậu mua mấy quả dưa hấu thế?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n买  /  几  /  个  /  你  /  西瓜",
         "options": [
           "西瓜个几买你。",
           "买你几个西瓜。",
@@ -19816,7 +19810,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct8_54",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“给我一个西瓜和两斤火龙果，还要两杯____ (cǎoméi)果汁。”\n(Nghĩa: Lấy cho cháu một quả dưa hấu, hai cân thanh long và hai cốc nước ép dâu.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“给我一个西瓜和两斤火龙果，还要两杯____果汁。”",
         "options": [
           "芒果",
           "前面",
@@ -19829,7 +19823,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct8_55",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“____ (āyí)今天的苹果甜不甜”\n(Nghĩa: Cô ơi, táo hôm nay có ngọt không ạ?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____今天的苹果甜不甜”",
         "options": [
           "来自",
           "黄色",
@@ -19842,7 +19836,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct8_56",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“苹果很甜，一斤两____ (kuài)。你想买几斤？”\n(Nghĩa: Táo ngọt lắm, một cân 2 tệ. Cháu muốn mua mấy cân?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“苹果很甜，一斤两____。你想买几斤？”",
         "options": [
           "块",
           "个",
@@ -20221,7 +20215,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "白茹雪",
             "hanzi": "小兰！你跟我一起去超市买衣服，好吗？",
-            "displayHanzi": "小兰！你跟 (gēn: cùng, với)我一起去超市买衣服，好吗？",
+            "displayHanzi": "小兰！你跟我一起去超市买衣服，好吗？",
             "pinyin": "Xiǎolán, nǐ gēn wǒ yīqǐ qù chāoshì mǎi yīfu, hǎo ma?",
             "meaning": "Tiểu Lan! Cậu đi siêu thị mua quần áo cùng tớ nhé, được không?"
           },
@@ -20242,28 +20236,28 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "白茹雪",
             "hanzi": "我想买一条裤子，一条裙子和一件大衣。",
-            "displayHanzi": "我想买一条裤子，一条裙子和一件 (jiàn: cái, chiếc (áo, việc))大衣。",
+            "displayHanzi": "我想买一条裤子，一条裙子和一件大衣。",
             "pinyin": "Wǒ xiǎng mǎi yī tiáo kùzi, yī tiáo qúnzi hé yī jiàn dàyī.",
             "meaning": "Tớ muốn mua một chiếc quần dài, một chiếc váy và một chiếc áo khoác dài."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "你觉得这条裤子好不好看？",
-            "displayHanzi": "你觉得这条裤子好不 (bù: không)好看？",
+            "displayHanzi": "你觉得这条裤子好不好看？",
             "pinyin": "Nǐ juéde zhè tiáo kùzi hǎo bu hǎokàn?",
             "meaning": "Cậu thấy chiếc quần này có đẹp không?"
           },
           {
             "speaker": "白茹雪",
             "hanzi": "我觉得颜色不太好看，我不喜欢绿色，我最喜欢红色和黄色。",
-            "displayHanzi": "我觉得颜色不 (bù: không)太好看，我不喜欢绿色，我最喜欢红色和黄色。",
+            "displayHanzi": "我觉得颜色不太好看，我不喜欢绿色，我最喜欢红色和黄色。",
             "pinyin": "Wǒ juéde yánsè bú tài hǎokàn, wǒ bù xǐhuan lǜsè, wǒ zuì xǐhuan hóngsè hé huángsè.",
             "meaning": "Tớ thấy màu sắc không đẹp lắm, tớ không thích màu xanh lá, tớ thích nhất màu đỏ và màu vàng."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "那这条红色的裤子行吗？你试试看！",
-            "displayHanzi": "那这条红色的裤子行 (xíng: được)吗？你试试看！",
+            "displayHanzi": "那这条红色的裤子行吗？你试试看！",
             "pinyin": "Nà zhè tiáo hóngsè de kùzi xíng ma? Nǐ shìshi kàn!",
             "meaning": "Vậy chiếc quần màu đỏ này có được không? Cậu mặc thử xem!"
           },
@@ -20277,21 +20271,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "你看，那边是大衣和裙子，好漂亮啊！",
-            "displayHanzi": "你看，那边 (biān: bên, phía)是大衣和裙子，好漂亮啊！",
+            "displayHanzi": "你看，那边是大衣和裙子，好漂亮啊！",
             "pinyin": "Nǐ kàn, nàbian shì dàyī hé qúnzi, hǎo piàoliang a!",
             "meaning": "Cậu nhìn kìa, bên kia là áo khoác và váy, đẹp quá đi!"
           },
           {
             "speaker": "白茹雪",
             "hanzi": "很好看，我买这件黄色的大衣和这条粉红色的裙子。你觉得这件大衣贵不贵？",
-            "displayHanzi": "很好看，我买这件 (jiàn: cái, chiếc (áo, việc))黄色的大衣和这条粉红色的裙子。你觉得这件大衣贵不 (bù: không)贵？",
+            "displayHanzi": "很好看，我买这件黄色的大衣和这条粉红色的裙子。你觉得这件大衣贵不贵？",
             "pinyin": "Hěn hǎokàn, wǒ mǎi zhè jiàn huángsè de dàyī hé zhè tiáo fěnhóngsè de qúnzi. Nǐ juéde zhè jiàn dàyī guì bu guì?",
             "meaning": "Đẹp lắm, tớ sẽ mua chiếc áo khoác màu vàng này và chiếc váy màu hồng này. Cậu thấy chiếc áo khoác này có đắt không?"
           },
           {
             "speaker": "范玉兰",
             "hanzi": "我觉得不贵，很便宜!",
-            "displayHanzi": "我觉得不 (bù: không)贵，很便宜!",
+            "displayHanzi": "我觉得不贵，很便宜!",
             "pinyin": "Wǒ juéde bú guì, hěn piányi!",
             "meaning": "Tớ thấy không đắt đâu, rất rẻ!"
           },
@@ -20348,9 +20342,9 @@ const DEFAULT_LESSONS = [
             "audioText": "好啊。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "小兰！你跟 (gēn: cùng, với)我一起去超市买衣服，好吗？",
-              "我不 (bù: không)会 (huì: Phó, đtnn biết)跟 (gēn: cùng, với)他一起回家。",
-              "他是班里 (bān li: trong lớp)最高 (gāo: cao)的同学。",
+              "小兰！你跟我一起去超市买衣服，好吗？",
+              "我不会跟他一起回家。",
+              "他是班里最高的同学。",
               "好啊。"
             ],
             "correctIndex": 3,
@@ -20372,10 +20366,10 @@ const DEFAULT_LESSONS = [
             "audioText": "我想买一条裤子，一条裙子和一件大衣。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "我想来 (lái: đến)超市买一些 (yīxiē: một ít, một vài)东西。",
-              "我想买一条裤子，一条裙子和一件 (jiàn: cái, chiếc (áo, việc))大衣。",
-              "他是班里 (bān li: trong lớp)最高 (gāo: cao)的同学。",
-              "她去银行 (xíng: được)取 (qǔ: lấy)钱了。"
+              "我想来超市买一些东西。",
+              "我想买一条裤子，一条裙子和一件大衣。",
+              "他是班里最高的同学。",
+              "她去银行取钱了。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 我想买一条裤子，一条裙子和一件大衣。 (Wǒ xiǎng mǎi yī tiáo kùzi, yī tiáo qúnzi hé yī jiàn dàyī.) → Tớ muốn mua một chiếc quần dài, một chiếc váy và một chiếc áo khoác dài."
@@ -20446,7 +20440,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "一座楼",
-            "question": "[Ôn tập Bài 8] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Lúc đó, người con gái ấy khóc không ngớt.",
               "Tôi chưa ăn cơm.",
@@ -20458,19 +20452,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我们下午去吧！",
-            "question": "[Bài 9] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "明天上午我们一起去超市吧！",
               "我们下午去吧！",
-              "他去北京 (Běijīng: Bắc Kinh)留学 (liúxué: du học)。",
-              "我听 (tīng: nghe)着 (zhe: đang (trạng thái))音乐看书。"
+              "他去北京留学。",
+              "我听着音乐看书。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 我们下午去吧！ (Wǒmen xiàwǔ qù ba!) → Buổi chiều chúng ta đi nhé!"
           },
           {
             "audioText": "食堂左边",
-            "question": "[Ôn tập Bài 4] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "quyển sách thú vị, có ý nghĩa",
               "Phía bên trái nhà ăn",
@@ -20482,19 +20476,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你买吧！",
-            "question": "[Bài 9] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "你买吧！",
-              "我觉得粉红色的裙子更 (gèng: càng)合适。",
-              "请问 (qǐngwèn: xin hỏi)，在哪儿结账？",
-              "我想来 (lái: đến)超市买一些 (yīxiē: một ít, một vài)东西。"
+              "我觉得粉红色的裙子更合适。",
+              "请问，在哪儿结账？",
+              "我想来超市买一些东西。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 你买吧！ (Nǐ mǎi ba!) → Cậu mua đi!"
           },
           {
             "audioText": "三个朋友",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Bài hát này dạo gần đây khá thịnh hành đấy!",
               "Ba người bạn (cách dùng đúng)",
@@ -20520,21 +20514,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Lan",
             "hanzi": "我想试一下那件白色的大衣和这条黑色的裤子。",
-            "displayHanzi": "我想试一下 (xià: dưới / xuống)那件 (jiàn: cái, chiếc (áo, việc))白色的大衣和这条黑色的裤子。",
+            "displayHanzi": "我想试一下那件白色的大衣和这条黑色的裤子。",
             "pinyin": "Wǒ xiǎng shì yíxià nà jiàn báisè de dàyī hé zhè tiáo hēisè de kùzi.",
             "meaning": "Tôi muốn mặc thử chiếc áo khoác trắng kia và chiếc quần đen này."
           },
           {
             "speaker": "Lan",
             "hanzi": "大衣很合适，颜色也不错，但是裤子有点儿大。",
-            "displayHanzi": "大衣很合适，颜色也不错，但是 (dànshì: nhưng, nhưng mà)裤子有点儿 (yǒudiǎnr: hơi hơi, có hơi)大 (dà: to, lớn)。",
+            "displayHanzi": "大衣很合适，颜色也不错，但是裤子有点儿大。",
             "pinyin": "Dàyī hěn héshì, yánsè yě búcuò, dànshì kùzi yǒudiǎnr dà.",
             "meaning": "Áo khoác rất vừa vặn, màu cũng đẹp, nhưng quần hơi rộng một chút."
           },
           {
             "speaker": "Nhân viên",
             "hanzi": "那你试试这条小一点儿的吧。",
-            "displayHanzi": "那你试试这条小 (xiǎo: nhỏ, bé)一点儿 (ér: con, (âm uốn lưỡi))的吧。",
+            "displayHanzi": "那你试试这条小一点儿的吧。",
             "pinyin": "Nà nǐ shìshi zhè tiáo xiǎo yìdiǎnr de ba.",
             "meaning": "Vậy bạn thử chiếc nhỏ hơn một chút này nhé."
           }
@@ -20542,7 +20536,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "你好，你想买什么衣服？ 我想试一下那件白色的大衣和这条黑色的裤子。 大衣很合适，颜色也不错，但是裤子有点儿大。 那你试试这条小一点儿的吧。",
-            "question": "[Nghe hiểu tình huống mới] Sau khi mặc thử, Lan nhận xét chiếc quần thế nào?",
+            "question": "Sau khi mặc thử, Lan nhận xét chiếc quần thế nào?",
             "options": [
               "Quá chật không mặc vừa",
               "Hơi rộng một chút (有点儿大)",
@@ -20554,7 +20548,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你好，你想买什么衣服？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Chào bạn, bạn muốn mua trang phục gì?",
               "Cô giáo không ở trong phòng làm việc.",
@@ -20566,10 +20560,10 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我想试一下那件白色的大衣和这条黑色的裤子。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "售货员说 (shuō: nói)那件 (jiàn: cái, chiếc (áo, việc))红色衣服不错。",
-              "我想试一下 (xià: dưới / xuống)那件 (jiàn: cái, chiếc (áo, việc))白色的大衣和这条黑色的裤子。",
+              "售货员说那件红色衣服不错。",
+              "我想试一下那件白色的大衣和这条黑色的裤子。",
               "好啊。",
               "你买吧！"
             ],
@@ -20578,7 +20572,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "大衣很合适，颜色也不错，但是裤子有点儿大。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Áo khoác rất vừa vặn, màu cũng đẹp, nhưng quần hơi rộng một chút.",
               "Bọn họ tặng cho tôi rất nhiều quà.",
@@ -20670,7 +20664,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss9_1",
           "targetHanzi": "明天上午我们一起去超市吧",
-          "targetMeaning": "[Mở rộng] Sáng mai chúng ta cùng đi siêu thị nhé!",
+          "targetMeaning": "Sáng mai chúng ta cùng đi siêu thị nhé!",
           "pinyin": "Míngtiān shàngwǔ wǒmen yīqǐ qù chāoshì ba!",
           "tokens": [
             "明天",
@@ -20684,7 +20678,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss9_2",
           "targetHanzi": "这件大衣的颜色我很喜欢",
-          "targetMeaning": "[Mở rộng] Màu sắc của chiếc áo khoác dài này tôi rất thích.",
+          "targetMeaning": "Màu sắc của chiếc áo khoác dài này tôi rất thích.",
           "pinyin": "Zhè jiàn dàyī de yánsè wǒ hěn xǐhuan.",
           "tokens": [
             "这件",
@@ -20693,8 +20687,7 @@ const DEFAULT_LESSONS = [
             "我",
             "很",
             "喜欢"
-          ],
-          "unlearnedHint": "Từ chưa học: 件 (jiàn: cái, chiếc (áo, việc))"
+          ]
         },
         {
           "id": "ss9_3",
@@ -20724,7 +20717,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss9_5",
           "targetHanzi": "这里的水果怎么卖",
-          "targetMeaning": "[Ôn tập Bài 8] Hoa quả ở đây bán thế nào vậy ạ?",
+          "targetMeaning": "Hoa quả ở đây bán thế nào vậy ạ?",
           "pinyin": "Zhèlǐ de shuǐguǒ zěnme mài?",
           "tokens": [
             "这",
@@ -20733,13 +20726,12 @@ const DEFAULT_LESSONS = [
             "水果",
             "怎么",
             "卖"
-          ],
-          "unlearnedHint": "Từ chưa học: 里 (lǐ: trong)"
+          ]
         },
         {
           "id": "ss9_6",
           "targetHanzi": "他来自哪个国家",
-          "targetMeaning": "[Ôn tập Bài 3] Anh ấy đến từ đất nước nào?",
+          "targetMeaning": "Anh ấy đến từ đất nước nào?",
           "pinyin": "Tā láizì nǎ gè guójiā?",
           "tokens": [
             "他",
@@ -20997,7 +20989,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr9_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Sáng mai chúng ta cùng đi siêu thị nhé!",
+          "promptText": "Sáng mai chúng ta cùng đi siêu thị nhé!",
           "expectedChinese": "明天上午我们一起去超市吧！",
           "acceptedPinyin": "míngtiān shàngwǔ wǒmen yīqǐ qù chāoshì ba",
           "hint": "Gợi ý Pinyin: Míngtiān shàngwǔ wǒmen yīqǐ qù chāoshì ba!",
@@ -21006,10 +20998,10 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr9_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Màu sắc của chiếc áo khoác dài này tôi rất thích.",
+          "promptText": "Màu sắc của chiếc áo khoác dài này tôi rất thích.",
           "expectedChinese": "这件大衣的颜色我很喜欢。",
           "acceptedPinyin": "zhè jiàn dàyī de yánsè wǒ hěn xǐhuan",
-          "hint": "Gợi ý Pinyin: Zhè jiàn dàyī de yánsè wǒ hěn xǐhuan. | Từ chưa học: 件 (jiàn: cái, chiếc (áo, việc))",
+          "hint": "Gợi ý Pinyin: Zhè jiàn dàyī de yánsè wǒ hěn xǐhuan.",
           "explanation": "Màu sắc của chiếc áo khoác dài này tôi rất thích. → 这件大衣的颜色我很喜欢。 (Zhè jiàn dàyī de yánsè wǒ hěn xǐhuan.)"
         },
         {
@@ -21123,7 +21115,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr9_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 我觉得粉红色的裙子更 (gèng: càng)合适。",
+          "promptText": "我觉得粉红色的裙子更合适。",
           "chineseAudioText": "我觉得粉红色的裙子更合适。",
           "pinyin": "Wǒ juéde fěnhóngsè de qúnzi gèng héshì.",
           "expectedMeaning": "Tôi thấy chiếc váy màu hồng phù hợp hơn.",
@@ -21138,7 +21130,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr9_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 请问 (qǐngwèn: xin hỏi)，在哪儿结账？",
+          "promptText": "请问，在哪儿结账？",
           "chineseAudioText": "请问，在哪儿结账？",
           "pinyin": "Qǐngwèn, zài nǎr jiézhàng?",
           "expectedMeaning": "Xin hỏi thanh toán ở đâu ạ?",
@@ -21153,7 +21145,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr9_zh_3",
           "direction": "zh_to_vi",
-          "promptText": "我们一起去那边 (biān: bên, phía)吧！",
+          "promptText": "我们一起去那边吧！",
           "chineseAudioText": "我们一起去那边吧！",
           "pinyin": "Wǒmen yīqǐ qù nàbian ba!",
           "expectedMeaning": "Chúng ta cùng qua bên đó xem đi!",
@@ -21168,7 +21160,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr9_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 4] 食堂左边",
+          "promptText": "食堂左边",
           "chineseAudioText": "食堂左边",
           "pinyin": "shítáng zuǒbian",
           "expectedMeaning": "Phía bên trái nhà ăn",
@@ -21599,7 +21591,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq9_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 1] Từ đã học “是” (shì) có nghĩa là gì?",
+          "question": "Từ đã học “是” (shì) có nghĩa là gì?",
           "options": [
             "quần",
             "ba",
@@ -21612,7 +21604,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq9_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 4] Từ đã học “食堂” (shítáng) có nghĩa là gì?",
+          "question": "Từ đã học “食堂” (shítáng) có nghĩa là gì?",
           "options": [
             "ngài, ông, bà... (cách gọi tôn trọng và lịch sự dành cho những người có địa vị cao...)",
             "bảy",
@@ -21625,7 +21617,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq9_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 1] Từ đã học “晚上” (wǎnshàng) có nghĩa là gì?",
+          "question": "Từ đã học “晚上” (wǎnshàng) có nghĩa là gì?",
           "options": [
             "ngã tư",
             "bút bi",
@@ -21638,7 +21630,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq9_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “明天上午我们一起去超市吧！” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “明天上午我们一起去超市吧！” có nghĩa tiếng Việt là gì?",
           "options": [
             "Một cái ô",
             "Bài hát này dạo gần đây khá thịnh hành đấy!",
@@ -21651,7 +21643,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq9_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nNhân viên: 你好，你想买什么衣服？\nLan: 我想试一下 (xià: dưới / xuống)那件 (jiàn: cái, chiếc (áo, việc))白色的大衣和这条黑色的裤子。\nLan: 大衣很合适，颜色也不错，但是 (dànshì: nhưng, nhưng mà)裤子有点儿 (yǒudiǎnr: hơi hơi, có hơi)大 (dà: to, lớn)。\nNhân viên: 那你试试这条小 (xiǎo: nhỏ, bé)一点儿 (ér: con, (âm uốn lưỡi))的吧。\n\nSau khi mặc thử, Lan nhận xét chiếc quần thế nào?",
+          "question": "Đọc đoạn hội thoại:\nNhân viên: 你好，你想买什么衣服？\nLan: 我想试一下那件白色的大衣和这条黑色的裤子。\nLan: 大衣很合适，颜色也不错，但是裤子有点儿大。\nNhân viên: 那你试试这条小一点儿的吧。\n\nSau khi mặc thử, Lan nhận xét chiếc quần thế nào?",
           "options": [
             "Màu sắc không đẹp",
             "Quá chật không mặc vừa",
@@ -22149,7 +22141,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct9_36",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我想买一条裤子，一条____和一件大衣。”\n(Gợi ý nghĩa: Tớ muốn mua một chiếc quần dài, một chiếc váy và một chiếc áo khoác dài.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我想买一条裤子，一条____和一件大衣。”",
         "options": [
           "东边",
           "阿姨",
@@ -22162,7 +22154,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct9_37",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____，很合适。我买这条吧！”\n(Gợi ý nghĩa: Khá ổn, rất vừa vặn. Tớ mua chiếc này nhé!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____，很合适。我买这条吧！”",
         "options": [
           "不错",
           "哪里",
@@ -22175,7 +22167,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct9_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“好的，我们去____吧！”\n(Gợi ý nghĩa: Được rồi, chúng ta đi thanh toán thôi!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“好的，我们去____吧！”",
         "options": [
           "宿舍",
           "再见",
@@ -22188,7 +22180,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct9_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“大衣很合适，颜色也不错，但是____有点儿大。”\n(Gợi ý nghĩa: Áo khoác rất vừa vặn, màu cũng đẹp, nhưng quần hơi rộng một chút.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“大衣很合适，颜色也不错，但是____有点儿大。”",
         "options": [
           "好看",
           "漂亮",
@@ -22214,7 +22206,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct9_41",
         "category": "vocab",
-        "question": "Từ Hán tự “不错” (được, tốt, không tồi) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “不错” có phiên âm Pinyin đúng là gì?",
         "options": [
           "shàngwǔ",
           "zhōngwǔ",
@@ -22338,7 +22330,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct9_50",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 个  /  哪  /  来自  /  他  /  国家\n(Nghĩa: “Anh ấy đến từ đất nước nào?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n个  /  哪  /  来自  /  他  /  国家",
         "options": [
           "国家个哪来自他。",
           "他来自哪个国家。",
@@ -22351,7 +22343,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct9_51",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 上午  /  一起  /  去  /  超市吧  /  我们  /  明天\n(Nghĩa: “Sáng mai chúng ta cùng đi siêu thị nhé!”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n上午  /  一起  /  去  /  超市吧  /  我们  /  明天",
         "options": [
           "超市吧去一起我们上午明天。",
           "明天上午我们一起去超市吧。",
@@ -22364,7 +22356,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct9_52",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 去  /  吧  /  下午  /  我们\n(Nghĩa: “Buổi chiều chúng ta đi nhé!”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n去  /  吧  /  下午  /  我们",
         "options": [
           "下午我们去吧。",
           "我们下午去吧。",
@@ -22377,7 +22369,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct9_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 大衣的  /  这件  /  我  /  喜欢  /  很  /  颜色\n(Nghĩa: “Màu sắc của chiếc áo khoác dài này tôi rất thích.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n大衣的  /  这件  /  我  /  喜欢  /  很  /  颜色",
         "options": [
           "这件大衣的颜色我很喜欢。",
           "大衣的这件颜色我很喜欢。",
@@ -22390,7 +22382,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct9_54",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“那你试试这条小一点儿的____ (ba)。”\n(Nghĩa: Vậy bạn thử chiếc nhỏ hơn một chút này nhé.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“那你试试这条小一点儿的____。”",
         "options": [
           "二",
           "钱",
@@ -22403,7 +22395,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct9_55",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“我想____ (shì)一下那件白色的大衣和这条黑色的裤子。”\n(Nghĩa: Tôi muốn mặc thử chiếc áo khoác trắng kia và chiếc quần đen này.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我想____一下那件白色的大衣和这条黑色的裤子。”",
         "options": [
           "吧",
           "试",
@@ -22416,7 +22408,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct9_56",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“小兰！你跟我一起去____ (chāoshì)买衣服，好吗？”\n(Nghĩa: Tiểu Lan! Cậu đi siêu thị mua quần áo cùng tớ nhé, được không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“小兰！你跟我一起去____买衣服，好吗？”",
         "options": [
           "超市",
           "晚上",
@@ -22795,21 +22787,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "小雪，下午你跟我一起去商店买书本吧！",
-            "displayHanzi": "小雪 (Xiǎoxuě: Tiểu Tuyết)，下午你跟 (gēn: cùng, với)我一起去商店买书本吧！",
+            "displayHanzi": "小雪，下午你跟我一起去商店买书本吧！",
             "pinyin": "Xiǎoxuě, xiàwǔ nǐ gēn wǒ yīqǐ qù shāngdiàn mǎi shūběn ba!",
             "meaning": "Tiểu Tuyết, chiều nay cậu cùng tớ ra cửa hàng mua sách vở nhé!"
           },
           {
             "speaker": "白茹雪",
             "hanzi": "你怎么到现在还去商店买东西啊！在中国，人们都在网上买了！",
-            "displayHanzi": "你怎么到现在还去商店买东西啊！在中国 (Zhōngguó: Trung Quốc)，人们都在网上买了！",
+            "displayHanzi": "你怎么到现在还去商店买东西啊！在中国，人们都在网上买了！",
             "pinyin": "Nǐ zěnme dào xiànzài hái qù shāngdiàn mǎi dōngxi a! Zài Zhōngguó, rénmen dōu zài wǎngshàng mǎi le!",
             "meaning": "Sao đến bây giờ cậu vẫn còn ra cửa hàng mua đồ vậy! Ở Trung Quốc mọi người đều mua trên mạng hết rồi!"
           },
           {
             "speaker": "范玉兰",
             "hanzi": "我不常上网买东西。你经常在网上买东西吗？",
-            "displayHanzi": "我不常 (bù cháng: không thường xuyên, ít khi)上网买东西。你经常在网上买东西吗？",
+            "displayHanzi": "我不常上网买东西。你经常在网上买东西吗？",
             "pinyin": "Wǒ bù cháng shàngwǎng mǎi dōngxi. Nǐ jīngcháng zài wǎngshàng mǎi dōngxi ma?",
             "meaning": "Tớ ít khi lên mạng mua đồ. Cậu có hay mua đồ qua mạng không?"
           },
@@ -22830,14 +22822,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "白茹雪",
             "hanzi": "真的。网上购物还挺方便，你只要有电脑或者手机，不用出门也能买到东西。很容易是吧！",
-            "displayHanzi": "真的。网上购物还挺方便，你只 (zhī: con)要有电脑或者手机，不 (bù: không)用 (yòng: dùng)出门也能买到东西。很容易是吧！",
+            "displayHanzi": "真的。网上购物还挺方便，你只要有电脑或者手机，不用出门也能买到东西。很容易是吧！",
             "pinyin": "Zhēn de. Wǎngshàng gòuwù hái tǐng fāngbiàn, nǐ zhǐyào yǒu diànnǎo huòzhě shǒujī, búyòng chūmén yě néng mǎi dào dōngxi. Hěn róngyì shì ba!",
             "meaning": "Thật đấy. Mua sắm trực tuyến khá tiện lợi, chỉ cần có máy tính hoặc điện thoại là không cần ra khỏi nhà cũng mua được đồ. Rất dễ đúng không nào!"
           },
           {
             "speaker": "范玉兰",
             "hanzi": "哇！太方便了！但是网上的东西价格怎么样？",
-            "displayHanzi": "哇 (wa: oa, chà (cảm thán))！太方便了！但是网上的东西价格怎么样？",
+            "displayHanzi": "哇！太方便了！但是网上的东西价格怎么样？",
             "pinyin": "Wa! Tài fāngbiàn le! Dànshì wǎngshàng de dōngxi jiàgé zěnmeyàng?",
             "meaning": "Chà! Tiện lợi quá! Nhưng giá cả đồ trên mạng thế nào?"
           },
@@ -22865,14 +22857,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "那怎么才能买到好东西？",
-            "displayHanzi": "那怎么才 (cái: mới)能买到好东西？",
+            "displayHanzi": "那怎么才能买到好东西？",
             "pinyin": "Nà zěnme cái néng mǎidào hǎo dōngxi?",
             "meaning": "Vậy làm sao để mua được đồ tốt?"
           },
           {
             "speaker": "白茹雪",
             "hanzi": "这个不好说。你上网吧，我会告诉你怎么买。",
-            "displayHanzi": "这个不 (bù: không)好说 (shuō: nói)。你上网吧，我会 (huì: Phó, đtnn biết)告诉你怎么买。",
+            "displayHanzi": "这个不好说。你上网吧，我会告诉你怎么买。",
             "pinyin": "Zhège bù hǎoshuō. Nǐ shàngwǎng ba, wǒ huì gàosù nǐ zěnme mǎi.",
             "meaning": "Chuyện này khó nói lắm. Cậu lên mạng đi, tớ sẽ chỉ cậu cách mua."
           },
@@ -22902,9 +22894,9 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "网上有很多书本，比如词典和笔记本。",
-              "你怎么到现在还去商店买东西啊！在中国 (Zhōngguó: Trung Quốc)，人们都在网上买了！",
-              "我不常 (bù cháng: không thường xuyên, ít khi)跟 (gēn: cùng, với)李君 (Lǐ Jūn: Lý Quân)联系。",
-              "我不常 (bù cháng: không thường xuyên, ít khi)上网买东西。你经常在网上买东西吗？"
+              "你怎么到现在还去商店买东西啊！在中国，人们都在网上买了！",
+              "我不常跟李君联系。",
+              "我不常上网买东西。你经常在网上买东西吗？"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 你怎么到现在还去商店买东西啊！在中国，人们都在网上买了！ (Nǐ zěnme dào xiànzài hái qù shāngdiàn mǎi dōngxi a! Zài Zhōngguó, rénmen dōu zài wǎngshàng mǎi le!) → Sao đến bây giờ cậu vẫn còn ra cửa hàng mua đồ vậy! Ở Trung Quốc mọi người đều mua trên mạng hết rồi!"
@@ -22928,7 +22920,7 @@ const DEFAULT_LESSONS = [
               "是啊。在网上你可以买到很多东西，比如衣服、手表、眼镜、书本等等。",
               "请告诉我这副眼镜多少钱。",
               "这本书是我的。",
-              "太难 (nán: khó)了，我不 (bù: không)知道该怎么做 (zuò: làm)！"
+              "太难了，我不知道该怎么做！"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 是啊。在网上你可以买到很多东西，比如衣服、手表、眼镜、书本等等。 (Shì a. Zài wǎngshàng nǐ kěyǐ mǎidào hěn duō dōngxi, bǐrú yīfu, shǒubiǎo, yǎnjìng, shūběn děngděng.) → Có chứ. Trên mạng cậu có thể mua được rất nhiều thứ, ví dụ như quần áo, đồng hồ, kính mắt, sách vở, v.v."
@@ -22999,7 +22991,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "我们下午去吧！",
-            "question": "[Ôn tập Bài 9] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Em chào thầy/cô ạ",
               "Cậu nên ngủ sớm dậy sớm.",
@@ -23011,19 +23003,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "这本书是我的。",
-            "question": "[Bài 10] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "小雪 (Xiǎoxuě: Tiểu Tuyết)，下午你跟 (gēn: cùng, với)我一起去商店买书本吧！",
+              "小雪，下午你跟我一起去商店买书本吧！",
               "质量呢？",
               "这本书是我的。",
-              "我不常 (bù cháng: không thường xuyên, ít khi)跟 (gēn: cùng, với)李君 (Lǐ Jūn: Lý Quân)联系。"
+              "我不常跟李君联系。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 这本书是我的。 (Zhè běn shū shì wǒ de.) → Quyển sách này là sách của tôi."
           },
           {
             "audioText": "我明天上午八点上课。",
-            "question": "[Ôn tập Bài 5] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "tiếng gõ cửa",
               "Tám giờ sáng ngày mai tớ đi học.",
@@ -23035,19 +23027,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "这条裙子是你的吗？",
-            "question": "[Bài 10] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "这条裙子是你的吗？",
               "网上有很多书本，比如词典和笔记本。",
-              "小雪 (Xiǎoxuě: Tiểu Tuyết)，下午你跟 (gēn: cùng, với)我一起去商店买书本吧！",
-              "我不常 (bù cháng: không thường xuyên, ít khi)跟 (gēn: cùng, với)李君 (Lǐ Jūn: Lý Quân)联系。"
+              "小雪，下午你跟我一起去商店买书本吧！",
+              "我不常跟李君联系。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 这条裙子是你的吗？ (Zhè tiáo qúnzi shì nǐ de ma?) → Cái váy này là của em à?"
           },
           {
             "audioText": "晚上好！",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Chào buổi tối!",
               "Tôi so sánh đáp án với anh ấy.",
@@ -23073,14 +23065,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Minh",
             "hanzi": "不是，我是在网上买的，不用出门也很方便。",
-            "displayHanzi": "不 (bù: không)是，我是在网上买的，不用 (yòng: dùng)出门也很方便。",
+            "displayHanzi": "不是，我是在网上买的，不用出门也很方便。",
             "pinyin": "Bú shì, wǒ shì zài wǎngshàng mǎi de, búyòng chūmén yě hěn fāngbiàn.",
             "meaning": "Không, tôi mua trên mạng đấy, không cần ra ngoài mà rất tiện lợi."
           },
           {
             "speaker": "Mark",
             "hanzi": "网上的价格便宜吗？质量好不好？",
-            "displayHanzi": "网上的价格便宜吗？质量好不 (bù: không)好？",
+            "displayHanzi": "网上的价格便宜吗？质量好不好？",
             "pinyin": "Wǎngshàng de jiàgé piányi ma? Zhìliàng hǎo bu hǎo?",
             "meaning": "Giá trên mạng có rẻ không? Chất lượng có tốt không?"
           },
@@ -23095,7 +23087,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "你这副新眼镜是在超市买的吗？ 不是，我是在网上买的，不用出门也很方便。 网上的价格便宜吗？质量好不好？ 价格比商店便宜，但是买的时候要小心看质量。",
-            "question": "[Nghe hiểu tình huống mới] Theo lời Minh, khi mua hàng trên mạng cần chú ý điều gì?",
+            "question": "Theo lời Minh, khi mua hàng trên mạng cần chú ý điều gì?",
             "options": [
               "Chỉ cần chọn món đắt nhất",
               "Không được mua kính mắt trên mạng",
@@ -23107,7 +23099,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你这副新眼镜是在超市买的吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cặp kính mắt mới này của bạn mua ở siêu thị à?",
               "Tớ học được môn Thái cực quyền rồi.",
@@ -23119,19 +23111,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "不是，我是在网上买的，不用出门也很方便。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "网上买的手表质量怎么样？",
               "真的吗？",
               "有的质量挺好，但是也有的太差了！你要小心啊！",
-              "不 (bù: không)是，我是在网上买的，不用 (yòng: dùng)出门也很方便。"
+              "不是，我是在网上买的，不用出门也很方便。"
             ],
             "correctIndex": 3,
             "explanation": "Câu vừa đọc: 不是，我是在网上买的，不用出门也很方便。 (Bú shì, wǒ shì zài wǎngshàng mǎi de, búyòng chūmén yě hěn fāngbiàn.) → Không, tôi mua trên mạng đấy, không cần ra ngoài mà rất tiện lợi."
           },
           {
             "audioText": "网上的价格便宜吗？质量好不好？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Hai người họ dường như là bạn bè thân thiết đã nhiều năm rồi.",
               "Bạn có thể đi mua mũ cùng với tôi không?",
@@ -23223,7 +23215,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss10_1",
           "targetHanzi": "网上买的手表质量怎么样",
-          "targetMeaning": "[Mở rộng] Chất lượng đồng hồ mua trên mạng thế nào?",
+          "targetMeaning": "Chất lượng đồng hồ mua trên mạng thế nào?",
           "pinyin": "Wǎngshàng mǎi de shǒubiǎo zhìliàng zěnmeyàng?",
           "tokens": [
             "网上",
@@ -23237,7 +23229,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss10_2",
           "targetHanzi": "请告诉我这副眼镜多少钱",
-          "targetMeaning": "[Mở rộng] Làm ơn cho tôi biết cặp kính mắt này bao nhiêu tiền.",
+          "targetMeaning": "Làm ơn cho tôi biết cặp kính mắt này bao nhiêu tiền.",
           "pinyin": "Qǐng gàosu wǒ zhè fù yǎnjìng duōshao qián.",
           "tokens": [
             "请告诉",
@@ -23279,7 +23271,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss10_5",
           "targetHanzi": "她叫什么名字",
-          "targetMeaning": "[Ôn tập Bài 2] Cô ấy tên là gì?",
+          "targetMeaning": "Cô ấy tên là gì?",
           "pinyin": "Tā jiào shénme míngzi?",
           "tokens": [
             "她",
@@ -23291,7 +23283,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss10_6",
           "targetHanzi": "你去学校附近的地方吗",
-          "targetMeaning": "[Ôn tập Bài 4] Bạn có đi đến chỗ gần trường không?",
+          "targetMeaning": "Bạn có đi đến chỗ gần trường không?",
           "pinyin": "Nǐ qù xuéxiào fùjìn de dìfang ma?",
           "tokens": [
             "你去",
@@ -23574,7 +23566,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr10_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Chất lượng đồng hồ mua trên mạng thế nào?",
+          "promptText": "Chất lượng đồng hồ mua trên mạng thế nào?",
           "expectedChinese": "网上买的手表质量怎么样？",
           "acceptedPinyin": "wǎngshàng mǎi de shǒubiǎo zhìliàng zěnmeyàng",
           "hint": "Gợi ý Pinyin: Wǎngshàng mǎi de shǒubiǎo zhìliàng zěnmeyàng?",
@@ -23583,7 +23575,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr10_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Trên mạng có rất nhiều sách vở, ví dụ như từ điển và vở ghi.",
+          "promptText": "Trên mạng có rất nhiều sách vở, ví dụ như từ điển và vở ghi.",
           "expectedChinese": "网上有很多书本，比如词典和笔记本。",
           "acceptedPinyin": "wǎngshàng yǒu hěnduō shūběn bǐrú cídiǎn hé bǐjìběn",
           "hint": "Gợi ý Pinyin: Wǎngshàng yǒu hěnduō shūběn, bǐrú cídiǎn hé bǐjìběn.",
@@ -23700,7 +23692,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr10_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 请告诉我这副眼镜多少钱。",
+          "promptText": "请告诉我这副眼镜多少钱。",
           "chineseAudioText": "请告诉我这副眼镜多少钱。",
           "pinyin": "Qǐng gàosu wǒ zhè fù yǎnjìng duōshao qián.",
           "expectedMeaning": "Làm ơn cho tôi biết cặp kính mắt này bao nhiêu tiền.",
@@ -23715,7 +23707,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr10_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 用 (yòng: dùng)手机上网购物非常 (fēicháng: cực kì)方便。",
+          "promptText": "用手机上网购物非常方便。",
           "chineseAudioText": "用手机上网购物非常方便。",
           "pinyin": "Yòng shǒujī shàngwǎng gòuwù fēicháng fāngbiàn.",
           "expectedMeaning": "Dùng điện thoại lên mạng mua sắm vô cùng tiện lợi.",
@@ -23730,7 +23722,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr10_zh_3",
           "direction": "zh_to_vi",
-          "promptText": "天气 (tiānqì: thời tiết)太舒服 (shūfu: thoải mái, dễ chịu)了！",
+          "promptText": "天气太舒服了！",
           "chineseAudioText": "天气太舒服了！",
           "pinyin": "Tiānqì tài shūfu le!",
           "expectedMeaning": "Thời tiết dễ chịu quá!",
@@ -23745,7 +23737,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr10_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 5] 我明天上午八点上课。",
+          "promptText": "我明天上午八点上课。",
           "chineseAudioText": "我明天上午八点上课。",
           "pinyin": "Wǒ míngtiān shàngwǔ bā diǎn shàngkè.",
           "expectedMeaning": "Tám giờ sáng ngày mai tớ đi học.",
@@ -24200,7 +24192,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq10_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 1] Từ đã học “晚上” (wǎnshàng) có nghĩa là gì?",
+          "question": "Từ đã học “晚上” (wǎnshàng) có nghĩa là gì?",
           "options": [
             "cùng nhau",
             "nói cho",
@@ -24213,7 +24205,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq10_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 2] Từ đã học “她” (tā) có nghĩa là gì?",
+          "question": "Từ đã học “她” (tā) có nghĩa là gì?",
           "options": [
             "cô ấy, bà ấy, chị ấy,... (ngôi thứ ba số ít chỉ nữ)",
             "Sao thế, như thế nào",
@@ -24226,7 +24218,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq10_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 1] Từ đã học “学校” (xuéxiào) có nghĩa là gì?",
+          "question": "Từ đã học “学校” (xuéxiào) có nghĩa là gì?",
           "options": [
             "anh ấy, cậu ấy... (ngôi thứ ba số ít chỉ nam)",
             "đi",
@@ -24239,7 +24231,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq10_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “网上买的手表质量怎么样？” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “网上买的手表质量怎么样？” có nghĩa tiếng Việt là gì?",
           "options": [
             "Chất lượng đồng hồ mua trên mạng thế nào?",
             "Quyển sách này là sách của tôi.",
@@ -24252,7 +24244,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq10_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nMark: 你这副新眼镜是在超市买的吗？\nMinh: 不 (bù: không)是，我是在网上买的，不用 (yòng: dùng)出门也很方便。\nMark: 网上的价格便宜吗？质量好不 (bù: không)好？\nMinh: 价格比商店便宜，但是买的时候要小心看质量。\n\nTheo lời Minh, khi mua hàng trên mạng cần chú ý điều gì?",
+          "question": "Đọc đoạn hội thoại:\nMark: 你这副新眼镜是在超市买的吗？\nMinh: 不是，我是在网上买的，不用出门也很方便。\nMark: 网上的价格便宜吗？质量好不好？\nMinh: 价格比商店便宜，但是买的时候要小心看质量。\n\nTheo lời Minh, khi mua hàng trên mạng cần chú ý điều gì?",
           "options": [
             "Chỉ cần chọn món đắt nhất",
             "Không được mua kính mắt trên mạng",
@@ -24750,7 +24742,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct10_36",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是啊。在网上你可以买到很多东西，比如衣服、手表、眼镜、____等等。”\n(Gợi ý nghĩa: Có chứ. Trên mạng cậu có thể mua được rất nhiều thứ, ví dụ như quần áo, đồng hồ, kính mắt, sách vở, v.v.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是啊。在网上你可以买到很多东西，比如衣服、手表、眼镜、____等等。”",
         "options": [
           "书本",
           "好吃",
@@ -24763,7 +24755,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct10_37",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“请____我这副眼镜多少钱”\n(Gợi ý nghĩa: Làm ơn cho tôi biết cặp kính mắt này bao nhiêu tiền.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“请____我这副眼镜多少钱”",
         "options": [
           "西瓜",
           "早上",
@@ -24776,7 +24768,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct10_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“真的。网上购物还挺方便，你只要有电脑或者手机，不用出门也能买到东西。很____是吧！”\n(Gợi ý nghĩa: Thật đấy. Mua sắm trực tuyến khá tiện lợi, chỉ cần có máy tính hoặc điện thoại là không cần ra khỏi nhà cũng mua được đồ. Rất dễ đúng không nào!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“真的。网上购物还挺方便，你只要有电脑或者手机，不用出门也能买到东西。很____是吧！”",
         "options": [
           "容易",
           "贵姓",
@@ -24789,7 +24781,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct10_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“网上的价格便宜吗？____好不好？”\n(Gợi ý nghĩa: Giá trên mạng có rẻ không? Chất lượng có tốt không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“网上的价格便宜吗？____好不好？”",
         "options": [
           "地方",
           "东边",
@@ -24815,7 +24807,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct10_41",
         "category": "vocab",
-        "question": "Từ Hán tự “告诉” (nói cho) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “告诉” có phiên âm Pinyin đúng là gì?",
         "options": [
           "fāngbiàn",
           "yī",
@@ -24939,7 +24931,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct10_50",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 她  /  名字  /  叫  /  什么\n(Nghĩa: “Cô ấy tên là gì?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n她  /  名字  /  叫  /  什么",
         "options": [
           "叫她什么名字。",
           "名字什么叫她。",
@@ -24952,7 +24944,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct10_51",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 这  /  是  /  条  /  裙子  /  吗  /  你的\n(Nghĩa: “Cái váy này là của em à?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n这  /  是  /  条  /  裙子  /  吗  /  你的",
         "options": [
           "条裙子是你的吗这。",
           "这条裙子是你的吗。",
@@ -24965,7 +24957,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct10_52",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 是  /  这  /  本  /  书  /  的  /  我\n(Nghĩa: “Quyển sách này là sách của tôi.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n是  /  这  /  本  /  书  /  的  /  我",
         "options": [
           "这本书是我的。",
           "本这书是我的。",
@@ -24978,7 +24970,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct10_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 学校  /  的  /  地方  /  吗  /  附近  /  你去\n(Nghĩa: “Bạn có đi đến chỗ gần trường không?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n学校  /  的  /  地方  /  吗  /  附近  /  你去",
         "options": [
           "吗地方的附近学校你去。",
           "你去学校附近的地方吗。",
@@ -24991,7 +24983,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct10_54",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“哇！太方便了！但是网上的东西____ (jiàgé)怎么样？”\n(Nghĩa: Chà! Tiện lợi quá! Nhưng giá cả đồ trên mạng thế nào?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“哇！太方便了！但是网上的东西____怎么样？”",
         "options": [
           "合适",
           "南边",
@@ -25004,7 +24996,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct10_55",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“这首歌最近____ (tǐng)流行的！”\n(Nghĩa: Bài hát này dạo gần đây khá thịnh hành đấy!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“这首歌最近____流行的！”",
         "options": [
           "贵",
           "姓",
@@ -25017,7 +25009,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct10_56",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“你怎么到现在____ (hái)去商店买东西啊！在中国，人们都在网上买了！”\n(Nghĩa: Sao đến bây giờ cậu vẫn còn ra cửa hàng mua đồ vậy! Ở Trung Quốc mọi người đều mua trên mạng hết rồi!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你怎么到现在____去商店买东西啊！在中国，人们都在网上买了！”",
         "options": [
           "是",
           "还",
@@ -25515,14 +25507,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "安妮",
             "hanzi": "你姐姐今年多大了？",
-            "displayHanzi": "你姐姐今 (jīn: hôm nay, nay)年多大了？",
+            "displayHanzi": "你姐姐今年多大了？",
             "pinyin": "Nǐ jiějie jīnnián duōdà le?",
             "meaning": "Chị gái bạn năm nay bao nhiêu tuổi rồi?"
           },
           {
             "speaker": "范玉兰",
             "hanzi": "她今年 22 岁。你想看我们全家的照片吗?",
-            "displayHanzi": "她今 (jīn: hôm nay, nay)年 22 岁。你想看我们全家的照片吗?",
+            "displayHanzi": "她今年 22 岁。你想看我们全家的照片吗?",
             "pinyin": "Tā jīnnián 22 suì. Nǐ xiǎng kàn wǒmen quánjiā de zhàopiàn ma?",
             "meaning": "Chị ấy năm nay 22 tuổi. Bạn có muốn xem ảnh cả nhà tôi không?"
           },
@@ -25557,7 +25549,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "安妮",
             "hanzi": "这样也很可爱嘛！你姐姐好漂亮啊！",
-            "displayHanzi": "这样也很可爱嘛 (ma: mà (ngữ khí))！你姐姐好漂亮啊！",
+            "displayHanzi": "这样也很可爱嘛！你姐姐好漂亮啊！",
             "pinyin": "Zhèyàng yě hěn kě'ài ma! Nǐ jiějie hǎo piàoliang a!",
             "meaning": "Thế này cũng rất đáng yêu mà! Chị gái bạn xinh quá đi!"
           },
@@ -25571,7 +25563,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "安妮",
             "hanzi": "这里还有一条狗和一只猫。你们家是不是很爱它们？",
-            "displayHanzi": "这里 (lǐ: trong)还有一条狗和一只猫。你们家是不 (bù: không)是很爱它们？",
+            "displayHanzi": "这里还有一条狗和一只猫。你们家是不是很爱它们？",
             "pinyin": "Zhèli hái yǒu yītiáo gǒu hé yī zhī māo. Nǐmen jiā shì bu shì hěn ài tāmen?",
             "meaning": "Ở đây còn có một con chó và một con mèo nữa. Nhà bạn chắc yêu quý chúng lắm nhỉ?"
           },
@@ -25600,9 +25592,9 @@ const DEFAULT_LESSONS = [
             "audioText": "我家有六口人：我爷爷、奶奶、爸爸、妈妈、哥哥和我。你家呢？",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "我姐姐比弟弟大 (dà: to, lớn)五岁。",
-              "你说 (shuō: nói)什么呢？",
-              "奶奶和爷爷每天 (tiān: ngày, trời)都很高兴。",
+              "我姐姐比弟弟大五岁。",
+              "你说什么呢？",
+              "奶奶和爷爷每天都很高兴。",
               "我家有六口人：我爷爷、奶奶、爸爸、妈妈、哥哥和我。你家呢？"
             ],
             "correctIndex": 3,
@@ -25625,9 +25617,9 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "我有一个弟弟。",
-              "奶奶和爷爷每天 (tiān: ngày, trời)都很高兴。",
-              "你姐姐今 (jīn: hôm nay, nay)年多大了？",
-              "你说 (shuō: nói)什么呢？"
+              "奶奶和爷爷每天都很高兴。",
+              "你姐姐今年多大了？",
+              "你说什么呢？"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 你姐姐今年多大了？ (Nǐ jiějie jīnnián duōdà le?) → Chị gái bạn năm nay bao nhiêu tuổi rồi?"
@@ -25698,7 +25690,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "这本书是我的。",
-            "question": "[Ôn tập Bài 10] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Nhà tôi có 5 người: bố, mẹ, chị gái, em trai và tôi.",
               "Một phần quà",
@@ -25710,11 +25702,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我有一个弟弟。",
-            "question": "[Bài 11] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "奶奶和爷爷每天 (tiān: ngày, trời)都很高兴。",
-              "这里 (lǐ: trong)只有我们两 (liǎng: hai (số lượng))个人？",
-              "这张 (zhāng: tờ, tấm, chiếc)全家的照片真好看！",
+              "奶奶和爷爷每天都很高兴。",
+              "这里只有我们两个人？",
+              "这张全家的照片真好看！",
               "我有一个弟弟。"
             ],
             "correctIndex": 3,
@@ -25722,7 +25714,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我明天上午八点上课。",
-            "question": "[Ôn tập Bài 5] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tớ biết bơi, còn biết trượt băng.",
               "Tám giờ sáng ngày mai tớ đi học.",
@@ -25734,19 +25726,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "他们只关心自己。",
-            "question": "[Bài 11] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "他正在 (zhèngzài: đang, động tác đang diễn ra)听音乐 (tīng yīnyuè: nghe nhạc)呢。",
+              "他正在听音乐呢。",
               "他们只关心自己。",
               "你是谁呢？",
-              "他真的这么说 (shuō: nói)。"
+              "他真的这么说。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 他们只关心自己。 (Tāmen zhǐ guānxīn zìjǐ.) → Bọn họ chỉ quan tâm đến bản thân mình mà thôi."
           },
           {
             "audioText": "她是老师。",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tôi dậy rất sớm.",
               "Kỳ học này tôi kiểm tra một lần rồi.",
@@ -25779,14 +25771,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Annie",
             "hanzi": "你姐姐今年多大？她工作了吗？",
-            "displayHanzi": "你姐姐今 (jīn: hôm nay, nay)年多大？她工作 (gōngzuò: nghề nghiệp, công việc)了吗？",
+            "displayHanzi": "你姐姐今年多大？她工作了吗？",
             "pinyin": "Nǐ jiějie jīnnián duōdà? Tā gōngzuò le ma?",
             "meaning": "Chị gái bạn năm nay bao nhiêu tuổi? Chị ấy đi làm chưa?"
           },
           {
             "speaker": "Minh",
             "hanzi": "她二十五岁了，在一家医院工作，很喜欢小猫。",
-            "displayHanzi": "她二十五岁了，在一家医院 (yīyuàn: bệnh viện)工作 (gōngzuò: nghề nghiệp, công việc)，很喜欢小 (xiǎo: nhỏ, bé)猫。",
+            "displayHanzi": "她二十五岁了，在一家医院工作，很喜欢小猫。",
             "pinyin": "Tā èrshíwǔ suì le, zài yì jiā yīyuàn gōngzuò, hěn xǐhuan xiǎo māo.",
             "meaning": "Chị ấy 25 tuổi rồi, làm việc ở một bệnh viện và rất thích mèo con."
           }
@@ -25794,7 +25786,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "日明，这是你全家的照片吗？你们家有几口人？ 我家有五口人：爷爷、爸爸、妈妈、姐姐和我。 你姐姐今年多大？她工作了吗？ 她二十五岁了，在一家医院工作，很喜欢小猫。",
-            "question": "[Nghe hiểu tình huống mới] Chị gái của Nhật Minh năm nay bao nhiêu tuổi và làm việc ở đâu?",
+            "question": "Chị gái của Nhật Minh năm nay bao nhiêu tuổi và làm việc ở đâu?",
             "options": [
               "18 tuổi, thích nuôi chó",
               "25 tuổi, làm việc tại một bệnh viện",
@@ -25806,7 +25798,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "日明，这是你全家的照片吗？你们家有几口人？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tôi không có em trai.",
               "Khó quá đi, tôi không biết nên làm như thế nào nữa!",
@@ -25818,19 +25810,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我家有五口人：爷爷、爸爸、妈妈、姐姐和我。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "我家有五口人：爷爷、爸爸、妈妈、姐姐和我。",
-              "你姐姐今 (jīn: hôm nay, nay)年多大了？",
-              "奶奶和爷爷每天 (tiān: ngày, trời)都很高兴。",
-              "学校左边有一家银行 (xíng: được)。"
+              "你姐姐今年多大了？",
+              "奶奶和爷爷每天都很高兴。",
+              "学校左边有一家银行。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 我家有五口人：爷爷、爸爸、妈妈、姐姐和我。 (Wǒ jiā yǒu wǔ kǒu rén: yéye, bàba, māma, jiějie hé wǒ.) → Nhà tôi có năm người: ông nội, bố, mẹ, chị gái và tôi."
           },
           {
             "audioText": "你姐姐今年多大？她工作了吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Chị gái bạn năm nay bao nhiêu tuổi? Chị ấy đi làm chưa?",
               "Hai mươi lăm cái",
@@ -25922,7 +25914,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss11_1",
           "targetHanzi": "我家有四口人爸爸妈妈哥哥和我",
-          "targetMeaning": "[Mở rộng] Nhà tôi có bốn người: bố, mẹ, anh trai và tôi.",
+          "targetMeaning": "Nhà tôi có bốn người: bố, mẹ, anh trai và tôi.",
           "pinyin": "Wǒ jiā yǒu sì kǒu rén: bàba, māma, gēge hé wǒ.",
           "tokens": [
             "我家有四",
@@ -25936,7 +25928,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss11_2",
           "targetHanzi": "奶奶和爷爷每天都很高兴",
-          "targetMeaning": "[Mở rộng] Bà nội và ông nội ngày nào cũng rất vui vẻ.",
+          "targetMeaning": "Bà nội và ông nội ngày nào cũng rất vui vẻ.",
           "pinyin": "Nǎinai hé yéye měitiān dōu hěn gāoxìng.",
           "tokens": [
             "奶奶",
@@ -25945,8 +25937,7 @@ const DEFAULT_LESSONS = [
             "每天",
             "都很",
             "高兴"
-          ],
-          "unlearnedHint": "Từ chưa học: 天 (tiān: ngày, trời)"
+          ]
         },
         {
           "id": "ss11_3",
@@ -25977,7 +25968,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss11_5",
           "targetHanzi": "昨天下午你去图书馆了吗",
-          "targetMeaning": "[Ôn tập Bài 5] Chiều hôm qua bạn có đi thư viện không?",
+          "targetMeaning": "Chiều hôm qua bạn có đi thư viện không?",
           "pinyin": "Zuótiān xiàwǔ nǐ qù túshūguǎn le ma?",
           "tokens": [
             "昨天",
@@ -25991,7 +25982,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss11_6",
           "targetHanzi": "草莓果汁十块钱两杯",
-          "targetMeaning": "[Ôn tập Bài 8] Nước ép dâu tây 10 tệ hai cốc.",
+          "targetMeaning": "Nước ép dâu tây 10 tệ hai cốc.",
           "pinyin": "Cǎoméi guǒzhī shí kuài qián liǎng bēi.",
           "tokens": [
             "草莓",
@@ -26000,8 +25991,7 @@ const DEFAULT_LESSONS = [
             "钱",
             "两",
             "杯"
-          ],
-          "unlearnedHint": "Từ chưa học: 两 (liǎng: hai (số lượng))"
+          ]
         },
         {
           "id": "ss11_exp_1",
@@ -26260,7 +26250,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr11_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Nhà tôi có bốn người: bố, mẹ, anh trai và tôi.",
+          "promptText": "Nhà tôi có bốn người: bố, mẹ, anh trai và tôi.",
           "expectedChinese": "我家有四口人：爸爸、妈妈、哥哥和我。",
           "acceptedPinyin": "wǒ jiā yǒu sì kǒu rén bàba māma gēge hé wǒ",
           "hint": "Gợi ý Pinyin: Wǒ jiā yǒu sì kǒu rén: bàba, māma, gēge hé wǒ.",
@@ -26269,10 +26259,10 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr11_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Bà nội và ông nội ngày nào cũng rất vui vẻ.",
+          "promptText": "Bà nội và ông nội ngày nào cũng rất vui vẻ.",
           "expectedChinese": "奶奶和爷爷每天都很高兴。",
           "acceptedPinyin": "nǎinai hé yéye měitiān dōu hěn gāoxìng",
-          "hint": "Gợi ý Pinyin: Nǎinai hé yéye měitiān dōu hěn gāoxìng. | Từ chưa học: 天 (tiān: ngày, trời)",
+          "hint": "Gợi ý Pinyin: Nǎinai hé yéye měitiān dōu hěn gāoxìng.",
           "explanation": "Bà nội và ông nội ngày nào cũng rất vui vẻ. → 奶奶和爷爷每天都很高兴。 (Nǎinai hé yéye měitiān dōu hěn gāoxìng.)"
         },
         {
@@ -26386,7 +26376,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr11_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 这张 (zhāng: tờ, tấm, chiếc)全家的照片真好看！",
+          "promptText": "这张全家的照片真好看！",
           "chineseAudioText": "这张全家的照片真好看！",
           "pinyin": "Zhè zhāng quánjiā de zhàopiàn zhēn hǎokàn!",
           "expectedMeaning": "Bức ảnh cả gia đình này đẹp thật đấy!",
@@ -26401,7 +26391,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr11_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 我姐姐比弟弟大 (dà: to, lớn)五岁。",
+          "promptText": "我姐姐比弟弟大五岁。",
           "chineseAudioText": "我姐姐比弟弟大五岁。",
           "pinyin": "Wǒ jiějie bǐ dìdi dà wǔ suì.",
           "expectedMeaning": "Chị gái tôi lớn hơn em trai 5 tuổi.",
@@ -26431,7 +26421,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr11_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 5] 我明天上午八点上课。",
+          "promptText": "我明天上午八点上课。",
           "chineseAudioText": "我明天上午八点上课。",
           "pinyin": "Wǒ míngtiān shàngwǔ bā diǎn shàngkè.",
           "expectedMeaning": "Tám giờ sáng ngày mai tớ đi học.",
@@ -26873,7 +26863,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq11_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 9] Từ đã học “粉红色” (fěnhóngsè) có nghĩa là gì?",
+          "question": "Từ đã học “粉红色” (fěnhóngsè) có nghĩa là gì?",
           "options": [
             "xa",
             "màu hồng phấn",
@@ -26886,7 +26876,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq11_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 9] Từ đã học “结账” (jié zhàng) có nghĩa là gì?",
+          "question": "Từ đã học “结账” (jié zhàng) có nghĩa là gì?",
           "options": [
             "thanh toán",
             "phía trước",
@@ -26899,7 +26889,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq11_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 7] Từ đã học “家” (jiā) có nghĩa là gì?",
+          "question": "Từ đã học “家” (jiā) có nghĩa là gì?",
           "options": [
             "giống",
             "ngôi, hiệu, tiệm, quán (lượng từ của cửa hàng, công ty,...)",
@@ -26912,7 +26902,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq11_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “我家有四口人：爸爸、妈妈、哥哥和我。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “我家有四口人：爸爸、妈妈、哥哥和我。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Bệnh của mẹ khỏi lâu rồi, con đừng lo lắng.",
             "Nhà tôi có bốn người: bố, mẹ, anh trai và tôi.",
@@ -26925,7 +26915,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq11_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nAnnie: 日明，这是你全家的照片吗？你们家有几口人？\nMinh: 我家有五口人：爷爷、爸爸、妈妈、姐姐和我。\nAnnie: 你姐姐今 (jīn: hôm nay, nay)年多大？她工作 (gōngzuò: nghề nghiệp, công việc)了吗？\nMinh: 她二十五岁了，在一家医院 (yīyuàn: bệnh viện)工作 (gōngzuò: nghề nghiệp, công việc)，很喜欢小 (xiǎo: nhỏ, bé)猫。\n\nChị gái của Nhật Minh năm nay bao nhiêu tuổi và làm việc ở đâu?",
+          "question": "Đọc đoạn hội thoại:\nAnnie: 日明，这是你全家的照片吗？你们家有几口人？\nMinh: 我家有五口人：爷爷、爸爸、妈妈、姐姐和我。\nAnnie: 你姐姐今年多大？她工作了吗？\nMinh: 她二十五岁了，在一家医院工作，很喜欢小猫。\n\nChị gái của Nhật Minh năm nay bao nhiêu tuổi và làm việc ở đâu?",
           "options": [
             "25 tuổi, làm ở hiệu sách",
             "18 tuổi, thích nuôi chó",
@@ -27490,7 +27480,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct11_41",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“奶奶和爷爷每天都很____兴”\n(Gợi ý nghĩa: Bà nội và ông nội ngày nào cũng rất vui vẻ.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“奶奶和爷爷每天都很____兴”",
         "options": [
           "看",
           "请",
@@ -27503,7 +27493,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct11_42",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“这里还有一条____和一只猫。你们家是不是很爱它们？”\n(Gợi ý nghĩa: Ở đây còn có một con chó và một con mèo nữa. Nhà bạn chắc yêu quý chúng lắm nhỉ?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“这里还有一条____和一只猫。你们家是不是很爱它们？”",
         "options": [
           "块",
           "就",
@@ -27516,7 +27506,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct11_43",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“他不相信命运，只相信____。”\n(Gợi ý nghĩa: Anh ấy không tin vào vận mệnh, chỉ tin vào bản thân mình.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“他不相信命运，只相信____。”",
         "options": [
           "自己",
           "总共",
@@ -27529,7 +27519,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct11_44",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“这样也很可____嘛！你姐姐好漂亮啊！”\n(Gợi ý nghĩa: Thế này cũng rất đáng yêu mà! Chị gái bạn xinh quá đi!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“这样也很可____嘛！你姐姐好漂亮啊！”",
         "options": [
           "爱",
           "试",
@@ -27555,7 +27545,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct11_46",
         "category": "vocab",
-        "question": "Từ Hán tự “狗” (con chó) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “狗” có phiên âm Pinyin đúng là gì?",
         "options": [
           "hěn",
           "suì",
@@ -27581,7 +27571,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct11_48",
         "category": "vocab",
-        "question": "Từ Hán tự “爱” (yêu) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “爱” có phiên âm Pinyin đúng là gì?",
         "options": [
           "Mǎkè",
           "zìjǐ",
@@ -27706,7 +27696,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct11_57",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 个  /  我  /  有  /  弟弟  /  一\n(Nghĩa: “Tôi có một cậu em trai.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n个  /  我  /  有  /  弟弟  /  一",
         "options": [
           "有一个弟弟我。",
           "有我一个弟弟。",
@@ -27719,7 +27709,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct11_58",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 了吗  /  下午  /  昨天  /  图书馆  /  去  /  你\n(Nghĩa: “Chiều hôm qua bạn có đi thư viện không?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n了吗  /  下午  /  昨天  /  图书馆  /  去  /  你",
         "options": [
           "了吗图书馆去你下午昨天。",
           "下午你去图书馆了吗昨天。",
@@ -27732,7 +27722,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct11_59",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 奶奶  /  和  /  都很  /  每天  /  高兴  /  爷爷\n(Nghĩa: “Bà nội và ông nội ngày nào cũng rất vui vẻ.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n奶奶  /  和  /  都很  /  每天  /  高兴  /  爷爷",
         "options": [
           "和奶奶爷爷每天都很高兴。",
           "高兴都很每天爷爷和奶奶。",
@@ -27745,7 +27735,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct11_60",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 十块  /  果汁  /  草莓  /  钱  /  杯  /  两\n(Nghĩa: “Nước ép dâu tây 10 tệ hai cốc.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n十块  /  果汁  /  草莓  /  钱  /  杯  /  两",
         "options": [
           "草莓果汁十块钱两杯。",
           "果汁草莓十块钱两杯。",
@@ -27758,7 +27748,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct11_61",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“为什么你昨天____ (nàme)晚才回来？”\n(Nghĩa: Vì sao tối qua muộn như thế anh mới về?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“为什么你昨天____晚才回来？”",
         "options": [
           "当然",
           "妈妈",
@@ -27771,7 +27761,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct11_62",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“日明，这是你全家的____ (zhàopiàn)吗？你们家有几口人？”\n(Nghĩa: Nhật Minh, đây là ảnh cả gia đình bạn à? Nhà bạn có mấy người?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“日明，这是你全家的____吗？你们家有几口人？”",
         "options": [
           "全家",
           "但是",
@@ -27784,7 +27774,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct11_63",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“安妮，你____ (jiā)有几口人？”\n(Nghĩa: Annie, nhà bạn có mấy người?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“安妮，你____有几口人？”",
         "options": [
           "家",
           "哪",
@@ -27797,7 +27787,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct11_64",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“我家有六口人：我爷爷、____ (nǎinai)、爸爸、妈妈、哥哥和我。你家呢？”\n(Nghĩa: Nhà tôi có 6 người: ông nội, bà nội, bố, mẹ, anh trai và tôi. Còn nhà bạn thì sao?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我家有六口人：我爷爷、____、爸爸、妈妈、哥哥和我。你家呢？”",
         "options": [
           "奶奶",
           "铅笔",
@@ -28246,21 +28236,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "昨天你去哪儿了？我到你的宿舍但是没见到你。",
-            "displayHanzi": "昨天你去哪儿了？我到你的宿舍但是没 (méi: chưa, không có)见到你。",
+            "displayHanzi": "昨天你去哪儿了？我到你的宿舍但是没见到你。",
             "pinyin": "Zuótiān nǐ qù nǎr le? Wǒ dào nǐ de sùshè dànshì méi jiàn dào nǐ.",
             "meaning": "Hôm qua cậu đi đâu thế? Tớ qua ký túc xá của cậu nhưng không gặp được cậu."
           },
           {
             "speaker": "阮日明",
             "hanzi": "你问上午还是下午？上午六点我去图书馆学习，下午跟 山本同学、马克同学到张风家。",
-            "displayHanzi": "你问上午还是下午？上午六点我去图书馆学习 (xuéxí: học tập)，下午跟 (gēn: cùng, với) 山本 (Shānběn: Yamamoto)同学、马克同学到张风家。",
+            "displayHanzi": "你问上午还是下午？上午六点我去图书馆学习，下午跟 山本同学、马克同学到张风家。",
             "pinyin": "Nǐ wèn shàngwǔ háishi xiàwǔ? Shàngwǔ liù diǎn wǒ qù túshūguǎn xuéxí, xiàwǔ gēn Shānběn tóngxué, Mǎkè tóngxué dào Zhāng Fēng jiā.",
             "meaning": "Cậu hỏi buổi sáng hay buổi chiều? 6 giờ sáng tớ đi thư viện học, buổi chiều cùng bạn Yamamoto và bạn Mark đến nhà Trương Phong."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "你们到他家聚会还是有什么事？",
-            "displayHanzi": "你们到他家聚会还是有什么事 (shì: việc, chuyện)？",
+            "displayHanzi": "你们到他家聚会还是有什么事？",
             "pinyin": "Nǐmen dào tā jiā jùhuì háishi yǒu shénme shì?",
             "meaning": "Các cậu đến nhà cậu ấy tụ tập hay có việc gì thế?"
           },
@@ -28274,63 +28264,63 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "那么你一定见到他的家人了吧？他们怎么样？",
-            "displayHanzi": "那么你一定 (yīdìng: nhất định)见到他的家人 (jiārén: người nhà)了吧？他们怎么样？",
+            "displayHanzi": "那么你一定见到他的家人了吧？他们怎么样？",
             "pinyin": "Nàme nǐ yídìng jiàn dào tā de jiārén le ba? Tāmen zěnmeyàng?",
             "meaning": "Vậy chắc cậu đã gặp người nhà cậu ấy rồi nhỉ? Họ thế nào?"
           },
           {
             "speaker": "阮日明",
             "hanzi": "是的。张风给我们介绍了他的妈妈和弟弟，他爸爸不在家。阿姨很漂亮、很年轻，他弟弟也很可爱。他们都很热情地接待了我们。",
-            "displayHanzi": "是的。张风给我们介绍了他的妈妈和弟弟，他爸爸不 (bù: không)在家。阿姨很漂亮、很年轻，他弟弟也很可爱。他们都很热情地 (de: liên kết trạng từ và trung t)接待了我们。",
+            "displayHanzi": "是的。张风给我们介绍了他的妈妈和弟弟，他爸爸不在家。阿姨很漂亮、很年轻，他弟弟也很可爱。他们都很热情地接待了我们。",
             "pinyin": "Shì de. Zhāng Fēng gěi wǒmen jièshào le tā de māma hé dìdi, tā bàba bú zàijiā. Āyí hěn piàoliang, hěn niánqīng, tā dìdi yě hěn kě'ài. Tāmen dōu hěn rèqíng de jiēdài le wǒmen.",
             "meaning": "Đúng rồi. Trương Phong giới thiệu mẹ và em trai cậu ấy cho bọn tớ, bố cậu ấy không có ở nhà. Cô ấy rất xinh đẹp và trẻ trung, em trai cậu ấy cũng rất đáng yêu. Mọi người đều tiếp đón bọn tớ rất nhiệt tình."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "你们不觉得紧张吗？如果是我，我就紧张死了。",
-            "displayHanzi": "你们不 (bù: không)觉得紧张吗？如果是我，我就紧张死了。",
+            "displayHanzi": "你们不觉得紧张吗？如果是我，我就紧张死了。",
             "pinyin": "Nǐmen bù juéde jǐnzhāng ma? Rúguǒ shì wǒ, wǒ jiù jǐnzhāng sǐle.",
             "meaning": "Các cậu không thấy hồi hộp à? Nếu là tớ chắc tớ hồi hộp chết mất."
           },
           {
             "speaker": "阮日明",
             "hanzi": "我也有点儿不好意思，但是张风和他家人都很欢迎我们。阿姨给我们准备了很多好吃的，有茶、咖啡、牛肉、鱼、水果等等。",
-            "displayHanzi": "我也有点儿不好意思，但是张风和他家人 (jiārén: người nhà)都很欢迎我们。阿姨给我们准备了很多好吃的，有茶、咖啡、牛肉、鱼、水果等等。",
+            "displayHanzi": "我也有点儿不好意思，但是张风和他家人都很欢迎我们。阿姨给我们准备了很多好吃的，有茶、咖啡、牛肉、鱼、水果等等。",
             "pinyin": "Wǒ yě yǒudiǎnr bù hǎoyìsi, dànshì Zhāng Fēng hé tā jiārén dōu hěn huānyíng wǒmen. Āyí gěi wǒmen zhǔnbèi le hěnduō hǎo chī de, yǒu chá, kāfēi, niúròu, yú, shuǐguǒ děng děng.",
             "meaning": "Tớ cũng hơi ngại một chút, nhưng Trương Phong và gia đình cậu ấy rất hoan nghênh bọn tớ. Cô ấy chuẩn bị cho bọn tớ rất nhiều đồ ngon, nào là trà, cà phê, thịt bò, cá, hoa quả, v.v."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "哇！她真好！你们在他家做什么了？",
-            "displayHanzi": "哇 (wa: oa, chà (cảm thán))！她真好！你们在他家做 (zuò: làm)什么了？",
+            "displayHanzi": "哇！她真好！你们在他家做什么了？",
             "pinyin": "Wa! Tā zhēn hǎo! Nǐmen zài tā jiā zuò shénme le?",
             "meaning": "Chà! Cô ấy tốt thật đấy! Các cậu đã làm gì ở nhà cậu ấy?"
           },
           {
             "speaker": "阮日明",
             "hanzi": "打游戏、听音乐、聊天儿、喝 水、吃东西。到十点半我们才回宿舍。现在回想起来，昨天真快乐，真热闹。",
-            "displayHanzi": "打游戏、听音乐、聊天儿、喝 水、吃东西。到十点半我们才 (cái: mới)回宿舍。现在回想起来 (qǐlái: lên (bổ ngữ))，昨天真快乐，真热闹。",
+            "displayHanzi": "打游戏、听音乐、聊天儿、喝 水、吃东西。到十点半我们才回宿舍。现在回想起来，昨天真快乐，真热闹。",
             "pinyin": "Dǎ yóuxì, tīng yīnyuè, liáotiānr, hē shuǐ, chī dōngxi. Dào shí diǎn bàn wǒmen cái huí sùshè. Xiànzài huíxiǎng qǐlai, zuótiān zhēn kuàilè, zhēn rènao.",
             "meaning": "Chơi game, nghe nhạc, trò chuyện, uống nước, ăn uống. Đến 10 giờ rưỡi bọn tớ mới về ký túc xá. Giờ nhớ lại, hôm qua thật vui và náo nhiệt."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "我也想去啊。你们怎么不叫我一起去？",
-            "displayHanzi": "我也想去啊。你们怎么不 (bù: không)叫我一起去？",
+            "displayHanzi": "我也想去啊。你们怎么不叫我一起去？",
             "pinyin": "Wǒ yě xiǎng qù a. Nǐmen zěnme bú jiào wǒ yīqǐ qù?",
             "meaning": "Tớ cũng muốn đi mà. Sao các cậu không rủ tớ đi cùng?"
           },
           {
             "speaker": "阮日明",
             "hanzi": "昨天上午山本才说他可以去，所以到那个时候我们才决定去!等下次吧！下次去玩儿我就跟你说。",
-            "displayHanzi": "昨天上午山本 (Shānběn: Yamamoto)才 (cái: mới)说他可以去，所以 (suǒyǐ: cho nên)到那个时候我们才决定去!等下次吧！下次去玩儿我就跟 (gēn: cùng, với)你说。",
+            "displayHanzi": "昨天上午山本才说他可以去，所以到那个时候我们才决定去!等下次吧！下次去玩儿我就跟你说。",
             "pinyin": "Zuótiān shàngwǔ Shānběn cái shuō tā kěyǐ qù, suǒyǐ dào nàge shíhou wǒmen cái juédìng qù! Děng xià cì ba! Xià cì qù wánr wǒ jiù gēn nǐ shuō.",
             "meaning": "Sáng hôm qua Yamamoto mới nói có thể đi, nên lúc đó bọn tớ mới quyết định đi! Đợi lần sau nhé! Lần sau đi chơi tớ sẽ rủ cậu."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "好，下次一定要叫我啊！",
-            "displayHanzi": "好，下次一定 (yīdìng: nhất định)要叫我啊！",
+            "displayHanzi": "好，下次一定要叫我啊！",
             "pinyin": "Hǎo, xià cì yídìng yào jiào wǒ a!",
             "meaning": "Được, lần sau nhất định phải gọi tớ nhé!"
           }
@@ -28352,10 +28342,10 @@ const DEFAULT_LESSONS = [
             "audioText": "你问上午还是下午？上午六点我去图书馆学习，下午跟 山本同学、马克同学到张风家。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "你问上午还是下午？上午六点我去图书馆学习 (xuéxí: học tập)，下午跟 (gēn: cùng, với) 山本 (Shānběn: Yamamoto)同学、马克同学到张风家。",
-              "那么你一定 (yīdìng: nhất định)见到他的家人 (jiārén: người nhà)了吧？他们怎么样？",
-              "我真不 (bù: không)喜欢！",
-              "从我家走路 (zǒulù: đi bộ)到学校，五分钟就到。"
+              "你问上午还是下午？上午六点我去图书馆学习，下午跟 山本同学、马克同学到张风家。",
+              "那么你一定见到他的家人了吧？他们怎么样？",
+              "我真不喜欢！",
+              "从我家走路到学校，五分钟就到。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 你问上午还是下午？上午六点我去图书馆学习，下午跟 山本同学、马克同学到张风家。 (Nǐ wèn shàngwǔ háishi xiàwǔ? Shàngwǔ liù diǎn wǒ qù túshūguǎn xuéxí, xiàwǔ gēn Shānběn tóngxué, Mǎkè tóngxué dào Zhāng Fēng jiā.) → Cậu hỏi buổi sáng hay buổi chiều? 6 giờ sáng tớ đi thư viện học, buổi chiều cùng bạn Yamamoto và bạn Mark đến nhà Trương Phong."
@@ -28377,8 +28367,8 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "他这个人真好！",
-              "妈妈做 (zuò: làm)了一盘很好吃的牛肉和鱼。",
-              "你喜欢学 (xué: học)汉语还是英语 (Yīngyǔ: tiếng Anh)？",
+              "妈妈做了一盘很好吃的牛肉和鱼。",
+              "你喜欢学汉语还是英语？",
               "张风请我们去他家做客。"
             ],
             "correctIndex": 3,
@@ -28428,7 +28418,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Bài 12",
             "hanzi": "我真不喜欢！",
-            "displayHanzi": "我真不 (bù: không)喜欢！",
+            "displayHanzi": "我真不喜欢！",
             "pinyin": "Wǒ zhēn bù xǐhuan!",
             "meaning": "Tôi thực sự không thích!"
           },
@@ -28442,7 +28432,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Bài 12",
             "hanzi": "B: 他是日本人。",
-            "displayHanzi": "B: 他是日 (rì: ngày)本人。",
+            "displayHanzi": "B: 他是日本人。",
             "pinyin": "Tā shì Rìběn rén.",
             "meaning": "Cậu ấy là người Nhật Bản."
           }
@@ -28450,7 +28440,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "他在吃饭呢。",
-            "question": "[Ôn tập Bài 11] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Anh ấy đang ăn cơm kìa.",
               "Trương Hồng là giáo viên à?",
@@ -28462,19 +28452,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "他这个人真好！",
-            "question": "[Bài 12] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "张风请我们去他家做客。",
               "他这个人真好！",
-              "这个会 (huì: Phó, đtnn biết)议，你去还是小 (xiǎo: nhỏ, bé)明 (míng: ngày mai, sáng)去？",
-              "我喜欢一边 (biān: bên, phía)喝水一边听音乐。"
+              "这个会议，你去还是小明去？",
+              "我喜欢一边喝水一边听音乐。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 他这个人真好！ (Tā zhège rén zhēn hǎo!) → Con người anh ta thật là tốt!"
           },
           {
             "audioText": "A: 你怎么去超市呢？",
-            "question": "[Ôn tập Bài 6] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Thời tiết dễ chịu quá!",
               "Anh ấy đang nghe nhạc.",
@@ -28486,19 +28476,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "张风请我们去他家做客。",
-            "question": "[Bài 12] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "下次我们再 (zài: lại)一起聊天儿吧！",
-              "我不 (bù: không)知道这个人是男 (nán: nam)的还是女 (nǚ: nữ)的。",
+              "下次我们再一起聊天儿吧！",
+              "我不知道这个人是男的还是女的。",
               "张风请我们去他家做客。",
-              "你今 (jīn: hôm nay, nay)年去留学 (liúxué: du học)还是明年 (míngnián: năm sau)去？"
+              "你今年去留学还是明年去？"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 张风请我们去他家做客。 (Zhāng Fēng qǐng wǒmen qù tā jiā zuòkè.) → Trương Phong mời bọn tớ đến nhà cậu ấy chơi."
           },
           {
             "audioText": "晚上好！",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Chào buổi tối!",
               "Anh ấy là ai?",
@@ -28517,28 +28507,28 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Phong",
             "hanzi": "欢迎大家来我家做客！快请坐！",
-            "displayHanzi": "欢迎大家 (dàjiā: mọi người)来 (lái: đến)我家做客！快 (kuài: nhanh)请坐 (zuò: ngồi)！",
+            "displayHanzi": "欢迎大家来我家做客！快请坐！",
             "pinyin": "Huānyíng dàjiā lái wǒ jiā zuòkè! Kuài qǐng zuò!",
             "meaning": "Chào mừng mọi người đến nhà mình chơi! Mời ngồi tự nhiên nhé!"
           },
           {
             "speaker": "Lan",
             "hanzi": "谢谢你和阿姨这么热情地接待我们。",
-            "displayHanzi": "谢谢你和阿姨这么热情地 (de: liên kết trạng từ và trung t)接待我们。",
+            "displayHanzi": "谢谢你和阿姨这么热情地接待我们。",
             "pinyin": "Xièxie nǐ hé āyí zhème rèqíng de jiēdài wǒmen.",
             "meaning": "Cảm ơn cậu và cô đã tiếp đón bọn mình nhiệt tình thế này."
           },
           {
             "speaker": "Phong",
             "hanzi": "你们想喝茶还是咖啡？这里还有水果和牛肉。",
-            "displayHanzi": "你们想喝茶还是咖啡？这里 (lǐ: trong)还有水果和牛肉。",
+            "displayHanzi": "你们想喝茶还是咖啡？这里还有水果和牛肉。",
             "pinyin": "Nǐmen xiǎng hē chá háishi kāfēi? Zhèlǐ hái yǒu shuǐguǒ hé niúròu.",
             "meaning": "Các cậu muốn uống trà hay cà phê? Ở đây còn có hoa quả và thịt bò nữa."
           },
           {
             "speaker": "Lan",
             "hanzi": "我要一杯热茶吧。吃饱了我们一起听音乐、聊天儿！",
-            "displayHanzi": "我要一杯热 (rè: nóng)茶吧。吃饱 (bǎo: no)了我们一起听音乐、聊天儿！",
+            "displayHanzi": "我要一杯热茶吧。吃饱了我们一起听音乐、聊天儿！",
             "pinyin": "Wǒ yào yì bēi rè chá ba. Chībǎo le wǒmen yīqǐ tīng yīnyuè, liáotiānr!",
             "meaning": "Cho mình một tách trà nóng nhé. Ăn xong chúng ta cùng nghe nhạc và trò chuyện!"
           }
@@ -28546,7 +28536,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "欢迎大家来我家做客！快请坐！ 谢谢你和阿姨这么热情地接待我们。 你们想喝茶还是咖啡？这里还有水果和牛肉。 我要一杯热茶吧。吃饱了我们一起听音乐、聊天儿！",
-            "question": "[Nghe hiểu tình huống mới] Lan chọn đồ uống gì khi đến nhà Trương Phong làm khách?",
+            "question": "Lan chọn đồ uống gì khi đến nhà Trương Phong làm khách?",
             "options": [
               "Một ly cà phê đá",
               "Một ly sữa tươi",
@@ -28558,7 +28548,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "欢迎大家来我家做客！快请坐！",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Hoan nghênh các vị khách đến chơi nhà tôi!",
               "Chào buổi sáng!",
@@ -28570,19 +28560,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "谢谢你和阿姨这么热情地接待我们。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "那件 (jiàn: cái, chiếc (áo, việc))事 (shì: việc, chuyện)是真的。",
-              "谢谢你和阿姨这么热情地 (de: liên kết trạng từ và trung t)接待我们。",
-              "你问上午还是下午？上午六点我去图书馆学习 (xuéxí: học tập)，下午跟 (gēn: cùng, với) 山本 (Shānběn: Yamamoto)同学、马克同学到张风家。",
-              "我喜欢一边 (biān: bên, phía)喝水一边听音乐。"
+              "那件事是真的。",
+              "谢谢你和阿姨这么热情地接待我们。",
+              "你问上午还是下午？上午六点我去图书馆学习，下午跟 山本同学、马克同学到张风家。",
+              "我喜欢一边喝水一边听音乐。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 谢谢你和阿姨这么热情地接待我们。 (Xièxie nǐ hé āyí zhème rèqíng de jiēdài wǒmen.) → Cảm ơn cậu và cô đã tiếp đón bọn mình nhiệt tình thế này."
           },
           {
             "audioText": "你们想喝茶还是咖啡？这里还有水果和牛肉。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Không sớm cũng không muộn, rất đúng giờ!",
               "đứa bé vô cùng",
@@ -28674,7 +28664,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss12_1",
           "targetHanzi": "请喝一杯热茶或者咖啡吧",
-          "targetMeaning": "[Mở rộng] Mời uống một tách trà nóng hoặc cà phê nhé.",
+          "targetMeaning": "Mời uống một tách trà nóng hoặc cà phê nhé.",
           "pinyin": "Qǐng hē yì bēi rè chá huòzhě kāfēi ba.",
           "tokens": [
             "请喝",
@@ -28683,13 +28673,12 @@ const DEFAULT_LESSONS = [
             "或者",
             "咖啡",
             "吧"
-          ],
-          "unlearnedHint": "Từ chưa học: 热 (rè: nóng)"
+          ]
         },
         {
           "id": "ss12_2",
           "targetHanzi": "爸爸热情地接待了我的同学",
-          "targetMeaning": "[Mở rộng] Bố tôi đã tiếp đón bạn học của tôi rất nhiệt tình.",
+          "targetMeaning": "Bố tôi đã tiếp đón bạn học của tôi rất nhiệt tình.",
           "pinyin": "Bàba rèqíng de jiēdài le wǒ de tóngxué.",
           "tokens": [
             "爸爸",
@@ -28698,8 +28687,7 @@ const DEFAULT_LESSONS = [
             "接待了",
             "我的",
             "同学"
-          ],
-          "unlearnedHint": "Từ chưa học: 地 (de: liên kết trạng từ và trung t)"
+          ]
         },
         {
           "id": "ss12_3",
@@ -28732,7 +28720,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss12_5",
           "targetHanzi": "马路北边有一个大书店",
-          "targetMeaning": "[Ôn tập Bài 6] Phía bắc con đường có một hiệu sách lớn.",
+          "targetMeaning": "Phía bắc con đường có một hiệu sách lớn.",
           "pinyin": "Mǎlù běibian yǒu yígè dà shūdiàn.",
           "tokens": [
             "马路",
@@ -28741,13 +28729,12 @@ const DEFAULT_LESSONS = [
             "个",
             "大",
             "书店"
-          ],
-          "unlearnedHint": "Từ chưa học: 大 (dà: to, lớn)"
+          ]
         },
         {
           "id": "ss12_6",
           "targetHanzi": "教学楼在图书馆的左边",
-          "targetMeaning": "[Ôn tập Bài 4] Tòa nhà giảng đường nằm ở bên trái thư viện.",
+          "targetMeaning": "Tòa nhà giảng đường nằm ở bên trái thư viện.",
           "pinyin": "Jiàoxué lóu zài túshūguǎn de zuǒbian.",
           "tokens": [
             "教学楼",
@@ -29107,19 +29094,19 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr12_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Mời uống một tách trà nóng hoặc cà phê nhé.",
+          "promptText": "Mời uống một tách trà nóng hoặc cà phê nhé.",
           "expectedChinese": "请喝一杯热茶或者咖啡吧。",
           "acceptedPinyin": "qǐng hē yì bēi rè chá huòzhě kāfēi ba",
-          "hint": "Gợi ý Pinyin: Qǐng hē yì bēi rè chá huòzhě kāfēi ba. | Từ chưa học: 热 (rè: nóng)",
+          "hint": "Gợi ý Pinyin: Qǐng hē yì bēi rè chá huòzhě kāfēi ba.",
           "explanation": "Mời uống một tách trà nóng hoặc cà phê nhé. → 请喝一杯热茶或者咖啡吧。 (Qǐng hē yì bēi rè chá huòzhě kāfēi ba.)"
         },
         {
           "id": "tr12_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Bố tôi đã tiếp đón bạn học của tôi rất nhiệt tình.",
+          "promptText": "Bố tôi đã tiếp đón bạn học của tôi rất nhiệt tình.",
           "expectedChinese": "爸爸热情地接待了我的同学。",
           "acceptedPinyin": "bàba rèqíng de jiēdài le wǒ de tóngxué",
-          "hint": "Gợi ý Pinyin: Bàba rèqíng de jiēdài le wǒ de tóngxué. | Từ chưa học: 地 (de: liên kết trạng từ và trung t)",
+          "hint": "Gợi ý Pinyin: Bàba rèqíng de jiēdài le wǒ de tóngxué.",
           "explanation": "Bố tôi đã tiếp đón bạn học của tôi rất nhiệt tình. → 爸爸热情地接待了我的同学。 (Bàba rèqíng de jiēdài le wǒ de tóngxué.)"
         },
         {
@@ -29137,7 +29124,7 @@ const DEFAULT_LESSONS = [
           "promptText": "Tôi thực sự không thích!",
           "expectedChinese": "我真不喜欢！",
           "acceptedPinyin": "wǒ zhēn bù xǐhuan",
-          "hint": "Gợi ý Pinyin: Wǒ zhēn bù xǐhuan! | Từ chưa học: 不 (bù: không)",
+          "hint": "Gợi ý Pinyin: Wǒ zhēn bù xǐhuan!",
           "explanation": "Tôi thực sự không thích! → 我真不喜欢！ (Wǒ zhēn bù xǐhuan!)"
         },
         {
@@ -29233,7 +29220,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr12_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 下次我们再 (zài: lại)一起聊天儿吧！",
+          "promptText": "下次我们再一起聊天儿吧！",
           "chineseAudioText": "下次我们再一起聊天儿吧！",
           "pinyin": "Xiàcì wǒmen zài yīqǐ liáotiānr ba!",
           "expectedMeaning": "Lần sau chúng ta lại cùng nhau trò chuyện nhé!",
@@ -29248,7 +29235,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr12_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 妈妈做 (zuò: làm)了一盘很好吃的牛肉和鱼。",
+          "promptText": "妈妈做了一盘很好吃的牛肉和鱼。",
           "chineseAudioText": "妈妈做了一盘很好吃的牛肉和鱼。",
           "pinyin": "Māma zuò le yì pán hěn hǎochī de niúròu hé yú.",
           "expectedMeaning": "Mẹ đã nấu một đĩa thịt bò và cá rất ngon.",
@@ -29263,7 +29250,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr12_zh_3",
           "direction": "zh_to_vi",
-          "promptText": "B: 他是日 (rì: ngày)本人。",
+          "promptText": "B: 他是日本人。",
           "chineseAudioText": "B: 他是日本人。",
           "pinyin": "Tā shì Rìběn rén.",
           "expectedMeaning": "Cậu ấy là người Nhật Bản.",
@@ -29278,7 +29265,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr12_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 6] A: 你怎么去超市呢？",
+          "promptText": "A: 你怎么去超市呢？",
           "chineseAudioText": "A: 你怎么去超市呢？",
           "pinyin": "Nǐ zěnme qù chāoshì ne?",
           "expectedMeaning": "Cậu đi gì đến siêu thị thế?",
@@ -29729,7 +29716,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq12_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 10] Từ đã học “购物” (gòuwù) có nghĩa là gì?",
+          "question": "Từ đã học “购物” (gòuwù) có nghĩa là gì?",
           "options": [
             "mua hàng, mua đồ",
             "em trai",
@@ -29742,7 +29729,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq12_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 6] Từ đã học “中间” (zhōngjiān) có nghĩa là gì?",
+          "question": "Từ đã học “中间” (zhōngjiān) có nghĩa là gì?",
           "options": [
             "sách",
             "xoài",
@@ -29755,7 +29742,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq12_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 6] Từ đã học “到” (dào) có nghĩa là gì?",
+          "question": "Từ đã học “到” (dào) có nghĩa là gì?",
           "options": [
             "đến",
             "hôm nay",
@@ -29768,7 +29755,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq12_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “请喝一杯热 (rè: nóng)茶或者咖啡吧。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “请喝一杯热茶或者咖啡吧。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Bệnh của mẹ khỏi lâu rồi, con đừng lo lắng.",
             "Chúng tôi đang thảo luận về vấn đề này.",
@@ -29781,7 +29768,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq12_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nPhong: 欢迎大家 (dàjiā: mọi người)来 (lái: đến)我家做客！快 (kuài: nhanh)请坐 (zuò: ngồi)！\nLan: 谢谢你和阿姨这么热情地 (de: liên kết trạng từ và trung t)接待我们。\nPhong: 你们想喝茶还是咖啡？这里 (lǐ: trong)还有水果和牛肉。\nLan: 我要一杯热 (rè: nóng)茶吧。吃饱 (bǎo: no)了我们一起听音乐、聊天儿！\n\nLan chọn đồ uống gì khi đến nhà Trương Phong làm khách?",
+          "question": "Đọc đoạn hội thoại:\nPhong: 欢迎大家来我家做客！快请坐！\nLan: 谢谢你和阿姨这么热情地接待我们。\nPhong: 你们想喝茶还是咖啡？这里还有水果和牛肉。\nLan: 我要一杯热茶吧。吃饱了我们一起听音乐、聊天儿！\n\nLan chọn đồ uống gì khi đến nhà Trương Phong làm khách?",
           "options": [
             "Một ly cà phê đá",
             "Một cốc nước ép táo",
@@ -30346,7 +30333,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct12_41",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“打游戏、____、聊天儿、喝 水、吃东西。到十点半我们才回宿舍。现在回想起来，昨天真快乐，真热闹。”\n(Gợi ý nghĩa: Chơi game, nghe nhạc, trò chuyện, uống nước, ăn uống. Đến 10 giờ rưỡi bọn tớ mới về ký túc xá. Giờ nhớ lại, hôm qua thật vui và náo nhiệt.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“打游戏、____、聊天儿、喝 水、吃东西。到十点半我们才回宿舍。现在回想起来，昨天真快乐，真热闹。”",
         "options": [
           "听音乐",
           "不客气",
@@ -30359,7 +30346,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct12_42",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是的。张风给我们____了他的妈妈和弟弟，他爸爸不在家。阿姨很漂亮、很年轻，他弟弟也很可爱。他们都很热情地接待了我们。”\n(Gợi ý nghĩa: Đúng rồi. Trương Phong giới thiệu mẹ và em trai cậu ấy cho bọn tớ, bố cậu ấy không có ở nhà. Cô ấy rất xinh đẹp và trẻ trung, em trai cậu ấy cũng rất đáng yêu. Mọi người đều tiếp đón bọn tớ rất nhiệt tình.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是的。张风给我们____了他的妈妈和弟弟，他爸爸不在家。阿姨很漂亮、很年轻，他弟弟也很可爱。他们都很热情地接待了我们。”",
         "options": [
           "出门",
           "热情",
@@ -30372,7 +30359,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct12_43",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你们到他家____还是有什么事？”\n(Gợi ý nghĩa: Các cậu đến nhà cậu ấy tụ tập hay có việc gì thế?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你们到他家____还是有什么事？”",
         "options": [
           "当然",
           "结账",
@@ -30385,7 +30372,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct12_44",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“昨天上午山本才说他可以去，所以到那个时候我们才____去!等下次吧！下次去玩儿我就跟你说。”\n(Gợi ý nghĩa: Sáng hôm qua Yamamoto mới nói có thể đi, nên lúc đó bọn tớ mới quyết định đi! Đợi lần sau nhé! Lần sau đi chơi tớ sẽ rủ cậu.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“昨天上午山本才说他可以去，所以到那个时候我们才____去!等下次吧！下次去玩儿我就跟你说。”",
         "options": [
           "但是",
           "决定",
@@ -30411,7 +30398,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct12_46",
         "category": "vocab",
-        "question": "Từ Hán tự “介绍” (giới thiệu) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “介绍” có phiên âm Pinyin đúng là gì?",
         "options": [
           "jièshào",
           "kāfēi",
@@ -30437,7 +30424,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct12_48",
         "category": "vocab",
-        "question": "Từ Hán tự “决定” (quyết định) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “决定” có phiên âm Pinyin đúng là gì?",
         "options": [
           "shíjiān",
           "dìfāng",
@@ -30562,7 +30549,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct12_57",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 请  /  去他  /  张风  /  家  /  做客  /  我们\n(Nghĩa: “Trương Phong mời bọn tớ đến nhà cậu ấy chơi.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n请  /  去他  /  张风  /  家  /  做客  /  我们",
         "options": [
           "请张风我们去他家做客。",
           "张风请我们去他家做客。",
@@ -30575,7 +30562,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct12_58",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 在  /  的  /  教学楼  /  左边  /  图书馆\n(Nghĩa: “Tòa nhà giảng đường nằm ở bên trái thư viện.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n在  /  的  /  教学楼  /  左边  /  图书馆",
         "options": [
           "左边的图书馆在教学楼。",
           "教学楼在图书馆的左边。",
@@ -30588,7 +30575,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct12_59",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 人  /  个  /  真  /  好  /  这  /  他\n(Nghĩa: “Con người anh ta thật là tốt!”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n人  /  个  /  真  /  好  /  这  /  他",
         "options": [
           "这他个人真好。",
           "他这个人真好。",
@@ -30601,7 +30588,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct12_60",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 咖啡  /  热茶  /  吧  /  一杯  /  或者  /  请喝\n(Nghĩa: “Mời uống một tách trà nóng hoặc cà phê nhé.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n咖啡  /  热茶  /  吧  /  一杯  /  或者  /  请喝",
         "options": [
           "吧咖啡或者热茶一杯请喝。",
           "请喝一杯热茶或者咖啡吧。",
@@ -30614,7 +30601,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct12_61",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“我也有点儿不好意思，但是张风和他家人都很欢迎我们。阿姨给我们准备了很多好吃的，有____ (chá)、咖啡、牛肉、鱼、水果等等。”\n(Nghĩa: Tớ cũng hơi ngại một chút, nhưng Trương Phong và gia đình cậu ấy rất hoan nghênh bọn tớ. Cô ấy chuẩn bị cho bọn tớ rất nhiều đồ ngon, nào là trà, cà phê, thịt bò, cá, hoa quả, v.v.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我也有点儿不好意思，但是张风和他家人都很欢迎我们。阿姨给我们准备了很多好吃的，有____、咖啡、牛肉、鱼、水果等等。”",
         "options": [
           "想",
           "远",
@@ -30627,7 +30614,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct12_62",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“大衣很合适，颜色也不错，但是裤子____ (yǒudiǎnr)大。”\n(Nghĩa: Áo khoác rất vừa vặn, màu cũng đẹp, nhưng quần hơi rộng một chút.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“大衣很合适，颜色也不错，但是裤子____大。”",
         "options": [
           "电影院",
           "怎么样",
@@ -30640,7 +30627,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct12_63",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“你们想____ (hē)茶还是咖啡？这里还有水果和牛肉。”\n(Nghĩa: Các cậu muốn uống trà hay cà phê? Ở đây còn có hoa quả và thịt bò nữa.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你们想____茶还是咖啡？这里还有水果和牛肉。”",
         "options": [
           "半",
           "喝",
@@ -30653,7 +30640,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct12_64",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“谢谢你和阿姨这么热情地____ (jiēdài)我们。”\n(Nghĩa: Cảm ơn cậu và cô đã tiếp đón bọn mình nhiệt tình thế này.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“谢谢你和阿姨这么热情地____我们。”",
         "options": [
           "漂亮",
           "地方",
@@ -31102,21 +31089,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "安妮",
             "hanzi": "你打算送给她什么礼物？",
-            "displayHanzi": "你打算送给 (sònggěi: tặng cho)她什么礼物？",
+            "displayHanzi": "你打算送给她什么礼物？",
             "pinyin": "Nǐ dǎsuan sòng gěi tā shénme lǐwù?",
             "meaning": "Cậu định tặng em ấy món quà gì?"
           },
           {
             "speaker": "马克",
             "hanzi": "我打算送给她一顶帽子和一双鞋。你觉得这顶红色的帽子怎么样？",
-            "displayHanzi": "我打算送给 (sònggěi: tặng cho)她一顶帽子和一双鞋。你觉得这顶红色的帽子怎么样？",
+            "displayHanzi": "我打算送给她一顶帽子和一双鞋。你觉得这顶红色的帽子怎么样？",
             "pinyin": "Wǒ dǎsuan sòng gěi tā yī dǐng màozi hé yīshuāng xié. Nǐ juéde zhè dǐng hóngsè de màozi zěnmeyàng?",
             "meaning": "Tớ định tặng em ấy một chiếc mũ và một đôi giày. Cậu thấy chiếc mũ màu đỏ này thế nào?"
           },
           {
             "speaker": "安妮",
             "hanzi": "哇，太好看了！我觉得你妹妹一定很喜欢！对了，你妹妹的生日是几月几号？",
-            "displayHanzi": "哇 (wa: oa, chà (cảm thán))，太好看了！我觉得你妹妹一定 (yīdìng: nhất định)很喜欢！对了，你妹妹的生日是几月几号？",
+            "displayHanzi": "哇，太好看了！我觉得你妹妹一定很喜欢！对了，你妹妹的生日是几月几号？",
             "pinyin": "Wa, tài hǎokàn le! Wǒ juéde nǐ mèimei yídìng hěn xǐhuan! Duì le, nǐ mèimei de shēngrì shì jǐ yuè jǐ hào?",
             "meaning": "Chà, đẹp quá đi! Tớ nghĩ em gái cậu nhất định sẽ rất thích! À, sinh nhật em gái cậu là ngày mấy tháng mấy?"
           },
@@ -31144,7 +31131,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "安妮",
             "hanzi": "我差点儿忘了，星期六也是我的一个朋友的生日。那你买你的吧，我现在去书店给他买一本汉语书，明天再跟你说吧！",
-            "displayHanzi": "我差点儿忘 (wàng: quên)了，星期六也是我的一个朋友的生日。那你买你的吧，我现在去书店给他买一本汉语书，明天再跟 (gēn: cùng, với)你说吧！",
+            "displayHanzi": "我差点儿忘了，星期六也是我的一个朋友的生日。那你买你的吧，我现在去书店给他买一本汉语书，明天再跟你说吧！",
             "pinyin": "Wǒ chàdiǎnr wàng le, xīngqīliù yěshì wǒ de yígè péngyou de shēngrì. Nà nǐ mǎi nǐ de ba, wǒ xiànzài qù shūdiàn gěi tā mǎi yī běn Hànyǔ shū, míngtiān zài gēn nǐ shuō ba!",
             "meaning": "Suýt nữa tớ quên mất, thứ Bảy cũng là sinh nhật một người bạn của tớ. Vậy cậu cứ mua đồ của cậu đi, giờ tớ ra hiệu sách mua tặng cậu ấy một quyển sách tiếng Hán, mai nói chuyện với cậu sau nhé!"
           },
@@ -31181,8 +31168,8 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "他一直在等你。",
-              "我给朋友打 (dǎ: đánh, gọi, chơi)电话时 (shí: lúc, khi)，爸爸在看着 (zhe: đang (trạng thái))我呢。",
-              "今天又下雨 (xià yǔ: mưa)了！",
+              "我给朋友打电话时，爸爸在看着我呢。",
+              "今天又下雨了！",
               "我正在选生日礼物。"
             ],
             "correctIndex": 3,
@@ -31204,9 +31191,9 @@ const DEFAULT_LESSONS = [
             "audioText": "我妹妹的。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "老师讲 (jiǎng: kể, giảng)课 (kè: tiết học, bài học)时 (shí: lúc, khi)，我正在查生词 (shēngcí: từ mới)。",
-              "祝你生日快乐，天 (tiān: ngày, trời)天开心 (kāixīn: vui vẻ, hạnh phúc)！",
-              "下 (xià: dưới / xuống)星期六是我妹妹的生日。",
+              "老师讲课时，我正在查生词。",
+              "祝你生日快乐，天天开心！",
+              "下星期六是我妹妹的生日。",
               "我妹妹的。"
             ],
             "correctIndex": 3,
@@ -31278,7 +31265,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "他这个人真好！",
-            "question": "[Ôn tập Bài 12] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Được rồi, tôi đồng ý, cậu đừng nói lại nữa!",
               "Cậu nên ngủ sớm dậy sớm.",
@@ -31290,19 +31277,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我在看书呢。",
-            "question": "[Bài 13] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "我在看书呢。",
-              "我们在/正在讨论 (tǎolùn: thảo luận)。",
-              "这双新鞋穿 (chuān: mặc)起来 (qǐlái: lên (bổ ngữ))非常 (fēicháng: cực kì)舒服 (shūfu: thoải mái, dễ chịu)。",
-              "我回家时 (shí: lúc, khi)，爸爸正 (zhèng: đang)看着 (zhe: đang (trạng thái))电视 (diànshì: tivi)。"
+              "我们在/正在讨论。",
+              "这双新鞋穿起来非常舒服。",
+              "我回家时，爸爸正看着电视。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 我在看书呢。 (Wǒ zài kànshū ne.) → Tôi đang đọc sách."
           },
           {
             "audioText": "A: 你怎么去超市呢？",
-            "question": "[Ôn tập Bài 6] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cậu đi gì đến siêu thị thế?",
               "Cậu ấy ngủ suốt chín tiếng đồng hồ.",
@@ -31314,19 +31301,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "他一直在等你。",
-            "question": "[Bài 13] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "星期三下午我们没有 (méiyǒu: không có)汉语课 (kè: tiết học, bài học)。",
+              "星期三下午我们没有汉语课。",
               "他一直在等你。",
-              "他又来 (lái: đến)了！",
-              "妈妈做 (zuò: làm)饭时 (shí: lúc, khi)，我正 (zhèng: đang)洗澡 (xǐzǎo: tắm rửa)呢。"
+              "他又来了！",
+              "妈妈做饭时，我正洗澡呢。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 他一直在等你。 (Tā yīzhí zài děng nǐ.) → Anh ấy vẫn cứ chờ đợi cậu."
           },
           {
             "audioText": "老师您好！",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tớ đang chọn quà sinh nhật.",
               "Em chào thầy/cô ạ",
@@ -31352,14 +31339,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Annie",
             "hanzi": "对呀！我打算星期五晚上在宿舍附近请大家吃饭。",
-            "displayHanzi": "对呀！我打算星期五晚上在宿舍附近请大家 (dàjiā: mọi người)吃饭。",
+            "displayHanzi": "对呀！我打算星期五晚上在宿舍附近请大家吃饭。",
             "pinyin": "Duì ya! Wǒ dǎsuan xīngqīwǔ wǎnshang zài sùshè fùjìn qǐng dàjiā chīfàn.",
             "meaning": "Đúng rồi! Tớ định tối thứ Sáu mời mọi người ăn cơm gần ký túc xá."
           },
           {
             "speaker": "Mark",
             "hanzi": "太好了！我和玉兰给你准备了一双漂亮的运动鞋。",
-            "displayHanzi": "太好了！我和玉兰给你准备了一双漂亮的运动 (yùndòng: vận động, hoạt động thể thao)鞋。",
+            "displayHanzi": "太好了！我和玉兰给你准备了一双漂亮的运动鞋。",
             "pinyin": "Tài hǎo le! Wǒ hé Yùlán gěi nǐ zhǔnbèi le yì shuāng piàoliang de yùndòngxié.",
             "meaning": "Tuyệt quá! Tớ và Ngọc Lan đã chuẩn bị tặng cậu một đôi giày thể thao rất đẹp."
           },
@@ -31374,7 +31361,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "安妮，这星期五是你的生日，对吗？ 对呀！我打算星期五晚上在宿舍附近请大家吃饭。 太好了！我和玉兰给你准备了一双漂亮的运动鞋。 谢谢你们，我太高兴了！",
-            "question": "[Nghe hiểu tình huống mới] Mark và Ngọc Lan tặng Annie món quà gì nhân ngày sinh nhật vào thứ Sáu?",
+            "question": "Mark và Ngọc Lan tặng Annie món quà gì nhân ngày sinh nhật vào thứ Sáu?",
             "options": [
               "Một chiếc mũ màu đỏ",
               "Một quyển từ điển Hán ngữ",
@@ -31386,7 +31373,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "安妮，这星期五是你的生日，对吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Annie, thứ Sáu tuần này là sinh nhật cậu đúng không?",
               "Nếu ngày mai có tuyết rơi thì tớ sẽ đi đắp người tuyết.",
@@ -31398,19 +31385,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "对呀！我打算星期五晚上在宿舍附近请大家吃饭。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "对呀！我打算星期五晚上在宿舍附近请大家 (dàjiā: mọi người)吃饭。",
-              "我给朋友打 (dǎ: đánh, gọi, chơi)电话时 (shí: lúc, khi)，爸爸在看着 (zhe: đang (trạng thái))我呢。",
-              "这双新鞋穿 (chuān: mặc)起来 (qǐlái: lên (bổ ngữ))非常 (fēicháng: cực kì)舒服 (shūfu: thoải mái, dễ chịu)。",
-              "请问 (qǐngwèn: xin hỏi)，今天是几月几号，星期几？"
+              "对呀！我打算星期五晚上在宿舍附近请大家吃饭。",
+              "我给朋友打电话时，爸爸在看着我呢。",
+              "这双新鞋穿起来非常舒服。",
+              "请问，今天是几月几号，星期几？"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 对呀！我打算星期五晚上在宿舍附近请大家吃饭。 (Duì ya! Wǒ dǎsuan xīngqīwǔ wǎnshang zài sùshè fùjìn qǐng dàjiā chīfàn.) → Đúng rồi! Tớ định tối thứ Sáu mời mọi người ăn cơm gần ký túc xá."
           },
           {
             "audioText": "太好了！我和玉兰给你准备了一双漂亮的运动鞋。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Dương vừa về nhà là đi nấu cơm.",
               "Hôm nay là thứ tư.",
@@ -31484,7 +31471,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss13_1",
           "targetHanzi": "下星期六是我妹妹的生日",
-          "targetMeaning": "[Mở rộng] Thứ Bảy tuần sau là sinh nhật em gái tôi.",
+          "targetMeaning": "Thứ Bảy tuần sau là sinh nhật em gái tôi.",
           "pinyin": "Xià xīngqīliù shì wǒ mèimei de shēngrì.",
           "tokens": [
             "下",
@@ -31493,13 +31480,12 @@ const DEFAULT_LESSONS = [
             "妹妹",
             "的",
             "生日"
-          ],
-          "unlearnedHint": "Từ chưa học: 下 (xià: dưới / xuống)"
+          ]
         },
         {
           "id": "ss13_2",
           "targetHanzi": "我买了一顶白色帽子当生日礼物",
-          "targetMeaning": "[Mở rộng] Tôi đã mua một chiếc mũ trắng làm quà sinh nhật.",
+          "targetMeaning": "Tôi đã mua một chiếc mũ trắng làm quà sinh nhật.",
           "pinyin": "Wǒ mǎi le yì dǐng báisè màozi dāng shēngrì lǐwù.",
           "tokens": [
             "我买了",
@@ -31508,8 +31494,7 @@ const DEFAULT_LESSONS = [
             "帽子当",
             "生日",
             "礼物"
-          ],
-          "unlearnedHint": "Từ chưa học: 当 (dāng: đảm nhiệm, làm)"
+          ]
         },
         {
           "id": "ss13_3",
@@ -31540,7 +31525,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss13_5",
           "targetHanzi": "请告诉我这副眼镜多少钱",
-          "targetMeaning": "[Ôn tập Bài 10] Làm ơn cho tôi biết cặp kính mắt này bao nhiêu tiền.",
+          "targetMeaning": "Làm ơn cho tôi biết cặp kính mắt này bao nhiêu tiền.",
           "pinyin": "Qǐng gàosu wǒ zhè fù yǎnjìng duōshao qián.",
           "tokens": [
             "请告诉",
@@ -31554,7 +31539,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss13_6",
           "targetHanzi": "今天下雨我不想出门买东西",
-          "targetMeaning": "[Ôn tập Bài 10] Hôm nay trời mưa, tôi không muốn ra ngoài mua đồ.",
+          "targetMeaning": "Hôm nay trời mưa, tôi không muốn ra ngoài mua đồ.",
           "pinyin": "Jīntiān xià yǔ, wǒ bù xiǎng chūmén mǎi dōngxi.",
           "tokens": [
             "今天",
@@ -31563,8 +31548,7 @@ const DEFAULT_LESSONS = [
             "出门",
             "买",
             "东西"
-          ],
-          "unlearnedHint": "Từ chưa học: 下雨 (xià yǔ: mưa), 不 (bù: không)"
+          ]
         },
         {
           "id": "ss13_exp_1",
@@ -31814,19 +31798,19 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr13_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Thứ Bảy tuần sau là sinh nhật em gái tôi.",
+          "promptText": "Thứ Bảy tuần sau là sinh nhật em gái tôi.",
           "expectedChinese": "下星期六是我妹妹的生日。",
           "acceptedPinyin": "xià xīngqīliù shì wǒ mèimei de shēngrì",
-          "hint": "Gợi ý Pinyin: Xià xīngqīliù shì wǒ mèimei de shēngrì. | Từ chưa học: 下 (xià: dưới / xuống)",
+          "hint": "Gợi ý Pinyin: Xià xīngqīliù shì wǒ mèimei de shēngrì.",
           "explanation": "Thứ Bảy tuần sau là sinh nhật em gái tôi. → 下星期六是我妹妹的生日。 (Xià xīngqīliù shì wǒ mèimei de shēngrì.)"
         },
         {
           "id": "tr13_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Tôi đã mua một chiếc mũ trắng làm quà sinh nhật.",
+          "promptText": "Tôi đã mua một chiếc mũ trắng làm quà sinh nhật.",
           "expectedChinese": "我买了一顶白色帽子当生日礼物。",
           "acceptedPinyin": "wǒ mǎi le yì dǐng báisè màozi dāng shēngrì lǐwù",
-          "hint": "Gợi ý Pinyin: Wǒ mǎi le yì dǐng báisè màozi dāng shēngrì lǐwù. | Từ chưa học: 当 (dāng: đảm nhiệm, làm)",
+          "hint": "Gợi ý Pinyin: Wǒ mǎi le yì dǐng báisè màozi dāng shēngrì lǐwù.",
           "explanation": "Tôi đã mua một chiếc mũ trắng làm quà sinh nhật. → 我买了一顶白色帽子当生日礼物。 (Wǒ mǎi le yì dǐng báisè màozi dāng shēngrì lǐwù.)"
         },
         {
@@ -31940,7 +31924,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr13_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 请问 (qǐngwèn: xin hỏi)，今天是几月几号，星期几？",
+          "promptText": "请问，今天是几月几号，星期几？",
           "chineseAudioText": "请问，今天是几月几号，星期几？",
           "pinyin": "Qǐngwèn, jīntiān shì jǐ yuè jǐ hào, xīngqī jǐ?",
           "expectedMeaning": "Xin hỏi hôm nay là ngày mấy tháng mấy, thứ mấy?",
@@ -31955,7 +31939,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr13_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 星期三下午我们没有 (méiyǒu: không có)汉语课 (kè: tiết học, bài học)。",
+          "promptText": "星期三下午我们没有汉语课。",
           "chineseAudioText": "星期三下午我们没有汉语课。",
           "pinyin": "Xīngqīsān xiàwǔ wǒmen méiyǒu Hànyǔ kè.",
           "expectedMeaning": "Chiều thứ Tư chúng tôi không có tiết tiếng Hán.",
@@ -31985,7 +31969,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr13_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 6] A: 你怎么去超市呢？",
+          "promptText": "A: 你怎么去超市呢？",
           "chineseAudioText": "A: 你怎么去超市呢？",
           "pinyin": "Nǐ zěnme qù chāoshì ne?",
           "expectedMeaning": "Cậu đi gì đến siêu thị thế?",
@@ -32432,7 +32416,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq13_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 4] Từ đã học “不客气” (bú kèqì) có nghĩa là gì?",
+          "question": "Từ đã học “不客气” (bú kèqì) có nghĩa là gì?",
           "options": [
             "tên",
             "cái, chiếc, cây (lượng từ của cái bút,...)",
@@ -32445,7 +32429,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq13_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 4] Từ đã học “教学楼” (jiàoxuélóu) có nghĩa là gì?",
+          "question": "Từ đã học “教学楼” (jiàoxuélóu) có nghĩa là gì?",
           "options": [
             "chỗ kia, chỗ ấy",
             "tự mình, bản thân, một mình",
@@ -32458,7 +32442,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq13_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 9] Từ đã học “裤子” (kùzi) có nghĩa là gì?",
+          "question": "Từ đã học “裤子” (kùzi) có nghĩa là gì?",
           "options": [
             "học sinh",
             "quần áo",
@@ -32471,7 +32455,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq13_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “下 (xià: dưới / xuống)星期六是我妹妹的生日。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “下星期六是我妹妹的生日。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Bọn họ chỉ quan tâm đến bản thân mình mà thôi.",
             "Bố tôi đẹp trai như vậy, nên đương nhiên tôi cũng đẹp trai rồi.",
@@ -32484,7 +32468,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq13_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nMark: 安妮，这星期五是你的生日，对吗？\nAnnie: 对呀！我打算星期五晚上在宿舍附近请大家 (dàjiā: mọi người)吃饭。\nMark: 太好了！我和玉兰给你准备了一双漂亮的运动 (yùndòng: vận động, hoạt động thể thao)鞋。\nAnnie: 谢谢你们，我太高兴了！\n\nMark và Ngọc Lan tặng Annie món quà gì nhân ngày sinh nhật vào thứ Sáu?",
+          "question": "Đọc đoạn hội thoại:\nMark: 安妮，这星期五是你的生日，对吗？\nAnnie: 对呀！我打算星期五晚上在宿舍附近请大家吃饭。\nMark: 太好了！我和玉兰给你准备了一双漂亮的运动鞋。\nAnnie: 谢谢你们，我太高兴了！\n\nMark và Ngọc Lan tặng Annie món quà gì nhân ngày sinh nhật vào thứ Sáu?",
           "options": [
             "Một chiếc áo khoác trắng",
             "Một chiếc mũ màu đỏ",
@@ -33010,7 +32994,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct13_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“今天____。”\n(Gợi ý nghĩa: Hôm nay là thứ tư.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“今天____。”",
         "options": [
           "星期三",
           "星期一",
@@ -33023,7 +33007,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct13_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我想来超市买____东西。”\n(Gợi ý nghĩa: Tôi muốn đi siêu thị mua một chút đồ.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我想来超市买____东西。”",
         "options": [
           "介绍",
           "同学",
@@ -33036,7 +33020,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct13_40",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“太好了！我和玉兰给你准备了一双漂亮的运动____。”\n(Gợi ý nghĩa: Tuyệt quá! Tớ và Ngọc Lan đã chuẩn bị tặng cậu một đôi giày thể thao rất đẹp.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“太好了！我和玉兰给你准备了一双漂亮的运动____。”",
         "options": [
           "也",
           "鞋",
@@ -33049,7 +33033,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct13_41",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我正在选生日____。”\n(Gợi ý nghĩa: Tớ đang chọn quà sinh nhật.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我正在选生日____。”",
         "options": [
           "书包",
           "礼物",
@@ -33075,7 +33059,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct13_43",
         "category": "vocab",
-        "question": "Từ Hán tự “星期四” (thứ năm) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “星期四” có phiên âm Pinyin đúng là gì?",
         "options": [
           "xīngqīsì",
           "fěnhóngsè",
@@ -33101,7 +33085,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct13_45",
         "category": "vocab",
-        "question": "Từ Hán tự “鞋” (giày, dép) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “鞋” có phiên âm Pinyin đúng là gì?",
         "options": [
           "xié",
           "duì wǒ lái shuō",
@@ -33212,7 +33196,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct13_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 下  /  妹妹  /  星期六  /  是我  /  的  /  生日\n(Nghĩa: “Thứ Bảy tuần sau là sinh nhật em gái tôi.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n下  /  妹妹  /  星期六  /  是我  /  的  /  生日",
         "options": [
           "星期六下是我妹妹的生日。",
           "生日的妹妹是我星期六下。",
@@ -33225,7 +33209,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct13_54",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 呢  /  书  /  在  /  我  /  看\n(Nghĩa: “Tôi đang đọc sách.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n呢  /  书  /  在  /  我  /  看",
         "options": [
           "在看书呢我。",
           "在我看书呢。",
@@ -33238,7 +33222,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct13_55",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 帽子当  /  生日  /  白色  /  礼物  /  一顶  /  我买了\n(Nghĩa: “Tôi đã mua một chiếc mũ trắng làm quà sinh nhật.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n帽子当  /  生日  /  白色  /  礼物  /  一顶  /  我买了",
         "options": [
           "我买了一顶白色帽子当生日礼物。",
           "礼物生日帽子当白色一顶我买了。",
@@ -33251,7 +33235,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct13_56",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 多少  /  我这  /  副  /  眼镜  /  钱  /  请告诉\n(Nghĩa: “Làm ơn cho tôi biết cặp kính mắt này bao nhiêu tiền.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n多少  /  我这  /  副  /  眼镜  /  钱  /  请告诉",
         "options": [
           "我这请告诉副眼镜多少钱。",
           "我这副眼镜多少钱请告诉。",
@@ -33264,7 +33248,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct13_57",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“老师讲课时，我____ (zhèngzài)查生词。”\n(Nghĩa: Lúc cô giáo giảng bài thì tôi đang tra từ mới.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“老师讲课时，我____查生词。”",
         "options": [
           "正在",
           "觉得",
@@ -33277,7 +33261,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct13_58",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“安妮，这____ (xīngqīwǔ)是你的生日，对吗？”\n(Nghĩa: Annie, thứ Sáu tuần này là sinh nhật cậu đúng không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“安妮，这____是你的生日，对吗？”",
         "options": [
           "笔记本",
           "星期五",
@@ -33290,7 +33274,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct13_59",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“我打算送给她一顶帽子和一____ (shuāng)鞋。你觉得这顶红色的帽子怎么样？”\n(Nghĩa: Tớ định tặng em ấy một chiếc mũ và một đôi giày. Cậu thấy chiếc mũ màu đỏ này thế nào?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我打算送给她一顶帽子和一____鞋。你觉得这顶红色的帽子怎么样？”",
         "options": [
           "谁",
           "七",
@@ -33303,7 +33287,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct13_60",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“你打算____ (sòng (gěi shuí))给她什么礼物？”\n(Nghĩa: Cậu định tặng em ấy món quà gì?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你打算____)给她什么礼物？”",
         "options": [
           "近",
           "分",
@@ -33647,7 +33631,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "我家有很多人，每个人的爱好都不一样。",
-            "displayHanzi": "我家有很多人，每个人的爱好都不 (bù: không)一样。",
+            "displayHanzi": "我家有很多人，每个人的爱好都不一样。",
             "pinyin": "Wǒ jiā yǒu hěn duō rén, měi gèrén de àihào dōu bù yíyàng.",
             "meaning": "Nhà tớ có rất nhiều người, sở thích của mỗi người đều khác nhau."
           },
@@ -33661,14 +33645,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "我爸爸很喜欢种树，我家有一个小园子，园子里全都是花和树.",
-            "displayHanzi": "我爸爸很喜欢种树，我家有一个小园子，园子里 (lǐ: trong)全都是花和树.",
+            "displayHanzi": "我爸爸很喜欢种树，我家有一个小园子，园子里全都是花和树.",
             "pinyin": "Wǒ bàba hěn xǐhuan zhòng shù, wǒjiā yǒu yígè xiǎo yuánzi, yuánzi li quán dōu shì huā hé shù.",
             "meaning": "Bố tớ rất thích trồng cây, nhà tớ có một khu vườn nhỏ, trong vườn toàn là hoa và cây cối."
           },
           {
             "speaker": "马克",
             "hanzi": "一定很漂亮！ 你妈妈呢？",
-            "displayHanzi": "一定 (yīdìng: nhất định)很漂亮！ 你妈妈呢？",
+            "displayHanzi": "一定很漂亮！ 你妈妈呢？",
             "pinyin": "Yídìng hěn piàoliang! Nǐ māma ne?",
             "meaning": "Chắc chắn rất đẹp! Thế còn mẹ cậu?"
           },
@@ -33689,7 +33673,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "我弟弟今年 6 岁，他最喜欢画画儿。你看，这是他画的画儿，他画了爷爷的真容。",
-            "displayHanzi": "我弟弟今 (jīn: hôm nay, nay)年 6 岁，他最喜欢画画儿。你看，这是他画的画儿，他画了爷爷的真容。",
+            "displayHanzi": "我弟弟今年 6 岁，他最喜欢画画儿。你看，这是他画的画儿，他画了爷爷的真容。",
             "pinyin": "Wǒ dìdi jīnnián 6 suì, tā zuì xǐhuan huà huàr. Nǐ kàn，zhè shì tā huà de huàr, tā huà le yéye de zhēnróng.",
             "meaning": "Em trai tớ năm nay 6 tuổi, em ấy thích nhất là vẽ tranh. Cậu xem, đây là bức tranh em ấy vẽ, em ấy vẽ chân dung ông nội đấy."
           },
@@ -33703,14 +33687,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "爷爷很喜欢散步和看报纸，他每天早上在家看报纸，下午去公园散步。你有什么爱好吗？",
-            "displayHanzi": "爷爷很喜欢散步和看报纸，他每天 (tiān: ngày, trời)早上在家看报纸，下午去公园散步。你有什么爱好吗？",
+            "displayHanzi": "爷爷很喜欢散步和看报纸，他每天早上在家看报纸，下午去公园散步。你有什么爱好吗？",
             "pinyin": "Yéye hěn xǐhuan sànbù hé kàn bàozhǐ, tā měitiān zǎoshang zài jiā kàn bàozhǐ, xiàwǔ qù gōngyuán sànbù. Nǐ yǒu shénme àihào ma?",
             "meaning": "Ông nội rất thích đi dạo và đọc báo, sáng nào ông cũng đọc báo ở nhà, chiều ra công viên đi dạo. Cậu có sở thích gì không?"
           },
           {
             "speaker": "马克",
             "hanzi": "我最喜欢踢足球，如果学校有足球比赛, 我一定参加。",
-            "displayHanzi": "我最喜欢踢足球，如果学校有足球 (zúqiú: bóng đá)比赛, 我一定 (yīdìng: nhất định)参加。",
+            "displayHanzi": "我最喜欢踢足球，如果学校有足球比赛, 我一定参加。",
             "pinyin": "Wǒ zuì xǐhuan tī zúqiú, rúguǒ xuéxiào yǒu zúqiú bǐsài, wǒ yídìng cānjiā.",
             "meaning": "Tớ thích nhất đá bóng, nếu trường có giải bóng đá, tớ nhất định sẽ tham gia."
           },
@@ -33739,10 +33723,10 @@ const DEFAULT_LESSONS = [
             "audioText": "我家有很多人，每个人的爱好都不一样。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "我爸爸那么帅 (shuài: đẹp trai)，所以 (suǒyǐ: cho nên)我当然也很帅了。",
-              "晚 (wǎn: muộn, tối)饭以后 (yǐhòu: sau, lúc sau)我常常 (chángcháng: thường)去公园散步。",
+              "我爸爸那么帅，所以我当然也很帅了。",
+              "晚饭以后我常常去公园散步。",
               "我正在吃饭。",
-              "我家有很多人，每个人的爱好都不 (bù: không)一样。"
+              "我家有很多人，每个人的爱好都不一样。"
             ],
             "correctIndex": 3,
             "explanation": "Câu vừa đọc: 我家有很多人，每个人的爱好都不一样。 (Wǒ jiā yǒu hěn duō rén, měi gèrén de àihào dōu bù yíyàng.) → Nhà tớ có rất nhiều người, sở thích của mỗi người đều khác nhau."
@@ -33763,10 +33747,10 @@ const DEFAULT_LESSONS = [
             "audioText": "我爸爸很喜欢种树，我家有一个小园子，园子里全都是花和树.",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "奶奶在看一个节目 (jiémù: chương trình)，你们别 (bié: đừng)闹了！",
+              "奶奶在看一个节目，你们别闹了！",
               "他们只关心自己。",
-              "你怎么现在才 (cái: mới)来 (lái: đến)啊，大家 (dàjiā: mọi người)都吃了。",
-              "我爸爸很喜欢种树，我家有一个小园子，园子里 (lǐ: trong)全都是花和树."
+              "你怎么现在才来啊，大家都吃了。",
+              "我爸爸很喜欢种树，我家有一个小园子，园子里全都是花和树."
             ],
             "correctIndex": 3,
             "explanation": "Câu vừa đọc: 我爸爸很喜欢种树，我家有一个小园子，园子里全都是花和树. (Wǒ bàba hěn xǐhuan zhòng shù, wǒjiā yǒu yígè xiǎo yuánzi, yuánzi li quán dōu shì huā hé shù.) → Bố tớ rất thích trồng cây, nhà tớ có một khu vườn nhỏ, trong vườn toàn là hoa và cây cối."
@@ -33837,7 +33821,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "我在看书呢。",
-            "question": "[Ôn tập Bài 13] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tôi biết đá bóng.",
               "Tôi đang đọc sách.",
@@ -33849,19 +33833,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我有一个哥哥和一个妹妹。",
-            "question": "[Bài 14] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "我叔叔 (shūshu: chú)只有一个儿子 (érzi: con trai)。",
+              "我叔叔只有一个儿子。",
               "他们只关心自己。",
               "我有一个哥哥和一个妹妹。",
-              "客厅 (kètīng: phòng khách)里 (lǐ: trong)有三个人。"
+              "客厅里有三个人。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 我有一个哥哥和一个妹妹。 (Wǒ yǒu yígè gēge hé yígè mèimei.) → Tôi có một anh trai và một em gái."
           },
           {
             "audioText": "现在的我们",
-            "question": "[Ôn tập Bài 7] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Chạy một chuyến",
               "kế bên (của) cô ấy",
@@ -33873,11 +33857,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "他们只关心自己。",
-            "question": "[Bài 14] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "他们只关心自己。",
-              "你喜欢春天 (chūntiān: mùa xuân)还是夏天 (xiàtiān: mùa hè)？",
-              "你怎么又来 (lái: đến)了？",
+              "你喜欢春天还是夏天？",
+              "你怎么又来了？",
               "你爸爸喜欢什么？"
             ],
             "correctIndex": 0,
@@ -33885,7 +33869,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我也是学生。",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Một con đường",
               "Năm nay cháu 6 tuổi ạ.",
@@ -33911,7 +33895,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Minh",
             "hanzi": "不一样。爸爸喜欢看报纸和种花，妈妈喜欢听音乐唱歌。",
-            "displayHanzi": "不 (bù: không)一样。爸爸喜欢看报纸和种花，妈妈喜欢听音乐唱歌。",
+            "displayHanzi": "不一样。爸爸喜欢看报纸和种花，妈妈喜欢听音乐唱歌。",
             "pinyin": "Bù yíyàng. Bàba xǐhuan kàn bàozhǐ hé zhòng huā, māma xǐhuan tīng yīnyuè chànggē.",
             "meaning": "Không giống nhau. Bố thích đọc báo và trồng hoa, mẹ thích nghe nhạc và ca hát."
           },
@@ -33925,7 +33909,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Minh",
             "hanzi": "他最喜欢画画儿，我才是家里的足球迷。",
-            "displayHanzi": "他最喜欢画画儿，我才 (cái: mới)是家里 (lǐ: trong)的足球迷。",
+            "displayHanzi": "他最喜欢画画儿，我才是家里的足球迷。",
             "pinyin": "Tā zuì xǐhuan huà huàr, wǒ cái shì jiālǐ de zúqiúmí.",
             "meaning": "Em ấy thích nhất vẽ tranh, còn tớ mới là tín đồ bóng đá của cả nhà."
           }
@@ -33933,7 +33917,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "日明，你们家人的爱好都一样吗？ 不一样。爸爸喜欢看报纸和种花，妈妈喜欢听音乐唱歌。 那你弟弟呢？他也喜欢踢足球吗？ 他最喜欢画画儿，我才是家里的足球迷。",
-            "question": "[Nghe hiểu tình huống mới] Trong gia đình Nhật Minh, ai là người thích nhất môn vẽ tranh?",
+            "question": "Trong gia đình Nhật Minh, ai là người thích nhất môn vẽ tranh?",
             "options": [
               "Bản thân Nhật Minh",
               "Em trai của Nhật Minh (弟弟)",
@@ -33945,7 +33929,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "日明，你们家人的爱好都一样吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Nhật Minh, sở thích của mọi người trong nhà cậu có giống nhau không?",
               "Anh đã uống 2 chai rồi, đừng uống nữa!",
@@ -33957,19 +33941,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "不一样。爸爸喜欢看报纸和种花，妈妈喜欢听音乐唱歌。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "不 (bù: không)一样。爸爸喜欢看报纸和种花，妈妈喜欢听音乐唱歌。",
-              "我家有很多人，每个人的爱好都不 (bù: không)一样。",
-              "你明天再来 (lái: đến)跟 (gēn: cùng, với)姥姥 (lǎolao: bà ngoại)聊天儿吧！",
-              "你怎么现在才 (cái: mới)来 (lái: đến)啊，大家 (dàjiā: mọi người)都吃了。"
+              "不一样。爸爸喜欢看报纸和种花，妈妈喜欢听音乐唱歌。",
+              "我家有很多人，每个人的爱好都不一样。",
+              "你明天再来跟姥姥聊天儿吧！",
+              "你怎么现在才来啊，大家都吃了。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 不一样。爸爸喜欢看报纸和种花，妈妈喜欢听音乐唱歌。 (Bù yíyàng. Bàba xǐhuan kàn bàozhǐ hé zhòng huā, māma xǐhuan tīng yīnyuè chànggē.) → Không giống nhau. Bố thích đọc báo và trồng hoa, mẹ thích nghe nhạc và ca hát."
           },
           {
             "audioText": "那你弟弟呢？他也喜欢踢足球吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Ngày mai chúng tôi sẽ đi leo núi.",
               "Họ đã tốt nghiệp 2 năm rồi!",
@@ -34061,7 +34045,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss14_1",
           "targetHanzi": "爷爷的爱好是早上看报纸喝茶",
-          "targetMeaning": "[Mở rộng] Sở thích của ông nội là buổi sáng đọc báo và uống trà.",
+          "targetMeaning": "Sở thích của ông nội là buổi sáng đọc báo và uống trà.",
           "pinyin": "Yéye de àihào shì zǎoshang kàn bàozhǐ, hē chá.",
           "tokens": [
             "爷爷的",
@@ -34075,7 +34059,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss14_2",
           "targetHanzi": "妹妹最喜欢唱歌和画画儿",
-          "targetMeaning": "[Mở rộng] Em gái thích nhất là ca hát và vẽ tranh.",
+          "targetMeaning": "Em gái thích nhất là ca hát và vẽ tranh.",
           "pinyin": "Mèimei zuì xǐhuan chànggē hé huà huàr.",
           "tokens": [
             "妹妹",
@@ -34116,7 +34100,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss14_5",
           "targetHanzi": "安妮生活在这里吗",
-          "targetMeaning": "[Ôn tập Bài 3] Annie sống ở đây phải không?",
+          "targetMeaning": "Annie sống ở đây phải không?",
           "pinyin": "Ānnī shēnghuó zài zhèlǐ ma?",
           "tokens": [
             "安妮",
@@ -34125,13 +34109,12 @@ const DEFAULT_LESSONS = [
             "这",
             "里",
             "吗"
-          ],
-          "unlearnedHint": "Từ chưa học: 里 (lǐ: trong)"
+          ]
         },
         {
           "id": "ss14_6",
           "targetHanzi": "这个木瓜很大也很便宜",
-          "targetMeaning": "[Ôn tập Bài 8] Quả đu đủ này rất to mà giá cũng rất rẻ.",
+          "targetMeaning": "Quả đu đủ này rất to mà giá cũng rất rẻ.",
           "pinyin": "Zhège mùguā hěn dà, yě hěn piányi.",
           "tokens": [
             "这个",
@@ -34140,8 +34123,7 @@ const DEFAULT_LESSONS = [
             "也",
             "很",
             "便宜"
-          ],
-          "unlearnedHint": "Từ chưa học: 大 (dà: to, lớn)"
+          ]
         },
         {
           "id": "ss14_exp_1",
@@ -34435,7 +34417,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr14_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Sở thích của ông nội là buổi sáng đọc báo và uống trà.",
+          "promptText": "Sở thích của ông nội là buổi sáng đọc báo và uống trà.",
           "expectedChinese": "爷爷的爱好是早上看报纸、喝茶。",
           "acceptedPinyin": "yéye de àihào shì zǎoshang kàn bàozhǐ hē chá",
           "hint": "Gợi ý Pinyin: Yéye de àihào shì zǎoshang kàn bàozhǐ, hē chá.",
@@ -34444,7 +34426,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr14_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Em gái thích nhất là ca hát và vẽ tranh.",
+          "promptText": "Em gái thích nhất là ca hát và vẽ tranh.",
           "expectedChinese": "妹妹最喜欢唱歌和画画儿。",
           "acceptedPinyin": "mèimei zuì xǐhuan chànggē hé huà huàr",
           "hint": "Gợi ý Pinyin: Mèimei zuì xǐhuan chànggē hé huà huàr.",
@@ -34561,7 +34543,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr14_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 爸爸在园子里 (lǐ: trong)种了很多漂亮的花和树。",
+          "promptText": "爸爸在园子里种了很多漂亮的花和树。",
           "chineseAudioText": "爸爸在园子里种了很多漂亮的花和树。",
           "pinyin": "Bàba zài yuánzi lǐ zhòng le hěnduō piàoliang de huā hé shù.",
           "expectedMeaning": "Bố trồng rất nhiều hoa đẹp và cây cối trong khu vườn.",
@@ -34576,7 +34558,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr14_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 哥哥是个足球迷，喜欢看足球 (zúqiú: bóng đá)比赛。",
+          "promptText": "哥哥是个足球迷，喜欢看足球比赛。",
           "chineseAudioText": "哥哥是个足球迷，喜欢看足球比赛。",
           "pinyin": "Gēge shì gè zúqiúmí, xǐhuan kàn zúqiú bǐsài.",
           "expectedMeaning": "Anh trai là một tín đồ bóng đá, rất thích xem các trận đấu bóng đá.",
@@ -34606,7 +34588,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr14_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 7] 学生的书包",
+          "promptText": "学生的书包",
           "chineseAudioText": "学生的书包",
           "pinyin": "xuéshēng de shūbāo",
           "expectedMeaning": "cặp của học sinh",
@@ -35060,7 +35042,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq14_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 12] Từ đã học “客人” (kèrén) có nghĩa là gì?",
+          "question": "Từ đã học “客人” (kèrén) có nghĩa là gì?",
           "options": [
             "họ, quý tính, quý danh (cách nói lịch sử)",
             "chơi bóng đá",
@@ -35073,7 +35055,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq14_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 3] Từ đã học “国家” (guójiā) có nghĩa là gì?",
+          "question": "Từ đã học “国家” (guójiā) có nghĩa là gì?",
           "options": [
             "quốc gia, đất nước",
             "mời, xin",
@@ -35086,7 +35068,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq14_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 5] Từ đã học “给 (给谁打电话)” (gěi gěi shéi dǎ diànhuà) có nghĩa là gì?",
+          "question": "Từ đã học “给 (给谁打电话)” (gěi gěi shéi dǎ diànhuà) có nghĩa là gì?",
           "options": [
             "cho gọi điện thoại cho ai đó",
             "dùng cuối câu, biểu thị ngữ khí cảm thán.",
@@ -35099,7 +35081,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq14_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “爷爷的爱好是早上看报纸、喝茶。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “爷爷的爱好是早上看报纸、喝茶。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Tôi thật lòng muốn đi cùng em.",
             "Sở thích của ông nội là buổi sáng đọc báo và uống trà.",
@@ -35112,7 +35094,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq14_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nLan: 日明，你们家人的爱好都一样吗？\nMinh: 不 (bù: không)一样。爸爸喜欢看报纸和种花，妈妈喜欢听音乐唱歌。\nLan: 那你弟弟呢？他也喜欢踢足球吗？\nMinh: 他最喜欢画画儿，我才 (cái: mới)是家里 (lǐ: trong)的足球迷。\n\nTrong gia đình Nhật Minh, ai là người thích nhất môn vẽ tranh?",
+          "question": "Đọc đoạn hội thoại:\nLan: 日明，你们家人的爱好都一样吗？\nMinh: 不一样。爸爸喜欢看报纸和种花，妈妈喜欢听音乐唱歌。\nLan: 那你弟弟呢？他也喜欢踢足球吗？\nMinh: 他最喜欢画画儿，我才是家里的足球迷。\n\nTrong gia đình Nhật Minh, ai là người thích nhất môn vẽ tranh?",
           "options": [
             "Mẹ của Nhật Minh",
             "Bản thân Nhật Minh",
@@ -35610,7 +35592,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct14_36",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我爸爸很喜欢种树，我家有一个小____，园子里全都是花和树.”\n(Gợi ý nghĩa: Bố tớ rất thích trồng cây, nhà tớ có một khu vườn nhỏ, trong vườn toàn là hoa và cây cối.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我爸爸很喜欢种树，我家有一个小____，园子里全都是花和树.”",
         "options": [
           "打算",
           "它们",
@@ -35623,7 +35605,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct14_37",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我家有很多人，每个人的爱好都不____。”\n(Gợi ý nghĩa: Nhà tớ có rất nhiều người, sở thích của mỗi người đều khác nhau.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我家有很多人，每个人的爱好都不____。”",
         "options": [
           "喜欢",
           "决定",
@@ -35636,7 +35618,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct14_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____兰，你家人的爱好是什么？”\n(Gợi ý nghĩa: Tiểu Lan, sở thích của những người trong gia đình cậu là gì?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____兰，你家人的爱好是什么？”",
         "options": [
           "说",
           "好",
@@ -35649,7 +35631,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct14_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“爷爷的____是早上看报纸喝茶”\n(Gợi ý nghĩa: Sở thích của ông nội là buổi sáng đọc báo và uống trà.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“爷爷的____是早上看报纸喝茶”",
         "options": [
           "部分",
           "自己",
@@ -35675,7 +35657,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct14_41",
         "category": "vocab",
-        "question": "Từ Hán tự “一样” (giống nhau) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “一样” có phiên âm Pinyin đúng là gì?",
         "options": [
           "yíyàng",
           "yòubian",
@@ -35799,7 +35781,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct14_50",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 吗  /  里  /  这  /  生活  /  安妮  /  在\n(Nghĩa: “Annie sống ở đây phải không?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n吗  /  里  /  这  /  生活  /  安妮  /  在",
         "options": [
           "生活在这里吗安妮。",
           "生活安妮在这里吗。",
@@ -35812,7 +35794,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct14_51",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 哥哥  /  个  /  妹妹  /  一个  /  我有  /  和一\n(Nghĩa: “Tôi có một anh trai và một em gái.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n哥哥  /  个  /  妹妹  /  一个  /  我有  /  和一",
         "options": [
           "妹妹个和一哥哥一个我有。",
           "我有一个哥哥和一个妹妹。",
@@ -35825,7 +35807,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct14_52",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 唱歌  /  喜欢  /  和画  /  最  /  画儿  /  妹妹\n(Nghĩa: “Em gái thích nhất là ca hát và vẽ tranh.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n唱歌  /  喜欢  /  和画  /  最  /  画儿  /  妹妹",
         "options": [
           "画儿和画唱歌喜欢最妹妹。",
           "最妹妹喜欢唱歌和画画儿。",
@@ -35838,7 +35820,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct14_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 们  /  关心  /  自己  /  只  /  他\n(Nghĩa: “Bọn họ chỉ quan tâm đến bản thân mình mà thôi.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n们  /  关心  /  自己  /  只  /  他",
         "options": [
           "他们只关心自己。",
           "自己关心只们他。",
@@ -35851,7 +35833,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct14_54",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“我妈妈很喜欢____ (chàng gē)和看书，她买了很多书。”\n(Nghĩa: Mẹ tớ rất thích hát và đọc sách, bà mua rất nhiều sách.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我妈妈很喜欢____和看书，她买了很多书。”",
         "options": [
           "觉得",
           "书店",
@@ -35864,7 +35846,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct14_55",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“爷爷很喜欢散步和看____ (bàozhǐ)，他每天早上在家看报纸，下午去公园散步。你有什么爱好吗？”\n(Nghĩa: Ông nội rất thích đi dạo và đọc báo, sáng nào ông cũng đọc báo ở nhà, chiều ra công viên đi dạo. Cậu có sở thích gì không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“爷爷很喜欢散步和看____，他每天早上在家看报纸，下午去公园散步。你有什么爱好吗？”",
         "options": [
           "方便",
           "介绍",
@@ -35877,7 +35859,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct14_56",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“我最喜欢踢足球，如果学校有足球比赛, 我一定____ (cānjiā)。”\n(Nghĩa: Tớ thích nhất đá bóng, nếu trường có giải bóng đá, tớ nhất định sẽ tham gia.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我最喜欢踢足球，如果学校有足球比赛, 我一定____。”",
         "options": [
           "大衣",
           "参加",
@@ -36333,7 +36315,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "张风",
             "hanzi": "北京的秋天不冷不热，很舒服，这是一年中最好的季节。",
-            "displayHanzi": "北京的秋天不冷不热，很舒服，这是一年中 (zhōng: giữa / trong)最好的季节。",
+            "displayHanzi": "北京的秋天不冷不热，很舒服，这是一年中最好的季节。",
             "pinyin": "Běijīng de qiūtiān bù lěng bú rè, hěn shūfu, zhè shì yī nián zhōng zuì hǎo de jìjié.",
             "meaning": "Mùa thu Bắc Kinh không lạnh không nóng, rất dễ chịu, đây là mùa đẹp nhất trong năm."
           },
@@ -36361,7 +36343,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "张风",
             "hanzi": "常下雪。冬天的时候我经常跟朋友去滑冰、滑雪。特别好玩儿。",
-            "displayHanzi": "常下雪。冬天的时候我经常跟 (gēn: cùng, với)朋友去滑冰、滑雪。特别好玩儿。",
+            "displayHanzi": "常下雪。冬天的时候我经常跟朋友去滑冰、滑雪。特别好玩儿。",
             "pinyin": "Cháng xiàxuě. Dōngtiān de shíhou wǒ jīngcháng gēn péngyou qù huábīng, huáxuě. Tèbié hǎowánr.",
             "meaning": "Thường hay có tuyết rơi. Vào mùa đông tôi hay đi trượt băng, trượt tuyết cùng bạn bè. Vui lắm."
           },
@@ -36375,7 +36357,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "张风",
             "hanzi": "我最喜欢夏天。因为我喜欢游泳。小明，你呢？",
-            "displayHanzi": "我最喜欢夏天。因为我喜欢游泳。小明 (míng: ngày mai, sáng)，你呢？",
+            "displayHanzi": "我最喜欢夏天。因为我喜欢游泳。小明，你呢？",
             "pinyin": "Wǒ zuì xǐhuan xiàtiān. Yīnwèi wǒ xǐhuan yóuyǒng. Xiǎomíng, nǐ ne?",
             "meaning": "Tôi thích mùa hè nhất. Vì tôi thích bơi lội. Còn bạn thì sao, Tiểu Minh?"
           },
@@ -36404,8 +36386,8 @@ const DEFAULT_LESSONS = [
             "audioText": "北京有春天、夏天、秋天和冬天四个季节。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "我比较累 (lèi: mệt, mệt mỏi)，想睡 (shuì: ngủ)觉 (jiào: giấc ngủ)了！",
-              "不早 (zǎo: sớm)不晚 (wǎn: muộn, tối)，很准时 (zhǔnshí: đúng giờ)！",
+              "我比较累，想睡觉了！",
+              "不早不晚，很准时！",
               "北京有春天、夏天、秋天和冬天四个季节。",
               "今天天气怎么样？"
             ],
@@ -36502,7 +36484,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "我有一个哥哥和一个妹妹。",
-            "question": "[Ôn tập Bài 14] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tôi có một anh trai và một em gái.",
               "Một việc/chuyện",
@@ -36514,10 +36496,10 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "今天天气怎么样？",
-            "question": "[Bài 15] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "你身体 (shēntǐ: cơ thể)怎么样了？",
-              "他的考试 (kǎoshì: thi, kiểm tra)成绩 (chéngjì: thành tích)不怎么样。",
+              "你身体怎么样了？",
+              "他的考试成绩不怎么样。",
               "一年有四个季节，你最喜欢哪个季节？",
               "今天天气怎么样？"
             ],
@@ -36526,7 +36508,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "那本词典",
-            "question": "[Ôn tập Bài 7] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tôi so sánh đáp án với anh ấy.",
               "Mùa thu ở Bắc Kinh mát mẻ hơn mùa hè nhiều.",
@@ -36538,19 +36520,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你现在觉得怎么样？",
-            "question": "[Bài 15] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "北京的春天很暖和，不常下雨，有时候刮大风。",
               "今天比较热。",
               "你现在觉得怎么样？",
-              "这件 (jiàn: cái, chiếc (áo, việc))衣服不大 (dà: to, lớn)不小。"
+              "这件衣服不大不小。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 你现在觉得怎么样？ (Nǐ xiànzài juéde zěnmeyàng?) → Bây giờ cậu cảm thấy thế nào?"
           },
           {
             "audioText": "晚上好！",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Chào buổi tối!",
               "Mùa xuân ở Bắc Kinh rất ấm áp, ít khi mưa, thỉnh thoảng có gió lớn.",
@@ -36569,28 +36551,28 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Phong",
             "hanzi": "小雪，明天北京的天气怎么样？",
-            "displayHanzi": "小雪 (Xiǎoxuě: Tiểu Tuyết)，明天北京的天气怎么样？",
+            "displayHanzi": "小雪，明天北京的天气怎么样？",
             "pinyin": "Xiǎoxuě, míngtiān Běijīng de tiānqì zěnmeyàng?",
             "meaning": "Tiểu Tuyết, ngày mai thời tiết ở Bắc Kinh thế nào?"
           },
           {
             "speaker": "Tuyết",
             "hanzi": "明天刮大风，也很冷，温度大概零下八度。",
-            "displayHanzi": "明天刮大风，也很冷，温度大概 (dàgài: đại khái, khoảng)零下八度。",
+            "displayHanzi": "明天刮大风，也很冷，温度大概零下八度。",
             "pinyin": "Míngtiān guā dàfēng, yě hěn lěng, wēndù dàgài língxià bā dù.",
             "meaning": "Ngày mai có gió lớn và rất lạnh, nhiệt độ khoảng âm 8 độ."
           },
           {
             "speaker": "Phong",
             "hanzi": "会下雪吗？我想周末和朋友去滑雪。",
-            "displayHanzi": "会 (huì: Phó, đtnn biết)下雪吗？我想周末和朋友去滑雪。",
+            "displayHanzi": "会下雪吗？我想周末和朋友去滑雪。",
             "pinyin": "Huì xiàxuě ma? Wǒ xiǎng zhōumò hé péngyou qù huáxuě.",
             "meaning": "Có tuyết rơi không? Cuối tuần tớ muốn đi trượt tuyết cùng bạn bè."
           },
           {
             "speaker": "Tuyết",
             "hanzi": "后天会下大雪，你们出去玩儿要多穿点儿大衣！",
-            "displayHanzi": "后 (hòu: sau)天 (tiān: ngày, trời)会 (huì: Phó, đtnn biết)下 (xià: dưới / xuống)大 (dà: to, lớn)雪，你们出去 (chūqù: ra ngoài)玩儿要多穿 (chuān: mặc)点儿 (ér: con, (âm uốn lưỡi))大衣！",
+            "displayHanzi": "后天会下大雪，你们出去玩儿要多穿点儿大衣！",
             "pinyin": "Hòutiān huì xià dàxuě, nǐmen chūqù wánr yào duō chuān diǎnr dàyī!",
             "meaning": "Ngày kia sẽ có tuyết rơi lớn, các cậu ra ngoài chơi nhớ mặc thêm áo khoác nhé!"
           }
@@ -36598,7 +36580,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "小雪，明天北京的天气怎么样？ 明天刮大风，也很冷，温度大概零下八度。 会下雪吗？我想周末和朋友去滑雪。 后天会下大雪，你们出去玩儿要多穿点儿大衣！",
-            "question": "[Nghe hiểu tình huống mới] Theo Tiểu Tuyết, thời tiết ngày mai ở Bắc Kinh sẽ như thế nào?",
+            "question": "Theo Tiểu Tuyết, thời tiết ngày mai ở Bắc Kinh sẽ như thế nào?",
             "options": [
               "Nắng ấm dễ chịu khoảng 22 độ",
               "Không gió, rất nóng",
@@ -36610,7 +36592,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "小雪，明天北京的天气怎么样？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Phía sau (của) Lan",
               "bên trái (của) trường học",
@@ -36622,19 +36604,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "明天刮大风，也很冷，温度大概零下八度。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "今天刮大风，温度只有零下五度。",
               "今天天气很冷。",
-              "北京的秋天比夏天凉快 (kuài: nhanh)得 (děi: phải)多。",
-              "明天刮大风，也很冷，温度大概 (dàgài: đại khái, khoảng)零下八度。"
+              "北京的秋天比夏天凉快得多。",
+              "明天刮大风，也很冷，温度大概零下八度。"
             ],
             "correctIndex": 3,
             "explanation": "Câu vừa đọc: 明天刮大风，也很冷，温度大概零下八度。 (Míngtiān guā dàfēng, yě hěn lěng, wēndù dàgài língxià bā dù.) → Ngày mai có gió lớn và rất lạnh, nhiệt độ khoảng âm 8 độ."
           },
           {
             "audioText": "会下雪吗？我想周末和朋友去滑雪。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Có tuyết rơi không? Cuối tuần tớ muốn đi trượt tuyết cùng bạn bè.",
               "Mùa thu Bắc Kinh không lạnh không nóng, rất dễ chịu, đây là mùa đẹp nhất trong năm.",
@@ -36708,7 +36690,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss15_1",
           "targetHanzi": "我觉得春天的天气最暖和最舒服",
-          "targetMeaning": "[Mở rộng] Tôi thấy thời tiết mùa xuân ấm áp và dễ chịu nhất.",
+          "targetMeaning": "Tôi thấy thời tiết mùa xuân ấm áp và dễ chịu nhất.",
           "pinyin": "Wǒ juéde chūntiān de tiānqì zuì nuǎnhuo, zuì shūfu.",
           "tokens": [
             "我觉得",
@@ -36722,7 +36704,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss15_2",
           "targetHanzi": "北京的冬天很冷常常下雪",
-          "targetMeaning": "[Mở rộng] Mùa đông ở Bắc Kinh rất lạnh, thường xuyên có tuyết rơi.",
+          "targetMeaning": "Mùa đông ở Bắc Kinh rất lạnh, thường xuyên có tuyết rơi.",
           "pinyin": "Běijīng de dōngtiān hěn lěng, chángcháng xiàxuě.",
           "tokens": [
             "北京的",
@@ -36731,8 +36713,7 @@ const DEFAULT_LESSONS = [
             "冷",
             "常常",
             "下雪"
-          ],
-          "unlearnedHint": "Từ chưa học: 常常 (chángcháng: thường)"
+          ]
         },
         {
           "id": "ss15_3",
@@ -36760,7 +36741,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss15_5",
           "targetHanzi": "安妮是我的好朋友",
-          "targetMeaning": "[Ôn tập Bài 3] Annie là bạn thân của tôi.",
+          "targetMeaning": "Annie là bạn thân của tôi.",
           "pinyin": "Ānnī shì wǒ de hǎo péngyou.",
           "tokens": [
             "安妮",
@@ -36774,7 +36755,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss15_6",
           "targetHanzi": "图书馆前面是我常去的地方",
-          "targetMeaning": "[Ôn tập Bài 4] Phía trước thư viện là nơi tôi thường đến.",
+          "targetMeaning": "Phía trước thư viện là nơi tôi thường đến.",
           "pinyin": "Túshūguǎn qiánmian shì wǒ cháng qù de dìfang.",
           "tokens": [
             "图书馆",
@@ -37031,7 +37012,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr15_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Tôi thấy thời tiết mùa xuân ấm áp và dễ chịu nhất.",
+          "promptText": "Tôi thấy thời tiết mùa xuân ấm áp và dễ chịu nhất.",
           "expectedChinese": "我觉得春天的天气最暖和、最舒服。",
           "acceptedPinyin": "wǒ juéde chūntiān de tiānqì zuì nuǎnhuo zuì shūfu",
           "hint": "Gợi ý Pinyin: Wǒ juéde chūntiān de tiānqì zuì nuǎnhuo, zuì shūfu.",
@@ -37040,7 +37021,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr15_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Một năm có bốn mùa, bạn thích mùa nào nhất?",
+          "promptText": "Một năm có bốn mùa, bạn thích mùa nào nhất?",
           "expectedChinese": "一年有四个季节，你最喜欢哪个季节？",
           "acceptedPinyin": "yì nián yǒu sì gè jìjié nǐ zuì xǐhuan nǎge jìjié",
           "hint": "Gợi ý Pinyin: Yì nián yǒu sì gè jìjié, nǐ zuì xǐhuan nǎge jìjié?",
@@ -37157,7 +37138,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr15_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 北京的冬天很冷，常常 (chángcháng: thường)下雪。",
+          "promptText": "北京的冬天很冷，常常下雪。",
           "chineseAudioText": "北京的冬天很冷，常常下雪。",
           "pinyin": "Běijīng de dōngtiān hěn lěng, chángcháng xiàxuě.",
           "expectedMeaning": "Mùa đông ở Bắc Kinh rất lạnh, thường xuyên có tuyết rơi.",
@@ -37172,7 +37153,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr15_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 今天刮大风，温度只有零下五度。",
+          "promptText": "今天刮大风，温度只有零下五度。",
           "chineseAudioText": "今天刮大风，温度只有零下五度。",
           "pinyin": "Jīntiān guā dàfēng, wēndù zhǐyǒu língxià wǔ dù.",
           "expectedMeaning": "Hôm nay gió lớn, nhiệt độ chỉ có âm năm độ.",
@@ -37202,7 +37183,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr15_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 7] 汉语词典",
+          "promptText": "汉语词典",
           "chineseAudioText": "汉语词典",
           "pinyin": "Hànyǔ cídiǎn",
           "expectedMeaning": "từ điển tiếng Trung",
@@ -37644,7 +37625,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq15_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 14] Từ đã học “一样” (yíyàng) có nghĩa là gì?",
+          "question": "Từ đã học “一样” (yíyàng) có nghĩa là gì?",
           "options": [
             "nói",
             "giống nhau",
@@ -37657,7 +37638,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq15_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 6] Từ đã học “西边” (xībian) có nghĩa là gì?",
+          "question": "Từ đã học “西边” (xībian) có nghĩa là gì?",
           "options": [
             "tốt, khỏe, hay, ngon...",
             "tuyết",
@@ -37670,7 +37651,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq15_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 6] Từ đã học “白色” (báisè) có nghĩa là gì?",
+          "question": "Từ đã học “白色” (báisè) có nghĩa là gì?",
           "options": [
             "là, thì...",
             "buổi chiều",
@@ -37683,7 +37664,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq15_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “我觉得春天的天气最暖和、最舒服。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “我觉得春天的天气最暖和、最舒服。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Mắt cô ấy đo đỏ.",
             "Hôm nay thời tiết như thế nào?",
@@ -37696,7 +37677,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq15_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nPhong: 小雪 (Xiǎoxuě: Tiểu Tuyết)，明天北京的天气怎么样？\nTuyết: 明天刮大风，也很冷，温度大概 (dàgài: đại khái, khoảng)零下八度。\nPhong: 会 (huì: Phó, đtnn biết)下雪吗？我想周末和朋友去滑雪。\nTuyết: 后 (hòu: sau)天 (tiān: ngày, trời)会 (huì: Phó, đtnn biết)下 (xià: dưới / xuống)大 (dà: to, lớn)雪，你们出去 (chūqù: ra ngoài)玩儿要多穿 (chuān: mặc)点儿 (ér: con, (âm uốn lưỡi))大衣！\n\nTheo Tiểu Tuyết, thời tiết ngày mai ở Bắc Kinh sẽ như thế nào?",
+          "question": "Đọc đoạn hội thoại:\nPhong: 小雪，明天北京的天气怎么样？\nTuyết: 明天刮大风，也很冷，温度大概零下八度。\nPhong: 会下雪吗？我想周末和朋友去滑雪。\nTuyết: 后天会下大雪，你们出去玩儿要多穿点儿大衣！\n\nTheo Tiểu Tuyết, thời tiết ngày mai ở Bắc Kinh sẽ như thế nào?",
           "options": [
             "Không gió, rất nóng",
             "Có gió lớn, rất lạnh, khoảng âm 8 độ",
@@ -38222,7 +38203,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct15_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是。北京的冬天比较冷，最冷差____多零下二十二度。”\n(Gợi ý nghĩa: Đúng vậy. Mùa đông Bắc Kinh khá lạnh, lạnh nhất khoảng âm 22 độ.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是。北京的冬天比较冷，最冷差____多零下二十二度。”",
         "options": [
           "多",
           "不",
@@ -38235,7 +38216,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct15_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我觉得春天的天气最暖和最____”\n(Gợi ý nghĩa: Tôi thấy thời tiết mùa xuân ấm áp và dễ chịu nhất.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我觉得春天的天气最暖和最____”",
         "options": [
           "苹果",
           "舒服",
@@ -38248,7 +38229,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct15_40",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“常____。冬天的时候我经常跟朋友去滑冰、滑雪。特别好玩儿。”\n(Gợi ý nghĩa: Thường hay có tuyết rơi. Vào mùa đông tôi hay đi trượt băng, trượt tuyết cùng bạn bè. Vui lắm.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“常____。冬天的时候我经常跟朋友去滑冰、滑雪。特别好玩儿。”",
         "options": [
           "下雪",
           "苹果",
@@ -38261,7 +38242,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct15_41",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我最喜欢夏天。____我喜欢游泳。小明，你呢？”\n(Gợi ý nghĩa: Tôi thích mùa hè nhất. Vì tôi thích bơi lội. Còn bạn thì sao, Tiểu Minh?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我最喜欢夏天。____我喜欢游泳。小明，你呢？”",
         "options": [
           "决定",
           "因为",
@@ -38287,7 +38268,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct15_43",
         "category": "vocab",
-        "question": "Từ Hán tự “舒服” (thoải mái, dễ chịu) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “舒服” có phiên âm Pinyin đúng là gì?",
         "options": [
           "xiàwǔ",
           "shūfu",
@@ -38313,7 +38294,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct15_45",
         "category": "vocab",
-        "question": "Từ Hán tự “下雪” (tuyết rơi) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “下雪” có phiên âm Pinyin đúng là gì?",
         "options": [
           "xià xuě",
           "sùshè",
@@ -38424,7 +38405,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct15_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 天气  /  怎么样  /  今天\n(Nghĩa: “Hôm nay thời tiết như thế nào?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n天气  /  怎么样  /  今天",
         "options": [
           "今天天气怎么样。",
           "天气怎么样今天。",
@@ -38437,7 +38418,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct15_54",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 我觉得  /  最  /  天气最  /  舒服  /  暖和  /  春天的\n(Nghĩa: “Tôi thấy thời tiết mùa xuân ấm áp và dễ chịu nhất.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n我觉得  /  最  /  天气最  /  舒服  /  暖和  /  春天的",
         "options": [
           "我觉得春天的天气最暖和最舒服。",
           "舒服最暖和天气最春天的我觉得。",
@@ -38450,7 +38431,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct15_55",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 是  /  的  /  朋友  /  安妮  /  我  /  好\n(Nghĩa: “Annie là bạn thân của tôi.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n是  /  的  /  朋友  /  安妮  /  我  /  好",
         "options": [
           "安妮是我的好朋友。",
           "是我的好朋友安妮。",
@@ -38463,7 +38444,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct15_56",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 觉得  /  你  /  现在  /  怎么样\n(Nghĩa: “Bây giờ cậu cảm thấy thế nào?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n觉得  /  你  /  现在  /  怎么样",
         "options": [
           "现在觉得怎么样你。",
           "你现在觉得怎么样。",
@@ -38476,7 +38457,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct15_57",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“我最喜欢____ (chūntiān)。”\n(Nghĩa: Tôi thích mùa xuân nhất.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我最喜欢____。”",
         "options": [
           "现在",
           "爸爸",
@@ -38489,7 +38470,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct15_58",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“明天刮大风，也很冷，温____ (dù)大概零下八度。”\n(Nghĩa: Ngày mai có gió lớn và rất lạnh, nhiệt độ khoảng âm 8 độ.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“明天刮大风，也很冷，温____大概零下八度。”",
         "options": [
           "刻",
           "度",
@@ -38502,7 +38483,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct15_59",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“北京有春天、夏天、秋天和____ (dōngtiān)四个季节。”\n(Nghĩa: Bắc Kinh có bốn mùa: xuân, hạ, thu và đông.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“北京有春天、夏天、秋天和____四个季节。”",
         "options": [
           "那么",
           "认识",
@@ -38515,7 +38496,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct15_60",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“后天会下大____ (xuě)，你们出去玩儿要多穿点儿大衣！”\n(Nghĩa: Ngày kia sẽ có tuyết rơi lớn, các cậu ra ngoài chơi nhớ mặc thêm áo khoác nhé!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“后天会下大____，你们出去玩儿要多穿点儿大衣！”",
         "options": [
           "书",
           "半",
@@ -38915,7 +38896,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "白茹雪",
             "hanzi": "是啊！你觉得周末做什么比较好呢？",
-            "displayHanzi": "是啊！你觉得周末做 (zuò: làm)什么比较好呢？",
+            "displayHanzi": "是啊！你觉得周末做什么比较好呢？",
             "pinyin": "Shì a! Nǐ juéde zhōumò zuò shénme bǐjiào hǎo ne?",
             "meaning": "Đúng rồi! Bạn thấy cuối tuần làm gì thì hay nhỉ?"
           },
@@ -38929,28 +38910,28 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "白茹雪",
             "hanzi": "很好，那你周末常常做什么？",
-            "displayHanzi": "很好，那你周末常常做 (zuò: làm)什么？",
+            "displayHanzi": "很好，那你周末常常做什么？",
             "pinyin": "Hěn hǎo, nà nǐ zhōumò chángcháng zuò shénme?",
             "meaning": "Hay đấy, thế cuối tuần bạn thường làm gì?"
           },
           {
             "speaker": "范玉兰",
             "hanzi": "我常常跟朋友出去玩儿，我非常喜欢去公园照相。",
-            "displayHanzi": "我常常跟 (gēn: cùng, với)朋友出去玩儿，我非常喜欢去公园照相。",
+            "displayHanzi": "我常常跟朋友出去玩儿，我非常喜欢去公园照相。",
             "pinyin": "Wǒ chángcháng gēn péngyou chūqù wánr, wǒ fēicháng xǐhuan qù gōngyuán zhàoxiàng.",
             "meaning": "Tôi thường ra ngoài chơi với bạn bè, tôi rất thích ra công viên chụp ảnh."
           },
           {
             "speaker": "白茹雪",
             "hanzi": "周末的时候我在家休息休息，如果有作业我就做作业，如果妈妈要帮忙我就去帮忙。",
-            "displayHanzi": "周末的时候我在家休息休息，如果有作业我就做 (zuò: làm)作业，如果妈妈要帮忙我就去帮忙。",
+            "displayHanzi": "周末的时候我在家休息休息，如果有作业我就做作业，如果妈妈要帮忙我就去帮忙。",
             "pinyin": "Zhōumò de shíhou wǒ zài jiā xiūxi xiūxi, rúguǒ yǒu zuòyè wǒ jiù zuò zuòyè, rúguǒ māma yào bāngmáng wǒ jiù qù bāngmáng.",
             "meaning": "Cuối tuần tôi nghỉ ngơi ở nhà, nếu có bài tập thì làm bài tập, nếu mẹ cần giúp việc gì thì tôi giúp mẹ."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "你很乖啊！如果没有什么做我就上网看新闻或者玩游戏。",
-            "displayHanzi": "你很乖啊！如果没有 (méiyǒu: không có)什么做 (zuò: làm)我就上网看新闻或者玩 (wán: chơi)游戏 (yóuxì: trò chơi)。",
+            "displayHanzi": "你很乖啊！如果没有什么做我就上网看新闻或者玩游戏。",
             "pinyin": "Nǐ hěn guāi a! Rúguǒ méiyǒu shénme zuò wǒ jiù shàngwǎng kàn xīnwén huòzhě wán yóuxì.",
             "meaning": "Bạn ngoan thật đấy! Nếu không có việc gì làm thì tôi lên mạng đọc tin tức hoặc chơi game."
           },
@@ -38986,10 +38967,10 @@ const DEFAULT_LESSONS = [
             "audioText": "是啊！你觉得周末做什么比较好呢？",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "了解 (liǎojiě: hiểu rõ, biết rõ)了解",
-              "是啊！你觉得周末做 (zuò: làm)什么比较好呢？",
-              "她歌唱 (gēchàng: ca hát)得 (děi: phải)很好听 (tīng: nghe)！",
-              "= 明天天气好的话 (huà: lời nói)，我们就去爬山 (páshān: leo núi)。"
+              "了解了解",
+              "是啊！你觉得周末做什么比较好呢？",
+              "她歌唱得很好听！",
+              "= 明天天气好的话，我们就去爬山。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 是啊！你觉得周末做什么比较好呢？ (Shì a! Nǐ juéde zhōumò zuò shénme bǐjiào hǎo ne?) → Đúng rồi! Bạn thấy cuối tuần làm gì thì hay nhỉ?"
@@ -39010,10 +38991,10 @@ const DEFAULT_LESSONS = [
             "audioText": "很好，那你周末常常做什么？",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "我早上打扫 (dǎsǎo: dọn dẹp, quét dọn)了打扫房间 (fángjiān: căn phòng)。",
+              "我早上打扫了打扫房间。",
               "找找 = 找一找",
-              "很好，那你周末常常做 (zuò: làm)什么？",
-              "小兰刚 (gāng: vừa mới)跟 (gēn: cùng, với)朋友吵架 (chǎojià: cãi nhau)。"
+              "很好，那你周末常常做什么？",
+              "小兰刚跟朋友吵架。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 很好，那你周末常常做什么？ (Hěn hǎo, nà nǐ zhōumò chángcháng zuò shénme?) → Hay đấy, thế cuối tuần bạn thường làm gì?"
@@ -39084,7 +39065,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "他是个不怎么样的人。",
-            "question": "[Ôn tập Bài 15] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Năm nay cháu mấy tuổi rồi (Hỏi trẻ em dưới mười tuổi)",
               "Chào thầy/Chào cô",
@@ -39096,19 +39077,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "找找 = 找一找",
-            "question": "[Bài 16] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "妈妈拍 (pāi: chụp, vỗ)了拍我的头 (tóu: con (trâu, bò) / đầu)。",
-              "你早上跟 (gēn: cùng, với)他见面 (miàn: mặt, phía)了没 (méi: chưa, không có)？",
+              "妈妈拍了拍我的头。",
+              "你早上跟他见面了没？",
               "找找 = 找一找",
-              "= 明天天气好的话 (huà: lời nói)，我们就去爬山 (páshān: leo núi)。"
+              "= 明天天气好的话，我们就去爬山。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 找找 = 找一找 (zhǎozhao = zhǎo yi zhǎo) → Tìm một chút, tìm qua."
           },
           {
             "audioText": "一斤苹果多少钱？",
-            "question": "[Ôn tập Bài 8] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Nửa kg (1 cân) táo bao nhiêu tiền?",
               "Bên trái tôi không phải là tòa giảng đường.",
@@ -39120,19 +39101,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "等等 = 等一等",
-            "question": "[Bài 16] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "她歌唱 (gēchàng: ca hát)得 (děi: phải)很好听 (tīng: nghe)！",
-              "昨天晚上我复习了复习课文 (kèwén: bài khoá)。",
+              "她歌唱得很好听！",
+              "昨天晚上我复习了复习课文。",
               "等等 = 等一等",
-              "爸爸每天 (tiān: ngày, trời)看新闻，然后 (ránhòu: đầu tiên... sau đó...)再休息一会 (huì: Phó, đtnn biết)儿 (ér: con, (âm uốn lưỡi))。"
+              "爸爸每天看新闻，然后再休息一会儿。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 等等 = 等一等 (děngdeng = děng yi děng) → Đợi một chút."
           },
           {
             "audioText": "你是日明吗？",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cậu là Nhật Minh phải không?",
               "Cô ấy đẹp quá.",
@@ -39158,21 +39139,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Mark",
             "hanzi": "上午我要在家做功课、复习新闻，下午去健身房。",
-            "displayHanzi": "上午我要在家做 (zuò: làm)功课、复习新闻，下午去健身房。",
+            "displayHanzi": "上午我要在家做功课、复习新闻，下午去健身房。",
             "pinyin": "Shàngwǔ wǒ yào zài jiā zuò gōngkè, fùxí xīnwén, xiàwǔ qù jiànshēnfáng.",
             "meaning": "Buổi sáng tôi phải làm bài tập ở nhà, buổi chiều đến phòng tập gym."
           },
           {
             "speaker": "Minh",
             "hanzi": "那晚上我们去吃火锅吧，好久没见大家了。",
-            "displayHanzi": "那晚上我们去吃火锅吧，好久没 (méi: chưa, không có)见大家 (dàjiā: mọi người)了。",
+            "displayHanzi": "那晚上我们去吃火锅吧，好久没见大家了。",
             "pinyin": "Nà wǎnshang wǒmen qù chī huǒguō ba, hǎojiǔ méi jiàn dàjiā le.",
             "meaning": "Vậy buổi tối chúng ta đi ăn lẩu nhé, lâu rồi không gặp mọi người."
           },
           {
             "speaker": "Mark",
             "hanzi": "太好了！吃完火锅我们还可以在公园照相休息。",
-            "displayHanzi": "太好了！吃完 (wán: xong, hết)火锅我们还可以在公园照相休息。",
+            "displayHanzi": "太好了！吃完火锅我们还可以在公园照相休息。",
             "pinyin": "Tài hǎo le! Chīwán huǒguō wǒmen hái kěyǐ zài gōngyuán zhàoxiàng xiūxi.",
             "meaning": "Hay quá! Ăn lẩu xong chúng ta còn có thể ra công viên chụp ảnh và thư giãn."
           }
@@ -39180,7 +39161,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "周末你有什么打算？去逛街看电影吗？ 上午我要在家做功课、复习新闻，下午去健身房。 那晚上我们去吃火锅吧，好久没见大家了。 太好了！吃完火锅我们还可以在公园照相休息。",
-            "question": "[Nghe hiểu tình huống mới] Buổi chiều cuối tuần, Mark dự định đi đâu?",
+            "question": "Buổi chiều cuối tuần, Mark dự định đi đâu?",
             "options": [
               "Đến thư viện từ sáng đến tối",
               "Đi siêu thị mua giày",
@@ -39192,7 +39173,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "周末你有什么打算？去逛街看电影吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cuối tuần cậu có dự định gì? Đi dạo phố xem phim không?",
               "Bye! (thường dùng trong giới trẻ)",
@@ -39204,11 +39185,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "上午我要在家做功课、复习新闻，下午去健身房。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "昨天晚上我复习了复习课文 (kèwén: bài khoá)。",
-              "做完 (zuòwán: làm xong)功课以后 (yǐhòu: sau, lúc sau)我想去看电影。",
-              "上午我要在家做 (zuò: làm)功课、复习新闻，下午去健身房。",
+              "昨天晚上我复习了复习课文。",
+              "做完功课以后我想去看电影。",
+              "上午我要在家做功课、复习新闻，下午去健身房。",
               "等等 = 等一等"
             ],
             "correctIndex": 2,
@@ -39216,7 +39197,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "那晚上我们去吃火锅吧，好久没见大家了。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cô ấy hát rất hay!",
               "từ điển tiếng Trung",
@@ -39308,7 +39289,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss16_1",
           "targetHanzi": "星期天我们去逛街吃火锅吧",
-          "targetMeaning": "[Mở rộng] Chủ nhật chúng ta đi dạo phố và ăn lẩu nhé!",
+          "targetMeaning": "Chủ nhật chúng ta đi dạo phố và ăn lẩu nhé!",
           "pinyin": "Xīngqītiān wǒmen qù guàngjiē, chī huǒguō ba!",
           "tokens": [
             "星期天",
@@ -39322,7 +39303,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss16_2",
           "targetHanzi": "做完功课以后我想去看电影",
-          "targetMeaning": "[Mở rộng] Sau khi làm xong bài tập tôi muốn đi xem phim.",
+          "targetMeaning": "Sau khi làm xong bài tập tôi muốn đi xem phim.",
           "pinyin": "Zuòwán gōngkè yǐhòu wǒ xiǎng qù kàn diànyǐng.",
           "tokens": [
             "做完",
@@ -39331,8 +39312,7 @@ const DEFAULT_LESSONS = [
             "我想",
             "去",
             "看电影"
-          ],
-          "unlearnedHint": "Từ chưa học: 以后 (yǐhòu: sau, lúc sau), 做完 (zuòwán: làm xong)"
+          ]
         },
         {
           "id": "ss16_3",
@@ -39364,7 +39344,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss16_5",
           "targetHanzi": "认识刘老师我很高兴",
-          "targetMeaning": "[Ôn tập Bài 3] Được quen biết thầy Lưu em rất vui.",
+          "targetMeaning": "Được quen biết thầy Lưu em rất vui.",
           "pinyin": "Rènshi Liú lǎoshī wǒ hěn gāoxìng.",
           "tokens": [
             "认识",
@@ -39378,7 +39358,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss16_6",
           "targetHanzi": "我觉得春天的天气最暖和最舒服",
-          "targetMeaning": "[Ôn tập Bài 15] Tôi thấy thời tiết mùa xuân ấm áp và dễ chịu nhất.",
+          "targetMeaning": "Tôi thấy thời tiết mùa xuân ấm áp và dễ chịu nhất.",
           "pinyin": "Wǒ juéde chūntiān de tiānqì zuì nuǎnhuo, zuì shūfu.",
           "tokens": [
             "我觉得",
@@ -39643,7 +39623,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr16_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Chủ nhật chúng ta đi dạo phố và ăn lẩu nhé!",
+          "promptText": "Chủ nhật chúng ta đi dạo phố và ăn lẩu nhé!",
           "expectedChinese": "星期天我们去逛街、吃火锅吧！",
           "acceptedPinyin": "xīngqītiān wǒmen qù guàngjiē chī huǒguō ba",
           "hint": "Gợi ý Pinyin: Xīngqītiān wǒmen qù guàngjiē, chī huǒguō ba!",
@@ -39652,10 +39632,10 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr16_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Sau khi làm xong bài tập tôi muốn đi xem phim.",
+          "promptText": "Sau khi làm xong bài tập tôi muốn đi xem phim.",
           "expectedChinese": "做完功课以后我想去看电影。",
           "acceptedPinyin": "zuòwán gōngkè yǐhòu wǒ xiǎng qù kàn diànyǐng",
-          "hint": "Gợi ý Pinyin: Zuòwán gōngkè yǐhòu wǒ xiǎng qù kàn diànyǐng. | Từ chưa học: 以后 (yǐhòu: sau, lúc sau), 做完 (zuòwán: làm xong)",
+          "hint": "Gợi ý Pinyin: Zuòwán gōngkè yǐhòu wǒ xiǎng qù kàn diànyǐng.",
           "explanation": "Sau khi làm xong bài tập tôi muốn đi xem phim. → 做完功课以后我想去看电影。 (Zuòwán gōngkè yǐhòu wǒ xiǎng qù kàn diànyǐng.)"
         },
         {
@@ -39769,7 +39749,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr16_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 谢谢你经常在学习 (xuéxí: học tập)上 (shàng: trên / lên)帮助我。",
+          "promptText": "谢谢你经常在学习上帮助我。",
           "chineseAudioText": "谢谢你经常在学习上帮助我。",
           "pinyin": "Xièxie nǐ jīngcháng zài xuéxí shàng bāngzhù wǒ.",
           "expectedMeaning": "Cảm ơn bạn thường xuyên giúp đỡ tôi trong việc học.",
@@ -39784,7 +39764,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr16_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 我哥哥每周都去健身房锻炼 (duànliàn: tập luyện, tập)。",
+          "promptText": "我哥哥每周都去健身房锻炼。",
           "chineseAudioText": "我哥哥每周都去健身房锻炼。",
           "pinyin": "Wǒ gēge měi zhōu dōu qù jiànshēnfáng duànliàn.",
           "expectedMeaning": "Anh trai tôi tuần nào cũng đến phòng tập gym rèn luyện.",
@@ -39814,7 +39794,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr16_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 8] 你买几个西瓜？",
+          "promptText": "你买几个西瓜？",
           "chineseAudioText": "你买几个西瓜？",
           "pinyin": "Nǐ mǎi jǐ gè xīguā?",
           "expectedMeaning": "Cậu mua mấy quả dưa hấu thế?",
@@ -40264,7 +40244,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq16_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 15] Từ đã học “冷” (lěng) có nghĩa là gì?",
+          "question": "Từ đã học “冷” (lěng) có nghĩa là gì?",
           "options": [
             "tôi, tớ, mình... (ngôi thứ nhất số ít)",
             "lạnh",
@@ -40277,7 +40257,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq16_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 2] Từ đã học “马克” (Mǎkè) có nghĩa là gì?",
+          "question": "Từ đã học “马克” (Mǎkè) có nghĩa là gì?",
           "options": [
             "Mark (du học sinh Mỹ)",
             "cà phê",
@@ -40290,7 +40270,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq16_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 9] Từ đã học “新” (xīn) có nghĩa là gì?",
+          "question": "Từ đã học “新” (xīn) có nghĩa là gì?",
           "options": [
             "đến từ (đâu)",
             "cùng nhau",
@@ -40303,7 +40283,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq16_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “星期天我们去逛街、吃火锅吧！” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “星期天我们去逛街、吃火锅吧！” có nghĩa tiếng Việt là gì?",
           "options": [
             "Thử qua một chút.",
             "Chủ nhật chúng ta đi dạo phố và ăn lẩu nhé!",
@@ -40316,7 +40296,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq16_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nMinh: 周末你有什么打算？去逛街看电影吗？\nMark: 上午我要在家做 (zuò: làm)功课、复习新闻，下午去健身房。\nMinh: 那晚上我们去吃火锅吧，好久没 (méi: chưa, không có)见大家 (dàjiā: mọi người)了。\nMark: 太好了！吃完 (wán: xong, hết)火锅我们还可以在公园照相休息。\n\nBuổi chiều cuối tuần, Mark dự định đi đâu?",
+          "question": "Đọc đoạn hội thoại:\nMinh: 周末你有什么打算？去逛街看电影吗？\nMark: 上午我要在家做功课、复习新闻，下午去健身房。\nMinh: 那晚上我们去吃火锅吧，好久没见大家了。\nMark: 太好了！吃完火锅我们还可以在公园照相休息。\n\nBuổi chiều cuối tuần, Mark dự định đi đâu?",
           "options": [
             "Đến thư viện từ sáng đến tối",
             "Đi siêu thị mua giày",
@@ -40842,7 +40822,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct16_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你的周末很无聊，你看看, 这____太浪费时间了吧！”\n(Gợi ý nghĩa: Cuối tuần của bạn nhàm chán quá, bạn xem đấy, như vậy thật quá lãng phí thời gian rồi!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你的周末很无聊，你看看, 这____太浪费时间了吧！”",
         "options": [
           "老师",
           "便宜",
@@ -40855,7 +40835,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct16_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“那件____是真的。”\n(Gợi ý nghĩa: Việc đó là thật.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“那件____是真的。”",
         "options": [
           "又",
           "要",
@@ -40868,7 +40848,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct16_40",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我常常跟朋友出去玩儿，我____喜欢去公园照相。”\n(Gợi ý nghĩa: Tôi thường ra ngoài chơi với bạn bè, tôi rất thích ra công viên chụp ảnh.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我常常跟朋友出去玩儿，我____喜欢去公园照相。”",
         "options": [
           "非常",
           "帽子",
@@ -40881,7 +40861,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct16_41",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“做完功课以后我想去____”\n(Gợi ý nghĩa: Sau khi làm xong bài tập tôi muốn đi xem phim.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“做完功课以后我想去____”",
         "options": [
           "差不多",
           "看电影",
@@ -40907,7 +40887,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct16_43",
         "category": "vocab",
-        "question": "Từ Hán tự “事” (việc, chuyện) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “事” có phiên âm Pinyin đúng là gì?",
         "options": [
           "hái",
           "zhàopiàn",
@@ -40933,7 +40913,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct16_45",
         "category": "vocab",
-        "question": "Từ Hán tự “看电影” (xem phim) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “看电影” có phiên âm Pinyin đúng là gì?",
         "options": [
           "le",
           "kàn diànyǐng",
@@ -41044,7 +41024,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct16_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 天气最  /  舒服  /  最  /  我觉得  /  春天的  /  暖和\n(Nghĩa: “Tôi thấy thời tiết mùa xuân ấm áp và dễ chịu nhất.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n天气最  /  舒服  /  最  /  我觉得  /  春天的  /  暖和",
         "options": [
           "我觉得春天的天气最暖和最舒服。",
           "春天的我觉得天气最暖和最舒服。",
@@ -41057,7 +41037,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct16_54",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 我  /  高兴  /  认识  /  刘  /  很  /  老师\n(Nghĩa: “Được quen biết thầy Lưu em rất vui.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n我  /  高兴  /  认识  /  刘  /  很  /  老师",
         "options": [
           "刘老师我很高兴认识。",
           "认识刘老师我很高兴。",
@@ -41070,7 +41050,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct16_55",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 等等  /  一  /  等  /  等  /  =\n(Nghĩa: “Đợi một chút.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n等等  /  一  /  等  /  等  /  =",
         "options": [
           "等一等=等等。",
           "=等等等一等。",
@@ -41083,7 +41063,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct16_56",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 吧  /  吃火锅  /  去  /  逛街  /  我们  /  星期天\n(Nghĩa: “Chủ nhật chúng ta đi dạo phố và ăn lẩu nhé!”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n吧  /  吃火锅  /  去  /  逛街  /  我们  /  星期天",
         "options": [
           "星期天我们去逛街吃火锅吧。",
           "我们星期天去逛街吃火锅吧。",
@@ -41096,7 +41076,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct16_57",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“周末的时候我在家休息休息，如果有____ (zuòyè)我就做作业，如果妈妈要帮忙我就去帮忙。”\n(Nghĩa: Cuối tuần tôi nghỉ ngơi ở nhà, nếu có bài tập thì làm bài tập, nếu mẹ cần giúp việc gì thì tôi giúp mẹ.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“周末的时候我在家休息休息，如果有____我就做作业，如果妈妈要帮忙我就去帮忙。”",
         "options": [
           "一直",
           "作业",
@@ -41109,7 +41089,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct16_58",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“你很乖啊！如果没有什么做我就上网看____ (xīnwén)或者玩游戏。”\n(Nghĩa: Bạn ngoan thật đấy! Nếu không có việc gì làm thì tôi lên mạng đọc tin tức hoặc chơi game.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你很乖啊！如果没有什么做我就上网看____或者玩游戏。”",
         "options": [
           "新闻",
           "老师",
@@ -41122,7 +41102,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct16_59",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“上午我要在家做____ (gōngkè)、复习新闻，下午去健身房。”\n(Nghĩa: Buổi sáng tôi phải làm bài tập ở nhà, buổi chiều đến phòng tập gym.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“上午我要在家做____、复习新闻，下午去健身房。”",
         "options": [
           "时候",
           "功课",
@@ -41135,7 +41115,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct16_60",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“昨天晚上我____ (fùxí)了复习课文。”\n(Nghĩa: Tối hôm qua tôi đã ôn tập qua bài khóa rồi.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“昨天晚上我____了复习课文。”",
         "options": [
           "欢迎",
           "现在",
@@ -41570,21 +41550,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "安妮",
             "hanzi": "我听几个朋友说快到春节了，春节是你们的一个节日，对吗？",
-            "displayHanzi": "我听 (tīng: nghe)几个朋友说快 (kuài: nhanh)到春节了，春节是你们的一个节日，对吗？",
+            "displayHanzi": "我听几个朋友说快到春节了，春节是你们的一个节日，对吗？",
             "pinyin": "Wǒ tīng jǐ gè péngyou shuō kuài dào Chūnjié le, Chūnjié shì nǐmen de yígè jiérì, duì ma?",
             "meaning": "Tôi nghe mấy người bạn nói sắp đến Tết Nguyên Đán rồi, Tết là một ngày lễ của các bạn đúng không?"
           },
           {
             "speaker": "白茹雪",
             "hanzi": "对，春节是中国的一个重要传统节日。",
-            "displayHanzi": "对，春节是中国 (Zhōngguó: Trung Quốc)的一个重要传统节日。",
+            "displayHanzi": "对，春节是中国的一个重要传统节日。",
             "pinyin": "Duì, Chūnjié shì Zhōngguó de yígè zhòngyào chuántǒng jiérì.",
             "meaning": "Đúng vậy, Tết Nguyên Đán là một ngày lễ truyền thống quan trọng của Trung Quốc."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "我们越南人也有春节，和中国的春节差不多。",
-            "displayHanzi": "我们越南人也有春节，和中国 (Zhōngguó: Trung Quốc)的春节差不多。",
+            "displayHanzi": "我们越南人也有春节，和中国的春节差不多。",
             "pinyin": "Wǒmen Yuènán rén yě yǒu Chūnjié, hé Zhōngguó de Chūnjié chàbuduō.",
             "meaning": "Người Việt Nam chúng tôi cũng có Tết Nguyên Đán, khá giống Tết ở Trung Quốc."
           },
@@ -41619,42 +41599,42 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "白茹雪",
             "hanzi": "先准备好这些，然后到除夕，全家人团圆，一起吃年夜饭、放鞭炮，庆祝新年。",
-            "displayHanzi": "先准备好这些 (xiē: vài, một ít)，然后到除夕，全家人团圆，一起吃年夜饭、放鞭炮，庆祝新年。",
+            "displayHanzi": "先准备好这些，然后到除夕，全家人团圆，一起吃年夜饭、放鞭炮，庆祝新年。",
             "pinyin": "Xiān zhǔnbèi hǎo zhèxiē, ránhòu dào chúxī, quán jiārén tuányuán, yīqǐ chī niányèfàn, fàng biānpào, qìngzhù xīnnián.",
             "meaning": "Trước tiên chuẩn bị xong những thứ này, rồi đến đêm Giao thừa, cả nhà đoàn tụ cùng ăn bữa cơm tất niên, đốt pháo mừng năm mới."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "对，还有红包。我还记得我小时候去亲戚家拜年，他们给我很多红包，真开心，但是现在没有了。",
-            "displayHanzi": "对，还有红包。我还记 (jì: nhớ, ghi)得 (děi: phải)我小时 (xiǎoshí: tiếng, giờ đồng hồ)候去亲戚家拜年，他们给我很多红包，真开心，但是现在没有 (méiyǒu: không có)了。",
+            "displayHanzi": "对，还有红包。我还记得我小时候去亲戚家拜年，他们给我很多红包，真开心，但是现在没有了。",
             "pinyin": "Duì, hái yǒu hóngbāo. Wǒ hái jìde wǒ xiǎoshíhou qù qīnqi jiā bàinián, tāmen gěi wǒ hěnduō hóngbāo, zhēn kāixīn, dànshì xiànzài méiyǒu le.",
             "meaning": "Đúng rồi, còn có lì xì nữa. Tôi vẫn nhớ hồi nhỏ đi chúc Tết họ hàng, mọi người mừng tuổi tôi rất nhiều bao lì xì, vui lắm, nhưng bây giờ thì không còn nữa rồi."
           },
           {
             "speaker": "妮妮",
             "hanzi": "哇！春节真有意思！我也想过春节。",
-            "displayHanzi": "哇 (wa: oa, chà (cảm thán))！春节真有意思！我也想过 (guò: từng, qua)春节。",
+            "displayHanzi": "哇！春节真有意思！我也想过春节。",
             "pinyin": "Wa! Chūnjié zhēn yǒuyìsi! Wǒ yě xiǎngguò chūnjié.",
             "meaning": "Chà! Tết thú vị thật đấy! Tôi cũng muốn đón Tết."
           },
           {
             "speaker": "白茹雪",
             "hanzi": "那么今年春节请你们到我们家做客，我们在一块儿好好儿过年，一定会很快乐。",
-            "displayHanzi": "那么今 (jīn: hôm nay, nay)年春节请你们到我们家做客，我们在一块儿好好儿过年，一定 (yīdìng: nhất định)会 (huì: Phó, đtnn biết)很快乐。",
+            "displayHanzi": "那么今年春节请你们到我们家做客，我们在一块儿好好儿过年，一定会很快乐。",
             "pinyin": "Nàme jīnnián Chūnjié qǐng nǐmen dào wǒmen jiā zuòkè, wǒmen zài yíkuàir hǎohāor guònián, yídìng huì hěn kuàilè.",
             "meaning": "Vậy Tết năm nay mời các bạn đến nhà chúng tôi chơi, chúng ta cùng nhau đón Tết thật vui vẻ, chắc chắn sẽ rất hạnh phúc."
           },
           {
             "speaker": "妮妮",
             "hanzi": "好！玉兰我们一起去吧！你才过越南春节，还没有过中国春节，对吗？",
-            "displayHanzi": "好！玉兰我们一起去吧！你才 (cái: mới)过 (guò: từng, qua)越南春节，还没有 (méiyǒu: không có)过中国 (Zhōngguó: Trung Quốc)春节，对吗？",
+            "displayHanzi": "好！玉兰我们一起去吧！你才过越南春节，还没有过中国春节，对吗？",
             "pinyin": "Hǎo! Yùlán wǒmen yīqǐ qù ba! Nǐ cái guò Yuènán Chūnjié, hái méiyǒu guò Zhōngguó Chūnjié, duì ma?",
             "meaning": "Được! Ngọc Lan chúng ta cùng đi nhé! Cậu mới đón Tết Việt Nam thôi, chưa từng đón Tết Trung Quốc đúng không?"
           },
           {
             "speaker": "范玉兰",
             "hanzi": "嗯。到那时候我们一定要好好儿玩。",
-            "displayHanzi": "嗯 (èn: ừ, ừm)。到那时候我们一定 (yīdìng: nhất định)要好好儿玩 (wán: chơi)。",
+            "displayHanzi": "嗯。到那时候我们一定要好好儿玩。",
             "pinyin": "Ēn. Dào nàge shíhou wǒmen yídìng yào hǎohāor wán.",
             "meaning": "Ừ. Đến lúc đó chúng ta nhất định phải chơi thật vui."
           }
@@ -41676,9 +41656,9 @@ const DEFAULT_LESSONS = [
             "audioText": "对，春节是中国的一个重要传统节日。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "对，春节是中国 (Zhōngguó: Trung Quốc)的一个重要传统节日。",
-              "我听 (tīng: nghe)几个朋友说快 (kuài: nhanh)到春节了，春节是你们的一个节日，对吗？",
-              "我一定 (yīdìng: nhất định)要好好儿学习 (xuéxí: học tập)。",
+              "对，春节是中国的一个重要传统节日。",
+              "我听几个朋友说快到春节了，春节是你们的一个节日，对吗？",
+              "我一定要好好儿学习。",
               "越南人过年的时候常包粽子和买花。"
             ],
             "correctIndex": 0,
@@ -41701,7 +41681,7 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "越南人过年的时候常包粽子和买花。",
-              "今天他让 (ràng: bảo, khiến)我下 (xià: dưới / xuống)个月出国 (chūguó: ra nước ngoài)。",
+              "今天他让我下个月出国。",
               "他请我明天去他家吃饭。",
               "你们怎么准备过年？"
             ],
@@ -41774,7 +41754,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "找找 = 找一找",
-            "question": "[Ôn tập Bài 16] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tối hôm qua tôi đã ôn tập qua bài khóa rồi.",
               "đất nước (quốc gia) của chúng tôi",
@@ -41786,19 +41766,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你去吃饭吧！",
-            "question": "[Bài 17] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "他先回家洗澡 (xǐzǎo: tắm rửa)，然后过 (guò: từng, qua)来 (lái: đến)接 (jiē: đón, nhận)我。",
-              "他不让 (ràng: bảo, khiến)我走。",
+              "他先回家洗澡，然后过来接我。",
+              "他不让我走。",
               "你去吃饭吧！",
-              "我一定 (yīdìng: nhất định)要好好儿学习 (xuéxí: học tập)。"
+              "我一定要好好儿学习。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 你去吃饭吧！ (Nǐ qù chīfàn ba!) → Cậu đi ăn cơm đi!"
           },
           {
             "audioText": "二十五个",
-            "question": "[Ôn tập Bài 8] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Một trang giấy",
               "Hai mươi lăm cái",
@@ -41810,7 +41790,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你不要走！好不好？",
-            "question": "[Bài 17] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "你不要走！好不好？",
               "你去吃饭吧！",
@@ -41822,7 +41802,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "下午好！",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Ngày mai có lẽ là ngày nắng.",
               "Bạn đã chuẩn bị đầy đủ đồ đạc để đi du lịch chưa?",
@@ -41841,28 +41821,28 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Phong",
             "hanzi": "今年的除夕夜，欢迎你来我家过春节！",
-            "displayHanzi": "今 (jīn: hôm nay, nay)年的除夕夜，欢迎你来 (lái: đến)我家过 (guò: từng, qua)春节！",
+            "displayHanzi": "今年的除夕夜，欢迎你来我家过春节！",
             "pinyin": "Jīnnián de chúxī yè, huānyíng nǐ lái wǒ jiā guò Chūnjié!",
             "meaning": "Đêm Giao thừa năm nay mời cậu sang nhà tớ đón Tết nhé!"
           },
           {
             "speaker": "Lan",
             "hanzi": "谢谢！中国春节和越南春节都要大扫除、贴春联吧？",
-            "displayHanzi": "谢谢！中国 (Zhōngguó: Trung Quốc)春节和越南春节都要大 (dà: to, lớn)扫除、贴春联吧？",
+            "displayHanzi": "谢谢！中国春节和越南春节都要大扫除、贴春联吧？",
             "pinyin": "Xièxie! Zhōngguó Chūnjié hé Yuènán Chūnjié dōu yào dàsǎochú, tiē chūnlián ba?",
             "meaning": "Cảm ơn cậu! Tết Trung Quốc và Tết Việt Nam đều dọn dẹp nhà cửa và dán câu đối đúng không?"
           },
           {
             "speaker": "Phong",
             "hanzi": "是的，除夕晚上全家一起吃年夜饭、放鞭炮，还会包饺子。",
-            "displayHanzi": "是的，除夕晚上全家一起吃年夜饭、放鞭炮，还会 (huì: Phó, đtnn biết)包饺子。",
+            "displayHanzi": "是的，除夕晚上全家一起吃年夜饭、放鞭炮，还会包饺子。",
             "pinyin": "Shì de, chúxī wǎnshang quán jiā yīqǐ chī niányèfàn, fàng biānpào, hái huì bāo jiǎozi.",
             "meaning": "Đúng rồi, tối Giao thừa cả nhà cùng ăn cơm tất niên, đốt pháo và còn gói sủi cảo nữa."
           },
           {
             "speaker": "Lan",
             "hanzi": "太热闹了！我也想学怎么包饺子。",
-            "displayHanzi": "太热闹了！我也想学 (xué: học)怎么包饺子。",
+            "displayHanzi": "太热闹了！我也想学怎么包饺子。",
             "pinyin": "Tài rènao le! Wǒ yě xiǎng xué zěnme bāo jiǎozi.",
             "meaning": "Náo nhiệt quá! Tớ cũng muốn học cách gói sủi cảo."
           }
@@ -41870,7 +41850,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "今年的除夕夜，欢迎你来我家过春节！ 谢谢！中国春节和越南春节都要大扫除、贴春联吧？ 是的，除夕晚上全家一起吃年夜饭、放鞭炮，还会包饺子。 太热闹了！我也想学怎么包饺子。",
-            "question": "[Nghe hiểu tình huống mới] Điểm khác biệt trong hoạt động ngày Tết được nhắc đến là gì?",
+            "question": "Điểm khác biệt trong hoạt động ngày Tết được nhắc đến là gì?",
             "options": [
               "Chỉ ăn bánh mì vào đêm Giao thừa",
               "Không dán câu đối ngày Tết",
@@ -41882,7 +41862,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "今年的除夕夜，欢迎你来我家过春节！",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Chạy một chuyến",
               "Đêm Giao thừa năm nay mời cậu sang nhà tớ đón Tết nhé!",
@@ -41894,19 +41874,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "谢谢！中国春节和越南春节都要大扫除、贴春联吧？",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "你要好好儿跟 (gēn: cùng, với)他谈 (tán: nói, bàn)，别 (bié: đừng)着急 (zháojí: lo lắng, sốt ruột)。",
-              "谢谢！中国 (Zhōngguó: Trung Quốc)春节和越南春节都要大 (dà: to, lớn)扫除、贴春联吧？",
-              "手机刚才 (gāngcái: vừa nãy)还好好儿的，怎么就坏 (huài: xấu, hỏng)了。",
-              "我先去银行 (xíng: được)取 (qǔ: lấy)钱，然后去商店买东西。"
+              "你要好好儿跟他谈，别着急。",
+              "谢谢！中国春节和越南春节都要大扫除、贴春联吧？",
+              "手机刚才还好好儿的，怎么就坏了。",
+              "我先去银行取钱，然后去商店买东西。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 谢谢！中国春节和越南春节都要大扫除、贴春联吧？ (Xièxie! Zhōngguó Chūnjié hé Yuènán Chūnjié dōu yào dàsǎochú, tiē chūnlián ba?) → Cảm ơn cậu! Tết Trung Quốc và Tết Việt Nam đều dọn dẹp nhà cửa và dán câu đối đúng không?"
           },
           {
             "audioText": "是的，除夕晚上全家一起吃年夜饭、放鞭炮，还会包饺子。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cậu đi gì đến siêu thị thế?",
               "Em trai tôi chơi trong vườn hoa.",
@@ -41998,7 +41978,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss17_1",
           "targetHanzi": "爷爷奶奶给我和弟弟发了大红包",
-          "targetMeaning": "[Mở rộng] Ông bà nội đã lì xì cho tôi và em trai bao lì xì lớn.",
+          "targetMeaning": "Ông bà nội đã lì xì cho tôi và em trai bao lì xì lớn.",
           "pinyin": "Yéye nǎinai gěi wǒ hé dìdi fā le dà hóngbāo.",
           "tokens": [
             "爷爷",
@@ -42007,13 +41987,12 @@ const DEFAULT_LESSONS = [
             "弟弟",
             "发了大",
             "红包"
-          ],
-          "unlearnedHint": "Từ chưa học: 大 (dà: to, lớn)"
+          ]
         },
         {
           "id": "ss17_2",
           "targetHanzi": "春节期间我去看望了很多亲戚",
-          "targetMeaning": "[Mở rộng] Trong dịp Tết tôi đã đi thăm hỏi rất nhiều họ hàng.",
+          "targetMeaning": "Trong dịp Tết tôi đã đi thăm hỏi rất nhiều họ hàng.",
           "pinyin": "Chūnjié qījiān wǒ qù kànwàng le hěnduō qīnqi.",
           "tokens": [
             "春节",
@@ -42054,7 +42033,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss17_5",
           "targetHanzi": "张风也是学校的学生",
-          "targetMeaning": "[Ôn tập Bài 2] Trương Phong cũng là học sinh của trường.",
+          "targetMeaning": "Trương Phong cũng là học sinh của trường.",
           "pinyin": "Zhāng Fēng yě shì xuéxiào de xuésheng.",
           "tokens": [
             "张风",
@@ -42068,7 +42047,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss17_6",
           "targetHanzi": "我的朋友在食堂吃饭",
-          "targetMeaning": "[Ôn tập Bài 4] Bạn của tôi đang ăn cơm ở nhà ăn.",
+          "targetMeaning": "Bạn của tôi đang ăn cơm ở nhà ăn.",
           "pinyin": "Wǒ de péngyou zài shítáng chīfàn.",
           "tokens": [
             "我的",
@@ -42373,7 +42352,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr17_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Người Việt Nam dịp Tết thường gói bánh chưng và mua hoa.",
+          "promptText": "Người Việt Nam dịp Tết thường gói bánh chưng và mua hoa.",
           "expectedChinese": "越南人过年的时候常包粽子和买花。",
           "acceptedPinyin": "yuènán rén guònián de shíhou cháng bāo zòngzi hé mǎi huā",
           "hint": "Gợi ý Pinyin: Yuènán rén guònián de shíhou cháng bāo zòngzi hé mǎi huā.",
@@ -42382,7 +42361,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr17_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Chúng tôi dán câu đối và đốt pháo trước nhà để mừng năm mới.",
+          "promptText": "Chúng tôi dán câu đối và đốt pháo trước nhà để mừng năm mới.",
           "expectedChinese": "我们在房子前面贴春联、放鞭炮庆祝新年。",
           "acceptedPinyin": "wǒmen zài fángzi qiánmian tiē chūnlián fàng biānpào qìngzhù xīnnián",
           "hint": "Gợi ý Pinyin: Wǒmen zài fángzi qiánmian tiē chūnlián, fàng biānpào qìngzhù xīnnián.",
@@ -42499,7 +42478,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr17_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 春节是中国 (Zhōngguó: Trung Quốc)最重要、最热闹的传统节日。",
+          "promptText": "春节是中国最重要、最热闹的传统节日。",
           "chineseAudioText": "春节是中国最重要、最热闹的传统节日。",
           "pinyin": "Chūnjié shì Zhōngguó zuì zhòngyào, zuì rènao de chuántǒng jiérì.",
           "expectedMeaning": "Tết Nguyên Đán là ngày lễ truyền thống quan trọng và náo nhiệt nhất của Trung Quốc.",
@@ -42514,7 +42493,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr17_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 除夕夜全家人一起包饺子、吃年夜饭。",
+          "promptText": "除夕夜全家人一起包饺子、吃年夜饭。",
           "chineseAudioText": "除夕夜全家人一起包饺子、吃年夜饭。",
           "pinyin": "Chúxī yè quán jiārén yìqǐ bāo jiǎozi, chī niányèfàn.",
           "expectedMeaning": "Đêm Giao thừa cả gia đình cùng nhau gói sủi cảo và ăn cơm tất niên.",
@@ -42544,7 +42523,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr17_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 8] 你家有多少人？",
+          "promptText": "你家有多少人？",
           "chineseAudioText": "你家有多少人？",
           "pinyin": "Nǐ jiā yǒu duōshao rén?",
           "expectedMeaning": "Nhà cậu có bao nhiêu người?",
@@ -42998,7 +42977,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq17_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 7] Từ đã học “好看” (hǎokàn) có nghĩa là gì?",
+          "question": "Từ đã học “好看” (hǎokàn) có nghĩa là gì?",
           "options": [
             "à, ư, hả... (đặt ở cuối câu nghi vấn)",
             "đẹp, dễ nhìn, hay, thú vị",
@@ -43011,7 +42990,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq17_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 4] Từ đã học “右边” (yòubian) có nghĩa là gì?",
+          "question": "Từ đã học “右边” (yòubian) có nghĩa là gì?",
           "options": [
             "bên phải",
             "dùng cuối câu, biểu thị ngữ khí cảm thán.",
@@ -43024,7 +43003,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq17_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 11] Từ đã học “矮” (ǎi) có nghĩa là gì?",
+          "question": "Từ đã học “矮” (ǎi) có nghĩa là gì?",
           "options": [
             "nếu, nếu như",
             "thấp",
@@ -43037,7 +43016,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq17_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “越南人过年的时候常包粽子和买花。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “越南人过年的时候常包粽子和买花。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Bố mẹ tôi đã kết hôn được 25 năm rồi!",
             "Bạn ơi, bạn có thể giúp tôi một chút không?",
@@ -43050,7 +43029,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq17_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nPhong: 今 (jīn: hôm nay, nay)年的除夕夜，欢迎你来 (lái: đến)我家过 (guò: từng, qua)春节！\nLan: 谢谢！中国 (Zhōngguó: Trung Quốc)春节和越南春节都要大 (dà: to, lớn)扫除、贴春联吧？\nPhong: 是的，除夕晚上全家一起吃年夜饭、放鞭炮，还会 (huì: Phó, đtnn biết)包饺子。\nLan: 太热闹了！我也想学 (xué: học)怎么包饺子。\n\nĐiểm khác biệt trong hoạt động ngày Tết được nhắc đến là gì?",
+          "question": "Đọc đoạn hội thoại:\nPhong: 今年的除夕夜，欢迎你来我家过春节！\nLan: 谢谢！中国春节和越南春节都要大扫除、贴春联吧？\nPhong: 是的，除夕晚上全家一起吃年夜饭、放鞭炮，还会包饺子。\nLan: 太热闹了！我也想学怎么包饺子。\n\nĐiểm khác biệt trong hoạt động ngày Tết được nhắc đến là gì?",
           "options": [
             "Chỉ ăn bánh mì vào đêm Giao thừa",
             "Hai nước không tổ chức Tết",
@@ -43576,7 +43555,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct17_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“先准备好这些，然后到除夕，全家人____，一起吃年夜饭、放鞭炮，庆祝新年。”\n(Gợi ý nghĩa: Trước tiên chuẩn bị xong những thứ này, rồi đến đêm Giao thừa, cả nhà đoàn tụ cùng ăn bữa cơm tất niên, đốt pháo mừng năm mới.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“先准备好这些，然后到除夕，全家人____，一起吃年夜饭、放鞭炮，庆祝新年。”",
         "options": [
           "团圆",
           "我们",
@@ -43589,7 +43568,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct17_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“越南人过年的时候常____粽子和买花。”\n(Gợi ý nghĩa: Người Việt Nam dịp Tết thường gói bánh chưng và mua hoa.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“越南人过年的时候常____粽子和买花。”",
         "options": [
           "卖",
           "找",
@@ -43602,7 +43581,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct17_40",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“春节期间我去看望了很多____”\n(Gợi ý nghĩa: Trong dịp Tết tôi đã đi thăm hỏi rất nhiều họ hàng.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“春节期间我去看望了很多____”",
         "options": [
           "昨天",
           "爷爷",
@@ -43615,7 +43594,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct17_41",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我们越南不包饺子，我们包____。”\n(Gợi ý nghĩa: Việt Nam chúng tôi không gói sủi cảo, chúng tôi gói bánh chưng.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我们越南不包饺子，我们包____。”",
         "options": [
           "地方",
           "爸爸",
@@ -43667,7 +43646,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct17_45",
         "category": "vocab",
-        "question": "Từ Hán tự “粽子” (bánh chưng) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “粽子” có phiên âm Pinyin đúng là gì?",
         "options": [
           "jìn",
           "dànshì",
@@ -43778,7 +43757,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct17_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 你  /  想  /  再  /  一  /  好好儿  /  想\n(Nghĩa: “Cậu hãy cố gắng nghĩ nữa đi.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n你  /  想  /  再  /  一  /  好好儿  /  想",
         "options": [
           "想一想好好儿再你。",
           "你再好好儿想一想。",
@@ -43791,7 +43770,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct17_54",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 吃  /  饭  /  我的  /  朋友  /  食堂  /  在\n(Nghĩa: “Bạn của tôi đang ăn cơm ở nhà ăn.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n吃  /  饭  /  我的  /  朋友  /  食堂  /  在",
         "options": [
           "朋友我的在食堂吃饭。",
           "饭吃食堂在朋友我的。",
@@ -43804,7 +43783,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct17_55",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 亲戚  /  春节  /  望了  /  期间  /  我去看  /  很多\n(Nghĩa: “Trong dịp Tết tôi đã đi thăm hỏi rất nhiều họ hàng.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n亲戚  /  春节  /  望了  /  期间  /  我去看  /  很多",
         "options": [
           "期间春节我去看望了很多亲戚。",
           "期间我去看望了很多亲戚春节。",
@@ -43817,7 +43796,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct17_56",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 你  /  吃  /  饭  /  去  /  吧\n(Nghĩa: “Cậu đi ăn cơm đi!”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n你  /  吃  /  饭  /  去  /  吧",
         "options": [
           "你去吃饭吧。",
           "吧饭吃去你。",
@@ -43830,7 +43809,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct17_57",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“我们在房子前面贴春联、____ (fàng)鞭炮庆祝新年。”\n(Nghĩa: Chúng tôi dán câu đối và đốt pháo trước nhà để mừng năm mới.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我们在房子前面贴春联、____鞭炮庆祝新年。”",
         "options": [
           "条",
           "放",
@@ -43843,7 +43822,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct17_58",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“哇！春节真____ (yǒuyìsi)！我也想过春节。”\n(Nghĩa: Chà! Tết thú vị thật đấy! Tôi cũng muốn đón Tết.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“哇！春节真____！我也想过春节。”",
         "options": [
           "有意思",
           "阮日明",
@@ -43856,7 +43835,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct17_59",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“今年的____ (chúxī)夜，欢迎你来我家过春节！”\n(Nghĩa: Đêm Giao thừa năm nay mời cậu sang nhà tớ đón Tết nhé!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“今年的____夜，欢迎你来我家过春节！”",
         "options": [
           "上网",
           "除夕",
@@ -43869,7 +43848,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct17_60",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“对，春节是中国的一个重要____ (chuántǒng)节日。”\n(Nghĩa: Đúng vậy, Tết Nguyên Đán là một ngày lễ truyền thống quan trọng của Trung Quốc.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“对，春节是中国的一个重要____节日。”",
         "options": [
           "经常",
           "中间",
@@ -44276,7 +44255,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "安妮",
             "hanzi": "哇，我挺喜欢万里长城。它很雄伟，对吗？",
-            "displayHanzi": "哇 (wa: oa, chà (cảm thán))，我挺喜欢万里长城。它很雄伟，对吗？",
+            "displayHanzi": "哇，我挺喜欢万里长城。它很雄伟，对吗？",
             "pinyin": "Wa, wǒ tǐng xǐhuan Wànlǐ Chángchéng. Tā hěn xióngwěi duì ma?",
             "meaning": "Chà, tôi rất thích Vạn Lý Trường Thành. Nó rất hùng vĩ đúng không?"
           },
@@ -44297,7 +44276,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "马克",
             "hanzi": "我还去爬山、拍照、购物和尝尝北京的菜。",
-            "displayHanzi": "我还去爬山、拍照、购物和尝尝 (chángchang: nếm thử)北京的菜。",
+            "displayHanzi": "我还去爬山、拍照、购物和尝尝北京的菜。",
             "pinyin": "Wǒ hái qù páshān, pāizhào, gòuwù hé chángchang Běijīng de cài.",
             "meaning": "Tôi còn đi leo núi, chụp ảnh, mua sắm và thưởng thức các món ăn Bắc Kinh."
           },
@@ -44332,21 +44311,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "安妮",
             "hanzi": "好羡慕你啊！今年暑假我也会去北京旅行。",
-            "displayHanzi": "好羡慕你啊！今 (jīn: hôm nay, nay)年暑假我也会去北京旅行。",
+            "displayHanzi": "好羡慕你啊！今年暑假我也会去北京旅行。",
             "pinyin": "Hǎo xiànmù nǐ a! Jīnnián shǔjià wǒ yě huì qù Běijīng lǚxíng.",
             "meaning": "Ghen tị với bạn quá đi! Kỳ nghỉ hè năm nay tôi cũng sẽ đi du lịch Bắc Kinh."
           },
           {
             "speaker": "马克",
             "hanzi": "你不是说今年要去日本旅行吗？",
-            "displayHanzi": "你不是说今 (jīn: hôm nay, nay)年要去日 (rì: ngày)本旅行吗？",
+            "displayHanzi": "你不是说今年要去日本旅行吗？",
             "pinyin": "Nǐ búshì shuō jīnnián yào qù Rìběn lǚxíng ma?",
             "meaning": "Không phải bạn nói năm nay sẽ đi du lịch Nhật Bản sao?"
           },
           {
             "speaker": "安妮",
             "hanzi": "我决定了，今年去中国，明年去日本！",
-            "displayHanzi": "我决定了，今 (jīn: hôm nay, nay)年去中国，明年去日 (rì: ngày)本！",
+            "displayHanzi": "我决定了，今年去中国，明年去日本！",
             "pinyin": "Wǒ juédìng le, jīnnián qù Zhōngguó, míngnián qù Rìběn!",
             "meaning": "Tôi quyết định rồi, năm nay đi Trung Quốc, năm sau đi Nhật Bản!"
           }
@@ -44393,7 +44372,7 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "当然了。北京特别美，有很多有名的景点，比如：万里长城、颐和园、故宫和天安门。",
-              "不是我们昨天已经 (yǐjīng: đã)见面 (miàn: mặt, phía)了吗？",
+              "不是我们昨天已经见面了吗？",
               "你知道他在哪儿吗？",
               "马克，去年暑假你去哪儿旅行？"
             ],
@@ -44466,7 +44445,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "你再好好儿想一想。",
-            "question": "[Ôn tập Bài 17] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cậu hãy cố gắng nghĩ nữa đi.",
               "Cô bé, năm nay cháu mấy tuổi rồi?",
@@ -44478,10 +44457,10 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "明天我们会去爬山。",
-            "question": "[Bài 18] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "我去北京旅行。",
-              "不是我们昨天已经 (yǐjīng: đã)见面 (miàn: mặt, phía)了吗？",
+              "不是我们昨天已经见面了吗？",
               "明天我们会去爬山。",
               "你不告诉我，我怎么知道呢？"
             ],
@@ -44490,7 +44469,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我们下午去吧！",
-            "question": "[Ôn tập Bài 9] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tớ biết bơi, còn biết trượt băng.",
               "Buổi chiều chúng ta đi nhé!",
@@ -44502,19 +44481,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我会踢足球。",
-            "question": "[Bài 18] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "你知道他在哪儿吗？",
-              "我什么时候说我不是河内 (Hénèi: Hà Nội)人？",
+              "我什么时候说我不是河内人？",
               "我会踢足球。",
-              "不是我们昨天已经 (yǐjīng: đã)见面 (miàn: mặt, phía)了吗？"
+              "不是我们昨天已经见面了吗？"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 我会踢足球。 (Wǒ huì tī zúqiú.) → Tôi biết đá bóng."
           },
           {
             "audioText": "老师您好！",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Em chào thầy/cô ạ",
               "Mỗi ngày anh ấy đều đến thư viện mượn sách.",
@@ -44533,14 +44512,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Lan",
             "hanzi": "马克，去年暑假你去北京旅游去了哪些景点？",
-            "displayHanzi": "马克，去年暑假你去北京旅游去了哪些 (xiē: vài, một ít)景点？",
+            "displayHanzi": "马克，去年暑假你去北京旅游去了哪些景点？",
             "pinyin": "Mǎkè, qùnián shǔjià nǐ qù Běijīng lǚyóu qù le nǎxiē jǐngdiǎn?",
             "meaning": "Mark, kỳ nghỉ hè năm ngoái đi du lịch Bắc Kinh bạn đã tới những thắng cảnh nào?"
           },
           {
             "speaker": "Mark",
             "hanzi": "我去了故宫、颐和园和万里长城，了解了好多中国历史文化。",
-            "displayHanzi": "我去了故宫、颐和园和万里长城，了解 (liǎojiě: hiểu rõ, biết rõ)了好多中国历史文化。",
+            "displayHanzi": "我去了故宫、颐和园和万里长城，了解了好多中国历史文化。",
             "pinyin": "Wǒ qù le Gùgōng, Yíhéyuán hé Wànlǐ Chángchéng, liǎojiě le hǎoduō Zhōngguó lìshǐ wénhuà.",
             "meaning": "Tôi đã đi Cố Cung, Di Hòa Viên và Vạn Lý Trường Thành, hiểu thêm rất nhiều về lịch sử văn hóa Trung Quốc."
           },
@@ -44554,7 +44533,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Mark",
             "hanzi": "特别好吃！北京烤鸭真香，明年我还要再去一次。",
-            "displayHanzi": "特别好吃！北京烤鸭真香 (xiāng: thơm)，明年我还要再去一次 (cì: lần)。",
+            "displayHanzi": "特别好吃！北京烤鸭真香，明年我还要再去一次。",
             "pinyin": "Tèbié hǎochī! Běijīng kǎoyā zhēn xiāng, míngnián wǒ hái yào zài qù yí cì.",
             "meaning": "Đặc biệt ngon! Vịt quay Bắc Kinh thơm lắm, năm sau tôi muốn đi lại lần nữa."
           }
@@ -44562,7 +44541,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "马克，去年暑假你去北京旅游去了哪些景点？ 我去了故宫、颐和园和万里长城，了解了好多中国历史文化。 北京的菜好吃吗？ 特别好吃！北京烤鸭真香，明年我还要再去一次。",
-            "question": "[Nghe hiểu tình huống mới] Món ăn nào ở Bắc Kinh khiến Mark ấn tượng nhất và muốn quay lại?",
+            "question": "Món ăn nào ở Bắc Kinh khiến Mark ấn tượng nhất và muốn quay lại?",
             "options": [
               "Bánh chưng",
               "Cháo thịt",
@@ -44574,7 +44553,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "马克，去年暑假你去北京旅游去了哪些景点？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Anh ấy hát rất hay.",
               "Tôi không biết người này là nam hay là nữ nữa.",
@@ -44586,19 +44565,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我去了故宫、颐和园和万里长城，了解了好多中国历史文化。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "北京美吗？",
-              "去颐和园旅行的时候我们拍 (pāi: chụp, vỗ)了很多照片。",
-              "我什么时候说我不是河内 (Hénèi: Hà Nội)人？",
-              "我去了故宫、颐和园和万里长城，了解 (liǎojiě: hiểu rõ, biết rõ)了好多中国历史文化。"
+              "去颐和园旅行的时候我们拍了很多照片。",
+              "我什么时候说我不是河内人？",
+              "我去了故宫、颐和园和万里长城，了解了好多中国历史文化。"
             ],
             "correctIndex": 3,
             "explanation": "Câu vừa đọc: 我去了故宫、颐和园和万里长城，了解了好多中国历史文化。 (Wǒ qù le Gùgōng, Yíhéyuán hé Wànlǐ Chángchéng, liǎojiě le hǎoduō Zhōngguó lìshǐ wénhuà.) → Tôi đã đi Cố Cung, Di Hòa Viên và Vạn Lý Trường Thành, hiểu thêm rất nhiều về lịch sử văn hóa Trung Quốc."
           },
           {
             "audioText": "北京的菜好吃吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "hai cô gái kia",
               "Bệnh viện ở bên phải trường học của chúng ta.",
@@ -44672,7 +44651,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss18_1",
           "targetHanzi": "我很喜欢了解中国的历史和文化",
-          "targetMeaning": "[Mở rộng] Tôi rất thích tìm hiểu lịch sử và văn hóa Trung Quốc.",
+          "targetMeaning": "Tôi rất thích tìm hiểu lịch sử và văn hóa Trung Quốc.",
           "pinyin": "Wǒ hěn xǐhuan liǎojiě Zhōngguó de lìshǐ hé wénhuà.",
           "tokens": [
             "我很",
@@ -44681,13 +44660,12 @@ const DEFAULT_LESSONS = [
             "中国的",
             "历史和",
             "文化"
-          ],
-          "unlearnedHint": "Từ chưa học: 了解 (liǎojiě: hiểu rõ, biết rõ)"
+          ]
         },
         {
           "id": "ss18_2",
           "targetHanzi": "故宫是中国古代文化的重要象征",
-          "targetMeaning": "[Mở rộng] Cố Cung là biểu tượng quan trọng của văn hóa cổ đại Trung Quốc.",
+          "targetMeaning": "Cố Cung là biểu tượng quan trọng của văn hóa cổ đại Trung Quốc.",
           "pinyin": "Gùgōng shì Zhōngguó gǔdài wénhuà de zhòngyào xiàngzhēng.",
           "tokens": [
             "故宫是",
@@ -44725,7 +44703,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss18_5",
           "targetHanzi": "你认识阮日明吗",
-          "targetMeaning": "[Ôn tập Bài 3] Bạn có quen biết Nguyễn Nhật Minh không?",
+          "targetMeaning": "Bạn có quen biết Nguyễn Nhật Minh không?",
           "pinyin": "Nǐ rènshi Ruǎn Rìmíng ma?",
           "tokens": [
             "你",
@@ -44737,7 +44715,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss18_6",
           "targetHanzi": "电影院在美术馆的东边",
-          "targetMeaning": "[Ôn tập Bài 6] Rạp chiếu phim nằm ở phía đông bảo tàng mỹ thuật.",
+          "targetMeaning": "Rạp chiếu phim nằm ở phía đông bảo tàng mỹ thuật.",
           "pinyin": "Diànyǐngyuàn zài měishùguǎn de dōngbian.",
           "tokens": [
             "电影院",
@@ -44994,7 +44972,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr18_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Kỳ nghỉ hè năm sau tôi dự định đi du lịch Trung Quốc một tháng.",
+          "promptText": "Kỳ nghỉ hè năm sau tôi dự định đi du lịch Trung Quốc một tháng.",
           "expectedChinese": "明年暑假我打算去中国旅游一个月。",
           "acceptedPinyin": "míngnián shǔjià wǒ dǎsuan qù zhōngguó lǚyóu yígè yuè",
           "hint": "Gợi ý Pinyin: Míngnián shǔjià wǒ dǎsuan qù Zhōngguó lǚyóu yígè yuè.",
@@ -45003,7 +44981,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr18_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Vạn Lý Trường Thành và Cố Cung đều là những thắng cảnh rất nổi tiếng ở Bắc Kinh.",
+          "promptText": "Vạn Lý Trường Thành và Cố Cung đều là những thắng cảnh rất nổi tiếng ở Bắc Kinh.",
           "expectedChinese": "万里长城和故宫都是北京很有名的景点。",
           "acceptedPinyin": "wànlǐ chángchéng hé gùgōng dōu shì běijīng hěn yǒumíng de jǐngdiǎn",
           "hint": "Gợi ý Pinyin: Wànlǐ Chángchéng hé Gùgōng dōu shì Běijīng hěn yǒumíng de jǐngdiǎn.",
@@ -45120,7 +45098,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr18_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 我很喜欢了解 (liǎojiě: hiểu rõ, biết rõ)中国的历史和文化。",
+          "promptText": "我很喜欢了解中国的历史和文化。",
           "chineseAudioText": "我很喜欢了解中国的历史和文化。",
           "pinyin": "Wǒ hěn xǐhuan liǎojiě Zhōngguó de lìshǐ hé wénhuà.",
           "expectedMeaning": "Tôi rất thích tìm hiểu lịch sử và văn hóa Trung Quốc.",
@@ -45135,7 +45113,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr18_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 去颐和园旅行的时候我们拍 (pāi: chụp, vỗ)了很多照片。",
+          "promptText": "去颐和园旅行的时候我们拍了很多照片。",
           "chineseAudioText": "去颐和园旅行的时候我们拍了很多照片。",
           "pinyin": "Qù Yíhéyuán lǚxíng de shíhou wǒmen pāi le hěnduō zhàopiàn.",
           "expectedMeaning": "Lúc đi du lịch Di Hòa Viên chúng tôi đã chụp rất nhiều ảnh.",
@@ -45165,7 +45143,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr18_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 9] 我们下午去吧！",
+          "promptText": "我们下午去吧！",
           "chineseAudioText": "我们下午去吧！",
           "pinyin": "Wǒmen xiàwǔ qù ba!",
           "expectedMeaning": "Buổi chiều chúng ta đi nhé!",
@@ -45611,7 +45589,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq18_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 11] Từ đã học “照片” (zhàopiàn) có nghĩa là gì?",
+          "question": "Từ đã học “照片” (zhàopiàn) có nghĩa là gì?",
           "options": [
             "cô ấy, bà ấy, chị ấy,... (ngôi thứ ba số ít chỉ nữ)",
             "bánh chưng",
@@ -45624,7 +45602,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq18_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 2] Từ đã học “上课” (shàng kè) có nghĩa là gì?",
+          "question": "Từ đã học “上课” (shàng kè) có nghĩa là gì?",
           "options": [
             "thế, nhé, nhỉ, cơ (dùng ở cuối câu trần thuật hoặc nghi vấn)",
             "vào học, lên lớp",
@@ -45637,7 +45615,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq18_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 6] Từ đã học “米” (mǐ) có nghĩa là gì?",
+          "question": "Từ đã học “米” (mǐ) có nghĩa là gì?",
           "options": [
             "mét (m)",
             "ảnh",
@@ -45650,7 +45628,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq18_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “明年暑假我打算去中国旅游一个月。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “明年暑假我打算去中国旅游一个月。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Cậu hãy cố gắng nghĩ nữa đi.",
             "Điện thoại vừa nãy còn tốt lắm mà, sao đã hỏng rồi.",
@@ -45663,7 +45641,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq18_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nLan: 马克，去年暑假你去北京旅游去了哪些 (xiē: vài, một ít)景点？\nMark: 我去了故宫、颐和园和万里长城，了解 (liǎojiě: hiểu rõ, biết rõ)了好多中国历史文化。\nLan: 北京的菜好吃吗？\nMark: 特别好吃！北京烤鸭真香 (xiāng: thơm)，明年我还要再去一次 (cì: lần)。\n\nMón ăn nào ở Bắc Kinh khiến Mark ấn tượng nhất và muốn quay lại?",
+          "question": "Đọc đoạn hội thoại:\nLan: 马克，去年暑假你去北京旅游去了哪些景点？\nMark: 我去了故宫、颐和园和万里长城，了解了好多中国历史文化。\nLan: 北京的菜好吃吗？\nMark: 特别好吃！北京烤鸭真香，明年我还要再去一次。\n\nMón ăn nào ở Bắc Kinh khiến Mark ấn tượng nhất và muốn quay lại?",
           "options": [
             "Cháo thịt",
             "Bánh chưng",
@@ -46161,7 +46139,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct18_36",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“电影院在____术馆的东边”\n(Gợi ý nghĩa: Rạp chiếu phim nằm ở phía đông bảo tàng mỹ thuật.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“电影院在____术馆的东边”",
         "options": [
           "把",
           "六",
@@ -46174,7 +46152,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct18_37",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“对。万里长城非常雄伟壮丽，是中国人历史和文化的____。”\n(Gợi ý nghĩa: Đúng vậy. Vạn Lý Trường Thành vô cùng hùng vĩ tráng lệ, là biểu tượng lịch sử và văn hóa của người Trung Quốc.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“对。万里长城非常雄伟壮丽，是中国人历史和文化的____。”",
         "options": [
           "家人",
           "弟弟",
@@ -46187,7 +46165,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct18_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我很喜欢了解中国的____和文化”\n(Gợi ý nghĩa: Tôi rất thích tìm hiểu lịch sử và văn hóa Trung Quốc.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我很喜欢了解中国的____和文化”",
         "options": [
           "南边",
           "历史",
@@ -46200,7 +46178,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct18_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“马克，去年____你去哪儿旅行？”\n(Gợi ý nghĩa: Mark, kỳ nghỉ hè năm ngoái bạn đi du lịch ở đâu?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“马克，去年____你去哪儿旅行？”",
         "options": [
           "暑假",
           "老师",
@@ -46226,7 +46204,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct18_41",
         "category": "vocab",
-        "question": "Từ Hán tự “象征” (tượng trưng) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “象征” có phiên âm Pinyin đúng là gì?",
         "options": [
           "xīngqīsì",
           "tǐng",
@@ -46350,7 +46328,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct18_50",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 去  /  爬山  /  会  /  明天  /  我们\n(Nghĩa: “Ngày mai chúng tôi sẽ đi leo núi.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n去  /  爬山  /  会  /  明天  /  我们",
         "options": [
           "明天我们会去爬山。",
           "爬山去会我们明天。",
@@ -46363,7 +46341,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct18_51",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 你  /  吗  /  阮日明  /  认识\n(Nghĩa: “Bạn có quen biết Nguyễn Nhật Minh không?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n你  /  吗  /  阮日明  /  认识",
         "options": [
           "认识你阮日明吗。",
           "吗阮日明认识你。",
@@ -46376,7 +46354,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct18_52",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 历史和  /  喜欢  /  文化  /  中国的  /  了解  /  我很\n(Nghĩa: “Tôi rất thích tìm hiểu lịch sử và văn hóa Trung Quốc.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n历史和  /  喜欢  /  文化  /  中国的  /  了解  /  我很",
         "options": [
           "喜欢我很了解中国的历史和文化。",
           "喜欢了解中国的历史和文化我很。",
@@ -46389,7 +46367,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct18_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 象征  /  重要  /  文化的  /  古代  /  故宫是  /  中国\n(Nghĩa: “Cố Cung là biểu tượng quan trọng của văn hóa cổ đại Trung Quốc.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n象征  /  重要  /  文化的  /  古代  /  故宫是  /  中国",
         "options": [
           "故宫是中国古代文化的重要象征。",
           "中国故宫是古代文化的重要象征。",
@@ -46402,7 +46380,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct18_54",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“当然了。北京特别美，有很多有名的景点，比如：万里长城、颐和园、故宫和____ (Tiān'ānmén)。”\n(Nghĩa: Tất nhiên rồi. Bắc Kinh vô cùng đẹp, có rất nhiều danh thắng nổi tiếng như: Vạn Lý Trường Thành, Di Hòa Viên, Cố Cung và Thiên An Môn.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“当然了。北京特别美，有很多有名的景点，比如：万里长城、颐和园、故宫和____。”",
         "options": [
           "一下儿",
           "天安门",
@@ -46415,7 +46393,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct18_55",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“你帮我，然后我____ (huì)帮你，好吗？”\n(Nghĩa: Cậu giúp tới rồi tớ sẽ giúp cậu, có được không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你帮我，然后我____帮你，好吗？”",
         "options": [
           "送",
           "走",
@@ -46428,7 +46406,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct18_56",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“很热情和____ (hàokè)，我还认识了一个很好的朋友。”\n(Nghĩa: Rất nhiệt tình và hiếu khách, tôi còn kết quen được một người bạn rất tốt.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“很热情和____，我还认识了一个很好的朋友。”",
         "options": [
           "好客",
           "或者",
@@ -46800,14 +46778,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "我觉得头很疼，上午还发烧和咳嗽， 好像感冒了。",
-            "displayHanzi": "我觉得头 (tóu: con (trâu, bò) / đầu)很疼 (téng: đau)，上午还发烧和咳嗽， 好像感冒了。",
+            "displayHanzi": "我觉得头很疼，上午还发烧和咳嗽， 好像感冒了。",
             "pinyin": "Wǒ juéde tóu hěn téng, shàngwǔ hái fāshāo hé késou, hǎoxiàng gǎnmào le.",
             "meaning": "Tớ thấy rất đau đầu, buổi sáng còn bị sốt và ho, hình như cảm lạnh rồi."
           },
           {
             "speaker": "阮日明",
             "hanzi": "你是不是又喝冰水了？你的喉咙经常发炎,你还不戒除冰水。",
-            "displayHanzi": "你是不是又喝冰水了？你的喉咙 (hóulong: cổ họng)经常发炎 (fāyán: bị viêm),你还不戒除冰水。",
+            "displayHanzi": "你是不是又喝冰水了？你的喉咙经常发炎,你还不戒除冰水。",
             "pinyin": "Nǐ shì bu shì yòu hē bīngshuǐ le? Nǐ de hóulong jīngcháng fāyán, nǐ hái bù jièchú bīngshuǐ.",
             "meaning": "Có phải cậu lại uống nước đá rồi không? Cổ họng cậu hay bị viêm mà cậu vẫn chưa bỏ uống nước đá."
           },
@@ -46821,21 +46799,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "阮日明",
             "hanzi": "今天下午有课，你这样一定不能上课了。 最好回家休息吧！",
-            "displayHanzi": "今天下午有课 (kè: tiết học, bài học)，你这样一定 (yīdìng: nhất định)不能上课了。 最好回家休息吧！",
+            "displayHanzi": "今天下午有课，你这样一定不能上课了。 最好回家休息吧！",
             "pinyin": "Jīntiān xiàwǔ yǒu kè, nǐ zhèyàng yídìng bùnéng shàngkè le. Zuì hǎo huí jiā xiūxi ba!",
             "meaning": "Chiều nay có tiết học, cậu thế này chắc chắn không đi học được rồi. Tốt nhất là về nhà nghỉ ngơi đi!"
           },
           {
             "speaker": "范玉兰",
             "hanzi": "那你帮我跟刘老师说一声， 我生病不能上课了！",
-            "displayHanzi": "那你帮 (bāng: giúp đỡ)我跟 (gēn: cùng, với)刘老师说一声 (shēng: tiếng)， 我生病不能上课了！",
+            "displayHanzi": "那你帮我跟刘老师说一声， 我生病不能上课了！",
             "pinyin": "Nà nǐ bāng wǒ gēn Liú lǎoshī shuō yī shēng, wǒ shēngbìng bùnéng shàngkè le!",
             "meaning": "Vậy cậu nói giúp tớ với cô Lưu một tiếng là tớ bị ốm không thể lên lớp được nhé!"
           },
           {
             "speaker": "阮日明",
             "hanzi": "好的！我现在有空儿，还能帮你做什么吗？",
-            "displayHanzi": "好的！我现在有空儿，还能帮 (bāng: giúp đỡ)你做 (zuò: làm)什么吗？",
+            "displayHanzi": "好的！我现在有空儿，还能帮你做什么吗？",
             "pinyin": "Hǎo de! Wǒ xiànzài yǒu kòngr, hái néng bāng nǐ zuò shénme ma?",
             "meaning": "Được rồi! Giờ tớ đang rảnh, còn giúp được gì cho cậu nữa không?"
           },
@@ -46849,7 +46827,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "阮日明",
             "hanzi": "你还这样说！我现在去药店给你买药。对了， 听说感冒应该吃肉粥，这样很快就恢复了。我顺便给你买一碗粥吧！",
-            "displayHanzi": "你还这样说！我现在去药店给你买药。对了， 听说感冒应该 (yīnggāi: nên, có vẻ như)吃肉粥，这样很快就恢复了。我顺便给你买一碗 (wǎn: cái bát)粥 (zhōu: cháo)吧！",
+            "displayHanzi": "你还这样说！我现在去药店给你买药。对了， 听说感冒应该吃肉粥，这样很快就恢复了。我顺便给你买一碗粥吧！",
             "pinyin": "Nǐ hái zhèyàng shuō! Wǒ xiànzài qù yàodiàn gěi nǐ mǎi yào. Duì le, tīngshuō gǎnmào yīnggāi chī ròu zhōu, zhèyàng hěn kuài jiù huīfù le. Wǒ shùnbiàn gěi nǐ mǎi yī wǎn zhōu ba!",
             "meaning": "Cậu vẫn còn nói thế được à! Giờ tớ ra hiệu thuốc mua thuốc cho cậu. À đúng rồi, nghe nói bị cảm nên ăn cháo thịt để mau hồi phục. Tớ tiện đường mua cho cậu một bát cháo nhé!"
           },
@@ -46878,10 +46856,10 @@ const DEFAULT_LESSONS = [
             "audioText": "我觉得头很疼，上午还发烧和咳嗽， 好像感冒了。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "我明天要考试了，不能跟 (gēn: cùng, với)你去。",
-              "多喝温水，过 (guò: từng, qua)几天 (tiān: ngày, trời)身体 (shēntǐ: cơ thể)就会恢复。",
+              "我明天要考试了，不能跟你去。",
+              "多喝温水，过几天身体就会恢复。",
               "谢谢！你辛苦了！",
-              "我觉得头 (tóu: con (trâu, bò) / đầu)很疼 (téng: đau)，上午还发烧和咳嗽， 好像感冒了。"
+              "我觉得头很疼，上午还发烧和咳嗽， 好像感冒了。"
             ],
             "correctIndex": 3,
             "explanation": "Câu vừa đọc: 我觉得头很疼，上午还发烧和咳嗽， 好像感冒了。 (Wǒ juéde tóu hěn téng, shàngwǔ hái fāshāo hé késou, hǎoxiàng gǎnmào le.) → Tớ thấy rất đau đầu, buổi sáng còn bị sốt và ho, hình như cảm lạnh rồi."
@@ -46902,9 +46880,9 @@ const DEFAULT_LESSONS = [
             "audioText": "我只喝了一口，  没想到……",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "那你帮 (bāng: giúp đỡ)我跟 (gēn: cùng, với)刘老师说一声 (shēng: tiếng)， 我生病不能上课了！",
-              "你太累了，喝完 (wán: xong, hết)这碗 (wǎn: cái bát)肉粥就好好休息吧。",
-              "我的头 (tóu: con (trâu, bò) / đầu)很疼 (téng: đau)，不能上课。",
+              "那你帮我跟刘老师说一声， 我生病不能上课了！",
+              "你太累了，喝完这碗肉粥就好好休息吧。",
+              "我的头很疼，不能上课。",
               "我只喝了一口，  没想到……"
             ],
             "correctIndex": 3,
@@ -46976,7 +46954,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "她会说汉语。",
-            "question": "[Ôn tập Bài 18] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tôi sẽ không về nhà cùng với anh ta đâu.",
               "hai quyển sách",
@@ -46988,19 +46966,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "今天会下雨吧。",
-            "question": "[Bài 19] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "我明天要考试了，不能跟 (gēn: cùng, với)你去。",
+              "我明天要考试了，不能跟你去。",
               "今天会下雨吧。",
-              "你得 (děi: phải)多锻炼 (duànliàn: tập luyện, tập)了。",
-              "她不来 (lái: đến)了吧。"
+              "你得多锻炼了。",
+              "她不来了吧。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 今天会下雨吧。 (Jīntiān huì xià yǔ ba.) → Hôm nay chắc sẽ mưa đấy nhỉ."
           },
           {
             "audioText": "我们下午去吧！",
-            "question": "[Ôn tập Bài 9] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Con đang ăn nè.",
               "Buổi chiều chúng ta đi nhé!",
@@ -47012,19 +46990,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "小兰，你的脸色不太好，是不是生病了？",
-            "question": "[Bài 19] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "今天下午有课 (kè: tiết học, bài học)，你这样一定 (yīdìng: nhất định)不能上课了。 最好回家休息吧！",
-              "你还这样说！我现在去药店给你买药。对了， 听说感冒应该 (yīnggāi: nên, có vẻ như)吃肉粥，这样很快就恢复了。我顺便给你买一碗 (wǎn: cái bát)粥 (zhōu: cháo)吧！",
+              "今天下午有课，你这样一定不能上课了。 最好回家休息吧！",
+              "你还这样说！我现在去药店给你买药。对了， 听说感冒应该吃肉粥，这样很快就恢复了。我顺便给你买一碗粥吧！",
               "小兰，你的脸色不太好，是不是生病了？",
-              "你咳嗽了，最好别 (bié: đừng)抽烟 (chōuyān: hút thuốc)了。"
+              "你咳嗽了，最好别抽烟了。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 小兰，你的脸色不太好，是不是生病了？ (Xiǎo Lán, nǐ de liǎnsè bú tài hǎo, shì bu shì shēngbìng le?) → Tiểu Lan, sắc mặt cậu không tốt lắm, có phải bị ốm rồi không?"
           },
           {
             "audioText": "老师们",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Các thầy cô giáo",
               "Tớ muốn đến công viên chạy bộ.",
@@ -47050,21 +47028,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Lan",
             "hanzi": "嗯，我头很疼，还有点儿咳嗽、喉咙发炎。",
-            "displayHanzi": "嗯 (èn: ừ, ừm)，我头 (tóu: con (trâu, bò) / đầu)很疼 (téng: đau)，还有点儿咳嗽、喉咙发炎。",
+            "displayHanzi": "嗯，我头很疼，还有点儿咳嗽、喉咙发炎。",
             "pinyin": "Ēn, wǒ tóu hěn téng, hái yǒudiǎnr késou, hóulong fāyán.",
             "meaning": "Ừ, tớ đau đầu quá, lại hơi ho và viêm họng nữa."
           },
           {
             "speaker": "Minh",
             "hanzi": "你以后得戒除冰水了。我已经去药店给你买了药和一碗肉粥。",
-            "displayHanzi": "你以后 (yǐhòu: sau, lúc sau)得 (děi: phải)戒除冰水了。我已经 (yǐjīng: đã)去药店给你买了药和一碗 (wǎn: cái bát)肉粥。",
+            "displayHanzi": "你以后得戒除冰水了。我已经去药店给你买了药和一碗肉粥。",
             "pinyin": "Nǐ yǐhòu děi jièchú bīngshuǐ le. Wǒ yǐjīng qù yàodiàn gěi nǐ mǎi le yào hé yì wǎn ròuzhōu.",
             "meaning": "Sau này cậu phải bỏ uống nước đá đi nhé. Tớ đã ra hiệu thuốc mua thuốc và một bát cháo thịt cho cậu rồi."
           },
           {
             "speaker": "Lan",
             "hanzi": "太谢谢你了，喝完粥吃药我一定会很快恢复！",
-            "displayHanzi": "太谢谢你了，喝完 (wán: xong, hết)粥 (zhōu: cháo)吃药我一定 (yīdìng: nhất định)会很快恢复！",
+            "displayHanzi": "太谢谢你了，喝完粥吃药我一定会很快恢复！",
             "pinyin": "Tài xièxie nǐ le, hēwán zhōu chī yào wǒ yídìng huì hěn kuài huīfù!",
             "meaning": "Cảm ơn cậu nhiều lắm, ăn cháo uống thuốc xong tớ nhất định sẽ mau khỏi!"
           }
@@ -47072,7 +47050,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "小兰，你脸色不太好，是不是感冒发烧了？ 嗯，我头很疼，还有点儿咳嗽、喉咙发炎。 你以后得戒除冰水了。我已经去药店给你买了药和一碗肉粥。 太谢谢你了，喝完粥吃药我一定会很快恢复！",
-            "question": "[Nghe hiểu tình huống mới] Minh đã mua những gì cho Tiểu Lan khi cô ấy bị ốm?",
+            "question": "Minh đã mua những gì cho Tiểu Lan khi cô ấy bị ốm?",
             "options": [
               "Mua thuốc ở hiệu thuốc và một bát cháo thịt",
               "Mua một cốc nước đá và trái cây",
@@ -47084,7 +47062,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "小兰，你脸色不太好，是不是感冒发烧了？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Hiệu sách phía trước",
               "Bộ quần áo này là hàng thật, không phải hàng giả đâu.",
@@ -47096,19 +47074,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "嗯，我头很疼，还有点儿咳嗽、喉咙发炎。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "嗯 (èn: ừ, ừm)，我头 (tóu: con (trâu, bò) / đầu)很疼 (téng: đau)，还有点儿咳嗽、喉咙发炎。",
+              "嗯，我头很疼，还有点儿咳嗽、喉咙发炎。",
               "我今天头疼、发烧，还一直咳嗽。",
-              "我觉得头 (tóu: con (trâu, bò) / đầu)很疼 (téng: đau)，上午还发烧和咳嗽， 好像感冒了。",
-              "她不来 (lái: đến)了吧。"
+              "我觉得头很疼，上午还发烧和咳嗽， 好像感冒了。",
+              "她不来了吧。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 嗯，我头很疼，还有点儿咳嗽、喉咙发炎。 (Ēn, wǒ tóu hěn téng, hái yǒudiǎnr késou, hóulong fāyán.) → Ừ, tớ đau đầu quá, lại hơi ho và viêm họng nữa."
           },
           {
             "audioText": "你以后得戒除冰水了。我已经去药店给你买了药和一碗肉粥。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Sau này cậu phải bỏ uống nước đá đi nhé. Tớ đã ra hiệu thuốc mua thuốc và một bát cháo thịt cho cậu rồi.",
               "Em trai vui đến nổi nhảy cẫng lên.",
@@ -47195,7 +47173,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss19_1",
           "targetHanzi": "昨天天气太冷我好像得了感冒",
-          "targetMeaning": "[Mở rộng] Hôm qua trời lạnh quá, hình như tôi bị cảm cúm rồi.",
+          "targetMeaning": "Hôm qua trời lạnh quá, hình như tôi bị cảm cúm rồi.",
           "pinyin": "Zuótiān tiānqì tài lěng, wǒ hǎoxiàng dé le gǎnmào.",
           "tokens": [
             "昨天",
@@ -47209,7 +47187,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss19_2",
           "targetHanzi": "我今天头疼发烧还一直咳嗽",
-          "targetMeaning": "[Mở rộng] Hôm nay tôi bị đau đầu, sốt, lại còn ho liên tục.",
+          "targetMeaning": "Hôm nay tôi bị đau đầu, sốt, lại còn ho liên tục.",
           "pinyin": "Wǒ jīntiān tóuténg, fāshāo, hái yìzhí késou.",
           "tokens": [
             "我今天",
@@ -47249,7 +47227,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss19_5",
           "targetHanzi": "阿姨今天的苹果甜不甜",
-          "targetMeaning": "[Ôn tập Bài 8] Cô ơi, táo hôm nay có ngọt không ạ?",
+          "targetMeaning": "Cô ơi, táo hôm nay có ngọt không ạ?",
           "pinyin": "Āyí, jīntiān de píngguǒ tián bu tián?",
           "tokens": [
             "阿姨",
@@ -47263,7 +47241,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss19_6",
           "targetHanzi": "我觉得春天的天气最暖和最舒服",
-          "targetMeaning": "[Ôn tập Bài 15] Tôi thấy thời tiết mùa xuân ấm áp và dễ chịu nhất.",
+          "targetMeaning": "Tôi thấy thời tiết mùa xuân ấm áp và dễ chịu nhất.",
           "pinyin": "Wǒ juéde chūntiān de tiānqì zuì nuǎnhuo, zuì shūfu.",
           "tokens": [
             "我觉得",
@@ -47553,7 +47531,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr19_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Hôm qua trời lạnh quá, hình như tôi bị cảm cúm rồi.",
+          "promptText": "Hôm qua trời lạnh quá, hình như tôi bị cảm cúm rồi.",
           "expectedChinese": "昨天天气太冷，我好像得了感冒。",
           "acceptedPinyin": "zuótiān tiānqì tài lěng wǒ hǎoxiàng dé le gǎnmào",
           "hint": "Gợi ý Pinyin: Zuótiān tiānqì tài lěng, wǒ hǎoxiàng dé le gǎnmào.",
@@ -47562,7 +47540,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr19_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Hôm nay tôi bị đau đầu, sốt, lại còn ho liên tục.",
+          "promptText": "Hôm nay tôi bị đau đầu, sốt, lại còn ho liên tục.",
           "expectedChinese": "我今天头疼、发烧，还一直咳嗽。",
           "acceptedPinyin": "wǒ jīntiān tóuténg fāshāo hái yìzhí késou",
           "hint": "Gợi ý Pinyin: Wǒ jīntiān tóuténg, fāshāo, hái yìzhí késou.",
@@ -47583,7 +47561,7 @@ const DEFAULT_LESSONS = [
           "promptText": "Mai tớ thi rồi, không thể đi cùng cậu được.",
           "expectedChinese": "我明天要考试了，不能跟你去。",
           "acceptedPinyin": "wǒ míngtiān yào kǎoshì le bù néng gēn nǐ qù",
-          "hint": "Gợi ý Pinyin: Wǒ míngtiān yào kǎoshì le, bù néng gēn nǐ qù. | Từ chưa học: 跟 (gēn: cùng, với)",
+          "hint": "Gợi ý Pinyin: Wǒ míngtiān yào kǎoshì le, bù néng gēn nǐ qù.",
           "explanation": "Mai tớ thi rồi, không thể đi cùng cậu được. → 我明天要考试了，不能跟你去。 (Wǒ míngtiān yào kǎoshì le, bù néng gēn nǐ qù.)"
         },
         {
@@ -47679,7 +47657,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr19_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 我去药店给你买一些感冒药。",
+          "promptText": "我去药店给你买一些感冒药。",
           "chineseAudioText": "我去药店给你买一些感冒药。",
           "pinyin": "Wǒ qù yàodiàn gěi nǐ mǎi yìxiē gǎnmàoyào.",
           "expectedMeaning": "Tôi ra hiệu thuốc mua cho bạn một ít thuốc cảm nhé.",
@@ -47694,7 +47672,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr19_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 你太累了，喝完 (wán: xong, hết)这碗 (wǎn: cái bát)肉粥就好好休息吧。",
+          "promptText": "你太累了，喝完这碗肉粥就好好休息吧。",
           "chineseAudioText": "你太累了，喝完这碗肉粥就好好休息吧。",
           "pinyin": "Nǐ tài lèi le, hēwán zhè wǎn ròuzhōu jiù hǎohāo xiūxi ba.",
           "expectedMeaning": "Bạn mệt quá rồi, ăn hết bát cháo thịt này rồi nghỉ ngơi cho khỏe nhé.",
@@ -47709,7 +47687,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr19_zh_3",
           "direction": "zh_to_vi",
-          "promptText": "她不来 (lái: đến)了吧。",
+          "promptText": "她不来了吧。",
           "chineseAudioText": "她不来了吧。",
           "pinyin": "Tā bù lái le ba.",
           "expectedMeaning": "Chắc là cô đấy không đến nữa.",
@@ -47724,7 +47702,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr19_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 9] 你买吧！",
+          "promptText": "你买吧！",
           "chineseAudioText": "你买吧！",
           "pinyin": "Nǐ mǎi ba!",
           "expectedMeaning": "Cậu mua đi!",
@@ -48201,7 +48179,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq19_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 16] Từ đã học “快要......了” (kuàiyào… le) có nghĩa là gì?",
+          "question": "Từ đã học “快要......了” (kuàiyào… le) có nghĩa là gì?",
           "options": [
             "mệt, mệt mỏi",
             "mét (m)",
@@ -48214,7 +48192,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq19_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 13] Từ đã học “打算” (dǎsuan) có nghĩa là gì?",
+          "question": "Từ đã học “打算” (dǎsuan) có nghĩa là gì?",
           "options": [
             "Phó,đtnn biết, sẽ",
             "mũ",
@@ -48227,7 +48205,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq19_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 14] Từ đã học “小” (xiǎo) có nghĩa là gì?",
+          "question": "Từ đã học “小” (xiǎo) có nghĩa là gì?",
           "options": [
             "trà",
             "nhỏ, bé",
@@ -48240,7 +48218,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq19_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “昨天天气太冷，我好像得了感冒。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “昨天天气太冷，我好像得了感冒。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Ngày mai là lễ Quốc khánh, chúng ta có thể đi mua sắm.",
             "Tớ muốn đến công viên chạy bộ.",
@@ -48253,7 +48231,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq19_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nMinh: 小兰，你脸色不太好，是不是感冒发烧了？\nLan: 嗯 (èn: ừ, ừm)，我头 (tóu: con (trâu, bò) / đầu)很疼 (téng: đau)，还有点儿咳嗽、喉咙发炎。\nMinh: 你以后 (yǐhòu: sau, lúc sau)得 (děi: phải)戒除冰水了。我已经 (yǐjīng: đã)去药店给你买了药和一碗 (wǎn: cái bát)肉粥。\nLan: 太谢谢你了，喝完 (wán: xong, hết)粥 (zhōu: cháo)吃药我一定 (yīdìng: nhất định)会很快恢复！\n\nMinh đã mua những gì cho Tiểu Lan khi cô ấy bị ốm?",
+          "question": "Đọc đoạn hội thoại:\nMinh: 小兰，你脸色不太好，是不是感冒发烧了？\nLan: 嗯，我头很疼，还有点儿咳嗽、喉咙发炎。\nMinh: 你以后得戒除冰水了。我已经去药店给你买了药和一碗肉粥。\nLan: 太谢谢你了，喝完粥吃药我一定会很快恢复！\n\nMinh đã mua những gì cho Tiểu Lan khi cô ấy bị ốm?",
           "options": [
             "Mua thuốc ở hiệu thuốc và một bát cháo thịt",
             "Mua vé đi du lịch",
@@ -48751,7 +48729,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct19_36",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你以后得戒除冰水了。我已经去____给你买了药和一碗肉粥。”\n(Gợi ý nghĩa: Sau này cậu phải bỏ uống nước đá đi nhé. Tớ đã ra hiệu thuốc mua thuốc và một bát cháo thịt cho cậu rồi.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你以后得戒除冰水了。我已经去____给你买了药和一碗肉粥。”",
         "options": [
           "药店",
           "照相",
@@ -48764,7 +48742,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct19_37",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“没事儿， 只得了感冒____， 不要紧。”\n(Gợi ý nghĩa: Không sao đâu, chỉ bị cảm nhẹ thôi mà, không đáng ngại đâu.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“没事儿， 只得了感冒____， 不要紧。”",
         "options": [
           "头疼",
           "夏天",
@@ -48777,7 +48755,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct19_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“谢谢！你____了！”\n(Gợi ý nghĩa: Cảm ơn cậu! Làm phiền cậu quá!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“谢谢！你____了！”",
         "options": [
           "哪里",
           "感冒",
@@ -48790,7 +48768,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct19_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你是不是又喝____了？你的喉咙经常发炎,你还不戒除冰水。”\n(Gợi ý nghĩa: Có phải cậu lại uống nước đá rồi không? Cổ họng cậu hay bị viêm mà cậu vẫn chưa bỏ uống nước đá.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你是不是又喝____了？你的喉咙经常发炎,你还不戒除冰水。”",
         "options": [
           "拍照",
           "冰水",
@@ -48816,7 +48794,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct19_41",
         "category": "vocab",
-        "question": "Từ Hán tự “而已” (mà thôi) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “而已” có phiên âm Pinyin đúng là gì?",
         "options": [
           "měishùguǎn",
           "éryǐ",
@@ -48940,7 +48918,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct19_50",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 好像  /  得了  /  天气  /  太冷我  /  感冒  /  昨天\n(Nghĩa: “Hôm qua trời lạnh quá, hình như tôi bị cảm cúm rồi.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n好像  /  得了  /  天气  /  太冷我  /  感冒  /  昨天",
         "options": [
           "昨天天气太冷我好像得了感冒。",
           "天气昨天太冷我好像得了感冒。",
@@ -48953,7 +48931,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct19_51",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 没想到  /  喝了  /  一口  /  我只  /  …  /  …\n(Nghĩa: “Tớ chỉ uống có một ngụm thôi, không ngờ…”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n没想到  /  喝了  /  一口  /  我只  /  …  /  …",
         "options": [
           "喝了一口没想到……我只。",
           "我只喝了一口没想到……。",
@@ -48966,7 +48944,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct19_52",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 最  /  我觉得  /  天气最  /  舒服  /  暖和  /  春天的\n(Nghĩa: “Tôi thấy thời tiết mùa xuân ấm áp và dễ chịu nhất.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n最  /  我觉得  /  天气最  /  舒服  /  暖和  /  春天的",
         "options": [
           "我觉得春天的天气最暖和最舒服。",
           "春天的我觉得天气最暖和最舒服。",
@@ -48979,7 +48957,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct19_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 咳嗽  /  我今天  /  还  /  发烧  /  一直  /  头疼\n(Nghĩa: “Hôm nay tôi bị đau đầu, sốt, lại còn ho liên tục.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n咳嗽  /  我今天  /  还  /  发烧  /  一直  /  头疼",
         "options": [
           "我今天头疼发烧还一直咳嗽。",
           "头疼发烧还一直咳嗽我今天。",
@@ -48992,7 +48970,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct19_54",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“昨天天气太冷我好像____ (dé le)感冒”\n(Nghĩa: Hôm qua trời lạnh quá, hình như tôi bị cảm cúm rồi.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“昨天天气太冷我好像____感冒”",
         "options": [
           "复习",
           "高兴",
@@ -49005,7 +48983,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct19_55",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“小兰，你____ (liǎnsè)不太好，是不是感冒发烧了？”\n(Nghĩa: Tiểu Lan, sắc mặt cậu không tốt lắm, có phải bị cảm sốt rồi không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“小兰，你____不太好，是不是感冒发烧了？”",
         "options": [
           "全家",
           "脸色",
@@ -49018,7 +48996,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct19_56",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“我觉得头很疼，上午还发烧和咳嗽， ____ (hǎoxiàng)感冒了。”\n(Nghĩa: Tớ thấy rất đau đầu, buổi sáng còn bị sốt và ho, hình như cảm lạnh rồi.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我觉得头很疼，上午还发烧和咳嗽， ____感冒了。”",
         "options": [
           "价格",
           "拍照",
@@ -49411,28 +49389,28 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "安妮",
             "hanzi": "阿明，我看你每天早上都跑步，你是不是常常锻炼身体？",
-            "displayHanzi": "阿明 (Āmíng: A Minh)，我看你每天 (tiān: ngày, trời)早上都跑步，你是不是常常锻炼身体？",
+            "displayHanzi": "阿明，我看你每天早上都跑步，你是不是常常锻炼身体？",
             "pinyin": "Āmíng, wǒ kàn nǐ měi tiān zǎoshang dōu pǎobù, nǐ shì bu shì chángcháng duànliàn shēntǐ?",
             "meaning": "A Minh, mình thấy sáng nào cậu cũng chạy bộ, cậu có thường xuyên rèn luyện sức khỏe không?"
           },
           {
             "speaker": "阮日明",
             "hanzi": "是。我每天早上六点都起来跑步。",
-            "displayHanzi": "是。我每天 (tiān: ngày, trời)早上六点都起来 (qǐlái: lên (bổ ngữ))跑步。",
+            "displayHanzi": "是。我每天早上六点都起来跑步。",
             "pinyin": "Shì. Wǒ měitiān zǎoshang liù diǎn dōu qǐlai pǎobù.",
             "meaning": "Có. Sáng nào 6 giờ mình cũng dậy chạy bộ."
           },
           {
             "speaker": "安妮",
             "hanzi": "你每天跑多长时间？",
-            "displayHanzi": "你每天 (tiān: ngày, trời)跑 (pǎo: chạy)多长 (cháng: dài)时间？",
+            "displayHanzi": "你每天跑多长时间？",
             "pinyin": "Nǐ měi tiān pǎo duō cháng shíjiān?",
             "meaning": "Mỗi ngày cậu chạy bao lâu?"
           },
           {
             "speaker": "阮日明",
             "hanzi": "大概跑半个小时。",
-            "displayHanzi": "大概跑 (pǎo: chạy)半个小时。",
+            "displayHanzi": "大概跑半个小时。",
             "pinyin": "Dàgài pǎo bàn gè xiǎoshí.",
             "meaning": "Chạy khoảng nửa tiếng."
           },
@@ -49453,21 +49431,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "安妮",
             "hanzi": "我看你的身体真棒。你一定很喜欢体育运动吧？",
-            "displayHanzi": "我看你的身体真棒。你一定 (yīdìng: nhất định)很喜欢体育 (tǐyù: thể dục)运动吧？",
+            "displayHanzi": "我看你的身体真棒。你一定很喜欢体育运动吧？",
             "pinyin": "Wǒ kàn nǐ de shēntǐ zhēn bàng. Nǐ yídìng hěn xǐhuān tǐyù yùndòng ba?",
             "meaning": "Mình thấy thể lực của cậu tốt thật đấy. Chắc cậu rất thích thể dục thể thao nhỉ?"
           },
           {
             "speaker": "阮日明",
             "hanzi": "对。每天下午我都去体育馆游泳，打篮球、打网球和武术。周末如果天气好我就跟几个朋友去爬山。我觉得你的身体太弱，可能是因为不经常锻炼身体。",
-            "displayHanzi": "对。每天 (tiān: ngày, trời)下午我都去体育馆游泳，打 (dǎ: đánh, gọi, chơi)篮球、打网球和武术。周末如果天气好我就跟 (gēn: cùng, với)几个朋友去爬山。我觉得你的身体太弱，可能是因为不经常锻炼身体。",
+            "displayHanzi": "对。每天下午我都去体育馆游泳，打篮球、打网球和武术。周末如果天气好我就跟几个朋友去爬山。我觉得你的身体太弱，可能是因为不经常锻炼身体。",
             "pinyin": "Duì. Měi tiān xiàwǔ wǒ dōu qù tǐyùguǎn yóuyǒng, dǎ lánqiú, dǎ wǎngqiú hé wǔshù. Zhōumò rúguǒ tiānqì hǎo wǒ jiù gēn jǐ gè péngyou qù páshān. Wǒ juéde nǐ de shēntǐ tài ruò, kěnéng shì yīnwèi bù jīngcháng duànliàn shēntǐ.",
             "meaning": "Đúng vậy. Chiều nào mình cũng đến nhà thi đấu bơi lội, chơi bóng rổ, đánh tennis và tập võ. Cuối tuần nếu thời tiết đẹp mình đi leo núi cùng vài người bạn. Mình thấy sức khỏe cậu hơi yếu, có lẽ vì ít rèn luyện thể thao đấy."
           },
           {
             "speaker": "安妮",
             "hanzi": "我每天都晚睡晚起，也不太喜欢体育运动。",
-            "displayHanzi": "我每天 (tiān: ngày, trời)都晚 (wǎn: muộn, tối)睡晚起 (wǎnqǐ: dậy muộn)，也不太喜欢体育 (tǐyù: thể dục)运动。",
+            "displayHanzi": "我每天都晚睡晚起，也不太喜欢体育运动。",
             "pinyin": "Wǒ měitiān dōu wǎn shuì wǎn qǐ, yě bú tài xǐhuan tǐyù yùndòng.",
             "meaning": "Ngày nào mình cũng thức khuya dậy muộn, lại không thích vận động thể thao lắm."
           },
@@ -49481,7 +49459,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "安妮",
             "hanzi": "我知道了，明天你跑步的时候能叫我吗？我决定要跟你一样坚持锻炼身体。",
-            "displayHanzi": "我知道了，明天你跑步的时候能叫我吗？我决定要跟 (gēn: cùng, với)你一样坚持锻炼身体。",
+            "displayHanzi": "我知道了，明天你跑步的时候能叫我吗？我决定要跟你一样坚持锻炼身体。",
             "pinyin": "Wǒ zhīdào le, míngtiān nǐ pǎobù de shíhou néng jiào wǒ ma? Wǒ juédìng yào gēn nǐ yíyàng jiānchí duànliàn shēntǐ.",
             "meaning": "Mình biết rồi, ngày mai lúc đi chạy bộ cậu gọi mình với nhé? Mình quyết định sẽ kiên trì tập luyện giống cậu."
           },
@@ -49510,10 +49488,10 @@ const DEFAULT_LESSONS = [
             "audioText": "是。我每天早上六点都起来跑步。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "是。我每天 (tiān: ngày, trời)早上六点都起来 (qǐlái: lên (bổ ngữ))跑步。",
-              "阿明 (Āmíng: A Minh)，我看你每天 (tiān: ngày, trời)早上都跑步，你是不是常常锻炼身体？",
-              "她会中文 (Zhōngwén: tiếng Trung)。",
-              "我要学 (xué: học)游泳。"
+              "是。我每天早上六点都起来跑步。",
+              "阿明，我看你每天早上都跑步，你是不是常常锻炼身体？",
+              "她会中文。",
+              "我要学游泳。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 是。我每天早上六点都起来跑步。 (Shì. Wǒ měitiān zǎoshang liù diǎn dōu qǐlai pǎobù.) → Có. Sáng nào 6 giờ mình cũng dậy chạy bộ."
@@ -49534,9 +49512,9 @@ const DEFAULT_LESSONS = [
             "audioText": "大概跑半个小时。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "我可以做 (zuò: làm)好这件 (jiàn: cái, chiếc (áo, việc))事。",
-              "如果要减肥 (jiǎnféi: giảm cân)，你可以多锻炼身体。",
-              "大概跑 (pǎo: chạy)半个小时。",
+              "我可以做好这件事。",
+              "如果要减肥，你可以多锻炼身体。",
+              "大概跑半个小时。",
               "明天我想去图书馆看书。"
             ],
             "correctIndex": 2,
@@ -49608,7 +49586,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "今天会下雨吧。",
-            "question": "[Ôn tập Bài 19] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cậu nói gì vậy?",
               "tóc dài (mang sự dễ thương)",
@@ -49620,19 +49598,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你得多锻炼了。",
-            "question": "[Bài 20] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "天 (tiān: ngày, trời)可能要下雨。",
+              "天可能要下雨。",
               "坚持运动可以帮助我们预防很多疾病。",
               "你得多锻炼了。",
-              "你每天 (tiān: ngày, trời)几点起床去学 (xué: học)武术？"
+              "你每天几点起床去学武术？"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 你得多锻炼了。 (Nǐ děi duō duànliàn le.) → Bạn cần phải luyện tập nhiều hơn nữa."
           },
           {
             "audioText": "天气太舒服了！",
-            "question": "[Ôn tập Bài 10] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Thời tiết dễ chịu quá!",
               "Cậu có biết chữ này viết như thế nào không?",
@@ -49644,19 +49622,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你是不是累了？多休息吧！",
-            "question": "[Bài 20] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "是。我每天 (tiān: ngày, trời)早上六点都起来 (qǐlái: lên (bổ ngữ))跑步。",
+              "是。我每天早上六点都起来跑步。",
               "你是不是累了？多休息吧！",
-              "中 (zhōng: giữa / trong)学生不可以抽烟 (chōuyān: hút thuốc)。",
-              "她会中文 (Zhōngwén: tiếng Trung)。"
+              "中学生不可以抽烟。",
+              "她会中文。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 你是不是累了？多休息吧！ (Nǐ shì bu shì lèi le? Duō xiūxi ba!) → Bạn mệt à? Nghỉ ngơi thêm chút đi!"
           },
           {
             "audioText": "老师们",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Các thầy cô giáo",
               "Anh ấy đã về nước từ tuần trước rồi.",
@@ -49675,14 +49653,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Mark",
             "hanzi": "阿明，你每天几点起床锻炼身体？",
-            "displayHanzi": "阿明 (Āmíng: A Minh)，你每天 (tiān: ngày, trời)几点起床锻炼身体？",
+            "displayHanzi": "阿明，你每天几点起床锻炼身体？",
             "pinyin": "Āmíng, nǐ měitiān jǐ diǎn qǐchuáng duànliàn shēntǐ?",
             "meaning": "A Minh, mỗi ngày mấy giờ cậu thức dậy rèn luyện sức khỏe?"
           },
           {
             "speaker": "A Minh",
             "hanzi": "我每天早上六点起床去公园跑步，下午去体育馆打篮球或武术。",
-            "displayHanzi": "我每天 (tiān: ngày, trời)早上六点起床去公园跑步，下午去体育馆打 (dǎ: đánh, gọi, chơi)篮球或武术。",
+            "displayHanzi": "我每天早上六点起床去公园跑步，下午去体育馆打篮球或武术。",
             "pinyin": "Wǒ měitiān zǎoshang liù diǎn qǐchuáng qù gōngyuán pǎobù, xiàwǔ qù tǐyùguǎn dǎ lánqiú huò wǔshù.",
             "meaning": "Sáng nào 6 giờ mình cũng dậy ra công viên chạy bộ, chiều đến nhà thi đấu chơi bóng rổ hoặc tập võ."
           },
@@ -49696,7 +49674,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "A Minh",
             "hanzi": "当然，不仅让人精神好，还能预防疾病呢！",
-            "displayHanzi": "当然，不仅让 (ràng: bảo, khiến)人精神好，还能预防疾病呢！",
+            "displayHanzi": "当然，不仅让人精神好，还能预防疾病呢！",
             "pinyin": "Dāngrán, bùjǐn ràng rén jīngshen hǎo, hái néng yùfáng jíbìng ne!",
             "meaning": "Tất nhiên rồi, không chỉ giúp tinh thần minh mẫn mà còn phòng ngừa bệnh tật nữa đấy!"
           }
@@ -49704,7 +49682,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "阿明，你每天几点起床锻炼身体？ 我每天早上六点起床去公园跑步，下午去体育馆打篮球或武术。 坚持运动真的有很多好处吗？ 当然，不仅让人精神好，还能预防疾病呢！",
-            "question": "[Nghe hiểu tình huống mới] Theo A Minh, buổi sáng cậu ấy tập môn thể thao gì và ở đâu?",
+            "question": "Theo A Minh, buổi sáng cậu ấy tập môn thể thao gì và ở đâu?",
             "options": [
               "Ngủ nướng đến trưa",
               "Đá bóng trên sân thượng",
@@ -49716,7 +49694,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "阿明，你每天几点起床锻炼身体？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Một cái ghế",
               "Tôi đợi các bạn ở cổng trường.",
@@ -49728,19 +49706,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我每天早上六点起床去公园跑步，下午去体育馆打篮球或武术。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "你得多锻炼了。",
-              "我喜欢在公园一边 (biān: bên, phía)锻炼一边享受新鲜空气。",
-              "我每天 (tiān: ngày, trời)早上六点起床去公园跑步，下午去体育馆打 (dǎ: đánh, gọi, chơi)篮球或武术。",
-              "妈妈，做完 (zuòwán: làm xong)作业以后 (yǐhòu: sau, lúc sau)，我可以看电影吗？"
+              "我喜欢在公园一边锻炼一边享受新鲜空气。",
+              "我每天早上六点起床去公园跑步，下午去体育馆打篮球或武术。",
+              "妈妈，做完作业以后，我可以看电影吗？"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 我每天早上六点起床去公园跑步，下午去体育馆打篮球或武术。 (Wǒ měitiān zǎoshang liù diǎn qǐchuáng qù gōngyuán pǎobù, xiàwǔ qù tǐyùguǎn dǎ lánqiú huò wǔshù.) → Sáng nào 6 giờ mình cũng dậy ra công viên chạy bộ, chiều đến nhà thi đấu chơi bóng rổ hoặc tập võ."
           },
           {
             "audioText": "坚持运动真的有很多好处吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Kiên trì vận động thực sự có nhiều lợi ích vậy sao?",
               "Tôi không biết người này là nam hay là nữ nữa.",
@@ -49832,7 +49810,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss20_1",
           "targetHanzi": "下午我去体育馆打篮球和打网球",
-          "targetMeaning": "[Mở rộng] Buổi chiều tôi đến nhà thi đấu chơi bóng rổ và đánh tennis.",
+          "targetMeaning": "Buổi chiều tôi đến nhà thi đấu chơi bóng rổ và đánh tennis.",
           "pinyin": "Xiàwǔ wǒ qù tǐyùguǎn dǎ lánqiú hé dǎ wǎngqiú.",
           "tokens": [
             "下午",
@@ -49841,13 +49819,12 @@ const DEFAULT_LESSONS = [
             "打篮球",
             "和打",
             "网球"
-          ],
-          "unlearnedHint": "Từ chưa học: 打 (dǎ: đánh, gọi, chơi)"
+          ]
         },
         {
           "id": "ss20_2",
           "targetHanzi": "你每天几点起床去学武术",
-          "targetMeaning": "[Mở rộng] Mỗi ngày mấy giờ bạn thức dậy đi học võ thuật?",
+          "targetMeaning": "Mỗi ngày mấy giờ bạn thức dậy đi học võ thuật?",
           "pinyin": "Nǐ měitiān jǐ diǎn qǐchuáng qù xué wǔshù?",
           "tokens": [
             "你每",
@@ -49856,8 +49833,7 @@ const DEFAULT_LESSONS = [
             "起床",
             "去学",
             "武术"
-          ],
-          "unlearnedHint": "Từ chưa học: 天 (tiān: ngày, trời), 学 (xué: học)"
+          ]
         },
         {
           "id": "ss20_3",
@@ -49889,7 +49865,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss20_5",
           "targetHanzi": "谢谢你经常在学习上帮助我",
-          "targetMeaning": "[Ôn tập Bài 16] Cảm ơn bạn thường xuyên giúp đỡ tôi trong việc học.",
+          "targetMeaning": "Cảm ơn bạn thường xuyên giúp đỡ tôi trong việc học.",
           "pinyin": "Xièxie nǐ jīngcháng zài xuéxí shàng bāngzhù wǒ.",
           "tokens": [
             "谢谢你",
@@ -49898,13 +49874,12 @@ const DEFAULT_LESSONS = [
             "上",
             "帮助",
             "我"
-          ],
-          "unlearnedHint": "Từ chưa học: 上 (shàng: trên / lên), 学习 (xuéxí: học tập)"
+          ]
         },
         {
           "id": "ss20_6",
           "targetHanzi": "我喜欢一边喝水一边听音乐",
-          "targetMeaning": "[Ôn tập Bài 12] Tôi thích vừa uống nước vừa nghe nhạc.",
+          "targetMeaning": "Tôi thích vừa uống nước vừa nghe nhạc.",
           "pinyin": "Wǒ xǐhuan yìbiān hē shuǐ yìbiān tīng yīnyuè.",
           "tokens": [
             "我",
@@ -49913,8 +49888,7 @@ const DEFAULT_LESSONS = [
             "喝水",
             "一边",
             "听音乐"
-          ],
-          "unlearnedHint": "Từ chưa học: 边 (biān: bên, phía)"
+          ]
         },
         {
           "id": "ss20_exp_1",
@@ -50224,7 +50198,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr20_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Kiên trì vận động có thể giúp chúng ta phòng ngừa nhiều bệnh tật.",
+          "promptText": "Kiên trì vận động có thể giúp chúng ta phòng ngừa nhiều bệnh tật.",
           "expectedChinese": "坚持运动可以帮助我们预防很多疾病。",
           "acceptedPinyin": "jiānchí yùndòng kěyǐ bāngzhù wǒmen yùfáng hěnduō jíbìng",
           "hint": "Gợi ý Pinyin: Jiānchí yùndòng kěyǐ bāngzhù wǒmen yùfáng hěnduō jíbìng.",
@@ -50233,10 +50207,10 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr20_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Sáng nào cũng chạy bộ nửa tiếng rất tốt cho sức khỏe.",
+          "promptText": "Sáng nào cũng chạy bộ nửa tiếng rất tốt cho sức khỏe.",
           "expectedChinese": "每天早上跑步半个小时对身体有很多好处。",
           "acceptedPinyin": "měitiān zǎoshang pǎobù bàn gè xiǎoshí duì shēntǐ yǒu hěnduō hǎochu",
-          "hint": "Gợi ý Pinyin: Měitiān zǎoshang pǎobù bàn gè xiǎoshí duì shēntǐ yǒu hěnduō hǎochu. | Từ chưa học: 天 (tiān: ngày, trời)",
+          "hint": "Gợi ý Pinyin: Měitiān zǎoshang pǎobù bàn gè xiǎoshí duì shēntǐ yǒu hěnduō hǎochu.",
           "explanation": "Sáng nào cũng chạy bộ nửa tiếng rất tốt cho sức khỏe. → 每天早上跑步半个小时对身体有很多好处。 (Měitiān zǎoshang pǎobù bàn gè xiǎoshí duì shēntǐ yǒu hěnduō hǎochu.)"
         },
         {
@@ -50350,7 +50324,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr20_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 我喜欢在公园一边 (biān: bên, phía)锻炼一边享受新鲜空气。",
+          "promptText": "我喜欢在公园一边锻炼一边享受新鲜空气。",
           "chineseAudioText": "我喜欢在公园一边锻炼一边享受新鲜空气。",
           "pinyin": "Wǒ xǐhuan zài gōngyuán yìbiān duànliàn yìbiān xiǎngshòu xīnxiān kōngqì.",
           "expectedMeaning": "Tôi thích vừa tập thể dục vừa hít thở không khí trong lành ở công viên.",
@@ -50365,7 +50339,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr20_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 下午我去体育馆打 (dǎ: đánh, gọi, chơi)篮球和打网球。",
+          "promptText": "下午我去体育馆打篮球和打网球。",
           "chineseAudioText": "下午我去体育馆打篮球和打网球。",
           "pinyin": "Xiàwǔ wǒ qù tǐyùguǎn dǎ lánqiú hé dǎ wǎngqiú.",
           "expectedMeaning": "Buổi chiều tôi đến nhà thi đấu chơi bóng rổ và đánh tennis.",
@@ -50395,7 +50369,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr20_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 10] 天气太舒服了！",
+          "promptText": "天气太舒服了！",
           "chineseAudioText": "天气太舒服了！",
           "pinyin": "Tiānqì tài shūfu le!",
           "expectedMeaning": "Thời tiết dễ chịu quá!",
@@ -50842,7 +50816,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq20_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 19] Từ đã học “要紧” (yàojǐn) có nghĩa là gì?",
+          "question": "Từ đã học “要紧” (yàojǐn) có nghĩa là gì?",
           "options": [
             "cái (lượng từ dùng cho cái mũ)",
             "hầu hết, xấp xỉ",
@@ -50855,7 +50829,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq20_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 9] Từ đã học “试” (shì) có nghĩa là gì?",
+          "question": "Từ đã học “试” (shì) có nghĩa là gì?",
           "options": [
             "như thế, như thế này",
             "bơi",
@@ -50868,7 +50842,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq20_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 3] Từ đã học “美国” (Měiguó) có nghĩa là gì?",
+          "question": "Từ đã học “美国” (Měiguó) có nghĩa là gì?",
           "options": [
             "Mỹ",
             "nào, đâu",
@@ -50881,7 +50855,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq20_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “坚持运动可以帮助我们预防很多疾病。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “坚持运动可以帮助我们预防很多疾病。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Kiên trì vận động có thể giúp chúng ta phòng ngừa nhiều bệnh tật.",
             "Trời có thể sắp mưa.",
@@ -50894,7 +50868,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq20_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nMark: 阿明 (Āmíng: A Minh)，你每天 (tiān: ngày, trời)几点起床锻炼身体？\nA Minh: 我每天 (tiān: ngày, trời)早上六点起床去公园跑步，下午去体育馆打 (dǎ: đánh, gọi, chơi)篮球或武术。\nMark: 坚持运动真的有很多好处吗？\nA Minh: 当然，不仅让 (ràng: bảo, khiến)人精神好，还能预防疾病呢！\n\nTheo A Minh, buổi sáng cậu ấy tập môn thể thao gì và ở đâu?",
+          "question": "Đọc đoạn hội thoại:\nMark: 阿明，你每天几点起床锻炼身体？\nA Minh: 我每天早上六点起床去公园跑步，下午去体育馆打篮球或武术。\nMark: 坚持运动真的有很多好处吗？\nA Minh: 当然，不仅让人精神好，还能预防疾病呢！\n\nTheo A Minh, buổi sáng cậu ấy tập môn thể thao gì và ở đâu?",
           "options": [
             "Đá bóng trên sân thượng",
             "Ngủ nướng đến trưa",
@@ -51420,7 +51394,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct20_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“当然，不仅让人精神好，还能____疾病呢！”\n(Gợi ý nghĩa: Tất nhiên rồi, không chỉ giúp tinh thần minh mẫn mà còn phòng ngừa bệnh tật nữa đấy!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“当然，不仅让人精神好，还能____疾病呢！”",
         "options": [
           "家人",
           "预防",
@@ -51433,7 +51407,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct20_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“早上跑步不但可以享受新鲜的____，而且对身体也有很多好处。”\n(Gợi ý nghĩa: Chạy bộ buổi sáng không những được hít thở không khí trong lành mà còn có rất nhiều lợi ích cho sức khỏe.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“早上跑步不但可以享受新鲜的____，而且对身体也有很多好处。”",
         "options": [
           "名字",
           "空气",
@@ -51446,7 +51420,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct20_40",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你这样对身体不好，也很容易生病。你____多多锻炼身体。锻炼身体还可以预防疾病。”\n(Gợi ý nghĩa: Cậu sống như vậy không tốt cho sức khỏe đâu, rất dễ bị ốm đấy. Cậu phải rèn luyện sức khỏe nhiều lên. Tập thể dục còn giúp phòng ngừa bệnh tật nữa.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你这样对身体不好，也很容易生病。你____多多锻炼身体。锻炼身体还可以预防疾病。”",
         "options": [
           "得",
           "走",
@@ -51459,7 +51433,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct20_41",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“天____要下雨。”\n(Gợi ý nghĩa: Trời có thể sắp mưa.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“天____要下雨。”",
         "options": [
           "比赛",
           "老师",
@@ -51485,7 +51459,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct20_43",
         "category": "vocab",
-        "question": "Từ Hán tự “空气” (không khí) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “空气” có phiên âm Pinyin đúng là gì?",
         "options": [
           "kōngqì",
           "shǔi",
@@ -51511,7 +51485,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct20_45",
         "category": "vocab",
-        "question": "Từ Hán tự “可能” (khả năng, có thể) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “可能” có phiên âm Pinyin đúng là gì?",
         "options": [
           "jièshào",
           "shì",
@@ -51622,7 +51596,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct20_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 喜欢  /  听音乐  /  喝水  /  我  /  一边  /  一边\n(Nghĩa: “Tôi thích vừa uống nước vừa nghe nhạc.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n喜欢  /  听音乐  /  喝水  /  我  /  一边  /  一边",
         "options": [
           "喜欢我一边喝水一边听音乐。",
           "喜欢一边喝水一边听音乐我。",
@@ -51635,7 +51609,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct20_54",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 点  /  去学  /  武术  /  起床  /  你每  /  天几\n(Nghĩa: “Mỗi ngày mấy giờ bạn thức dậy đi học võ thuật?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n点  /  去学  /  武术  /  起床  /  你每  /  天几",
         "options": [
           "天几点起床去学武术你每。",
           "武术去学起床点天几你每。",
@@ -51648,7 +51622,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct20_55",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 看  /  明天  /  图书馆  /  我想  /  去  /  书\n(Nghĩa: “Ngày mai tôi muốn đi thư viện đọc sách.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n看  /  明天  /  图书馆  /  我想  /  去  /  书",
         "options": [
           "书看图书馆去我想明天。",
           "我想去图书馆看书明天。",
@@ -51661,7 +51635,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct20_56",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 网球  /  体育馆  /  我去  /  和打  /  打篮球  /  下午\n(Nghĩa: “Buổi chiều tôi đến nhà thi đấu chơi bóng rổ và đánh tennis.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n网球  /  体育馆  /  我去  /  和打  /  打篮球  /  下午",
         "options": [
           "下午我去体育馆打篮球和打网球。",
           "我去体育馆打篮球和打网球下午。",
@@ -51674,7 +51648,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct20_57",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“对。每天下午我都去体育馆游泳，打篮球、打____ (wǎngqiú)和武术。周末如果天气好我就跟几个朋友去爬山。我觉得你的身体太弱，可能是因为不经常锻炼身体。”\n(Nghĩa: Đúng vậy. Chiều nào mình cũng đến nhà thi đấu bơi lội, chơi bóng rổ, đánh tennis và tập võ. Cuối tuần nếu thời tiết đẹp mình đi leo núi cùng vài người bạn. Mình thấy sức khỏe cậu hơi yếu, có lẽ vì ít rèn luyện thể thao đấy.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“对。每天下午我都去体育馆游泳，打篮球、打____和武术。周末如果天气好我就跟几个朋友去爬山。我觉得你的身体太弱，可能是因为不经常锻炼身体。”",
         "options": [
           "庆祝",
           "网球",
@@ -51687,7 +51661,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct20_58",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“下午我去____ (tǐyùguǎn)打篮球和打网球”\n(Nghĩa: Buổi chiều tôi đến nhà thi đấu chơi bóng rổ và đánh tennis.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“下午我去____打篮球和打网球”",
         "options": [
           "体育馆",
           "天安门",
@@ -51700,7 +51674,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct20_59",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“每天早上跑步半个小时对身体有很多____ (hǎochù)。”\n(Nghĩa: Sáng nào cũng chạy bộ nửa tiếng rất tốt cho sức khỏe.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“每天早上跑步半个小时对身体有很多____。”",
         "options": [
           "好处",
           "健身",
@@ -51713,7 +51687,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct20_60",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“阿明，你每天几点起床____ (duànliàn)身体？”\n(Nghĩa: A Minh, mỗi ngày mấy giờ cậu thức dậy rèn luyện sức khỏe?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“阿明，你每天几点起床____身体？”",
         "options": [
           "坚持",
           "锻炼",
@@ -52078,7 +52052,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "白茹雪",
             "hanzi": "是的，最近觉得身体不太好，所以想去医院看看得了什么病。",
-            "displayHanzi": "是的，最近觉得身体不太好，所以 (suǒyǐ: cho nên)想去医院看看得了什么病 (bìng: bệnh)。",
+            "displayHanzi": "是的，最近觉得身体不太好，所以想去医院看看得了什么病。",
             "pinyin": "Shì de, zuìjìn juéde shēntǐ bù tài hǎo, suǒyǐ xiǎng qù yīyuàn kànkan déle shénme bìng.",
             "meaning": "Đúng vậy, dạo này thấy người không khỏe lắm, nên muốn đi bệnh viện khám xem bị bệnh gì."
           },
@@ -52120,7 +52094,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "医生",
             "hanzi": "你学习和工作太累了， 所以才有那样的症状。",
-            "displayHanzi": "你学习 (xuéxí: học tập)和工作 (gōngzuò: nghề nghiệp, công việc)太累了， 所以 (suǒyǐ: cho nên)才 (cái: mới)有那样 (yàng: kiểu, dáng)的症状。",
+            "displayHanzi": "你学习和工作太累了， 所以才有那样的症状。",
             "pinyin": "Nǐ xuéxí hé gōngzuò tài lèi le, suǒyǐ cái yǒu nàyàng de zhèngzhuàng.",
             "meaning": "Bạn học tập và làm việc quá mệt mỏi, nên mới xuất hiện những triệu chứng như vậy."
           },
@@ -52134,7 +52108,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "医生",
             "hanzi": "其实没有什么要紧的。 我让护士给你打个针并开给你一个处方，你回家吃完饭再吃药和多喝水，过几天身体就恢复了。",
-            "displayHanzi": "其实没有 (méiyǒu: không có)什么要紧的。 我让 (ràng: bảo, khiến)护士给你打 (dǎ: đánh, gọi, chơi)个针 (zhēn: kim tiêm)并开 (kāi: mở, lái)给你一个处方 (chǔfāng: đơn thuốc)，你回家吃完 (wán: xong, hết)饭再吃药和多喝水，过 (guò: từng, qua)几天 (tiān: ngày, trời)身体就恢复了。",
+            "displayHanzi": "其实没有什么要紧的。 我让护士给你打个针并开给你一个处方，你回家吃完饭再吃药和多喝水，过几天身体就恢复了。",
             "pinyin": "Qíshí méiyǒu shénme yàojǐn de. Wǒ ràng hùshì gěi nǐ dǎ gè zhēn bìng kāi gěi nǐ yí gè chǔfāng, nǐ huí jiā chī wán fàn zài chī yào hé duō hē shuǐ, guò jǐ tiān shēntǐ jiù huīfù le.",
             "meaning": "Thực ra không có gì nghiêm trọng đâu. Tôi bảo y tá tiêm cho bạn một mũi và kê đơn thuốc, bạn về nhà ăn cơm xong uống thuốc và uống nhiều nước, vài ngày sau sức khỏe sẽ hồi phục thôi."
           },
@@ -52148,21 +52122,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "医生",
             "hanzi": "对了，你有没有医疗保险？如果有的话就可以减少检查费用。",
-            "displayHanzi": "对了，你有没有 (méiyǒu: không có)医疗保险？如果有的话 (huà: lời nói)就可以减少检查费用。",
+            "displayHanzi": "对了，你有没有医疗保险？如果有的话就可以减少检查费用。",
             "pinyin": "Duì le, nǐ yǒu méiyǒu yīliáo bǎoxiǎn? Rúguǒ yǒu de huà jiù kěyǐ jiǎnshǎo jiǎnchá fèiyòng.",
             "meaning": "À đúng rồi, bạn có bảo hiểm y tế không? Nếu có thì có thể giảm bớt chi phí khám bệnh đấy."
           },
           {
             "speaker": "白茹雪",
             "hanzi": "我没有医疗保险。",
-            "displayHanzi": "我没有 (méiyǒu: không có)医疗保险。",
+            "displayHanzi": "我没有医疗保险。",
             "pinyin": "Wǒ méiyǒu yīliáo bǎoxiǎn.",
             "meaning": "Tôi chưa có bảo hiểm y tế ạ."
           },
           {
             "speaker": "医生",
             "hanzi": "大多数病人都买医疗保险，它很重要，你应该买一个!",
-            "displayHanzi": "大 (dà: to, lớn)多数病人都买医疗保险，它很重要，你应该买一个!",
+            "displayHanzi": "大多数病人都买医疗保险，它很重要，你应该买一个!",
             "pinyin": "Dàduōshù bìngrén dōu mǎi yīliáo bǎoxiǎn, tā hěn zhòngyào, nǐ yīnggāi mǎi yígè!",
             "meaning": "Đa số bệnh nhân đều mua bảo hiểm y tế, nó rất quan trọng, bạn nên mua một cái nhé!"
           },
@@ -52192,9 +52166,9 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "你怎么了? 身体不好吗？",
-              "护士告诉我这只是小毛病 (bìng: bệnh)，不是重病。",
-              "你这么努力 (nǔlì: cố gắng, nỗ lực)，肯定 (kěndìng: khẳng định, chắc chắn)很累吧？",
-              "是的，最近觉得身体不太好，所以 (suǒyǐ: cho nên)想去医院看看得了什么病 (bìng: bệnh)。"
+              "护士告诉我这只是小毛病，不是重病。",
+              "你这么努力，肯定很累吧？",
+              "是的，最近觉得身体不太好，所以想去医院看看得了什么病。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 你怎么了? 身体不好吗？ (Nǐ zěnme le? Shēntǐ bù hǎo ma?) → Bạn làm sao thế? Trong người không khỏe à?"
@@ -52289,7 +52263,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "明天我想去图书馆看书。",
-            "question": "[Ôn tập Bài 20] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Mẹ bảo tôi ăn cơm xong thì giúp mẹ quét dọn nhà cửa.",
               "chi phí sinh hoạt",
@@ -52301,11 +52275,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你多运动运动吧！",
-            "question": "[Bài 21] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "你多运动运动吧！",
               "如果有医疗保险，看病费用可以减少很多。",
-              "他可能同意 (tóngyì: đồng ý)了吧？",
+              "他可能同意了吧？",
               "我想去公园跑步。"
             ],
             "correctIndex": 0,
@@ -52313,7 +52287,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "这本书是我的。",
-            "question": "[Ôn tập Bài 10] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tớ biết bơi, còn biết trượt băng.",
               "Bộ quần áo này không to cũng không nhỏ.",
@@ -52325,7 +52299,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我会游泳，也会滑冰。",
-            "question": "[Bài 21] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "我下午陪奶奶去医院看病。",
               "我经常觉得头晕，吃什么都过敏。 最近胃口和睡眠都不好。",
@@ -52337,7 +52311,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "老师好",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Em trai vui đến nổi nhảy cẫng lên.",
               "Chào thầy/Chào cô",
@@ -52363,21 +52337,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Bệnh nhân",
             "hanzi": "医生，我头晕、睡眠不好，对有些食物还会过敏。",
-            "displayHanzi": "医生，我头晕、睡眠不好，对有些 (xiē: vài, một ít)食物还会过敏。",
+            "displayHanzi": "医生，我头晕、睡眠不好，对有些食物还会过敏。",
             "pinyin": "Yīshēng, wǒ tóuyūn, shuìmián bù hǎo, duì yǒuxiē shíwù hái huì guòmǐn.",
             "meaning": "Thưa bác sĩ, tôi bị chóng mặt, ngủ không ngon giấc, lại còn dị ứng với vài món ăn."
           },
           {
             "speaker": "Bác sĩ",
             "hanzi": "别担心，检查结果正常，没有重病，只是太累了。",
-            "displayHanzi": "别 (bié: đừng)担心 (dānxīn: lo lắng)，检查结果正 (zhèng: đang)常，没有 (méiyǒu: không có)重病，只是太累了。",
+            "displayHanzi": "别担心，检查结果正常，没有重病，只是太累了。",
             "pinyin": "Bié dānxīn, jiǎnchá jiéguǒ zhèngcháng, méiyǒu zhòngbìng, zhǐshì tài lèi le.",
             "meaning": "Đừng lo, kết quả kiểm tra bình thường, không có bệnh nặng đâu, chỉ là làm việc quá mệt thôi."
           },
           {
             "speaker": "Bệnh nhân",
             "hanzi": "还好我有医疗保险，费用减轻了不少，谢谢医生和护士！",
-            "displayHanzi": "还好我有医疗保险，费用减轻了不少 (shǎo: ít)，谢谢医生和护士！",
+            "displayHanzi": "还好我有医疗保险，费用减轻了不少，谢谢医生和护士！",
             "pinyin": "Háihǎo wǒ yǒu yīliáo bǎoxiǎn, fèiyòng jiǎnqīng le bùshǎo, xièxie yīshēng hé hùshi!",
             "meaning": "May quá tôi có bảo hiểm y tế nên chi phí giảm đi nhiều, cảm ơn bác sĩ và y tá!"
           }
@@ -52385,7 +52359,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "你最近有什么症状，哪里不舒服？ 医生，我头晕、睡眠不好，对有些食物还会过敏。 别担心，检查结果正常，没有重病，只是太累了。 还好我有医疗保险，费用减轻了不少，谢谢医生和护士！",
-            "question": "[Nghe hiểu tình huống mới] Bác sĩ kết luận tình trạng của bệnh nhân sau khi kiểm tra là gì?",
+            "question": "Bác sĩ kết luận tình trạng của bệnh nhân sau khi kiểm tra là gì?",
             "options": [
               "Bị gãy chân khi chạy bộ",
               "Cần đổi bảo hiểm y tế",
@@ -52397,7 +52371,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你最近有什么症状，哪里不舒服？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Bọn họ chỉ quan tâm đến bản thân mình mà thôi.",
               "Một câu chuyện",
@@ -52409,19 +52383,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "医生，我头晕、睡眠不好，对有些食物还会过敏。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "如果八点我还没 (méi: chưa, không có)回来 (lái: đến)，你就不用 (yòng: dùng)等我了。",
+              "如果八点我还没回来，你就不用等我了。",
               "病人对这种水果有点儿过敏。",
               "如果有医疗保险，看病费用可以减少很多。",
-              "医生，我头晕、睡眠不好，对有些 (xiē: vài, một ít)食物还会过敏。"
+              "医生，我头晕、睡眠不好，对有些食物还会过敏。"
             ],
             "correctIndex": 3,
             "explanation": "Câu vừa đọc: 医生，我头晕、睡眠不好，对有些食物还会过敏。 (Yīshēng, wǒ tóuyūn, shuìmián bù hǎo, duì yǒuxiē shíwù hái huì guòmǐn.) → Thưa bác sĩ, tôi bị chóng mặt, ngủ không ngon giấc, lại còn dị ứng với vài món ăn."
           },
           {
             "audioText": "别担心，检查结果正常，没有重病，只是太累了。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cô ấy là học sinh trường nào?",
               "một câu chuyện",
@@ -52513,7 +52487,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss21_1",
           "targetHanzi": "病人对这种水果有点儿过敏",
-          "targetMeaning": "[Mở rộng] Bệnh nhân hơi bị dị ứng với loại trái cây này.",
+          "targetMeaning": "Bệnh nhân hơi bị dị ứng với loại trái cây này.",
           "pinyin": "Bìngrén duì zhè zhǒng shuǐguǒ yǒudiǎnr guòmǐn.",
           "tokens": [
             "病人",
@@ -52527,7 +52501,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss21_2",
           "targetHanzi": "我下午陪奶奶去医院看病",
-          "targetMeaning": "[Mở rộng] Chiều nay tôi đưa bà nội đi bệnh viện khám bệnh.",
+          "targetMeaning": "Chiều nay tôi đưa bà nội đi bệnh viện khám bệnh.",
           "pinyin": "Wǒ xiàwǔ péi nǎinai qù yīyuàn kànbìng.",
           "tokens": [
             "我下午",
@@ -52568,7 +52542,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss21_5",
           "targetHanzi": "请告诉我这副眼镜多少钱",
-          "targetMeaning": "[Ôn tập Bài 10] Làm ơn cho tôi biết cặp kính mắt này bao nhiêu tiền.",
+          "targetMeaning": "Làm ơn cho tôi biết cặp kính mắt này bao nhiêu tiền.",
           "pinyin": "Qǐng gàosu wǒ zhè fù yǎnjìng duōshao qián.",
           "tokens": [
             "请告诉",
@@ -52582,7 +52556,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss21_6",
           "targetHanzi": "马克明天早上见",
-          "targetMeaning": "[Ôn tập Bài 2] Mark, sáng mai gặp lại nhé!",
+          "targetMeaning": "Mark, sáng mai gặp lại nhé!",
           "pinyin": "Mǎkè, míngtiān zǎoshang jiàn!",
           "tokens": [
             "马克",
@@ -52866,7 +52840,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr21_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Dạo này tôi hay bị chóng mặt, ăn uống và giấc ngủ đều không tốt lắm.",
+          "promptText": "Dạo này tôi hay bị chóng mặt, ăn uống và giấc ngủ đều không tốt lắm.",
           "expectedChinese": "最近我常常头晕，胃口和睡眠都不太好。",
           "acceptedPinyin": "zuìjìn wǒ chángcháng tóuyūn wèikǒu hé shuìmián dōu bú tài hǎo",
           "hint": "Gợi ý Pinyin: Zuìjìn wǒ chángcháng tóuyūn, wèikǒu hé shuìmián dōu bú tài hǎo.",
@@ -52875,7 +52849,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr21_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Nếu có bảo hiểm y tế, chi phí khám bệnh có thể giảm đi rất nhiều.",
+          "promptText": "Nếu có bảo hiểm y tế, chi phí khám bệnh có thể giảm đi rất nhiều.",
           "expectedChinese": "如果有医疗保险，看病费用可以减少很多。",
           "acceptedPinyin": "rúguǒ yǒu yīliáo bǎoxiǎn kànbìng fèiyòng kěyǐ jiǎnshǎo hěnduō",
           "hint": "Gợi ý Pinyin: Rúguǒ yǒu yīliáo bǎoxiǎn, kànbìng fèiyòng kěyǐ jiǎnshǎo hěnduō.",
@@ -52992,7 +52966,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr21_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 病人对这种水果有点儿过敏。",
+          "promptText": "病人对这种水果有点儿过敏。",
           "chineseAudioText": "病人对这种水果有点儿过敏。",
           "pinyin": "Bìngrén duì zhè zhǒng shuǐguǒ yǒudiǎnr guòmǐn.",
           "expectedMeaning": "Bệnh nhân hơi bị dị ứng với loại trái cây này.",
@@ -53007,7 +52981,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr21_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 我下午陪奶奶去医院看病。",
+          "promptText": "我下午陪奶奶去医院看病。",
           "chineseAudioText": "我下午陪奶奶去医院看病。",
           "pinyin": "Wǒ xiàwǔ péi nǎinai qù yīyuàn kànbìng.",
           "expectedMeaning": "Chiều nay tôi đưa bà nội đi bệnh viện khám bệnh.",
@@ -53037,7 +53011,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr21_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 10] 天气太舒服了！",
+          "promptText": "天气太舒服了！",
           "chineseAudioText": "天气太舒服了！",
           "pinyin": "Tiānqì tài shūfu le!",
           "expectedMeaning": "Thời tiết dễ chịu quá!",
@@ -53511,7 +53485,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq21_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 10] Từ đã học “上网” (shàngwǎng) có nghĩa là gì?",
+          "question": "Từ đã học “上网” (shàngwǎng) có nghĩa là gì?",
           "options": [
             "giảm",
             "ho",
@@ -53524,7 +53498,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq21_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 18] Từ đã học “颐和园” (Yíhéyuán) có nghĩa là gì?",
+          "question": "Từ đã học “颐和园” (Yíhéyuán) có nghĩa là gì?",
           "options": [
             "bác sĩ",
             "trẻ tuổi",
@@ -53537,7 +53511,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq21_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 6] Từ đã học “东边” (dōngbian) có nghĩa là gì?",
+          "question": "Từ đã học “东边” (dōngbian) có nghĩa là gì?",
           "options": [
             "Việt Nam",
             "quen biết, biết",
@@ -53550,7 +53524,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq21_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “最近我常常头晕，胃口和睡眠都不太好。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “最近我常常头晕，胃口和睡眠都不太好。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Bạn cố gắng như vậy, nhất định rất mệt nhỉ?",
             "Mẹ ơi, sau khi làm xong bài tập về nhà con có thể xem phim không ạ?",
@@ -53563,7 +53537,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq21_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nBác sĩ: 你最近有什么症状，哪里不舒服？\nBệnh nhân: 医生，我头晕、睡眠不好，对有些 (xiē: vài, một ít)食物还会过敏。\nBác sĩ: 别 (bié: đừng)担心 (dānxīn: lo lắng)，检查结果正 (zhèng: đang)常，没有 (méiyǒu: không có)重病，只是太累了。\nBệnh nhân: 还好我有医疗保险，费用减轻了不少 (shǎo: ít)，谢谢医生和护士！\n\nBác sĩ kết luận tình trạng của bệnh nhân sau khi kiểm tra là gì?",
+          "question": "Đọc đoạn hội thoại:\nBác sĩ: 你最近有什么症状，哪里不舒服？\nBệnh nhân: 医生，我头晕、睡眠不好，对有些食物还会过敏。\nBác sĩ: 别担心，检查结果正常，没有重病，只是太累了。\nBệnh nhân: 还好我有医疗保险，费用减轻了不少，谢谢医生和护士！\n\nBác sĩ kết luận tình trạng của bệnh nhân sau khi kiểm tra là gì?",
           "options": [
             "Cần đổi bảo hiểm y tế",
             "Mắc bệnh nặng phải nhập viện ngay",
@@ -54061,7 +54035,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct21_36",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“病人对这种水果有点儿____”\n(Gợi ý nghĩa: Bệnh nhân hơi bị dị ứng với loại trái cây này.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“病人对这种水果有点儿____”",
         "options": [
           "夏天",
           "过敏",
@@ -54074,7 +54048,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct21_37",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“马克，我下午想去医院____身体， 你可以陪我去吗？”\n(Gợi ý nghĩa: Mark, chiều nay tôi muốn đi bệnh viện kiểm tra sức khỏe, bạn đi cùng tôi được không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“马克，我下午想去医院____身体， 你可以陪我去吗？”",
         "options": [
           "检查",
           "雄伟",
@@ -54087,7 +54061,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct21_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我下午____奶奶去医院看病”\n(Gợi ý nghĩa: Chiều nay tôi đưa bà nội đi bệnh viện khám bệnh.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我下午____奶奶去医院看病”",
         "options": [
           "回",
           "陪",
@@ -54100,7 +54074,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct21_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“大多数____都买医疗保险，它很重要，你应该买一个!”\n(Gợi ý nghĩa: Đa số bệnh nhân đều mua bảo hiểm y tế, nó rất quan trọng, bạn nên mua một cái nhé!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“大多数____都买医疗保险，它很重要，你应该买一个!”",
         "options": [
           "客人",
           "病人",
@@ -54126,7 +54100,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct21_41",
         "category": "vocab",
-        "question": "Từ Hán tự “检查” (kiểm tra) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “检查” có phiên âm Pinyin đúng là gì?",
         "options": [
           "bú kèqì",
           "tóuyūn",
@@ -54250,7 +54224,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct21_50",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 我  /  会  /  滑冰  /  游泳  /  也  /  会\n(Nghĩa: “Tớ biết bơi, còn biết trượt băng.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n我  /  会  /  滑冰  /  游泳  /  也  /  会",
         "options": [
           "会我游泳也会滑冰。",
           "滑冰会也游泳会我。",
@@ -54263,7 +54237,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct21_51",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 奶奶  /  看病  /  陪  /  我下午  /  医院  /  去\n(Nghĩa: “Chiều nay tôi đưa bà nội đi bệnh viện khám bệnh.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n奶奶  /  看病  /  陪  /  我下午  /  医院  /  去",
         "options": [
           "陪奶奶去医院看病我下午。",
           "陪我下午奶奶去医院看病。",
@@ -54276,7 +54250,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct21_52",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 你  /  吧  /  多  /  运动  /  运动\n(Nghĩa: “Con vận động nhiều hơn đi!”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n你  /  吧  /  多  /  运动  /  运动",
         "options": [
           "多你运动运动吧。",
           "你多运动运动吧。",
@@ -54289,7 +54263,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct21_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 对这  /  有点儿  /  种  /  水果  /  病人  /  过敏\n(Nghĩa: “Bệnh nhân hơi bị dị ứng với loại trái cây này.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n对这  /  有点儿  /  种  /  水果  /  病人  /  过敏",
         "options": [
           "对这病人种水果有点儿过敏。",
           "病人对这种水果有点儿过敏。",
@@ -54302,7 +54276,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct21_54",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“是的，最近觉得身体不太好，所以想去____ (yīyuàn)看看得了什么病。”\n(Nghĩa: Đúng vậy, dạo này thấy người không khỏe lắm, nên muốn đi bệnh viện khám xem bị bệnh gì.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是的，最近觉得身体不太好，所以想去____看看得了什么病。”",
         "options": [
           "怎么",
           "医院",
@@ -54315,7 +54289,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct21_55",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“我____ (míngbai)了。 谢谢您！”\n(Nghĩa: Tôi hiểu rồi. Cảm ơn ông ạ!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我____了。 谢谢您！”",
         "options": [
           "国家",
           "经常",
@@ -54328,7 +54302,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct21_56",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“那现在怎么____ (zhìbìng)呢, 医生？”\n(Nghĩa: Vậy bây giờ điều trị thế nào ạ, thưa bác sĩ?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“那现在怎么____呢, 医生？”",
         "options": [
           "治病",
           "学校",
@@ -54840,21 +54814,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "昨天下雪了，天挺冷的，所以我好像感冒了。",
-            "displayHanzi": "昨天下雪了，天 (tiān: ngày, trời)挺冷的，所以 (suǒyǐ: cho nên)我好像感冒了。",
+            "displayHanzi": "昨天下雪了，天挺冷的，所以我好像感冒了。",
             "pinyin": "Zuótiān xià xuěle, tiān tǐng lěng de, suǒyǐ wǒ hǎoxiàng gǎnmào le.",
             "meaning": "Hôm qua trời có tuyết rơi, lạnh lắm, nên hình như tớ bị cảm rồi."
           },
           {
             "speaker": "白茹雪",
             "hanzi": "你还没习惯这里的气候吗？",
-            "displayHanzi": "你还没 (méi: chưa, không có)习惯这里 (lǐ: trong)的气候吗？",
+            "displayHanzi": "你还没习惯这里的气候吗？",
             "pinyin": "Nǐ hái méi xíguàn zhèli de qìhòu ma?",
             "meaning": "Cậu vẫn chưa quen với khí hậu ở đây à?"
           },
           {
             "speaker": "范玉兰",
             "hanzi": "还没习惯，因为我家乡冬天不太冷，也不下雪。",
-            "displayHanzi": "还没 (méi: chưa, không có)习惯，因为我家乡冬天不太冷，也不下雪。",
+            "displayHanzi": "还没习惯，因为我家乡冬天不太冷，也不下雪。",
             "pinyin": "Hái méi xíguàn, yīnwèi wǒ jiāxiāng dōngtiān bú tài lěng, yě bú xià xuě.",
             "meaning": "Vẫn chưa quen, vì mùa đông quê tớ không quá lạnh, cũng không có tuyết rơi."
           },
@@ -54868,70 +54842,70 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "我也希望是这样。出国留学真是不容易啊！",
-            "displayHanzi": "我也希望是这样。出国留学 (liúxué: du học)真是不容易啊！",
+            "displayHanzi": "我也希望是这样。出国留学真是不容易啊！",
             "pinyin": "Wǒ yě xīwàng shì zhèyàng. Chūguó liúxué zhēnshì bù róngyì a!",
             "meaning": "Tớ cũng hy vọng là thế. Đi du học nước ngoài thật sự không dễ dàng chút nào!"
           },
           {
             "speaker": "白茹雪",
             "hanzi": "怎么了？你还有什么困难，告诉我吧！我会帮你解决。",
-            "displayHanzi": "怎么了？你还有什么困难，告诉我吧！我会帮 (bāng: giúp đỡ)你解决。",
+            "displayHanzi": "怎么了？你还有什么困难，告诉我吧！我会帮你解决。",
             "pinyin": "Zěnmele? Nǐ hái yǒu shén me kùnnan, gàosù wǒ ba! Wǒ huì bāng nǐ jiějué.",
             "meaning": "Sao vậy? Cậu còn gặp khó khăn gì cứ nói với tớ! Tớ sẽ giúp cậu giải quyết."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "都是留学生经常遇到的困难，比如文化不同、生活环境不同等等。我们留学生的压力很大。",
-            "displayHanzi": "都是留学生经常遇到的困难，比如文化不同、生活环境不同等等。我们留学生的压力很大 (dà: to, lớn)。",
+            "displayHanzi": "都是留学生经常遇到的困难，比如文化不同、生活环境不同等等。我们留学生的压力很大。",
             "pinyin": "Dōu shì liúxuéshēng jīngcháng yùdào de kùnnan, bǐrú wénhuà bùtóng, shēnghuó huánjìng bùtóng děngděng. Wǒmen liúxuéshēng de yālì hěn dà.",
             "meaning": "Đều là những khó khăn mà du học sinh hay gặp phải thôi, như khác biệt văn hóa, môi trường sống khác nhau, v.v. Áp lực của du học sinh bọn tớ lớn lắm."
           },
           {
             "speaker": "白茹雪",
             "hanzi": "我现在才知道。你们辛苦了。",
-            "displayHanzi": "我现在才 (cái: mới)知道。你们辛苦了。",
+            "displayHanzi": "我现在才知道。你们辛苦了。",
             "pinyin": "Wǒ xiànzài cái zhīdao. Nǐmen xīnkǔle.",
             "meaning": "Bây giờ tớ mới biết đấy. Các cậu vất vả quá."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "那些困难我都能自己适应，自己解决。最糟糕的要说到学习问题。刚来中国的时候，因为不习惯这里的学习方法，所以我做什么事都很难。虽然在国内已经学汉语了，但是到中国以后，有很多时候你们说的我听不懂。考试又有很多，要抓紧时间练习。我一点儿也不习惯，哭了很多次。",
-            "displayHanzi": "那些 (xiē: vài, một ít)困难我都能自己适应，自己解决。最糟糕的要说到学习 (xuéxí: học tập)问题。刚 (gāng: vừa mới)来 (lái: đến)中国的时候，因为不习惯这里 (lǐ: trong)的学习方法，所以 (suǒyǐ: cho nên)我做 (zuò: làm)什么事都很难。虽然在国内 (guónèi: trong nước)已经学 (xué: học)汉语了，但是到中国以后，有很多时候你们说的我听 (tīng: nghe)不懂。考试又有很多，要抓紧时间练习。我一点儿 (ér: con, (âm uốn lưỡi))也不习惯，哭了很多次 (cì: lần)。",
+            "displayHanzi": "那些困难我都能自己适应，自己解决。最糟糕的要说到学习问题。刚来中国的时候，因为不习惯这里的学习方法，所以我做什么事都很难。虽然在国内已经学汉语了，但是到中国以后，有很多时候你们说的我听不懂。考试又有很多，要抓紧时间练习。我一点儿也不习惯，哭了很多次。",
             "pinyin": "Nàxiē kùnnan wǒ dōu néng zìjǐ shìyìng, zìjǐ jiějué. Zuì zāogāo de yāo shuō dào xuéxí wèntí. Gāng lái Zhōngguó de shíhou, yīn wèi bù xíguàn zhèli de xuéxí fāngfǎ, suǒ yǐ wǒ zuò shénme shì dōu hěn nán. Suīrán zài guónèi yǐjīng xué Hànyǔ le, dànshì dào Zhōngguó yǐhòu, yǒu hěnduō shíhou nǐmen shuō de wǒ tīng bù dǒng. Kǎoshì yòu yǒu hěnduō, yào zhuā jǐn shíjiān liànxí. Wǒ yīdiǎnr yě bù xíguàn, kūle hěnduō cì.",
             "meaning": "Những khó khăn đó tớ đều có thể tự thích nghi và tự giải quyết. Tệ nhất phải nói đến chuyện học tập. Hồi mới sang Trung Quốc, vì chưa quen phương pháp học ở đây nên làm việc gì cũng thấy khó. Dù ở trong nước đã học tiếng Trung rồi, nhưng sang đây có nhiều lúc các bạn nói tớ nghe không hiểu. Thi cử lại nhiều, phải tranh thủ thời gian luyện tập. Tớ chẳng quen chút nào, đã khóc rất nhiều lần."
           },
           {
             "speaker": "白茹雪",
             "hanzi": "你怎么不跟我们说啊？那时候你一定很难过。",
-            "displayHanzi": "你怎么不跟 (gēn: cùng, với)我们说啊？那时候你一定 (yīdìng: nhất định)很难过。",
+            "displayHanzi": "你怎么不跟我们说啊？那时候你一定很难过。",
             "pinyin": "Nǐ zěnme bù gēn wǒmen shuō a? Nà shíhou nǐ yídìng hěn nánguò.",
             "meaning": "Sao cậu không kể với bọn tớ? Lúc đó chắc cậu buồn lắm."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "没关系！我只要继续努力，相信自己就好。再说，虽然我不说，但是你们也帮助我很多。能到中国，跟你们交朋友，我很幸福。",
-            "displayHanzi": "没关系！我只要继续努力，相信自己就好。再说，虽然我不说，但是你们也帮助我很多。能到中国，跟 (gēn: cùng, với)你们交 (jiāo: nộp, kết bạn)朋友，我很幸福。",
+            "displayHanzi": "没关系！我只要继续努力，相信自己就好。再说，虽然我不说，但是你们也帮助我很多。能到中国，跟你们交朋友，我很幸福。",
             "pinyin": "Méiguānxi! Wǒ zhǐyào jìxù nǔlì, xiāngxìn zìjǐ jiù hǎo. Zàishuō, suīrán wǒ bù shuō, dànshì nǐmen yě bāngzhù wǒ hěnduō. Néng dào Zhōngguó, gēn nǐmen jiāo péngyou, wǒ hěn xìngfú.",
             "meaning": "Không sao đâu! Chỉ cần tớ tiếp tục cố gắng, tin vào bản thân là được. Hơn nữa, dù tớ không nói ra nhưng các bạn cũng giúp đỡ tớ rất nhiều. Được đến Trung Quốc và kết bạn với các bạn, tớ thấy rất hạnh phúc."
           },
           {
             "speaker": "白茹雪",
             "hanzi": "哪有啊！都是你自己解决，我们没有做什么。",
-            "displayHanzi": "哪有啊！都是你自己解决，我们没有 (méiyǒu: không có)做 (zuò: làm)什么。",
+            "displayHanzi": "哪有啊！都是你自己解决，我们没有做什么。",
             "pinyin": "Nǎ yǒu a! Dōu shì nǐ zìjǐ jiějué, wǒmen méiyǒu zuò shénme.",
             "meaning": "Đâu có đâu! Đều do cậu tự vượt qua cả, bọn tớ có làm gì đâu."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "其实这些事我出国以前我奶奶已经跟我说了。她年轻的时候也去国外留学，很有经验。",
-            "displayHanzi": "其实这些 (xiē: vài, một ít)事我出国以前我奶奶已经跟 (gēn: cùng, với)我说了。她年轻的时候也去国外 (guówài: nước ngoài)留学 (liúxué: du học)，很有经验。",
+            "displayHanzi": "其实这些事我出国以前我奶奶已经跟我说了。她年轻的时候也去国外留学，很有经验。",
             "pinyin": "Qíshí zhèxiē shì wǒ chūguó yǐqián wǒ nǎinai yǐjīng gēn wǒ shuō le. Tā niánqīng de shíhou yě qù guówài liúxué, hěn yǒu jīngyàn.",
             "meaning": "Thực ra những chuyện này trước khi ra nước ngoài bà nội tớ đã dặn dò tớ hết rồi. Thời trẻ bà cũng từng đi du học nên rất có kinh nghiệm."
           },
           {
             "speaker": "白茹雪",
             "hanzi": "到中国留学的时候你多大？",
-            "displayHanzi": "到中国留学 (liúxué: du học)的时候你多大？",
+            "displayHanzi": "到中国留学的时候你多大？",
             "pinyin": "Dào Zhōngguó liúxué de shíhou nǐ duōdà?",
             "meaning": "Lúc sang Trung Quốc du học cậu bao nhiêu tuổi?"
           },
@@ -54952,21 +54926,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "那时候她才十六岁。",
-            "displayHanzi": "那时候她才 (cái: mới)十六岁。",
+            "displayHanzi": "那时候她才十六岁。",
             "pinyin": "Nà shíhou tā cái shíliù suì.",
             "meaning": "Lúc đó bà mới mười sáu tuổi thôi."
           },
           {
             "speaker": "白茹雪",
             "hanzi": "这么年轻！你奶奶真棒！你也真棒！对了，你奶奶今年多大年纪了？",
-            "displayHanzi": "这么年轻！你奶奶真棒！你也真棒！对了，你奶奶今 (jīn: hôm nay, nay)年多大年纪了？",
+            "displayHanzi": "这么年轻！你奶奶真棒！你也真棒！对了，你奶奶今年多大年纪了？",
             "pinyin": "Zhème niánqīng! Nǐ nǎinai zhēn bàng! Nǐ yě zhēn bàng! Duìle, nǐ nǎinai jīnnián duōdà niánjì le?",
             "meaning": "Trẻ thế cơ à! Bà nội cậu giỏi thật! Cậu cũng rất giỏi! À, năm nay bà nội cậu bao nhiêu tuổi rồi?"
           },
           {
             "speaker": "范玉兰",
             "hanzi": "她今年七十三岁。",
-            "displayHanzi": "她今 (jīn: hôm nay, nay)年七十三岁。",
+            "displayHanzi": "她今年七十三岁。",
             "pinyin": "Tā jīnnián qīshísān suì.",
             "meaning": "Năm nay bà 73 tuổi rồi."
           },
@@ -55003,9 +54977,9 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "我二十三岁。",
-              "还没 (méi: chưa, không có)习惯，因为我家乡冬天不太冷，也不下雪。",
-              "昨天下雪了，天 (tiān: ngày, trời)挺冷的，所以 (suǒyǐ: cho nên)我好像感冒了。",
-              "我今 (jīn: hôm nay, nay)年六岁。"
+              "还没习惯，因为我家乡冬天不太冷，也不下雪。",
+              "昨天下雪了，天挺冷的，所以我好像感冒了。",
+              "我今年六岁。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 昨天下雪了，天挺冷的，所以我好像感冒了。 (Zuótiān xià xuěle, tiān tǐng lěng de, suǒyǐ wǒ hǎoxiàng gǎnmào le.) → Hôm qua trời có tuyết rơi, lạnh lắm, nên hình như tớ bị cảm rồi."
@@ -55026,10 +55000,10 @@ const DEFAULT_LESSONS = [
             "audioText": "还没习惯，因为我家乡冬天不太冷，也不下雪。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "只要多练习听 (tīng: nghe)力，以后就会听懂的。",
-              "你还没 (méi: chưa, không có)习惯这里 (lǐ: trong)的气候吗？",
-              "我今 (jīn: hôm nay, nay)年六岁。",
-              "还没 (méi: chưa, không có)习惯，因为我家乡冬天不太冷，也不下雪。"
+              "只要多练习听力，以后就会听懂的。",
+              "你还没习惯这里的气候吗？",
+              "我今年六岁。",
+              "还没习惯，因为我家乡冬天不太冷，也不下雪。"
             ],
             "correctIndex": 3,
             "explanation": "Câu vừa đọc: 还没习惯，因为我家乡冬天不太冷，也不下雪。 (Hái méi xíguàn, yīnwèi wǒ jiāxiāng dōngtiān bú tài lěng, yě bú xià xuě.) → Vẫn chưa quen, vì mùa đông quê tớ không quá lạnh, cũng không có tuyết rơi."
@@ -55100,7 +55074,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "你多运动运动吧！",
-            "question": "[Ôn tập Bài 21] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Chào buổi trưa!",
               "Hai người họ dường như là bạn bè thân thiết đã nhiều năm rồi.",
@@ -55112,11 +55086,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我吃饭了。",
-            "question": "[Bài 22] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "玉兰，你怎么了？生病了吗？",
-              "我也希望是这样。出国留学 (liúxué: du học)真是不容易啊！",
-              "我今 (jīn: hôm nay, nay)年六十岁了。",
+              "我也希望是这样。出国留学真是不容易啊！",
+              "我今年六十岁了。",
               "我吃饭了。"
             ],
             "correctIndex": 3,
@@ -55124,7 +55098,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "他真的这么说。",
-            "question": "[Ôn tập Bài 11] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Cậu là Nhật Minh phải không?",
               "Bệnh viện ở bên phải trường học của chúng ta.",
@@ -55136,19 +55110,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我二十三岁。",
-            "question": "[Bài 22] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "我二十三岁。",
-              "老师教 (jiāo: Dạy)给了我一个很有效的学习 (xuéxí: học tập)方法。",
-              "他昨天没 (méi: chưa, không có)来 (lái: đến)。",
-              "你今 (jīn: hôm nay, nay)年多大？"
+              "老师教给了我一个很有效的学习方法。",
+              "他昨天没来。",
+              "你今年多大？"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 我二十三岁。 (Wǒ èrshísān suì.) → Tôi 23 tuổi."
           },
           {
             "audioText": "她不是学生吗？",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Hội nghị này, cậu đi hay Minh đi?",
               "Sáng nay cậu gặp anh ấy chưa?",
@@ -55167,28 +55141,28 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Lan",
             "hanzi": "刚来中国的时候，我对这里的气候和学习方法都不太适应。",
-            "displayHanzi": "刚 (gāng: vừa mới)来 (lái: đến)中国的时候，我对这里 (lǐ: trong)的气候和学习 (xuéxí: học tập)方法都不太适应。",
+            "displayHanzi": "刚来中国的时候，我对这里的气候和学习方法都不太适应。",
             "pinyin": "Gāng lái Zhōngguó de shíhou, wǒ duì zhèlǐ de qìhòu hé xuéxí fāngfǎ dōu bú tài shìyìng.",
             "meaning": "Hồi mới sang Trung Quốc, tôi đều chưa quen lắm với khí hậu và phương pháp học ở đây."
           },
           {
             "speaker": "Minh",
             "hanzi": "遇到那些困难的时候，你的压力很大吧？",
-            "displayHanzi": "遇到那些 (xiē: vài, một ít)困难的时候，你的压力很大 (dà: to, lớn)吧？",
+            "displayHanzi": "遇到那些困难的时候，你的压力很大吧？",
             "pinyin": "Yùdào nàxiē kùnnan de shíhou, nǐ de yālì hěn dà ba?",
             "meaning": "Khi gặp những khó khăn đó, chắc áp lực của cậu lớn lắm nhỉ?"
           },
           {
             "speaker": "Lan",
             "hanzi": "是的，不过有朋友鼓励，我也每天努力练习，现在都能听懂了。",
-            "displayHanzi": "是的，不过 (búguò: nhưng, tuy nhiên)有朋友鼓励，我也每天 (tiān: ngày, trời)努力练习，现在都能听 (tīng: nghe)懂了。",
+            "displayHanzi": "是的，不过有朋友鼓励，我也每天努力练习，现在都能听懂了。",
             "pinyin": "Shì de, búguò yǒu péngyou gǔlì, wǒ yě měitiān nǔlì liànxí, xiànzài dōu néng tīng dǒng le.",
             "meaning": "Đúng vậy, nhưng nhờ bạn bè động viên và ngày nào tôi cũng chăm chỉ luyện tập, giờ đã nghe hiểu hết rồi."
           },
           {
             "speaker": "Minh",
             "hanzi": "太棒了！以后我们还会更加习惯这里的生活。",
-            "displayHanzi": "太棒了！以后我们还会更 (gèng: càng)加习惯这里 (lǐ: trong)的生活。",
+            "displayHanzi": "太棒了！以后我们还会更加习惯这里的生活。",
             "pinyin": "Tài bàng le! Yǐhòu wǒmen hái huì gèngjiā xíguàn zhèlǐ de shēnghuó.",
             "meaning": "Tuyệt vời! Sau này chúng ta sẽ còn quen với cuộc sống ở đây hơn nữa."
           }
@@ -55196,7 +55170,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "刚来中国的时候，我对这里的气候和学习方法都不太适应。 遇到那些困难的时候，你的压力很大吧？ 是的，不过有朋友鼓励，我也每天努力练习，现在都能听懂了。 太棒了！以后我们还会更加习惯这里的生活。",
-            "question": "[Nghe hiểu tình huống mới] Nhờ đâu Ngọc Lan đã vượt qua khó khăn nghe giảng không hiểu lúc mới du học?",
+            "question": "Nhờ đâu Ngọc Lan đã vượt qua khó khăn nghe giảng không hiểu lúc mới du học?",
             "options": [
               "Nhờ bạn bè động viên và chăm chỉ luyện tập mỗi ngày",
               "Vì bỏ hết các tiết học trên lớp",
@@ -55208,7 +55182,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "刚来中国的时候，我对这里的气候和学习方法都不太适应。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "người Trung Quốc",
               "ba cây bút chì",
@@ -55220,11 +55194,11 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "遇到那些困难的时候，你的压力很大吧？",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "你姥姥 (lǎolao: bà ngoại)今 (jīn: hôm nay, nay)年多大年纪？",
-              "遇到那些 (xiē: vài, một ít)困难的时候，你的压力很大 (dà: to, lớn)吧？",
-              "好了，我同意 (tóngyì: đồng ý)，你别 (bié: đừng)再说了！",
+              "你姥姥今年多大年纪？",
+              "遇到那些困难的时候，你的压力很大吧？",
+              "好了，我同意，你别再说了！",
               "我吃饭了。"
             ],
             "correctIndex": 1,
@@ -55232,7 +55206,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "是的，不过有朋友鼓励，我也每天努力练习，现在都能听懂了。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "cuộc sống hạnh phúc",
               "Bên trái tôi không phải là tòa giảng đường.",
@@ -55288,7 +55262,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss22_1",
           "targetHanzi": "只要多练习听力以后就会听懂的",
-          "targetMeaning": "[Mở rộng] Chỉ cần luyện nghe nhiều thì sau này sẽ nghe hiểu thôi.",
+          "targetMeaning": "Chỉ cần luyện nghe nhiều thì sau này sẽ nghe hiểu thôi.",
           "pinyin": "Zhǐyào duō liànxí tīnglì, yǐhòu jiù huì tīng dǒng de.",
           "tokens": [
             "只要多",
@@ -55297,8 +55271,7 @@ const DEFAULT_LESSONS = [
             "以后",
             "就会听",
             "懂的"
-          ],
-          "unlearnedHint": "Từ chưa học: 听 (tīng: nghe)"
+          ]
         },
         {
           "id": "ss22_2",
@@ -55341,7 +55314,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss22_5",
           "targetHanzi": "用手机上网购物非常方便",
-          "targetMeaning": "[Ôn tập Bài 10] Dùng điện thoại lên mạng mua sắm vô cùng tiện lợi.",
+          "targetMeaning": "Dùng điện thoại lên mạng mua sắm vô cùng tiện lợi.",
           "pinyin": "Yòng shǒujī shàngwǎng gòuwù fēicháng fāngbiàn.",
           "tokens": [
             "用",
@@ -55350,13 +55323,12 @@ const DEFAULT_LESSONS = [
             "购物",
             "非常",
             "方便"
-          ],
-          "unlearnedHint": "Từ chưa học: 用 (yòng: dùng)"
+          ]
         },
         {
           "id": "ss22_6",
           "targetHanzi": "我姓范叫范玉兰",
-          "targetMeaning": "[Ôn tập Bài 2] Tôi họ Phạm, tên là Phạm Ngọc Lan.",
+          "targetMeaning": "Tôi họ Phạm, tên là Phạm Ngọc Lan.",
           "pinyin": "Wǒ xìng Fàn, jiào Fàn Yùlán.",
           "tokens": [
             "我",
@@ -55751,7 +55723,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr22_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Sau khi dần thích nghi với môi trường mới, áp lực của tôi giảm đi nhiều rồi.",
+          "promptText": "Sau khi dần thích nghi với môi trường mới, áp lực của tôi giảm đi nhiều rồi.",
           "expectedChinese": "慢慢适应新环境以后，我的压力小多了。",
           "acceptedPinyin": "mànmàn shìyìng xīn huánjìng yǐhòu wǒ de yālì xiǎo duō le",
           "hint": "Gợi ý Pinyin: Mànmàn shìyìng xīn huánjìng yǐhòu, wǒ de yālì xiǎo duō le.",
@@ -55760,10 +55732,10 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr22_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Khi gặp vấn đề, bạn có thể tìm bạn bè cùng nhau giải quyết.",
+          "promptText": "Khi gặp vấn đề, bạn có thể tìm bạn bè cùng nhau giải quyết.",
           "expectedChinese": "遇到问题时，你可以找朋友一起解决。",
           "acceptedPinyin": "yùdào wèntí shí nǐ kěyǐ zhǎo péngyou yìqǐ jiějué",
-          "hint": "Gợi ý Pinyin: Yùdào wèntí shí, nǐ kěyǐ zhǎo péngyou yìqǐ jiějué. | Từ chưa học: 时 (shí: lúc, khi)",
+          "hint": "Gợi ý Pinyin: Yùdào wèntí shí, nǐ kěyǐ zhǎo péngyou yìqǐ jiějué.",
           "explanation": "Khi gặp vấn đề, bạn có thể tìm bạn bè cùng nhau giải quyết. → 遇到问题时，你可以找朋友一起解决。 (Yùdào wèntí shí, nǐ kěyǐ zhǎo péngyou yìqǐ jiějué.)"
         },
         {
@@ -55877,7 +55849,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr22_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 刚 (gāng: vừa mới)出国留学 (liúxué: du học)的时候，我遇到了一些生活困难。",
+          "promptText": "刚出国留学的时候，我遇到了一些生活困难。",
           "chineseAudioText": "刚出国留学的时候，我遇到了一些生活困难。",
           "pinyin": "Gāng chūguó liúxué de shíhou, wǒ yùdào le yìxiē shēnghuó kùnnan.",
           "expectedMeaning": "Hồi mới ra nước ngoài du học, tôi gặp một vài khó khăn trong cuộc sống.",
@@ -55892,7 +55864,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr22_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 我非常想念家乡的菜和那里 (lǐ: trong)的气候。",
+          "promptText": "我非常想念家乡的菜和那里的气候。",
           "chineseAudioText": "我非常想念家乡的菜和那里的气候。",
           "pinyin": "Wǒ fēicháng xiǎngniàn jiāxiāng de cài hé nàlǐ de qìhòu.",
           "expectedMeaning": "Tôi rất nhớ những món ăn quê nhà và khí hậu ở đó.",
@@ -55907,7 +55879,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr22_zh_3",
           "direction": "zh_to_vi",
-          "promptText": "我没 (méi: chưa, không có)吃饭。",
+          "promptText": "我没吃饭。",
           "chineseAudioText": "我没吃饭。",
           "pinyin": "Wǒ méi chīfàn.",
           "expectedMeaning": "Tôi chưa ăn cơm.",
@@ -55922,7 +55894,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr22_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 11] 他正在听音乐呢。",
+          "promptText": "他正在听音乐呢。",
           "chineseAudioText": "他正在听音乐呢。",
           "pinyin": "Tā zhèngzài tīng yīnyuè ne.",
           "expectedMeaning": "Anh ấy đang nghe nhạc.",
@@ -56373,7 +56345,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq22_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 16] Từ đã học “休息” (xiūxi) có nghĩa là gì?",
+          "question": "Từ đã học “休息” (xiūxi) có nghĩa là gì?",
           "options": [
             "bữa cơm tất niên",
             "nhiều",
@@ -56386,7 +56358,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq22_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 16] Từ đã học “逛街” (guàngjiē) có nghĩa là gì?",
+          "question": "Từ đã học “逛街” (guàngjiē) có nghĩa là gì?",
           "options": [
             "sủi cảo",
             "chúc mừng năm mới",
@@ -56399,7 +56371,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq22_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 10] Từ đã học “等等” (děng děng) có nghĩa là gì?",
+          "question": "Từ đã học “等等” (děng děng) có nghĩa là gì?",
           "options": [
             "ồn ào, náo nhiệt",
             "cây",
@@ -56412,7 +56384,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq22_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “慢慢适应新环境以后，我的压力小多了。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “慢慢适应新环境以后，我的压力小多了。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Quyển sách đó ở ngay trên bàn.",
             "Hình như tớ quen người này.",
@@ -56425,7 +56397,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq22_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nLan: 刚 (gāng: vừa mới)来 (lái: đến)中国的时候，我对这里 (lǐ: trong)的气候和学习 (xuéxí: học tập)方法都不太适应。\nMinh: 遇到那些 (xiē: vài, một ít)困难的时候，你的压力很大 (dà: to, lớn)吧？\nLan: 是的，不过 (búguò: nhưng, tuy nhiên)有朋友鼓励，我也每天 (tiān: ngày, trời)努力练习，现在都能听 (tīng: nghe)懂了。\nMinh: 太棒了！以后我们还会更 (gèng: càng)加习惯这里 (lǐ: trong)的生活。\n\nNhờ đâu Ngọc Lan đã vượt qua khó khăn nghe giảng không hiểu lúc mới du học?",
+          "question": "Đọc đoạn hội thoại:\nLan: 刚来中国的时候，我对这里的气候和学习方法都不太适应。\nMinh: 遇到那些困难的时候，你的压力很大吧？\nLan: 是的，不过有朋友鼓励，我也每天努力练习，现在都能听懂了。\nMinh: 太棒了！以后我们还会更加习惯这里的生活。\n\nNhờ đâu Ngọc Lan đã vượt qua khó khăn nghe giảng không hiểu lúc mới du học?",
           "options": [
             "Vì bỏ hết các tiết học trên lớp",
             "Nhờ bạn bè động viên và chăm chỉ luyện tập mỗi ngày",
@@ -56990,7 +56962,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct22_41",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“慢慢就会____了。”\n(Gợi ý nghĩa: Dần dần rồi sẽ quen thôi.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“慢慢就会____了。”",
         "options": [
           "习惯",
           "医院",
@@ -57003,7 +56975,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct22_42",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“遇到那些困难的时候，你的____很大吧？”\n(Gợi ý nghĩa: Khi gặp những khó khăn đó, chắc áp lực của cậu lớn lắm nhỉ?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“遇到那些困难的时候，你的____很大吧？”",
         "options": [
           "介绍",
           "压力",
@@ -57016,7 +56988,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct22_43",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你怎么不跟我们说啊？那时候你一定很____。”\n(Gợi ý nghĩa: Sao cậu không kể với bọn tớ? Lúc đó chắc cậu buồn lắm.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你怎么不跟我们说啊？那时候你一定很____。”",
         "options": [
           "好处",
           "难过",
@@ -57029,7 +57001,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct22_44",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是的，不过有朋友鼓励，我也每天____练习，现在都能听懂了。”\n(Gợi ý nghĩa: Đúng vậy, nhưng nhờ bạn bè động viên và ngày nào tôi cũng chăm chỉ luyện tập, giờ đã nghe hiểu hết rồi.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是的，不过有朋友鼓励，我也每天____练习，现在都能听懂了。”",
         "options": [
           "认真",
           "爷爷",
@@ -57055,7 +57027,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct22_46",
         "category": "vocab",
-        "question": "Từ Hán tự “压力” (áp lực) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “压力” có phiên âm Pinyin đúng là gì?",
         "options": [
           "xīwàng",
           "Yíhéyuán",
@@ -57081,7 +57053,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct22_48",
         "category": "vocab",
-        "question": "Từ Hán tự “努力” (cố gắng, nỗ lực) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “努力” có phiên âm Pinyin đúng là gì?",
         "options": [
           "nǔlì",
           "diànyǐngyuàn",
@@ -57206,7 +57178,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct22_57",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 上网  /  方便  /  非常  /  用  /  手机  /  购物\n(Nghĩa: “Dùng điện thoại lên mạng mua sắm vô cùng tiện lợi.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n上网  /  方便  /  非常  /  用  /  手机  /  购物",
         "options": [
           "用手机上网购物非常方便。",
           "方便非常购物上网手机用。",
@@ -57219,7 +57191,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct22_58",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 我  /  叫  /  范玉兰  /  范  /  姓\n(Nghĩa: “Tôi họ Phạm, tên là Phạm Ngọc Lan.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n我  /  叫  /  范玉兰  /  范  /  姓",
         "options": [
           "姓我范叫范玉兰。",
           "范玉兰叫范姓我。",
@@ -57232,7 +57204,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct22_59",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 了  /  吃  /  饭  /  我\n(Nghĩa: “Tôi ăn cơm rồi.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n了  /  吃  /  饭  /  我",
         "options": [
           "我吃饭了。",
           "吃饭了我。",
@@ -57245,7 +57217,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct22_60",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 就会听  /  听力  /  练习  /  懂的  /  只要多  /  以后\n(Nghĩa: “Chỉ cần luyện nghe nhiều thì sau này sẽ nghe hiểu thôi.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n就会听  /  听力  /  练习  /  懂的  /  只要多  /  以后",
         "options": [
           "练习只要多听力以后就会听懂的。",
           "懂的就会听以后听力练习只要多。",
@@ -57258,7 +57230,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct22_61",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“刚来中国的时候，我对这里的气候和学习方法都不太____ (shìyìng)。”\n(Nghĩa: Hồi mới sang Trung Quốc, tôi đều chưa quen lắm với khí hậu và phương pháp học ở đây.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“刚来中国的时候，我对这里的气候和学习方法都不太____。”",
         "options": [
           "适应",
           "真容",
@@ -57271,7 +57243,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct22_62",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“都是留学生经常遇到的困难，比如文化____ (bùtóng)、生活环境不同等等。我们留学生的压力很大。”\n(Nghĩa: Đều là những khó khăn mà du học sinh hay gặp phải thôi, như khác biệt văn hóa, môi trường sống khác nhau, v.v. Áp lực của du học sinh bọn tớ lớn lắm.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“都是留学生经常遇到的困难，比如文化____、生活环境不同等等。我们留学生的压力很大。”",
         "options": [
           "姐姐",
           "新鲜",
@@ -57284,7 +57256,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct22_63",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“____ (yù dào)问题时，你可以找朋友一起解决。”\n(Nghĩa: Khi gặp vấn đề, bạn có thể tìm bạn bè cùng nhau giải quyết.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____问题时，你可以找朋友一起解决。”",
         "options": [
           "快乐",
           "武术",
@@ -57297,7 +57269,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct22_64",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“其实这些事我出国____ (yǐqián)我奶奶已经跟我说了。她年轻的时候也去国外留学，很有经验。”\n(Nghĩa: Thực ra những chuyện này trước khi ra nước ngoài bà nội tớ đã dặn dò tớ hết rồi. Thời trẻ bà cũng từng đi du học nên rất có kinh nghiệm.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“其实这些事我出国____我奶奶已经跟我说了。她年轻的时候也去国外留学，很有经验。”",
         "options": [
           "家人",
           "以前",
@@ -57732,7 +57704,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "小雪，中国人常吃什么味道的菜？",
-            "displayHanzi": "小雪 (Xiǎoxuě: Tiểu Tuyết)，中国人常吃什么味道的菜？",
+            "displayHanzi": "小雪，中国人常吃什么味道的菜？",
             "pinyin": "Xiǎoxuě, Zhōngguó rén cháng chī shénme wèidao de cài?",
             "meaning": "Tiểu Tuyết, người Trung Quốc thường ăn các món có hương vị như thế nào?"
           },
@@ -57760,7 +57732,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "我不能吃辣的，我每次吃辣都会过敏。",
-            "displayHanzi": "我不能吃辣的，我每次 (cì: lần)吃辣都会过敏。",
+            "displayHanzi": "我不能吃辣的，我每次吃辣都会过敏。",
             "pinyin": "Wǒ bùnéng chī là de, wǒ měi cì chī là dōu huì guòmǐn.",
             "meaning": "Tớ không ăn được cay, hễ ăn cay là tớ lại bị dị ứng."
           },
@@ -57774,28 +57746,28 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "范玉兰",
             "hanzi": "有，中国的臭豆腐。真的太难吃了。我来中国快要三个月了，可是到现在还不能吃，闻也不行。",
-            "displayHanzi": "有，中国的臭豆腐。真的太难吃了。我来 (lái: đến)中国快要三个月了，可是到现在还不能吃，闻也不行。",
+            "displayHanzi": "有，中国的臭豆腐。真的太难吃了。我来中国快要三个月了，可是到现在还不能吃，闻也不行。",
             "pinyin": "Yǒu, Zhōngguó de Chòudòufu. Zhēn de tài nán chī le. Wǒ lái Zhōngguó kuàiyào sān gè yuè le, kěshì dào xiànzài hái bùnéng chī, wén yě bùxíng.",
             "meaning": "Có chứ, đậu phụ thối của Trung Quốc. Thật sự khó ăn quá. Tớ sang Trung Quốc gần ba tháng rồi mà đến giờ vẫn không ăn nổi, ngửi cũng không chịu được."
           },
           {
             "speaker": "白茹雪",
             "hanzi": "好像大多数外国人都跟你一样，都不喜欢它的味道，但是如果你吃了一两次，你会觉得它很好吃！",
-            "displayHanzi": "好像大 (dà: to, lớn)多数外国人都跟 (gēn: cùng, với)你一样，都不喜欢它的味道，但是如果你吃了一两 (liǎng: hai (số lượng))次 (cì: lần)，你会觉得它很好吃！",
+            "displayHanzi": "好像大多数外国人都跟你一样，都不喜欢它的味道，但是如果你吃了一两次，你会觉得它很好吃！",
             "pinyin": "Hǎoxiàng dàduōshù wàiguó rén dōu gēn nǐ yíyàng, dōu bù xǐhuan tā de wèidào, dànshì rúguǒ nǐ chīle yī liǎng cì, nǐ huì juéde tā hěn hǎo chī!",
             "meaning": "Hình như đa số người nước ngoài đều giống cậu, không thích mùi vị của nó, nhưng nếu ăn thử một hai lần cậu sẽ thấy nó rất ngon đấy!"
           },
           {
             "speaker": "范玉兰",
             "hanzi": "是吗？下次我会尝一尝。那中国人的主食是什么？",
-            "displayHanzi": "是吗？下次我会尝 (cháng: nếm thử)一尝。那中国人的主食是什么？",
+            "displayHanzi": "是吗？下次我会尝一尝。那中国人的主食是什么？",
             "pinyin": "Shì ma? Xià cì wǒ huì cháng yi cháng. Nà Zhōngguó rén de zhǔshí shì shénme?",
             "meaning": "Thật sao? Lần sau tớ sẽ nếm thử xem. Vậy lương thực chính của người Trung Quốc là gì?"
           },
           {
             "speaker": "白茹雪",
             "hanzi": "中国人常说：“南米北面”，意思是北方人的主食是馒头、面包和小麦，南方人的主食是米饭。",
-            "displayHanzi": "中国人常说：“南 (nán: phía Nam)米北面 (běimian: phía Bắc)”，意思 (yìsi: ý nghĩa)是北方人的主食是馒头、面包和小麦，南方人的主食是米饭。",
+            "displayHanzi": "中国人常说：“南米北面”，意思是北方人的主食是馒头、面包和小麦，南方人的主食是米饭。",
             "pinyin": "Zhōngguó rén cháng shuō: “Nán mǐ Běi miàn”, yìsi shì Běifāng rén de zhǔshí shì mántou, miànbāo hé xiǎomài, Nánfāng rén de zhǔshí shì mǐfàn.",
             "meaning": "Người Trung Quốc hay nói 'Nam cơm Bắc mì', nghĩa là món chính của người miền Bắc là màn thầu, bánh mì và lúa mì, còn người miền Nam là cơm."
           },
@@ -57809,21 +57781,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "白茹雪",
             "hanzi": "中国人常喝啤酒、白酒、红酒还有茶。如果你到中国人家里去做客，他们就会请你喝酒。",
-            "displayHanzi": "中国人常喝啤酒、白酒、红酒还有茶。如果你到中国人家里 (lǐ: trong)去做客，他们就会请你喝酒 (jiǔ: rượu)。",
+            "displayHanzi": "中国人常喝啤酒、白酒、红酒还有茶。如果你到中国人家里去做客，他们就会请你喝酒。",
             "pinyin": "Zhōngguó rén cháng hē píjiǔ, báijiǔ, hóngjiǔ hái yǒu chá. Rúguǒ nǐ dào Zhōngguó rén jiāli qù zuòkè, tāmen jiù huì qǐng nǐ hē jiǔ.",
             "meaning": "Người Trung Quốc hay uống bia, rượu trắng, rượu vang đỏ và trà. Nếu cậu đến nhà người Trung Quốc làm khách, họ sẽ mời cậu uống rượu."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "如果不会喝酒呢？",
-            "displayHanzi": "如果不会喝酒 (jiǔ: rượu)呢？",
+            "displayHanzi": "如果不会喝酒呢？",
             "pinyin": "Rúguǒ bú huì hējiǔ ne?",
             "meaning": "Nếu không biết uống rượu thì sao?"
           },
           {
             "speaker": "白茹雪",
             "hanzi": "那也没关系。你可以用茶来代替也行。",
-            "displayHanzi": "那也没关系。你可以用茶来 (lái: đến)代替也行。",
+            "displayHanzi": "那也没关系。你可以用茶来代替也行。",
             "pinyin": "Nà yě méiguānxi. Nǐ kěyǐ yòng chá lái dàitì yě xíng.",
             "meaning": "Cũng không sao cả. Cậu có thể dùng trà thay thế cũng được."
           },
@@ -57837,14 +57809,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "白茹雪",
             "hanzi": "中国北方人习惯吃饺子，南方人喜欢吃年糕。春节是一年最快乐的时候。家人开开心心地坐在一起，一起包饺子，煮饺子。",
-            "displayHanzi": "中国北方人习惯吃饺子，南方人喜欢吃年糕。春节是一年最快乐的时候。家人开 (kāi: mở, lái)开心心 (xīn: tim, lòng)地坐 (zuò: ngồi)在一起，一起包饺子，煮饺子。",
+            "displayHanzi": "中国北方人习惯吃饺子，南方人喜欢吃年糕。春节是一年最快乐的时候。家人开开心心地坐在一起，一起包饺子，煮饺子。",
             "pinyin": "Zhōngguó běifāng rén xíguàn chī jiǎozi, nánfāng rén xǐhuan chī niángāo. Chūnjié shì yī nián zuì kuàilè de shíhou. Jiārén kāi kāi xīn xīn de zuò zài yīqǐ, yīqǐ bāo jiǎozi, zhǔ jiǎozi.",
             "meaning": "Người miền Bắc Trung Quốc quen ăn sủi cảo, người miền Nam thích ăn bánh tổ. Tết là dịp vui nhất trong năm. Cả nhà quây quần vui vẻ bên nhau, cùng gói và luộc sủi cảo."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "哇，你会包饺子吗？我特别喜欢吃饺子，但是不会包饺子。你可以教我吗？",
-            "displayHanzi": "哇 (wa: oa, chà (cảm thán))，你会包饺子吗？我特别喜欢吃饺子，但是不会包饺子。你可以教我吗？",
+            "displayHanzi": "哇，你会包饺子吗？我特别喜欢吃饺子，但是不会包饺子。你可以教我吗？",
             "pinyin": "Wa, nǐ huì bāo jiǎozi ma? Wǒ tèbié xǐhuan chī jiǎozi, dànshì bú huì bāo jiǎozi. Nǐ kěyǐ jiào wǒ ma?",
             "meaning": "Chà, cậu biết gói sủi cảo không? Tớ đặc biệt thích ăn sủi cảo nhưng lại không biết gói. Cậu dạy tớ được không?"
           },
@@ -57900,7 +57872,7 @@ const DEFAULT_LESSONS = [
               "南方人的主食一般是米饭，北方人常吃馒头。",
               "我喜欢吃辣的，你呢？",
               "他高高兴兴地对我讲故事。",
-              "小雪 (Xiǎoxuě: Tiểu Tuyết)，中国人常吃什么味道的菜？"
+              "小雪，中国人常吃什么味道的菜？"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 我喜欢吃辣的，你呢？ (Wǒ xǐhuan chī là de, nǐ ne?) → Tớ thích ăn cay, còn cậu?"
@@ -57971,7 +57943,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "我二十三岁。",
-            "question": "[Ôn tập Bài 22] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tôi 23 tuổi.",
               "Năm nay cháu 6 tuổi ạ.",
@@ -57983,19 +57955,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "她吃了三个饺子。",
-            "question": "[Bài 23] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "中国的饮料呢？",
               "昨天我们一起去书店，他买了一本词典。",
               "她吃了三个饺子。",
-              "早餐 (zǎocān: bữa sáng)我通常吃一碗面 (miàn: mặt, phía)条或者几块面包。"
+              "早餐我通常吃一碗面条或者几块面包。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 她吃了三个饺子。 (Tā chīle sān gè jiǎozi.) → Cô ấy đã ăn 3 cái sủi cảo."
           },
           {
             "audioText": "他在吃饭呢。",
-            "question": "[Ôn tập Bài 11] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Anh ấy đang ăn cơm kìa.",
               "Tôi đứng ở giữa Lâm và Phương.",
@@ -58007,10 +57979,10 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "昨天我们一起去书店，他买了一本词典。",
-            "question": "[Bài 23] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "我不能吃辣的，我每次 (cì: lần)吃辣都会过敏。",
-              "有，中国的臭豆腐。真的太难吃了。我来 (lái: đến)中国快要三个月了，可是到现在还不能吃，闻也不行。",
+              "我不能吃辣的，我每次吃辣都会过敏。",
+              "有，中国的臭豆腐。真的太难吃了。我来中国快要三个月了，可是到现在还不能吃，闻也不行。",
               "中国的饮料呢？",
               "昨天我们一起去书店，他买了一本词典。"
             ],
@@ -58019,7 +57991,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "老师好",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Bố rất ít đưa tôi đi du lịch.",
               "Chào thầy/Chào cô",
@@ -58045,7 +58017,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Phong",
             "hanzi": "真的！南方主食多是米饭和年糕，北方人爱吃馒头和面条。",
-            "displayHanzi": "真的！南方主食多是米饭和年糕，北方人爱吃馒头和面 (miàn: mặt, phía)条。",
+            "displayHanzi": "真的！南方主食多是米饭和年糕，北方人爱吃馒头和面条。",
             "pinyin": "Zhēn de! Nánfāng zhǔshí duō shì mǐfàn hé niángāo, běifāng rén ài chī mántou hé miàntiáo.",
             "meaning": "Thật đấy! Món chính miền Nam phần nhiều là cơm và bánh tổ, người miền Bắc thích ăn màn thầu và mì sợi."
           },
@@ -58059,7 +58031,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Phong",
             "hanzi": "臭豆腐我还没试过，但是辣菜配冰饮料可香了！",
-            "displayHanzi": "臭豆腐我还没 (méi: chưa, không có)试过 (guò: từng, qua)，但是辣菜配冰饮料可香 (xiāng: thơm)了！",
+            "displayHanzi": "臭豆腐我还没试过，但是辣菜配冰饮料可香了！",
             "pinyin": "Chòudòufu wǒ hái méi shì guo, dànshì là cài pèi bīng yǐnliào kě xiāng le!",
             "meaning": "Đậu phụ thối mình chưa thử bao giờ, nhưng món cay ăn kèm đồ uống lạnh thì ngon tuyệt!"
           }
@@ -58067,7 +58039,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "听说中国南方和北方的饮食习惯不太一样，是真的吗？ 真的！南方主食多是米饭和年糕，北方人爱吃馒头和面条。 那你敢吃臭豆腐或者特别辣的菜吗？ 臭豆腐我还没试过，但是辣菜配冰饮料可香了！",
-            "question": "[Nghe hiểu tình huống mới] Theo Trương Phong, lương thực chính quen thuộc của người miền Bắc Trung Quốc là gì?",
+            "question": "Theo Trương Phong, lương thực chính quen thuộc của người miền Bắc Trung Quốc là gì?",
             "options": [
               "Chỉ uống rượu vang đỏ",
               "Màn thầu và mì sợi (馒头和面条)",
@@ -58079,7 +58051,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "听说中国南方和北方的饮食习惯不太一样，是真的吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Người (mà) đi hiệu sách mua sách rất nhiều.",
               "Mẹ ơi, sau khi làm xong bài tập về nhà con có thể xem phim không ạ?",
@@ -58091,19 +58063,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "真的！南方主食多是米饭和年糕，北方人爱吃馒头和面条。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "你更 (gèng: càng)喜欢喝什么饮料：茶还是果汁？",
+              "你更喜欢喝什么饮料：茶还是果汁？",
               "这个人我好像认识 。",
               "他高高兴兴地对我讲故事。",
-              "真的！南方主食多是米饭和年糕，北方人爱吃馒头和面 (miàn: mặt, phía)条。"
+              "真的！南方主食多是米饭和年糕，北方人爱吃馒头和面条。"
             ],
             "correctIndex": 3,
             "explanation": "Câu vừa đọc: 真的！南方主食多是米饭和年糕，北方人爱吃馒头和面条。 (Zhēn de! Nánfāng zhǔshí duō shì mǐfàn hé niángāo, běifāng rén ài chī mántou hé miàntiáo.) → Thật đấy! Món chính miền Nam phần nhiều là cơm và bánh tổ, người miền Bắc thích ăn màn thầu và mì sợi."
           },
           {
             "audioText": "那你敢吃臭豆腐或者特别辣的菜吗？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Bạn đã chuẩn bị đầy đủ đồ đạc để đi du lịch chưa?",
               "Quyển sách này là sách của tớ.",
@@ -58195,7 +58167,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss23_1",
           "targetHanzi": "这道菜的味道太辣了我吃不习惯",
-          "targetMeaning": "[Mở rộng] Món ăn này cay quá, tôi ăn không quen.",
+          "targetMeaning": "Món ăn này cay quá, tôi ăn không quen.",
           "pinyin": "Zhè dào cài de wèidao tài là le, wǒ chī bu xíguàn.",
           "tokens": [
             "这道",
@@ -58209,7 +58181,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss23_2",
           "targetHanzi": "爸爸喜欢喝一点儿啤酒或者红酒",
-          "targetMeaning": "[Mở rộng] Bố thích uống một chút bia hoặc rượu vang đỏ.",
+          "targetMeaning": "Bố thích uống một chút bia hoặc rượu vang đỏ.",
           "pinyin": "Bàba xǐhuan hē yìdiǎnr píjiǔ huòzhě hóngjiǔ.",
           "tokens": [
             "爸爸喜欢",
@@ -58218,8 +58190,7 @@ const DEFAULT_LESSONS = [
             "啤酒",
             "或者",
             "红酒"
-          ],
-          "unlearnedHint": "Từ chưa học: 儿 (ér: con, (âm uốn lưỡi))"
+          ]
         },
         {
           "id": "ss23_3",
@@ -58252,7 +58223,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss23_5",
           "targetHanzi": "他来自哪个国家",
-          "targetMeaning": "[Ôn tập Bài 3] Anh ấy đến từ đất nước nào?",
+          "targetMeaning": "Anh ấy đến từ đất nước nào?",
           "pinyin": "Tā láizì nǎ gè guójiā?",
           "tokens": [
             "他",
@@ -58265,7 +58236,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss23_6",
           "targetHanzi": "我要一个西瓜一共多少钱",
-          "targetMeaning": "[Ôn tập Bài 8] Cháu lấy một quả dưa hấu, tổng cộng bao nhiêu tiền ạ?",
+          "targetMeaning": "Cháu lấy một quả dưa hấu, tổng cộng bao nhiêu tiền ạ?",
           "pinyin": "Wǒ yào yígè xīguā, yígòng duōshao qián?",
           "tokens": [
             "我要",
@@ -58620,7 +58591,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr23_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Lương thực chính của người miền Nam thường là cơm, còn người miền Bắc hay ăn màn thầu.",
+          "promptText": "Lương thực chính của người miền Nam thường là cơm, còn người miền Bắc hay ăn màn thầu.",
           "expectedChinese": "南方人的主食一般是米饭，北方人常吃馒头。",
           "acceptedPinyin": "nánfāng rén de zhǔshí yìbān shì mǐfàn běifāng rén cháng chī mántou",
           "hint": "Gợi ý Pinyin: Nánfāng rén de zhǔshí yìbān shì mǐfàn, běifāng rén cháng chī mántou.",
@@ -58629,7 +58600,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr23_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Món ăn này cay quá, tôi ăn không quen.",
+          "promptText": "Món ăn này cay quá, tôi ăn không quen.",
           "expectedChinese": "这道菜的味道太辣了，我吃不习惯。",
           "acceptedPinyin": "zhè dào cài de wèidao tài là le wǒ chī bu xíguàn",
           "hint": "Gợi ý Pinyin: Zhè dào cài de wèidao tài là le, wǒ chī bu xíguàn.",
@@ -58746,7 +58717,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr23_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 爸爸喜欢喝一点儿 (ér: con, (âm uốn lưỡi))啤酒或者红酒。",
+          "promptText": "爸爸喜欢喝一点儿啤酒或者红酒。",
           "chineseAudioText": "爸爸喜欢喝一点儿啤酒或者红酒。",
           "pinyin": "Bàba xǐhuan hē yìdiǎnr píjiǔ huòzhě hóngjiǔ.",
           "expectedMeaning": "Bố thích uống một chút bia hoặc rượu vang đỏ.",
@@ -58761,7 +58732,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr23_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 你更 (gèng: càng)喜欢喝什么饮料：茶还是果汁？",
+          "promptText": "你更喜欢喝什么饮料：茶还是果汁？",
           "chineseAudioText": "你更喜欢喝什么饮料：茶还是果汁？",
           "pinyin": "Nǐ gèng xǐhuan hē shénme yǐnliào: chá háishi guǒzhī?",
           "expectedMeaning": "Bạn thích uống loại đồ uống nào hơn: trà hay nước ép trái cây?",
@@ -58791,7 +58762,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr23_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 11] 他正在听音乐呢。",
+          "promptText": "他正在听音乐呢。",
           "chineseAudioText": "他正在听音乐呢。",
           "pinyin": "Tā zhèngzài tīng yīnyuè ne.",
           "expectedMeaning": "Anh ấy đang nghe nhạc.",
@@ -59265,7 +59236,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq23_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 20] Từ đã học “新鲜” (xīnxiān) có nghĩa là gì?",
+          "question": "Từ đã học “新鲜” (xīnxiān) có nghĩa là gì?",
           "options": [
             "tươi, trong lành, mới mẻ",
             "cả nhà",
@@ -59278,7 +59249,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq23_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 20] Từ đã học “得” (děi) có nghĩa là gì?",
+          "question": "Từ đã học “得” (děi) có nghĩa là gì?",
           "options": [
             "áp lực",
             "bảo hiểm y tế",
@@ -59291,7 +59262,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq23_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 20] Từ đã học “可能” (kěnéng) có nghĩa là gì?",
+          "question": "Từ đã học “可能” (kěnéng) có nghĩa là gì?",
           "options": [
             "khả năng, có thể",
             "yếu, yếu sức",
@@ -59304,7 +59275,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq23_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “南方人的主食一般是米饭，北方人常吃馒头。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “南方人的主食一般是米饭，北方人常吃馒头。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Tôi đã đọc sách hết một buổi sáng.",
             "Anh ấy hát không hay lắm.",
@@ -59317,7 +59288,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq23_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nMark: 听说中国南方和北方的饮食习惯不太一样，是真的吗？\nPhong: 真的！南方主食多是米饭和年糕，北方人爱吃馒头和面 (miàn: mặt, phía)条。\nMark: 那你敢吃臭豆腐或者特别辣的菜吗？\nPhong: 臭豆腐我还没 (méi: chưa, không có)试过 (guò: từng, qua)，但是辣菜配冰饮料可香 (xiāng: thơm)了！\n\nTheo Trương Phong, lương thực chính quen thuộc của người miền Bắc Trung Quốc là gì?",
+          "question": "Đọc đoạn hội thoại:\nMark: 听说中国南方和北方的饮食习惯不太一样，是真的吗？\nPhong: 真的！南方主食多是米饭和年糕，北方人爱吃馒头和面条。\nMark: 那你敢吃臭豆腐或者特别辣的菜吗？\nPhong: 臭豆腐我还没试过，但是辣菜配冰饮料可香了！\n\nTheo Trương Phong, lương thực chính quen thuộc của người miền Bắc Trung Quốc là gì?",
           "options": [
             "Màn thầu và mì sợi (馒头和面条)",
             "Chỉ uống rượu vang đỏ",
@@ -59843,7 +59814,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct23_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“那也没关系。你可以____茶来代替也行。”\n(Gợi ý nghĩa: Cũng không sao cả. Cậu có thể dùng trà thay thế cũng được.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“那也没关系。你可以____茶来代替也行。”",
         "options": [
           "用",
           "号",
@@ -59856,7 +59827,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct23_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“臭豆腐我还没试过，但是____菜配冰饮料可香了！”\n(Gợi ý nghĩa: Đậu phụ thối mình chưa thử bao giờ, nhưng món cay ăn kèm đồ uống lạnh thì ngon tuyệt!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“臭豆腐我还没试过，但是____菜配冰饮料可香了！”",
         "options": [
           "辣",
           "她",
@@ -59869,7 +59840,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct23_40",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“中国人常说：“南米北面”，意思是北方人的主食是馒头、____和小麦，南方人的主食是米饭。”\n(Gợi ý nghĩa: Người Trung Quốc hay nói 'Nam cơm Bắc mì', nghĩa là món chính của người miền Bắc là màn thầu, bánh mì và lúa mì, còn người miền Nam là cơm.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“中国人常说：“南米北面”，意思是北方人的主食是馒头、____和小麦，南方人的主食是米饭。”",
         "options": [
           "生活",
           "面包",
@@ -59882,7 +59853,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct23_41",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“中国人常喝____、白酒、红酒还有茶。如果你到中国人家里去做客，他们就会请你喝酒。”\n(Gợi ý nghĩa: Người Trung Quốc hay uống bia, rượu trắng, rượu vang đỏ và trà. Nếu cậu đến nhà người Trung Quốc làm khách, họ sẽ mời cậu uống rượu.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“中国人常喝____、白酒、红酒还有茶。如果你到中国人家里去做客，他们就会请你喝酒。”",
         "options": [
           "天气",
           "啤酒",
@@ -59908,7 +59879,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct23_43",
         "category": "vocab",
-        "question": "Từ Hán tự “辣” (cay) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “辣” có phiên âm Pinyin đúng là gì?",
         "options": [
           "là",
           "diànhuà",
@@ -59934,7 +59905,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct23_45",
         "category": "vocab",
-        "question": "Từ Hán tự “啤酒” (bia) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “啤酒” có phiên âm Pinyin đúng là gì?",
         "options": [
           "píjiǔ",
           "xīguā",
@@ -60045,7 +60016,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct23_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 好像  /  个  /  这  /  我  /  人  /  认识\n(Nghĩa: “Hình như tớ quen người này.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n好像  /  个  /  这  /  我  /  人  /  认识",
         "options": [
           "个这人我好像认识。",
           "认识好像我人个这。",
@@ -60058,7 +60029,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct23_54",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 饺子  /  她  /  三  /  吃  /  了  /  个\n(Nghĩa: “Cô ấy đã ăn 3 cái sủi cảo.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n饺子  /  她  /  三  /  吃  /  了  /  个",
         "options": [
           "饺子个三了吃她。",
           "她吃了三个饺子。",
@@ -60071,7 +60042,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct23_55",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 或者  /  喝一  /  爸爸喜欢  /  红酒  /  点儿  /  啤酒\n(Nghĩa: “Bố thích uống một chút bia hoặc rượu vang đỏ.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n或者  /  喝一  /  爸爸喜欢  /  红酒  /  点儿  /  啤酒",
         "options": [
           "爸爸喜欢喝一点儿啤酒或者红酒。",
           "红酒或者啤酒点儿喝一爸爸喜欢。",
@@ -60084,7 +60055,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct23_56",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 我要  /  西瓜  /  钱  /  一个  /  多少  /  一共\n(Nghĩa: “Cháu lấy một quả dưa hấu, tổng cộng bao nhiêu tiền ạ?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n我要  /  西瓜  /  钱  /  一个  /  多少  /  一共",
         "options": [
           "一个我要西瓜一共多少钱。",
           "钱多少一共西瓜一个我要。",
@@ -60097,7 +60068,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct23_57",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“她自信____ (de)参加比赛。”\n(Nghĩa: Cô ấy tự tin tham gia cuộc thi.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“她自信____参加比赛。”",
         "options": [
           "地",
           "借",
@@ -60110,7 +60081,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct23_58",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“真的！南方主食多是米饭和____ (niángāo)，北方人爱吃馒头和面条。”\n(Nghĩa: Thật đấy! Món chính miền Nam phần nhiều là cơm và bánh tổ, người miền Bắc thích ăn màn thầu và mì sợi.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“真的！南方主食多是米饭和____，北方人爱吃馒头和面条。”",
         "options": [
           "西瓜",
           "学生",
@@ -60123,7 +60094,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct23_59",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“听说中国____ (nánfāng)和北方的饮食习惯不太一样，是真的吗？”\n(Nghĩa: Nghe nói thói quen ăn uống của miền Nam và miền Bắc Trung Quốc khá khác nhau, có thật không?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“听说中国____和北方的饮食习惯不太一样，是真的吗？”",
         "options": [
           "其实",
           "粽子",
@@ -60136,7 +60107,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct23_60",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“在中国，不同地方菜的味道不同，比如：南方人常吃甜的、北方人吃咸的、东部的人吃酸的、____ (xībù)人吃辣的。”\n(Nghĩa: Ở Trung Quốc, hương vị món ăn từng vùng khác nhau, ví dụ: người miền Nam hay ăn ngọt, miền Bắc ăn mặn, miền Đông ăn chua, còn miền Tây ăn cay.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“在中国，不同地方菜的味道不同，比如：南方人常吃甜的、北方人吃咸的、东部的人吃酸的、____人吃辣的。”",
         "options": [
           "生日",
           "西部",
@@ -60543,35 +60514,35 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "白茹雪",
             "hanzi": "小兰， 你来中国留学快要一年了，中国的交通你习惯了吗？",
-            "displayHanzi": "小兰， 你来 (lái: đến)中国留学 (liúxué: du học)快要一年了，中国的交通你习惯了吗？",
+            "displayHanzi": "小兰， 你来中国留学快要一年了，中国的交通你习惯了吗？",
             "pinyin": "Xiǎolán, nǐ lái Zhōngguó liúxué kuàiyào yī nián le, Zhōngguó de jiāotōng nǐ xíguàn le ma?",
             "meaning": "Tiểu Lan, cậu sang Trung Quốc du học gần một năm rồi, cậu đã quen với giao thông ở Trung Quốc chưa?"
           },
           {
             "speaker": "范玉兰",
             "hanzi": "我习惯了。 中国的交通很好，高峰时间很少堵车。",
-            "displayHanzi": "我习惯了。 中国的交通很好，高峰时间很少 (shǎo: ít)堵车。",
+            "displayHanzi": "我习惯了。 中国的交通很好，高峰时间很少堵车。",
             "pinyin": "Wǒ xíguàn le. Zhōngguó de jiāotōng hěn hǎo, gāofēng shíjiān hěn shǎo dǔchē.",
             "meaning": "Tớ quen rồi. Giao thông ở Trung Quốc rất tốt, giờ cao điểm cũng ít khi tắc đường."
           },
           {
             "speaker": "白茹雪",
             "hanzi": "是啊! 大部分中国人都遵守交通规则。",
-            "displayHanzi": "是啊! 大 (dà: to, lớn)部分中国人都遵守交通规则。",
+            "displayHanzi": "是啊! 大部分中国人都遵守交通规则。",
             "pinyin": "Shì a! Dàbùfen Zhōngguó rén dōu zūnshǒu jiāotōng guīzé.",
             "meaning": "Đúng vậy! Phần lớn người Trung Quốc đều tuân thủ luật giao thông."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "你会骑什么车？",
-            "displayHanzi": "你会骑 (qí: cưỡi, đi (xe đạp/máy))什么车 (chē: xe)？",
+            "displayHanzi": "你会骑什么车？",
             "pinyin": "Nǐ huì qí shénme chē?",
             "meaning": "Cậu biết đi xe gì?"
           },
           {
             "speaker": "白茹雪",
             "hanzi": "我会骑自行车和摩托车，我爸爸刚买了一辆汽车，  所以我正在学开车。学会的时候我就开车去玩儿。",
-            "displayHanzi": "我会骑 (qí: cưỡi, đi (xe đạp/máy))自行车和摩托车，我爸爸刚 (gāng: vừa mới)买了一辆汽车，  所以 (suǒyǐ: cho nên)我正在学 (xué: học)开车。学会的时候我就开车去玩儿。",
+            "displayHanzi": "我会骑自行车和摩托车，我爸爸刚买了一辆汽车，  所以我正在学开车。学会的时候我就开车去玩儿。",
             "pinyin": "Wǒ huì qí zìxíngchē hé mótuōchē, wǒ bàba gāng mǎi le yí liàng qìchē, suǒyǐ wǒ zhèngzài xué kāichē. Xuéhuì de shíhou wǒ jiù kāichē qù wánr.",
             "meaning": "Tớ biết đi xe đạp và xe máy, bố tớ vừa mua một chiếc ô tô nên tớ đang học lái xe. Khi nào học xong tớ sẽ lái xe đi chơi."
           },
@@ -60585,35 +60556,35 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "白茹雪",
             "hanzi": "不会啊，如果不知道的话，我就看地图或者可以看路上的标志。",
-            "displayHanzi": "不会啊，如果不知道的话 (huà: lời nói)，我就看地图或者可以看路上 (lùshang: trên đường)的标志。",
+            "displayHanzi": "不会啊，如果不知道的话，我就看地图或者可以看路上的标志。",
             "pinyin": "Bú huì a, rúguǒ bù zhīdao dehuà, wǒ jiù kàn dìtú huòzhě kěyǐ kàn lùshang de biāozhì.",
             "meaning": "Không đâu, nếu không biết đường thì tớ xem bản đồ hoặc nhìn biển báo chỉ đường."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "你觉得在中国坐什么车比较方便？",
-            "displayHanzi": "你觉得在中国坐 (zuò: ngồi)什么车 (chē: xe)比较方便？",
+            "displayHanzi": "你觉得在中国坐什么车比较方便？",
             "pinyin": "Nǐ juéde zài Zhōngguó zuò shénme chē bǐjiào fāngbiàn?",
             "meaning": "Cậu thấy ở Trung Quốc đi phương tiện gì thì tiện hơn?"
           },
           {
             "speaker": "白茹雪",
             "hanzi": "如果要去比较近的地方，你可以走路或者骑自行车。较远的地方可以坐火车、出租车或者公共汽车， 但公共汽车上的乘客比较多。",
-            "displayHanzi": "如果要去比较近的地方，你可以走路或者骑 (qí: cưỡi, đi (xe đạp/máy))自行车。较远的地方可以坐 (zuò: ngồi)火车、出租车或者公共汽车， 但 (dàn: nhưng)公共汽车上 (shàng: trên / lên)的乘客比较多。",
+            "displayHanzi": "如果要去比较近的地方，你可以走路或者骑自行车。较远的地方可以坐火车、出租车或者公共汽车， 但公共汽车上的乘客比较多。",
             "pinyin": "Rúguǒ yào qù bǐjiào jìn de dìfang, nǐ kěyǐ zǒulù huòzhě qí zìxíngchē. Jiào yuǎn de dìfang kěyǐ zuò huǒchē, chūzūchē huòzhě gōnggòng qìchē, dàn gōnggòng qìchē shàng de chéngkè bǐjiào duō.",
             "meaning": "Nếu đi chỗ gần, cậu có thể đi bộ hoặc đạp xe. Chỗ xa hơn có thể đi tàu hỏa, taxi hoặc xe buýt, nhưng hành khách trên xe buýt khá đông."
           },
           {
             "speaker": "范玉兰",
             "hanzi": "是的，我昨天坐公共汽车去上课，车上很拥挤。所以司机开车开得挺慢，我坐车坐了一个小时才到学校。",
-            "displayHanzi": "是的，我昨天坐 (zuò: ngồi)公共汽车去上课，车 (chē: xe)上 (shàng: trên / lên)很拥挤。所以 (suǒyǐ: cho nên)司机开车开 (kāi: mở, lái)得挺慢，我坐车坐了一个小时才 (cái: mới)到学校。",
+            "displayHanzi": "是的，我昨天坐公共汽车去上课，车上很拥挤。所以司机开车开得挺慢，我坐车坐了一个小时才到学校。",
             "pinyin": "Shì de, wǒ zuótiān zuò gōnggòng qìchē qù shàngkè, chē shàng hěn yōngjǐ. Suǒyǐ sījī kāichē kāi de tǐng màn, wǒ zuòchē zuòle yígè xiǎoshí cái dào xuéxiào.",
             "meaning": "Đúng thế, hôm qua tớ đi xe buýt đến lớp, trên xe rất đông đúc. Vì vậy tài xế lái khá chậm, tớ ngồi xe mất một tiếng mới tới trường."
           },
           {
             "speaker": "白茹雪",
             "hanzi": "最好应该骑摩托车，但是要有安全帽，红绿灯的红灯亮了要停车，因为路上都有交通警察。",
-            "displayHanzi": "最好应该骑 (qí: cưỡi, đi (xe đạp/máy))摩托车，但是要有安全帽，红绿灯的红灯 (hóngdēng: đèn đỏ)亮 (liàng: sáng)了要停车 (chē: xe)，因为路上 (lùshang: trên đường)都有交通警察。",
+            "displayHanzi": "最好应该骑摩托车，但是要有安全帽，红绿灯的红灯亮了要停车，因为路上都有交通警察。",
             "pinyin": "Zuì hǎo yīnggāi qí mótuōchē, dànshì yào yǒu ānquán mào, hónglǜdēng de hóngdēng liàngle yào tíngchē, yīnwèi lùshang dōu yǒu jiāotōng jǐngchá.",
             "meaning": "Tốt nhất là nên đi xe máy, nhưng phải đội mũ bảo hiểm, đèn đỏ bật sáng là phải dừng xe vì trên đường đều có cảnh sát giao thông."
           },
@@ -60642,10 +60613,10 @@ const DEFAULT_LESSONS = [
             "audioText": "我习惯了。 中国的交通很好，高峰时间很少堵车。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "我习惯了。 中国的交通很好，高峰时间很少 (shǎo: ít)堵车。",
-              "高峰时间公共汽车上 (shàng: trên / lên)的乘客非常多。",
+              "我习惯了。 中国的交通很好，高峰时间很少堵车。",
+              "高峰时间公共汽车上的乘客非常多。",
               "他就是我的弟弟。",
-              "我学 (xué: học)汉语学了三年。"
+              "我学汉语学了三年。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 我习惯了。 中国的交通很好，高峰时间很少堵车。 (Wǒ xíguàn le. Zhōngguó de jiāotōng hěn hǎo, gāofēng shíjiān hěn shǎo dǔchē.) → Tớ quen rồi. Giao thông ở Trung Quốc rất tốt, giờ cao điểm cũng ít khi tắc đường."
@@ -60666,10 +60637,10 @@ const DEFAULT_LESSONS = [
             "audioText": "你会骑什么车？",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "小明 (míng: ngày mai, sáng)做完 (zuòwán: làm xong)作业就去看电视 (diànshì: tivi)。",
-              "如果担心 (dānxīn: lo lắng)迷路，你可以先看看手机地图。",
-              "你会骑 (qí: cưỡi, đi (xe đạp/máy))什么车 (chē: xe)？",
-              "火车马上 (mǎshàng: ngay lập tức)就开 (kāi: mở, lái)。"
+              "小明做完作业就去看电视。",
+              "如果担心迷路，你可以先看看手机地图。",
+              "你会骑什么车？",
+              "火车马上就开。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 你会骑什么车？ (Nǐ huì qí shénme chē?) → Cậu biết đi xe gì?"
@@ -60740,7 +60711,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "昨天我去了超市和书店。 （你去哪儿了？）",
-            "question": "[Ôn tập Bài 23] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tôi không biết người này là nam hay là nữ nữa.",
               "Hôm qua tôi đã đi đến siêu thị và hiệu sách. (Bạn đã đi đâu thế?)",
@@ -60752,19 +60723,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我看了一个上午的书了。",
-            "question": "[Bài 24] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "他睡觉 (jiào: giấc ngủ)睡了九个小时。",
+              "他睡觉睡了九个小时。",
               "我看了一个上午的书了。",
-              "今天的作业你做完 (zuòwán: làm xong)了吗？",
-              "大家 (dàjiā: mọi người)都要遵守交通规则，注意 (zhùyì: chú ý)红绿灯标志。"
+              "今天的作业你做完了吗？",
+              "大家都要遵守交通规则，注意红绿灯标志。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 我看了一个上午的书了。 (Wǒ kànle yígè shàngwǔ de shū le.) → Tôi đã đọc sách hết một buổi sáng."
           },
           {
             "audioText": "你累了，还是去休息吧！",
-            "question": "[Ôn tập Bài 12] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Anh ấy về nhà tắm trước, sau đó qua đón tớ.",
               "Hẹn gặp lại vào ngày mai! (Hoặc “Mai gặp nhé!”)",
@@ -60776,19 +60747,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "去旅游的东西你准备好了吗？",
-            "question": "[Bài 24] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "去旅游的东西你准备好了吗？",
-              "我一定 (yīdìng: nhất định)要学 (xué: học)好汉语，不学好我就不回国 (huíguó: về nước)。",
-              "这位 (wèi: vị)出租车司机开车开 (kāi: mở, lái)得很稳、很快。",
-              "他说的话 (huà: lời nói)我没 (méi: chưa, không có)听 (tīng: nghe)见。"
+              "我一定要学好汉语，不学好我就不回国。",
+              "这位出租车司机开车开得很稳、很快。",
+              "他说的话我没听见。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 去旅游的东西你准备好了吗？ (Qù lǚyóu de dōngxi nǐ zhǔnbèi hǎo le ma?) → Bạn đã chuẩn bị đầy đủ đồ đạc để đi du lịch chưa?"
           },
           {
             "audioText": "中午好！",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Anh đừng đi! Có được không?",
               "Tôi chưa ăn cơm.",
@@ -60807,28 +60778,28 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Lan",
             "hanzi": "从学校去火车站坐公共汽车还是坐出租车方便？",
-            "displayHanzi": "从学校去火车站 (zhàn: đứng / trạm)坐 (zuò: ngồi)公共汽车还是坐出租车方便？",
+            "displayHanzi": "从学校去火车站坐公共汽车还是坐出租车方便？",
             "pinyin": "Cóng xuéxiào qù huǒchēzhàn zuò gōnggòng qìchē háishi zuò chūzūchē fāngbiàn?",
             "meaning": "Từ trường ra ga tàu hỏa thì đi xe buýt hay taxi tiện hơn?"
           },
           {
             "speaker": "Minh",
             "hanzi": "早上乘客多、容易堵车，坐地铁或者提早出门打车比较好。",
-            "displayHanzi": "早上乘客多、容易堵车，坐 (zuò: ngồi)地铁或者提早 (zǎo: sớm)出门打 (dǎ: đánh, gọi, chơi)车 (chē: xe)比较好。",
+            "displayHanzi": "早上乘客多、容易堵车，坐地铁或者提早出门打车比较好。",
             "pinyin": "Zǎoshang chéngkè duō, róngyì dǔchē, zuò dìtiě huòzhě tízǎo chūmén dǎchē bǐjiào hǎo.",
             "meaning": "Buổi sáng hành khách đông, dễ tắc đường, đi tàu điện ngầm hoặc ra sớm bắt taxi thì tốt hơn."
           },
           {
             "speaker": "Lan",
             "hanzi": "对了，我看大家骑摩托车都戴安全帽，也很注意红绿灯。",
-            "displayHanzi": "对了，我看大家 (dàjiā: mọi người)骑 (qí: cưỡi, đi (xe đạp/máy))摩托车都戴安全帽，也很注意 (zhùyì: chú ý)红绿灯。",
+            "displayHanzi": "对了，我看大家骑摩托车都戴安全帽，也很注意红绿灯。",
             "pinyin": "Duì le, wǒ kàn dàjiā qí mótuōchē dōu dài ānquán mào, yě hěn zhùyì hónglǜdēng.",
             "meaning": "Đúng rồi, tớ thấy mọi người đi xe máy đều đội mũ bảo hiểm và rất chú ý đèn đỏ đèn xanh."
           },
           {
             "speaker": "Minh",
             "hanzi": "是啊，每个人遵守交通规则，路上才安全。",
-            "displayHanzi": "是啊，每个人遵守交通规则，路上 (lùshang: trên đường)才 (cái: mới)安全。",
+            "displayHanzi": "是啊，每个人遵守交通规则，路上才安全。",
             "pinyin": "Shì a, měi gèrén zūnshǒu jiāotōng guīzé, lùshang cái ānquán.",
             "meaning": "Đúng vậy, mỗi người đều tuân thủ luật giao thông thì đi đường mới an toàn."
           }
@@ -60836,7 +60807,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "从学校去火车站坐公共汽车还是坐出租车方便？ 早上乘客多、容易堵车，坐地铁或者提早出门打车比较好。 对了，我看大家骑摩托车都戴安全帽，也很注意红绿灯。 是啊，每个人遵守交通规则，路上才安全。",
-            "question": "[Nghe hiểu tình huống mới] Minh khuyên nên làm gì khi muốn đi từ trường ra ga tàu hỏa vào buổi sáng?",
+            "question": "Minh khuyên nên làm gì khi muốn đi từ trường ra ga tàu hỏa vào buổi sáng?",
             "options": [
               "Đi bộ mất cả ngày",
               "Đi xe máy không cần đội mũ bảo hiểm",
@@ -60848,7 +60819,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "从学校去火车站坐公共汽车还是坐出租车方便？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Một bức tranh",
               "Từ trường ra ga tàu hỏa thì đi xe buýt hay taxi tiện hơn?",
@@ -60860,19 +60831,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "早上乘客多、容易堵车，坐地铁或者提早出门打车比较好。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "如果担心 (dānxīn: lo lắng)迷路，你可以先看看手机地图。",
-              "如果明天下雨，我们就不去玩 (wán: chơi)了。",
-              "早上乘客多、容易堵车，坐 (zuò: ngồi)地铁或者提早 (zǎo: sớm)出门打 (dǎ: đánh, gọi, chơi)车 (chē: xe)比较好。",
-              "我走了一会儿 (ér: con, (âm uốn lưỡi))就回来 (lái: đến)。"
+              "如果担心迷路，你可以先看看手机地图。",
+              "如果明天下雨，我们就不去玩了。",
+              "早上乘客多、容易堵车，坐地铁或者提早出门打车比较好。",
+              "我走了一会儿就回来。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 早上乘客多、容易堵车，坐地铁或者提早出门打车比较好。 (Zǎoshang chéngkè duō, róngyì dǔchē, zuò dìtiě huòzhě tízǎo chūmén dǎchē bǐjiào hǎo.) → Buổi sáng hành khách đông, dễ tắc đường, đi tàu điện ngầm hoặc ra sớm bắt taxi thì tốt hơn."
           },
           {
             "audioText": "对了，我看大家骑摩托车都戴安全帽，也很注意红绿灯。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Chúng tôi đang bàn bạc thảo luận.",
               "Hẹn gặp lại vào ngày mai! (Hoặc “Mai gặp nhé!”)",
@@ -60984,7 +60955,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss24_5",
           "targetHanzi": "爸爸热情地接待了我的同学",
-          "targetMeaning": "[Ôn tập Bài 12] Bố tôi đã tiếp đón bạn học của tôi rất nhiệt tình.",
+          "targetMeaning": "Bố tôi đã tiếp đón bạn học của tôi rất nhiệt tình.",
           "pinyin": "Bàba rèqíng de jiēdài le wǒ de tóngxué.",
           "tokens": [
             "爸爸",
@@ -60998,7 +60969,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss24_6",
           "targetHanzi": "她吃了三个饺子",
-          "targetMeaning": "[Ôn tập Bài 23] Cô ấy đã ăn 3 cái sủi cảo.",
+          "targetMeaning": "Cô ấy đã ăn 3 cái sủi cảo.",
           "pinyin": "Tā chīle sān gè jiǎozi.",
           "tokens": [
             "她",
@@ -61340,19 +61311,19 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr24_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Vào giờ cao điểm, hành khách trên xe buýt rất đông.",
+          "promptText": "Vào giờ cao điểm, hành khách trên xe buýt rất đông.",
           "expectedChinese": "高峰时间公共汽车上的乘客非常多。",
           "acceptedPinyin": "gāofēng shíjiān gōnggòng qìchē shàng de chéngkè fēicháng duō",
-          "hint": "Gợi ý Pinyin: Gāofēng shíjiān gōnggòng qìchē shàng de chéngkè fēicháng duō. | Từ chưa học: 上 (shàng: trên / lên)",
+          "hint": "Gợi ý Pinyin: Gāofēng shíjiān gōnggòng qìchē shàng de chéngkè fēicháng duō.",
           "explanation": "Vào giờ cao điểm, hành khách trên xe buýt rất đông. → 高峰时间公共汽车上的乘客非常多。 (Gāofēng shíjiān gōnggòng qìchē shàng de chéngkè fēicháng duō.)"
         },
         {
           "id": "tr24_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Nếu lo bị lạc đường, bạn có thể xem trước bản đồ trên điện thoại.",
+          "promptText": "Nếu lo bị lạc đường, bạn có thể xem trước bản đồ trên điện thoại.",
           "expectedChinese": "如果担心迷路，你可以先看看手机地图。",
           "acceptedPinyin": "rúguǒ dānxīn mílù nǐ kěyǐ xiān kànkan shǒujī dìtú",
-          "hint": "Gợi ý Pinyin: Rúguǒ dānxīn mílù, nǐ kěyǐ xiān kànkan shǒujī dìtú. | Từ chưa học: 担心 (dānxīn: lo lắng)",
+          "hint": "Gợi ý Pinyin: Rúguǒ dānxīn mílù, nǐ kěyǐ xiān kànkan shǒujī dìtú.",
           "explanation": "Nếu lo bị lạc đường, bạn có thể xem trước bản đồ trên điện thoại. → 如果担心迷路，你可以先看看手机地图。 (Rúguǒ dānxīn mílù, nǐ kěyǐ xiān kànkan shǒujī dìtú.)"
         },
         {
@@ -61466,7 +61437,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr24_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 大家 (dàjiā: mọi người)都要遵守交通规则，注意 (zhùyì: chú ý)红绿灯标志。",
+          "promptText": "大家都要遵守交通规则，注意红绿灯标志。",
           "chineseAudioText": "大家都要遵守交通规则，注意红绿灯标志。",
           "pinyin": "Dàjiā dōu yào zūnshǒu jiāotōng guīzé, zhùyì hónglǜdēng biāozhì.",
           "expectedMeaning": "Mọi người đều phải tuân thủ luật giao thông và chú ý biển báo đèn giao thông.",
@@ -61481,7 +61452,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr24_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 骑 (qí: cưỡi, đi (xe đạp/máy))摩托车的时候一定 (yīdìng: nhất định)要戴好安全帽。",
+          "promptText": "骑摩托车的时候一定要戴好安全帽。",
           "chineseAudioText": "骑摩托车的时候一定要戴好安全帽。",
           "pinyin": "Qí mótuōchē de shíhou yídìng yào dài hǎo ānquán mào.",
           "expectedMeaning": "Khi đi xe máy nhất định phải đội mũ bảo hiểm cẩn thận.",
@@ -61511,7 +61482,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr24_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 12] 从我家走路到学校，五分钟就到。",
+          "promptText": "从我家走路到学校，五分钟就到。",
           "chineseAudioText": "从我家走路到学校，五分钟就到。",
           "pinyin": "Cóng wǒ jiā zǒulù dào xuéxiào, wǔ fēnzhōng jiù dào.",
           "expectedMeaning": "Đi bộ từ nhà tôi tới trường, chỉ mất 5 phút là đến rồi.",
@@ -61971,7 +61942,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq24_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 6] Từ đã học “都” (dōu) có nghĩa là gì?",
+          "question": "Từ đã học “都” (dōu) có nghĩa là gì?",
           "options": [
             "bệnh viện",
             "đi, nhé,…",
@@ -61984,7 +61955,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq24_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 1] Từ đã học “您” (nín) có nghĩa là gì?",
+          "question": "Từ đã học “您” (nín) có nghĩa là gì?",
           "options": [
             "thứ bảy",
             "ngài, ông, bà... (cách gọi tôn trọng và lịch sự dành cho những người có địa vị cao...)",
@@ -61997,7 +61968,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq24_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 11] Từ đã học “矮” (ǎi) có nghĩa là gì?",
+          "question": "Từ đã học “矮” (ǎi) có nghĩa là gì?",
           "options": [
             "mùa xuân",
             "quê hương",
@@ -62010,7 +61981,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq24_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “高峰时间公共汽车上 (shàng: trên / lên)的乘客非常多。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “高峰时间公共汽车上的乘客非常多。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Vào giờ cao điểm, hành khách trên xe buýt rất đông.",
             "Năm nay cháu mấy tuổi rồi (Hỏi trẻ em dưới mười tuổi)",
@@ -62023,7 +61994,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq24_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nLan: 从学校去火车站 (zhàn: đứng / trạm)坐 (zuò: ngồi)公共汽车还是坐出租车方便？\nMinh: 早上乘客多、容易堵车，坐 (zuò: ngồi)地铁或者提早 (zǎo: sớm)出门打 (dǎ: đánh, gọi, chơi)车 (chē: xe)比较好。\nLan: 对了，我看大家 (dàjiā: mọi người)骑 (qí: cưỡi, đi (xe đạp/máy))摩托车都戴安全帽，也很注意 (zhùyì: chú ý)红绿灯。\nMinh: 是啊，每个人遵守交通规则，路上 (lùshang: trên đường)才 (cái: mới)安全。\n\nMinh khuyên nên làm gì khi muốn đi từ trường ra ga tàu hỏa vào buổi sáng?",
+          "question": "Đọc đoạn hội thoại:\nLan: 从学校去火车站坐公共汽车还是坐出租车方便？\nMinh: 早上乘客多、容易堵车，坐地铁或者提早出门打车比较好。\nLan: 对了，我看大家骑摩托车都戴安全帽，也很注意红绿灯。\nMinh: 是啊，每个人遵守交通规则，路上才安全。\n\nMinh khuyên nên làm gì khi muốn đi từ trường ra ga tàu hỏa vào buổi sáng?",
           "options": [
             "Đi xe máy không cần đội mũ bảo hiểm",
             "Đi tàu điện ngầm hoặc ra khỏi nhà sớm để bắt taxi vì sáng dễ tắc đường",
@@ -62549,7 +62520,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct24_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“最好应该骑摩托车，但是要有安全帽，____的红灯亮了要停车，因为路上都有交通警察。”\n(Gợi ý nghĩa: Tốt nhất là nên đi xe máy, nhưng phải đội mũ bảo hiểm, đèn đỏ bật sáng là phải dừng xe vì trên đường đều có cảnh sát giao thông.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“最好应该骑摩托车，但是要有安全帽，____的红灯亮了要停车，因为路上都有交通警察。”",
         "options": [
           "踢足球",
           "红绿灯",
@@ -62562,7 +62533,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct24_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“如果要去比较近的地方，你可以走路或者骑自行车。较远的地方可以坐火车、____或者公共汽车， 但公共汽车上的乘客比较多。”\n(Gợi ý nghĩa: Nếu đi chỗ gần, cậu có thể đi bộ hoặc đạp xe. Chỗ xa hơn có thể đi tàu hỏa, taxi hoặc xe buýt, nhưng hành khách trên xe buýt khá đông.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“如果要去比较近的地方，你可以走路或者骑自行车。较远的地方可以坐火车、____或者公共汽车， 但公共汽车上的乘客比较多。”",
         "options": [
           "讲故事",
           "白茹雪",
@@ -62575,7 +62546,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct24_40",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是的，我昨天坐公共汽车去上课，车上很拥挤。所以司机开车开得挺慢，我____坐了一个小时才到学校。”\n(Gợi ý nghĩa: Đúng thế, hôm qua tớ đi xe buýt đến lớp, trên xe rất đông đúc. Vì vậy tài xế lái khá chậm, tớ ngồi xe mất một tiếng mới tới trường.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是的，我昨天坐公共汽车去上课，车上很拥挤。所以司机开车开得挺慢，我____坐了一个小时才到学校。”",
         "options": [
           "贵姓",
           "坐车",
@@ -62588,7 +62559,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct24_41",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我会骑自行车和摩托车，我爸爸刚买了一____汽车， 所以我正在学开车。学会的时候我就开车去玩儿。”\n(Gợi ý nghĩa: Tớ biết đi xe đạp và xe máy, bố tớ vừa mua một chiếc ô tô nên tớ đang học lái xe. Khi nào học xong tớ sẽ lái xe đi chơi.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我会骑自行车和摩托车，我爸爸刚买了一____汽车， 所以我正在学开车。学会的时候我就开车去玩儿。”",
         "options": [
           "冷",
           "睡",
@@ -62614,7 +62585,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct24_43",
         "category": "vocab",
-        "question": "Từ Hán tự “出租车” (xe taxi) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “出租车” có phiên âm Pinyin đúng là gì?",
         "options": [
           "děi",
           "quán",
@@ -62751,7 +62722,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct24_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 的  /  一个  /  书了  /  上午  /  看了  /  我\n(Nghĩa: “Tôi đã đọc sách hết một buổi sáng.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n的  /  一个  /  书了  /  上午  /  看了  /  我",
         "options": [
           "书了的上午一个看了我。",
           "看了我一个上午的书了。",
@@ -62764,7 +62735,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct24_54",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 饺子  /  个  /  她  /  吃  /  了  /  三\n(Nghĩa: “Cô ấy đã ăn 3 cái sủi cảo.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n饺子  /  个  /  她  /  吃  /  了  /  三",
         "options": [
           "她吃了三个饺子。",
           "吃了三个饺子她。",
@@ -62777,7 +62748,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct24_55",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 问我  /  什么  /  不  /  知道  /  如果有  /  你就\n(Nghĩa: “Nếu có gì không biết thì cậu cứ hỏi tớ.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n问我  /  什么  /  不  /  知道  /  如果有  /  你就",
         "options": [
           "什么如果有不知道你就问我。",
           "什么不知道你就问我如果有。",
@@ -62790,7 +62761,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct24_56",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 你  /  去  /  准备  /  东西  /  好了吗  /  旅游的\n(Nghĩa: “Bạn đã chuẩn bị đầy đủ đồ đạc để đi du lịch chưa?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n你  /  去  /  准备  /  东西  /  好了吗  /  旅游的",
         "options": [
           "去旅游的东西你准备好了吗。",
           "旅游的东西你准备好了吗去。",
@@ -62803,7 +62774,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct24_57",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“____ (màn)慢就会习惯了。”\n(Nghĩa: Dần dần rồi sẽ quen thôi.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“____慢就会习惯了。”",
         "options": [
           "事",
           "吧",
@@ -62816,7 +62787,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct24_58",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“不会啊，如果不知道的话，我就看地图或者可以看路上的____ (biāozhì)。”\n(Nghĩa: Không đâu, nếu không biết đường thì tớ xem bản đồ hoặc nhìn biển báo chỉ đường.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“不会啊，如果不知道的话，我就看地图或者可以看路上的____。”",
         "options": [
           "标志",
           "啤酒",
@@ -62829,7 +62800,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct24_59",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“是啊! 大部分中国人都____ (zūnshǒu)交通规则。”\n(Nghĩa: Đúng vậy! Phần lớn người Trung Quốc đều tuân thủ luật giao thông.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“是啊! 大部分中国人都____交通规则。”",
         "options": [
           "园子",
           "遵守",
@@ -62842,7 +62813,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct24_60",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“我习惯了。 中国的交通很好，____ (gāofēng shíjiān)很少堵车。”\n(Nghĩa: Tớ quen rồi. Giao thông ở Trung Quốc rất tốt, giờ cao điểm cũng ít khi tắc đường.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我习惯了。 中国的交通很好，____很少堵车。”",
         "options": [
           "十字路口",
           "医疗保险",
@@ -63207,42 +63178,42 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "阮日明",
             "hanzi": "您也知道我们来中国留学是为了想学汉语学得更好，说得更流利更标准。但是来中国以后，我发现自己没有进步。我不知道要怎么办，所以只好来找您。",
-            "displayHanzi": "您也知道我们来 (lái: đến)中国留学 (liúxué: du học)是为了想学 (xué: học)汉语学得更好，说得更流利更标准。但是来中国以后，我发现自己没有 (méiyǒu: không có)进步。我不知道要怎么办，所以 (suǒyǐ: cho nên)只好来找您。",
+            "displayHanzi": "您也知道我们来中国留学是为了想学汉语学得更好，说得更流利更标准。但是来中国以后，我发现自己没有进步。我不知道要怎么办，所以只好来找您。",
             "pinyin": "Nín yě zhīdao wǒmen lái Zhōngguó liúxué shì wèile xiǎng xué Hànyǔ xué de gèng hǎo, shuō de gèng liúlì gèng biāozhǔn. Dànshì lái Zhōngguó yǐhòu, wǒ fāxiàn zìjǐ méiyǒu jìnbù. Wǒ bù zhīdào yào zěnme bàn, suǒyǐ zhǐhǎo lái zhǎo nín.",
             "meaning": "Thầy/cô cũng biết chúng em sang Trung Quốc du học là để học tiếng Hán tốt hơn, nói trôi chảy và chuẩn hơn. Nhưng sau khi đến Trung Quốc, em thấy mình không tiến bộ. Em không biết phải làm sao nên đành đến tìm thầy/cô."
           },
           {
             "speaker": "刘老师",
             "hanzi": "你为什么这么想？",
-            "displayHanzi": "你为 (wèi: vì)什么这么想？",
+            "displayHanzi": "你为什么这么想？",
             "pinyin": "Nǐ wèishénme zhème xiǎng?",
             "meaning": "Sao em lại nghĩ như vậy?"
           },
           {
             "speaker": "阮日明",
             "hanzi": "跟中国朋友说话的时候，我觉得他们说什么我都能听懂，因为朋友们说得很慢，还选择比较简单的词语。但是如果在路边随便找一个人问路，他们说得很快，还用很多我不知道的词语，我听不清楚。",
-            "displayHanzi": "跟 (gēn: cùng, với)中国朋友说话 (huà: lời nói)的时候，我觉得他们说什么我都能听 (tīng: nghe)懂，因为朋友们说得很慢，还选择比较简单的词语。但是如果在路边 (lùbiān: ven đường)随便找一个人问路 (lù: đường)，他们说得很快，还用很多我不知道的词语，我听不清楚。",
+            "displayHanzi": "跟中国朋友说话的时候，我觉得他们说什么我都能听懂，因为朋友们说得很慢，还选择比较简单的词语。但是如果在路边随便找一个人问路，他们说得很快，还用很多我不知道的词语，我听不清楚。",
             "pinyin": "Gēn Zhōngguó péngyou shuōhuà de shíhou, wǒ juéde tāmen shuō shénme wǒ dōu néng tīng dǒng, yīnwèi péngyoumen shuō de hěn màn, hái xuǎnzé bǐ jiào jiǎndān de cíyǔ. Dànshì rúguǒ zài lù biān suíbiàn zhǎo yígè rén wèn lù, tāmen shuō de hěn kuài, hái yòng hěnduō wǒ bù zhīdao de cíyǔ, wǒ tīng bu qīngchu.",
             "meaning": "Khi nói chuyện với bạn bè Trung Quốc, em thấy họ nói gì em cũng hiểu, vì các bạn nói chậm và chọn từ ngữ khá đơn giản. Nhưng nếu hỏi đường ngẫu nhiên một người ngoài phố, họ nói rất nhanh lại dùng nhiều từ em không biết nên em nghe không rõ."
           },
           {
             "speaker": "刘老师",
             "hanzi": "这是留学生常遇到的困难。你应该多去外面走走，比如晚上你可以到湖边或者公园散步，然后跟那里的人说话。如果你听不清楚的话，也可以让他们再说一遍。慢慢的你的沟通问题就没有了。",
-            "displayHanzi": "这是留学生常遇到的困难。你应该多去外面 (wàimian: bên ngoài)走走，比如晚上你可以到湖边或者公园散步，然后跟 (gēn: cùng, với)那里 (lǐ: trong)的人说话 (huà: lời nói)。如果你听 (tīng: nghe)不清楚的话，也可以让他们再说一遍。慢慢的你的沟通问题就没有 (méiyǒu: không có)了。",
+            "displayHanzi": "这是留学生常遇到的困难。你应该多去外面走走，比如晚上你可以到湖边或者公园散步，然后跟那里的人说话。如果你听不清楚的话，也可以让他们再说一遍。慢慢的你的沟通问题就没有了。",
             "pinyin": "Zhè shì liúxuéshēng cháng yùdào de kùnnan. Nǐ yīnggāi duō qù wàimian zǒuzou, bǐrú wǎnshàng nǐ kěyǐ dào hú biān huòzhě gōngyuán sànbù, ránhòu gēn",
             "meaning": "Đây là khó khăn thường gặp của du học sinh. Em nên ra ngoài đi dạo nhiều hơn, ví dụ buổi tối ra bờ hồ hoặc công viên tản bộ rồi trò chuyện với mọi người ở đó. Nếu nghe chưa rõ thì có thể nhờ họ nói lại lần nữa. Dần dần vấn đề giao tiếp của em sẽ hết thôi."
           },
           {
             "speaker": "阮日明",
             "hanzi": "但是这样做可能会打扰他们。",
-            "displayHanzi": "但是这样做 (zuò: làm)可能会打扰他们。",
+            "displayHanzi": "但是这样做可能会打扰他们。",
             "pinyin": "Dànshì zhèyàng zuò kěnéng huì dǎrǎo tāmen.",
             "meaning": "Nhưng làm như vậy có thể sẽ làm phiền họ ạ."
           },
           {
             "speaker": "刘老师",
             "hanzi": "不会的。中国人很热情，他们一定会帮你。可是你要注意一点，就是不要害怕说错。你是留学生，你说错也没有人笑你。",
-            "displayHanzi": "不会的。中国人很热情，他们一定 (yīdìng: nhất định)会帮 (bāng: giúp đỡ)你。可是你要注意一点，就是不要害怕说错。你是留学生，你说错也没有 (méiyǒu: không có)人笑你。",
+            "displayHanzi": "不会的。中国人很热情，他们一定会帮你。可是你要注意一点，就是不要害怕说错。你是留学生，你说错也没有人笑你。",
             "pinyin": "Bú huì de. Zhōngguó rén hěn rèqíng, tāmen yídìng huì bāng nǐ. Kěshì nǐ yào zhùyì yīdiǎn, jiùshì búyào hàipà shuō cuò. Nǐ shì liúxuéshēng, nǐ shuō cuò yě méiyǒu rén xiào nǐ.",
             "meaning": "Không đâu. Người Trung Quốc rất nhiệt tình, họ nhất định sẽ giúp em. Nhưng em cần chú ý một điều là đừng sợ nói sai. Em là du học sinh, nói sai cũng không ai cười em đâu."
           },
@@ -63256,7 +63227,7 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "刘老师",
             "hanzi": "你不要着急，我们慢慢学。其实现在你汉语说得很流利了。",
-            "displayHanzi": "你不要着急，我们慢慢学 (xué: học)。其实现在你汉语说得很流利了。",
+            "displayHanzi": "你不要着急，我们慢慢学。其实现在你汉语说得很流利了。",
             "pinyin": "Nǐ búyào zháojí, wǒmen mànmàn xué. Qíshí xiànzài nǐ Hànyǔ shuō de hěn liúlì le.",
             "meaning": "Em đừng nóng vội, chúng ta cứ học từ từ. Thực ra bây giờ tiếng Hán của em nói cũng rất trôi chảy rồi đấy."
           },
@@ -63286,9 +63257,9 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "你说吧！",
-              "他歌唱 (gēchàng: ca hát)得不太好听 (tīng: nghe)。",
+              "他歌唱得不太好听。",
               "他说汉语说得很好。",
-              "选择简单清楚的词语会让交 (jiāo: nộp, kết bạn)流 (liú: chảy)更轻松。"
+              "选择简单清楚的词语会让交流更轻松。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 你说吧！ (Nǐ shuō ba!) → Em cứ nói đi!"
@@ -63309,10 +63280,10 @@ const DEFAULT_LESSONS = [
             "audioText": "你为什么这么想？",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "他歌唱 (gēchàng: ca hát)得不太好听 (tīng: nghe)。",
-              "晚上在湖边散步时 (shí: lúc, khi)，我发现很多人都在练习说话 (huà: lời nói)。",
-              "你为 (wèi: vì)什么这么想？",
-              "爸爸累得下 (xià: dưới / xuống)了班 (bān: lớp học)就想睡觉 (jiào: giấc ngủ)。"
+              "他歌唱得不太好听。",
+              "晚上在湖边散步时，我发现很多人都在练习说话。",
+              "你为什么这么想？",
+              "爸爸累得下了班就想睡觉。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 你为什么这么想？ (Nǐ wèishénme zhème xiǎng?) → Sao em lại nghĩ như vậy?"
@@ -63383,7 +63354,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "如果有什么不知道，你就问我。",
-            "question": "[Ôn tập Bài 24] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Phía bên trái trường học có một ngân hàng.",
               "Nếu có gì không biết thì cậu cứ hỏi tớ.",
@@ -63395,19 +63366,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "他说汉语说得很好。",
-            "question": "[Bài 25] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "他说汉语说得不好。",
               "他说汉语说得很好。",
-              "你觉得我穿 (chuān: mặc)得漂不漂亮？",
-              "下雨了，我没 (méi: chưa, không có)带 (dài: mang theo)伞 (sǎn: cái ô, dù)，只好在学校等着 (zhe: đang (trạng thái))。"
+              "你觉得我穿得漂不漂亮？",
+              "下雨了，我没带伞，只好在学校等着。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 他说汉语说得很好。 (Tā shuō Hànyǔ shuō de hěn hǎo.) → Anh ấy nói tiếng Trung rất tốt."
           },
           {
             "audioText": "从我家走路到学校，五分钟就到。",
-            "question": "[Ôn tập Bài 12] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Năm nay cậu bao nhiêu tuổi? (Hỏi chung chung)",
               "Đi bộ từ nhà tôi tới trường, chỉ mất 5 phút là đến rồi.",
@@ -63419,19 +63390,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "他汉语说得很好。",
-            "question": "[Bài 25] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "他歌唱 (gēchàng: ca hát)得很好听 (tīng: nghe)。",
-              "弟弟高兴得跳 (tiào: nhảy)了起来 (qǐlái: lên (bổ ngữ))。",
+              "他歌唱得很好听。",
+              "弟弟高兴得跳了起来。",
               "他汉语说得很好。",
-              "都七点了，他可能下班 (xiàbān: tan làm)回家了。"
+              "都七点了，他可能下班回家了。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 他汉语说得很好。 (Tā Hànyǔ shuō de hěn hǎo.) → Anh ấy nói tiếng Trung rất tốt."
           },
           {
             "audioText": "晚上好！",
-            "question": "[Ôn tập Bài 1] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Xin hỏi, đi đến bệnh viện như thế nào vậy?",
               "Bên trái tôi không phải là tòa giảng đường.",
@@ -63450,28 +63421,28 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Lan",
             "hanzi": "老师，我发现和中国人交流时，我还是有点儿害怕说错。",
-            "displayHanzi": "老师，我发现和中国人交 (jiāo: nộp, kết bạn)流 (liú: chảy)时 (shí: lúc, khi)，我还是有点儿害怕说错。",
+            "displayHanzi": "老师，我发现和中国人交流时，我还是有点儿害怕说错。",
             "pinyin": "Lǎoshī, wǒ fāxiàn hé Zhōngguó rén jiāoliú shí, wǒ háishi yǒudiǎnr hàipà shuō cuò.",
             "meaning": "Thưa thầy, em thấy khi giao tiếp với người Trung Quốc em vẫn hơi sợ nói sai."
           },
           {
             "speaker": "Thầy Lưu",
             "hanzi": "别怕！你应该先从简单的词语开始，慢慢就能说清楚。",
-            "displayHanzi": "别 (bié: đừng)怕！你应该先从简单的词语开 (kāi: mở, lái)始，慢慢就能说清楚。",
+            "displayHanzi": "别怕！你应该先从简单的词语开始，慢慢就能说清楚。",
             "pinyin": "Bié pà! Nǐ yīnggāi xiān cóng jiǎndān de cíyǔ kāishǐ, mànmàn jiù néng shuō qīngchu.",
             "meaning": "Đừng sợ! Em nên bắt đầu từ những từ ngữ đơn giản trước, dần dần sẽ nói rõ ràng thôi."
           },
           {
             "speaker": "Lan",
             "hanzi": "我可以晚上去湖边找大家聊天儿吗？怕打扰他们。",
-            "displayHanzi": "我可以晚上去湖边找大家 (dàjiā: mọi người)聊天儿吗？怕打扰他们。",
+            "displayHanzi": "我可以晚上去湖边找大家聊天儿吗？怕打扰他们。",
             "pinyin": "Wǒ kěyǐ wǎnshang qù húbiān zhǎo dàjiā liáotiānr ma? Pà dǎrǎo tāmen.",
             "meaning": "Buổi tối em có thể ra bờ hồ bắt chuyện với mọi người không? Em sợ làm phiền họ ạ."
           },
           {
             "speaker": "Thầy Lưu",
             "hanzi": "只要礼貌沟通，大家不仅不会笑你，还会帮你快速进步！",
-            "displayHanzi": "只要礼貌沟通，大家 (dàjiā: mọi người)不仅不会笑你，还会帮 (bāng: giúp đỡ)你快速进步！",
+            "displayHanzi": "只要礼貌沟通，大家不仅不会笑你，还会帮你快速进步！",
             "pinyin": "Zhǐyào lǐmào gōutōng, dàjiā bùjǐn bú huì xiào nǐ, hái huì bāng nǐ kuàisù jìnbù!",
             "meaning": "Chỉ cần giao tiếp lịch sự, mọi người chẳng những không cười em mà còn giúp em tiến bộ nhanh đấy!"
           }
@@ -63479,7 +63450,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "老师，我发现和中国人交流时，我还是有点儿害怕说错。 别怕！你应该先从简单的词语开始，慢慢就能说清楚。 我可以晚上去湖边找大家聊天儿吗？怕打扰他们。 只要礼貌沟通，大家不仅不会笑你，还会帮你快速进步！",
-            "question": "[Nghe hiểu tình huống mới] Thầy Lưu khuyên Ngọc Lan bắt đầu luyện nói như thế nào để bớt sợ sai?",
+            "question": "Thầy Lưu khuyên Ngọc Lan bắt đầu luyện nói như thế nào để bớt sợ sai?",
             "options": [
               "Chỉ học thuộc từ điển ở nhà, không nói chuyện với ai",
               "Phải dùng ngay các câu thật dài và khó",
@@ -63491,7 +63462,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "老师，我发现和中国人交流时，我还是有点儿害怕说错。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Nghỉ ngơi một chút",
               "Anh ấy hát không hay lắm.",
@@ -63503,19 +63474,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "别怕！你应该先从简单的词语开始，慢慢就能说清楚。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "不好意思，现在打扰您五分钟可以吗？",
-              "他吃得不太饱 (bǎo: no)。",
-              "明天天气可能会变 (biàn: biến đổi, trở nên)冷。",
-              "别 (bié: đừng)怕！你应该先从简单的词语开 (kāi: mở, lái)始，慢慢就能说清楚。"
+              "他吃得不太饱。",
+              "明天天气可能会变冷。",
+              "别怕！你应该先从简单的词语开始，慢慢就能说清楚。"
             ],
             "correctIndex": 3,
             "explanation": "Câu vừa đọc: 别怕！你应该先从简单的词语开始，慢慢就能说清楚。 (Bié pà! Nǐ yīnggāi xiān cóng jiǎndān de cíyǔ kāishǐ, mànmàn jiù néng shuō qīngchu.) → Đừng sợ! Em nên bắt đầu từ những từ ngữ đơn giản trước, dần dần sẽ nói rõ ràng thôi."
           },
           {
             "audioText": "我可以晚上去湖边找大家聊天儿吗？怕打扰他们。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "quyển từ điển kia",
               "Nếu tám giờ mà tớ vẫn chưa quay lại thì cậu không cần đợi tớ nữa nhé.",
@@ -63607,7 +63578,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss25_1",
           "targetHanzi": "不要害怕说错没有人会笑你的",
-          "targetMeaning": "[Mở rộng] Đừng sợ nói sai, sẽ không có ai cười bạn đâu.",
+          "targetMeaning": "Đừng sợ nói sai, sẽ không có ai cười bạn đâu.",
           "pinyin": "Búyào hàipà shuō cuò, méiyǒu rén huì xiào nǐ de.",
           "tokens": [
             "不要",
@@ -63616,13 +63587,12 @@ const DEFAULT_LESSONS = [
             "没有",
             "人会笑",
             "你的"
-          ],
-          "unlearnedHint": "Từ chưa học: 没有 (méiyǒu: không có)"
+          ]
         },
         {
           "id": "ss25_2",
           "targetHanzi": "他的普通话说得又流利又标准",
-          "targetMeaning": "[Mở rộng] Tiếng phổ thông của anh ấy nói vừa trôi chảy vừa chuẩn.",
+          "targetMeaning": "Tiếng phổ thông của anh ấy nói vừa trôi chảy vừa chuẩn.",
           "pinyin": "Tā de Pǔtōnghuà shuō de yòu liúlì yòu biāozhǔn.",
           "tokens": [
             "他的",
@@ -63631,8 +63601,7 @@ const DEFAULT_LESSONS = [
             "得又",
             "流利又",
             "标准"
-          ],
-          "unlearnedHint": "Từ chưa học: 话 (huà: lời nói)"
+          ]
         },
         {
           "id": "ss25_3",
@@ -63665,7 +63634,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss25_5",
           "targetHanzi": "从宿舍到食堂怎么走",
-          "targetMeaning": "[Ôn tập Bài 6] Từ ký túc xá đến nhà ăn đi như thế nào?",
+          "targetMeaning": "Từ ký túc xá đến nhà ăn đi như thế nào?",
           "pinyin": "Cóng sùshè dào shítáng zěnme zǒu?",
           "tokens": [
             "从",
@@ -63679,7 +63648,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss25_6",
           "targetHanzi": "她叫什么名字",
-          "targetMeaning": "[Ôn tập Bài 2] Cô ấy tên là gì?",
+          "targetMeaning": "Cô ấy tên là gì?",
           "pinyin": "Tā jiào shénme míngzi?",
           "tokens": [
             "她",
@@ -64067,7 +64036,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr25_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Xin lỗi, bây giờ làm phiền thầy năm phút có được không ạ?",
+          "promptText": "Xin lỗi, bây giờ làm phiền thầy năm phút có được không ạ?",
           "expectedChinese": "不好意思，现在打扰您五分钟可以吗？",
           "acceptedPinyin": "bù hǎoyìsi xiànzài dǎrǎo nín wǔ fēnzhōng kěyǐ ma",
           "hint": "Gợi ý Pinyin: Bù hǎoyìsi, xiànzài dǎrǎo nín wǔ fēnzhōng kěyǐ ma?",
@@ -64076,10 +64045,10 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr25_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Giao tiếp nhiều với người Trung Quốc, tiếng Hán của bạn nhất định sẽ tiến bộ.",
+          "promptText": "Giao tiếp nhiều với người Trung Quốc, tiếng Hán của bạn nhất định sẽ tiến bộ.",
           "expectedChinese": "多和中国人沟通，你的汉语一定会进步。",
           "acceptedPinyin": "duō hé zhōngguó rén gōutōng nǐ de hànyǔ yídìng huì jìnbù",
-          "hint": "Gợi ý Pinyin: Duō hé Zhōngguó rén gōutōng, nǐ de Hànyǔ yídìng huì jìnbù. | Từ chưa học: 一定 (yīdìng: nhất định)",
+          "hint": "Gợi ý Pinyin: Duō hé Zhōngguó rén gōutōng, nǐ de Hànyǔ yídìng huì jìnbù.",
           "explanation": "Giao tiếp nhiều với người Trung Quốc, tiếng Hán của bạn nhất định sẽ tiến bộ. → 多和中国人沟通，你的汉语一定会进步。 (Duō hé Zhōngguó rén gōutōng, nǐ de Hànyǔ yídìng huì jìnbù.)"
         },
         {
@@ -64193,7 +64162,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr25_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 不要害怕说错，没有 (méiyǒu: không có)人会笑你的。",
+          "promptText": "不要害怕说错，没有人会笑你的。",
           "chineseAudioText": "不要害怕说错，没有人会笑你的。",
           "pinyin": "Búyào hàipà shuō cuò, méiyǒu rén huì xiào nǐ de.",
           "expectedMeaning": "Đừng sợ nói sai, sẽ không có ai cười bạn đâu.",
@@ -64208,7 +64177,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr25_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 晚上在湖边散步时 (shí: lúc, khi)，我发现很多人都在练习说话 (huà: lời nói)。",
+          "promptText": "晚上在湖边散步时，我发现很多人都在练习说话。",
           "chineseAudioText": "晚上在湖边散步时，我发现很多人都在练习说话。",
           "pinyin": "Wǎnshang zài húbiān sànbù shí, wǒ fāxiàn hěnduō rén dōu zài liànxí shuōhuà.",
           "expectedMeaning": "Buổi tối đi dạo bên bờ hồ, tôi phát hiện rất nhiều người đang luyện nói chuyện.",
@@ -64238,7 +64207,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr25_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 12] 他这个人真好！",
+          "promptText": "他这个人真好！",
           "chineseAudioText": "他这个人真好！",
           "pinyin": "Tā zhège rén zhēn hǎo!",
           "expectedMeaning": "Con người anh ta thật là tốt!",
@@ -64697,7 +64666,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq25_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 2] Từ đã học “见” (jiàn) có nghĩa là gì?",
+          "question": "Từ đã học “见” (jiàn) có nghĩa là gì?",
           "options": [
             "nghỉ ngơi",
             "cai, bỏ, chừa",
@@ -64710,7 +64679,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq25_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 6] Từ đã học “就” (jiù) có nghĩa là gì?",
+          "question": "Từ đã học “就” (jiù) có nghĩa là gì?",
           "options": [
             "là (dùng sau từ chỉ thời gian, số lượng từ, biểu thị thời gian sớm, số lượng ít, nhỏ tuổi, cuối câu thường dùng 了).",
             "vị, mùi vị, mùi",
@@ -64723,7 +64692,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq25_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 8] Từ đã học “块” (kuài) có nghĩa là gì?",
+          "question": "Từ đã học “块” (kuài) có nghĩa là gì?",
           "options": [
             "đồng (đơn vị tiền)",
             "hiểu",
@@ -64736,7 +64705,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq25_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “不好意思，现在打扰您五分钟可以吗？” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “不好意思，现在打扰您五分钟可以吗？” có nghĩa tiếng Việt là gì?",
           "options": [
             "Cô ấy đã ăn 3 cái sủi cảo.",
             "Xin lỗi, bây giờ làm phiền thầy năm phút có được không ạ?",
@@ -64749,7 +64718,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq25_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nLan: 老师，我发现和中国人交 (jiāo: nộp, kết bạn)流 (liú: chảy)时 (shí: lúc, khi)，我还是有点儿害怕说错。\nThầy Lưu: 别 (bié: đừng)怕！你应该先从简单的词语开 (kāi: mở, lái)始，慢慢就能说清楚。\nLan: 我可以晚上去湖边找大家 (dàjiā: mọi người)聊天儿吗？怕打扰他们。\nThầy Lưu: 只要礼貌沟通，大家 (dàjiā: mọi người)不仅不会笑你，还会帮 (bāng: giúp đỡ)你快速进步！\n\nThầy Lưu khuyên Ngọc Lan bắt đầu luyện nói như thế nào để bớt sợ sai?",
+          "question": "Đọc đoạn hội thoại:\nLan: 老师，我发现和中国人交流时，我还是有点儿害怕说错。\nThầy Lưu: 别怕！你应该先从简单的词语开始，慢慢就能说清楚。\nLan: 我可以晚上去湖边找大家聊天儿吗？怕打扰他们。\nThầy Lưu: 只要礼貌沟通，大家不仅不会笑你，还会帮你快速进步！\n\nThầy Lưu khuyên Ngọc Lan bắt đầu luyện nói như thế nào để bớt sợ sai?",
           "options": [
             "Chỉ học thuộc từ điển ở nhà, không nói chuyện với ai",
             "Tránh đi dạo công viên hoặc bờ hồ",
@@ -65247,7 +65216,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct25_36",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“这是留学生常遇到的困难。你应该多去外面走走，比如晚上你可以到湖边或者公园散步，然后跟那里的人说话。如果你听不清楚的话，也可以____他们再说一遍。慢慢的你的沟通问题就没有了。”\n(Gợi ý nghĩa: Đây là khó khăn thường gặp của du học sinh. Em nên ra ngoài đi dạo nhiều hơn, ví dụ buổi tối ra bờ hồ hoặc công viên tản bộ rồi trò chuyện với mọi người ở đó. Nếu nghe chưa rõ thì có thể nhờ họ nói lại lần nữa. Dần dần vấn đề giao tiếp của em sẽ hết thôi.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“这是留学生常遇到的困难。你应该多去外面走走，比如晚上你可以到湖边或者公园散步，然后跟那里的人说话。如果你听不清楚的话，也可以____他们再说一遍。慢慢的你的沟通问题就没有了。”",
         "options": [
           "走",
           "让",
@@ -65260,7 +65229,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct25_37",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“只要礼貌沟通，大家不仅不会____你，还会帮你快速进步！”\n(Gợi ý nghĩa: Chỉ cần giao tiếp lịch sự, mọi người chẳng những không cười em mà còn giúp em tiến bộ nhanh đấy!)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“只要礼貌沟通，大家不仅不会____你，还会帮你快速进步！”",
         "options": [
           "试",
           "煮",
@@ -65273,7 +65242,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct25_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“不要____说错没有人会笑你的”\n(Gợi ý nghĩa: Đừng sợ nói sai, sẽ không có ai cười bạn đâu.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“不要____说错没有人会笑你的”",
         "options": [
           "难过",
           "篮球",
@@ -65286,7 +65255,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct25_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“您也知道我们来中国留学是____想学汉语学得更好，说得更流利更标准。但是来中国以后，我发现自己没有进步。我不知道要怎么办，所以只好来找您。”\n(Gợi ý nghĩa: Thầy/cô cũng biết chúng em sang Trung Quốc du học là để học tiếng Hán tốt hơn, nói trôi chảy và chuẩn hơn. Nhưng sau khi đến Trung Quốc, em thấy mình không tiến bộ. Em không biết phải làm sao nên đành đến tìm thầy/cô.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“您也知道我们来中国留学是____想学汉语学得更好，说得更流利更标准。但是来中国以后，我发现自己没有进步。我不知道要怎么办，所以只好来找您。”",
         "options": [
           "胃口",
           "热情",
@@ -65312,7 +65281,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct25_41",
         "category": "vocab",
-        "question": "Từ Hán tự “笑” (cười) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “笑” có phiên âm Pinyin đúng là gì?",
         "options": [
           "guònián",
           "zhìliàng",
@@ -65436,7 +65405,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct25_50",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 人会笑  /  说错  /  害怕  /  你的  /  没有  /  不要\n(Nghĩa: “Đừng sợ nói sai, sẽ không có ai cười bạn đâu.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n人会笑  /  说错  /  害怕  /  你的  /  没有  /  不要",
         "options": [
           "不要害怕说错没有人会笑你的。",
           "害怕不要说错没有人会笑你的。",
@@ -65449,7 +65418,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct25_51",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 什么  /  叫  /  她  /  名字\n(Nghĩa: “Cô ấy tên là gì?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n什么  /  叫  /  她  /  名字",
         "options": [
           "名字什么叫她。",
           "叫什么名字她。",
@@ -65462,7 +65431,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct25_52",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 说  /  很  /  汉语  /  得  /  好  /  他说\n(Nghĩa: “Anh ấy nói tiếng Trung rất tốt.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n说  /  很  /  汉语  /  得  /  好  /  他说",
         "options": [
           "他说汉语说得很好。",
           "汉语他说说得很好。",
@@ -65475,7 +65444,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct25_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 怎么  /  食堂  /  到  /  走  /  从  /  宿舍\n(Nghĩa: “Từ ký túc xá đến nhà ăn đi như thế nào?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n怎么  /  食堂  /  到  /  走  /  从  /  宿舍",
         "options": [
           "宿舍到食堂怎么走从。",
           "走怎么食堂到宿舍从。",
@@ -65488,7 +65457,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct25_54",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“你不要____ (zháojí)，我们慢慢学。其实现在你汉语说得很流利了。”\n(Nghĩa: Em đừng nóng vội, chúng ta cứ học từ từ. Thực ra bây giờ tiếng Hán của em nói cũng rất trôi chảy rồi đấy.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你不要____，我们慢慢学。其实现在你汉语说得很流利了。”",
         "options": [
           "着急",
           "前面",
@@ -65501,7 +65470,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct25_55",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“多和中国人____ (gōutōng)，你的汉语一定会进步。”\n(Nghĩa: Giao tiếp nhiều với người Trung Quốc, tiếng Hán của bạn nhất định sẽ tiến bộ.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“多和中国人____，你的汉语一定会进步。”",
         "options": [
           "沟通",
           "喜欢",
@@ -65514,7 +65483,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct25_56",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“跟中国朋友说话的时候，我觉得他们说什么我都能听懂，因为朋友们说得很慢，还____ (xuǎnzé)比较简单的词语。但是如果在路边随便找一个人问路，他们说得很快，还用很多我不知道的词语，我听不清楚。”\n(Nghĩa: Khi nói chuyện với bạn bè Trung Quốc, em thấy họ nói gì em cũng hiểu, vì các bạn nói chậm và chọn từ ngữ khá đơn giản. Nhưng nếu hỏi đường ngẫu nhiên một người ngoài phố, họ nói rất nhanh lại dùng nhiều từ em không biết nên em nghe không rõ.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“跟中国朋友说话的时候，我觉得他们说什么我都能听懂，因为朋友们说得很慢，还____比较简单的词语。但是如果在路边随便找一个人问路，他们说得很快，还用很多我不知道的词语，我听不清楚。”",
         "options": [
           "饮料",
           "选择",
@@ -65858,14 +65827,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "阮日明",
             "hanzi": "我打算继续在这儿学习。",
-            "displayHanzi": "我打算继续在这儿学习 (xuéxí: học tập)。",
+            "displayHanzi": "我打算继续在这儿学习。",
             "pinyin": "Wǒ dǎsuan jìxù zài zhèr xuéxí.",
             "meaning": "Tôi dự định tiếp tục học ở đây."
           },
           {
             "speaker": "马克",
             "hanzi": "你想学硕士吗？",
-            "displayHanzi": "你想学 (xué: học)硕士吗？",
+            "displayHanzi": "你想学硕士吗？",
             "pinyin": "Nǐ xiǎng xué shuòshì ma?",
             "meaning": "Cậu muốn học thạc sĩ à?"
           },
@@ -65879,35 +65848,35 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "马克",
             "hanzi": "学几年？",
-            "displayHanzi": "学 (xué: học)几年？",
+            "displayHanzi": "学几年？",
             "pinyin": "Xué jǐ nián?",
             "meaning": "Học mấy năm?"
           },
           {
             "speaker": "阮日明",
             "hanzi": "学两年。然后我会回国找工作。",
-            "displayHanzi": "学 (xué: học)两 (liǎng: hai (số lượng))年。然后我会回国找工作。",
+            "displayHanzi": "学两年。然后我会回国找工作。",
             "pinyin": "Xué liǎng nián. Ránhòu wǒ huì huíguó zhǎo gōngzuò.",
             "meaning": "Học hai năm. Sau đó tôi sẽ về nước tìm việc."
           },
           {
             "speaker": "马克",
             "hanzi": "你想做什么工作？",
-            "displayHanzi": "你想做 (zuò: làm)什么工作？",
+            "displayHanzi": "你想做什么工作？",
             "pinyin": "Nǐ xiǎng zuò shénme gōngzuò?",
             "meaning": "Cậu muốn làm công việc gì?"
           },
           {
             "speaker": "阮日明",
             "hanzi": "因为我的专业是汉语教育，所以回国后我想当一位老师。我想帮助越南学生学习汉语，让他们更了解中国文化，更喜欢中国。那你呢？你有什么打算？",
-            "displayHanzi": "因为我的专业是汉语教育，所以 (suǒyǐ: cho nên)回国后 (hòu: sau)我想当一位老师。我想帮助越南学生学习 (xuéxí: học tập)汉语，让他们更了解中国文化，更喜欢中国。那你呢？你有什么打算？",
+            "displayHanzi": "因为我的专业是汉语教育，所以回国后我想当一位老师。我想帮助越南学生学习汉语，让他们更了解中国文化，更喜欢中国。那你呢？你有什么打算？",
             "pinyin": "Yīnwèi wǒ de zhuānyè shì Hànyǔ jiàoyù, suǒyǐ huíguó hòu wǒ xiǎng dāng yí wèi lǎoshī. Wǒ xiǎng bāngzhù Yuènán xuésheng xuéxí Hànyǔ, ràng tāmen gèng liǎojiě Zhōngguó wénhuà, gèng xǐhuan Zhōngguó. Nà nǐ ne? Nǐ yǒu shén me dǎsuan?",
             "meaning": "Vì chuyên ngành của tôi là Giáo dục Hán ngữ, nên sau khi về nước tôi muốn làm giáo viên. Tôi muốn giúp học sinh Việt Nam học tiếng Hán, giúp các em hiểu hơn về văn hóa Trung Quốc và yêu thích Trung Quốc hơn. Còn cậu thì sao? Cậu có dự định gì?"
           },
           {
             "speaker": "马克",
             "hanzi": "我想找一份好工作。不过对我们留学生来说，在中国找工作确实很难，所以我只好回国，希望找到一份合适的工作。",
-            "displayHanzi": "我想找一份好工作。不过对我们留学生来 (lái: đến)说，在中国找工作确实很难，所以 (suǒyǐ: cho nên)我只好回国，希望找到一份合适的工作。",
+            "displayHanzi": "我想找一份好工作。不过对我们留学生来说，在中国找工作确实很难，所以我只好回国，希望找到一份合适的工作。",
             "pinyin": "Wǒ xiǎng zhǎo yí fèn hǎo gōngzuò. Búguò duì wǒmen liúxuéshēng lái shuō, zài Zhōngguó zhǎo gōngzuò quèshí hěn nán, suǒyǐ wǒ zhǐhǎo huíguó, xīwàng zhǎodào yí fèn héshì de gōngzuò.",
             "meaning": "Tôi muốn tìm một công việc tốt. Nhưng với du học sinh chúng mình, tìm việc ở Trung Quốc thực sự rất khó, nên tôi đành về nước, hy vọng tìm được một công việc phù hợp."
           },
@@ -65921,14 +65890,14 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "马克",
             "hanzi": "翻译。这是我从小的梦想。现在我正在一家企业实习。虽然工作有点儿累，但是在这里我学会了很多技能和经验。",
-            "displayHanzi": "翻译。这是我从小的梦想。现在我正在一家企业实习。虽然工作有点儿累，但是在这里 (lǐ: trong)我学 (xué: học)会了很多技能和经验。",
+            "displayHanzi": "翻译。这是我从小的梦想。现在我正在一家企业实习。虽然工作有点儿累，但是在这里我学会了很多技能和经验。",
             "pinyin": "Fānyì. Zhè shì wǒ cóngxiǎo de mèngxiǎng. Xiànzài wǒ zhèng zài yījiā qǐyè shíxí. Suīrán gōngzuò yǒudiǎnr lèi dànshì zài zhèlǐ wǒ xué huì le hěn duō jìnéng hé jīngyàn.",
             "meaning": "Phiên dịch viên. Đây là ước mơ từ nhỏ của tôi. Hiện tôi đang thực tập tại một doanh nghiệp. Tuy công việc hơi vất vả nhưng ở đây tôi học được rất nhiều kỹ năng và kinh nghiệm."
           },
           {
             "speaker": "阮日明",
             "hanzi": "我觉得当翻译也很好，很多人都想做这个工作。希望你能实现你的梦想！",
-            "displayHanzi": "我觉得当翻译也很好，很多人都想做 (zuò: làm)这个工作。希望你能实现你的梦想！",
+            "displayHanzi": "我觉得当翻译也很好，很多人都想做这个工作。希望你能实现你的梦想！",
             "pinyin": "Wǒ juéde dāng fānyì yě hěn hǎo, hěnduō rén dōu xiǎng zuò zhège gōngzuò. Xīwàng nǐ néng shíxiàn nǐ de mèngxiǎng!",
             "meaning": "Tôi thấy làm phiên dịch viên cũng rất hay, rất nhiều người muốn làm công việc này. Chúc cậu thực hiện được ước mơ của mình!"
           },
@@ -65957,10 +65926,10 @@ const DEFAULT_LESSONS = [
             "audioText": "我打算继续在这儿学习。",
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "刚才 (gāngcái: vừa nãy)我好像看见了她。",
-              "我打算继续在这儿学习 (xuéxí: học tập)。",
-              "爸爸轻轻 (qīngqīng: nhẹ nhàng)地拍 (pāi: chụp, vỗ)我的肩膀 (jiānbǎng: bờ vai)，无声 (wúshēng: không tiếng động)地安慰 (ānwèi: an ủi)我。",
-              "我的理想是当一名 (míng: người (lượng từ))优秀的汉语翻译。"
+              "刚才我好像看见了她。",
+              "我打算继续在这儿学习。",
+              "爸爸轻轻地拍我的肩膀，无声地安慰我。",
+              "我的理想是当一名优秀的汉语翻译。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 我打算继续在这儿学习。 (Wǒ dǎsuan jìxù zài zhèr xuéxí.) → Tôi dự định tiếp tục học ở đây."
@@ -65982,9 +65951,9 @@ const DEFAULT_LESSONS = [
             "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "回国以后，我想帮助学生更了解中国文化。",
-              "他笑得留下 (liúxià: để lại)了眼泪 (yǎnlèi: nước mắt)。",
-              "学 (xué: học)几年？",
-              "我朋友就要去重庆 (Chóngqìng: Trùng Khánh)留学 (liúxué: du học)了。"
+              "他笑得留下了眼泪。",
+              "学几年？",
+              "我朋友就要去重庆留学了。"
             ],
             "correctIndex": 2,
             "explanation": "Câu vừa đọc: 学几年？ (Xué jǐ nián?) → Học mấy năm?"
@@ -66055,7 +66024,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "他说汉语说得很好。",
-            "question": "[Ôn tập Bài 25] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Anh ấy nói tiếng Trung rất tốt.",
               "Mẹ bảo tôi ăn cơm xong thì giúp mẹ quét dọn nhà cửa.",
@@ -66067,19 +66036,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "日明，快要毕业了，你有什么打算了吗？",
-            "question": "[Bài 26] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
               "日明，快要毕业了，你有什么打算了吗？",
-              "你今 (jīn: hôm nay, nay)年多大年纪了？",
-              "大学 (dàxué: đại học)毕业以后，我想继续读 (dú: đọc)汉语教育硕士。",
-              "他连忙 (liánmáng: vội vàng)地向 (xiàng: hướng về)我挥手 (huīshǒu: vẫy tay)。"
+              "你今年多大年纪了？",
+              "大学毕业以后，我想继续读汉语教育硕士。",
+              "他连忙地向我挥手。"
             ],
             "correctIndex": 0,
             "explanation": "Câu vừa đọc: 日明，快要毕业了，你有什么打算了吗？ (Rìmíng, kuàiyào bìyè le, nǐ yǒu shénme dǎsuan le ma?) → Nhật Minh, sắp tốt nghiệp rồi, cậu đã có dự định gì chưa?"
           },
           {
             "audioText": "A: 今天星期几啊？",
-            "question": "[Ôn tập Bài 13] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Mẹ gõ nhẹ vào đầu tôi.",
               "Năm nay hay năm sau cậu đi du học?",
@@ -66091,10 +66060,10 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "她是老师。",
-            "question": "[Ôn tập Bài 1] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "这次 (cì: lần)比赛如果他参加我就参加。",
-              "希望你早 (zǎo: sớm)日 (rì: ngày)找到一份理想的工作，实现梦想！",
+              "这次比赛如果他参加我就参加。",
+              "希望你早日找到一份理想的工作，实现梦想！",
               "回国以后，我想帮助学生更了解中国文化。",
               "她是老师。"
             ],
@@ -66103,7 +66072,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "你的理想工作是什么？",
-            "question": "[Bài 26] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "zǒu jiù dào.",
               "Công việc lý tưởng của cậu là gì?",
@@ -66122,21 +66091,21 @@ const DEFAULT_LESSONS = [
           {
             "speaker": "Minh",
             "hanzi": "下个月就要毕业了，你的梦想是什么工作？",
-            "displayHanzi": "下 (xià: dưới / xuống)个月就要毕业了，你的梦想是什么工作？",
+            "displayHanzi": "下个月就要毕业了，你的梦想是什么工作？",
             "pinyin": "Xià gè yuè jiù yào bìyè le, nǐ de mèngxiǎng shì shénme gōngzuò?",
             "meaning": "Tháng sau là tốt nghiệp rồi, công việc mơ ước của cậu là gì?"
           },
           {
             "speaker": "Lan",
             "hanzi": "我的专业是汉语教育，想先读两年硕士，以后当一位老师。",
-            "displayHanzi": "我的专业是汉语教育，想先读 (dú: đọc)两 (liǎng: hai (số lượng))年硕士，以后当一位老师。",
+            "displayHanzi": "我的专业是汉语教育，想先读两年硕士，以后当一位老师。",
             "pinyin": "Wǒ de zhuānyè shì Hànyǔ jiàoyù, xiǎng xiān dú liǎng nián shuòshì, yǐhòu dāng yí wèi lǎoshī.",
             "meaning": "Chuyên ngành của mình là Giáo dục Hán ngữ, mình muốn học thạc sĩ hai năm trước rồi sau này làm giáo viên."
           },
           {
             "speaker": "Minh",
             "hanzi": "真好！我现在在一家企业实习做翻译，积累了很多技能和经验。",
-            "displayHanzi": "真好！我现在在一家企业实习做 (zuò: làm)翻译，积累了很多技能和经验。",
+            "displayHanzi": "真好！我现在在一家企业实习做翻译，积累了很多技能和经验。",
             "pinyin": "Zhēn hǎo! Wǒ xiànzài zài yì jiā qǐyè shíxí zuò fānyì, jīlěi le hěnduō jìnéng hé jīngyàn.",
             "meaning": "Hay quá! Mình thì đang thực tập biên phiên dịch tại một doanh nghiệp, tích lũy được nhiều kỹ năng và kinh nghiệm."
           },
@@ -66151,7 +66120,7 @@ const DEFAULT_LESSONS = [
         "listeningQuestions": [
           {
             "audioText": "下个月就要毕业了，你的梦想是什么工作？ 我的专业是汉语教育，想先读两年硕士，以后当一位老师。 真好！我现在在一家企业实习做翻译，积累了很多技能和经验。 祝我们都能找到理想的工作，继续了解并热爱中国文化！",
-            "question": "[Nghe hiểu tình huống mới] Nhật Minh hiện đang tích lũy kinh nghiệm làm công việc gì trước khi tốt nghiệp?",
+            "question": "Nhật Minh hiện đang tích lũy kinh nghiệm làm công việc gì trước khi tốt nghiệp?",
             "options": [
               "Mở nhà hàng ở Bắc Kinh",
               "Học thạc sĩ y khoa",
@@ -66163,7 +66132,7 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "下个月就要毕业了，你的梦想是什么工作？",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Tháng sau là tốt nghiệp rồi, công việc mơ ước của cậu là gì?",
               "thành tích kiểm tra",
@@ -66175,19 +66144,19 @@ const DEFAULT_LESSONS = [
           },
           {
             "audioText": "我的专业是汉语教育，想先读两年硕士，以后当一位老师。",
-            "question": "[Mở rộng] Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
+            "question": "Nghe đoạn ghi âm và chọn câu Hán tự khớp với nội dung vừa nghe:",
             "options": [
-              "希望你早 (zǎo: sớm)日 (rì: ngày)找到一份理想的工作，实现梦想！",
-              "我的专业是汉语教育，想先读 (dú: đọc)两 (liǎng: hai (số lượng))年硕士，以后当一位老师。",
-              "我的理想是当一名 (míng: người (lượng từ))优秀的汉语翻译。",
-              "我朋友就要去重庆 (Chóngqìng: Trùng Khánh)留学 (liúxué: du học)了。"
+              "希望你早日找到一份理想的工作，实现梦想！",
+              "我的专业是汉语教育，想先读两年硕士，以后当一位老师。",
+              "我的理想是当一名优秀的汉语翻译。",
+              "我朋友就要去重庆留学了。"
             ],
             "correctIndex": 1,
             "explanation": "Câu vừa đọc: 我的专业是汉语教育，想先读两年硕士，以后当一位老师。 (Wǒ de zhuānyè shì Hànyǔ jiàoyù, xiǎng xiān dú liǎng nián shuòshì, yǐhòu dāng yí wèi lǎoshī.) → Chuyên ngành của mình là Giáo dục Hán ngữ, mình muốn học thạc sĩ hai năm trước rồi sau này làm giáo viên."
           },
           {
             "audioText": "真好！我现在在一家企业实习做翻译，积累了很多技能和经验。",
-            "question": "[Mở rộng] Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
+            "question": "Nghe câu tiếng Trung và chọn nghĩa tiếng Việt chính xác nhất:",
             "options": [
               "Hay quá! Mình thì đang thực tập biên phiên dịch tại một doanh nghiệp, tích lũy được nhiều kỹ năng và kinh nghiệm.",
               "Cậu thích mùa xuân hay mùa hè?",
@@ -66301,8 +66270,7 @@ const DEFAULT_LESSONS = [
             "年",
             "多大",
             "了"
-          ],
-          "unlearnedHint": "Từ chưa học: 今 (jīn: hôm nay, nay)"
+          ]
         },
         {
           "id": "ss26_3",
@@ -66316,8 +66284,7 @@ const DEFAULT_LESSONS = [
             "几",
             "岁",
             "了"
-          ],
-          "unlearnedHint": "Từ chưa học: 今 (jīn: hôm nay, nay)"
+          ]
         },
         {
           "id": "ss26_4",
@@ -66331,13 +66298,12 @@ const DEFAULT_LESSONS = [
             "多大",
             "年纪",
             "了"
-          ],
-          "unlearnedHint": "Từ chưa học: 今 (jīn: hôm nay, nay)"
+          ]
         },
         {
           "id": "ss26_5",
           "targetHanzi": "北京的秋天比夏天凉快得多",
-          "targetMeaning": "[Ôn tập Bài 15] Mùa thu ở Bắc Kinh mát mẻ hơn mùa hè nhiều.",
+          "targetMeaning": "Mùa thu ở Bắc Kinh mát mẻ hơn mùa hè nhiều.",
           "pinyin": "Běijīng de qiūtiān bǐ xiàtiān liángkuai de duō.",
           "tokens": [
             "北京的",
@@ -66351,7 +66317,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "ss26_6",
           "targetHanzi": "他汉语说得很好",
-          "targetMeaning": "[Ôn tập Bài 25] Anh ấy nói tiếng Trung rất tốt.",
+          "targetMeaning": "Anh ấy nói tiếng Trung rất tốt.",
           "pinyin": "Tā Hànyǔ shuō de hěn hǎo.",
           "tokens": [
             "他",
@@ -66664,7 +66630,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr26_vi_1",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Sau khi về nước, tôi muốn giúp học sinh hiểu thêm về văn hóa Trung Quốc.",
+          "promptText": "Sau khi về nước, tôi muốn giúp học sinh hiểu thêm về văn hóa Trung Quốc.",
           "expectedChinese": "回国以后，我想帮助学生更了解中国文化。",
           "acceptedPinyin": "huíguó yǐhòu wǒ xiǎng bāngzhù xuésheng gèng liǎojiě zhōngguó wénhuà",
           "hint": "Gợi ý Pinyin: Huíguó yǐhòu, wǒ xiǎng bāngzhù xuésheng gèng liǎojiě Zhōngguó wénhuà.",
@@ -66673,10 +66639,10 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr26_vi_2",
           "direction": "vi_to_zh",
-          "promptText": "[Mở rộng] Thực tập tại doanh nghiệp giúp tôi học được rất nhiều kỹ năng và kinh nghiệm làm việc.",
+          "promptText": "Thực tập tại doanh nghiệp giúp tôi học được rất nhiều kỹ năng và kinh nghiệm làm việc.",
           "expectedChinese": "在企业实习让我学到了很多工作技能和经验。",
           "acceptedPinyin": "zài qǐyè shíxí ràng wǒ xuédào le hěnduō gōngzuò jìnéng hé jīngyàn",
-          "hint": "Gợi ý Pinyin: Zài qǐyè shíxí ràng wǒ xuédào le hěnduō gōngzuò jìnéng hé jīngyàn. | Từ chưa học: 学 (xué: học)",
+          "hint": "Gợi ý Pinyin: Zài qǐyè shíxí ràng wǒ xuédào le hěnduō gōngzuò jìnéng hé jīngyàn.",
           "explanation": "Thực tập tại doanh nghiệp giúp tôi học được rất nhiều kỹ năng và kinh nghiệm làm việc. → 在企业实习让我学到了很多工作技能和经验。 (Zài qǐyè shíxí ràng wǒ xuédào le hěnduō gōngzuò jìnéng hé jīngyàn.)"
         },
         {
@@ -66685,7 +66651,7 @@ const DEFAULT_LESSONS = [
           "promptText": "Năm nay cậu bao nhiêu tuổi? (Hỏi chung chung)",
           "expectedChinese": "你今年多大了？",
           "acceptedPinyin": "nǐ jīnnián duōdà le",
-          "hint": "Gợi ý Pinyin: Nǐ jīnnián duōdà le? | Từ chưa học: 今 (jīn: hôm nay, nay)",
+          "hint": "Gợi ý Pinyin: Nǐ jīnnián duōdà le?",
           "explanation": "Năm nay cậu bao nhiêu tuổi? (Hỏi chung chung) → 你今年多大了？ (Nǐ jīnnián duōdà le?)"
         },
         {
@@ -66694,7 +66660,7 @@ const DEFAULT_LESSONS = [
           "promptText": "Năm nay cháu mấy tuổi rồi (Hỏi trẻ em dưới mười tuổi)",
           "expectedChinese": "你今年几岁了？",
           "acceptedPinyin": "nǐ jīnnián jǐ suì le",
-          "hint": "Gợi ý Pinyin: Nǐ jīnnián jǐ suì le? | Từ chưa học: 今 (jīn: hôm nay, nay)",
+          "hint": "Gợi ý Pinyin: Nǐ jīnnián jǐ suì le?",
           "explanation": "Năm nay cháu mấy tuổi rồi (Hỏi trẻ em dưới mười tuổi) → 你今年几岁了？ (Nǐ jīnnián jǐ suì le?)"
         },
         {
@@ -66790,7 +66756,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr26_zh_1",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 大学 (dàxué: đại học)毕业以后，我想继续读 (dú: đọc)汉语教育硕士。",
+          "promptText": "大学毕业以后，我想继续读汉语教育硕士。",
           "chineseAudioText": "大学毕业以后，我想继续读汉语教育硕士。",
           "pinyin": "Dàxué bìyè yǐhòu, wǒ xiǎng jìxù dú Hànyǔ jiàoyù shuòshì.",
           "expectedMeaning": "Sau khi tốt nghiệp đại học, tôi muốn học tiếp thạc sĩ Giáo dục Hán ngữ.",
@@ -66805,7 +66771,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr26_zh_2",
           "direction": "zh_to_vi",
-          "promptText": "[Mở rộng] 希望你早 (zǎo: sớm)日 (rì: ngày)找到一份理想的工作，实现梦想！",
+          "promptText": "希望你早日找到一份理想的工作，实现梦想！",
           "chineseAudioText": "希望你早日找到一份理想的工作，实现梦想！",
           "pinyin": "Xīwàng nǐ zǎorì zhǎodào yí fèn lǐxiǎng de gōngzuò, shíxiàn mèngxiǎng!",
           "expectedMeaning": "Hy vọng bạn sớm tìm được một công việc lý tưởng và thực hiện được ước mơ!",
@@ -66820,7 +66786,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr26_zh_3",
           "direction": "zh_to_vi",
-          "promptText": "你今 (jīn: hôm nay, nay)年多大年纪了？",
+          "promptText": "你今年多大年纪了？",
           "chineseAudioText": "你今年多大年纪了？",
           "pinyin": "Nǐ jīnnián duōdà niánjì le?",
           "expectedMeaning": "Năm nay bác bao nhiêu tuổi rồi ạ? (Hỏi người lớn tuổi)",
@@ -66835,7 +66801,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "tr26_zh_4",
           "direction": "zh_to_vi",
-          "promptText": "[Ôn tập Bài 13] A: 今天星期几啊？",
+          "promptText": "A: 今天星期几啊？",
           "chineseAudioText": "A: 今天星期几啊？",
           "pinyin": "Jīntiān xīngqī jǐ a?",
           "expectedMeaning": "Hôm nay là thứ mấy thế?",
@@ -67327,7 +67293,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq26_17",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 8] Từ đã học “芒果” (mángguǒ) có nghĩa là gì?",
+          "question": "Từ đã học “芒果” (mángguǒ) có nghĩa là gì?",
           "options": [
             "xoài",
             "rất",
@@ -67340,7 +67306,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq26_18",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 13] Từ đã học “干” (gàn) có nghĩa là gì?",
+          "question": "Từ đã học “干” (gàn) có nghĩa là gì?",
           "options": [
             "làm",
             "đi bộ",
@@ -67353,7 +67319,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq26_19",
           "type": "vocabulary",
-          "question": "[Ôn tập Bài 13] Từ đã học “帽子” (màozi) có nghĩa là gì?",
+          "question": "Từ đã học “帽子” (màozi) có nghĩa là gì?",
           "options": [
             "người, con người",
             "cao",
@@ -67366,7 +67332,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq26_20",
           "type": "reading",
-          "question": "[Mở rộng] Câu “回国以后，我想帮助学生更了解中国文化。” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “回国以后，我想帮助学生更了解中国文化。” có nghĩa tiếng Việt là gì?",
           "options": [
             "Hình như ban nãy tôi mới trông thấy cô ấy.",
             "Sau khi về nước, tôi muốn giúp học sinh hiểu thêm về văn hóa Trung Quốc.",
@@ -67379,7 +67345,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq26_21",
           "type": "reading",
-          "question": "[Đọc hiểu mở rộng] Đọc đoạn hội thoại:\nMinh: 下 (xià: dưới / xuống)个月就要毕业了，你的梦想是什么工作？\nLan: 我的专业是汉语教育，想先读 (dú: đọc)两 (liǎng: hai (số lượng))年硕士，以后当一位老师。\nMinh: 真好！我现在在一家企业实习做 (zuò: làm)翻译，积累了很多技能和经验。\nLan: 祝我们都能找到理想的工作，继续了解并热爱中国文化！\n\nNhật Minh hiện đang tích lũy kinh nghiệm làm công việc gì trước khi tốt nghiệp?",
+          "question": "Đọc đoạn hội thoại:\nMinh: 下个月就要毕业了，你的梦想是什么工作？\nLan: 我的专业是汉语教育，想先读两年硕士，以后当一位老师。\nMinh: 真好！我现在在一家企业实习做翻译，积累了很多技能和经验。\nLan: 祝我们都能找到理想的工作，继续了解并热爱中国文化！\n\nNhật Minh hiện đang tích lũy kinh nghiệm làm công việc gì trước khi tốt nghiệp?",
           "options": [
             "Học thạc sĩ y khoa",
             "Làm tài xế taxi",
@@ -67392,7 +67358,7 @@ const DEFAULT_LESSONS = [
         {
           "id": "eq26_22",
           "type": "reading",
-          "question": "Câu “你今 (jīn: hôm nay, nay)年多大了？” có nghĩa tiếng Việt là gì?",
+          "question": "Câu “你今年多大了？” có nghĩa tiếng Việt là gì?",
           "options": [
             "Anh ấy chạy rất nhanh.",
             "Anh ấy hát không hay lắm.",
@@ -67877,7 +67843,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct26_36",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“因为我的____是汉语教育，所以回国后我想当一位老师。我想帮助越南学生学习汉语，让他们更了解中国文化，更喜欢中国。那你呢？你有什么打算？”\n(Gợi ý nghĩa: Vì chuyên ngành của tôi là Giáo dục Hán ngữ, nên sau khi về nước tôi muốn làm giáo viên. Tôi muốn giúp học sinh Việt Nam học tiếng Hán, giúp các em hiểu hơn về văn hóa Trung Quốc và yêu thích Trung Quốc hơn. Còn cậu thì sao? Cậu có dự định gì?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“因为我的____是汉语教育，所以回国后我想当一位老师。我想帮助越南学生学习汉语，让他们更了解中国文化，更喜欢中国。那你呢？你有什么打算？”",
         "options": [
           "鞭炮",
           "早上",
@@ -67890,7 +67856,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct26_37",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“下个月就要毕业了，你的____是什么工作？”\n(Gợi ý nghĩa: Tháng sau là tốt nghiệp rồi, công việc mơ ước của cậu là gì?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“下个月就要毕业了，你的____是什么工作？”",
         "options": [
           "水果",
           "梦想",
@@ -67903,7 +67869,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct26_38",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“翻译。这是我从小的梦想。现在我正在一家企业实习。虽然工作有点儿累，但是在这里我学会了很多技能和____。”\n(Gợi ý nghĩa: Phiên dịch viên. Đây là ước mơ từ nhỏ của tôi. Hiện tôi đang thực tập tại một doanh nghiệp. Tuy công việc hơi vất vả nhưng ở đây tôi học được rất nhiều kỹ năng và kinh nghiệm.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“翻译。这是我从小的梦想。现在我正在一家企业实习。虽然工作有点儿累，但是在这里我学会了很多技能和____。”",
         "options": [
           "开心",
           "价格",
@@ -67916,7 +67882,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct26_39",
         "category": "fill_blank",
-        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我想找一____好工作。不过对我们留学生来说，在中国找工作确实很难，所以我只好回国，希望找到一份合适的工作。”\n(Gợi ý nghĩa: Tôi muốn tìm một công việc tốt. Nhưng với du học sinh chúng mình, tìm việc ở Trung Quốc thực sự rất khó, nên tôi đành về nước, hy vọng tìm được một công việc phù hợp.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我想找一____好工作。不过对我们留学生来说，在中国找工作确实很难，所以我只好回国，希望找到一份合适的工作。”",
         "options": [
           "吃",
           "很",
@@ -67942,7 +67908,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct26_41",
         "category": "vocab",
-        "question": "Từ Hán tự “梦想” (khát vọng, ước mơ) có phiên âm Pinyin đúng là gì?",
+        "question": "Từ Hán tự “梦想” có phiên âm Pinyin đúng là gì?",
         "options": [
           "mótuōchē",
           "biāozhǔn",
@@ -68066,7 +68032,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct26_50",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 什么  /  工作  /  理想  /  你  /  是  /  的\n(Nghĩa: “Công việc lý tưởng của cậu là gì?”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n什么  /  工作  /  理想  /  你  /  是  /  的",
         "options": [
           "什么是工作理想的你。",
           "你的理想工作是什么。",
@@ -68079,7 +68045,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct26_51",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 夏天  /  北京的  /  比  /  得多  /  秋天  /  凉快\n(Nghĩa: “Mùa thu ở Bắc Kinh mát mẻ hơn mùa hè nhiều.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n夏天  /  北京的  /  比  /  得多  /  秋天  /  凉快",
         "options": [
           "秋天北京的比夏天凉快得多。",
           "得多凉快夏天比秋天北京的。",
@@ -68092,7 +68058,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct26_52",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 了  /  年纪  /  多大  /  你  /  年  /  今\n(Nghĩa: “Năm nay bác bao nhiêu tuổi rồi ạ? (Hỏi người lớn tuổi)”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n了  /  年纪  /  多大  /  你  /  年  /  今",
         "options": [
           "你今年多大年纪了。",
           "今年多大年纪了你。",
@@ -68105,7 +68071,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct26_53",
         "category": "translate_vi_zh",
-        "question": "Sắp xếp các từ gợi ý sau thành câu tiếng Trung đúng ngữ pháp:\nTừ gợi ý: 好  /  汉语  /  得  /  说  /  他  /  很\n(Nghĩa: “Anh ấy nói tiếng Trung rất tốt.”)",
+        "question": "Sắp xếp các từ sau thành câu tiếng Trung đúng ngữ pháp:\n好  /  汉语  /  得  /  说  /  他  /  很",
         "options": [
           "他汉语说得很好。",
           "汉语他说得很好。",
@@ -68118,7 +68084,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct26_54",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“你想学____ (shuòshì)吗？”\n(Nghĩa: Cậu muốn học thạc sĩ à?)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“你想学____吗？”",
         "options": [
           "非常",
           "硕士",
@@ -68131,7 +68097,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct26_55",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“学两年。然后我会____ (huíguó)找工作。”\n(Nghĩa: Học hai năm. Sau đó tôi sẽ về nước tìm việc.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“学两年。然后我会____找工作。”",
         "options": [
           "骑车",
           "不常",
@@ -68144,7 +68110,7 @@ const DEFAULT_LESSONS = [
       {
         "id": "ct26_56",
         "category": "fill_blank",
-        "question": "Chọn chữ Hán tương ứng với phiên âm Pinyin để hoàn thành câu:\n“我的专业是汉语教育，想先读两年硕士，以后当一____ (wèi)老师。”\n(Nghĩa: Chuyên ngành của mình là Giáo dục Hán ngữ, mình muốn học thạc sĩ hai năm trước rồi sau này làm giáo viên.)",
+        "question": "Chọn từ thích hợp điền vào chỗ trống:\n“我的专业是汉语教育，想先读两年硕士，以后当一____老师。”",
         "options": [
           "在",
           "慢",

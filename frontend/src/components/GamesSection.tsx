@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  BookOpen,
   CheckCircle2,
   Clock,
   Flame,
@@ -7,6 +8,7 @@ import {
   Keyboard,
   Layers,
   ListChecks,
+  Loader2,
   Medal,
   RotateCcw,
   Shuffle,
@@ -19,6 +21,8 @@ import { soundFx, speakChinese } from '../lib/audio';
 import { api } from '../lib/api';
 import { shuffleArray } from '../lib/constants';
 import { getAvatarPreset, isImageMediaUrl } from '../lib/profileMedia';
+import { ensureGlossaryLoaded, seedLessonVocabIntoGlossary } from '../lib/vocabGlossary';
+import { InteractiveChineseText } from './common/InteractiveChineseText';
 import type {
   ExpandedQuizQuestion,
   GameLeaderboardEntry,
@@ -32,6 +36,8 @@ import type {
 interface GamesSectionProps {
   lesson: LessonDetail;
   currentUserId?: string;
+  canUseAiGrading?: boolean;
+  onOpenAiDictionary?: (word: string) => void;
 }
 
 const GAME_MODE_LABELS: Record<GameMode, string> = {
@@ -117,6 +123,19 @@ function tokenizeWords(str: string): string[] {
     .filter(Boolean);
 }
 
+function cleanGradeFeedback(raw: string | null | undefined): string | null {
+  if (!raw) return null;
+  const cleaned = raw
+    .trim()
+    .replace(
+      /^(?:chính xác|đúng rồi|rất tốt|tuyệt vời|chưa chính xác|chưa khớp|chưa đúng(?:\s+thứ\s+tự)?|sai rồi)\s*[!.,:\-–—]*\s*/iu,
+      ''
+    )
+    .trim();
+  if (!cleaned) return null;
+  return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+}
+
 function isZhToViCompleteMatch(
   userInput: string,
   expectedMeaning?: string | null,
@@ -167,8 +186,42 @@ function isZhToViCompleteMatch(
   return keywords.every((kw) => userLower.includes(kw.toLowerCase()));
 }
 
-export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserId }) => {
+export const GamesSection: React.FC<GamesSectionProps> = ({
+  lesson,
+  currentUserId,
+  canUseAiGrading = false,
+  onOpenAiDictionary,
+}) => {
   const [mode, setMode] = useState<GameMode>('tri_match');
+  const [lookupMode, setLookupMode] = useState(false);
+
+  useEffect(() => {
+    seedLessonVocabIntoGlossary(lesson.vocabulary);
+  }, [lesson.vocabulary]);
+
+  const toggleLookupMode = () => {
+    setLookupMode((prev) => {
+      const next = !prev;
+      if (next) void ensureGlossaryLoaded();
+      return next;
+    });
+  };
+
+  const renderLookupToggleButton = () => (
+    <button
+      type="button"
+      onClick={toggleLookupMode}
+      className={`px-3 py-1.5 rounded-xl border text-xs font-semibold inline-flex items-center gap-1.5 transition active:scale-95 ${
+        lookupMode
+          ? 'border-purple-500 bg-purple-600 text-white shadow-sm shadow-purple-500/20'
+          : 'border-stone-200 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 hover:bg-purple-50 dark:hover:bg-purple-900/30 text-gray-700 dark:text-slate-200 hover:text-purple-600 dark:hover:text-purple-300 dark:hover:border-purple-500'
+      }`}
+      title="Bật chế độ di chuột lên chữ Hán để xem nghĩa nhanh"
+    >
+      <BookOpen className="w-3.5 h-3.5" />
+      {lookupMode ? 'Tra từ: Bật' : 'Tra từ'}
+    </button>
+  );
 
   // --- Leaderboard ---
   const [lbMode, setLbMode] = useState<GameMode | 'all'>('tri_match');
@@ -356,6 +409,24 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
   const [scrambleIdx, setScrambleIdx] = useState(0);
   const [selectedTokens, setSelectedTokens] = useState<number[]>([]);
   const [scrambleResult, setScrambleResult] = useState<boolean | null>(null);
+  const [scrambleGrading, setScrambleGrading] = useState(false);
+  const [scrambleFeedback, setScrambleFeedback] = useState<string | null>(null);
+  const scrambleGradeSeqRef = useRef(0);
+  const sessionVariantsRef = useRef<Map<string, Set<string>>>(new Map());
+
+  const getKnownVariants = (cacheBucketKey: string, initial?: string[]): string[] => {
+    const extra = sessionVariantsRef.current.get(cacheBucketKey);
+    if (!extra || extra.size === 0) return initial || [];
+    return [...(initial || []), ...Array.from(extra)];
+  };
+
+  const rememberAcceptedVariant = (cacheBucketKey: string, answer: string) => {
+    const trimmed = answer.trim();
+    if (!trimmed) return;
+    const set = sessionVariantsRef.current.get(cacheBucketKey) || new Set<string>();
+    set.add(trimmed);
+    sessionVariantsRef.current.set(cacheBucketKey, set);
+  };
   const [scrambleScoreMap, setScrambleScoreMap] = useState<Record<number, boolean>>({});
   const [scrambleStarted, setScrambleStarted] = useState(false);
   const [scrambleTime, setScrambleTime] = useState(0);
@@ -369,11 +440,26 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
   const touchMovedRef = useRef(false);
   const currScramble = scrambleDeck[scrambleIdx];
 
+  const resetScrambleFeedback = () => {
+    scrambleGradeSeqRef.current += 1;
+    setScrambleGrading(false);
+    setScrambleResult(null);
+    setScrambleFeedback(null);
+  };
+
   useEffect(() => {
-    if (mode !== 'scramble' || !scrambleStarted || scrambleDone || scrambleDeck.length === 0) return;
+    if (
+      mode !== 'scramble' ||
+      !scrambleStarted ||
+      scrambleDone ||
+      scrambleGrading ||
+      scrambleDeck.length === 0
+    ) {
+      return;
+    }
     const id = window.setInterval(() => setScrambleTime((t) => t + 1), 1000);
     return () => window.clearInterval(id);
-  }, [mode, scrambleStarted, scrambleDone, scrambleDeck.length]);
+  }, [mode, scrambleStarted, scrambleDone, scrambleGrading, scrambleDeck.length]);
 
   const scrambleCorrectCount = useMemo(
     () => Object.values(scrambleScoreMap).filter(Boolean).length,
@@ -402,7 +488,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
 
   const handleScrambleDropOnSelected = (targetPos?: number) => {
     if (!dragSource) return;
-    setScrambleResult(null);
+    resetScrambleFeedback();
 
     if (dragSource.type === 'selected') {
       const fromPos = dragSource.pos;
@@ -441,7 +527,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
       return;
     }
     const removePos = dragSource.pos;
-    setScrambleResult(null);
+    resetScrambleFeedback();
     setSelectedTokens((prev) => prev.filter((_, i) => i !== removePos));
     clearScrambleDrag();
   };
@@ -449,7 +535,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
   const restartScrambleRound = () => {
     setScrambleIdx(0);
     setSelectedTokens([]);
-    setScrambleResult(null);
+    resetScrambleFeedback();
     setScrambleScoreMap({});
     setScrambleStarted(false);
     setScrambleTime(0);
@@ -479,6 +565,81 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
       .sort((a, b) => ((a.text.charCodeAt(0) + scrambleIdx) % 7) - ((b.text.charCodeAt(0) + scrambleIdx) % 7));
   }, [currScramble, scrambleIdx]);
 
+  const handleCheckScramble = async () => {
+    if (!currScramble || scrambleGrading || selectedTokens.length < shuffledTokens.length) return;
+    setScrambleStarted(true);
+    const built = selectedTokens.map((i) => shuffledTokens[i].text).join('');
+    const currentIndex = scrambleIdx;
+
+    // Tier 1: Local exact match + Read-through acceptedVariants (< 1ms)
+    const cleanBuilt = normalizeClean(built);
+    const scrambleBucketKey = `scramble::${currScramble.id}`;
+    const knownScrambleVariants = getKnownVariants(
+      scrambleBucketKey,
+      currScramble.acceptedVariants
+    );
+    const matchedLocalScramble =
+      cleanBuilt === normalizeClean(currScramble.targetHanzi) ||
+      knownScrambleVariants.some((v) => normalizeClean(v) === cleanBuilt);
+
+    if (matchedLocalScramble) {
+      scrambleGradeSeqRef.current += 1;
+      setScrambleGrading(false);
+      setScrambleResult(true);
+      setScrambleFeedback(null);
+      setScrambleScoreMap((prev) => ({
+        ...prev,
+        [currentIndex]: true,
+      }));
+      soundFx.playCorrect();
+      return;
+    }
+
+    // Tier 2 & 3: Cache + Auto AI fallback for valid word-order permutations
+    if (!canUseAiGrading) {
+      setScrambleResult(false);
+      setScrambleFeedback(null);
+      soundFx.playWrong();
+      return;
+    }
+
+    const seq = ++scrambleGradeSeqRef.current;
+    setScrambleGrading(true);
+    setScrambleResult(null);
+    setScrambleFeedback(null);
+
+    try {
+      const graded = await api.aiGradeGame({
+        mode: 'scramble',
+        exerciseId: currScramble.id,
+        promptText: currScramble.targetMeaning,
+        expectedChinese: currScramble.targetHanzi,
+        expectedPinyin: currScramble.pinyin || null,
+        userAnswer: built,
+      });
+      if (seq !== scrambleGradeSeqRef.current) return;
+
+      setScrambleGrading(false);
+      setScrambleResult(graded.isCorrect);
+      setScrambleFeedback(cleanGradeFeedback(graded.feedback));
+      if (graded.isCorrect) {
+        rememberAcceptedVariant(scrambleBucketKey, built);
+      }
+      setScrambleScoreMap((prev) => ({
+        ...prev,
+        [currentIndex]: graded.isCorrect || Boolean(prev[currentIndex]),
+      }));
+      if (graded.isCorrect) soundFx.playCorrect();
+      else soundFx.playWrong();
+    } catch {
+      if (seq !== scrambleGradeSeqRef.current) return;
+      setScrambleGrading(false);
+      setScrambleResult(false);
+      setScrambleFeedback(null);
+      soundFx.playWrong();
+    }
+  };
+
   // --- Game 3: Bilingual Translation ---
   const [transMode, setTransMode] = useState<'vi_to_zh' | 'zh_to_vi'>('vi_to_zh');
   const [transDeck, setTransDeck] = useState<TranslationExercise[]>([]);
@@ -486,6 +647,10 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
   const [transInput, setTransInput] = useState('');
   const [transChecked, setTransChecked] = useState(false);
   const [transCorrect, setTransCorrect] = useState(false);
+  const [transGrading, setTransGrading] = useState(false);
+  const [transFeedback, setTransFeedback] = useState<string | null>(null);
+  const [transSuggestion, setTransSuggestion] = useState<string | null>(null);
+  const transGradeSeqRef = useRef(0);
   const [showTransHint, setShowTransHint] = useState(false);
   const [showTransAnswer, setShowTransAnswer] = useState(false);
   const [transScoreMap, setTransScoreMap] = useState<Record<number, boolean>>({});
@@ -494,6 +659,14 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
   const [transDone, setTransDone] = useState(false);
   const transSubmittedRef = useRef(false);
 
+  const resetTransFeedback = () => {
+    transGradeSeqRef.current += 1;
+    setTransGrading(false);
+    setTransChecked(false);
+    setTransFeedback(null);
+    setTransSuggestion(null);
+  };
+
   const transPool = useMemo(
     () => (lesson.exercises?.translationExercises || []).filter((t) => t.direction === transMode),
     [lesson.exercises, transMode]
@@ -501,10 +674,18 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
   const currTrans = transDeck[transIdx];
 
   useEffect(() => {
-    if (mode !== 'translation' || !transStarted || transDone || transDeck.length === 0) return;
+    if (
+      mode !== 'translation' ||
+      !transStarted ||
+      transDone ||
+      transGrading ||
+      transDeck.length === 0
+    ) {
+      return;
+    }
     const id = window.setInterval(() => setTransTime((t) => t + 1), 1000);
     return () => window.clearInterval(id);
-  }, [mode, transStarted, transDone, transDeck.length]);
+  }, [mode, transStarted, transDone, transGrading, transDeck.length]);
 
   const transCorrectCount = useMemo(
     () => Object.values(transScoreMap).filter(Boolean).length,
@@ -525,7 +706,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
   const restartTransRound = () => {
     setTransIdx(0);
     setTransInput('');
-    setTransChecked(false);
+    resetTransFeedback();
     setShowTransHint(false);
     setShowTransAnswer(false);
     setTransScoreMap({});
@@ -548,38 +729,145 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
     restartTransRound();
   };
 
-  const handleCheckTranslation = () => {
-    if (!currTrans) return;
-    const cleanUser = normalizeClean(transInput);
+  const handleCheckTranslation = async () => {
+    if (!currTrans || transGrading) return;
+    const rawUser = transInput.trim();
+    const cleanUser = normalizeClean(rawUser);
     if (!cleanUser) {
-      setTransChecked(false);
+      resetTransFeedback();
       return;
     }
 
     setTransStarted(true);
-    setTransChecked(true);
+    const currentIndex = transIdx;
 
-    let ok = false;
+    // Tier 1: Local exact / structured match + Read-through acceptedVariants (< 1ms)
+    let localOk = false;
+    let shortGuardFeedback: string | null = null;
+    const transBucketKey = `translation::${currTrans.id}`;
+    const knownTransVariants = getKnownVariants(transBucketKey, currTrans.acceptedVariants);
+
     if (currTrans.direction === 'vi_to_zh') {
       const cleanZh = normalizeClean(currTrans.expectedChinese || '');
       const cleanPy = normalizeClean(currTrans.acceptedPinyin || '');
-      const cleanUserNoTone = stripPinyinTones(transInput);
+      const cleanUserNoTone = stripPinyinTones(rawUser);
       const cleanPyNoTone = stripPinyinTones(currTrans.acceptedPinyin || '');
-      ok =
-        cleanUser === cleanZh ||
-        (Boolean(cleanPy) && (cleanUser === cleanPy || cleanUserNoTone === cleanPyNoTone));
+      const matchedVariant = knownTransVariants.some((variant) => {
+        const cleanV = normalizeClean(variant);
+        if (!cleanV) return false;
+        if (cleanUser === cleanV) return true;
+        return !/[\u4e00-\u9fff]/.test(variant) && cleanUserNoTone === stripPinyinTones(variant);
+      });
+      localOk =
+        (Boolean(cleanZh) && cleanUser === cleanZh) ||
+        (Boolean(cleanPy) && (cleanUser === cleanPy || cleanUserNoTone === cleanPyNoTone)) ||
+        matchedVariant;
+
+      if (!localOk) {
+        const userHasHanzi = /[\u4e00-\u9fff]/.test(rawUser);
+        if (userHasHanzi) {
+          if (cleanZh.length >= 4 && cleanUser.length < Math.max(2, Math.floor(cleanZh.length * 0.45))) {
+            shortGuardFeedback = 'Câu trả lời còn thiếu nội dung so với đề bài.';
+          }
+        } else if (
+          cleanPyNoTone.length >= 8 &&
+          cleanUserNoTone.length < Math.max(4, Math.floor(cleanPyNoTone.length * 0.45))
+        ) {
+          shortGuardFeedback = 'Phần Pinyin còn quá ngắn hoặc chưa dịch đủ hết câu.';
+        }
+      }
     } else {
-      ok = isZhToViCompleteMatch(
-        transInput,
-        currTrans.expectedMeaning,
-        currTrans.acceptedKeywords
-      );
+      const matchedVariant = knownTransVariants.some((variant) => {
+        const cleanV = normalizeClean(variant);
+        return Boolean(cleanV) && cleanUser === cleanV;
+      });
+      localOk =
+        matchedVariant ||
+        isZhToViCompleteMatch(
+          rawUser,
+          currTrans.expectedMeaning,
+          currTrans.acceptedKeywords
+        );
+
+      if (!localOk) {
+        const expectedWords = tokenizeWords(currTrans.expectedMeaning || '');
+        const userWords = tokenizeWords(rawUser);
+        if (
+          cleanUser.length < 2 ||
+          (expectedWords.length >= 4 &&
+            userWords.length < Math.max(2, Math.ceil(expectedWords.length * 0.35)))
+        ) {
+          shortGuardFeedback = 'Bản dịch còn quá ngắn hoặc thiếu ý chính của câu.';
+        }
+      }
     }
 
-    setTransCorrect(ok);
-    setTransScoreMap((prev) => ({ ...prev, [transIdx]: ok || Boolean(prev[transIdx]) }));
-    if (ok) soundFx.playCorrect();
-    else soundFx.playWrong();
+    if (localOk) {
+      transGradeSeqRef.current += 1;
+      setTransGrading(false);
+      setTransChecked(true);
+      setTransCorrect(true);
+      setTransFeedback(null);
+      setTransSuggestion(null);
+      setTransScoreMap((prev) => ({ ...prev, [currentIndex]: true }));
+      soundFx.playCorrect();
+      return;
+    }
+
+    if (shortGuardFeedback || !canUseAiGrading) {
+      transGradeSeqRef.current += 1;
+      setTransGrading(false);
+      setTransChecked(true);
+      setTransCorrect(false);
+      setTransFeedback(shortGuardFeedback);
+      setTransSuggestion(null);
+      soundFx.playWrong();
+      return;
+    }
+
+    // Tier 2 & 3: Cache DB + Auto AI semantic grading
+    const seq = ++transGradeSeqRef.current;
+    setTransGrading(true);
+    setTransChecked(false);
+    setTransFeedback(null);
+    setTransSuggestion(null);
+
+    try {
+      const graded = await api.aiGradeGame({
+        mode: 'translation',
+        direction: currTrans.direction,
+        exerciseId: currTrans.id,
+        promptText: currTrans.promptText,
+        expectedChinese: currTrans.expectedChinese || null,
+        expectedPinyin: currTrans.acceptedPinyin || null,
+        expectedMeaning: currTrans.expectedMeaning || null,
+        userAnswer: rawUser,
+      });
+      if (seq !== transGradeSeqRef.current) return;
+
+      setTransGrading(false);
+      setTransChecked(true);
+      setTransCorrect(graded.isCorrect);
+      setTransFeedback(cleanGradeFeedback(graded.feedback));
+      setTransSuggestion(graded.suggestion || null);
+      if (graded.isCorrect) {
+        rememberAcceptedVariant(transBucketKey, rawUser);
+      }
+      setTransScoreMap((prev) => ({
+        ...prev,
+        [currentIndex]: graded.isCorrect || Boolean(prev[currentIndex]),
+      }));
+      if (graded.isCorrect) soundFx.playCorrect();
+      else soundFx.playWrong();
+    } catch {
+      if (seq !== transGradeSeqRef.current) return;
+      setTransGrading(false);
+      setTransChecked(true);
+      setTransCorrect(false);
+      setTransFeedback(null);
+      setTransSuggestion(null);
+      soundFx.playWrong();
+    }
   };
 
   // --- Game 4: Expanded Quiz ---
@@ -909,7 +1197,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                       <Flame className="w-3.5 h-3.5 text-amber-500" /> {scrambleCorrectCount * 100} điểm
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <button
                       type="button"
                       onClick={() => speakChinese(currScramble.targetHanzi)}
@@ -917,6 +1205,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                     >
                       <Volume2 className="w-3.5 h-3.5" /> Nghe câu mẫu
                     </button>
+                    {renderLookupToggleButton()}
                     {scramblePool.length > 1 && (
                       <button
                         type="button"
@@ -1037,7 +1326,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                             }}
                             onClick={() => {
                               if (touchMovedRef.current) return;
-                              setScrambleResult(null);
+                              resetScrambleFeedback();
                               setSelectedTokens((list) => list.filter((_, i) => i !== pos));
                             }}
                             className={`px-3.5 py-2 rounded-xl bg-purple-600 text-white chinese-font font-bold text-lg shadow-sm select-none touch-none cursor-grab active:cursor-grabbing transition ${
@@ -1048,7 +1337,16 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                                   : 'hover:bg-purple-700'
                             }`}
                           >
-                            {tok.text}
+                            <InteractiveChineseText
+                              text={tok.text}
+                              enabled={lookupMode}
+                              canUseAi={canUseAiGrading}
+                              contextSentence={currScramble.targetHanzi}
+                              preserveClick
+                              treatAsSingleWord
+                              onOpenDetail={onOpenAiDictionary}
+                              wordClassName="underline decoration-dotted underline-offset-4 decoration-white/75"
+                            />
                           </button>
                         );
                       })
@@ -1136,7 +1434,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                           if (touchMovedRef.current) return;
                           soundFx.playFlip();
                           setScrambleStarted(true);
-                          setScrambleResult(null);
+                          resetScrambleFeedback();
                           setSelectedTokens((list) => [...list, idx]);
                         }}
                         className={`px-4 py-2 rounded-xl border text-lg chinese-font font-bold select-none touch-none transition ${
@@ -1147,7 +1445,15 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                               : 'bg-white dark:bg-slate-800 border-stone-300 dark:border-slate-700 hover:border-purple-500 text-gray-900 dark:text-white cursor-grab active:cursor-grabbing'
                         }`}
                       >
-                        {tok.text}
+                        <InteractiveChineseText
+                          text={tok.text}
+                          enabled={lookupMode && !used}
+                          canUseAi={canUseAiGrading}
+                          contextSentence={currScramble.targetHanzi}
+                          preserveClick
+                          treatAsSingleWord
+                          onOpenDetail={onOpenAiDictionary}
+                        />
                       </button>
                     );
                   })}
@@ -1155,29 +1461,36 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
 
                 {scrambleResult !== null && (
                   <div
-                    className={`p-4 rounded-2xl border text-xs flex items-center gap-2 ${
+                    className={`p-4 rounded-2xl border text-xs flex items-start gap-2.5 ${
                       scrambleResult
-                        ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 text-emerald-800 dark:text-emerald-200'
-                        : 'bg-red-50 dark:bg-red-900/20 border-red-200 text-red-800 dark:text-red-200'
+                        ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800/60 text-emerald-800 dark:text-emerald-200'
+                        : 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800/60 text-red-800 dark:text-red-200'
                     }`}
                   >
                     {scrambleResult ? (
-                      <>
-                        <CheckCircle2 className="w-4 h-4" />
-                        <span>
-                          Chính xác! <strong className="chinese-font">{currScramble.targetHanzi}</strong> (
-                          {currScramble.pinyin})
-                        </span>
-                      </>
+                      <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
                     ) : (
-                      <>
-                        <XCircle className="w-4 h-4" />
-                        <span>
-                          Chưa đúng thứ tự. Đáp án:{' '}
-                          <strong className="chinese-font">{currScramble.targetHanzi}</strong>
-                        </span>
-                      </>
+                      <XCircle className="w-4 h-4 shrink-0 mt-0.5" />
                     )}
+                    <div className="space-y-1 flex-1">
+                      <div>
+                        {scrambleResult ? (
+                          <span>
+                            <strong>Chính xác!</strong> Câu mẫu:{' '}
+                            <strong className="chinese-font">{currScramble.targetHanzi}</strong> (
+                            {currScramble.pinyin})
+                          </span>
+                        ) : (
+                          <span>
+                            <strong>Chưa đúng thứ tự.</strong> Đáp án:{' '}
+                            <strong className="chinese-font">{currScramble.targetHanzi}</strong>
+                          </span>
+                        )}
+                      </div>
+                      {scrambleFeedback && (
+                        <p className="opacity-90 leading-relaxed">{scrambleFeedback}</p>
+                      )}
+                    </div>
                   </div>
                 )}
 
@@ -1185,7 +1498,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                   <button
                     onClick={() => {
                       setSelectedTokens([]);
-                      setScrambleResult(null);
+                      resetScrambleFeedback();
                       clearScrambleDrag();
                     }}
                     className="px-4 py-2 rounded-xl border border-stone-300 dark:border-slate-700 text-xs font-bold"
@@ -1195,32 +1508,28 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
-                      disabled={selectedTokens.length < shuffledTokens.length}
-                      onClick={() => {
-                        setScrambleStarted(true);
-                        const built = selectedTokens.map((i) => shuffledTokens[i].text).join('');
-                        const ok = normalizeClean(built) === normalizeClean(currScramble.targetHanzi);
-                        setScrambleResult(ok);
-                        setScrambleScoreMap((prev) => ({
-                          ...prev,
-                          [scrambleIdx]: ok || Boolean(prev[scrambleIdx]),
-                        }));
-                        if (ok) soundFx.playCorrect();
-                        else soundFx.playWrong();
-                      }}
-                      className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold transition"
+                      disabled={selectedTokens.length < shuffledTokens.length || scrambleGrading}
+                      onClick={() => void handleCheckScramble()}
+                      className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold inline-flex items-center gap-1.5 transition"
                     >
-                      Kiểm tra
+                      {scrambleGrading ? (
+                        <>
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" /> Đang chấm...
+                        </>
+                      ) : (
+                        'Kiểm tra'
+                      )}
                     </button>
                     <button
                       onClick={() => {
                         if (scrambleIdx + 1 >= scrambleDeck.length) {
+                          resetScrambleFeedback();
                           setScrambleDone(true);
                           soundFx.playVictory();
                         } else {
                           setScrambleIdx((i) => i + 1);
                           setSelectedTokens([]);
-                          setScrambleResult(null);
+                          resetScrambleFeedback();
                           clearScrambleDrag();
                         }
                       }}
@@ -1280,6 +1589,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                   <span className="inline-flex items-center gap-1 text-xs font-bold text-purple-700 dark:text-purple-400">
                     <Flame className="w-3.5 h-3.5 text-amber-500" /> {transCorrectCount * 100} điểm
                   </span>
+                  {transMode === 'zh_to_vi' && renderLookupToggleButton()}
                   {transPool.length > 1 && (
                     <button
                       type="button"
@@ -1353,7 +1663,13 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                     )}
                   </div>
                   <div className="text-xl font-bold text-gray-900 dark:text-white chinese-font">
-                    {currTrans.promptText}
+                    <InteractiveChineseText
+                      text={currTrans.promptText}
+                      enabled={lookupMode && currTrans.direction === 'zh_to_vi'}
+                      canUseAi={canUseAiGrading}
+                      contextSentence={currTrans.promptText}
+                      onOpenDetail={onOpenAiDictionary}
+                    />
                   </div>
                   {showTransHint && currTrans.hint && (
                     <p className="text-xs text-amber-700 dark:text-amber-300">💡 {currTrans.hint}</p>
@@ -1374,12 +1690,17 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                   onChange={(e) => {
                     setTransStarted(true);
                     setTransInput(e.target.value);
-                    if (transChecked) setTransChecked(false);
+                    if (transChecked || transGrading) resetTransFeedback();
                   }}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.nativeEvent.isComposing && e.keyCode !== 229) {
+                    if (
+                      e.key === 'Enter' &&
+                      !e.nativeEvent.isComposing &&
+                      e.keyCode !== 229 &&
+                      !transGrading
+                    ) {
                       e.preventDefault();
-                      handleCheckTranslation();
+                      void handleCheckTranslation();
                     }
                   }}
                   placeholder={
@@ -1392,14 +1713,24 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
 
                 {transChecked && (
                   <div
-                    className={`p-4 rounded-2xl border text-xs ${
+                    className={`p-4 rounded-2xl border text-xs space-y-1.5 ${
                       transCorrect
-                        ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 text-emerald-800 dark:text-emerald-200'
-                        : 'bg-red-50 dark:bg-red-900/20 border-red-200 text-red-800 dark:text-red-200'
+                        ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800/60 text-emerald-800 dark:text-emerald-200'
+                        : 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800/60 text-red-800 dark:text-red-200'
                     }`}
                   >
-                    <strong>{transCorrect ? 'Chính xác!' : 'Chưa khớp!'}</strong>{' '}
-                    {currTrans.explanation}
+                    <div>
+                      <strong>{transCorrect ? 'Chính xác!' : 'Chưa khớp!'}</strong>{' '}
+                      {currTrans.explanation}
+                    </div>
+                    {transFeedback && (
+                      <p className="opacity-90 leading-relaxed">{transFeedback}</p>
+                    )}
+                    {transSuggestion && (
+                      <p className="opacity-90 leading-relaxed">
+                        Gợi ý tự nhiên hơn: <strong className="chinese-font">{transSuggestion}</strong>
+                      </p>
+                    )}
                   </div>
                 )}
 
@@ -1421,21 +1752,28 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
-                      disabled={!transInput.trim()}
-                      onClick={handleCheckTranslation}
-                      className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold transition"
+                      disabled={!transInput.trim() || transGrading}
+                      onClick={() => void handleCheckTranslation()}
+                      className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold inline-flex items-center gap-1.5 transition"
                     >
-                      Kiểm tra
+                      {transGrading ? (
+                        <>
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" /> Đang chấm...
+                        </>
+                      ) : (
+                        'Kiểm tra'
+                      )}
                     </button>
                     <button
                       onClick={() => {
                         if (transIdx + 1 >= transDeck.length) {
+                          resetTransFeedback();
                           setTransDone(true);
                           soundFx.playVictory();
                         } else {
                           setTransIdx((i) => i + 1);
                           setTransInput('');
-                          setTransChecked(false);
+                          resetTransFeedback();
                           setShowTransHint(false);
                           setShowTransAnswer(false);
                         }
@@ -1514,6 +1852,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                       <span className="px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 font-bold">
                         Chuỗi đúng: {quizStreak}
                       </span>
+                      {renderLookupToggleButton()}
                       {quizPool.length > 1 && (
                         <button
                           type="button"
@@ -1527,8 +1866,14 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                     </div>
                   </div>
 
-                  <div className="p-5 rounded-2xl bg-stone-50 dark:bg-slate-800/60 border border-stone-200 dark:border-slate-700 text-base font-bold text-gray-900 dark:text-white">
-                    {currQuiz.question}
+                  <div className="p-5 rounded-2xl bg-stone-50 dark:bg-slate-800/60 border border-stone-200 dark:border-slate-700 text-base font-bold text-gray-900 dark:text-white whitespace-pre-line leading-relaxed">
+                    <InteractiveChineseText
+                      text={currQuiz.question}
+                      enabled={lookupMode}
+                      canUseAi={canUseAiGrading}
+                      contextSentence={currQuiz.question}
+                      onOpenDetail={onOpenAiDictionary}
+                    />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1559,10 +1904,19 @@ export const GamesSection: React.FC<GamesSectionProps> = ({ lesson, currentUserI
                           }}
                           className={`p-3.5 rounded-xl border text-left text-xs transition flex items-center gap-2.5 ${cls}`}
                         >
-                          <span className="w-6 h-6 rounded-lg bg-stone-100 dark:bg-slate-800 flex items-center justify-center font-mono font-bold">
+                          <span className="w-6 h-6 rounded-lg bg-stone-100 dark:bg-slate-800 flex items-center justify-center font-mono font-bold shrink-0">
                             {String.fromCharCode(65 + optIdx)}
                           </span>
-                          <span>{opt}</span>
+                          <span>
+                            <InteractiveChineseText
+                              text={opt}
+                              enabled={lookupMode}
+                              canUseAi={canUseAiGrading}
+                              contextSentence={opt}
+                              preserveClick
+                              onOpenDetail={onOpenAiDictionary}
+                            />
+                          </span>
                         </button>
                       );
                     })}

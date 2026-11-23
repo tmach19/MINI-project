@@ -9,6 +9,7 @@ import {
   type RoleCatalogItem,
 } from '../config/rbacCatalog.js';
 import type {
+  GameGradingCacheRecord,
   GameMode,
   LessonDetail,
   MarkedVocabRecord,
@@ -65,6 +66,7 @@ class FallbackMemoryStore {
   // userId -> Map<permissionId, isExcluded>
   userOverrides = new Map<string, Map<string, boolean>>();
   translationCache = new Map<string, TranslationCacheRecord>();
+  gameGradingCache = new Map<string, GameGradingCacheRecord>();
   // userId -> Map<vocabId, MarkedVocabRecord>
   markedByUser = new Map<string, Map<string, MarkedVocabRecord>>();
   attemptsByUser = new Map<string, TestAttemptRecord[]>();

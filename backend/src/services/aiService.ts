@@ -1,5 +1,11 @@
 import { env } from '../config/env.js';
-import { getCachedTranslation, saveCachedTranslation } from '../repositories/aiCacheRepo.js';
+import {
+  buildGameGradingCacheKey,
+  getCachedGameGrade,
+  getCachedTranslation,
+  saveCachedGameGrade,
+  saveCachedTranslation,
+} from '../repositories/aiCacheRepo.js';
 import {
   getLessonById,
   searchAllVocabulary,
@@ -10,8 +16,13 @@ import type {
   AiDictionaryExample,
   AiPendingAction,
   AiToolExecutionSummary,
+  GameGradeDirection,
+  GameGradeMode,
+  GameGradeResult,
+  QuickLookupResult,
   TranslationDirection,
   UserProfile,
+  VocabGlossaryItem,
 } from '../types/domain.js';
 import {
   AI_TOOL_DECLARATIONS,
@@ -291,6 +302,7 @@ async function generateAiResponse(options: {
   userPrompt: string;
   jsonMode?: boolean;
   temperature?: number;
+  maxOutputTokens?: number;
 }): Promise<{ text: string; usedModel: string }> {
   if (!isAiConfigured()) {
     console.warn('[AI] Chưa cấu hình GEMINI_API_KEY hoặc AI_API_KEY trong backend/.env.');
@@ -305,6 +317,7 @@ async function generateAiResponse(options: {
       messages: [...cleanHistory, { role: 'user', content: options.userPrompt }],
       jsonMode: options.jsonMode,
       temperature: options.temperature,
+      maxTokens: options.maxOutputTokens,
     });
     return { text, usedModel: env.ai.model };
   }
@@ -322,6 +335,7 @@ async function generateAiResponse(options: {
     contents,
     jsonMode: options.jsonMode,
     temperature: options.temperature,
+    maxOutputTokens: options.maxOutputTokens,
   });
 }
 
@@ -722,4 +736,498 @@ Quy tắc trình bày & gọi tool khi trong phạm vi:
     pendingActions: toolCtx.pendingActions,
     effects: toolCtx.effects,
   };
+}
+
+const PINYIN_TONE_STRIP_MAP: Record<string, string> = {
+  ā: 'a', á: 'a', ǎ: 'a', à: 'a',
+  ē: 'e', é: 'e', ě: 'e', è: 'e',
+  ī: 'i', í: 'i', ǐ: 'i', ì: 'i',
+  ō: 'o', ó: 'o', ǒ: 'o', ò: 'o',
+  ū: 'u', ú: 'u', ǔ: 'u', ù: 'u',
+  ǖ: 'u', ǘ: 'u', ǚ: 'u', ǜ: 'u', ü: 'u',
+};
+
+function normalizeGameText(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/[\s,.;:!?'"“”‘’()（）！？。，、]/g, '')
+    .trim();
+}
+
+function stripGamePinyinTones(str: string): string {
+  return normalizeGameText(str).replace(
+    /[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]/g,
+    (ch) => PINYIN_TONE_STRIP_MAP[ch] ?? ch
+  );
+}
+
+function tokenizeGameWords(str: string): string[] {
+  return str
+    .toLowerCase()
+    .replace(/[,.;:!?'"“”‘’()（）！？。，、/]/g, ' ')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+function hasSameCharMultiset(a: string, b: string): boolean {
+  const arrA = Array.from(normalizeGameText(a)).sort();
+  const arrB = Array.from(normalizeGameText(b)).sort();
+  if (arrA.length !== arrB.length) return false;
+  for (let i = 0; i < arrA.length; i++) {
+    if (arrA[i] !== arrB[i]) return false;
+  }
+  return true;
+}
+
+export interface GradeGameAnswerParams {
+  mode: GameGradeMode;
+  direction?: GameGradeDirection;
+  exerciseId: string;
+  promptText: string;
+  expectedChinese?: string | null;
+  expectedPinyin?: string | null;
+  expectedMeaning?: string | null;
+  userAnswer: string;
+  canConsumeAiQuota?: () => boolean;
+}
+
+export async function gradeGameAnswer(params: GradeGameAnswerParams): Promise<GameGradeResult> {
+  const userAnswer = params.userAnswer.trim();
+  const direction: GameGradeDirection | null =
+    params.mode === 'translation' ? (params.direction || 'vi_to_zh') : null;
+  const cleanUser = normalizeGameText(userAnswer);
+
+  if (!cleanUser) {
+    return {
+      isCorrect: false,
+      feedback: 'Bạn chưa nhập đáp án.',
+      suggestion: null,
+      source: 'local',
+      aiUsed: false,
+    };
+  }
+
+  const expectedZh = (params.expectedChinese || '').trim();
+  const expectedPy = (params.expectedPinyin || '').trim();
+  const expectedMeaning = (params.expectedMeaning || '').trim();
+
+  // --- Tier 1: Local exact check + Guardrails (0ms, 0 token) ---
+  if (params.mode === 'scramble') {
+    const cleanExpectedZh = normalizeGameText(expectedZh);
+    if (cleanExpectedZh && cleanUser === cleanExpectedZh) {
+      return {
+        isCorrect: true,
+        feedback: '',
+        suggestion: null,
+        source: 'local',
+        aiUsed: false,
+      };
+    }
+    if (cleanExpectedZh && !hasSameCharMultiset(userAnswer, expectedZh)) {
+      return {
+        isCorrect: false,
+        feedback: 'Câu ghép chưa khớp đủ tập từ của đề bài.',
+        suggestion: expectedZh || null,
+        source: 'local',
+        aiUsed: false,
+      };
+    }
+  } else if (direction === 'vi_to_zh') {
+    const cleanZh = normalizeGameText(expectedZh);
+    const cleanPy = normalizeGameText(expectedPy);
+    const cleanUserNoTone = stripGamePinyinTones(userAnswer);
+    const cleanPyNoTone = stripGamePinyinTones(expectedPy);
+
+    if (
+      (cleanZh && cleanUser === cleanZh) ||
+      (cleanPy && (cleanUser === cleanPy || cleanUserNoTone === cleanPyNoTone))
+    ) {
+      return {
+        isCorrect: true,
+        feedback: '',
+        suggestion: null,
+        source: 'local',
+        aiUsed: false,
+      };
+    }
+
+    const userHasHanzi = /[\u4e00-\u9fff]/.test(userAnswer);
+    if (userHasHanzi) {
+      if (cleanZh.length >= 4 && cleanUser.length < Math.max(2, Math.floor(cleanZh.length * 0.45))) {
+        return {
+          isCorrect: false,
+          feedback: 'Câu trả lời còn thiếu nội dung so với đề bài.',
+          suggestion: null,
+          source: 'local',
+          aiUsed: false,
+        };
+      }
+    } else if (
+      cleanPyNoTone.length >= 8 &&
+      cleanUserNoTone.length < Math.max(4, Math.floor(cleanPyNoTone.length * 0.45))
+    ) {
+      return {
+        isCorrect: false,
+        feedback: 'Phần Pinyin còn quá ngắn hoặc chưa dịch đủ hết câu.',
+        suggestion: null,
+        source: 'local',
+        aiUsed: false,
+      };
+    }
+  } else {
+    const cleanExpectedMeaning = normalizeGameText(expectedMeaning);
+    if (cleanExpectedMeaning && cleanUser === cleanExpectedMeaning) {
+      return {
+        isCorrect: true,
+        feedback: '',
+        suggestion: null,
+        source: 'local',
+        aiUsed: false,
+      };
+    }
+    const expectedWords = tokenizeGameWords(expectedMeaning);
+    const userWords = tokenizeGameWords(userAnswer);
+    if (
+      cleanUser.length < 2 ||
+      (expectedWords.length >= 4 &&
+        userWords.length < Math.max(2, Math.ceil(expectedWords.length * 0.35)))
+    ) {
+      return {
+        isCorrect: false,
+        feedback: 'Bản dịch còn quá ngắn hoặc thiếu ý chính của câu.',
+        suggestion: null,
+        source: 'local',
+        aiUsed: false,
+      };
+    }
+  }
+
+  // --- Tier 2: Persistent / RAM Cache Lookup (~10ms, 0 token) ---
+  const normalizedCacheAnswer =
+    params.mode === 'scramble'
+      ? cleanUser
+      : direction === 'vi_to_zh'
+        ? /[\u4e00-\u9fff]/.test(userAnswer)
+          ? cleanUser
+          : stripGamePinyinTones(userAnswer)
+        : userAnswer.toLowerCase().replace(/\s+/g, ' ');
+
+  const cacheKey = buildGameGradingCacheKey(
+    params.mode,
+    params.exerciseId || normalizeGameText(params.promptText).slice(0, 64),
+    direction,
+    normalizedCacheAnswer
+  );
+
+  try {
+    const cached = await getCachedGameGrade(cacheKey);
+    if (cached) {
+      return {
+        isCorrect: cached.isCorrect,
+        feedback: cached.feedback,
+        suggestion: cached.suggestion,
+        source: 'cache',
+        aiUsed: true,
+      };
+    }
+  } catch (err) {
+    console.warn('[AI Game Grade] Không đọc được cache, tiếp tục xử lý:', err);
+  }
+
+  // --- Tier 3: AI Semantic Grader Fallback ---
+  if (!isAiConfigured()) {
+    console.warn('[AI Game Grade] AI chưa được cấu hình, fallback chấm local.');
+    return {
+      isCorrect: false,
+      feedback: '',
+      suggestion: null,
+      source: 'local_fallback',
+      aiUsed: false,
+    };
+  }
+
+  if (params.canConsumeAiQuota && !params.canConsumeAiQuota()) {
+    return {
+      isCorrect: false,
+      feedback: '',
+      suggestion: null,
+      source: 'local_fallback',
+      aiUsed: false,
+    };
+  }
+
+  const systemInstruction =
+    params.mode === 'scramble'
+      ? [
+          'Bạn là giáo viên tiếng Trung HSK giàu kinh nghiệm, chấm bài Sắp xếp từ thành câu.',
+          'QUAN TRỌNG: Phải phân tích kỹ từng từ trong trường "analysis" TRƯỚC, rồi mới kết luận "isCorrect" sao cho 100% nhất quán với phần phân tích.',
+          'Chỉ trả về JSON thuần đúng thứ tự các trường sau: {"analysis": string, "isCorrect": boolean, "feedback": string, "suggestion": string | null}.',
+          'Lưu ý đặc biệt của trò chơi ghép từ:',
+          '- Các mảnh từ KHÔNG có dấu câu (không có dấu phẩy `，`), nên từ cảm thán/đáp lại đầu câu (như 是, 对, 好, 嗯, 不, 没有) sẽ dính liền với vế sau. Ví dụ: "是我每个周末都到那儿买书" chính là "是，我每个周末都到那儿买书".',
+          '- TUYỆT ĐỐI KHÔNG đánh sai chỉ vì khác trật tự với "Câu chuẩn tham khảo". Tiêu chí duy nhất là: câu người học ghép có ĐÚNG NGỮ PHÁP tiếng Trung hiện đại, tự nhiên và CÙNG NGHĨA với đề tiếng Việt hay không.',
+          'Quy tắc chấm:',
+          '- BẮT BUỘC CHẤP NHẬN (isCorrect=true) khi câu ghép đúng ngữ pháp và cùng nghĩa, bao gồm mọi cách đảo hợp lệ như: trạng ngữ thời gian đặt TRƯỚC hoặc SAU chủ ngữ ("我每个周末都..." = "每个周末我都...", "我们下午去吧" = "下午我们去吧"), hai cụm đẳng lập đổi chỗ, v.v.',
+          '- CHỈ TỪ CHỐI (isCorrect=false) khi câu THỰC SỰ sai ngữ pháp tiếng Trung (sai vị trí phó từ 都/也/就/还, sai vị trí trợ từ 吧/吗/了/的/呢, sai trật tự định ngữ-trung tâm ngữ, hoặc đổi ngược chủ ngữ-tân ngữ làm sai nghĩa).',
+          'Ví dụ mẫu:',
+          '1) Câu chuẩn: "是每个周末我都到那儿买书" | Người học: "是我每个周末都到那儿买书" -> {"analysis": "Người học ghép là 是，我每个周末都到那儿买书. Cấu trúc Chủ ngữ (我) + Trạng ngữ thời gian (每个周末) + 都 + Động từ (到那儿买书) hoàn toàn đúng ngữ pháp và cùng nghĩa.", "isCorrect": true, "feedback": "Trạng ngữ thời gian 每个周末 đặt sau chủ ngữ 我 hoàn toàn tự nhiên và đúng ngữ pháp.", "suggestion": null}',
+          '2) Câu chuẩn: "是每个周末我都到那儿买书" | Người học: "是我都每个周末到那儿买书" -> {"analysis": "Phó từ 都 đứng trước 每个周末 là sai ngữ pháp tiếng Trung, 都 phải đứng sau 每个周末 và trước động từ 到.", "isCorrect": false, "feedback": "Trong cấu trúc 每...都..., phó từ 都 phải đặt sau 每个周末 và trước động từ 到.", "suggestion": "是我每个周末都到那儿买书"}',
+          '- Trường feedback viết bằng tiếng Việt ngắn gọn (1 câu, tối đa 180 ký tự), KHÔNG mở đầu bằng "Chính xác!", "Đúng rồi!" hay "Sai rồi!" (vì giao diện đã hiển thị sẵn nhãn này) và PHẢI khớp hoàn toàn với isCorrect.',
+        ].join('\n')
+      : direction === 'vi_to_zh'
+        ? [
+            'Bạn là giáo viên tiếng Trung HSK chấm bài Dịch Việt → Trung (người học có thể gõ Hán tự, Pinyin có dấu hoặc Pinyin không dấu).',
+            'Phải phân tích kỹ từng vế trong "analysis" TRƯỚC rồi mới chốt "isCorrect" nhất quán 100% với phân tích.',
+            'Chỉ trả về JSON thuần đúng thứ tự các trường: {"analysis": string, "isCorrect": boolean, "feedback": string, "suggestion": string | null}.',
+            'Quy tắc chấm:',
+            '- KHÔNG chấm sai chỉ vì khác câu mẫu. BẮT BUỘC CHẤP NHẬN (isCorrect=true) nếu câu người học dịch ĐẦY ĐỦ TẤT CẢ CÁC VẾ Ý của đề tiếng Việt, đúng ngữ pháp và tự nhiên; chấp nhận từ đồng nghĩa phù hợp (vd: 药店/药房, 这样/为了, 我们/咱们), trật tự trạng ngữ linh hoạt (我每个周末都... / 每个周末我都..., 下午我们去吧 / 我们下午去吧), và chấp nhận Pinyin không dấu hoặc dính/tách âm tiết miễn đọc đúng âm của từ đúng.',
+            '- TỪ CHỐI (isCorrect=false) nếu dịch thiếu vế/thiếu câu, sai nghĩa chính, gõ sai âm Pinyin làm lệch nghĩa, hoặc sai ngữ pháp nghiêm trọng.',
+            '- Trường feedback viết bằng tiếng Việt ngắn gọn (1-2 câu, tối đa 220 ký tự), khớp hoàn toàn với isCorrect.',
+            '- Trường suggestion: nếu cần gợi ý 1 cách diễn đạt tự nhiên hơn thì ghi ngắn gọn, không thì để null.',
+          ].join('\n')
+        : [
+            'Bạn là giáo viên tiếng Trung HSK chấm bài Dịch Trung → Việt.',
+            'Phải phân tích kỹ trong "analysis" TRƯỚC rồi mới chốt "isCorrect" nhất quán 100% với phân tích.',
+            'Chỉ trả về JSON thuần đúng thứ tự các trường: {"analysis": string, "isCorrect": boolean, "feedback": string, "suggestion": string | null}.',
+            'Quy tắc chấm:',
+            '- BẮT BUỘC CHẤP NHẬN (isCorrect=true) nếu bản dịch tiếng Việt đúng và ĐỦ TẤT CẢ Ý CHÍNH của câu tiếng Trung, chấp nhận khác đại từ xưng hô (tôi/tớ/mình, cậu/bạn/anh/chị) hoặc từ đồng nghĩa tự nhiên.',
+            '- TỪ CHỐI (isCorrect=false) nếu dịch thiếu vế/thiếu thông tin quan trọng hoặc sai nghĩa.',
+            '- Trường feedback viết bằng tiếng Việt ngắn gọn (1-2 câu, tối đa 220 ký tự), khớp hoàn toàn với isCorrect.',
+            '- Trường suggestion: để null nếu không cần sửa thêm.',
+          ].join('\n');
+
+  const userPrompt =
+    params.mode === 'scramble'
+      ? [
+          `Nghĩa tiếng Việt: ${params.promptText}`,
+          `Câu chuẩn tham khảo: ${expectedZh}${expectedPy ? ` (${expectedPy})` : ''}`,
+          `Câu người học ghép (không có dấu phẩy): ${userAnswer}`,
+          'Hãy đọc thật kỹ từng chữ của câu người học ghép, phân tích ngữ pháp trong "analysis" trước rồi kết luận "isCorrect".',
+        ].join('\n')
+      : direction === 'vi_to_zh'
+        ? [
+            `Đề tiếng Việt cần dịch: ${params.promptText}`,
+            `Đáp án tham khảo (Hán tự): ${expectedZh || '(không có)'}`,
+            `Đáp án tham khảo (Pinyin): ${expectedPy || '(không có)'}`,
+            `Câu trả lời của người học: ${userAnswer}`,
+          ].join('\n')
+        : [
+            `Câu tiếng Trung cần dịch: ${params.promptText}`,
+            `Nghĩa tham khảo tiếng Việt: ${expectedMeaning || '(không có)'}`,
+            `Bản dịch của người học: ${userAnswer}`,
+          ].join('\n');
+
+  try {
+    const { text, usedModel } = await generateAiResponse({
+      systemInstruction,
+      userPrompt,
+      jsonMode: true,
+      temperature: 0,
+      maxOutputTokens: 520,
+    });
+
+    const parsed = parseJsonObject(text);
+    const isCorrect = Boolean(parsed.isCorrect);
+    const rawFeedback =
+      typeof parsed.feedback === 'string'
+        ? parsed.feedback
+            .trim()
+            .replace(
+              /^(?:chính xác|đúng rồi|rất tốt|tuyệt vời|chưa chính xác|chưa khớp|chưa đúng(?:\s+thứ\s+tự)?|sai rồi)\s*[!.,:\-–—]*\s*/iu,
+              ''
+            )
+            .trim()
+        : '';
+    const normalizedFeedback = rawFeedback
+      ? rawFeedback.charAt(0).toUpperCase() + rawFeedback.slice(1)
+      : '';
+    const feedback =
+      normalizedFeedback.slice(0, 280) ||
+      (isCorrect
+        ? 'Cách diễn đạt này đúng ngữ pháp và sát nghĩa với đề bài.'
+        : 'Câu trả lời chưa khớp nghĩa hoặc ngữ pháp với đề bài.');
+    const suggestion =
+      typeof parsed.suggestion === 'string' && parsed.suggestion.trim()
+        ? parsed.suggestion.trim().slice(0, 280)
+        : null;
+
+    await saveCachedGameGrade({
+      cacheKey,
+      gameMode: params.mode,
+      direction,
+      exerciseId: params.exerciseId || 'unknown',
+      userAnswer,
+      isCorrect,
+      feedback,
+      suggestion,
+      model: usedModel,
+    }).catch((err) => {
+      console.warn('[AI Game Grade] Không lưu được cache:', err);
+    });
+
+    return {
+      isCorrect,
+      feedback,
+      suggestion,
+      source: 'ai',
+      aiUsed: true,
+    };
+  } catch (err) {
+    console.warn('[AI Game Grade] Lỗi gọi AI, fallback local:', err);
+    return {
+      isCorrect: false,
+      feedback: '',
+      suggestion: null,
+      source: 'local_fallback',
+      aiUsed: false,
+    };
+  }
+}
+
+export interface QuickLookupWordParams {
+  word: string;
+  context?: string;
+  userId?: string;
+  canConsumeAiQuota?: () => boolean;
+}
+
+export async function quickLookupChineseWord(
+  params: QuickLookupWordParams
+): Promise<QuickLookupResult> {
+  const cleanWord = params.word.trim().replace(/[^\u4e00-\u9fff]/g, '');
+  if (!cleanWord || cleanWord.length > 12) {
+    return { entry: null, source: 'unavailable' };
+  }
+
+  // --- Tier 1: Tra trực tiếp kho từ vựng DB (< 5ms, 0 token) ---
+  try {
+    const hits = await searchAllVocabulary(cleanWord, params.userId);
+    const exact = hits.find((h) => {
+      const normalizedHead = h.hanzi
+        .replace(/\([^)]*\)|（[^）]*）/g, '')
+        .split(/[/／、,，]/)
+        .map((p) => p.replace(/[^\u4e00-\u9fff]/g, '').trim());
+      return normalizedHead.includes(cleanWord);
+    });
+    if (exact) {
+      return {
+        entry: {
+          hanzi: cleanWord,
+          pinyin: exact.pinyin || '',
+          sinoVietnamese: exact.sinoVietnamese || null,
+          meaning: exact.meaning || '',
+          wordType: exact.type || null,
+          source: 'db',
+        },
+        source: 'db',
+      };
+    }
+  } catch (err) {
+    console.warn('[Quick Lookup] Lỗi tra DB, chuyển sang cache:', err);
+  }
+
+  // --- Tier 2: Tra translation_cache dùng chung (~10ms, 0 token) ---
+  // Ưu tiên bản từ điển đầy đủ nếu đã có, sau đó tới bản tra nhanh quick::
+  try {
+    const cached =
+      (await getCachedTranslation('zh_vi', cleanWord)) ||
+      (await getCachedTranslation('zh_vi', `quick::${cleanWord}`));
+    if (cached?.payload?.meaning) {
+      return {
+        entry: {
+          hanzi: cleanWord,
+          pinyin: cached.payload.pinyin || '',
+          sinoVietnamese: cached.payload.sinoVietnamese || null,
+          meaning: cached.payload.meaning,
+          wordType: cached.payload.wordType || null,
+          source: 'cache',
+        },
+        source: 'cache',
+      };
+    }
+  } catch (err) {
+    console.warn('[Quick Lookup] Lỗi đọc translation_cache, chuyển sang AI:', err);
+  }
+
+  // --- Tier 3: Gọi AI siêu gọn (~120 token) & lưu vào translation_cache ---
+  if (!isAiConfigured()) {
+    console.warn('[Quick Lookup] AI chưa được cấu hình, bỏ qua tra nhanh AI.');
+    return { entry: null, source: 'unavailable' };
+  }
+  if (params.canConsumeAiQuota && !params.canConsumeAiQuota()) {
+    return { entry: null, source: 'unavailable' };
+  }
+
+  const contextClean = (params.context || '').trim().slice(0, 220);
+  const systemInstruction = [
+    'Bạn là từ điển Trung-Việt ngắn gọn chuẩn HSK cho thẻ gợi ý di chuột (Wikipedia-style).',
+    'Chỉ trả về JSON thuần đúng cấu trúc: {"hanzi": string, "pinyin": string, "sinoVietnamese": string | null, "wordType": string | null, "meaning": string}.',
+    'Quy tắc:',
+    '- pinyin có dấu thanh điệu đầy đủ (ưu tiên đúng âm đọc theo ngữ cảnh nếu có câu ngữ cảnh).',
+    '- sinoVietnamese: âm Hán-Việt viết hoa chữ cái đầu mỗi tiếng (ví dụ "Hầu Lung", "Phát Viêm"), hoặc null nếu là trợ từ thuần khẩu ngữ.',
+    '- wordType: từ loại ngắn gọn bằng tiếng Việt (vd "Danh từ", "Động từ", "Danh từ / Động từ"), hoặc null.',
+    '- meaning: nghĩa tiếng Việt súc tích (tối đa 110 ký tự). Nếu từ có nhiều từ loại khác nhau, tách rõ từng từ loại bằng dấu chấm phẩy (vd: "Danh từ: giờ; Động từ: châm lửa, gọi món").',
+  ].join('\n');
+
+  const userPrompt = contextClean
+    ? `Tra nhanh từ: ${cleanWord}\nCâu ngữ cảnh: ${contextClean}`
+    : `Tra nhanh từ: ${cleanWord}`;
+
+  try {
+    const { text, usedModel } = await generateAiResponse({
+      systemInstruction,
+      userPrompt,
+      jsonMode: true,
+      temperature: 0.1,
+      maxOutputTokens: 220,
+    });
+
+    const parsed = parseJsonObject(text);
+    const meaning = typeof parsed.meaning === 'string' ? parsed.meaning.trim().slice(0, 140) : '';
+    if (!meaning) {
+      return { entry: null, source: 'unavailable' };
+    }
+
+    const entry: VocabGlossaryItem = {
+      hanzi: cleanWord,
+      pinyin: typeof parsed.pinyin === 'string' ? parsed.pinyin.trim().slice(0, 80) : '',
+      sinoVietnamese:
+        typeof parsed.sinoVietnamese === 'string' && parsed.sinoVietnamese.trim()
+          ? parsed.sinoVietnamese.trim().slice(0, 80)
+          : null,
+      meaning,
+      wordType:
+        typeof parsed.wordType === 'string' && parsed.wordType.trim()
+          ? parsed.wordType.trim().slice(0, 40)
+          : null,
+      source: 'ai',
+    };
+
+    // Lưu vào translation_cache để user sau hưởng qua Read-through / Cache DB
+    const cachePayload: AiDictionaryEntry = {
+      query: cleanWord,
+      direction: 'zh_vi',
+      detectedLanguage: 'zh',
+      isSentence: false,
+      hanzi: entry.hanzi,
+      pinyin: entry.pinyin,
+      sinoVietnamese: entry.sinoVietnamese,
+      wordType: entry.wordType,
+      meaning: entry.meaning,
+      meanings: [entry.meaning],
+      radical: null,
+      breakdown: null,
+      mnemonic: null,
+      grammarNote: null,
+      examples: [],
+    };
+    await saveCachedTranslation('zh_vi', `quick::${cleanWord}`, usedModel, cachePayload).catch((err) => {
+      console.warn('[Quick Lookup] Không lưu được cache:', err);
+    });
+
+    return { entry, source: 'ai' };
+  } catch (err) {
+    console.warn('[Quick Lookup] Lỗi gọi AI:', err);
+    return { entry: null, source: 'unavailable' };
+  }
 }

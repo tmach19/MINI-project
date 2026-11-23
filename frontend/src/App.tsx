@@ -939,7 +939,14 @@ export default function App() {
                   () => setActiveTab('vocab')
                 )
               ) : (
-                <GamesSection lesson={currentLesson} currentUserId={user?.id} />
+                <GamesSection
+                  lesson={currentLesson}
+                  currentUserId={user?.id}
+                  canUseAiGrading={Boolean(user && canUseAiAssistant)}
+                  onOpenAiDictionary={
+                    canUseAiAssistant ? (q) => openAiAssistant('dictionary', q) : undefined
+                  }
+                />
               )
             ) : null}
             {activeTab === 'test' ? (

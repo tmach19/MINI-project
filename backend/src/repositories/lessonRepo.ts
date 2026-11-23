@@ -2,6 +2,10 @@ import crypto from 'node:crypto';
 import type { PoolClient } from 'pg';
 import { getDbMode, getPool } from '../db/pool.js';
 import { memoryStore } from '../db/fallbackStore.js';
+import {
+  getAcceptedGameVariantsByExerciseIds,
+  listCachedGlossaryEntries,
+} from './aiCacheRepo.js';
 import { enrichVocabularyRadicals } from '../utils/hanziRadicals.js';
 import type {
   ComprehensiveQuestion,
@@ -12,6 +16,7 @@ import type {
   ScrambleExercise,
   TextItem,
   TranslationExercise,
+  VocabGlossaryItem,
   VocabularyItem,
 } from '../types/domain.js';
 
@@ -264,7 +269,27 @@ export async function getLessonById(lessonId: string, userId?: string): Promise<
     const found = memoryStore.lessons.find((l) => l.id === lessonId && l.isDeleted !== 1);
     if (!found) return null;
     if (!found.isSystem && found.ownerId !== userId) return null;
-    return found;
+
+    const exerciseIds = [
+      ...(found.exercises?.sentenceScramble || []).map((s) => s.id),
+      ...(found.exercises?.translationExercises || []).map((t) => t.id),
+    ];
+    const variantMap = await getAcceptedGameVariantsByExerciseIds(exerciseIds);
+
+    return {
+      ...found,
+      exercises: {
+        ...found.exercises,
+        sentenceScramble: (found.exercises?.sentenceScramble || []).map((sc) => ({
+          ...sc,
+          acceptedVariants: variantMap.get(`scramble::${sc.id}`) || sc.acceptedVariants || [],
+        })),
+        translationExercises: (found.exercises?.translationExercises || []).map((tr) => ({
+          ...tr,
+          acceptedVariants: variantMap.get(`translation::${tr.id}`) || tr.acceptedVariants || [],
+        })),
+      },
+    };
   }
 
   const pool = getPool()!;
@@ -356,6 +381,11 @@ export async function getLessonById(lessonId: string, userId?: string): Promise<
       })),
   }));
 
+  const variantMap = await getAcceptedGameVariantsByExerciseIds([
+    ...scramblesRes.rows.map((sc) => sc.id),
+    ...transRes.rows.map((tr) => tr.id),
+  ]);
+
   return {
     id: l.id,
     title: l.title,
@@ -396,6 +426,7 @@ export async function getLessonById(lessonId: string, userId?: string): Promise<
         pinyin: sc.pinyin,
         tokens: sc.tokens || [],
         unlearnedHint: sc.unlearned_hint,
+        acceptedVariants: variantMap.get(`scramble::${sc.id}`) || [],
       })),
       translationExercises: transRes.rows.map((tr) => ({
         id: tr.id,
@@ -407,6 +438,7 @@ export async function getLessonById(lessonId: string, userId?: string): Promise<
         expectedMeaning: tr.expected_meaning,
         acceptedPinyin: tr.accepted_pinyin,
         acceptedKeywords: tr.accepted_keywords || [],
+        acceptedVariants: variantMap.get(`translation::${tr.id}`) || [],
         hint: tr.hint,
         explanation: tr.explanation,
       })),
@@ -1428,4 +1460,103 @@ export async function getComprehensiveExamQuestions(
     correctIndex: q.correct_index,
     explanation: q.explanation,
   }));
+}
+
+function extractGlossaryHeadwords(rawHanzi: string): string[] {
+  const parts = String(rawHanzi || '')
+    .replace(/\([^)]*\)|（[^）]*）/g, '')
+    .split(/[/／、,，]/)
+    .map((part) => part.replace(/[^\u4e00-\u9fff]/g, '').trim())
+    .filter((w) => w.length >= 1 && w.length <= 6);
+  return Array.from(new Set(parts));
+}
+
+export async function getVocabGlossary(userId?: string): Promise<VocabGlossaryItem[]> {
+  const glossaryMap = new Map<string, VocabGlossaryItem>();
+
+  const addEntry = (
+    rawHanzi: string,
+    pinyin: string,
+    sinoVietnamese: string | null,
+    meaning: string,
+    wordType: string | null,
+    source: 'db' | 'cache'
+  ) => {
+    const cleanMeaning = (meaning || '').trim();
+    if (!cleanMeaning) return;
+    for (const headword of extractGlossaryHeadwords(rawHanzi)) {
+      if (!glossaryMap.has(headword)) {
+        glossaryMap.set(headword, {
+          hanzi: headword,
+          pinyin: (pinyin || '').trim(),
+          sinoVietnamese: sinoVietnamese ? sinoVietnamese.trim() : null,
+          meaning: cleanMeaning,
+          wordType: wordType ? wordType.trim() : null,
+          source,
+        });
+      }
+    }
+  };
+
+  if (getDbMode() === 'memory') {
+    memoryStore.ensureLoaded();
+    const visibleLessons = memoryStore.lessons.filter(
+      (l) => l.isDeleted !== 1 && (l.isSystem || (userId && l.ownerId === userId))
+    );
+    for (const lesson of visibleLessons) {
+      for (const v of lesson.vocabulary || []) {
+        addEntry(
+          v.hanzi,
+          v.pinyin,
+          v.sinoVietnamese || null,
+          v.meaning,
+          v.type || null,
+          'db'
+        );
+      }
+    }
+  } else {
+    const pool = getPool()!;
+    const res = await pool.query<{
+      hanzi: string;
+      pinyin: string;
+      sino_vietnamese: string | null;
+      meaning: string;
+      word_type: string | null;
+    }>(
+      `SELECT v.hanzi, v.pinyin, v.sino_vietnamese, v.meaning, v.word_type
+       FROM vocabularies v
+       JOIN lessons l ON l.id = v.lesson_id
+       WHERE v.is_deleted = 0
+         AND l.is_deleted = 0
+         AND (l.is_system = TRUE OR ($1::uuid IS NOT NULL AND l.owner_id = $1::uuid))
+       ORDER BY l.is_system DESC, l.sort_order ASC, v.sort_order ASC`,
+      [userId || null]
+    );
+    for (const row of res.rows) {
+      addEntry(
+        row.hanzi,
+        row.pinyin,
+        row.sino_vietnamese,
+        row.meaning,
+        row.word_type,
+        'db'
+      );
+    }
+  }
+
+  // Read-through: gộp thêm các từ ngắn đã từng được AI giải nghĩa trong translation_cache
+  const cachedItems = await listCachedGlossaryEntries(400);
+  for (const item of cachedItems) {
+    addEntry(
+      item.hanzi,
+      item.pinyin,
+      item.sinoVietnamese,
+      item.meaning,
+      item.wordType,
+      'cache'
+    );
+  }
+
+  return Array.from(glossaryMap.values());
 }

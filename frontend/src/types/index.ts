@@ -63,6 +63,7 @@ export interface ScrambleExercise {
   pinyin?: string | null;
   tokens: string[];
   unlearnedHint?: string | null;
+  acceptedVariants?: string[];
 }
 
 export interface TranslationExercise {
@@ -75,6 +76,7 @@ export interface TranslationExercise {
   expectedMeaning?: string | null;
   acceptedPinyin?: string | null;
   acceptedKeywords?: string[];
+  acceptedVariants?: string[];
   hint?: string | null;
   explanation?: string | null;
 }
@@ -453,4 +455,26 @@ export interface AiChatMessage {
   content: string;
   toolExecutions?: AiToolExecutionSummary[];
   pendingActions?: AiPendingAction[];
+}
+
+export interface GameGradeResponse {
+  isCorrect: boolean;
+  feedback: string;
+  suggestion: string | null;
+  source: 'local' | 'cache' | 'ai' | 'local_fallback';
+  aiUsed: boolean;
+}
+
+export interface VocabGlossaryItem {
+  hanzi: string;
+  pinyin: string;
+  sinoVietnamese: string | null;
+  meaning: string;
+  wordType: string | null;
+  source: 'db' | 'cache' | 'ai';
+}
+
+export interface QuickLookupResponse {
+  entry: VocabGlossaryItem | null;
+  source: 'db' | 'cache' | 'ai' | 'unavailable';
 }
