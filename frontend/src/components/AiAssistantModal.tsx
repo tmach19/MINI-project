@@ -165,6 +165,26 @@ function extractHanziChars(text: string): string[] {
   return chars.slice(0, 12);
 }
 
+function renderHighlightedHanzi(text: string, targetHanzi: string): React.ReactNode {
+  const cleanTarget = (targetHanzi || '').replace(/[^\u4e00-\u9fff]/g, '').trim();
+  if (!text || !cleanTarget || cleanTarget.length > 6) return text;
+  const escaped = cleanTarget.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const parts = text.split(new RegExp(`(${escaped})`, 'g'));
+  if (parts.length <= 1) return text;
+  return parts.map((part, idx) =>
+    part === cleanTarget ? (
+      <mark
+        key={idx}
+        className="bg-amber-100/90 dark:bg-amber-500/25 text-amber-800 dark:text-amber-300 rounded px-0.5 font-black"
+      >
+        {part}
+      </mark>
+    ) : (
+      <React.Fragment key={idx}>{part}</React.Fragment>
+    )
+  );
+}
+
 function extractChineseSnippets(text: string): string[] {
   const matches = text.match(/[\u4e00-\u9fff][\u4e00-\u9fff，。？！、；：“”‘’\s]{0,40}[\u4e00-\u9fff]|[\u4e00-\u9fff]+/g);
   if (!matches) return [];
@@ -893,7 +913,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                           >
                             <div className="flex items-baseline gap-1.5 flex-wrap">
                               <span className="chinese-serif text-sm font-bold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition">
-                                {comp.hanzi}
+                                {renderHighlightedHanzi(comp.hanzi, dictResult.aiResult!.hanzi)}
                               </span>
                               {dictLoading && dictLoadingQuery === comp.hanzi && (
                                 <Loader2 className="w-3 h-3 animate-spin text-purple-500" />
@@ -962,7 +982,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                         >
                           <div className="space-y-0.5">
                             <p className="chinese-serif text-sm font-bold text-gray-900 dark:text-white">
-                              {ex.hanzi}
+                              {renderHighlightedHanzi(ex.hanzi, dictResult.aiResult!.hanzi)}
                             </p>
                             {ex.pinyin && (
                               <p className="text-xs font-mono text-red-600 dark:text-red-400">

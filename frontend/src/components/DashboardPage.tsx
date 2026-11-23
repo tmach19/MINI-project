@@ -13,6 +13,7 @@ import {
   Flame,
   GitBranch,
   LayoutDashboard,
+  Loader2,
   LogIn,
   LogOut,
   Moon,
@@ -28,6 +29,7 @@ import { api } from '../lib/api';
 import { getAvatarPreset, isImageMediaUrl } from '../lib/profileMedia';
 import { SavedVocabPanel } from './SavedVocabPanel';
 import { TestHistoryPanel } from './TestHistoryPanel';
+import { LoadingSpinner } from './common/LoadingState';
 import { ModalCloseButton } from './common/ModalShell';
 import type {
   DashboardActivityDay,
@@ -939,6 +941,15 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <section className="lg:col-span-8 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-[0_2px_8px_rgba(15,23,42,0.04)] p-6 flex flex-col justify-between gap-6 relative overflow-hidden group hover:border-red-300 dark:hover:border-red-800/80 transition">
               <div className="pointer-events-none absolute -top-20 -right-20 w-64 h-64 rounded-full bg-gradient-to-br from-red-500/10 via-amber-500/5 to-transparent blur-2xl" />
 
+              {loading && (
+                <div className="absolute inset-0 z-20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-[2px] flex flex-col items-center justify-center gap-2.5 pop-in">
+                  <LoadingSpinner size="md" />
+                  <p className="text-xs font-semibold text-slate-600 dark:text-slate-300">
+                    Đang tải tiến độ bài học...
+                  </p>
+                </div>
+              )}
+
               <div className="space-y-4 relative">
                 <div className="flex items-center justify-between gap-3 flex-wrap">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -956,19 +967,25 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                       ))}
                   </div>
 
-                  <select
-                    value={heroLesson?.lessonId || currentLessonId}
-                    onChange={(e) => onSelectLesson?.(e.target.value)}
-                    aria-label="Chọn bài học để xem tiến độ kiểm tra"
-                    className="max-w-[220px] sm:max-w-[270px] truncate px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-red-500 cursor-pointer transition"
-                    title="Đổi bài học để xem tiến độ kiểm tra & kỹ năng"
-                  >
-                    {lessons.map((l) => (
-                      <option key={l.id} value={l.id}>
-                        {l.title}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="flex items-center gap-2">
+                    {loading && (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-red-500 flex-shrink-0" />
+                    )}
+                    <select
+                      value={currentLessonId || heroLesson?.lessonId || ''}
+                      disabled={loading}
+                      onChange={(e) => onSelectLesson?.(e.target.value)}
+                      aria-label="Chọn bài học để xem tiến độ kiểm tra"
+                      className="max-w-[220px] sm:max-w-[270px] truncate px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200/80 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-red-500 cursor-pointer disabled:opacity-60 transition"
+                      title="Đổi bài học để xem tiến độ kiểm tra & kỹ năng"
+                    >
+                      {lessons.map((l) => (
+                        <option key={l.id} value={l.id}>
+                          {l.title}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
                 {loading && !dashboard ? (
