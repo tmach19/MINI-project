@@ -582,7 +582,7 @@ export default function App() {
     initializing ||
     (activeView === 'study' && loadingLesson && !currentLesson && lessons.length === 0 && !errorMsg)
   ) {
-    return <LoadingScreen />;
+    return <LoadingScreen lang={activeLang} />;
   }
 
   return (

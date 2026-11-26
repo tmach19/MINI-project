@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>汉语学堂 - Ứng Dụng Ôn Tập Tiếng Trung HSK</title>
+    <script>
+      if (window.location.pathname === '/en' || window.location.pathname.startsWith('/en/')) {
+        document.title = 'English Studio — Học tiếng Anh CEFR';
+      }
+      if (localStorage.getItem('cs_dark_mode') === 'true') {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
   </head>
   <body class="min-h-screen antialiased">
     <div id="root"></div>
