@@ -1,0 +1,45 @@
+# ============================================================================
+# Cấu hình Backend English Studio (hỗ trợ ${BIEN_MOI_TRUONG:gia_tri_mac_dinh})
+# ============================================================================
+
+server:
+  port: ${PORT:4001}
+  corsOrigin: ${CORS_ORIGIN:http://localhost:5173}
+
+database:
+  # Dùng chung PostgreSQL / Supabase với backend Tiếng Trung (phân tách bằng language_code = 'en')
+  url: ${DATABASE_URL:postgresql://postgres:manhtran191919%40%40@localhost:5432/chinese-study}
+  # auto | true | false (auto tự bật SSL nếu url chứa supabase hoặc sslmode=require)
+  ssl: ${DB_SSL:auto}
+  connectionTimeoutMs: 4000
+  maxPoolSize: 10
+  # Tự động fallback sang ../database/en/lessons-a1.json nếu DB chưa cài hoặc chưa chạy Liquibase
+  allowMemoryFallback: ${ALLOW_MEMORY_FALLBACK:true}
+
+security:
+  # Dùng chung JWT_SECRET với backend Tiếng Trung để đăng nhập 1 lần dùng chung cả / và /en
+  jwtSecret: ${JWT_SECRET:dev-chinese-study-jwt-secret-key}
+  jwtExpiresIn: ${JWT_EXPIRES_IN:7d}
+
+legacy:
+  enDataPath: ../database/en/lessons-a1.json
+
+media:
+  # Public CDN URL chứa ảnh WebP + audio MP3 UK/US/Ví dụ (Supabase Storage)
+  enBaseUrl: ${EN_MEDIA_BASE_URL:https://jxzxxmybmlwnfjalcykv.supabase.co/storage/v1/object/public/tmach/en-atlas}
+  enLocalDir: ${EN_MEDIA_LOCAL_DIR:../word-atlas/public/atlas}
+  supabaseUrl: ${SUPABASE_URL:}
+  supabaseEnBucket: ${SUPABASE_EN_MEDIA_BUCKET:tmach}
+  supabaseEnPrefix: ${SUPABASE_EN_MEDIA_PREFIX:en-atlas}
+
+ai:
+  # gemini | openai-compatible
+  provider: ${AI_PROVIDER:gemini}
+  apiKey: ${GEMINI_API_KEY:}
+  model: ${GEMINI_MODEL:gemini-3.5-flash-lite}
+  baseUrl: ${AI_BASE_URL:}
+  timeoutMs: ${AI_TIMEOUT_MS:45000}
+
+retention:
+  softDeleteDays: ${SOFT_DELETE_RETENTION_DAYS:30}
+  purgeIntervalHours: ${SOFT_DELETE_PURGE_INTERVAL_HOURS:24}

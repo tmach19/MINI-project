@@ -6,6 +6,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
-    proxy: proxyConfig,
+    proxy: {
+      '/api-en': {
+        ...proxyConfig['/api-en'],
+        rewrite: (path: string) => path.replace(/^\/api-en(?=\/|$)/, '/api'),
+      },
+      '/api/': proxyConfig['/api'],
+    },
   },
 });

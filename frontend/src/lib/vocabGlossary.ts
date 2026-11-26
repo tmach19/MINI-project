@@ -1,15 +1,24 @@
 import { api } from './api';
-import type { VocabGlossaryItem, VocabularyItem } from '../types';
+import type { LanguageCode, VocabGlossaryItem, VocabularyItem } from '../types';
 
 export interface TextSegment {
   text: string;
   isChinese: boolean;
 }
 
-const glossaryMap = new Map<string, VocabGlossaryItem>();
+const glossaryMaps: Record<LanguageCode, Map<string, VocabGlossaryItem>> = {
+  zh: new Map(),
+  en: new Map(),
+};
+const loadPromises: Record<LanguageCode, Promise<void> | null> = {
+  zh: null,
+  en: null,
+};
+const loadedFromServer: Record<LanguageCode, boolean> = {
+  zh: false,
+  en: false,
+};
 const listeners = new Set<() => void>();
-let loadPromise: Promise<void> | null = null;
-let loadedFromServer = false;
 let glossaryVersion = 0;
 
 type WordSegmenter = {
@@ -52,7 +61,14 @@ export function subscribeGlossary(listener: () => void): () => void {
   };
 }
 
-function extractHeadwords(rawHanzi: string): string[] {
+function extractHeadwords(rawHanzi: string, lang: LanguageCode): string[] {
+  if (lang === 'en') {
+    const clean = String(rawHanzi || '')
+      .replace(/\([^)]*\)/g, '')
+      .trim()
+      .toLowerCase();
+    return clean ? [clean] : [];
+  }
   return String(rawHanzi || '')
     .replace(/\([^)]*\)|（[^）]*）/g, '')
     .split(/[/／、,，]/)
@@ -60,16 +76,30 @@ function extractHeadwords(rawHanzi: string): string[] {
     .filter((w) => w.length >= 1 && w.length <= 6);
 }
 
-export function seedLessonVocabIntoGlossary(vocabList: VocabularyItem[] | undefined): void {
+function normalizeLookupKey(word: string, lang: LanguageCode): string {
+  if (lang === 'en') {
+    return word
+      .trim()
+      .toLowerCase()
+      .replace(/^[^a-z0-9]+|[^a-z0-9]+$/g, '');
+  }
+  return word.replace(/[^\u4e00-\u9fff]/g, '').trim();
+}
+
+export function seedLessonVocabIntoGlossary(
+  vocabList: VocabularyItem[] | undefined,
+  lang: LanguageCode = 'zh'
+): void {
   if (!vocabList || vocabList.length === 0) return;
+  const map = glossaryMaps[lang];
   let added = false;
   for (const v of vocabList) {
     const meaning = (v.meaning || '').trim();
     if (!meaning) continue;
-    for (const head of extractHeadwords(v.hanzi)) {
-      if (!glossaryMap.has(head)) {
-        glossaryMap.set(head, {
-          hanzi: head,
+    for (const head of extractHeadwords(v.hanzi, lang)) {
+      if (!map.has(head)) {
+        map.set(head, {
+          hanzi: lang === 'en' ? v.hanzi.trim() : head,
           pinyin: (v.pinyin || '').trim(),
           sinoVietnamese: v.sinoVietnamese ? v.sinoVietnamese.trim() : null,
           meaning,
@@ -83,47 +113,73 @@ export function seedLessonVocabIntoGlossary(vocabList: VocabularyItem[] | undefi
   if (added) notifyListeners();
 }
 
-export function ensureGlossaryLoaded(): Promise<void> {
-  if (loadedFromServer) return Promise.resolve();
-  if (loadPromise) return loadPromise;
+export function ensureGlossaryLoaded(lang: LanguageCode = 'zh'): Promise<void> {
+  if (loadedFromServer[lang]) return Promise.resolve();
+  if (loadPromises[lang]) return loadPromises[lang]!;
 
-  loadPromise = api
-    .getVocabGlossary()
+  const map = glossaryMaps[lang];
+  loadPromises[lang] = api
+    .getVocabGlossary(lang)
     .then((res) => {
-      loadedFromServer = true;
+      loadedFromServer[lang] = true;
       let added = false;
       for (const item of res.items || []) {
-        const key = (item.hanzi || '').replace(/[^\u4e00-\u9fff]/g, '').trim();
+        const key = normalizeLookupKey(item.hanzi || '', lang);
         if (!key || !item.meaning) continue;
-        // DB ưu tiên hơn cache nếu trùng từ
-        const existing = glossaryMap.get(key);
+        const existing = map.get(key);
         if (!existing || (existing.source !== 'db' && item.source === 'db')) {
-          glossaryMap.set(key, { ...item, hanzi: key });
+          map.set(key, { ...item, hanzi: lang === 'en' ? item.hanzi.trim() : key });
           added = true;
         }
       }
       if (added) notifyListeners();
     })
     .catch(() => {
-      // Cho phép thử lại lần sau nếu mạng tạm lỗi
-      loadPromise = null;
+      loadPromises[lang] = null;
     });
 
-  return loadPromise;
+  return loadPromises[lang]!;
 }
 
-export function lookupLocalGlossary(word: string): VocabGlossaryItem | null {
-  const clean = word.replace(/[^\u4e00-\u9fff]/g, '').trim();
+export function lookupLocalGlossary(
+  word: string,
+  lang: LanguageCode = 'zh'
+): VocabGlossaryItem | null {
+  const clean = normalizeLookupKey(word, lang);
   if (!clean) return null;
-  return glossaryMap.get(clean) || null;
+  const map = glossaryMaps[lang];
+  const exact = map.get(clean);
+  if (exact) return exact;
+  if (lang === 'en') {
+    // Simple inflection fallback (plural/past/ing) for instant English lookup
+    const candidates: string[] = [];
+    if (clean.endsWith('ies') && clean.length > 4) candidates.push(`${clean.slice(0, -3)}y`);
+    if (clean.endsWith('es') && clean.length > 3) candidates.push(clean.slice(0, -2));
+    if (clean.endsWith('s') && clean.length > 2) candidates.push(clean.slice(0, -1));
+    if (clean.endsWith('ed') && clean.length > 3) {
+      candidates.push(clean.slice(0, -2), clean.slice(0, -1));
+    }
+    if (clean.endsWith('ing') && clean.length > 4) {
+      candidates.push(clean.slice(0, -3), `${clean.slice(0, -3)}e`);
+    }
+    for (const c of candidates) {
+      const hit = map.get(c);
+      if (hit) return hit;
+    }
+  }
+  return null;
 }
 
-export function rememberGlossaryEntry(entry: VocabGlossaryItem): void {
-  const clean = (entry.hanzi || '').replace(/[^\u4e00-\u9fff]/g, '').trim();
+export function rememberGlossaryEntry(
+  entry: VocabGlossaryItem,
+  lang: LanguageCode = 'zh'
+): void {
+  const clean = normalizeLookupKey(entry.hanzi || '', lang);
   if (!clean || !entry.meaning) return;
-  const existing = glossaryMap.get(clean);
+  const map = glossaryMaps[lang];
+  const existing = map.get(clean);
   if (existing && existing.source === 'db') return;
-  glossaryMap.set(clean, { ...entry, hanzi: clean });
+  map.set(clean, { ...entry, hanzi: lang === 'en' ? entry.hanzi.trim() : clean });
   notifyListeners();
 }
 
@@ -140,12 +196,8 @@ function segmentFallbackSpan(span: string): string[] {
   return Array.from(span);
 }
 
-/**
- * Tách từ tiếng Trung 2 lớp:
- * 1) Khớp từ ghép dài nhất (6 -> 2 chữ) ưu tiên từ kho từ vựng HSK + cache của hệ thống.
- * 2) Phần chữ ngoài danh sách DB được tách bằng Intl.Segmenter('zh') của trình duyệt (0 KB).
- */
 function segmentChineseRun(run: string): string[] {
+  const map = glossaryMaps.zh;
   const result: string[] = [];
   let unmatchedBuf = '';
   let i = 0;
@@ -161,7 +213,7 @@ function segmentChineseRun(run: string): string[] {
     const maxLen = Math.min(6, run.length - i);
     for (let len = maxLen; len >= 2; len--) {
       const sub = run.slice(i, i + len);
-      if (glossaryMap.has(sub)) {
+      if (map.has(sub)) {
         matched = sub;
         break;
       }
@@ -181,9 +233,30 @@ function segmentChineseRun(run: string): string[] {
   return result;
 }
 
-export function segmentInteractiveText(text: string): TextSegment[] {
+export function segmentInteractiveText(
+  text: string,
+  lang: LanguageCode = 'zh'
+): TextSegment[] {
   if (!text) return [];
   const segments: TextSegment[] = [];
+
+  if (lang === 'en') {
+    const re = /([A-Za-z]+(?:['’-][A-Za-z]+)*)/g;
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = re.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        segments.push({ text: text.slice(lastIndex, match.index), isChinese: false });
+      }
+      segments.push({ text: match[1], isChinese: true });
+      lastIndex = match.index + match[0].length;
+    }
+    if (lastIndex < text.length) {
+      segments.push({ text: text.slice(lastIndex), isChinese: false });
+    }
+    return segments;
+  }
+
   const re = /([\u4e00-\u9fff]+)/g;
   let lastIndex = 0;
   let match: RegExpExecArray | null;

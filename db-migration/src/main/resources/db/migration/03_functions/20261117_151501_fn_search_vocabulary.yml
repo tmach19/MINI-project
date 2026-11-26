@@ -2,7 +2,7 @@ databaseChangeLog:
   - changeSet:
       id: 20261117_151501_fn_search_vocabulary
       author: chinese-study
-      comment: Function tim kiem tu vung xep hang do lien quan theo ranh gioi tu va ho tro khong dau
+      comment: Function tim kiem tu vung da ngon ngu (zh/en) xep hang do lien quan theo ranh gioi tu va ho tro khong dau
       runOnChange: true
       changes:
         - sql:
@@ -10,10 +10,13 @@ databaseChangeLog:
             splitStatements: false
             stripComments: false
             sql: |-
+              DROP FUNCTION IF EXISTS fn_search_vocabulary(TEXT, UUID, INTEGER);
+
               CREATE OR REPLACE FUNCTION fn_search_vocabulary(
                 p_query TEXT,
                 p_user_id UUID DEFAULT NULL,
-                p_limit INTEGER DEFAULT 60
+                p_limit INTEGER DEFAULT 60,
+                p_lang TEXT DEFAULT 'zh'
               )
               RETURNS TABLE (
                 id TEXT,
@@ -28,6 +31,7 @@ databaseChangeLog:
                 example_hanzi TEXT,
                 example_pinyin TEXT,
                 example_meaning TEXT,
+                meta JSONB,
                 lesson_id TEXT,
                 lesson_title TEXT,
                 hsk_level TEXT,
@@ -45,7 +49,8 @@ databaseChangeLog:
                     'aaaaaaaaaaaaaaaaaaaeeeeeeeeeeeeeiiiiiiiooooooooooooooooooouuuuuuuuuuuuuuuuuuyyyyyd'
                   ) AS q_norm,
                   regexp_replace(btrim(coalesce(p_query, '')), '\s+', ' ', 'g') ~ '[\u4E00-\u9FFF]' AS is_cjk,
-                  GREATEST(COALESCE(p_limit, 60), 1) AS lim
+                  GREATEST(COALESCE(p_limit, 60), 1) AS lim,
+                  COALESCE(NULLIF(lower(btrim(p_lang)), ''), 'zh') AS lang_code
               ),
               rx AS (
                 SELECT
@@ -71,6 +76,7 @@ databaseChangeLog:
                   v.example_hanzi,
                   v.example_pinyin,
                   v.example_meaning,
+                  v.meta,
                   l.id AS lesson_id,
                   l.title AS lesson_title,
                   l.hsk_level,
@@ -91,7 +97,9 @@ databaseChangeLog:
                           OR lower(v.pinyin) = r.q_raw
                           OR lower(v.meaning) = r.q_raw THEN 100
                         WHEN lower(coalesce(v.sino_vietnamese, '')) = r.q_raw THEN 92
-                        WHEN lower(v.pinyin) ~ ('\m' || r.q_esc_raw || '\M')
+                        WHEN lower(v.hanzi) LIKE r.q_raw || '%' THEN 90
+                        WHEN lower(v.hanzi) ~ ('\m' || r.q_esc_raw || '\M')
+                          OR lower(v.pinyin) ~ ('\m' || r.q_esc_raw || '\M')
                           OR lower(coalesce(v.sino_vietnamese, '')) ~ ('\m' || r.q_esc_raw || '\M')
                           OR lower(v.meaning) ~ ('\m' || r.q_esc_raw || '\M') THEN 85
                         WHEN NOT r.has_diacritics AND (
@@ -114,6 +122,7 @@ databaseChangeLog:
                 CROSS JOIN rx r
                 WHERE v.is_deleted = 0
                   AND l.is_deleted = 0
+                  AND l.language_code = r.lang_code
                   AND (l.is_system = TRUE OR (p_user_id IS NOT NULL AND l.owner_id = p_user_id))
                   AND (
                     (r.is_cjk AND (
@@ -121,13 +130,16 @@ databaseChangeLog:
                       OR lower(coalesce(v.radical, '')) LIKE '%' || r.q_raw || '%'
                     ))
                     OR
-                    (NOT r.is_cjk AND v.search_tsv @@ r.tsq)
+                    (NOT r.is_cjk AND (
+                      v.search_tsv @@ r.tsq
+                      OR (r.lang_code = 'en' AND lower(v.hanzi) LIKE r.q_raw || '%')
+                    ))
                   )
               )
               SELECT
                 s.id, s.hanzi, s.pinyin, s.sino_vietnamese, s.meaning, s.word_type,
                 s.radical, s.breakdown, s.mnemonic, s.example_hanzi, s.example_pinyin, s.example_meaning,
-                s.lesson_id, s.lesson_title, s.hsk_level, s.match_rank
+                s.meta, s.lesson_id, s.lesson_title, s.hsk_level, s.match_rank
               FROM scored s
               WHERE s.match_rank > 0
               ORDER BY s.match_rank DESC, s.lesson_sort ASC, s.vocab_sort ASC
@@ -136,4 +148,4 @@ databaseChangeLog:
       rollback:
         - sql:
             dbms: postgresql
-            sql: DROP FUNCTION IF EXISTS fn_search_vocabulary(TEXT, UUID, INTEGER);
+            sql: DROP FUNCTION IF EXISTS fn_search_vocabulary(TEXT, UUID, INTEGER, TEXT);

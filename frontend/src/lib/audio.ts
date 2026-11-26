@@ -1,5 +1,5 @@
-// Web Audio API Sound Effects & Chinese TTS (Backend MP3 proxy + Web Speech fallback)
-import type { TextItem } from '../types';
+// Web Audio API Sound Effects & Multi-language TTS (MP3 CDN / Backend MP3 proxy + Web Speech fallback)
+import type { LanguageCode, TextItem } from '../types';
 
 const API_BASE = import.meta.env.VITE_API_BASE || '/api';
 
@@ -396,3 +396,159 @@ export function speakChinese(
       fallbackSpeechSynthesis(clean, rate, onEnd, voice);
     });
 }
+
+function getEnglishVoices(accent: 'us' | 'uk' = 'us'): SpeechSynthesisVoice[] {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return [];
+  const voices = window.speechSynthesis.getVoices();
+  const preferredLang = accent === 'uk' ? 'en-GB' : 'en-US';
+  const exact = voices.filter((v) => v.lang?.toLowerCase() === preferredLang.toLowerCase());
+  const anyEn = voices.filter((v) => v.lang?.toLowerCase().startsWith('en'));
+  return exact.length > 0 ? [...exact, ...anyEn.filter((v) => !exact.includes(v))] : anyEn;
+}
+
+function fallbackEnglishSpeechSynthesis(
+  text: string,
+  accent: 'us' | 'uk' = 'us',
+  rate = 1,
+  onEnd?: () => void,
+  voiceKey?: TtsVoiceKey
+): void {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+    onEnd?.();
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const enVoices = getEnglishVoices(accent);
+  const segments = stripSpeakerLabelsForSpeech(text);
+  const seq = playSeq;
+
+  const speakNext = (idx: number) => {
+    if (seq !== playSeq) return;
+    if (idx >= segments.length) {
+      onEnd?.();
+      return;
+    }
+    const seg = segments[idx];
+    const effectiveVoiceKey = seg.voiceHint || voiceKey;
+    const utterance = new SpeechSynthesisUtterance(seg.text);
+    utterance.lang = accent === 'uk' ? 'en-GB' : 'en-US';
+    utterance.rate = Math.min(2, Math.max(0.5, rate));
+    utterance.pitch = getPitchForVoice(effectiveVoiceKey);
+    if (enVoices.length > 0) {
+      const vIdx =
+        effectiveVoiceKey === 'male' || effectiveVoiceKey === 'male1' || effectiveVoiceKey === 'male2'
+          ? Math.min(1, enVoices.length - 1)
+          : 0;
+      utterance.voice = enVoices[vIdx];
+    }
+    utterance.onend = () => speakNext(idx + 1);
+    utterance.onerror = () => speakNext(idx + 1);
+    window.speechSynthesis.speak(utterance);
+  };
+
+  speakNext(0);
+}
+
+/**
+ * Phát trực tiếp file MP3 từ CDN (vd: Supabase Storage public URL).
+ * Nếu lỗi mạng/404/autoplay, tự động gọi onFallback (Web Speech API).
+ */
+export function playAudioUrl(
+  url: string,
+  rate = 1,
+  onEnd?: () => void,
+  onFallback?: () => void
+): void {
+  const cleanUrl = (url || '').trim();
+  if (!cleanUrl) {
+    if (onFallback) onFallback();
+    else onEnd?.();
+    return;
+  }
+
+  stopChineseSpeech();
+  const seq = playSeq;
+  const audio = new Audio(cleanUrl);
+  audio.playbackRate = Math.min(2, Math.max(0.5, rate));
+  currentAudio = audio;
+
+  const cleanup = () => {
+    if (currentAudio === audio) {
+      currentAudio = null;
+    }
+  };
+
+  let handledError = false;
+  const handleFail = () => {
+    if (handledError) return;
+    handledError = true;
+    cleanup();
+    if (seq === playSeq) {
+      if (onFallback) onFallback();
+      else onEnd?.();
+    }
+  };
+
+  audio.onended = () => {
+    cleanup();
+    if (seq === playSeq) onEnd?.();
+  };
+
+  audio.onerror = handleFail;
+
+  audio.play().catch(handleFail);
+}
+
+export function speakEnglish(
+  text: string,
+  options?: {
+    accent?: 'us' | 'uk';
+    rate?: number;
+    audioUrl?: string | null;
+    onEnd?: () => void;
+    voice?: TtsVoiceKey;
+  }
+): void {
+  const clean = (text || '').trim();
+  const accent = options?.accent || 'us';
+  const rate = options?.rate ?? 1;
+  const onEnd = options?.onEnd;
+  const voice = options?.voice;
+  const audioUrl = options?.audioUrl?.trim() || null;
+
+  if (!clean && !audioUrl) {
+    onEnd?.();
+    return;
+  }
+
+  if (audioUrl) {
+    playAudioUrl(audioUrl, rate, onEnd, () => {
+      if (clean) fallbackEnglishSpeechSynthesis(clean, accent, rate, onEnd, voice);
+      else onEnd?.();
+    });
+    return;
+  }
+
+  stopChineseSpeech();
+  fallbackEnglishSpeechSynthesis(clean, accent, rate, onEnd, voice);
+}
+
+export function speakText(
+  text: string,
+  lang: LanguageCode = 'zh',
+  options?: {
+    accent?: 'us' | 'uk';
+    rate?: number;
+    audioUrl?: string | null;
+    onEnd?: () => void;
+    voice?: TtsVoiceKey;
+  }
+): void {
+  if (lang === 'en') {
+    speakEnglish(text, options);
+    return;
+  }
+  speakChinese(text, options?.rate ?? 1, options?.onEnd, options?.voice);
+}
+
+export const stopSpeech = stopChineseSpeech;

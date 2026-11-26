@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Award,
   BarChart3,
@@ -21,7 +21,14 @@ import {
   Trash2,
   User as UserIcon,
 } from 'lucide-react';
-import { api, getStoredToken, setStoredToken } from './lib/api';
+import { api, getStoredToken, setActiveApiLanguage, setStoredToken } from './lib/api';
+import {
+  buildRoutePath,
+  getLanguagePack,
+  parseLocationRoute,
+  setEnMediaBaseUrl,
+  type AppView,
+} from './languages/config';
 import { hasPermission, isSuperAdminUser, PERMISSIONS } from './lib/permissions';
 import { getAvatarPreset, isImageMediaUrl } from './lib/profileMedia';
 import { AdminRbacPage } from './components/AdminRbacPage';
@@ -42,6 +49,7 @@ import { TextsSection } from './components/TextsSection';
 import { VocabSection } from './components/VocabSection';
 import type {
   ComprehensiveExamResponse,
+  LanguageCode,
   LessonDetail,
   LessonSummary,
   MarkedVocabRecord,
@@ -51,38 +59,31 @@ import type {
   VocabularyItem,
 } from './types';
 
-type AppView = 'dashboard' | 'saved_vocab' | 'history' | 'study' | 'profile' | 'exam' | 'admin';
-
-function getViewFromPath(): AppView {
-  if (typeof window !== 'undefined') {
-    const p = window.location.pathname.replace(/\/+$/, '');
-    if (p === '/study') return 'study';
-    if (p === '/saved-vocab') return 'saved_vocab';
-    if (p === '/history') return 'history';
-    if (p === '/profile') return 'profile';
-    if (p === '/exam') return 'exam';
-    if (p === '/admin') return 'admin';
-    if (p === '/dashboard') return 'dashboard';
-  }
-  return 'dashboard';
-}
-
 export default function App() {
+  const initialRoute = useMemo(() => {
+    const parsed = parseLocationRoute();
+    setActiveApiLanguage(parsed.lang);
+    return parsed;
+  }, []);
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     return localStorage.getItem('cs_dark_mode') === 'true';
   });
+
+  const [activeLang, setActiveLang] = useState<LanguageCode>(initialRoute.lang);
+  setActiveApiLanguage(activeLang);
+  const langPack = useMemo(() => getLanguagePack(activeLang), [activeLang]);
+  const isEnglish = activeLang === 'en';
 
   const [user, setUser] = useState<UserProfile | null>(null);
   const [initializing, setInitializing] = useState(true);
   const [authChecked, setAuthChecked] = useState<boolean>(() => !getStoredToken());
   const [lessons, setLessons] = useState<LessonSummary[]>([]);
-  const [currentLessonId, setCurrentLessonId] = useState<string>(
-    () => localStorage.getItem('cs_current_lesson') || 'lesson-1'
-  );
+  const [currentLessonId, setCurrentLessonId] = useState<string>(() => {
+    const pack = getLanguagePack(initialRoute.lang);
+    return localStorage.getItem(pack.lessonStorageKey) || pack.defaultLessonId;
+  });
   const [currentLesson, setCurrentLesson] = useState<LessonDetail | null>(null);
-  const [activeView, setActiveView] = useState<AppView>(() =>
-    getViewFromPath()
-  );
+  const [activeView, setActiveView] = useState<AppView>(initialRoute.view);
   const [activeTab, setActiveTab] = useState<TabId>('vocab');
   const [loadingLesson, setLoadingLesson] = useState(false);
   const [comprehensiveExam, setComprehensiveExam] = useState<ComprehensiveExamResponse | null>(null);
@@ -103,6 +104,7 @@ export default function App() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deletingLesson, setDeletingLesson] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+  const prevLangRef = useRef<LanguageCode>(initialRoute.lang);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -110,6 +112,12 @@ export default function App() {
     else root.classList.remove('dark');
     localStorage.setItem('cs_dark_mode', String(darkMode));
   }, [darkMode]);
+
+  useEffect(() => {
+    document.title = isEnglish
+      ? 'English Studio — Học tiếng Anh CEFR'
+      : '汉语学堂 — Học tiếng Trung HSK';
+  }, [isEnglish]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -122,16 +130,19 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const refreshLessons = async () => {
-    const res = await api.listLessons();
+  const refreshLessons = async (targetLang: LanguageCode = activeLang) => {
+    const res = await api.listLessons(targetLang);
     setLessons(res.lessons);
-    if (res.lessons.length > 0 && !res.lessons.some((l) => l.id === currentLessonId)) {
-      setCurrentLessonId(res.lessons[0].id);
-    }
+    setCurrentLessonId((prevId) => {
+      if (res.lessons.length > 0 && !res.lessons.some((l) => l.id === prevId)) {
+        return res.lessons[0].id;
+      }
+      return prevId;
+    });
   };
 
-  const refreshUserProgress = async () => {
-    const progRes = await api.getProgress();
+  const refreshUserProgress = async (targetLang: LanguageCode = activeLang) => {
+    const progRes = await api.getProgress(targetLang);
     setMarkedMap(progRes.markedMap);
     setAttempts(progRes.attempts);
   };
@@ -148,20 +159,7 @@ export default function App() {
 
   const navigateView = (nextView: AppView, replace = false) => {
     setActiveView(nextView);
-    const targetPath =
-      nextView === 'study'
-        ? '/study'
-        : nextView === 'saved_vocab'
-        ? '/saved-vocab'
-        : nextView === 'history'
-        ? '/history'
-        : nextView === 'profile'
-        ? '/profile'
-        : nextView === 'exam'
-        ? '/exam'
-        : nextView === 'admin'
-        ? '/admin'
-        : '/';
+    const targetPath = buildRoutePath(activeLang, nextView);
     if (window.location.pathname !== targetPath) {
       if (replace) window.history.replaceState(null, '', targetPath);
       else window.history.pushState(null, '', targetPath);
@@ -193,8 +191,9 @@ export default function App() {
     if (selectedExamLessonIds !== null && targetIds.length === 0) {
       setComprehensiveExam({
         id: 'comprehensive_empty',
+        languageCode: activeLang,
         title: 'Kiểm tra tổng hợp (0 bài)',
-        hskLevel: 'HSK 1 - HSK 3',
+        hskLevel: langPack.examLevelRange,
         description: 'Vui lòng chọn ít nhất 1 buổi học trong danh sách để bốc câu hỏi ngẫu nhiên.',
         questions: [],
       });
@@ -204,7 +203,10 @@ export default function App() {
     setLoadingExam(true);
     setErrorMsg(null);
     try {
-      const res = await api.getComprehensiveExam(targetIds.length > 0 ? targetIds : undefined);
+      const res = await api.getComprehensiveExam(
+        targetIds.length > 0 ? targetIds : undefined,
+        activeLang
+      );
       setComprehensiveExam(res.exam);
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : 'Không tải được đề kiểm tra tổng hợp');
@@ -228,7 +230,11 @@ export default function App() {
   };
 
   useEffect(() => {
-    const onPopState = () => setActiveView(getViewFromPath());
+    const onPopState = () => {
+      const parsed = parseLocationRoute();
+      setActiveView(parsed.view);
+      setActiveLang(parsed.lang);
+    };
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
@@ -274,22 +280,39 @@ export default function App() {
   useEffect(() => {
     const init = async () => {
       try {
+        setActiveApiLanguage(initialRoute.lang);
         await api.health();
+        if (initialRoute.lang === 'en') {
+          await api
+            .getLanguages()
+            .then((langRes) => {
+              if (langRes.media?.enBaseUrl) setEnMediaBaseUrl(langRes.media.enBaseUrl);
+            })
+            .catch(() => {
+              // Fallback tới DEFAULT_EN_MEDIA_BASE_URL nếu cần
+            });
+        }
 
-        const token = getStoredToken();
+        const token = getStoredToken(initialRoute.lang);
         if (token) {
+          let authenticated = false;
           try {
             const me = await api.me();
             setUser(me.user);
-            await refreshUserProgress();
+            authenticated = true;
           } catch {
-            setStoredToken(null);
+            setStoredToken(null, initialRoute.lang);
+          }
+          if (authenticated) {
+            await refreshUserProgress(initialRoute.lang).catch(() => {});
           }
         }
-        await refreshLessons();
+        await refreshLessons(initialRoute.lang);
       } catch (err) {
         setErrorMsg(
-          `Không kết nối được Backend API (${(err as Error).message}). Hãy chạy backend trước.`
+          initialRoute.lang === 'en'
+            ? `Không kết nối được English Backend Service (${(err as Error).message}). Hãy chạy service Tiếng Anh trước.`
+            : `Không kết nối được Backend API (${(err as Error).message}). Hãy chạy backend trước.`
         );
       } finally {
         setAuthChecked(true);
@@ -299,9 +322,73 @@ export default function App() {
     init();
   }, []);
 
+  // Khi người dùng dùng nút Back/Forward giữa `/` và `/en`, chuyển service API & tải lại dữ liệu
+  useEffect(() => {
+    if (prevLangRef.current === activeLang) return;
+    prevLangRef.current = activeLang;
+    setActiveApiLanguage(activeLang);
+    const pack = getLanguagePack(activeLang);
+    setCurrentLesson(null);
+    setComprehensiveExam(null);
+    setSelectedExamLessonIds(null);
+    setCurrentLessonId(localStorage.getItem(pack.lessonStorageKey) || pack.defaultLessonId);
+    setMarkedMap({});
+    setAttempts([]);
+    setErrorMsg(null);
+
+    let cancelled = false;
+    const syncService = async () => {
+      if (activeLang === 'en') {
+        await api
+          .getLanguages()
+          .then((langRes) => {
+            if (!cancelled && langRes.media?.enBaseUrl) setEnMediaBaseUrl(langRes.media.enBaseUrl);
+          })
+          .catch(() => {});
+      }
+
+      const token = getStoredToken(activeLang);
+      if (token) {
+        let authenticated = false;
+        try {
+          const me = await api.me();
+          if (!cancelled) {
+            setUser(me.user);
+            authenticated = true;
+          }
+        } catch {
+          setStoredToken(null, activeLang);
+          if (!cancelled) setUser(null);
+        }
+        if (authenticated && !cancelled) {
+          await refreshUserProgress(activeLang).catch(() => {});
+        }
+      } else if (!cancelled) {
+        setUser(null);
+      }
+
+      if (!cancelled) {
+        await refreshLessons(activeLang).catch((err) => {
+          if (!cancelled) {
+            setErrorMsg(
+              activeLang === 'en'
+                ? `Không kết nối được English Backend Service (${(err as Error).message}).`
+                : `Không kết nối được Backend API (${(err as Error).message}).`
+            );
+          }
+        });
+      }
+    };
+
+    void syncService();
+    return () => {
+      cancelled = true;
+    };
+  }, [activeLang]);
+
   useEffect(() => {
     if (!currentLessonId) return;
-    localStorage.setItem('cs_current_lesson', currentLessonId);
+    localStorage.setItem(langPack.lessonStorageKey, currentLessonId);
     setLoadingLesson(true);
     api
       .getLesson(currentLessonId)
@@ -313,7 +400,7 @@ export default function App() {
         setErrorMsg((err as Error).message);
       })
       .finally(() => setLoadingLesson(false));
-  }, [currentLessonId, user?.id]);
+  }, [currentLessonId, user?.id, langPack.lessonStorageKey]);
 
   const groupedLessons = useMemo(() => {
     const groups: Record<string, LessonSummary[]> = {};
@@ -334,7 +421,7 @@ export default function App() {
   };
 
   const handleLogout = () => {
-    setStoredToken(null);
+    setStoredToken(null, activeLang, true);
     setUser(null);
     setComprehensiveExam(null);
     setMarkedMap({});
@@ -378,8 +465,8 @@ export default function App() {
       return;
     }
     const resolvedTitle =
-      payload.examTitle || currentLesson?.title || payload.lessonId || 'Kiểm tra tổng hợp (26 bài)';
-    const res = await api.submitTestAttempt(payload);
+      payload.examTitle || currentLesson?.title || payload.lessonId || langPack.examTitleAll;
+    const res = await api.submitTestAttempt({ ...payload, languageCode: activeLang });
     setAttempts((prev) => [
       { ...res.attempt, lessonTitle: res.attempt.lessonTitle || resolvedTitle },
       ...prev,
@@ -399,7 +486,7 @@ export default function App() {
       const res = await api.updateLesson(currentLesson.id, payload);
       setCurrentLesson(res.lesson);
     } else {
-      const res = await api.createLesson(payload);
+      const res = await api.createLesson({ ...payload, languageCode: activeLang });
       setCurrentLessonId(res.lesson.id);
       setCurrentLesson(res.lesson);
     }
@@ -501,6 +588,7 @@ export default function App() {
     <div className="min-h-screen flex flex-col">
       {activeView === 'dashboard' || activeView === 'saved_vocab' || activeView === 'history' ? (
         <DashboardPage
+          lang={activeLang}
           user={user}
           lessons={lessons}
           attempts={attempts}
@@ -529,9 +617,11 @@ export default function App() {
           onOpenProfile={() => navigateView('profile')}
           onOpenAdmin={() => navigateView('admin')}
           onOpenSearch={() => setShowSearchModal(true)}
-          onOpenAiDictionary={() => openAiAssistant('dictionary', '')}
+          onOpenAiDictionary={(q = '') =>
+            openAiAssistant('dictionary', typeof q === 'string' ? q : '')
+          }
           onToggleMarked={handleToggleMarked}
-          onOpenWriter={(vocab) => setWriterVocab(vocab)}
+          onOpenWriter={langPack.hasStrokeWriter ? (vocab) => setWriterVocab(vocab) : undefined}
           onRequireAuth={() => setShowAuthModal(true)}
           onLogout={handleLogout}
         />
@@ -546,19 +636,29 @@ export default function App() {
               className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0 text-left"
               title="Về trang Tổng quan (Dashboard)"
             >
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-red-600 to-amber-600 flex items-center justify-center text-white shadow-md">
-                <span className="chinese-serif text-lg sm:text-xl font-black">汉</span>
+              <div
+                className={`w-9 h-9 sm:w-10 sm:h-10 rounded-2xl flex items-center justify-center text-white shadow-md ${
+                  isEnglish
+                    ? 'bg-gradient-to-br from-indigo-600 to-blue-600'
+                    : 'bg-gradient-to-br from-red-600 to-amber-600'
+                }`}
+              >
+                <span className={langPack.brandGlyphClass}>{langPack.brandGlyph}</span>
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-base font-bold text-gray-900 dark:text-white">汉语学堂</h1>
-                <p className="text-[11px] text-gray-500 dark:text-slate-400">Học tiếng Trung</p>
+                <h1 className="text-base font-bold text-gray-900 dark:text-white">{langPack.brandTitle}</h1>
+                <p className="text-[11px] text-gray-500 dark:text-slate-400">{langPack.brandSubtitle}</p>
               </div>
             </button>
 
             <button
               type="button"
               onClick={() => navigateView('dashboard')}
-              className="px-2.5 sm:px-3 py-2 rounded-xl bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-950/70 border border-red-200/80 dark:border-red-900/60 text-xs font-bold text-red-700 dark:text-red-300 flex items-center gap-1.5 transition active:scale-95"
+              className={`px-2.5 sm:px-3 py-2 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition active:scale-95 ${
+                isEnglish
+                  ? 'bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-950/70 border-indigo-200/80 dark:border-indigo-900/60 text-indigo-700 dark:text-indigo-300'
+                  : 'bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-950/70 border-red-200/80 dark:border-red-900/60 text-red-700 dark:text-red-300'
+              }`}
               title="Mở trang Tổng quan học tập (Dashboard)"
             >
               <LayoutDashboard className="w-3.5 h-3.5" />
@@ -589,9 +689,9 @@ export default function App() {
             <button
               onClick={() => setShowSearchModal(true)}
               className="px-3 py-2 rounded-xl bg-stone-100 dark:bg-slate-800 hover:bg-stone-200 dark:hover:bg-slate-700 border border-stone-200 dark:border-slate-700 text-xs font-semibold text-gray-700 dark:text-slate-200 flex items-center gap-1.5"
-              title="Tìm từ vựng toàn bộ 26 bài (Ctrl+K)"
+              title={`Tìm từ vựng toàn bộ ${lessons.length} bài (Ctrl+K)`}
             >
-              <Search className="w-3.5 h-3.5 text-red-600" />
+              <Search className={`w-3.5 h-3.5 ${isEnglish ? 'text-indigo-600' : 'text-red-600'}`} />
               <span className="hidden md:inline">Tìm từ (Ctrl+K)</span>
             </button>
 
@@ -604,7 +704,9 @@ export default function App() {
                   }
                   setLessonModalMode('create');
                 }}
-                className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm"
+                className={`px-3 py-2 text-white rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm ${
+                  isEnglish ? 'bg-indigo-600 hover:bg-indigo-700' : 'bg-red-600 hover:bg-red-700'
+                }`}
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span className="hidden md:inline">Thêm bài</span>
@@ -638,7 +740,7 @@ export default function App() {
                       {
                         id: 'ai_dictionary',
                         label: 'Từ điển & Trợ lý AI',
-                        description: 'Dịch Trung ⇄ Việt & Gia sư',
+                        description: `Dịch ${langPack.aiDirectionLabel} & Gia sư`,
                         icon: Sparkles,
                         iconClassName: 'text-amber-500',
                         active: showAiModal,
@@ -760,8 +862,14 @@ export default function App() {
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="px-2.5 py-0.5 rounded-lg bg-red-100 dark:bg-red-900/40 text-red-800 dark:text-red-300 text-xs font-extrabold uppercase font-mono">
-                {currentLesson?.hskLevel || 'HSK'}
+              <span
+                className={`px-2.5 py-0.5 rounded-lg text-xs font-extrabold uppercase font-mono ${
+                  isEnglish
+                    ? 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-300'
+                    : 'bg-red-100 dark:bg-red-900/40 text-red-800 dark:text-red-300'
+                }`}
+              >
+                {currentLesson?.hskLevel || langPack.defaultLevel}
               </span>
               <h2 className="text-lg md:text-xl font-black text-gray-900 dark:text-white">
                 {currentLesson?.title || 'Đang tải buổi học...'}
@@ -775,8 +883,8 @@ export default function App() {
           <nav className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0">
             {(
               [
-                ['vocab', '1. Từ vựng & Viết', Layers],
-                ['texts', '2. Bài khoá & Nghe', Headphones],
+                ['vocab', langPack.vocabTabLabel, Layers],
+                ['texts', langPack.textsTabLabel, Headphones],
                 ['grammar', '3. Ngữ pháp', GitBranch],
                 ['games', '4. Trò chơi', Gamepad2],
                 ['test', '5. Kiểm tra', Award],
@@ -796,8 +904,12 @@ export default function App() {
                   }}
                   className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition active:scale-95 ${
                     active
-                      ? 'bg-red-600 text-white shadow-md'
-                      : 'text-gray-600 dark:text-slate-300 hover:bg-red-50 dark:hover:bg-slate-800 hover:text-red-700 dark:hover:text-red-300'
+                      ? isEnglish
+                        ? 'bg-indigo-600 text-white shadow-md'
+                        : 'bg-red-600 text-white shadow-md'
+                      : isEnglish
+                        ? 'text-gray-600 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-800 hover:text-indigo-700 dark:hover:text-indigo-300'
+                        : 'text-gray-600 dark:text-slate-300 hover:bg-red-50 dark:hover:bg-slate-800 hover:text-red-700 dark:hover:text-red-300'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" /> {label}
@@ -837,18 +949,26 @@ export default function App() {
           ) : loadingExam && !comprehensiveExam ? (
             <LoadingCard
               message="Đang bốc 50 câu hỏi ngẫu nhiên..."
-              subMessage="Tổng hợp từ 26 bài học theo đúng cơ cấu HSK 3"
+              subMessage={
+                isEnglish
+                  ? `Tổng hợp từ ${lessons.length || 31} bài học CEFR A1`
+                  : 'Tổng hợp từ 26 bài học theo đúng cơ cấu HSK 3'
+              }
             />
           ) : (
             <TestSection
+              lang={activeLang}
               lesson={{
-                id: comprehensiveExam?.id || 'comprehensive_all_26',
-                title: comprehensiveExam?.title || 'Kiểm tra tổng hợp (26 bài)',
-                unit: 'Tổng hợp 26 bài',
-                hskLevel: comprehensiveExam?.hskLevel || 'HSK 1 - HSK 3',
+                id: comprehensiveExam?.id || (isEnglish ? 'comprehensive_en_all' : 'comprehensive_all_26'),
+                languageCode: activeLang,
+                title: comprehensiveExam?.title || langPack.examTitleAll,
+                unit: isEnglish ? `Tổng hợp ${lessons.length} bài` : 'Tổng hợp 26 bài',
+                hskLevel: comprehensiveExam?.hskLevel || langPack.examLevelRange,
                 description:
                   comprehensiveExam?.description ||
-                  '50 câu hỏi ngẫu nhiên rải đều 26 bài học chuẩn cơ cấu HSK 3.',
+                  (isEnglish
+                    ? '50 câu hỏi ngẫu nhiên rải đều lộ trình Tiếng Anh CEFR A1.'
+                    : '50 câu hỏi ngẫu nhiên rải đều 26 bài học chuẩn cơ cấu HSK 3.'),
                 isSystem: true,
                 vocabulary: [],
                 texts: [],
@@ -908,10 +1028,14 @@ export default function App() {
           <>
             {activeTab === 'vocab' && (
               <VocabSection
+                lang={activeLang}
                 lesson={currentLesson}
                 markedMap={markedMap}
                 onToggleMarked={handleToggleMarked}
-                onOpenWriter={(v) => setWriterVocab(v)}
+                onOpenWriter={langPack.hasStrokeWriter ? (v) => setWriterVocab(v) : undefined}
+                onOpenAiDictionary={
+                  canUseAiAssistant ? (q) => openAiAssistant('dictionary', q) : undefined
+                }
                 canUseBookmark={canBookmarkVocab}
                 onRequireBookmarkAccess={() => {
                   if (!user) {
@@ -924,12 +1048,13 @@ export default function App() {
             )}
             {activeTab === 'texts' && (
               <TextsSection
+                lang={activeLang}
                 lesson={currentLesson}
                 canChangeSpeechRate={Boolean(user)}
                 onRequireAuth={() => setShowAuthModal(true)}
               />
             )}
-            {activeTab === 'grammar' && <GrammarSection lesson={currentLesson} />}
+            {activeTab === 'grammar' && <GrammarSection lang={activeLang} lesson={currentLesson} />}
             {activeTab === 'games' ? (
               !canPlayGames ? (
                 renderFeatureAccessGate(
@@ -940,6 +1065,7 @@ export default function App() {
                 )
               ) : (
                 <GamesSection
+                  lang={activeLang}
                   lesson={currentLesson}
                   currentUserId={user?.id}
                   canUseAiGrading={Boolean(user && canUseAiAssistant)}
@@ -954,6 +1080,7 @@ export default function App() {
                 renderExamAccessGate('Quay lại Từ vựng', () => setActiveTab('vocab'))
               ) : (
                 <TestSection
+                  lang={activeLang}
                   lesson={currentLesson}
                   attempts={attempts}
                   currentUserId={user?.id}
@@ -965,6 +1092,11 @@ export default function App() {
           </>
         )}
       </main>
+      {langPack.attribution && (
+        <footer className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pb-6 pt-2 text-center text-[11px] text-slate-400 dark:text-slate-500">
+          {langPack.attribution}
+        </footer>
+      )}
       </>
       )}
 
@@ -973,6 +1105,8 @@ export default function App() {
       )}
       {showSearchModal && (
         <GlobalSearchModal
+          lang={activeLang}
+          lessonCount={lessons.length}
           onClose={() => setShowSearchModal(false)}
           onJumpToLesson={(id) => {
             setCurrentLessonId(id);
@@ -986,6 +1120,7 @@ export default function App() {
       )}
       {showAiModal && (
         <AiAssistantModal
+          lang={activeLang}
           userId={user?.id}
           initialTab={aiInitialTab}
           initialQuery={aiInitialQuery}
@@ -1009,7 +1144,7 @@ export default function App() {
             setComprehensiveExam(exam);
             navigateView('exam');
           }}
-          onOpenWriter={(v) => setWriterVocab(v)}
+          onOpenWriter={langPack.hasStrokeWriter ? (v) => setWriterVocab(v) : undefined}
           onProgressChanged={refreshUserProgress}
           onLessonsChanged={async (focusId) => {
             await refreshLessons();
@@ -1023,7 +1158,11 @@ export default function App() {
           onClick={() => openAiAssistant('dictionary', '')}
           title="Mở Từ điển & Gia sư AI"
           aria-label="Mở Từ điển & Gia sư AI"
-          className="group fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-30 h-10 sm:h-11 px-2.5 sm:px-3 hover:px-4 focus-visible:px-4 rounded-full bg-gradient-to-r from-red-600 to-amber-600 hover:opacity-95 text-white text-xs font-bold shadow-lg flex items-center justify-center transition-all duration-300 ease-out active:scale-95"
+          className={`group fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-30 h-10 sm:h-11 px-2.5 sm:px-3 hover:px-4 focus-visible:px-4 rounded-full hover:opacity-95 text-white text-xs font-bold shadow-lg flex items-center justify-center transition-all duration-300 ease-out active:scale-95 ${
+            isEnglish
+              ? 'bg-gradient-to-r from-indigo-600 to-blue-600'
+              : 'bg-gradient-to-r from-red-600 to-amber-600'
+          }`}
         >
           <Sparkles className="w-5 h-5 flex-shrink-0" />
           <span className="max-w-0 opacity-0 overflow-hidden whitespace-nowrap transition-all duration-300 ease-out group-hover:max-w-[180px] group-hover:opacity-100 group-hover:ml-2 group-focus-visible:max-w-[180px] group-focus-visible:opacity-100 group-focus-visible:ml-2">
@@ -1031,7 +1170,7 @@ export default function App() {
           </span>
         </button>
       )}
-      {writerVocab && (
+      {writerVocab && langPack.hasStrokeWriter && (
         <HanziWriterModal
           word={writerVocab.hanzi}
           pinyin={writerVocab.pinyin}
@@ -1041,6 +1180,7 @@ export default function App() {
       )}
       {lessonModalMode && (
         <LessonModal
+          lang={activeLang}
           initialLesson={lessonModalMode === 'edit' ? currentLesson : null}
           canCreateSystemLesson={canCreateSystemLesson}
           canCreateCustomLesson={canCreateCustomLesson}

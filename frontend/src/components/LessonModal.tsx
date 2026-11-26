@@ -21,9 +21,10 @@ import {
   parseLessonImportFile,
   type ParsedLessonImport,
 } from '../lib/lessonImport';
-import type { LessonDetail } from '../types';
+import type { LanguageCode, LessonDetail } from '../types';
 
 interface LessonModalProps {
+  lang?: LanguageCode;
   initialLesson?: LessonDetail | null;
   canCreateSystemLesson?: boolean;
   canCreateCustomLesson?: boolean;
@@ -70,15 +71,18 @@ function formatFileSize(bytes: number): string {
 }
 
 export const LessonModal: React.FC<LessonModalProps> = ({
+  lang = 'zh',
   initialLesson,
   canCreateSystemLesson = false,
   canCreateCustomLesson = true,
   onClose,
   onSave,
 }) => {
+  const isEnglish = lang === 'en';
+  const defaultLevel = isEnglish ? 'CEFR A1' : 'HSK 1';
   const [activeTab, setActiveTab] = useState<'manual' | 'import'>('manual');
   const [title, setTitle] = useState(initialLesson?.title || '');
-  const [hskLevel, setHskLevel] = useState(initialLesson?.hskLevel || 'HSK 1');
+  const [hskLevel, setHskLevel] = useState(initialLesson?.hskLevel || defaultLevel);
   const [description, setDescription] = useState(initialLesson?.description || '');
   const [createAsSystem, setCreateAsSystem] = useState<boolean>(
     Boolean(initialLesson ? initialLesson.isSystem : !canCreateCustomLesson && canCreateSystemLesson)
@@ -426,6 +430,7 @@ export const LessonModal: React.FC<LessonModalProps> = ({
         {activeTab === 'manual' ? (
           <form onSubmit={handleSubmit} className="overflow-y-auto p-6 space-y-6 flex-grow">
             <LessonMetaFields
+              lang={lang}
               title={title}
               hskLevel={hskLevel}
               description={description}
@@ -492,17 +497,19 @@ export const LessonModal: React.FC<LessonModalProps> = ({
                     className="p-3 rounded-2xl border border-stone-200 dark:border-slate-700 bg-stone-50/60 dark:bg-slate-800/40 grid grid-cols-1 md:grid-cols-6 gap-2 items-center"
                   >
                     <input
-                      placeholder="Hán tự *"
+                      placeholder={isEnglish ? 'Từ tiếng Anh *' : 'Hán tự *'}
                       value={row.hanzi}
                       onChange={(e) =>
                         setVocabRows((list) =>
                           list.map((item, i) => (i === idx ? { ...item, hanzi: e.target.value } : item))
                         )
                       }
-                      className="p-2 text-xs rounded-lg border border-stone-300 dark:border-slate-700 bg-white dark:bg-slate-800 chinese-font font-bold"
+                      className={`p-2 text-xs rounded-lg border border-stone-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-bold ${
+                        isEnglish ? '' : 'chinese-font'
+                      }`}
                     />
                     <input
-                      placeholder="Pinyin"
+                      placeholder={isEnglish ? 'Phiên âm IPA' : 'Pinyin'}
                       value={row.pinyin}
                       onChange={(e) =>
                         setVocabRows((list) =>
@@ -522,7 +529,7 @@ export const LessonModal: React.FC<LessonModalProps> = ({
                       className="p-2 text-xs rounded-lg border border-stone-300 dark:border-slate-700 bg-white dark:bg-slate-800 md:col-span-2"
                     />
                     <input
-                      placeholder="Bộ thủ / Mẹo"
+                      placeholder={isEnglish ? 'Word family / Mẹo' : 'Bộ thủ / Mẹo'}
                       value={row.radical}
                       onChange={(e) =>
                         setVocabRows((list) =>

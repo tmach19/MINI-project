@@ -8,3 +8,8 @@ liquibase-supabase.properties
 target/
 **/.idea/workspace.xml
 **/.idea/vcs.xml
+
+# External vocabulary datasets & large media assets
+word-atlas/
+vocabulary-flashcard-dataset/
+**/scripts/.cache/

@@ -11,6 +11,7 @@ import {
 import { api } from '../lib/api';
 import { LoadingCard, LoadingSpinner } from './common/LoadingState';
 import type {
+  LanguageCode,
   LessonAttemptDetailRecord,
   LessonSummary,
   LessonTestSummaryRecord,
@@ -20,6 +21,7 @@ import type {
 type HistorySubTab = 'comprehensive' | 'lesson';
 
 interface TestHistoryPanelProps {
+  lang?: LanguageCode;
   userId: string;
   lessons: LessonSummary[];
   attempts: TestAttemptRecord[];
@@ -36,12 +38,14 @@ function formatDurationSeconds(totalSeconds: number): string {
 }
 
 export const TestHistoryPanel: React.FC<TestHistoryPanelProps> = ({
+  lang = 'zh',
   userId,
   lessons,
   attempts,
   onOpenLesson,
   onOpenExam,
 }) => {
+  const isEnglish = lang === 'en';
   const [comprehensiveAttempts, setComprehensiveAttempts] = useState<LessonAttemptDetailRecord[]>(() =>
     attempts
       .filter((a) => !a.lessonId)
@@ -120,8 +124,8 @@ export const TestHistoryPanel: React.FC<TestHistoryPanelProps> = ({
     setAttemptsError(null);
     try {
       const [summaryRes, compRes] = await Promise.all([
-        api.getLessonTestSummary(),
-        api.getLessonAttemptDetails('__comprehensive__'),
+        api.getLessonTestSummary(lang),
+        api.getLessonAttemptDetails('__comprehensive__', lang),
       ]);
       setLessonTestSummaries(summaryRes.items);
       setComprehensiveAttempts(compRes.attempts);
@@ -130,7 +134,7 @@ export const TestHistoryPanel: React.FC<TestHistoryPanelProps> = ({
     } finally {
       setLoadingAttempts(false);
     }
-  }, []);
+  }, [lang]);
 
   useEffect(() => {
     void loadAttemptsFromDb();
@@ -388,7 +392,9 @@ export const TestHistoryPanel: React.FC<TestHistoryPanelProps> = ({
                       : 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 border-red-200 dark:border-red-800/70'
                   : '';
 
-                const rawTitle = a?.examTitle?.trim() || 'Kiểm tra tổng hợp (26 bài)';
+                const rawTitle =
+                  a?.examTitle?.trim() ||
+                  (isEnglish ? 'Kiểm tra tổng hợp (CEFR A1)' : 'Kiểm tra tổng hợp (26 bài)');
                 const scopeMatch = rawTitle.match(/^(.*?)\s*\((\d+\s*bài[^()]*)\)$/i);
                 const displayTitle = scopeMatch ? scopeMatch[1].trim() : rawTitle;
                 const lessonCountNote = scopeMatch

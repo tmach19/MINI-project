@@ -7,10 +7,13 @@ import type {
   AiToolExecutionSummary,
   ComprehensiveExamResponse,
   DashboardSummary,
+  GameGradeDirection,
   GameGradeResponse,
   GameLeaderboardEntry,
   GameMode,
   GlobalVocabHit,
+  LanguageCode,
+  LanguageInfo,
   LessonAttemptDetailRecord,
   LessonDetail,
   LessonSummary,
@@ -27,26 +30,66 @@ import type {
   VocabGlossaryItem,
 } from '../types';
 
-const API_BASE = import.meta.env.VITE_API_BASE || '/api';
+const ZH_API_BASE = (import.meta.env.VITE_API_BASE || '/api').replace(/\/+$/, '');
+const EN_API_BASE = (import.meta.env.VITE_EN_API_BASE || '/api-en').replace(/\/+$/, '');
 
-export function getStoredToken(): string | null {
-  return localStorage.getItem('cs_auth_token');
+let activeApiLanguage: LanguageCode = 'zh';
+
+export function setActiveApiLanguage(lang: LanguageCode): void {
+  activeApiLanguage = lang === 'en' ? 'en' : 'zh';
 }
 
-export function setStoredToken(token: string | null): void {
-  if (token) localStorage.setItem('cs_auth_token', token);
-  else localStorage.removeItem('cs_auth_token');
+export function getActiveApiBase(langOverride?: LanguageCode): string {
+  const effective = langOverride ?? activeApiLanguage;
+  return effective === 'en' ? EN_API_BASE : ZH_API_BASE;
 }
 
-async function apiFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const token = getStoredToken();
+function getTokenStorageKey(langOverride?: LanguageCode): string {
+  const effective = langOverride ?? activeApiLanguage;
+  return effective === 'en' ? 'cs_auth_token_en' : 'cs_auth_token';
+}
+
+export function getStoredToken(langOverride?: LanguageCode): string | null {
+  const effective = langOverride ?? activeApiLanguage;
+  if (effective === 'en') {
+    return localStorage.getItem('cs_auth_token_en') || localStorage.getItem('cs_auth_token');
+  }
+  return localStorage.getItem('cs_auth_token') || localStorage.getItem('cs_auth_token_en');
+}
+
+export function setStoredToken(
+  token: string | null,
+  langOverride?: LanguageCode,
+  clearSharedOnLogout = false
+): void {
+  const key = getTokenStorageKey(langOverride);
+  if (token) {
+    // Đồng bộ SSO 2 chiều giữa `/` (Tiếng Trung) và `/en` (Tiếng Anh)
+    localStorage.setItem('cs_auth_token', token);
+    localStorage.setItem('cs_auth_token_en', token);
+  } else {
+    localStorage.removeItem(key);
+    if (clearSharedOnLogout) {
+      localStorage.removeItem('cs_auth_token');
+      localStorage.removeItem('cs_auth_token_en');
+    }
+  }
+}
+
+async function apiFetch<T>(
+  path: string,
+  init: RequestInit = {},
+  langOverride?: LanguageCode
+): Promise<T> {
+  const token = getStoredToken(langOverride);
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     ...(init.headers as Record<string, string> | undefined),
   };
   if (token) headers.Authorization = `Bearer ${token}`;
 
-  const res = await fetch(`${API_BASE}${path}`, { ...init, headers });
+  const base = getActiveApiBase(langOverride);
+  const res = await fetch(`${base}${path}`, { ...init, headers });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {
     throw new Error(data.error || `Lỗi API (${res.status})`);
@@ -56,6 +99,9 @@ async function apiFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
 
 export const api = {
   health: () => apiFetch<{ ok: boolean; dbMode: 'postgres' | 'memory' }>('/health'),
+
+  getLanguages: () =>
+    apiFetch<{ languages: LanguageInfo[]; media: { enBaseUrl: string } }>('/languages', {}, 'en'),
 
   register: (payload: { email: string; password: string; displayName: string }) =>
     apiFetch<{ token: string; user: UserProfile }>('/auth/register', {
@@ -81,11 +127,15 @@ export const api = {
       body: JSON.stringify(payload),
     }),
 
-  listLessons: () => apiFetch<{ lessons: LessonSummary[] }>('/lessons'),
+  listLessons: (lang?: LanguageCode) =>
+    apiFetch<{ lessons: LessonSummary[]; languageCode?: LanguageCode }>(
+      `/lessons${lang ? `?lang=${encodeURIComponent(lang)}` : ''}`
+    ),
 
   getLesson: (id: string) => apiFetch<{ lesson: LessonDetail }>(`/lessons/${encodeURIComponent(id)}`),
 
   createLesson: (payload: {
+    languageCode?: LanguageCode;
     title: string;
     hskLevel: string;
     unit?: string;
@@ -120,25 +170,36 @@ export const api = {
       method: 'DELETE',
     }),
 
-  searchVocab: (q: string) =>
-    apiFetch<{ items: GlobalVocabHit[] }>(`/vocab/search?q=${encodeURIComponent(q)}`),
+  searchVocab: (q: string, lang?: LanguageCode) =>
+    apiFetch<{ items: GlobalVocabHit[] }>(
+      `/vocab/search?q=${encodeURIComponent(q)}${lang ? `&lang=${encodeURIComponent(lang)}` : ''}`
+    ),
 
-  getVocabGlossary: () => apiFetch<{ items: VocabGlossaryItem[] }>('/vocab/glossary'),
+  getVocabGlossary: (lang?: LanguageCode) =>
+    apiFetch<{ items: VocabGlossaryItem[] }>(
+      `/vocab/glossary${lang ? `?lang=${encodeURIComponent(lang)}` : ''}`
+    ),
 
-  getProgress: () =>
+  getProgress: (lang?: LanguageCode) =>
     apiFetch<{
       markedMap: Record<string, MarkedVocabRecord>;
       markedCount: number;
       markedCards: MarkedVocabCard[];
       attempts: TestAttemptRecord[];
-    }>('/progress'),
+    }>(`/progress${lang ? `?lang=${encodeURIComponent(lang)}` : ''}`),
 
-  getDashboard: (lessonId?: string) =>
-    apiFetch<{ dashboard: DashboardSummary }>(
-      `/dashboard${lessonId ? `?lessonId=${encodeURIComponent(lessonId)}` : ''}`
+  getDashboard: (lessonId?: string, lang?: LanguageCode) => {
+    const sp = new URLSearchParams();
+    if (lessonId) sp.set('lessonId', lessonId);
+    if (lang) sp.set('lang', lang);
+    const qs = sp.toString();
+    return apiFetch<{ dashboard: DashboardSummary }>(`/dashboard${qs ? `?${qs}` : ''}`);
+  },
+
+  getMarkedCards: (lang?: LanguageCode) =>
+    apiFetch<{ cards: MarkedVocabCard[] }>(
+      `/progress/marked${lang ? `?lang=${encodeURIComponent(lang)}` : ''}`
     ),
-
-  getMarkedCards: () => apiFetch<{ cards: MarkedVocabCard[] }>('/progress/marked'),
 
   toggleMarkVocab: (payload: { vocabId: string; marked?: boolean; note?: string | null }) =>
     apiFetch<{ marked: boolean; record: MarkedVocabRecord | null }>('/progress/mark', {
@@ -152,26 +213,35 @@ export const api = {
       body: JSON.stringify({ vocabIds }),
     }),
 
-  getComprehensiveExam: (lessonIds?: string[]) => {
-    const query =
-      lessonIds && lessonIds.length > 0
-        ? `?lessonIds=${encodeURIComponent(lessonIds.join(','))}`
-        : '';
-    return apiFetch<{ exam: ComprehensiveExamResponse }>(`/tests/comprehensive-exam${query}`);
+  getComprehensiveExam: (lessonIds?: string[], lang?: LanguageCode) => {
+    const sp = new URLSearchParams();
+    if (lessonIds && lessonIds.length > 0) sp.set('lessonIds', lessonIds.join(','));
+    if (lang) sp.set('lang', lang);
+    const qs = sp.toString();
+    return apiFetch<{ exam: ComprehensiveExamResponse }>(
+      `/tests/comprehensive-exam${qs ? `?${qs}` : ''}`
+    );
   },
 
-  getTestAttempts: () => apiFetch<{ attempts: TestAttemptRecord[] }>('/tests/attempts'),
-
-  getLessonTestSummary: () =>
-    apiFetch<{ items: LessonTestSummaryRecord[] }>('/tests/lesson-summary'),
-
-  getLessonAttemptDetails: (lessonId: string) =>
-    apiFetch<{ attempts: LessonAttemptDetailRecord[] }>(
-      `/tests/attempts?lessonId=${encodeURIComponent(lessonId)}`
+  getTestAttempts: (lang?: LanguageCode) =>
+    apiFetch<{ attempts: TestAttemptRecord[] }>(
+      `/tests/attempts${lang ? `?lang=${encodeURIComponent(lang)}` : ''}`
     ),
+
+  getLessonTestSummary: (lang?: LanguageCode) =>
+    apiFetch<{ items: LessonTestSummaryRecord[] }>(
+      `/tests/lesson-summary${lang ? `?lang=${encodeURIComponent(lang)}` : ''}`
+    ),
+
+  getLessonAttemptDetails: (lessonId: string, lang?: LanguageCode) => {
+    const sp = new URLSearchParams({ lessonId });
+    if (lang) sp.set('lang', lang);
+    return apiFetch<{ attempts: LessonAttemptDetailRecord[] }>(`/tests/attempts?${sp.toString()}`);
+  },
 
   submitTestAttempt: (payload: {
     lessonId: string | null;
+    languageCode?: LanguageCode;
     examTitle?: string | null;
     score: number;
     totalQuestions: number;
@@ -256,6 +326,7 @@ export const api = {
     query: string;
     direction?: TranslationDirection;
     forceAi?: boolean;
+    lang?: LanguageCode;
   }) =>
     apiFetch<AiDictionaryResponse>('/ai/dictionary', {
       method: 'POST',
@@ -266,6 +337,7 @@ export const api = {
     message: string;
     history?: Array<Pick<AiChatMessage, 'role' | 'content'>>;
     lessonIds?: string[];
+    lang?: LanguageCode;
   }) =>
     apiFetch<{
       reply: string;
@@ -282,7 +354,8 @@ export const api = {
 
   aiGradeGame: (payload: {
     mode: 'scramble' | 'translation';
-    direction?: 'vi_to_zh' | 'zh_to_vi';
+    direction?: GameGradeDirection;
+    lang?: LanguageCode;
     exerciseId: string;
     promptText: string;
     expectedChinese?: string | null;
@@ -296,7 +369,7 @@ export const api = {
     }),
 
   aiQuickLookup: (
-    payload: { word: string; context?: string },
+    payload: { word: string; context?: string; lang?: LanguageCode },
     signal?: AbortSignal
   ) =>
     apiFetch<QuickLookupResponse>('/ai/quick-lookup', {

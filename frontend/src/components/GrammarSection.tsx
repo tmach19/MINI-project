@@ -1,14 +1,44 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { AlertTriangle, Calculator, GitBranch, Volume2 } from 'lucide-react';
-import { speakChinese } from '../lib/audio';
-import type { LessonDetail } from '../types';
+import { speakText } from '../lib/audio';
+import type { GrammarItem, LanguageCode, LessonDetail } from '../types';
 
 interface GrammarSectionProps {
+  lang?: LanguageCode;
   lesson: LessonDetail;
 }
 
-export const GrammarSection: React.FC<GrammarSectionProps> = ({ lesson }) => {
-  const grammarList = lesson.grammar || [];
+function scoreClientGrammarQuality(g: GrammarItem): number {
+  let score = 0;
+  if (/^g\d+_\d+$/.test(g.id)) score += 100;
+  if (g.examples?.length) score += 50 + Math.min(g.examples.length, 10) * 5;
+  if (g.notes?.trim()) score += 20;
+  if (g.explanation?.trim()) score += 10;
+  if (g.formula?.trim()) score += 5;
+  return score;
+}
+
+export const GrammarSection: React.FC<GrammarSectionProps> = ({ lang, lesson }) => {
+  const isEnglish = lang === 'en' || lesson.languageCode === 'en';
+  const effectiveLang: LanguageCode = isEnglish ? 'en' : 'zh';
+  const grammarList = useMemo(() => {
+    const raw = lesson.grammar || [];
+    const byTitle = new Map<string, { index: number; item: GrammarItem }>();
+    const ordered: Array<GrammarItem | null> = [];
+    for (const item of raw) {
+      const key = (item.title || '').trim();
+      if (!key) continue;
+      const existing = byTitle.get(key);
+      if (!existing) {
+        byTitle.set(key, { index: ordered.length, item });
+        ordered.push(item);
+      } else if (scoreClientGrammarQuality(item) > scoreClientGrammarQuality(existing.item)) {
+        ordered[existing.index] = item;
+        byTitle.set(key, { index: existing.index, item });
+      }
+    }
+    return ordered.filter((x): x is GrammarItem => Boolean(x));
+  }, [lesson.grammar]);
 
   return (
     <div className="space-y-8">
@@ -86,11 +116,16 @@ export const GrammarSection: React.FC<GrammarSectionProps> = ({ lesson }) => {
                         key={exIdx}
                         className="p-4 rounded-2xl border border-stone-200 dark:border-slate-800 bg-white dark:bg-slate-800/40 space-y-1"
                       >
-                        <div className="chinese-font text-base font-bold text-gray-900 dark:text-white flex items-center justify-between gap-2">
+                        <div
+                          className={`${
+                            isEnglish ? 'text-sm sm:text-base' : 'chinese-font text-base'
+                          } font-bold text-gray-900 dark:text-white flex items-center justify-between gap-2`}
+                        >
                           <span>{ex.hanzi}</span>
                           <button
-                            onClick={() => speakChinese(ex.hanzi)}
-                            className="text-gray-400 hover:text-blue-600 p-1"
+                            onClick={() => speakText(ex.hanzi, effectiveLang)}
+                            className="text-gray-400 hover:text-blue-600 p-1 shrink-0"
+                            title="Nghe câu ví dụ"
                           >
                             <Volume2 className="w-4 h-4" />
                           </button>

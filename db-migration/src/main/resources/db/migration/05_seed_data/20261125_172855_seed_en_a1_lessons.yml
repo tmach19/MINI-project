@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261125_172855_seed_en_a1_lessons
+      author: chinese-study
+      comment: Nap lo trinh 31 bai hoc Tieng Anh CEFR A1 (785 tu Word Atlas da dich Tieng Viet)
+      runOnChange: true
+      runInTransaction: false
+      changes:
+        - sqlFile:
+            path: ../sql/seed_en_a1_data.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+            stripComments: true
+            encoding: utf8
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: |-
+              UPDATE lessons
+              SET is_deleted = 1, deleted_at = NOW()
+              WHERE language_code = 'en' AND id LIKE 'en-a1-%' AND is_deleted = 0;

@@ -1,7 +1,9 @@
 import React from 'react';
-import { HSK_LEVELS } from '../../lib/constants';
+import { CEFR_LEVELS, HSK_LEVELS } from '../../lib/constants';
+import type { LanguageCode } from '../../types';
 
 interface LessonMetaFieldsProps {
+  lang?: LanguageCode;
   title: string;
   hskLevel: string;
   description: string;
@@ -13,6 +15,7 @@ interface LessonMetaFieldsProps {
 }
 
 export const LessonMetaFields: React.FC<LessonMetaFieldsProps> = ({
+  lang = 'zh',
   title,
   hskLevel,
   description,
@@ -22,6 +25,7 @@ export const LessonMetaFields: React.FC<LessonMetaFieldsProps> = ({
   titleRequired = false,
   compact = false,
 }) => {
+  const levelOptions = lang === 'en' ? CEFR_LEVELS : HSK_LEVELS;
   const inputPad = compact ? 'p-2' : 'p-2.5';
   const labelCls = compact
     ? 'text-[11px] font-bold text-gray-700 dark:text-slate-300 block mb-1'
@@ -37,7 +41,11 @@ export const LessonMetaFields: React.FC<LessonMetaFieldsProps> = ({
             value={title}
             onChange={(e) => onChangeTitle(e.target.value)}
             required={titleRequired}
-            placeholder="Ví dụ: Buổi ôn tập 1: Gọi món nhà hàng"
+            placeholder={
+              lang === 'en'
+                ? 'Ví dụ: Bài ôn tập 1: Giao tiếp tại quán cà phê'
+                : 'Ví dụ: Buổi ôn tập 1: Gọi món nhà hàng'
+            }
             className={`w-full ${inputPad} text-xs rounded-xl border border-stone-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white font-semibold`}
           />
         </div>
@@ -48,7 +56,7 @@ export const LessonMetaFields: React.FC<LessonMetaFieldsProps> = ({
             onChange={(e) => onChangeLevel(e.target.value)}
             className={`w-full ${inputPad} text-xs rounded-xl border border-stone-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white font-semibold`}
           >
-            {HSK_LEVELS.map((lvl) => (
+            {levelOptions.map((lvl) => (
               <option key={lvl} value={lvl}>
                 {lvl}
               </option>

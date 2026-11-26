@@ -1,0 +1,126 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261125_172855_add_multilanguage_support
+      author: chinese-study
+      comment: Bo sung bang danh muc ngon ngu (languages), cot language_code, vocabularies.meta JSONB va mo rong direction cho phan he Tieng Anh
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            stripComments: true
+            sql: |-
+              CREATE TABLE IF NOT EXISTS languages (
+                code TEXT PRIMARY KEY,
+                name TEXT NOT NULL,
+                native_name TEXT NOT NULL,
+                description TEXT,
+                accent_theme TEXT NOT NULL DEFAULT 'red',
+                is_active BOOLEAN NOT NULL DEFAULT TRUE,
+                sort_order INTEGER NOT NULL DEFAULT 0,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+              );
+
+              INSERT INTO languages (code, name, native_name, description, accent_theme, is_active, sort_order)
+              VALUES
+                ('zh', 'Tiếng Trung', '汉语 · HSK', 'Lộ trình 26 bài HSK chuẩn kèm Hán Việt, bộ thủ, tập viết nét và gia sư AI.', 'red', TRUE, 1),
+                ('en', 'Tiếng Anh', 'English · CEFR / IELTS', 'Lộ trình từ vựng Tiếng Anh CEFR A1–C2 (Word Atlas) kèm hình minh họa, audio UK/US và gia sư AI.', 'indigo', TRUE, 2)
+              ON CONFLICT (code) DO UPDATE SET
+                name = EXCLUDED.name,
+                native_name = EXCLUDED.native_name,
+                description = EXCLUDED.description,
+                accent_theme = EXCLUDED.accent_theme,
+                is_active = EXCLUDED.is_active,
+                sort_order = EXCLUDED.sort_order;
+
+              ALTER TABLE users
+                ADD COLUMN IF NOT EXISTS last_language_code TEXT NOT NULL DEFAULT 'zh' REFERENCES languages(code);
+
+              ALTER TABLE lessons
+                ADD COLUMN IF NOT EXISTS language_code TEXT NOT NULL DEFAULT 'zh' REFERENCES languages(code);
+
+              ALTER TABLE vocabularies
+                ADD COLUMN IF NOT EXISTS meta JSONB NOT NULL DEFAULT '{}'::jsonb;
+
+              ALTER TABLE test_attempts
+                ADD COLUMN IF NOT EXISTS language_code TEXT NOT NULL DEFAULT 'zh' REFERENCES languages(code);
+
+              ALTER TABLE game_scores
+                ADD COLUMN IF NOT EXISTS language_code TEXT NOT NULL DEFAULT 'zh' REFERENCES languages(code);
+
+              ALTER TABLE translation_cache
+                ADD COLUMN IF NOT EXISTS language_code TEXT NOT NULL DEFAULT 'zh';
+
+              ALTER TABLE game_grading_cache
+                ADD COLUMN IF NOT EXISTS language_code TEXT NOT NULL DEFAULT 'zh';
+
+              CREATE INDEX IF NOT EXISTS idx_lessons_lang_active
+                ON lessons (language_code, is_system DESC, sort_order ASC, created_at ASC)
+                WHERE is_deleted = 0;
+
+              CREATE INDEX IF NOT EXISTS idx_attempts_user_lang_submitted
+                ON test_attempts (user_id, language_code, submitted_at DESC)
+                WHERE is_deleted = 0;
+
+              CREATE INDEX IF NOT EXISTS idx_game_scores_lang_mode
+                ON game_scores (language_code, game_mode, score DESC, duration_seconds ASC, played_at DESC)
+                WHERE is_deleted = 0;
+
+              CREATE INDEX IF NOT EXISTS idx_translation_cache_lang
+                ON translation_cache (language_code, updated_at DESC);
+
+              CREATE INDEX IF NOT EXISTS idx_game_grading_cache_lang
+                ON game_grading_cache (language_code, exercise_id, updated_at DESC);
+        - sql:
+            dbms: postgresql
+            splitStatements: false
+            stripComments: false
+            sql: |-
+              DO $$
+              DECLARE
+                r RECORD;
+              BEGIN
+                FOR r IN
+                  SELECT conname, conrelid::regclass AS tbl
+                  FROM pg_constraint
+                  WHERE contype = 'c'
+                    AND conrelid IN (
+                      'translation_exercises'::regclass,
+                      'translation_cache'::regclass,
+                      'game_grading_cache'::regclass
+                    )
+                    AND pg_get_constraintdef(oid) ILIKE '%direction%'
+                LOOP
+                  EXECUTE format('ALTER TABLE %s DROP CONSTRAINT IF EXISTS %I', r.tbl, r.conname);
+                END LOOP;
+
+                ALTER TABLE translation_exercises
+                  ADD CONSTRAINT chk_translation_exercises_direction
+                  CHECK (direction IN ('vi_to_zh', 'zh_to_vi', 'vi_to_en', 'en_to_vi'));
+
+                ALTER TABLE translation_cache
+                  ADD CONSTRAINT chk_translation_cache_direction
+                  CHECK (direction IN ('auto', 'zh_vi', 'vi_zh', 'en_vi', 'vi_en'));
+
+                ALTER TABLE game_grading_cache
+                  ADD CONSTRAINT chk_game_grading_cache_direction
+                  CHECK (direction IS NULL OR direction IN ('vi_to_zh', 'zh_to_vi', 'vi_to_en', 'en_to_vi'));
+              END $$;
+      rollback:
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            stripComments: true
+            sql: |-
+              DROP INDEX IF EXISTS idx_game_grading_cache_lang;
+              DROP INDEX IF EXISTS idx_translation_cache_lang;
+              DROP INDEX IF EXISTS idx_game_scores_lang_mode;
+              DROP INDEX IF EXISTS idx_attempts_user_lang_submitted;
+              DROP INDEX IF EXISTS idx_lessons_lang_active;
+              ALTER TABLE game_grading_cache DROP COLUMN IF EXISTS language_code;
+              ALTER TABLE translation_cache DROP COLUMN IF EXISTS language_code;
+              ALTER TABLE game_scores DROP COLUMN IF EXISTS language_code;
+              ALTER TABLE test_attempts DROP COLUMN IF EXISTS language_code;
+              ALTER TABLE vocabularies DROP COLUMN IF EXISTS meta;
+              ALTER TABLE lessons DROP COLUMN IF EXISTS language_code;
+              ALTER TABLE users DROP COLUMN IF EXISTS last_language_code;
+              DROP TABLE IF EXISTS languages;

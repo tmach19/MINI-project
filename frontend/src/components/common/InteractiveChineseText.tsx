@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowUpRight, Loader2, Volume2 } from 'lucide-react';
 import { api } from '../../lib/api';
-import { speakChinese } from '../../lib/audio';
+import { speakText } from '../../lib/audio';
 import {
   ensureGlossaryLoaded,
   getGlossaryVersion,
@@ -11,11 +11,12 @@ import {
   segmentInteractiveText,
   subscribeGlossary,
 } from '../../lib/vocabGlossary';
-import type { VocabGlossaryItem } from '../../types';
+import type { LanguageCode, VocabGlossaryItem } from '../../types';
 
 interface InteractiveChineseTextProps {
   text: string;
   enabled: boolean;
+  lang?: LanguageCode;
   canUseAi?: boolean;
   contextSentence?: string;
   /**
@@ -151,6 +152,7 @@ function parseEntrySenses(wordType: string | null | undefined, meaning: string):
 export const InteractiveChineseText: React.FC<InteractiveChineseTextProps> = ({
   text,
   enabled,
+  lang = 'zh',
   canUseAi = false,
   contextSentence,
   preserveClick = false,
@@ -172,12 +174,12 @@ export const InteractiveChineseText: React.FC<InteractiveChineseTextProps> = ({
 
   useEffect(() => {
     if (enabled) {
-      void ensureGlossaryLoaded();
+      void ensureGlossaryLoaded(lang);
     } else {
       clearTimersAndAbort();
       setPopover(null);
     }
-  }, [enabled]);
+  }, [enabled, lang]);
 
   useEffect(() => {
     return () => {
@@ -257,8 +259,8 @@ export const InteractiveChineseText: React.FC<InteractiveChineseTextProps> = ({
     const r = el.getBoundingClientRect();
     const rect = { left: r.left, top: r.top, bottom: r.bottom, width: r.width };
 
-    // Tầng 1: Tra tức thì trong Glossary RAM (DB 670 từ + Read-through cache) -> 0ms
-    const localHit = lookupLocalGlossary(word);
+    // Tầng 1: Tra tức thì trong Glossary RAM (DB + Read-through cache) -> 0ms
+    const localHit = lookupLocalGlossary(word, lang);
     if (localHit) {
       setPopover({ word, rect, loading: false, entry: localHit, notFound: false });
       return;
@@ -281,13 +283,14 @@ export const InteractiveChineseText: React.FC<InteractiveChineseTextProps> = ({
         {
           word,
           context: (contextSentence || text).slice(0, 220),
+          lang,
         },
         controller.signal
       );
       if (seq !== lookupSeqRef.current) return;
 
       if (res.entry) {
-        rememberGlossaryEntry(res.entry);
+        rememberGlossaryEntry(res.entry, lang);
         setPopover({ word, rect, loading: false, entry: res.entry, notFound: false });
       } else {
         setPopover({ word, rect, loading: false, entry: null, notFound: true });
@@ -317,11 +320,11 @@ export const InteractiveChineseText: React.FC<InteractiveChineseTextProps> = ({
   const segments = useMemo(() => {
     if (!enabled) return null;
     if (treatAsSingleWord) {
-      const hasZh = /[\u4e00-\u9fff]/.test(text);
-      return [{ text, isChinese: hasZh }];
+      const hasTarget = lang === 'en' ? /[A-Za-z]/.test(text) : /[\u4e00-\u9fff]/.test(text);
+      return [{ text, isChinese: hasTarget }];
     }
-    return segmentInteractiveText(text);
-  }, [text, enabled, treatAsSingleWord, glossaryVer]);
+    return segmentInteractiveText(text, lang);
+  }, [text, enabled, lang, treatAsSingleWord, glossaryVer]);
 
   if (!enabled || !segments) {
     return <span className={className}>{text}</span>;
@@ -414,7 +417,7 @@ export const InteractiveChineseText: React.FC<InteractiveChineseTextProps> = ({
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
-                      speakChinese(popover.entry!.hanzi);
+                      speakText(popover.entry!.hanzi, lang);
                     }}
                     aria-label="Nghe phát âm"
                     title="Nghe phát âm"
@@ -478,7 +481,7 @@ export const InteractiveChineseText: React.FC<InteractiveChineseTextProps> = ({
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
-                  speakChinese(popover.word);
+                  speakText(popover.word, lang);
                 }}
                 aria-label="Nghe phát âm"
                 className="p-1.5 rounded-xl bg-stone-100 dark:bg-slate-800 text-gray-600 dark:text-slate-300 hover:text-purple-600 transition"

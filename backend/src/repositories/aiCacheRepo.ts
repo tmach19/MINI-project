@@ -424,17 +424,34 @@ export async function listCachedGlossaryEntries(limit = 400): Promise<VocabGloss
 
   const pool = getPool()!;
   try {
-    const res = await pool.query<{ payload: AiDictionaryEntry }>(
-      `SELECT payload
-       FROM translation_cache
-       WHERE direction IN ('zh_vi', 'auto')
-         AND COALESCE((payload->>'isSentence')::boolean, FALSE) = FALSE
-       ORDER BY hit_count DESC, updated_at DESC
-       LIMIT $1`,
-      [limit]
-    );
+    let rows: Array<{ payload: AiDictionaryEntry }>;
+    try {
+      const res = await pool.query<{ payload: AiDictionaryEntry }>(
+        `SELECT payload
+         FROM translation_cache
+         WHERE language_code = 'zh'
+           AND direction IN ('zh_vi', 'auto')
+           AND COALESCE((payload->>'isSentence')::boolean, FALSE) = FALSE
+         ORDER BY hit_count DESC, updated_at DESC
+         LIMIT $1`,
+        [limit]
+      );
+      rows = res.rows;
+    } catch (innerErr) {
+      if ((innerErr as { code?: string } | null)?.code !== '42703') throw innerErr;
+      const res = await pool.query<{ payload: AiDictionaryEntry }>(
+        `SELECT payload
+         FROM translation_cache
+         WHERE direction IN ('zh_vi', 'auto')
+           AND COALESCE((payload->>'isSentence')::boolean, FALSE) = FALSE
+         ORDER BY hit_count DESC, updated_at DESC
+         LIMIT $1`,
+        [limit]
+      );
+      rows = res.rows;
+    }
     const items: VocabGlossaryItem[] = [];
-    for (const row of res.rows) {
+    for (const row of rows) {
       const item = extractGlossaryFromCachePayload(row.payload);
       if (item) items.push(item);
     }

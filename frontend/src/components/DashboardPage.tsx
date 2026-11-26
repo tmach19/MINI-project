@@ -25,6 +25,7 @@ import {
   Target,
   User as UserIcon,
 } from 'lucide-react';
+import { getLanguagePack } from '../languages/config';
 import { api } from '../lib/api';
 import { getAvatarPreset, isImageMediaUrl } from '../lib/profileMedia';
 import { SavedVocabPanel } from './SavedVocabPanel';
@@ -34,6 +35,7 @@ import { ModalCloseButton } from './common/ModalShell';
 import type {
   DashboardActivityDay,
   DashboardSummary,
+  LanguageCode,
   LessonSummary,
   TabId,
   TestAttemptRecord,
@@ -44,6 +46,7 @@ import type {
 export type DashboardSection = 'overview' | 'saved_vocab' | 'history';
 
 interface DashboardPageProps {
+  lang?: LanguageCode;
   user: UserProfile | null;
   lessons: LessonSummary[];
   attempts: TestAttemptRecord[];
@@ -60,7 +63,7 @@ interface DashboardPageProps {
   onOpenProfile: () => void;
   onOpenAdmin: () => void;
   onOpenSearch: () => void;
-  onOpenAiDictionary: () => void;
+  onOpenAiDictionary: (query?: string) => void;
   onToggleMarked?: (vocabId: string) => Promise<void> | void;
   onOpenWriter?: (vocab: VocabularyItem) => void;
   onRequireAuth: () => void;
@@ -110,8 +113,10 @@ function getInitials(name: string): string {
 
 function buildGuestDashboard(
   lessons: LessonSummary[],
-  currentLessonId: string
+  currentLessonId: string,
+  lang: LanguageCode = 'zh'
 ): DashboardSummary {
+  const pack = getLanguagePack(lang);
   const totalVocab = lessons.reduce((sum, l) => sum + (l.vocabCount || 0), 0);
   const chosen = lessons.find((l) => l.id === currentLessonId) || lessons[0] || null;
 
@@ -125,7 +130,7 @@ function buildGuestDashboard(
     activityLast28Days.push({ date: key, count: 0, minutes: 0, level: 0 });
   }
 
-  const fallbackLessonId = chosen?.id || 'lesson-1';
+  const fallbackLessonId = chosen?.id || pack.defaultLessonId;
   return {
     streakDays: 0,
     bestStreakDays: 0,
@@ -195,7 +200,7 @@ function buildGuestDashboard(
       ? {
           lessonId: chosen.id,
           title: chosen.title,
-          hskLevel: chosen.hskLevel || 'HSK 1',
+          hskLevel: chosen.hskLevel || pack.defaultLevel,
           unit: chosen.unit ?? null,
           progressPercent: 0,
           passed: false,
@@ -222,6 +227,7 @@ function buildGuestDashboard(
 }
 
 export const DashboardPage: React.FC<DashboardPageProps> = ({
+  lang = 'zh',
   user,
   lessons,
   attempts,
@@ -244,6 +250,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   onRequireAuth,
   onLogout,
 }) => {
+  const langPack = useMemo(() => getLanguagePack(lang), [lang]);
+  const isEnglish = lang === 'en';
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showRoadmapModal, setShowRoadmapModal] = useState(false);
   const [showNotifPopover, setShowNotifPopover] = useState(false);
@@ -270,7 +278,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
   useEffect(() => {
     if (!user) {
-      setDashboard(buildGuestDashboard(lessons, currentLessonId));
+      setDashboard(buildGuestDashboard(lessons, currentLessonId, lang));
       setLoading(false);
       return;
     }
@@ -278,12 +286,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     let cancelled = false;
     setLoading(true);
     api
-      .getDashboard(currentLessonId)
+      .getDashboard(currentLessonId, lang)
       .then((res) => {
         if (!cancelled) setDashboard(res.dashboard);
       })
       .catch(() => {
-        if (!cancelled) setDashboard(buildGuestDashboard(lessons, currentLessonId));
+        if (!cancelled) setDashboard(buildGuestDashboard(lessons, currentLessonId, lang));
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -292,11 +300,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     return () => {
       cancelled = true;
     };
-  }, [user, currentLessonId, lessons]);
+  }, [user, currentLessonId, lessons, lang]);
 
   const data = useMemo(
-    () => dashboard || buildGuestDashboard(lessons, currentLessonId),
-    [dashboard, lessons, currentLessonId]
+    () => dashboard || buildGuestDashboard(lessons, currentLessonId, lang),
+    [dashboard, lessons, currentLessonId, lang]
   );
 
 
@@ -524,8 +532,14 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               title="Đi tới giao diện học chi tiết"
             >
               <span className="w-[51px] shrink-0 flex items-center justify-center">
-                <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-red-600 to-amber-600 flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform">
-                  <span className="chinese-serif text-lg font-black">汉</span>
+                <span
+                  className={`w-9 h-9 rounded-xl flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform ${
+                    isEnglish
+                      ? 'bg-gradient-to-br from-indigo-600 to-blue-600'
+                      : 'bg-gradient-to-br from-red-600 to-amber-600'
+                  }`}
+                >
+                  <span className={langPack.brandGlyphClass}>{langPack.brandGlyph}</span>
                 </span>
               </span>
               <span
@@ -534,10 +548,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 }`}
               >
                 <span className="block text-sm font-bold text-slate-900 dark:text-white leading-tight truncate">
-                  汉语学堂
+                  {langPack.brandTitle}
                 </span>
                 <span className="block text-[11px] text-slate-500 dark:text-slate-400 truncate">
-                  Học tiếng Trung HSK
+                  {langPack.dashboardBrandSubtitle}
                 </span>
               </span>
             </button>
@@ -587,7 +601,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             {canUseAiAssistant && (
               <button
                 type="button"
-                onClick={onOpenAiDictionary}
+                onClick={() => onOpenAiDictionary()}
                 title={sidebarCollapsed ? 'Từ điển & Trợ lý AI' : undefined}
                 className="w-full h-10 flex items-center rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-amber-50/70 dark:hover:bg-amber-950/30 hover:text-amber-700 dark:hover:text-amber-300 transition-colors"
               >
@@ -696,8 +710,14 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           <div className="w-full px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
             {/* Greeting + Date */}
             <div className="flex items-center gap-3 min-w-0">
-              <div className="lg:hidden w-9 h-9 rounded-xl bg-gradient-to-br from-red-600 to-amber-600 flex items-center justify-center text-white shadow-sm shrink-0">
-                <span className="chinese-serif text-lg font-black">汉</span>
+              <div
+                className={`lg:hidden w-9 h-9 rounded-xl flex items-center justify-center text-white shadow-sm shrink-0 ${
+                  isEnglish
+                    ? 'bg-gradient-to-br from-indigo-600 to-blue-600'
+                    : 'bg-gradient-to-br from-red-600 to-amber-600'
+                }`}
+              >
+                <span className={langPack.brandGlyphClass}>{langPack.brandGlyph}</span>
               </div>
               <div className="min-w-0">
                 <h1 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white truncate">
@@ -839,11 +859,13 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           {activeSection === 'saved_vocab' ? (
             user ? (
               <SavedVocabPanel
+                lang={lang}
                 userId={user.id}
                 lessons={lessons}
                 onToggleMarked={onToggleMarked}
                 onOpenLesson={(lessonId, tab) => onOpenLesson(lessonId, tab)}
-                onOpenWriter={onOpenWriter}
+                onOpenWriter={isEnglish ? undefined : onOpenWriter}
+                onOpenAiDictionary={canUseAiAssistant ? onOpenAiDictionary : undefined}
               />
             ) : (
               <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 text-center space-y-3">
@@ -866,6 +888,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           ) : activeSection === 'history' ? (
             user ? (
               <TestHistoryPanel
+                lang={lang}
                 userId={user.id}
                 lessons={lessons}
                 attempts={attempts}
@@ -896,14 +919,24 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           {isBrandNewUser && (
             <div className="bg-white dark:bg-slate-900 rounded-2xl border border-red-200/80 dark:border-red-900/50 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-950/60 text-red-600 dark:text-red-400 flex items-center justify-center shrink-0">
+                <div
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                    isEnglish
+                      ? 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400'
+                      : 'bg-red-50 dark:bg-red-950/60 text-red-600 dark:text-red-400'
+                  }`}
+                >
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <div>
                   <h2 className="text-sm font-bold text-slate-900 dark:text-white">
                     {user
-                      ? 'Chào mừng bạn bắt đầu hành trình chinh phục tiếng Trung!'
-                      : 'Khám phá lộ trình HSK cùng 汉语学堂'}
+                      ? isEnglish
+                        ? 'Chào mừng bạn bắt đầu hành trình chinh phục tiếng Anh!'
+                        : 'Chào mừng bạn bắt đầu hành trình chinh phục tiếng Trung!'
+                      : isEnglish
+                        ? 'Khám phá lộ trình CEFR A1 cùng English Studio'
+                        : 'Khám phá lộ trình HSK cùng 汉语学堂'}
                   </h2>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                     {user
@@ -1162,7 +1195,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     type="button"
                     disabled={!heroLesson}
                     onClick={() => heroLesson && onOpenLesson(heroLesson.lessonId, 'vocab')}
-                    className="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white text-sm font-bold shadow-sm hover:shadow-md inline-flex items-center gap-2 transition active:scale-[0.98]"
+                    className={`px-5 py-2.5 rounded-xl disabled:opacity-50 text-white text-sm font-bold shadow-sm hover:shadow-md inline-flex items-center gap-2 transition active:scale-[0.98] ${
+                      isEnglish
+                        ? 'bg-indigo-600 hover:bg-indigo-700'
+                        : 'bg-red-600 hover:bg-red-700'
+                    }`}
                   >
                     <Play className="w-4 h-4 fill-current" />
                     {heroLesson && heroLesson.attemptCount > 0 ? 'Học tiếp ngay' : 'Bắt đầu học ngay'}
@@ -1425,6 +1462,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               )}
             </section>
           </>
+          )}
+          {langPack.attribution && (
+            <p className="text-center text-[11px] text-slate-400 dark:text-slate-500 pt-2">
+              {langPack.attribution}
+            </p>
           )}
         </main>
       </div>

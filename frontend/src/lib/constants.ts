@@ -1,4 +1,5 @@
 export const HSK_LEVELS = ['HSK 1', 'HSK 2', 'HSK 3', 'HSK 4', 'Giao tiếp'] as const;
+export const CEFR_LEVELS = ['CEFR A1', 'CEFR A2', 'CEFR B1', 'CEFR B2', 'Giao tiếp'] as const;
 
 export type HskLevelOption = (typeof HSK_LEVELS)[number];
 

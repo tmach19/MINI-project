@@ -1,0 +1,96 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261125_134531_dedup_lesson_vocabularies
+      author: chinese-study
+      comment: Gop danh dau tu vung sang ban ghi chuan va xoa mem cac dong vocabularies bi nhan doi trong cung bai hoc
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            stripComments: true
+            sql: |-
+              WITH ranked AS (
+                SELECT
+                  id,
+                  lesson_id,
+                  btrim(hanzi) AS clean_hanzi,
+                  FIRST_VALUE(id) OVER (
+                    PARTITION BY lesson_id, btrim(hanzi)
+                    ORDER BY
+                      CASE WHEN id ~ '^v[0-9]+_[0-9]+$' THEN 0 ELSE 1 END ASC,
+                      CASE WHEN sino_vietnamese IS NOT NULL AND btrim(sino_vietnamese) <> '' THEN 0 ELSE 1 END ASC,
+                      CASE WHEN radical IS NOT NULL AND radical NOT ILIKE 'Bộ cấu tạo [%' THEN 0 ELSE 1 END ASC,
+                      sort_order ASC,
+                      id ASC
+                  ) AS keeper_id,
+                  ROW_NUMBER() OVER (
+                    PARTITION BY lesson_id, btrim(hanzi)
+                    ORDER BY
+                      CASE WHEN id ~ '^v[0-9]+_[0-9]+$' THEN 0 ELSE 1 END ASC,
+                      CASE WHEN sino_vietnamese IS NOT NULL AND btrim(sino_vietnamese) <> '' THEN 0 ELSE 1 END ASC,
+                      CASE WHEN radical IS NOT NULL AND radical NOT ILIKE 'Bộ cấu tạo [%' THEN 0 ELSE 1 END ASC,
+                      sort_order ASC,
+                      id ASC
+                  ) AS rn
+                FROM vocabularies
+                WHERE is_deleted = 0
+              ),
+              dups AS (
+                SELECT id AS dup_id, keeper_id
+                FROM ranked
+                WHERE rn > 1 AND id <> keeper_id
+              )
+              INSERT INTO user_marked_vocab (user_id, vocab_id, note, marked_at, is_deleted, deleted_at)
+              SELECT m.user_id, d.keeper_id, m.note, m.marked_at, 0, NULL
+              FROM user_marked_vocab m
+              JOIN dups d ON d.dup_id = m.vocab_id
+              WHERE m.is_deleted = 0
+              ON CONFLICT (user_id, vocab_id) DO UPDATE
+              SET is_deleted = 0,
+                  deleted_at = NULL,
+                  note = COALESCE(user_marked_vocab.note, EXCLUDED.note);
+
+              WITH ranked AS (
+                SELECT
+                  id,
+                  ROW_NUMBER() OVER (
+                    PARTITION BY lesson_id, btrim(hanzi)
+                    ORDER BY
+                      CASE WHEN id ~ '^v[0-9]+_[0-9]+$' THEN 0 ELSE 1 END ASC,
+                      CASE WHEN sino_vietnamese IS NOT NULL AND btrim(sino_vietnamese) <> '' THEN 0 ELSE 1 END ASC,
+                      CASE WHEN radical IS NOT NULL AND radical NOT ILIKE 'Bộ cấu tạo [%' THEN 0 ELSE 1 END ASC,
+                      sort_order ASC,
+                      id ASC
+                  ) AS rn
+                FROM vocabularies
+                WHERE is_deleted = 0
+              )
+              UPDATE user_marked_vocab
+              SET is_deleted = 1, deleted_at = NOW()
+              WHERE vocab_id IN (SELECT id FROM ranked WHERE rn > 1)
+                AND is_deleted = 0;
+
+              WITH ranked AS (
+                SELECT
+                  id,
+                  ROW_NUMBER() OVER (
+                    PARTITION BY lesson_id, btrim(hanzi)
+                    ORDER BY
+                      CASE WHEN id ~ '^v[0-9]+_[0-9]+$' THEN 0 ELSE 1 END ASC,
+                      CASE WHEN sino_vietnamese IS NOT NULL AND btrim(sino_vietnamese) <> '' THEN 0 ELSE 1 END ASC,
+                      CASE WHEN radical IS NOT NULL AND radical NOT ILIKE 'Bộ cấu tạo [%' THEN 0 ELSE 1 END ASC,
+                      sort_order ASC,
+                      id ASC
+                  ) AS rn
+                FROM vocabularies
+                WHERE is_deleted = 0
+              )
+              UPDATE vocabularies
+              SET is_deleted = 1, deleted_at = NOW()
+              WHERE id IN (SELECT id FROM ranked WHERE rn > 1)
+                AND is_deleted = 0;
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: |-
+              SELECT 1;

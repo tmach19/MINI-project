@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ExternalLink,
+  Eye,
   Flag,
   PenTool,
   RefreshCw,
@@ -8,45 +9,58 @@ import {
   Trash2,
   Volume2,
 } from 'lucide-react';
+import { getEnAudioUrl, getEnImageUrl } from '../languages/config';
 import { api } from '../lib/api';
-import { speakChinese } from '../lib/audio';
+import { speakChinese, speakEnglish } from '../lib/audio';
 import { LoadingCard } from './common/LoadingState';
-import type { LessonSummary, MarkedVocabCard, VocabularyItem } from '../types';
+import { VocabDetailModal } from './common/VocabDetailModal';
+import type {
+  LanguageCode,
+  LessonSummary,
+  MarkedVocabCard,
+  VocabularyItem,
+} from '../types';
 
 interface SavedVocabPanelProps {
+  lang?: LanguageCode;
   userId: string;
   lessons: LessonSummary[];
   onToggleMarked?: (vocabId: string) => Promise<void> | void;
   onOpenLesson?: (lessonId: string, tab?: 'vocab' | 'test') => void;
   onOpenWriter?: (vocab: VocabularyItem) => void;
+  onOpenAiDictionary?: (word: string) => void;
 }
 
 export const SavedVocabPanel: React.FC<SavedVocabPanelProps> = ({
+  lang = 'zh',
   userId,
   lessons,
   onToggleMarked,
   onOpenLesson,
   onOpenWriter,
+  onOpenAiDictionary,
 }) => {
+  const isEnglish = lang === 'en';
   const [markedCards, setMarkedCards] = useState<MarkedVocabCard[]>([]);
   const [loadingMarked, setLoadingMarked] = useState(false);
   const [markedError, setMarkedError] = useState<string | null>(null);
   const [markedSearch, setMarkedSearch] = useState('');
   const [lessonFilter, setLessonFilter] = useState<string>('all');
   const [removingId, setRemovingId] = useState<string | null>(null);
+  const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
 
   const loadMarkedFromDb = useCallback(async () => {
     setLoadingMarked(true);
     setMarkedError(null);
     try {
-      const res = await api.getMarkedCards();
+      const res = await api.getMarkedCards(lang);
       setMarkedCards(res.cards);
     } catch (err) {
       setMarkedError(err instanceof Error ? err.message : 'Không tải được danh sách từ đã đánh dấu');
     } finally {
       setLoadingMarked(false);
     }
-  }, []);
+  }, [lang]);
 
   useEffect(() => {
     void loadMarkedFromDb();
@@ -85,6 +99,17 @@ export const SavedVocabPanel: React.FC<SavedVocabPanelProps> = ({
     });
   }, [orderedMarkedCards, lessonFilter, markedSearch]);
 
+  const detailIndex = useMemo(
+    () => (selectedCardId ? filteredMarkedCards.findIndex((c) => c.id === selectedCardId) : -1),
+    [filteredMarkedCards, selectedCardId]
+  );
+  const detailCard =
+    detailIndex >= 0
+      ? filteredMarkedCards[detailIndex]
+      : selectedCardId
+        ? orderedMarkedCards.find((c) => c.id === selectedCardId) || null
+        : null;
+
   const handleRefresh = () => {
     setMarkedSearch('');
     setLessonFilter('all');
@@ -95,8 +120,20 @@ export const SavedVocabPanel: React.FC<SavedVocabPanelProps> = ({
     if (!onToggleMarked) return;
     setRemovingId(vocabId);
     try {
+      let nextSelectedAfterRemove: string | null = selectedCardId;
+      if (selectedCardId === vocabId) {
+        const curIdx = filteredMarkedCards.findIndex((c) => c.id === vocabId);
+        const remaining = filteredMarkedCards.filter((c) => c.id !== vocabId);
+        if (remaining.length === 0) {
+          nextSelectedAfterRemove = null;
+        } else {
+          const targetIdx = Math.min(Math.max(0, curIdx), remaining.length - 1);
+          nextSelectedAfterRemove = remaining[targetIdx].id;
+        }
+      }
       await onToggleMarked(vocabId);
       setMarkedCards((prev) => prev.filter((c) => c.id !== vocabId));
+      setSelectedCardId(nextSelectedAfterRemove);
     } finally {
       setRemovingId(null);
     }
@@ -116,7 +153,7 @@ export const SavedVocabPanel: React.FC<SavedVocabPanelProps> = ({
             </span>
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            Ôn tập nhanh các từ vựng bạn đã gắn cờ khó nhớ trên toàn bộ giáo trình.
+            Ôn tập nhanh các từ vựng bạn đã gắn cờ khó nhớ trên toàn bộ giáo trình. Bấm vào từ hoặc biểu tượng con mắt để xem chi tiết.
           </p>
         </div>
 
@@ -127,7 +164,9 @@ export const SavedVocabPanel: React.FC<SavedVocabPanelProps> = ({
               type="text"
               value={markedSearch}
               onChange={(e) => setMarkedSearch(e.target.value)}
-              placeholder="Tìm chữ Hán, Pinyin, nghĩa..."
+              placeholder={
+                isEnglish ? 'Tìm từ tiếng Anh, IPA, nghĩa...' : 'Tìm chữ Hán, Pinyin, nghĩa...'
+              }
               className="w-full pl-8 pr-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-red-500"
             />
           </div>
@@ -188,8 +227,8 @@ export const SavedVocabPanel: React.FC<SavedVocabPanelProps> = ({
             <thead>
               <tr className="bg-slate-50 dark:bg-slate-800/70 text-slate-500 dark:text-slate-400 uppercase text-[11px] border-b border-slate-200 dark:border-slate-800">
                 <th className="py-3 px-3.5 w-12 text-center">STT</th>
-                <th className="py-3 px-3.5">Chữ Hán</th>
-                <th className="py-3 px-3.5">Pinyin & Hán Việt</th>
+                <th className="py-3 px-3.5">{isEnglish ? 'Từ tiếng Anh' : 'Chữ Hán'}</th>
+                <th className="py-3 px-3.5">{isEnglish ? 'IPA & CEFR' : 'Pinyin & Hán Việt'}</th>
                 <th className="py-3 px-3.5">Nghĩa tiếng Việt</th>
                 <th className="py-3 px-3.5">Thuộc bài</th>
                 <th className="py-3 px-3.5 text-right">Thao tác</th>
@@ -198,6 +237,7 @@ export const SavedVocabPanel: React.FC<SavedVocabPanelProps> = ({
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {filteredMarkedCards.map((card, idx) => {
                 const shortLesson = card.lessonTitle.split(':')[0] || card.lessonTitle;
+                const thumbUrl = isEnglish ? getEnImageUrl(card.meta, 'thumb') : null;
                 return (
                   <tr
                     key={card.id}
@@ -208,9 +248,27 @@ export const SavedVocabPanel: React.FC<SavedVocabPanelProps> = ({
                     </td>
                     <td className="py-3 px-3.5">
                       <div className="flex items-center gap-2">
-                        <span className="chinese-font text-lg font-bold text-slate-900 dark:text-white">
+                        {thumbUrl && (
+                          <img
+                            src={thumbUrl}
+                            alt={card.hanzi}
+                            loading="lazy"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).style.display = 'none';
+                            }}
+                            className="w-8 h-8 rounded-lg object-cover border border-slate-200 dark:border-slate-700 shrink-0"
+                          />
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => setSelectedCardId(card.id)}
+                          className={`${
+                            isEnglish ? 'text-base' : 'chinese-font text-lg'
+                          } font-bold text-slate-900 dark:text-white hover:text-purple-600 dark:hover:text-purple-400 underline decoration-dotted underline-offset-4 decoration-slate-300 dark:decoration-slate-700 hover:decoration-purple-400 transition text-left`}
+                          title={`Xem chi tiết từ "${card.hanzi}"`}
+                        >
                           {card.hanzi}
-                        </span>
+                        </button>
                         {card.type && (
                           <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hidden sm:inline">
                             {card.type}
@@ -219,7 +277,13 @@ export const SavedVocabPanel: React.FC<SavedVocabPanelProps> = ({
                       </div>
                     </td>
                     <td className="py-3 px-3.5">
-                      <span className="block font-mono text-amber-700 dark:text-amber-400 font-semibold">
+                      <span
+                        className={`block font-mono font-semibold ${
+                          isEnglish
+                            ? 'text-indigo-600 dark:text-indigo-400'
+                            : 'text-amber-700 dark:text-amber-400'
+                        }`}
+                      >
                         {card.pinyin}
                       </span>
                       {card.sinoVietnamese && (
@@ -252,13 +316,28 @@ export const SavedVocabPanel: React.FC<SavedVocabPanelProps> = ({
                       <div className="flex items-center justify-end gap-1.5">
                         <button
                           type="button"
-                          onClick={() => speakChinese(card.hanzi)}
+                          onClick={() => setSelectedCardId(card.id)}
+                          className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/30 transition"
+                          title="Xem chi tiết từ vựng"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            isEnglish
+                              ? speakEnglish(card.hanzi, {
+                                  accent: 'us',
+                                  audioUrl: getEnAudioUrl(card.meta, 'us'),
+                                })
+                              : speakChinese(card.hanzi)
+                          }
                           className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/30 transition"
                           title="Nghe phát âm"
                         >
                           <Volume2 className="w-3.5 h-3.5" />
                         </button>
-                        {onOpenWriter && (
+                        {!isEnglish && onOpenWriter && (
                           <button
                             type="button"
                             onClick={() => onOpenWriter(card)}
@@ -287,6 +366,44 @@ export const SavedVocabPanel: React.FC<SavedVocabPanelProps> = ({
             </tbody>
           </table>
         </div>
+      )}
+
+      {/* Modal Xem chi tiết từ đã đánh dấu (dùng chung VocabDetailModal đầy đủ như Từ điển AI) */}
+      {detailCard && (
+        <VocabDetailModal
+          lang={lang}
+          vocab={detailCard}
+          lessonTitle={detailCard.lessonTitle}
+          onOpenLesson={onOpenLesson ? () => onOpenLesson(detailCard.lessonId, 'vocab') : undefined}
+          currentIndex={detailIndex}
+          totalCount={filteredMarkedCards.length}
+          onPrev={
+            filteredMarkedCards.length > 1 && detailIndex >= 0
+              ? () => {
+                  const prev =
+                    filteredMarkedCards[
+                      (detailIndex - 1 + filteredMarkedCards.length) % filteredMarkedCards.length
+                    ];
+                  if (prev) setSelectedCardId(prev.id);
+                }
+              : undefined
+          }
+          onNext={
+            filteredMarkedCards.length > 1 && detailIndex >= 0
+              ? () => {
+                  const next = filteredMarkedCards[(detailIndex + 1) % filteredMarkedCards.length];
+                  if (next) setSelectedCardId(next.id);
+                }
+              : undefined
+          }
+          isMarked={true}
+          markActionMode="unmark_only"
+          markLoading={removingId === detailCard.id}
+          onToggleMarked={onToggleMarked ? () => void handleUnmarkCard(detailCard.id) : undefined}
+          onOpenWriter={onOpenWriter}
+          onOpenAiDictionary={onOpenAiDictionary}
+          onClose={() => setSelectedCardId(null)}
+        />
       )}
     </div>
   );

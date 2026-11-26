@@ -20,13 +20,15 @@ import {
   Volume2,
   X,
 } from 'lucide-react';
+import { getEnAudioUrl, getLanguagePack } from '../languages/config';
 import { api } from '../lib/api';
-import { speakChinese } from '../lib/audio';
+import { speakText } from '../lib/audio';
 import type {
   AiChatMessage,
   AiDictionaryResponse,
   AiPendingAction,
   ComprehensiveExamResponse,
+  LanguageCode,
   LessonDetail,
   LessonSummary,
   TabId,
@@ -37,6 +39,7 @@ import { LoadingCard, LoadingSpinner } from './common/LoadingState';
 import { ErrorBanner, ModalCloseButton, ModalShell } from './common/ModalShell';
 
 interface AiAssistantModalProps {
+  lang?: LanguageCode;
   userId?: string | null;
   initialTab?: 'dictionary' | 'chat';
   initialQuery?: string;
@@ -48,7 +51,7 @@ interface AiAssistantModalProps {
     view: 'dashboard' | 'study' | 'profile' | 'exam' | 'saved_vocab' | 'history'
   ) => void;
   onStartReviewExam?: (exam: ComprehensiveExamResponse, lessonIds: string[]) => void;
-  onOpenWriter: (vocab: VocabularyItem) => void;
+  onOpenWriter?: (vocab: VocabularyItem) => void;
   onProgressChanged?: () => Promise<void> | void;
   onLessonsChanged?: (focusLessonId?: string) => Promise<void> | void;
 }
@@ -61,22 +64,29 @@ interface AiChatSession {
   updatedAt: string;
 }
 
-const HISTORY_STORAGE_KEY = 'cs_ai_dict_history';
 const MAX_HISTORY_ITEMS = 12;
 const MAX_CHAT_SESSIONS = 30;
 const MAX_MESSAGES_PER_SESSION = 60;
 
-function getChatSessionsKey(userScope: string): string {
-  return `cs_ai_chat_sessions_v1_${userScope}`;
+function getDictHistoryKey(lang: LanguageCode): string {
+  return lang === 'en' ? 'cs_ai_dict_history_en' : 'cs_ai_dict_history';
 }
 
-function getActiveSessionKey(userScope: string): string {
-  return `cs_ai_chat_active_v1_${userScope}`;
+function getChatSessionsKey(userScope: string, lang: LanguageCode): string {
+  return lang === 'en'
+    ? `cs_ai_chat_sessions_v1_en_${userScope}`
+    : `cs_ai_chat_sessions_v1_${userScope}`;
 }
 
-function loadSavedSessions(userScope: string): AiChatSession[] {
+function getActiveSessionKey(userScope: string, lang: LanguageCode): string {
+  return lang === 'en'
+    ? `cs_ai_chat_active_v1_en_${userScope}`
+    : `cs_ai_chat_active_v1_${userScope}`;
+}
+
+function loadSavedSessions(userScope: string, lang: LanguageCode): AiChatSession[] {
   try {
-    const raw = localStorage.getItem(getChatSessionsKey(userScope));
+    const raw = localStorage.getItem(getChatSessionsKey(userScope, lang));
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
@@ -93,10 +103,14 @@ function loadSavedSessions(userScope: string): AiChatSession[] {
   }
 }
 
-function saveSessionsToStorage(userScope: string, sessions: AiChatSession[]): void {
+function saveSessionsToStorage(
+  userScope: string,
+  lang: LanguageCode,
+  sessions: AiChatSession[]
+): void {
   try {
     localStorage.setItem(
-      getChatSessionsKey(userScope),
+      getChatSessionsKey(userScope, lang),
       JSON.stringify(sessions.slice(0, MAX_CHAT_SESSIONS))
     );
   } catch {
@@ -104,18 +118,22 @@ function saveSessionsToStorage(userScope: string, sessions: AiChatSession[]): vo
   }
 }
 
-function loadActiveSessionId(userScope: string): string | null {
+function loadActiveSessionId(userScope: string, lang: LanguageCode): string | null {
   try {
-    return localStorage.getItem(getActiveSessionKey(userScope));
+    return localStorage.getItem(getActiveSessionKey(userScope, lang));
   } catch {
     return null;
   }
 }
 
-function saveActiveSessionId(userScope: string, sessionId: string | null): void {
+function saveActiveSessionId(
+  userScope: string,
+  lang: LanguageCode,
+  sessionId: string | null
+): void {
   try {
-    if (sessionId) localStorage.setItem(getActiveSessionKey(userScope), sessionId);
-    else localStorage.removeItem(getActiveSessionKey(userScope));
+    if (sessionId) localStorage.setItem(getActiveSessionKey(userScope, lang), sessionId);
+    else localStorage.removeItem(getActiveSessionKey(userScope, lang));
   } catch {
     // Bỏ qua lỗi quota storage
   }
@@ -134,9 +152,9 @@ function createSessionId(): string {
   return `chat_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
-function loadDictHistory(): string[] {
+function loadDictHistory(lang: LanguageCode): string[] {
   try {
-    const raw = localStorage.getItem(HISTORY_STORAGE_KEY);
+    const raw = localStorage.getItem(getDictHistoryKey(lang));
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed.filter((x) => typeof x === 'string') : [];
@@ -145,9 +163,9 @@ function loadDictHistory(): string[] {
   }
 }
 
-function saveDictHistory(items: string[]): void {
+function saveDictHistory(lang: LanguageCode, items: string[]): void {
   try {
-    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(items));
+    localStorage.setItem(getDictHistoryKey(lang), JSON.stringify(items));
   } catch {
     // Bỏ qua lỗi quota storage
   }
@@ -202,6 +220,7 @@ function extractChineseSnippets(text: string): string[] {
 }
 
 export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
+  lang = 'zh',
   userId,
   initialTab = 'dictionary',
   initialQuery = '',
@@ -213,6 +232,8 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
   onProgressChanged,
   onLessonsChanged,
 }) => {
+  const isEnglish = lang === 'en';
+  const langPack = useMemo(() => getLanguagePack(lang), [lang]);
   const userScope = userId || 'guest';
   const [activeTab, setActiveTab] = useState<'dictionary' | 'chat'>(initialTab);
 
@@ -225,21 +246,23 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
   const [dictBackStack, setDictBackStack] = useState<
     Array<{ query: string; result: AiDictionaryResponse }>
   >([]);
-  const [dictHistory, setDictHistory] = useState<string[]>(() => loadDictHistory());
+  const [dictHistory, setDictHistory] = useState<string[]>(() => loadDictHistory(lang));
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const dictBodyRef = useRef<HTMLDivElement | null>(null);
 
   // Tutor chat state — tự động lưu & lịch sử các cuộc trò chuyện
-  const [sessions, setSessions] = useState<AiChatSession[]>(() => loadSavedSessions(userScope));
+  const [sessions, setSessions] = useState<AiChatSession[]>(() =>
+    loadSavedSessions(userScope, lang)
+  );
   const [activeSessionId, setActiveSessionId] = useState<string>(() => {
-    const saved = loadSavedSessions(userScope);
-    const storedId = loadActiveSessionId(userScope);
+    const saved = loadSavedSessions(userScope, lang);
+    const storedId = loadActiveSessionId(userScope, lang);
     return storedId || saved[0]?.id || createSessionId();
   });
   const [chatInput, setChatInput] = useState('');
   const [chatMessages, setChatMessages] = useState<AiChatMessage[]>(() => {
-    const saved = loadSavedSessions(userScope);
-    const storedId = loadActiveSessionId(userScope);
+    const saved = loadSavedSessions(userScope, lang);
+    const storedId = loadActiveSessionId(userScope, lang);
     const targetId = storedId || saved[0]?.id;
     const found = targetId ? saved.find((s) => s.id === targetId) : undefined;
     return found ? found.messages : [];
@@ -260,8 +283,11 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (initialQuery.trim()) {
-      void runDictionaryLookup(initialQuery.trim(), false);
+    const clean = initialQuery.trim();
+    if (clean) {
+      setActiveTab('dictionary');
+      setDictQuery(clean);
+      void runDictionaryLookup(clean, false);
     }
   }, [initialQuery]);
 
@@ -287,10 +313,10 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
         0,
         MAX_CHAT_SESSIONS
       );
-      saveSessionsToStorage(userScope, next);
+      saveSessionsToStorage(userScope, lang, next);
       return next;
     });
-    saveActiveSessionId(userScope, sessionId);
+    saveActiveSessionId(userScope, lang, sessionId);
   };
 
   const handleNewChat = () => {
@@ -299,7 +325,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
     setChatMessages([]);
     setChatError(null);
     setShowHistoryDrawer(false);
-    saveActiveSessionId(userScope, nextId);
+    saveActiveSessionId(userScope, lang, nextId);
   };
 
   const handleSelectSession = (session: AiChatSession) => {
@@ -307,13 +333,13 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
     setChatMessages(session.messages);
     setChatError(null);
     setShowHistoryDrawer(false);
-    saveActiveSessionId(userScope, session.id);
+    saveActiveSessionId(userScope, lang, session.id);
   };
 
   const handleDeleteSession = (sessionId: string) => {
     setSessions((prev) => {
       const next = prev.filter((s) => s.id !== sessionId);
-      saveSessionsToStorage(userScope, next);
+      saveSessionsToStorage(userScope, lang, next);
       return next;
     });
     if (sessionId === activeSessionId) {
@@ -321,19 +347,19 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
       setActiveSessionId(freshId);
       setChatMessages([]);
       setChatError(null);
-      saveActiveSessionId(userScope, freshId);
+      saveActiveSessionId(userScope, lang, freshId);
     }
   };
 
   const handleClearAllSessions = () => {
     setSessions([]);
-    saveSessionsToStorage(userScope, []);
+    saveSessionsToStorage(userScope, lang, []);
     const freshId = createSessionId();
     setActiveSessionId(freshId);
     setChatMessages([]);
     setChatError(null);
     setShowHistoryDrawer(false);
-    saveActiveSessionId(userScope, freshId);
+    saveActiveSessionId(userScope, lang, freshId);
   };
 
   const pushHistory = (q: string) => {
@@ -341,7 +367,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
     if (!clean) return;
     setDictHistory((prev) => {
       const next = [clean, ...prev.filter((item) => item !== clean)].slice(0, MAX_HISTORY_ITEMS);
-      saveDictHistory(next);
+      saveDictHistory(lang, next);
       return next;
     });
   };
@@ -360,7 +386,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
     dictBodyRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
 
     try {
-      const res = await api.aiDictionary({ query: trimmed, direction: 'auto', forceAi });
+      const res = await api.aiDictionary({ query: trimmed, direction: 'auto', forceAi, lang });
       if (prevSnapshot) {
         setDictBackStack((prev) => [...prev.slice(-14), prevSnapshot]);
       }
@@ -414,6 +440,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
         message: text,
         history: priorMessages.slice(-10).map((m) => ({ role: m.role, content: m.content })),
         lessonIds: [],
+        lang,
       });
       const completedMessages: AiChatMessage[] = [
         ...nextHistory,
@@ -452,7 +479,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
       };
       const res =
         action.type === 'create_lesson'
-          ? await api.createLesson(payload)
+          ? await api.createLesson({ ...payload, languageCode: lang })
           : await api.updateLesson(action.lessonId, payload);
 
       setActionStates((prev) => ({
@@ -471,16 +498,26 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
     }
   };
 
-  const quickPrompts = [
-    'Xem tiến độ Dashboard, các kỹ năng yếu & gợi ý ôn tập cho mình',
-    'Tổng hợp lịch sử làm bài kiểm tra của mình gần đây',
-    'Tìm và đánh dấu các từ có nghĩa liên quan đến "thời gian" để ôn tập',
-    'Phân biệt 有点儿 (yǒudiǎnr) và 一点儿 (yīdiǎnr)',
-  ];
+  const quickPrompts = isEnglish
+    ? [
+        'Xem tiến độ Dashboard, các kỹ năng yếu & gợi ý ôn tập tiếng Anh cho mình',
+        'Phân biệt "borrow" và "lend" kèm ví dụ thực tế',
+        'Tìm và đánh dấu các từ tiếng Anh liên quan đến "thời gian" để ôn tập',
+        'Giải thích cách dùng thì hiện tại đơn và hiện tại tiếp diễn',
+      ]
+    : [
+        'Xem tiến độ Dashboard, các kỹ năng yếu & gợi ý ôn tập cho mình',
+        'Tổng hợp lịch sử làm bài kiểm tra của mình gần đây',
+        'Tìm và đánh dấu các từ có nghĩa liên quan đến "thời gian" để ôn tập',
+        'Phân biệt 有点儿 (yǒudiǎnr) và 一点儿 (yīdiǎnr)',
+      ];
 
   const aiHanziChars = useMemo(
-    () => (dictResult?.aiResult?.hanzi ? extractHanziChars(dictResult.aiResult.hanzi) : []),
-    [dictResult]
+    () =>
+      !isEnglish && dictResult?.aiResult?.hanzi
+        ? extractHanziChars(dictResult.aiResult.hanzi)
+        : [],
+    [dictResult, isEnglish]
   );
 
   return (
@@ -488,16 +525,20 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
       {/* Modal Header */}
       <div className="p-5 bg-stone-50 dark:bg-slate-800/60 border-b border-stone-200 dark:border-slate-800 flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-red-600 to-amber-600 text-white flex items-center justify-center shadow-md">
+          <div
+            className={`w-10 h-10 rounded-2xl text-white flex items-center justify-center shadow-md ${
+              isEnglish
+                ? 'bg-gradient-to-br from-indigo-600 to-blue-600'
+                : 'bg-gradient-to-br from-red-600 to-amber-600'
+            }`}
+          >
             <Sparkles className="w-5 h-5" />
           </div>
           <div>
             <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-              Từ điển &amp; Trợ lý AI Tiếng Trung
+              {langPack.aiModalTitle}
             </h3>
-            <p className="text-xs text-gray-500 dark:text-slate-400">
-              Tra từ vựng Trung ⇄ Việt, dịch câu, luyện hội thoại &amp; giải thích ngữ pháp HSK.
-            </p>
+            <p className="text-xs text-gray-500 dark:text-slate-400">{langPack.aiModalSubtitle}</p>
           </div>
         </div>
         <ModalCloseButton onClick={onClose} />
@@ -511,18 +552,22 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
             onClick={() => setActiveTab('dictionary')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 transition ${
               activeTab === 'dictionary'
-                ? 'bg-red-600 text-white shadow-sm'
+                ? isEnglish
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : 'bg-red-600 text-white shadow-sm'
                 : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-stone-200 dark:border-slate-700 hover:bg-stone-50 dark:hover:bg-slate-700'
             }`}
           >
-            <Languages className="w-3.5 h-3.5" /> Từ điển &amp; Dịch Trung ⇄ Việt
+            <Languages className="w-3.5 h-3.5" /> Từ điển &amp; Dịch {langPack.aiDirectionLabel}
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('chat')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 transition ${
               activeTab === 'chat'
-                ? 'bg-red-600 text-white shadow-sm'
+                ? isEnglish
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : 'bg-red-600 text-white shadow-sm'
                 : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 border border-stone-200 dark:border-slate-700 hover:bg-stone-50 dark:hover:bg-slate-700'
             }`}
           >
@@ -576,7 +621,11 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                     void runDictionaryLookup(dictQuery, false);
                   }
                 }}
-                placeholder="Nhập chữ Hán (vd: 笔记本), Pinyin (bǐjìběn), từ tiếng Việt hoặc cả câu cần dịch... (Enter để tra)"
+                placeholder={
+                  isEnglish
+                    ? 'Nhập từ tiếng Anh (vd: library), cụm từ hoặc câu tiếng Việt cần dịch... (Enter để tra)'
+                    : 'Nhập chữ Hán (vd: 笔记本), Pinyin (bǐjìběn), từ tiếng Việt hoặc cả câu cần dịch... (Enter để tra)'
+                }
                 className="flex-1 p-3 rounded-2xl border border-stone-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-gray-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-red-500/40"
               />
               <button
@@ -662,21 +711,24 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
           {!dictResult && !dictLoading && (
             <div className="p-8 rounded-2xl border border-dashed border-stone-200 dark:border-slate-800 text-center space-y-2 text-xs text-gray-500 dark:text-slate-400">
               <p className="font-semibold text-gray-700 dark:text-slate-300">
-                Tra từ điển song ngữ Trung ⇄ Việt kết hợp giáo trình HSK &amp; AI
+                Tra từ điển song ngữ {langPack.aiDirectionLabel} kết hợp giáo trình &amp; AI
               </p>
               <p>
-                Ưu tiên trả ngay từ có sẵn trong 26 bài HSK; các từ/câu mới được AI phân tích chi tiết (Pinyin, Âm Hán Việt, Bộ thủ, Ví dụ).
+                {isEnglish
+                  ? 'Ưu tiên trả ngay từ có sẵn trong lộ trình CEFR A1; các từ/câu mới được AI phân tích chi tiết (IPA, Collocations, Cách dùng, Ví dụ).'
+                  : 'Ưu tiên trả ngay từ có sẵn trong 26 bài HSK; các từ/câu mới được AI phân tích chi tiết (Pinyin, Âm Hán Việt, Bộ thủ, Ví dụ).'}
               </p>
             </div>
           )}
 
-          {/* Local HSK hits */}
+          {/* Local hits */}
           {!dictLoading && dictResult && dictResult.localHits.length > 0 && (
             <div className="space-y-2.5">
               <div className="flex items-center justify-between gap-2 flex-wrap">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400 flex items-center gap-1.5">
                   <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
-                  Khớp trong giáo trình HSK / Bài của bạn ({dictResult.localHits.length})
+                  Khớp trong giáo trình {isEnglish ? 'CEFR' : 'HSK'} / Bài của bạn (
+                  {dictResult.localHits.length})
                 </h4>
               </div>
 
@@ -688,10 +740,20 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                   >
                     <div className="space-y-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="chinese-serif text-lg font-black text-gray-900 dark:text-white">
+                        <span
+                          className={`${
+                            isEnglish ? 'text-base' : 'chinese-serif text-lg'
+                          } font-black text-gray-900 dark:text-white`}
+                        >
                           {hit.hanzi}
                         </span>
-                        <span className="text-xs font-mono text-red-600 dark:text-red-400 font-semibold">
+                        <span
+                          className={`text-xs font-mono font-semibold ${
+                            isEnglish
+                              ? 'text-indigo-600 dark:text-indigo-400'
+                              : 'text-red-600 dark:text-red-400'
+                          }`}
+                        >
                           {hit.pinyin}
                         </span>
                         {hit.sinoVietnamese && (
@@ -711,20 +773,27 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                     <div className="flex items-center gap-1 flex-shrink-0">
                       <button
                         type="button"
-                        onClick={() => speakChinese(hit.hanzi)}
+                        onClick={() =>
+                          speakText(hit.hanzi, lang, {
+                            accent: 'us',
+                            audioUrl: isEnglish ? getEnAudioUrl(hit.meta, 'us') : null,
+                          })
+                        }
                         className="p-1.5 rounded-lg bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-gray-600 dark:text-slate-300 hover:text-red-600"
                         title="Nghe phát âm"
                       >
                         <Volume2 className="w-3.5 h-3.5" />
                       </button>
-                      <button
-                        type="button"
-                        onClick={() => onOpenWriter(hit)}
-                        className="p-1.5 rounded-lg bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-gray-600 dark:text-slate-300 hover:text-red-600"
-                        title="Tập viết chữ Hán"
-                      >
-                        <PenTool className="w-3.5 h-3.5" />
-                      </button>
+                      {!isEnglish && onOpenWriter && (
+                        <button
+                          type="button"
+                          onClick={() => onOpenWriter(hit)}
+                          className="p-1.5 rounded-lg bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-gray-600 dark:text-slate-300 hover:text-red-600"
+                          title="Tập viết chữ Hán"
+                        >
+                          <PenTool className="w-3.5 h-3.5" />
+                        </button>
+                      )}
                       <button
                         type="button"
                         onClick={() => {
@@ -793,17 +862,28 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-3 flex-wrap">
-                      <span className="chinese-serif text-3xl font-black text-gray-900 dark:text-white">
+                      <span
+                        className={`${
+                          isEnglish ? '' : 'chinese-serif'
+                        } text-3xl font-black text-gray-900 dark:text-white`}
+                      >
                         {dictResult.aiResult.hanzi}
                       </span>
                       {dictResult.aiResult.pinyin && (
-                        <span className="text-sm font-mono font-bold text-red-600 dark:text-red-400">
+                        <span
+                          className={`text-sm font-mono font-bold ${
+                            isEnglish
+                              ? 'text-indigo-600 dark:text-indigo-400'
+                              : 'text-red-600 dark:text-red-400'
+                          }`}
+                        >
                           {dictResult.aiResult.pinyin}
                         </span>
                       )}
                       {dictResult.aiResult.sinoVietnamese && (
                         <span className="px-2.5 py-0.5 rounded-lg bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 text-xs font-bold uppercase">
-                          Hán Việt: {dictResult.aiResult.sinoVietnamese}
+                          {isEnglish ? 'CEFR: ' : 'Hán Việt: '}
+                          {dictResult.aiResult.sinoVietnamese}
                         </span>
                       )}
                       {dictResult.aiResult.wordType && (
@@ -819,7 +899,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
 
                   <button
                     type="button"
-                    onClick={() => speakChinese(dictResult.aiResult!.hanzi)}
+                    onClick={() => speakText(dictResult.aiResult!.hanzi, lang)}
                     className="px-3.5 py-2 rounded-xl bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs font-bold inline-flex items-center gap-1.5 self-start hover:bg-red-100"
                   >
                     <Volume2 className="w-4 h-4" /> Nghe phát âm
@@ -849,7 +929,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                     {dictResult.aiResult.radical && (
                       <div className="p-3 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-stone-200/70 dark:border-slate-800">
                         <span className="font-bold text-gray-500 dark:text-slate-400 block mb-0.5">
-                          Bộ thủ
+                          {isEnglish ? 'Họ từ (Word Family)' : 'Bộ thủ'}
                         </span>
                         <span className="text-gray-900 dark:text-white font-semibold">
                           {dictResult.aiResult.radical}
@@ -859,7 +939,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                     {dictResult.aiResult.breakdown && (
                       <div className="p-3 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-stone-200/70 dark:border-slate-800">
                         <span className="font-bold text-gray-500 dark:text-slate-400 block mb-0.5">
-                          Chiết tự
+                          {isEnglish ? 'Đồng nghĩa / Trái nghĩa' : 'Chiết tự'}
                         </span>
                         <span className="text-gray-900 dark:text-white">
                           {dictResult.aiResult.breakdown}
@@ -889,11 +969,11 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                   </div>
                 )}
 
-                {/* Compounds (Từ ghép phổ biến) */}
+                {/* Compounds / Collocations */}
                 {dictResult.aiResult.compounds && dictResult.aiResult.compounds.length > 0 && (
                   <div className="space-y-2 pt-1">
                     <h5 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400">
-                      Từ ghép phổ biến
+                      {isEnglish ? 'Cụm từ & Collocations phổ biến' : 'Từ ghép phổ biến'}
                     </h5>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {dictResult.aiResult.compounds.map((comp, idx) => (
@@ -912,8 +992,14 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                             className="text-left min-w-0 flex-1 disabled:opacity-60"
                           >
                             <div className="flex items-baseline gap-1.5 flex-wrap">
-                              <span className="chinese-serif text-sm font-bold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition">
-                                {renderHighlightedHanzi(comp.hanzi, dictResult.aiResult!.hanzi)}
+                              <span
+                                className={`${
+                                  isEnglish ? '' : 'chinese-serif'
+                                } text-sm font-bold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition`}
+                              >
+                                {isEnglish
+                                  ? comp.hanzi
+                                  : renderHighlightedHanzi(comp.hanzi, dictResult.aiResult!.hanzi)}
                               </span>
                               {dictLoading && dictLoadingQuery === comp.hanzi && (
                                 <Loader2 className="w-3 h-3 animate-spin text-purple-500" />
@@ -930,7 +1016,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                           </button>
                           <button
                             type="button"
-                            onClick={() => speakChinese(comp.hanzi)}
+                            onClick={() => speakText(comp.hanzi, lang)}
                             className="p-1.5 rounded-lg bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-gray-500 hover:text-red-600 flex-shrink-0"
                             title={`Nghe phát âm ${comp.hanzi}`}
                           >
@@ -943,7 +1029,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                 )}
 
                 {/* HanziWriter quick buttons */}
-                {aiHanziChars.length > 0 && (
+                {!isEnglish && onOpenWriter && aiHanziChars.length > 0 && (
                   <div className="flex items-center gap-2 flex-wrap pt-1">
                     <span className="text-[11px] font-bold text-gray-500 dark:text-slate-400 inline-flex items-center gap-1">
                       <PenTool className="w-3.5 h-3.5" /> Tập viết từng chữ:
@@ -981,8 +1067,14 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                           className="p-3 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-stone-200/70 dark:border-slate-800 flex items-start justify-between gap-3"
                         >
                           <div className="space-y-0.5">
-                            <p className="chinese-serif text-sm font-bold text-gray-900 dark:text-white">
-                              {renderHighlightedHanzi(ex.hanzi, dictResult.aiResult!.hanzi)}
+                            <p
+                              className={`${
+                                isEnglish ? '' : 'chinese-serif'
+                              } text-sm font-bold text-gray-900 dark:text-white`}
+                            >
+                              {isEnglish
+                                ? ex.hanzi
+                                : renderHighlightedHanzi(ex.hanzi, dictResult.aiResult!.hanzi)}
                             </p>
                             {ex.pinyin && (
                               <p className="text-xs font-mono text-red-600 dark:text-red-400">
@@ -993,7 +1085,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                           </div>
                           <button
                             type="button"
-                            onClick={() => speakChinese(ex.hanzi)}
+                            onClick={() => speakText(ex.hanzi, lang)}
                             className="p-1.5 rounded-lg bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-gray-500 hover:text-red-600 flex-shrink-0"
                             title="Nghe câu ví dụ"
                           >
@@ -1101,10 +1193,15 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
               <div className="space-y-4 py-4">
                 <div className="p-4 rounded-2xl bg-gradient-to-br from-red-50 to-amber-50/70 dark:from-red-950/30 dark:to-amber-950/20 border border-red-200/70 dark:border-red-900/50 text-xs text-gray-800 dark:text-slate-200 space-y-1">
                   <p className="font-bold text-red-700 dark:text-red-300 flex items-center gap-1.5">
-                    <Bot className="w-4 h-4" /> Xin chào! Mình là Gia sư tiếng Trung AI.
+                    <Bot className="w-4 h-4" />{' '}
+                    {isEnglish
+                      ? 'Xin chào! Mình là Gia sư tiếng Anh AI.'
+                      : 'Xin chào! Mình là Gia sư tiếng Trung AI.'}
                   </p>
                   <p>
-                    Ngoài dịch và giải đáp ngữ pháp HSK, bạn có thể nhờ AI xem tiến độ điểm thi, đánh dấu từ vựng cần ôn tập, tạo đề kiểm tra tổng hợp theo bài học, hoặc tạo/cập nhật buổi học mới.
+                    {isEnglish
+                      ? 'Ngoài dịch Anh ⇄ Việt và giải thích ngữ pháp, bạn có thể nhờ AI xem tiến độ điểm thi, đánh dấu từ vựng cần ôn tập, tạo đề kiểm tra tổng hợp, hoặc tạo/cập nhật buổi học mới.'
+                      : 'Ngoài dịch và giải đáp ngữ pháp HSK, bạn có thể nhờ AI xem tiến độ điểm thi, đánh dấu từ vựng cần ôn tập, tạo đề kiểm tra tổng hợp theo bài học, hoặc tạo/cập nhật buổi học mới.'}
                   </p>
                 </div>
 
@@ -1361,7 +1458,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                         </div>
                       )}
 
-                      {snippets.length > 0 && (
+                      {snippets.length > 0 && !isEnglish && (
                         <div className="mt-2.5 pt-2 border-t border-stone-200/80 dark:border-slate-700 flex items-center gap-1.5 flex-wrap">
                           <span className="text-[10px] font-bold text-gray-500 dark:text-slate-400">
                             Nghe câu:
@@ -1370,7 +1467,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                             <button
                               key={s}
                               type="button"
-                              onClick={() => speakChinese(s)}
+                              onClick={() => speakText(s, lang)}
                               className="px-2 py-0.5 rounded-lg bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-600 text-[11px] font-semibold text-gray-700 dark:text-slate-200 hover:text-red-600 inline-flex items-center gap-1"
                             >
                               <Volume2 className="w-3 h-3 text-red-500" />

@@ -17,7 +17,7 @@ import {
   Volume2,
   XCircle,
 } from 'lucide-react';
-import { soundFx, speakChinese } from '../lib/audio';
+import { soundFx, speakText } from '../lib/audio';
 import { api } from '../lib/api';
 import { shuffleArray } from '../lib/constants';
 import { getAvatarPreset, isImageMediaUrl } from '../lib/profileMedia';
@@ -25,8 +25,10 @@ import { ensureGlossaryLoaded, seedLessonVocabIntoGlossary } from '../lib/vocabG
 import { InteractiveChineseText } from './common/InteractiveChineseText';
 import type {
   ExpandedQuizQuestion,
+  GameGradeDirection,
   GameLeaderboardEntry,
   GameMode,
+  LanguageCode,
   LessonDetail,
   ScrambleExercise,
   TranslationExercise,
@@ -34,18 +36,21 @@ import type {
 } from '../types';
 
 interface GamesSectionProps {
+  lang?: LanguageCode;
   lesson: LessonDetail;
   currentUserId?: string;
   canUseAiGrading?: boolean;
   onOpenAiDictionary?: (word: string) => void;
 }
 
-const GAME_MODE_LABELS: Record<GameMode, string> = {
-  tri_match: '1. Ghép bộ 3',
-  scramble: '2. Sắp xếp câu',
-  translation: '3. Dịch Việt-Trung',
-  expanded_quiz: '4. Trắc nghiệm',
-};
+function getGameModeLabels(isEnglish: boolean): Record<GameMode, string> {
+  return {
+    tri_match: '1. Ghép bộ 3',
+    scramble: '2. Sắp xếp câu',
+    translation: isEnglish ? '3. Dịch Việt-Anh' : '3. Dịch Việt-Trung',
+    expanded_quiz: '4. Trắc nghiệm',
+  };
+}
 
 function formatDurationClock(seconds: number): string {
   const safe = Math.max(0, Math.round(Number(seconds) || 0));
@@ -98,6 +103,44 @@ function normalizeClean(str: string): string {
   return str
     .toLowerCase()
     .replace(/[\s,.;:!?'"“”‘’()（）！？。，、]/g, '')
+    .trim();
+}
+
+const EN_UK_US_MAP: Array<[RegExp, string]> = [
+  [/\bcolour(s|ed|ing)?\b/g, 'color$1'],
+  [/\bfavour(s|ed|ing|ite|ites)?\b/g, 'favor$1'],
+  [/\bcentre(s)?\b/g, 'center$1'],
+  [/\bmetre(s)?\b/g, 'meter$1'],
+  [/\btheatre(s)?\b/g, 'theater$1'],
+  [/\btravelling\b/g, 'traveling'],
+  [/\btravelled\b/g, 'traveled'],
+  [/\bprogramme(s)?\b/g, 'program$1'],
+  [/\bgrey\b/g, 'gray'],
+  [/\borganis(e|ed|ing|ation)\b/g, 'organiz$1'],
+  [/\brealis(e|ed|ing)\b/g, 'realiz$1'],
+];
+
+function normalizeEnglishLocal(str: string): string {
+  let s = str
+    .toLowerCase()
+    .replace(/[’‘`]/g, "'")
+    .replace(/\bcan't\b/g, 'cannot')
+    .replace(/\bwon't\b/g, 'will not')
+    .replace(/\bshan't\b/g, 'shall not')
+    .replace(/\blet's\b/g, 'let us')
+    .replace(/n't\b/g, ' not')
+    .replace(/'m\b/g, ' am')
+    .replace(/'re\b/g, ' are')
+    .replace(/'ve\b/g, ' have')
+    .replace(/'ll\b/g, ' will')
+    .replace(/'d\b/g, ' would');
+
+  for (const [re, rep] of EN_UK_US_MAP) {
+    s = s.replace(re, rep);
+  }
+  return s
+    .replace(/[,.;:!?"“”()（）！？。，、]/g, ' ')
+    .replace(/\s+/g, ' ')
     .trim();
 }
 
@@ -187,22 +230,29 @@ function isZhToViCompleteMatch(
 }
 
 export const GamesSection: React.FC<GamesSectionProps> = ({
+  lang,
   lesson,
   currentUserId,
   canUseAiGrading = false,
   onOpenAiDictionary,
 }) => {
+  const isEnglish = lang === 'en' || lesson.languageCode === 'en';
+  const effectiveLang: LanguageCode = isEnglish ? 'en' : 'zh';
+  const primaryToTargetDir: GameGradeDirection = isEnglish ? 'vi_to_en' : 'vi_to_zh';
+  const targetToViDir: GameGradeDirection = isEnglish ? 'en_to_vi' : 'zh_to_vi';
+  const gameModeLabels = useMemo(() => getGameModeLabels(isEnglish), [isEnglish]);
+
   const [mode, setMode] = useState<GameMode>('tri_match');
   const [lookupMode, setLookupMode] = useState(false);
 
   useEffect(() => {
-    seedLessonVocabIntoGlossary(lesson.vocabulary);
-  }, [lesson.vocabulary]);
+    seedLessonVocabIntoGlossary(lesson.vocabulary, effectiveLang);
+  }, [lesson.vocabulary, effectiveLang]);
 
   const toggleLookupMode = () => {
     setLookupMode((prev) => {
       const next = !prev;
-      if (next) void ensureGlossaryLoaded();
+      if (next) void ensureGlossaryLoaded(effectiveLang);
       return next;
     });
   };
@@ -216,7 +266,11 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
           ? 'border-purple-500 bg-purple-600 text-white shadow-sm shadow-purple-500/20'
           : 'border-stone-200 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 hover:bg-purple-50 dark:hover:bg-purple-900/30 text-gray-700 dark:text-slate-200 hover:text-purple-600 dark:hover:text-purple-300 dark:hover:border-purple-500'
       }`}
-      title="Bật chế độ di chuột lên chữ Hán để xem nghĩa nhanh"
+      title={
+        isEnglish
+          ? 'Bật chế độ di chuột lên từ tiếng Anh để xem nghĩa nhanh'
+          : 'Bật chế độ di chuột lên chữ Hán để xem nghĩa nhanh'
+      }
     >
       <BookOpen className="w-3.5 h-3.5" />
       {lookupMode ? 'Tra từ: Bật' : 'Tra từ'}
@@ -325,8 +379,14 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
     setDragOverPos(null);
     setDragOverBox(null);
 
+    const nextDir: GameGradeDirection =
+      transMode === primaryToTargetDir || transMode === targetToViDir
+        ? transMode
+        : primaryToTargetDir;
+    if (nextDir !== transMode) setTransMode(nextDir);
+
     const trPool = (lesson.exercises?.translationExercises || []).filter(
-      (t) => t.direction === transMode
+      (t) => t.direction === nextDir
     );
     setTransDeck(pickNextDeck(trPool, [], TRANS_DECK_SIZE));
     setTransIdx(0);
@@ -349,7 +409,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
     setQuizStarted(false);
     setQuizTime(0);
     quizSubmittedRef.current = false;
-  }, [lesson.id, lesson.exercises]);
+  }, [lesson.id, lesson.exercises, primaryToTargetDir, targetToViDir]);
 
   useEffect(() => {
     if (mode !== 'tri_match' || !triStarted || triDone || triWords.length === 0) return;
@@ -568,11 +628,12 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
   const handleCheckScramble = async () => {
     if (!currScramble || scrambleGrading || selectedTokens.length < shuffledTokens.length) return;
     setScrambleStarted(true);
-    const built = selectedTokens.map((i) => shuffledTokens[i].text).join('');
+    const built = selectedTokens.map((i) => shuffledTokens[i].text).join(isEnglish ? ' ' : '');
     const currentIndex = scrambleIdx;
 
     // Tier 1: Local exact match + Read-through acceptedVariants (< 1ms)
     const cleanBuilt = normalizeClean(built);
+    const normEnBuilt = isEnglish ? normalizeEnglishLocal(built) : '';
     const scrambleBucketKey = `scramble::${currScramble.id}`;
     const knownScrambleVariants = getKnownVariants(
       scrambleBucketKey,
@@ -580,7 +641,12 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
     );
     const matchedLocalScramble =
       cleanBuilt === normalizeClean(currScramble.targetHanzi) ||
-      knownScrambleVariants.some((v) => normalizeClean(v) === cleanBuilt);
+      (isEnglish && normEnBuilt === normalizeEnglishLocal(currScramble.targetHanzi)) ||
+      knownScrambleVariants.some(
+        (v) =>
+          normalizeClean(v) === cleanBuilt ||
+          (isEnglish && normalizeEnglishLocal(v) === normEnBuilt)
+      );
 
     if (matchedLocalScramble) {
       scrambleGradeSeqRef.current += 1;
@@ -611,6 +677,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
     try {
       const graded = await api.aiGradeGame({
         mode: 'scramble',
+        lang: effectiveLang,
         exerciseId: currScramble.id,
         promptText: currScramble.targetMeaning,
         expectedChinese: currScramble.targetHanzi,
@@ -641,7 +708,9 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
   };
 
   // --- Game 3: Bilingual Translation ---
-  const [transMode, setTransMode] = useState<'vi_to_zh' | 'zh_to_vi'>('vi_to_zh');
+  const [transMode, setTransMode] = useState<GameGradeDirection>(() =>
+    isEnglish ? 'vi_to_en' : 'vi_to_zh'
+  );
   const [transDeck, setTransDeck] = useState<TranslationExercise[]>([]);
   const [transIdx, setTransIdx] = useState(0);
   const [transInput, setTransInput] = useState('');
@@ -716,7 +785,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
     transSubmittedRef.current = false;
   };
 
-  const refreshTransDeck = (targetDir?: 'vi_to_zh' | 'zh_to_vi') => {
+  const refreshTransDeck = (targetDir?: GameGradeDirection) => {
     const dir = targetDir || transMode;
     const pool = (lesson.exercises?.translationExercises || []).filter((t) => t.direction === dir);
     setTransDeck((prev) =>
@@ -774,6 +843,30 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
           cleanUserNoTone.length < Math.max(4, Math.floor(cleanPyNoTone.length * 0.45))
         ) {
           shortGuardFeedback = 'Phần Pinyin còn quá ngắn hoặc chưa dịch đủ hết câu.';
+        }
+      }
+    } else if (currTrans.direction === 'vi_to_en') {
+      const normUserEn = normalizeEnglishLocal(rawUser);
+      const normExpectedEn = normalizeEnglishLocal(currTrans.expectedChinese || '');
+      const matchedVariant = knownTransVariants.some((variant) => {
+        const nv = normalizeEnglishLocal(variant);
+        return Boolean(nv) && normUserEn === nv;
+      });
+      localOk =
+        (Boolean(normExpectedEn) && normUserEn === normExpectedEn) ||
+        (Boolean(currTrans.expectedChinese) &&
+          cleanUser === normalizeClean(currTrans.expectedChinese || '')) ||
+        matchedVariant;
+
+      if (!localOk) {
+        const expectedWords = tokenizeWords(currTrans.expectedChinese || '');
+        const userWords = tokenizeWords(rawUser);
+        if (
+          cleanUser.length < 2 ||
+          (expectedWords.length >= 4 &&
+            userWords.length < Math.max(2, Math.ceil(expectedWords.length * 0.35)))
+        ) {
+          shortGuardFeedback = 'Câu tiếng Anh còn quá ngắn hoặc chưa dịch đủ ý đề bài.';
         }
       }
     } else {
@@ -836,6 +929,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
       const graded = await api.aiGradeGame({
         mode: 'translation',
         direction: currTrans.direction,
+        lang: effectiveLang,
         exerciseId: currTrans.id,
         promptText: currTrans.promptText,
         expectedChinese: currTrans.expectedChinese || null,
@@ -938,7 +1032,9 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
           </div>
           <h2 className="text-2xl md:text-3xl font-bold">4 Chế độ luyện phản xạ</h2>
           <p className="text-white/90 text-sm mt-1">
-            Ghép bộ 3, Xếp câu Hán tự, Dịch song ngữ (đã sửa chấm điểm chuẩn) và Trắc nghiệm mở rộng.
+            {isEnglish
+              ? 'Ghép bộ 3 từ–IPA–nghĩa, Sắp xếp câu tiếng Anh, Dịch song ngữ Anh ⇄ Việt và Trắc nghiệm mở rộng.'
+              : 'Ghép bộ 3, Xếp câu Hán tự, Dịch song ngữ (đã sửa chấm điểm chuẩn) và Trắc nghiệm mở rộng.'}
           </p>
         </div>
 
@@ -947,7 +1043,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
             [
               ['tri_match', '1. Ghép bộ 3', Layers],
               ['scramble', '2. Sắp xếp câu', SortAsc],
-              ['translation', '3. Dịch Việt–Trung', Keyboard],
+              ['translation', isEnglish ? '3. Dịch Việt–Anh' : '3. Dịch Việt–Trung', Keyboard],
               ['expanded_quiz', '4. Trắc nghiệm', ListChecks],
             ] as const
           ).map(([id, label, Icon]) => (
@@ -1035,7 +1131,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="space-y-2.5 bg-red-50/40 dark:bg-red-950/20 p-4 rounded-2xl border border-red-100 dark:border-red-900/40">
                     <h4 className="text-xs font-bold text-red-700 dark:text-red-400 uppercase text-center">
-                      1. Chữ Hán
+                      {isEnglish ? '1. Từ tiếng Anh' : '1. Chữ Hán'}
                     </h4>
                     {triColumns.hanzi.map((w) => {
                       const matched = matchedIds.includes(w.id);
@@ -1057,7 +1153,11 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
                                 : 'border-stone-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-red-300 dark:hover:border-red-500 dark:hover:bg-slate-700/80'
                           }`}
                         >
-                          <div className="chinese-font text-3xl font-bold text-gray-900 dark:text-white">
+                          <div
+                            className={`${
+                              isEnglish ? 'text-xl sm:text-2xl' : 'chinese-font text-3xl'
+                            } font-bold text-gray-900 dark:text-white`}
+                          >
                             {w.hanzi}
                           </div>
                         </button>
@@ -1067,7 +1167,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
 
                   <div className="space-y-2.5 bg-amber-50/40 dark:bg-amber-950/20 p-4 rounded-2xl border border-amber-100 dark:border-amber-900/40">
                     <h4 className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase text-center">
-                      2. Pinyin
+                      {isEnglish ? '2. Phiên âm IPA' : '2. Pinyin'}
                     </h4>
                     {triColumns.pinyin.map((w) => {
                       const matched = matchedIds.includes(w.id);
@@ -1143,7 +1243,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
               <div className="text-center py-8 space-y-4 pop-in">
                 <Trophy className="w-12 h-12 text-amber-500 mx-auto" />
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  Hoàn thành Xếp câu Hán tự!
+                  {isEnglish ? 'Hoàn thành Sắp xếp câu!' : 'Hoàn thành Xếp câu Hán tự!'}
                 </h3>
                 <div className="flex justify-center gap-8 text-center">
                   <div>
@@ -1200,7 +1300,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
                   <div className="flex items-center gap-2 flex-wrap">
                     <button
                       type="button"
-                      onClick={() => speakChinese(currScramble.targetHanzi)}
+                      onClick={() => speakText(currScramble.targetHanzi, effectiveLang)}
                       className="text-purple-600 dark:text-purple-400 font-semibold flex items-center gap-1"
                     >
                       <Volume2 className="w-3.5 h-3.5" /> Nghe câu mẫu
@@ -1339,6 +1439,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
                           >
                             <InteractiveChineseText
                               text={tok.text}
+                              lang={effectiveLang}
                               enabled={lookupMode}
                               canUseAi={canUseAiGrading}
                               contextSentence={currScramble.targetHanzi}
@@ -1447,6 +1548,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
                       >
                         <InteractiveChineseText
                           text={tok.text}
+                          lang={effectiveLang}
                           enabled={lookupMode && !used}
                           canUseAi={canUseAiGrading}
                           contextSentence={currScramble.targetHanzi}
@@ -1477,13 +1579,17 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
                         {scrambleResult ? (
                           <span>
                             <strong>Chính xác!</strong> Câu mẫu:{' '}
-                            <strong className="chinese-font">{currScramble.targetHanzi}</strong> (
-                            {currScramble.pinyin})
+                            <strong className={isEnglish ? '' : 'chinese-font'}>
+                              {currScramble.targetHanzi}
+                            </strong>
+                            {currScramble.pinyin ? ` (${currScramble.pinyin})` : ''}
                           </span>
                         ) : (
                           <span>
                             <strong>Chưa đúng thứ tự.</strong> Đáp án:{' '}
-                            <strong className="chinese-font">{currScramble.targetHanzi}</strong>
+                            <strong className={isEnglish ? '' : 'chinese-font'}>
+                              {currScramble.targetHanzi}
+                            </strong>
                           </span>
                         )}
                       </div>
@@ -1551,29 +1657,29 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
               <div className="inline-flex bg-stone-100 dark:bg-slate-800 p-1 rounded-xl text-xs font-semibold">
                 <button
                   onClick={() => {
-                    setTransMode('vi_to_zh');
-                    refreshTransDeck('vi_to_zh');
+                    setTransMode(primaryToTargetDir);
+                    refreshTransDeck(primaryToTargetDir);
                   }}
                   className={`px-3 py-1.5 rounded-lg ${
-                    transMode === 'vi_to_zh'
+                    transMode === primaryToTargetDir
                       ? 'bg-white dark:bg-slate-700 text-purple-700 dark:text-purple-300 shadow-sm'
                       : 'text-gray-500'
                   }`}
                 >
-                  Việt → Trung (Gõ Hán tự / Pinyin)
+                  {isEnglish ? 'Việt → Anh (Gõ tiếng Anh)' : 'Việt → Trung (Gõ Hán tự / Pinyin)'}
                 </button>
                 <button
                   onClick={() => {
-                    setTransMode('zh_to_vi');
-                    refreshTransDeck('zh_to_vi');
+                    setTransMode(targetToViDir);
+                    refreshTransDeck(targetToViDir);
                   }}
                   className={`px-3 py-1.5 rounded-lg ${
-                    transMode === 'zh_to_vi'
+                    transMode === targetToViDir
                       ? 'bg-white dark:bg-slate-700 text-purple-700 dark:text-purple-300 shadow-sm'
                       : 'text-gray-500'
                   }`}
                 >
-                  Trung → Việt
+                  {isEnglish ? 'Anh → Việt' : 'Trung → Việt'}
                 </button>
               </div>
               {transDeck.length > 0 && (
@@ -1589,7 +1695,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
                   <span className="inline-flex items-center gap-1 text-xs font-bold text-purple-700 dark:text-purple-400">
                     <Flame className="w-3.5 h-3.5 text-amber-500" /> {transCorrectCount * 100} điểm
                   </span>
-                  {transMode === 'zh_to_vi' && renderLookupToggleButton()}
+                  {transMode === targetToViDir && renderLookupToggleButton()}
                   {transPool.length > 1 && (
                     <button
                       type="button"
@@ -1651,21 +1757,30 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
                 <div className="p-5 rounded-2xl bg-stone-50 dark:bg-slate-800/60 border border-stone-200 dark:border-slate-700 space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold uppercase text-purple-600 dark:text-purple-400">
-                      {currTrans.direction === 'vi_to_zh' ? 'Dịch sang tiếng Trung' : 'Dịch sang tiếng Việt'}
+                      {currTrans.direction === 'vi_to_zh'
+                        ? 'Dịch sang tiếng Trung'
+                        : currTrans.direction === 'vi_to_en'
+                          ? 'Dịch sang tiếng Anh'
+                          : 'Dịch sang tiếng Việt'}
                     </span>
                     {currTrans.chineseAudioText && (
                       <button
-                        onClick={() => speakChinese(currTrans.chineseAudioText!)}
+                        onClick={() => speakText(currTrans.chineseAudioText!, effectiveLang)}
                         className="text-xs text-purple-600 font-semibold flex items-center gap-1"
                       >
                         <Volume2 className="w-3.5 h-3.5" /> Nghe câu
                       </button>
                     )}
                   </div>
-                  <div className="text-xl font-bold text-gray-900 dark:text-white chinese-font">
+                  <div
+                    className={`text-xl font-bold text-gray-900 dark:text-white ${
+                      isEnglish ? '' : 'chinese-font'
+                    }`}
+                  >
                     <InteractiveChineseText
                       text={currTrans.promptText}
-                      enabled={lookupMode && currTrans.direction === 'zh_to_vi'}
+                      lang={effectiveLang}
+                      enabled={lookupMode && currTrans.direction === targetToViDir}
                       canUseAi={canUseAiGrading}
                       contextSentence={currTrans.promptText}
                       onOpenDetail={onOpenAiDictionary}
@@ -1679,7 +1794,9 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
                       Đáp án:{' '}
                       {currTrans.direction === 'vi_to_zh'
                         ? `${currTrans.expectedChinese} (${currTrans.acceptedPinyin || ''})`
-                        : currTrans.expectedMeaning}
+                        : currTrans.direction === 'vi_to_en'
+                          ? currTrans.expectedChinese
+                          : currTrans.expectedMeaning}
                     </p>
                   )}
                 </div>
@@ -1706,7 +1823,9 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
                   placeholder={
                     currTrans.direction === 'vi_to_zh'
                       ? 'Nhập Hán tự hoặc Pinyin...'
-                      : 'Nhập nghĩa tiếng Việt...'
+                      : currTrans.direction === 'vi_to_en'
+                        ? 'Nhập câu tiếng Anh...'
+                        : 'Nhập nghĩa tiếng Việt...'
                   }
                   className="w-full p-3.5 rounded-2xl border border-stone-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:outline-none focus:border-purple-500"
                 />
@@ -1869,6 +1988,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
                   <div className="p-5 rounded-2xl bg-stone-50 dark:bg-slate-800/60 border border-stone-200 dark:border-slate-700 text-base font-bold text-gray-900 dark:text-white whitespace-pre-line leading-relaxed">
                     <InteractiveChineseText
                       text={currQuiz.question}
+                      lang={effectiveLang}
                       enabled={lookupMode}
                       canUseAi={canUseAiGrading}
                       contextSentence={currQuiz.question}
@@ -1910,6 +2030,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
                           <span>
                             <InteractiveChineseText
                               text={opt}
+                              lang={effectiveLang}
                               enabled={lookupMode}
                               canUseAi={canUseAiGrading}
                               contextSentence={opt}
@@ -1977,10 +2098,10 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
         <div className="flex flex-wrap gap-1.5">
           {(
             [
-              { id: 'tri_match', label: '1. Ghép bộ 3' },
-              { id: 'scramble', label: '2. Sắp xếp câu' },
-              { id: 'translation', label: '3. Dịch Việt-Trung' },
-              { id: 'expanded_quiz', label: '4. Trắc nghiệm' },
+              { id: 'tri_match', label: gameModeLabels.tri_match },
+              { id: 'scramble', label: gameModeLabels.scramble },
+              { id: 'translation', label: gameModeLabels.translation },
+              { id: 'expanded_quiz', label: gameModeLabels.expanded_quiz },
               { id: 'all', label: 'Tất cả chế độ' },
             ] as const
           ).map((item) => (
@@ -2109,7 +2230,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
                             </div>
                             {lbMode === 'all' && (
                               <div className="text-[11px] text-gray-400 dark:text-slate-500 truncate mt-0.5">
-                                {GAME_MODE_LABELS[entry.gameMode]}
+                                {gameModeLabels[entry.gameMode]}
                               </div>
                             )}
                           </div>

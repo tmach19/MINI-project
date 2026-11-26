@@ -4,10 +4,10 @@ import {
   buildSpeakerVoiceMap,
   resolveDialogueTtsText,
   soundFx,
-  speakChinese,
+  speakText,
   stopChineseSpeech,
 } from '../lib/audio';
-import type { LessonDetail } from '../types';
+import type { LanguageCode, LessonDetail } from '../types';
 
 const SPEAKER_BADGE_STYLES = [
   'text-emerald-800 dark:text-emerald-300 bg-emerald-100/80 dark:bg-emerald-900/40',
@@ -18,16 +18,20 @@ const SPEAKER_BADGE_STYLES = [
 ];
 
 interface TextsSectionProps {
+  lang?: LanguageCode;
   lesson: LessonDetail;
   canChangeSpeechRate?: boolean;
   onRequireAuth?: () => void;
 }
 
 export const TextsSection: React.FC<TextsSectionProps> = ({
+  lang,
   lesson,
   canChangeSpeechRate = true,
   onRequireAuth,
 }) => {
+  const isEnglish = lang === 'en' || lesson.languageCode === 'en';
+  const effectiveLang: LanguageCode = isEnglish ? 'en' : 'zh';
   const [speechRate, setSpeechRate] = useState(1.0);
   const [showPinyin, setShowPinyin] = useState(true);
   const [showMeaning, setShowMeaning] = useState(true);
@@ -79,16 +83,15 @@ export const TextsSection: React.FC<TextsSectionProps> = ({
       setActiveSentenceIdx(idx);
       const sentence = textItem.sentences[idx];
       const spKey = (sentence.speaker || '').trim();
-      speakChinese(
-        sentence.hanzi,
-        speechRate,
-        () => {
+      speakText(sentence.hanzi, effectiveLang, {
+        rate: speechRate,
+        voice: voiceMap[spKey],
+        onEnd: () => {
           if (isPlayingRef.current) {
             timerRef.current = window.setTimeout(() => playStep(idx + 1), 650);
           }
         },
-        voiceMap[spKey]
-      );
+      });
     };
 
     playStep(0);
@@ -101,9 +104,12 @@ export const TextsSection: React.FC<TextsSectionProps> = ({
       <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 rounded-3xl p-6 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
         <div>
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-2">
-            <Headphones className="w-3.5 h-3.5" /> Module 2: Bài khoá & Luyện nghe HSK
+            <Headphones className="w-3.5 h-3.5" />{' '}
+            {isEnglish ? 'Module 2: Bài đọc & Luyện nghe Tiếng Anh' : 'Module 2: Bài khoá & Luyện nghe HSK'}
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold">Hội thoại thực tế & Luyện nghe</h2>
+          <h2 className="text-2xl md:text-3xl font-bold">
+            {isEnglish ? 'Câu mẫu ngữ cảnh & Luyện nghe' : 'Hội thoại thực tế & Luyện nghe'}
+          </h2>
           <p className="text-white/90 text-sm mt-1">
             Nghe từng câu hoặc cả bài hội thoại, tùy chỉnh tốc độ và làm câu hỏi nghe hiểu.
           </p>
@@ -135,15 +141,17 @@ export const TextsSection: React.FC<TextsSectionProps> = ({
             </select>
           </div>
           <div className="flex items-center gap-3 border-l border-white/30 pl-3">
-            <label className="flex items-center gap-1.5 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={showPinyin}
-                onChange={() => setShowPinyin((s) => !s)}
-                className="rounded"
-              />
-              <span>Hiện Pinyin</span>
-            </label>
+            {!isEnglish && (
+              <label className="flex items-center gap-1.5 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={showPinyin}
+                  onChange={() => setShowPinyin((s) => !s)}
+                  className="rounded"
+                />
+                <span>Hiện Pinyin</span>
+              </label>
+            )}
             <label className="flex items-center gap-1.5 cursor-pointer">
               <input
                 type="checkbox"
@@ -230,7 +238,12 @@ export const TextsSection: React.FC<TextsSectionProps> = ({
                         {s.speaker || 'Người nói'}
                       </span>
                       <button
-                        onClick={() => speakChinese(s.hanzi, speechRate, undefined, voiceMap[spKey])}
+                        onClick={() =>
+                          speakText(s.hanzi, effectiveLang, {
+                            rate: speechRate,
+                            voice: voiceMap[spKey],
+                          })
+                        }
                         className="sm:hidden flex-shrink-0 w-8 h-8 rounded-full bg-white dark:bg-slate-800 hover:bg-emerald-600 dark:hover:bg-emerald-600 hover:text-white border border-stone-200 dark:border-slate-700 dark:hover:border-emerald-500 text-gray-600 dark:text-slate-300 flex items-center justify-center transition active:scale-95"
                         title="Nghe câu này"
                       >
@@ -238,7 +251,11 @@ export const TextsSection: React.FC<TextsSectionProps> = ({
                       </button>
                     </div>
                     <div className="flex-grow min-w-0 space-y-1">
-                      <div className="chinese-font text-lg md:text-xl font-semibold text-gray-900 dark:text-white break-words">
+                      <div
+                        className={`${
+                          isEnglish ? 'text-base md:text-lg' : 'chinese-font text-lg md:text-xl'
+                        } font-semibold text-gray-900 dark:text-white break-words`}
+                      >
                         {s.displayHanzi || s.hanzi}
                       </div>
                       {showPinyin && s.pinyin && (
@@ -251,7 +268,12 @@ export const TextsSection: React.FC<TextsSectionProps> = ({
                       )}
                     </div>
                     <button
-                      onClick={() => speakChinese(s.hanzi, speechRate, undefined, voiceMap[spKey])}
+                      onClick={() =>
+                        speakText(s.hanzi, effectiveLang, {
+                          rate: speechRate,
+                          voice: voiceMap[spKey],
+                        })
+                      }
                       className="hidden sm:flex flex-shrink-0 w-8 h-8 rounded-full bg-white dark:bg-slate-800 hover:bg-emerald-600 dark:hover:bg-emerald-600 hover:text-white border border-stone-200 dark:border-slate-700 dark:hover:border-emerald-500 text-gray-600 dark:text-slate-300 items-center justify-center transition active:scale-95"
                       title="Nghe câu này"
                     >
@@ -270,7 +292,7 @@ export const TextsSection: React.FC<TextsSectionProps> = ({
                   </span>
                   <div>
                     <h4 className="font-bold text-gray-900 dark:text-white text-base">
-                      Câu hỏi luyện nghe hiểu HSK
+                      {isEnglish ? 'Câu hỏi luyện nghe hiểu' : 'Câu hỏi luyện nghe hiểu HSK'}
                     </h4>
                     <p className="text-xs text-gray-500 dark:text-slate-400">
                       Bấm nút loa để nghe đoạn ghi âm và chọn đáp án đúng.
@@ -294,14 +316,18 @@ export const TextsSection: React.FC<TextsSectionProps> = ({
                         </span>
                         <button
                           onClick={() =>
-                            speakChinese(
-                              resolveDialogueTtsText(q.audioText || q.question, [textItem]),
-                              speechRate
+                            speakText(
+                              isEnglish
+                                ? q.audioText || q.question
+                                : resolveDialogueTtsText(q.audioText || q.question, [textItem]),
+                              effectiveLang,
+                              { rate: speechRate }
                             )
                           }
                           className="text-xs font-semibold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 px-3 py-1.5 rounded-xl flex items-center gap-1.5"
                         >
-                          <Volume2 className="w-3.5 h-3.5" /> Nghe câu hỏi HSK
+                          <Volume2 className="w-3.5 h-3.5" />{' '}
+                          {isEnglish ? 'Nghe câu hỏi' : 'Nghe câu hỏi HSK'}
                         </button>
                       </div>
 

@@ -1,4 +1,33 @@
 export type TabId = 'vocab' | 'texts' | 'grammar' | 'games' | 'test';
+export type LanguageCode = 'zh' | 'en';
+
+export interface LanguageInfo {
+  code: LanguageCode;
+  name: string;
+  nativeName: string;
+  description: string | null;
+  accentTheme: string;
+  isActive: boolean;
+  sortOrder: number;
+}
+
+export interface VocabMeta {
+  wordId?: string;
+  ukIpa?: string;
+  usIpa?: string;
+  cefr?: string;
+  topic?: string;
+  senses?: Array<{ pos: string; en: string; vi: string }>;
+  examples?: Array<{ en: string; vi: string; audioKind?: 'ex' | 'ex2' | null }>;
+  collocations?: Array<{ en: string; vi: string }>;
+  wordFamily?: string[];
+  synonyms?: string[];
+  antonyms?: string[];
+  tipVi?: string;
+  noteVi?: string;
+  media?: { img?: boolean; uk?: boolean; us?: boolean; ex?: boolean; ex2?: boolean };
+  [key: string]: unknown;
+}
 
 export interface VocabularyItem {
   id: string;
@@ -13,6 +42,7 @@ export interface VocabularyItem {
   example?: string | null;
   examplePinyin?: string | null;
   exampleMeaning?: string | null;
+  meta?: VocabMeta | null;
 }
 
 export interface GrammarExample {
@@ -66,9 +96,11 @@ export interface ScrambleExercise {
   acceptedVariants?: string[];
 }
 
+export type GameGradeDirection = 'vi_to_zh' | 'zh_to_vi' | 'vi_to_en' | 'en_to_vi';
+
 export interface TranslationExercise {
   id: string;
-  direction: 'vi_to_zh' | 'zh_to_vi';
+  direction: GameGradeDirection;
   promptText: string;
   chineseAudioText?: string | null;
   pinyin?: string | null;
@@ -105,6 +137,7 @@ export interface ComprehensiveQuestion {
 
 export interface ComprehensiveExamResponse {
   id: string;
+  languageCode?: LanguageCode;
   title: string;
   hskLevel: string;
   description: string;
@@ -113,6 +146,7 @@ export interface ComprehensiveExamResponse {
 
 export interface LessonSummary {
   id: string;
+  languageCode?: LanguageCode;
   title: string;
   hskLevel: string;
   unit?: string | null;
@@ -128,6 +162,7 @@ export interface LessonSummary {
 
 export interface LessonDetail {
   id: string;
+  languageCode?: LanguageCode;
   title: string;
   hskLevel: string;
   unit?: string | null;
@@ -150,6 +185,7 @@ export interface GlobalVocabHit extends VocabularyItem {
   lessonId: string;
   lessonTitle: string;
   hskLevel: string;
+  languageCode?: LanguageCode;
 }
 
 export interface MarkedVocabRecord {
@@ -161,6 +197,7 @@ export interface MarkedVocabRecord {
 export interface MarkedVocabCard extends VocabularyItem {
   lessonId: string;
   lessonTitle: string;
+  languageCode?: LanguageCode;
   markedAt: string;
   note?: string | null;
 }
@@ -168,6 +205,7 @@ export interface MarkedVocabCard extends VocabularyItem {
 export interface TestAttemptRecord {
   id: string;
   lessonId: string | null;
+  languageCode?: LanguageCode;
   lessonTitle?: string;
   examTitle?: string | null;
   score: number;
@@ -345,7 +383,7 @@ export interface AdminUserRbacRow {
   effectivePermissions: string[];
 }
 
-export type TranslationDirection = 'auto' | 'zh_vi' | 'vi_zh';
+export type TranslationDirection = 'auto' | 'zh_vi' | 'vi_zh' | 'en_vi' | 'vi_en';
 
 export interface AiStatusResponse {
   configured: boolean;
@@ -368,7 +406,7 @@ export interface AiDictionaryCompound {
 export interface AiDictionaryEntry {
   query: string;
   direction: TranslationDirection;
-  detectedLanguage: 'zh' | 'vi' | 'mixed';
+  detectedLanguage: 'zh' | 'en' | 'vi' | 'mixed';
   isSentence: boolean;
   hanzi: string;
   pinyin: string;

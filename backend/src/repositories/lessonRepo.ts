@@ -29,6 +29,10 @@ export interface CreateLessonInput {
   grammar: Array<Partial<GrammarItem> & { title: string }>;
 }
 
+function isUndefinedColumn(err: unknown): boolean {
+  return (err as { code?: string } | null)?.code === '42703';
+}
+
 const FALLBACK_MEANING_POOL = [
   'Trường học',
   'Giáo viên',
@@ -205,15 +209,15 @@ export async function listLessons(userId?: string): Promise<LessonSummary[]> {
         dateAdded: l.dateAdded || null,
         isSystem: l.isSystem,
         ownerId: l.ownerId || null,
-        vocabCount: l.vocabulary.length,
-        grammarCount: l.grammar.length,
+        vocabCount: deduplicateVocabularyList(l.vocabulary || []).length,
+        grammarCount: deduplicateGrammarList(l.grammar || []).length,
         textCount: l.texts.length,
         testCount: l.comprehensiveTest.length,
       }));
   }
 
   const pool = getPool()!;
-  const res = await pool.query<{
+  type LessonListRow = {
     id: string;
     title: string;
     hsk_level: string;
@@ -226,28 +230,57 @@ export async function listLessons(userId?: string): Promise<LessonSummary[]> {
     grammar_count: string;
     text_count: string;
     test_count: string;
-  }>(
-    `SELECT
-       l.id,
-       l.title,
-       l.hsk_level,
-       l.unit,
-       l.description,
-       l.date_added::text,
-       l.is_system,
-       l.owner_id,
-       (SELECT COUNT(*) FROM vocabularies v WHERE v.lesson_id = l.id AND v.is_deleted = 0) AS vocab_count,
-       (SELECT COUNT(*) FROM grammars g WHERE g.lesson_id = l.id AND g.is_deleted = 0) AS grammar_count,
-       (SELECT COUNT(*) FROM texts t WHERE t.lesson_id = l.id AND t.is_deleted = 0) AS text_count,
-       (SELECT COUNT(*) FROM quiz_questions q WHERE q.lesson_id = l.id AND q.scope = 'comprehensive_test' AND q.is_deleted = 0) AS test_count
-     FROM lessons l
-     WHERE l.is_deleted = 0
-       AND (l.is_system = TRUE OR ($1::uuid IS NOT NULL AND l.owner_id = $1::uuid))
-     ORDER BY l.is_system DESC, l.sort_order ASC, l.created_at ASC`,
-    [userId || null]
-  );
+  };
+  let rows: LessonListRow[];
+  try {
+    const res = await pool.query<LessonListRow>(
+      `SELECT
+         l.id,
+         l.title,
+         l.hsk_level,
+         l.unit,
+         l.description,
+         l.date_added::text,
+         l.is_system,
+         l.owner_id,
+         (SELECT COUNT(DISTINCT btrim(v.hanzi)) FROM vocabularies v WHERE v.lesson_id = l.id AND v.is_deleted = 0) AS vocab_count,
+         (SELECT COUNT(DISTINCT btrim(g.title)) FROM grammars g WHERE g.lesson_id = l.id AND g.is_deleted = 0) AS grammar_count,
+         (SELECT COUNT(*) FROM texts t WHERE t.lesson_id = l.id AND t.is_deleted = 0) AS text_count,
+         (SELECT COUNT(*) FROM quiz_questions q WHERE q.lesson_id = l.id AND q.scope = 'comprehensive_test' AND q.is_deleted = 0) AS test_count
+       FROM lessons l
+       WHERE l.is_deleted = 0
+         AND l.language_code = 'zh'
+         AND (l.is_system = TRUE OR ($1::uuid IS NOT NULL AND l.owner_id = $1::uuid))
+       ORDER BY l.is_system DESC, l.sort_order ASC, l.created_at ASC`,
+      [userId || null]
+    );
+    rows = res.rows;
+  } catch (err) {
+    if (!isUndefinedColumn(err)) throw err;
+    const res = await pool.query<LessonListRow>(
+      `SELECT
+         l.id,
+         l.title,
+         l.hsk_level,
+         l.unit,
+         l.description,
+         l.date_added::text,
+         l.is_system,
+         l.owner_id,
+         (SELECT COUNT(DISTINCT btrim(v.hanzi)) FROM vocabularies v WHERE v.lesson_id = l.id AND v.is_deleted = 0) AS vocab_count,
+         (SELECT COUNT(DISTINCT btrim(g.title)) FROM grammars g WHERE g.lesson_id = l.id AND g.is_deleted = 0) AS grammar_count,
+         (SELECT COUNT(*) FROM texts t WHERE t.lesson_id = l.id AND t.is_deleted = 0) AS text_count,
+         (SELECT COUNT(*) FROM quiz_questions q WHERE q.lesson_id = l.id AND q.scope = 'comprehensive_test' AND q.is_deleted = 0) AS test_count
+       FROM lessons l
+       WHERE l.is_deleted = 0
+         AND (l.is_system = TRUE OR ($1::uuid IS NOT NULL AND l.owner_id = $1::uuid))
+       ORDER BY l.is_system DESC, l.sort_order ASC, l.created_at ASC`,
+      [userId || null]
+    );
+    rows = res.rows;
+  }
 
-  return res.rows.map((r) => ({
+  return rows.map((r) => ({
     id: r.id,
     title: r.title,
     hskLevel: r.hsk_level,
@@ -261,6 +294,68 @@ export async function listLessons(userId?: string): Promise<LessonSummary[]> {
     textCount: Number(r.text_count),
     testCount: Number(r.test_count),
   }));
+}
+
+function scoreVocabQuality(v: VocabularyItem): number {
+  let score = 0;
+  if (/^v\d+_\d+$/.test(v.id)) score += 100;
+  if (v.sinoVietnamese && v.sinoVietnamese.trim()) score += 40;
+  if (v.radical && !/^Bộ cấu tạo\s*\[/i.test(v.radical.trim())) score += 30;
+  if (v.breakdown && !/^Ghép từ các chữ Hán:/i.test(v.breakdown.trim())) score += 15;
+  if (v.mnemonic && v.mnemonic.trim()) score += 10;
+  if (v.example && !/这是关于.*的常用句子/.test(v.example)) score += 10;
+  return score;
+}
+
+function deduplicateVocabularyList(items: VocabularyItem[]): VocabularyItem[] {
+  const byHanzi = new Map<string, { index: number; item: VocabularyItem }>();
+  const ordered: Array<VocabularyItem | null> = [];
+
+  for (const item of items) {
+    const key = (item.hanzi || '').trim();
+    if (!key) continue;
+    const existing = byHanzi.get(key);
+    if (!existing) {
+      byHanzi.set(key, { index: ordered.length, item });
+      ordered.push(item);
+    } else if (scoreVocabQuality(item) > scoreVocabQuality(existing.item)) {
+      ordered[existing.index] = item;
+      byHanzi.set(key, { index: existing.index, item });
+    }
+  }
+
+  return ordered.filter((x): x is VocabularyItem => Boolean(x));
+}
+
+function scoreGrammarQuality(g: GrammarItem): number {
+  let score = 0;
+  if (/^g\d+_\d+$/.test(g.id)) score += 100;
+  const exCount = Array.isArray(g.examples) ? g.examples.length : 0;
+  if (exCount > 0) score += 50 + Math.min(exCount, 10) * 5;
+  if (g.notes && g.notes.trim()) score += 20;
+  if (g.explanation && g.explanation.trim()) score += 10;
+  if (g.formula && g.formula.trim()) score += 5;
+  return score;
+}
+
+function deduplicateGrammarList(items: GrammarItem[]): GrammarItem[] {
+  const byTitle = new Map<string, { index: number; item: GrammarItem }>();
+  const ordered: Array<GrammarItem | null> = [];
+
+  for (const item of items) {
+    const key = (item.title || '').trim();
+    if (!key) continue;
+    const existing = byTitle.get(key);
+    if (!existing) {
+      byTitle.set(key, { index: ordered.length, item });
+      ordered.push(item);
+    } else if (scoreGrammarQuality(item) > scoreGrammarQuality(existing.item)) {
+      ordered[existing.index] = item;
+      byTitle.set(key, { index: existing.index, item });
+    }
+  }
+
+  return ordered.filter((x): x is GrammarItem => Boolean(x));
 }
 
 export async function getLessonById(lessonId: string, userId?: string): Promise<LessonDetail | null> {
@@ -278,6 +373,8 @@ export async function getLessonById(lessonId: string, userId?: string): Promise<
 
     return {
       ...found,
+      vocabulary: deduplicateVocabularyList(found.vocabulary || []),
+      grammar: deduplicateGrammarList(found.grammar || []),
       exercises: {
         ...found.exercises,
         sentenceScramble: (found.exercises?.sentenceScramble || []).map((sc) => ({
@@ -293,7 +390,7 @@ export async function getLessonById(lessonId: string, userId?: string): Promise<
   }
 
   const pool = getPool()!;
-  const lessonRes = await pool.query<{
+  type LessonHeaderRow = {
     id: string;
     title: string;
     hsk_level: string;
@@ -302,16 +399,32 @@ export async function getLessonById(lessonId: string, userId?: string): Promise<
     date_added: string | null;
     is_system: boolean;
     owner_id: string | null;
-  }>(
-    `SELECT id, title, hsk_level, unit, description, date_added::text, is_system, owner_id
-     FROM lessons
-     WHERE id = $1
-       AND is_deleted = 0
-       AND (is_system = TRUE OR ($2::uuid IS NOT NULL AND owner_id = $2::uuid))`,
-    [lessonId, userId || null]
-  );
+  };
+  let l: LessonHeaderRow | undefined;
+  try {
+    const lessonRes = await pool.query<LessonHeaderRow>(
+      `SELECT id, title, hsk_level, unit, description, date_added::text, is_system, owner_id
+       FROM lessons
+       WHERE id = $1
+         AND is_deleted = 0
+         AND language_code = 'zh'
+         AND (is_system = TRUE OR ($2::uuid IS NOT NULL AND owner_id = $2::uuid))`,
+      [lessonId, userId || null]
+    );
+    l = lessonRes.rows[0];
+  } catch (err) {
+    if (!isUndefinedColumn(err)) throw err;
+    const lessonRes = await pool.query<LessonHeaderRow>(
+      `SELECT id, title, hsk_level, unit, description, date_added::text, is_system, owner_id
+       FROM lessons
+       WHERE id = $1
+         AND is_deleted = 0
+         AND (is_system = TRUE OR ($2::uuid IS NOT NULL AND owner_id = $2::uuid))`,
+      [lessonId, userId || null]
+    );
+    l = lessonRes.rows[0];
+  }
 
-  const l = lessonRes.rows[0];
   if (!l) return null;
 
   const [vocabRes, grammarRes, textsRes, sentencesRes, scramblesRes, transRes, quizRes] =
@@ -395,28 +508,32 @@ export async function getLessonById(lessonId: string, userId?: string): Promise<
     dateAdded: l.date_added,
     isSystem: l.is_system,
     ownerId: l.owner_id,
-    vocabulary: vocabRes.rows.map((v) => ({
-      id: v.id,
-      hanzi: v.hanzi,
-      pinyin: v.pinyin,
-      sinoVietnamese: v.sino_vietnamese,
-      meaning: v.meaning,
-      type: v.word_type,
-      radical: v.radical,
-      breakdown: v.breakdown,
-      mnemonic: v.mnemonic,
-      example: v.example_hanzi,
-      examplePinyin: v.example_pinyin,
-      exampleMeaning: v.example_meaning,
-    })),
-    grammar: grammarRes.rows.map((g) => ({
-      id: g.id,
-      title: g.title,
-      formula: g.formula || '',
-      explanation: g.explanation,
-      notes: g.notes,
-      examples: g.examples || [],
-    })),
+    vocabulary: deduplicateVocabularyList(
+      vocabRes.rows.map((v) => ({
+        id: v.id,
+        hanzi: v.hanzi,
+        pinyin: v.pinyin,
+        sinoVietnamese: v.sino_vietnamese,
+        meaning: v.meaning,
+        type: v.word_type,
+        radical: v.radical,
+        breakdown: v.breakdown,
+        mnemonic: v.mnemonic,
+        example: v.example_hanzi,
+        examplePinyin: v.example_pinyin,
+        exampleMeaning: v.example_meaning,
+      }))
+    ),
+    grammar: deduplicateGrammarList(
+      grammarRes.rows.map((g) => ({
+        id: g.id,
+        title: g.title,
+        formula: g.formula || '',
+        explanation: g.explanation,
+        notes: g.notes,
+        examples: g.examples || [],
+      }))
+    ),
     texts,
     exercises: {
       sentenceScramble: scramblesRes.rows.map((sc) => ({
@@ -836,7 +953,25 @@ export async function updateLessonById(
       }
       return v;
     });
-    const updatedGrammar = normalizeGrammarInput(lessonId, input.grammar, suffix);
+    const existingGrammarByTitle = new Map<string, GrammarItem>();
+    for (const oldG of existing.grammar) {
+      const key = oldG.title.trim();
+      const prev = existingGrammarByTitle.get(key);
+      if (!prev || scoreGrammarQuality(oldG) > scoreGrammarQuality(prev)) {
+        existingGrammarByTitle.set(key, oldG);
+      }
+    }
+
+    const updatedGrammar = normalizeGrammarInput(lessonId, input.grammar, suffix).map((g) => {
+      const matched = existingGrammarByTitle.get(g.title.trim());
+      if (!matched) return g;
+      return {
+        ...g,
+        id: g.id.startsWith(`gc_${lessonId}_${suffix}`) ? matched.id : g.id,
+        notes: g.notes ?? matched.notes ?? null,
+        examples: g.examples && g.examples.length > 0 ? g.examples : matched.examples || [],
+      };
+    });
     const remainingHanziSet = new Set(updatedVocab.map((v) => v.hanzi));
     const newlyAddedVocab = updatedVocab.filter((v) => !existingHanziSet.has(v.hanzi));
 
@@ -895,10 +1030,14 @@ export async function updateLessonById(
   try {
     await client.query('BEGIN');
 
-    // Đọc hiện trạng từ vựng + bài tập/đề kiểm tra trước khi cập nhật
-    const [curVocabRes, curScrambleRes, curTransRes, curQuizRes] = await Promise.all([
+    // Đọc hiện trạng từ vựng, ngữ pháp + bài tập/đề kiểm tra trước khi cập nhật
+    const [curVocabRes, curGrammarRes, curScrambleRes, curTransRes, curQuizRes] = await Promise.all([
       client.query<{ id: string; hanzi: string }>(
         'SELECT id, hanzi FROM vocabularies WHERE lesson_id = $1 AND is_deleted = 0',
+        [lessonId]
+      ),
+      client.query<{ id: string; title: string; formula: string | null; explanation: string | null; notes: string | null; examples: GrammarItem['examples'] }>(
+        'SELECT id, title, formula, explanation, notes, examples FROM grammars WHERE lesson_id = $1 AND is_deleted = 0',
         [lessonId]
       ),
       client.query<{ id: string }>(
@@ -984,7 +1123,33 @@ export async function updateLessonById(
       }
       return v;
     });
-    const grammar = normalizeGrammarInput(lessonId, input.grammar, suffix);
+    const existingGrammarByTitle = new Map<string, GrammarItem>();
+    for (const r of curGrammarRes.rows) {
+      const item: GrammarItem = {
+        id: r.id,
+        title: r.title,
+        formula: r.formula || '',
+        explanation: r.explanation,
+        notes: r.notes,
+        examples: r.examples || [],
+      };
+      const key = r.title.trim();
+      const prev = existingGrammarByTitle.get(key);
+      if (!prev || scoreGrammarQuality(item) > scoreGrammarQuality(prev)) {
+        existingGrammarByTitle.set(key, item);
+      }
+    }
+
+    const grammar = normalizeGrammarInput(lessonId, input.grammar, suffix).map((g) => {
+      const matched = existingGrammarByTitle.get(g.title.trim());
+      if (!matched) return g;
+      return {
+        ...g,
+        id: g.id.startsWith(`gc_${lessonId}_${suffix}`) ? matched.id : g.id,
+        notes: g.notes ?? matched.notes ?? null,
+        examples: g.examples && g.examples.length > 0 ? g.examples : matched.examples || [],
+      };
+    });
     const remainingHanziSet = new Set(vocabulary.map((v) => v.hanzi));
     const newlyAddedVocab = vocabulary.filter((v) => !existingHanziSet.has(v.hanzi));
 
@@ -1209,7 +1374,10 @@ function scoreVocabMemoryMatch(
   return 0;
 }
 
-export async function searchAllVocabulary(query: string, userId?: string): Promise<GlobalVocabSearchHit[]> {
+export async function searchAllVocabulary(
+  query: string,
+  userId?: string
+): Promise<GlobalVocabSearchHit[]> {
   const qRaw = query.trim().toLowerCase().replace(/\s+/g, ' ');
   if (!qRaw) return [];
 
@@ -1259,7 +1427,7 @@ export async function searchAllVocabulary(query: string, userId?: string): Promi
     [qRaw, userId || null]
   );
 
-  return res.rows.map((r) => ({
+  const rawHits: GlobalVocabSearchHit[] = res.rows.map((r) => ({
     id: r.id,
     hanzi: r.hanzi,
     pinyin: r.pinyin,
@@ -1276,6 +1444,22 @@ export async function searchAllVocabulary(query: string, userId?: string): Promi
     lessonTitle: r.lesson_title,
     hskLevel: r.hsk_level,
   }));
+
+  const byLessonHanzi = new Map<string, { index: number; hit: GlobalVocabSearchHit }>();
+  const dedupHits: Array<GlobalVocabSearchHit | null> = [];
+  for (const hit of rawHits) {
+    const key = `${hit.lessonId}::${hit.hanzi.trim()}`;
+    const existing = byLessonHanzi.get(key);
+    if (!existing) {
+      byLessonHanzi.set(key, { index: dedupHits.length, hit });
+      dedupHits.push(hit);
+    } else if (scoreVocabQuality(hit) > scoreVocabQuality(existing.hit)) {
+      dedupHits[existing.index] = hit;
+      byLessonHanzi.set(key, { index: existing.index, hit });
+    }
+  }
+
+  return dedupHits.filter((x): x is GlobalVocabSearchHit => Boolean(x));
 }
 
 const COMPREHENSIVE_QUOTAS: ReadonlyArray<{ bucket: string; count: number; order: number }> = [
@@ -1329,7 +1513,8 @@ export async function getComprehensiveExamQuestions(
       if (l.isDeleted === 1) return false;
       const accessible = l.isSystem || (userId && l.ownerId === userId);
       if (!accessible) return false;
-      return idSet ? idSet.has(l.id) : l.isSystem;
+      if (idSet) return idSet.has(l.id);
+      return l.isSystem;
     });
 
     if (targetLessons.length === 0) return [];
@@ -1399,7 +1584,7 @@ export async function getComprehensiveExamQuestions(
     if (allowedIds.length === 0) return [];
   }
 
-  type ExamRow = {
+  const res = await pool.query<{
     id: string;
     lesson_id: string;
     lesson_title: string;
@@ -1410,45 +1595,13 @@ export async function getComprehensiveExamQuestions(
     options: string[];
     correct_index: number;
     explanation: string | null;
-  };
+  }>(
+    `SELECT id, lesson_id, lesson_title, category, audio_text, passage, question, options, correct_index, explanation
+     FROM fn_get_random_comprehensive_exam($1, $2::text[])`,
+    [totalLimit, allowedIds]
+  );
 
-  let rows: ExamRow[];
-  try {
-    const res = await pool.query<ExamRow>(
-      `SELECT id, lesson_id, lesson_title, category, audio_text, passage, question, options, correct_index, explanation
-       FROM fn_get_random_comprehensive_exam($1, $2::text[])`,
-      [totalLimit, allowedIds]
-    );
-    rows = res.rows;
-  } catch (err) {
-    const code = (err as { code?: string } | null)?.code;
-    if (code !== '42883') throw err;
-    // Fallback an toàn nếu PostgreSQL chưa chạy Liquibase cập nhật fn_get_random_comprehensive_exam 2 tham số
-    const res = await pool.query<ExamRow>(
-      `WITH pool AS (
-         SELECT q.id, q.lesson_id, l.title AS lesson_title, q.category, q.audio_text, q.passage,
-                q.question, q.options, q.correct_index, q.explanation,
-                ROW_NUMBER() OVER (PARTITION BY q.lesson_id, q.category ORDER BY random()) AS rn
-         FROM quiz_questions q
-         JOIN lessons l ON l.id = q.lesson_id
-         WHERE q.scope = 'comprehensive_test'
-           AND q.is_deleted = 0
-           AND l.is_deleted = 0
-           AND (
-             ($2::text[] IS NULL AND l.is_system = TRUE)
-             OR ($2::text[] IS NOT NULL AND q.lesson_id = ANY($2::text[]))
-           )
-       )
-       SELECT id, lesson_id, lesson_title, category, audio_text, passage, question, options, correct_index, explanation
-       FROM pool
-       ORDER BY rn ASC, random()
-       LIMIT $1`,
-      [totalLimit, allowedIds]
-    );
-    rows = res.rows;
-  }
-
-  return rows.slice(0, totalLimit).map((q) => ({
+  return res.rows.slice(0, totalLimit).map((q) => ({
     id: q.id,
     lessonId: q.lesson_id,
     lessonTitle: q.lesson_title,
@@ -1517,23 +1670,42 @@ export async function getVocabGlossary(userId?: string): Promise<VocabGlossaryIt
     }
   } else {
     const pool = getPool()!;
-    const res = await pool.query<{
+    type GlossaryRow = {
       hanzi: string;
       pinyin: string;
       sino_vietnamese: string | null;
       meaning: string;
       word_type: string | null;
-    }>(
-      `SELECT v.hanzi, v.pinyin, v.sino_vietnamese, v.meaning, v.word_type
-       FROM vocabularies v
-       JOIN lessons l ON l.id = v.lesson_id
-       WHERE v.is_deleted = 0
-         AND l.is_deleted = 0
-         AND (l.is_system = TRUE OR ($1::uuid IS NOT NULL AND l.owner_id = $1::uuid))
-       ORDER BY l.is_system DESC, l.sort_order ASC, v.sort_order ASC`,
-      [userId || null]
-    );
-    for (const row of res.rows) {
+    };
+    let rows: GlossaryRow[];
+    try {
+      const res = await pool.query<GlossaryRow>(
+        `SELECT v.hanzi, v.pinyin, v.sino_vietnamese, v.meaning, v.word_type
+         FROM vocabularies v
+         JOIN lessons l ON l.id = v.lesson_id
+         WHERE v.is_deleted = 0
+           AND l.is_deleted = 0
+           AND l.language_code = 'zh'
+           AND (l.is_system = TRUE OR ($1::uuid IS NOT NULL AND l.owner_id = $1::uuid))
+         ORDER BY l.is_system DESC, l.sort_order ASC, v.sort_order ASC`,
+        [userId || null]
+      );
+      rows = res.rows;
+    } catch (err) {
+      if (!isUndefinedColumn(err)) throw err;
+      const res = await pool.query<GlossaryRow>(
+        `SELECT v.hanzi, v.pinyin, v.sino_vietnamese, v.meaning, v.word_type
+         FROM vocabularies v
+         JOIN lessons l ON l.id = v.lesson_id
+         WHERE v.is_deleted = 0
+           AND l.is_deleted = 0
+           AND (l.is_system = TRUE OR ($1::uuid IS NOT NULL AND l.owner_id = $1::uuid))
+         ORDER BY l.is_system DESC, l.sort_order ASC, v.sort_order ASC`,
+        [userId || null]
+      );
+      rows = res.rows;
+    }
+    for (const row of rows) {
       addEntry(
         row.hanzi,
         row.pinyin,

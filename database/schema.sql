@@ -6,6 +6,26 @@
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- ----------------------------------------------------------------------------
+-- 0. Danh mục ngôn ngữ (Languages)
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS languages (
+  code TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  native_name TEXT NOT NULL,
+  description TEXT,
+  accent_theme TEXT NOT NULL DEFAULT 'red',
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+INSERT INTO languages (code, name, native_name, description, accent_theme, is_active, sort_order)
+VALUES
+  ('zh', 'Tiếng Trung', '汉语 · HSK', 'Lộ trình 26 bài HSK chuẩn kèm Hán Việt, bộ thủ, tập viết nét và gia sư AI.', 'red', TRUE, 1),
+  ('en', 'Tiếng Anh', 'English · CEFR / IELTS', 'Lộ trình từ vựng Tiếng Anh CEFR A1–C2 (Word Atlas) kèm hình minh họa, audio UK/US và gia sư AI.', 'indigo', TRUE, 2)
+ON CONFLICT (code) DO NOTHING;
+
+-- ----------------------------------------------------------------------------
 -- 1. Người dùng (Users)
 -- ----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS users (
@@ -16,6 +36,7 @@ CREATE TABLE IF NOT EXISTS users (
   role TEXT NOT NULL DEFAULT 'user' CHECK (role IN ('user', 'admin')),
   avatar_url TEXT,
   cover_url TEXT,
+  last_language_code TEXT NOT NULL DEFAULT 'zh' REFERENCES languages(code),
   is_deleted SMALLINT NOT NULL DEFAULT 0,
   deleted_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -27,6 +48,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- ----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS lessons (
   id TEXT PRIMARY KEY,
+  language_code TEXT NOT NULL DEFAULT 'zh' REFERENCES languages(code),
   title TEXT NOT NULL,
   hsk_level TEXT NOT NULL DEFAULT 'HSK 1',
   unit TEXT,
@@ -44,6 +66,7 @@ CREATE TABLE IF NOT EXISTS lessons (
 CREATE INDEX IF NOT EXISTS idx_lessons_sort ON lessons (sort_order, created_at);
 CREATE INDEX IF NOT EXISTS idx_lessons_owner ON lessons (owner_id);
 CREATE INDEX IF NOT EXISTS idx_lessons_active ON lessons (is_system DESC, sort_order ASC, created_at ASC) WHERE is_deleted = 0;
+CREATE INDEX IF NOT EXISTS idx_lessons_lang_active ON lessons (language_code, is_system DESC, sort_order ASC, created_at ASC) WHERE is_deleted = 0;
 CREATE INDEX IF NOT EXISTS idx_lessons_purge ON lessons (deleted_at) WHERE is_deleted = 1;
 
 -- ----------------------------------------------------------------------------
@@ -63,6 +86,7 @@ CREATE TABLE IF NOT EXISTS vocabularies (
   example_hanzi TEXT,
   example_pinyin TEXT,
   example_meaning TEXT,
+  meta JSONB NOT NULL DEFAULT '{}'::jsonb,
   sort_order INTEGER NOT NULL DEFAULT 0,
   search_tsv TSVECTOR GENERATED ALWAYS AS (
     setweight(
@@ -177,7 +201,7 @@ CREATE INDEX IF NOT EXISTS idx_scrambles_lesson ON sentence_scrambles (lesson_id
 CREATE TABLE IF NOT EXISTS translation_exercises (
   id TEXT PRIMARY KEY,
   lesson_id TEXT NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
-  direction TEXT NOT NULL CHECK (direction IN ('vi_to_zh', 'zh_to_vi')),
+  direction TEXT NOT NULL CHECK (direction IN ('vi_to_zh', 'zh_to_vi', 'vi_to_en', 'en_to_vi')),
   prompt_text TEXT NOT NULL,
   audio_text TEXT,
   pinyin TEXT,
@@ -245,6 +269,7 @@ CREATE TABLE IF NOT EXISTS test_attempts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   lesson_id TEXT REFERENCES lessons(id) ON DELETE CASCADE,
+  language_code TEXT NOT NULL DEFAULT 'zh' REFERENCES languages(code),
   exam_title TEXT,
   score INTEGER NOT NULL CHECK (score >= 0 AND score <= 100),
   total_questions INTEGER NOT NULL CHECK (total_questions > 0),
@@ -411,7 +436,8 @@ ON CONFLICT (role_id, permission_id) DO NOTHING;
 -- ----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS translation_cache (
   cache_key TEXT PRIMARY KEY,
-  direction TEXT NOT NULL CHECK (direction IN ('auto', 'zh_vi', 'vi_zh')),
+  language_code TEXT NOT NULL DEFAULT 'zh',
+  direction TEXT NOT NULL CHECK (direction IN ('auto', 'zh_vi', 'vi_zh', 'en_vi', 'vi_en')),
   query_text TEXT NOT NULL,
   source TEXT NOT NULL DEFAULT 'ai',
   model TEXT,
@@ -423,6 +449,8 @@ CREATE TABLE IF NOT EXISTS translation_cache (
 
 CREATE INDEX IF NOT EXISTS idx_translation_cache_updated
   ON translation_cache (updated_at DESC);
+CREATE INDEX IF NOT EXISTS idx_translation_cache_lang
+  ON translation_cache (language_code, updated_at DESC);
 
 -- ----------------------------------------------------------------------------
 -- 13. Bảng xếp hạng trò chơi (Game Scores)
@@ -431,6 +459,7 @@ CREATE TABLE IF NOT EXISTS game_scores (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   lesson_id TEXT NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
+  language_code TEXT NOT NULL DEFAULT 'zh' REFERENCES languages(code),
   game_mode TEXT NOT NULL CHECK (game_mode IN ('tri_match', 'scramble', 'translation', 'expanded_quiz')),
   score INTEGER NOT NULL CHECK (score >= 0),
   max_score INTEGER CHECK (max_score IS NULL OR max_score >= 0),
@@ -448,6 +477,10 @@ CREATE INDEX IF NOT EXISTS idx_game_scores_global_mode
   ON game_scores (game_mode, score DESC, duration_seconds ASC, played_at DESC)
   WHERE is_deleted = 0;
 
+CREATE INDEX IF NOT EXISTS idx_game_scores_lang_mode
+  ON game_scores (language_code, game_mode, score DESC, duration_seconds ASC, played_at DESC)
+  WHERE is_deleted = 0;
+
 CREATE INDEX IF NOT EXISTS idx_game_scores_user
   ON game_scores (user_id, played_at DESC)
   WHERE is_deleted = 0;
@@ -461,8 +494,9 @@ CREATE INDEX IF NOT EXISTS idx_game_scores_purge
 -- ----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS game_grading_cache (
   cache_key TEXT PRIMARY KEY,
+  language_code TEXT NOT NULL DEFAULT 'zh',
   game_mode TEXT NOT NULL CHECK (game_mode IN ('scramble', 'translation')),
-  direction TEXT CHECK (direction IS NULL OR direction IN ('vi_to_zh', 'zh_to_vi')),
+  direction TEXT CHECK (direction IS NULL OR direction IN ('vi_to_zh', 'zh_to_vi', 'vi_to_en', 'en_to_vi')),
   exercise_id TEXT NOT NULL,
   user_answer TEXT NOT NULL,
   is_correct BOOLEAN NOT NULL,

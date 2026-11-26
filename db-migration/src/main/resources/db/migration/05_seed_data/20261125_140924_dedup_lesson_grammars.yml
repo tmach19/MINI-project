@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261125_140924_dedup_lesson_grammars
+      author: chinese-study
+      comment: Xoa mem cac ban ghi ngu phap (grammars) bi nhan doi trong cung bai hoc, giu lai ban ghi chuan co day du vi du thuc te
+      changes:
+        - sql:
+            dbms: postgresql
+            splitStatements: true
+            stripComments: true
+            sql: |-
+              WITH ranked AS (
+                SELECT
+                  id,
+                  ROW_NUMBER() OVER (
+                    PARTITION BY lesson_id, btrim(title)
+                    ORDER BY
+                      CASE WHEN id ~ '^g[0-9]+_[0-9]+$' THEN 0 ELSE 1 END ASC,
+                      CASE WHEN jsonb_typeof(examples) = 'array' THEN jsonb_array_length(examples) ELSE 0 END DESC,
+                      CASE WHEN notes IS NOT NULL AND btrim(notes) <> '' THEN 0 ELSE 1 END ASC,
+                      CASE WHEN explanation IS NOT NULL AND btrim(explanation) <> '' THEN 0 ELSE 1 END ASC,
+                      sort_order ASC,
+                      id ASC
+                  ) AS rn
+                FROM grammars
+                WHERE is_deleted = 0
+              )
+              UPDATE grammars
+              SET is_deleted = 1, deleted_at = NOW()
+              WHERE id IN (SELECT id FROM ranked WHERE rn > 1)
+                AND is_deleted = 0;
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: |-
+              SELECT 1;

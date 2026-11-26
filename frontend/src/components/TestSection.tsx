@@ -20,13 +20,20 @@ import { api } from '../lib/api';
 import {
   resolveDialogueTtsText,
   soundFx,
-  speakChinese,
+  speakText,
   stopChineseSpeech,
 } from '../lib/audio';
 import { getAvatarPreset, isImageMediaUrl } from '../lib/profileMedia';
-import type { LessonDetail, LessonSummary, TestAttemptRecord, TestLeaderboardEntry } from '../types';
+import type {
+  LanguageCode,
+  LessonDetail,
+  LessonSummary,
+  TestAttemptRecord,
+  TestLeaderboardEntry,
+} from '../types';
 
 interface TestSectionProps {
+  lang?: LanguageCode;
   lesson: LessonDetail;
   attempts: TestAttemptRecord[];
   currentUserId?: string;
@@ -84,13 +91,18 @@ function formatDurationMmSs(totalSecs: number): string {
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
 
-function getCategoryBadge(cat?: string | null) {
+function getCategoryBadge(cat?: string | null, isEnglish = false) {
   const map: Record<string, { label: string; cls: string }> = {
     translate_zh_vi: { label: 'Dịch Trung → Việt', cls: 'bg-blue-50 text-blue-700 border-blue-200' },
     translate_vi_zh: { label: 'Dịch Việt → Trung', cls: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
+    translate_en_vi: { label: 'Dịch Anh → Việt', cls: 'bg-blue-50 text-blue-700 border-blue-200' },
+    translate_vi_en: { label: 'Dịch Việt → Anh', cls: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
     fill_blank: { label: 'Điền từ', cls: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
     vocab: { label: 'Từ vựng', cls: 'bg-rose-50 text-rose-700 border-rose-200' },
-    listening: { label: 'Nghe HSK', cls: 'bg-amber-50 text-amber-800 border-amber-200' },
+    listening: {
+      label: isEnglish ? 'Nghe hiểu' : 'Nghe HSK',
+      cls: 'bg-amber-50 text-amber-800 border-amber-200',
+    },
     reading: { label: 'Đọc hiểu', cls: 'bg-purple-50 text-purple-700 border-purple-200' },
     grammar: { label: 'Ngữ pháp', cls: 'bg-teal-50 text-teal-700 border-teal-200' },
   };
@@ -104,6 +116,7 @@ const EXAM_SPEECH_RATES = [
 ] as const;
 
 export const TestSection: React.FC<TestSectionProps> = ({
+  lang,
   lesson,
   attempts,
   currentUserId,
@@ -117,6 +130,8 @@ export const TestSection: React.FC<TestSectionProps> = ({
   selectedLessonIds = [],
   onChangeSelectedLessons,
 }) => {
+  const isEnglish = lang === 'en' || lesson.languageCode === 'en';
+  const effectiveLang: LanguageCode = isEnglish ? 'en' : 'zh';
   const questions = lesson.comprehensiveTest || [];
   const totalSeconds = getTestDurationSeconds(questions.length);
   const [isActive, setIsActive] = useState(false);
@@ -461,7 +476,13 @@ export const TestSection: React.FC<TestSectionProps> = ({
           </div>
         )}
 
-        <div className="bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 rounded-3xl p-5 sm:p-8 text-white shadow-xl text-center space-y-4">
+        <div
+          className={`rounded-3xl p-5 sm:p-8 text-white shadow-xl text-center space-y-4 ${
+            isEnglish
+              ? 'bg-gradient-to-r from-indigo-600 via-blue-600 to-sky-600'
+              : 'bg-gradient-to-r from-red-600 via-rose-600 to-amber-600'
+          }`}
+        >
           <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/20 backdrop-blur-md mx-auto flex items-center justify-center">
             <Award className="w-7 h-7 sm:w-8 sm:h-8" />
           </div>
@@ -476,7 +497,9 @@ export const TestSection: React.FC<TestSectionProps> = ({
           <p className="text-white/90 text-xs sm:text-sm max-w-lg mx-auto">
             {isComprehensiveExam
               ? lesson.description
-              : 'Đánh giá toàn diện từ vựng, nghe HSK, đọc hiểu và dịch nghĩa. Điểm thi được lưu vào lịch sử học tập.'}
+              : isEnglish
+                ? 'Đánh giá toàn diện từ vựng, nghe hiểu, đọc hiểu và dịch nghĩa tiếng Anh. Điểm thi được lưu vào lịch sử học tập.'
+                : 'Đánh giá toàn diện từ vựng, nghe HSK, đọc hiểu và dịch nghĩa. Điểm thi được lưu vào lịch sử học tập.'}
           </p>
           <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-3 max-w-md mx-auto">
             <div className="bg-white/10 p-2 sm:p-3 rounded-2xl border border-white/20 min-w-0">
@@ -725,16 +748,16 @@ export const TestSection: React.FC<TestSectionProps> = ({
 
   if (isSubmitted) {
     const correctCount = questions.filter((q, idx) => answers[idx] === q.correctIndex).length;
-    let sealText = '及格 (ĐẠT)';
+    let sealText = isEnglish ? 'PASSED (ĐẠT)' : '及格 (ĐẠT)';
     let sealColor = 'text-emerald-600 border-emerald-600';
     if (finalScore >= 90) {
-      sealText = '优秀 (XUẤT SẮC)';
-      sealColor = 'text-red-600 border-red-600';
+      sealText = isEnglish ? 'EXCELLENT (XUẤT SẮC)' : '优秀 (XUẤT SẮC)';
+      sealColor = isEnglish ? 'text-indigo-600 border-indigo-600' : 'text-red-600 border-red-600';
     } else if (finalScore >= 70) {
-      sealText = '良好 (KHÁ GIỎI)';
+      sealText = isEnglish ? 'GOOD (KHÁ GIỎI)' : '良好 (KHÁ GIỎI)';
       sealColor = 'text-blue-600 border-blue-600';
     } else if (finalScore < 50) {
-      sealText = '需努力 (CỐ GẮNG)';
+      sealText = isEnglish ? 'KEEP TRYING (CỐ GẮNG)' : '需努力 (CỐ GẮNG)';
       sealColor = 'text-amber-600 border-amber-600';
     }
 
@@ -788,7 +811,7 @@ export const TestSection: React.FC<TestSectionProps> = ({
           {questions.map((q, idx) => {
             const uAns = answers[idx];
             const isRight = uAns === q.correctIndex;
-            const badge = getCategoryBadge(q.category);
+            const badge = getCategoryBadge(q.category, isEnglish);
             return (
               <div
                 key={q.id || idx}
@@ -841,7 +864,7 @@ export const TestSection: React.FC<TestSectionProps> = ({
   }
 
   const currQ = questions[currentIdx];
-  const badge = getCategoryBadge(currQ?.category);
+  const badge = getCategoryBadge(currQ?.category, isEnglish);
   const mins = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
   const secs = (timeRemaining % 60).toString().padStart(2, '0');
 
@@ -863,7 +886,11 @@ export const TestSection: React.FC<TestSectionProps> = ({
         </div>
 
         {currQ?.passage && (
-          <div className="p-4 rounded-2xl bg-amber-50/60 dark:bg-slate-800 border border-amber-200 dark:border-slate-700 text-xs chinese-font whitespace-pre-line text-gray-800 dark:text-slate-200">
+          <div
+            className={`p-4 rounded-2xl bg-amber-50/60 dark:bg-slate-800 border border-amber-200 dark:border-slate-700 text-xs ${
+              isEnglish ? '' : 'chinese-font'
+            } whitespace-pre-line text-gray-800 dark:text-slate-200`}
+          >
             {currQ.passage}
           </div>
         )}
@@ -873,12 +900,15 @@ export const TestSection: React.FC<TestSectionProps> = ({
             <button
               type="button"
               onClick={() =>
-                speakChinese(
-                  resolveDialogueTtsText(
-                    currQ.audioText!,
-                    isComprehensiveExam ? undefined : lesson.texts
-                  ),
-                  speechRate
+                speakText(
+                  isEnglish
+                    ? currQ.audioText!
+                    : resolveDialogueTtsText(
+                        currQ.audioText!,
+                        isComprehensiveExam ? undefined : lesson.texts
+                      ),
+                  effectiveLang,
+                  { rate: speechRate }
                 )
               }
               className="px-4 py-2 rounded-xl bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 hover:bg-amber-100 dark:hover:bg-amber-900/50 text-amber-800 dark:text-amber-300 text-xs font-bold inline-flex items-center gap-1.5 transition active:scale-95"

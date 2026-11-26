@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   ChevronLeft,
   ChevronRight,
+  Eye,
   Flag,
   Layers,
   PenTool,
@@ -10,39 +11,83 @@ import {
   Shuffle,
   Volume2,
 } from 'lucide-react';
-import { soundFx, speakChinese } from '../lib/audio';
+import { getEnAudioUrl, getEnImageUrl } from '../languages/config';
+import { soundFx, speakChinese, speakEnglish } from '../lib/audio';
 import { shuffleArray } from '../lib/constants';
-import type { LessonDetail, MarkedVocabRecord, VocabularyItem } from '../types';
+import { VocabDetailModal } from './common/VocabDetailModal';
+import type { LanguageCode, LessonDetail, MarkedVocabRecord, VocabularyItem } from '../types';
+
+const preloadedImageUrls = new Set<string>();
+const preloadedImagePool: HTMLImageElement[] = [];
+
+function preloadImage(url: string | null): void {
+  if (!url || typeof window === 'undefined' || preloadedImageUrls.has(url)) return;
+  preloadedImageUrls.add(url);
+  const img = new Image();
+  img.decoding = 'async';
+  img.src = url;
+  preloadedImagePool.push(img);
+  if (preloadedImagePool.length > 120) {
+    preloadedImagePool.shift();
+  }
+}
 
 interface VocabSectionProps {
+  lang?: LanguageCode;
   lesson: LessonDetail;
   markedMap: Record<string, MarkedVocabRecord>;
   onToggleMarked: (vocabId: string) => void;
-  onOpenWriter: (vocab: VocabularyItem) => void;
+  onOpenWriter?: (vocab: VocabularyItem) => void;
+  onOpenAiDictionary?: (word: string) => void;
   canUseBookmark?: boolean;
   onRequireBookmarkAccess?: () => void;
 }
 
+function scoreClientVocabQuality(v: VocabularyItem): number {
+  let score = 0;
+  if (/^v\d+_\d+$/.test(v.id)) score += 100;
+  if (v.sinoVietnamese && v.sinoVietnamese.trim()) score += 40;
+  if (v.radical && !/^Bộ cấu tạo\s*\[/i.test(v.radical.trim())) score += 30;
+  if (v.breakdown && !/^Ghép từ các chữ Hán:/i.test(v.breakdown.trim())) score += 15;
+  if (v.mnemonic && v.mnemonic.trim()) score += 10;
+  if (v.example && !/这是关于.*的常用句子/.test(v.example)) score += 10;
+  return score;
+}
+
 export const VocabSection: React.FC<VocabSectionProps> = ({
+  lang,
   lesson,
   markedMap,
   onToggleMarked,
   onOpenWriter,
+  onOpenAiDictionary,
   canUseBookmark = true,
   onRequireBookmarkAccess,
 }) => {
+  const isEnglish = lang === 'en' || lesson.languageCode === 'en';
+  const effectiveLang: LanguageCode = isEnglish ? 'en' : 'zh';
   const [filter, setFilter] = useState<'all' | 'marked'>('all');
   const [tableMarkedOnly, setTableMarkedOnly] = useState(false);
   const [search, setSearch] = useState('');
   const [cardIndex, setCardIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [shuffledOrder, setShuffledOrder] = useState<string[] | null>(null);
+  const [selectedVocabId, setSelectedVocabId] = useState<string | null>(null);
+  const [failedThumbIds, setFailedThumbIds] = useState<Record<string, boolean>>({});
+  const [cardImgError, setCardImgError] = useState(false);
   const [showCols, setShowCols] = useState({
     pinyin: true,
     hvd: true,
-    radical: true,
     meaning: true,
   });
+
+  const playVocabWord = (v: VocabularyItem, accent: 'us' | 'uk' = 'us') => {
+    if (isEnglish) {
+      speakEnglish(v.hanzi, { accent, audioUrl: getEnAudioUrl(v.meta, accent) });
+      return;
+    }
+    speakChinese(v.hanzi);
+  };
 
   useEffect(() => {
     setFilter('all');
@@ -50,6 +95,7 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
     setCardIndex(0);
     setFlipped(false);
     setShuffledOrder(null);
+    setSelectedVocabId(null);
   }, [lesson.id]);
 
   useEffect(() => {
@@ -59,12 +105,31 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
     }
   }, [canUseBookmark]);
 
+  // Đảm bảo mỗi từ Hán tự chỉ xuất hiện duy nhất 1 dòng với bản ghi đầy đủ nhất
+  const baseVocab = useMemo(() => {
+    const raw = lesson.vocabulary || [];
+    const byHanzi = new Map<string, { index: number; item: VocabularyItem }>();
+    const ordered: Array<VocabularyItem | null> = [];
+    for (const item of raw) {
+      const key = (item.hanzi || '').trim();
+      if (!key) continue;
+      const existing = byHanzi.get(key);
+      if (!existing) {
+        byHanzi.set(key, { index: ordered.length, item });
+        ordered.push(item);
+      } else if (scoreClientVocabQuality(item) > scoreClientVocabQuality(existing.item)) {
+        ordered[existing.index] = item;
+        byHanzi.set(key, { index: existing.index, item });
+      }
+    }
+    return ordered.filter((x): x is VocabularyItem => Boolean(x));
+  }, [lesson.vocabulary]);
+
   const orderedVocab = useMemo(() => {
-    const base = lesson.vocabulary || [];
-    if (!shuffledOrder) return base;
-    const map = new Map(base.map((v) => [v.id, v]));
+    if (!shuffledOrder) return baseVocab;
+    const map = new Map(baseVocab.map((v) => [v.id, v]));
     return shuffledOrder.map((id) => map.get(id)).filter((v): v is VocabularyItem => Boolean(v));
-  }, [lesson.vocabulary, shuffledOrder]);
+  }, [baseVocab, shuffledOrder]);
 
   // Danh sách riêng cho Flashcard bên trên
   const flashcardList = useMemo(() => {
@@ -76,29 +141,59 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
 
   // Danh sách riêng cho Bảng từ vựng bên dưới
   const tableList = useMemo(() => {
-    let list = lesson.vocabulary || [];
+    let list = baseVocab;
     if (tableMarkedOnly) {
       list = list.filter((v) => Boolean(markedMap[v.id]));
     }
     if (search.trim()) {
       const q = search.toLowerCase().trim();
       list = list.filter((v) =>
-        [v.hanzi, v.pinyin, v.meaning, v.sinoVietnamese, v.radical]
+        [v.hanzi, v.pinyin, v.meaning, v.sinoVietnamese]
           .filter(Boolean)
           .some((val) => val!.toLowerCase().includes(q))
       );
     }
     return list;
-  }, [lesson.vocabulary, tableMarkedOnly, markedMap, search]);
+  }, [baseVocab, tableMarkedOnly, markedMap, search]);
 
   const safeIndex = Math.min(cardIndex, Math.max(0, flashcardList.length - 1));
   const currentCard = flashcardList[safeIndex] || null;
 
-  const totalCount = lesson.vocabulary.length;
-  const markedCount = lesson.vocabulary.filter((v) => Boolean(markedMap[v.id])).length;
+  useEffect(() => {
+    setCardImgError(false);
+  }, [currentCard?.id]);
+
+  // Preload ưu tiên ảnh của 4 thẻ kế tiếp & thẻ trước đó + ảnh full của thẻ hiện tại (cho modal Xem chi tiết)
+  useEffect(() => {
+    if (!isEnglish || flashcardList.length === 0) return;
+    const offsets = [0, 1, 2, 3, 4, -1];
+    for (const offset of offsets) {
+      const idx = (safeIndex + offset + flashcardList.length) % flashcardList.length;
+      const item = flashcardList[idx];
+      if (item) preloadImage(getEnImageUrl(item.meta, 'thumb'));
+    }
+    if (currentCard) {
+      preloadImage(getEnImageUrl(currentCard.meta, 'full'));
+    }
+  }, [isEnglish, flashcardList, safeIndex, currentCard]);
+
+  // Khi vào bài mới, tải ngầm nhẹ toàn bộ ảnh thumb của bài (~25 ảnh × 10KB ≈ 250KB) khi trình duyệt rảnh
+  useEffect(() => {
+    if (!isEnglish || baseVocab.length === 0) return;
+    const timer = window.setTimeout(() => {
+      for (const item of baseVocab) {
+        preloadImage(getEnImageUrl(item.meta, 'thumb'));
+      }
+    }, 180);
+    return () => window.clearTimeout(timer);
+  }, [isEnglish, baseVocab]);
+
+  const totalCount = baseVocab.length;
+  const markedCount = baseVocab.filter((v) => Boolean(markedMap[v.id])).length;
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
+      if (selectedVocabId) return;
       const tag = (document.activeElement as HTMLElement | null)?.tagName;
       if (tag && ['INPUT', 'TEXTAREA', 'SELECT'].includes(tag)) return;
       if (flashcardList.length === 0) return;
@@ -114,35 +209,66 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
         setFlipped(false);
         setCardIndex((i) => (i - 1 + flashcardList.length) % flashcardList.length);
       } else if (e.code === 'KeyS' && currentCard) {
-        speakChinese(currentCard.hanzi);
+        playVocabWord(currentCard, 'us');
       } else if (e.code === 'KeyF' && currentCard) {
         onToggleMarked(currentCard.id);
       }
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [flashcardList.length, currentCard, onToggleMarked]);
+  }, [selectedVocabId, flashcardList.length, currentCard, onToggleMarked, isEnglish]);
 
   const handleShuffle = () => {
-    const ids = shuffleArray(lesson.vocabulary.map((v) => v.id));
+    const ids = shuffleArray(baseVocab.map((v) => v.id));
     setShuffledOrder(ids);
     setCardIndex(0);
     setFlipped(false);
   };
+
+  const detailNavList = useMemo(() => {
+    if (!selectedVocabId) return tableList;
+    if (tableList.some((v) => v.id === selectedVocabId)) return tableList;
+    return baseVocab;
+  }, [selectedVocabId, tableList, baseVocab]);
+
+  const detailIndex = useMemo(
+    () => (selectedVocabId ? detailNavList.findIndex((v) => v.id === selectedVocabId) : -1),
+    [detailNavList, selectedVocabId]
+  );
+
+  const selectedVocab =
+    detailIndex >= 0
+      ? detailNavList[detailIndex]
+      : selectedVocabId
+        ? baseVocab.find((v) => v.id === selectedVocabId) || null
+        : null;
 
   const isCurrentMarked = currentCard ? Boolean(markedMap[currentCard.id]) : false;
 
   return (
     <div className="space-y-8">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-red-500 via-rose-500 to-amber-500 rounded-3xl p-6 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+      <div
+        className={`rounded-3xl p-6 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 ${
+          isEnglish
+            ? 'bg-gradient-to-r from-indigo-600 via-blue-600 to-sky-500'
+            : 'bg-gradient-to-r from-red-500 via-rose-500 to-amber-500'
+        }`}
+      >
         <div>
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-2">
-            <Layers className="w-3.5 h-3.5" /> Module 1: Từ vựng, Chiết tự & Tập viết
+            <Layers className="w-3.5 h-3.5" />{' '}
+            {isEnglish
+              ? 'Module 1: Từ vựng, Phát âm UK/US & Minh họa'
+              : 'Module 1: Từ vựng, Chiết tự & Tập viết'}
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold">Thẻ ghi nhớ & Luyện viết chữ Hán</h2>
+          <h2 className="text-2xl md:text-3xl font-bold">
+            {isEnglish ? 'Thẻ ghi nhớ & Từ vựng Tiếng Anh' : 'Thẻ ghi nhớ & Luyện viết chữ Hán'}
+          </h2>
           <p className="text-white/90 text-sm mt-1">
-            Lật thẻ xem Pinyin, Hán Việt, Bộ thủ, tập viết đúng thứ tự nét và gắn cờ các từ cần nhớ kỹ.
+            {isEnglish
+              ? 'Lật thẻ xem phiên âm IPA UK/US, định nghĩa Anh–Việt, collocations, nghe phát âm chuẩn và gắn cờ các từ cần nhớ kỹ.'
+              : 'Lật thẻ xem Pinyin, Hán Việt, Bộ thủ, tập viết đúng thứ tự nét và gắn cờ các từ cần nhớ kỹ.'}
           </p>
         </div>
 
@@ -228,13 +354,35 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
                 <div className="flashcard-front bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 shadow-xl p-4 sm:p-6 md:p-8 flex flex-col justify-between">
                   <div className="w-full flex items-start sm:items-center justify-between text-xs gap-2 flex-wrap">
                     <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap min-w-0 flex-1">
-                      <span className="font-semibold px-2.5 py-1 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-md whitespace-nowrap">
+                      <span
+                        className={`font-semibold px-2.5 py-1 rounded-md whitespace-nowrap ${
+                          isEnglish
+                            ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300'
+                            : 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300'
+                        }`}
+                      >
                         {currentCard.type || 'Từ vựng'}
                       </span>
-                      {currentCard.radical && (
-                        <span className="px-2.5 py-1 bg-amber-50 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 rounded-md font-medium border border-amber-200/60 dark:border-amber-800/50 max-w-full sm:max-w-[240px] truncate min-w-0">
-                          Bộ: {currentCard.radical}
-                        </span>
+                      {isEnglish ? (
+                        <>
+                          {(currentCard.meta?.cefr || currentCard.sinoVietnamese) && (
+                            <span className="px-2 py-1 bg-sky-50 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300 rounded-md font-bold border border-sky-200/60 dark:border-sky-800/50">
+                              {currentCard.meta?.cefr || currentCard.sinoVietnamese}
+                            </span>
+                          )}
+                          {currentCard.meta?.topic && (
+                            <span className="px-2 py-1 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-md font-medium border border-emerald-200/60 dark:border-emerald-800/50 max-w-[180px] truncate">
+                              {currentCard.meta.topic}
+                            </span>
+                          )}
+                        </>
+                      ) : (
+                        currentCard.radical &&
+                        !/^Bộ cấu tạo\s*\[/i.test(currentCard.radical.trim()) && (
+                          <span className="px-2.5 py-1 bg-amber-50 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 rounded-md font-medium border border-amber-200/60 dark:border-amber-800/50 max-w-full sm:max-w-[240px] truncate min-w-0">
+                            Bộ: {currentCard.radical}
+                          </span>
+                        )
                       )}
                     </div>
                     <div className="flex items-center gap-2 ml-auto flex-shrink-0">
@@ -259,31 +407,89 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
                     </div>
                   </div>
 
-                  <div className="my-auto flex flex-col items-center py-3 sm:py-4 px-2">
-                    <div className="text-5xl sm:text-6xl md:text-8xl font-bold chinese-serif text-gray-900 dark:text-white tracking-wide text-center break-all hover:scale-105 transition-transform">
+                  <div className="my-auto flex flex-col items-center py-2 sm:py-4 px-2 gap-2.5">
+                    {isEnglish && getEnImageUrl(currentCard.meta, 'thumb') && !cardImgError && (
+                      <img
+                        key={currentCard.id}
+                        src={getEnImageUrl(currentCard.meta, 'thumb')!}
+                        alt={currentCard.hanzi}
+                        loading="eager"
+                        decoding="async"
+                        onError={() => setCardImgError(true)}
+                        className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border border-stone-200 dark:border-slate-700 shadow-sm bg-stone-50 dark:bg-slate-800"
+                      />
+                    )}
+                    <div
+                      className={
+                        isEnglish
+                          ? 'text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight text-center break-words hover:scale-105 transition-transform'
+                          : 'text-5xl sm:text-6xl md:text-8xl font-bold chinese-serif text-gray-900 dark:text-white tracking-wide text-center break-all hover:scale-105 transition-transform'
+                      }
+                    >
                       {currentCard.hanzi}
                     </div>
+                    {isEnglish && currentCard.pinyin && (
+                      <div className="text-sm font-mono font-semibold text-indigo-600 dark:text-indigo-400">
+                        {currentCard.pinyin}
+                      </div>
+                    )}
                   </div>
 
                   <div className="w-full flex items-center justify-between gap-2 text-xs border-t border-stone-100 dark:border-slate-800 pt-3 flex-wrap">
                     <div className="flex items-center gap-2 flex-wrap">
+                      {isEnglish ? (
+                        <>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              playVocabWord(currentCard, 'us');
+                            }}
+                            className="flex items-center gap-1.5 text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-200/70 dark:border-indigo-800/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 px-3 py-1.5 rounded-lg font-semibold transition active:scale-95 whitespace-nowrap"
+                          >
+                            <Volume2 className="w-3.5 h-3.5" /> US (S)
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              playVocabWord(currentCard, 'uk');
+                            }}
+                            className="flex items-center gap-1.5 text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-900/30 border border-sky-200/70 dark:border-sky-800/60 hover:bg-sky-100 dark:hover:bg-sky-900/50 px-3 py-1.5 rounded-lg font-semibold transition active:scale-95 whitespace-nowrap"
+                          >
+                            <Volume2 className="w-3.5 h-3.5" /> UK
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              speakChinese(currentCard.hanzi);
+                            }}
+                            className="flex items-center gap-1.5 text-red-600 dark:text-red-300 bg-red-50 dark:bg-red-900/30 border border-red-200/70 dark:border-red-800/60 hover:bg-red-100 dark:hover:bg-red-900/50 dark:hover:text-red-200 px-3 py-1.5 rounded-lg font-semibold transition active:scale-95 whitespace-nowrap"
+                          >
+                            <Volume2 className="w-3.5 h-3.5" /> Phát âm (S)
+                          </button>
+                          {onOpenWriter && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onOpenWriter(currentCard);
+                              }}
+                              className="flex items-center gap-1.5 text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/30 border border-amber-200/70 dark:border-amber-800/60 hover:bg-amber-100 dark:hover:bg-amber-900/50 dark:hover:text-amber-200 px-3 py-1.5 rounded-lg font-semibold transition active:scale-95 whitespace-nowrap"
+                            >
+                              <PenTool className="w-3.5 h-3.5" /> Tập viết nét
+                            </button>
+                          )}
+                        </>
+                      )}
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          speakChinese(currentCard.hanzi);
+                          setSelectedVocabId(currentCard.id);
                         }}
-                        className="flex items-center gap-1.5 text-red-600 dark:text-red-300 bg-red-50 dark:bg-red-900/30 border border-red-200/70 dark:border-red-800/60 hover:bg-red-100 dark:hover:bg-red-900/50 dark:hover:text-red-200 px-3 py-1.5 rounded-lg font-semibold transition active:scale-95 whitespace-nowrap"
+                        className="flex items-center gap-1.5 text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/30 border border-purple-200/70 dark:border-purple-800/60 hover:bg-purple-100 dark:hover:bg-purple-900/50 dark:hover:text-purple-200 px-3 py-1.5 rounded-lg font-semibold transition active:scale-95 whitespace-nowrap"
                       >
-                        <Volume2 className="w-3.5 h-3.5" /> Phát âm (S)
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onOpenWriter(currentCard);
-                        }}
-                        className="flex items-center gap-1.5 text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/30 border border-amber-200/70 dark:border-amber-800/60 hover:bg-amber-100 dark:hover:bg-amber-900/50 dark:hover:text-amber-200 px-3 py-1.5 rounded-lg font-semibold transition active:scale-95 whitespace-nowrap"
-                      >
-                        <PenTool className="w-3.5 h-3.5" /> Tập viết nét
+                        <Eye className="w-3.5 h-3.5" /> Xem chi tiết
                       </button>
                     </div>
                     <span className="text-gray-400 dark:text-slate-500 flex items-center gap-1 whitespace-nowrap">
@@ -293,10 +499,28 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
                 </div>
 
                 {/* BACK */}
-                <div className="flashcard-back bg-gradient-to-br from-amber-50 to-orange-50 dark:from-slate-800 dark:to-slate-900 border border-amber-200 dark:border-slate-700 shadow-xl p-4 sm:p-6 md:p-8 flex flex-col justify-between">
-                  <div className="w-full flex items-center justify-between gap-2 flex-wrap text-xs text-amber-800 dark:text-amber-300">
-                    <span className="font-semibold px-2.5 py-1 bg-amber-200/60 dark:bg-amber-900/40 rounded-md">
-                      Pinyin, Hán Việt &amp; Chiết tự
+                <div
+                  className={`flashcard-back shadow-xl p-4 sm:p-6 md:p-8 flex flex-col justify-between ${
+                    isEnglish
+                      ? 'bg-gradient-to-br from-indigo-50 to-sky-50 dark:from-slate-800 dark:to-slate-900 border border-indigo-200 dark:border-slate-700'
+                      : 'bg-gradient-to-br from-amber-50 to-orange-50 dark:from-slate-800 dark:to-slate-900 border border-amber-200 dark:border-slate-700'
+                  }`}
+                >
+                  <div
+                    className={`w-full flex items-center justify-between gap-2 flex-wrap text-xs ${
+                      isEnglish
+                        ? 'text-indigo-800 dark:text-indigo-300'
+                        : 'text-amber-800 dark:text-amber-300'
+                    }`}
+                  >
+                    <span
+                      className={`font-semibold px-2.5 py-1 rounded-md ${
+                        isEnglish
+                          ? 'bg-indigo-200/60 dark:bg-indigo-900/40'
+                          : 'bg-amber-200/60 dark:bg-amber-900/40'
+                      }`}
+                    >
+                      {isEnglish ? 'Phiên âm IPA, Định nghĩa & Ví dụ' : 'Pinyin, Hán Việt & Chiết tự'}
                     </span>
                     <div className="flex items-center gap-2 ml-auto flex-shrink-0">
                       <span className="font-mono font-medium whitespace-nowrap">
@@ -322,14 +546,31 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
                   <div className="my-2 flex-1 min-h-0 flex flex-col items-center w-full py-1 space-y-2.5 overflow-y-auto">
                     <div className="text-center">
                       <div className="flex items-baseline justify-center gap-3 flex-wrap">
-                        <span className="text-3xl font-bold chinese-serif text-gray-900 dark:text-white">
+                        <span
+                          className={`${
+                            isEnglish ? 'tracking-tight' : 'chinese-serif'
+                          } text-3xl font-bold text-gray-900 dark:text-white`}
+                        >
                           {currentCard.hanzi}
                         </span>
-                        <span className="text-xl font-semibold text-red-600 dark:text-red-400 font-mono">
-                          {currentCard.pinyin}
+                        <span
+                          className={`text-base sm:text-lg font-semibold font-mono ${
+                            isEnglish
+                              ? 'text-indigo-600 dark:text-indigo-400'
+                              : 'text-red-600 dark:text-red-400'
+                          }`}
+                        >
+                          {isEnglish && currentCard.meta?.usIpa
+                            ? `US ${currentCard.meta.usIpa}${
+                                currentCard.meta.ukIpa &&
+                                currentCard.meta.ukIpa !== currentCard.meta.usIpa
+                                  ? ` · UK ${currentCard.meta.ukIpa}`
+                                  : ''
+                              }`
+                            : currentCard.pinyin}
                         </span>
                       </div>
-                      {currentCard.sinoVietnamese && (
+                      {!isEnglish && currentCard.sinoVietnamese && (
                         <div className="text-[11px] text-amber-700 dark:text-amber-400 mt-0.5 uppercase tracking-widest font-semibold">
                           Hán Việt: [ {currentCard.sinoVietnamese} ]
                         </div>
@@ -337,36 +578,90 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
                       <div className="text-xl font-bold text-gray-900 dark:text-white mt-1">
                         {currentCard.meaning}
                       </div>
+                      {isEnglish && currentCard.meta?.senses?.[0]?.en && (
+                        <div className="text-xs text-slate-500 dark:text-slate-400 italic mt-0.5">
+                          {currentCard.meta.senses[0].en}
+                        </div>
+                      )}
                     </div>
 
-                    <div className="w-full bg-white/95 dark:bg-slate-900/90 p-4 rounded-2xl border border-amber-200 dark:border-slate-700 text-left space-y-1.5 text-xs">
+                    <div
+                      className={`w-full bg-white/95 dark:bg-slate-900/90 p-4 rounded-2xl border text-left space-y-1.5 text-xs ${
+                        isEnglish
+                          ? 'border-indigo-200 dark:border-slate-700'
+                          : 'border-amber-200 dark:border-slate-700'
+                      }`}
+                    >
                       {currentCard.radical && (
                         <p className="text-gray-800 dark:text-slate-200">
-                          <span className="font-bold text-amber-800 dark:text-amber-400">Bộ thủ:</span>{' '}
+                          <span
+                            className={`font-bold ${
+                              isEnglish
+                                ? 'text-indigo-700 dark:text-indigo-400'
+                                : 'text-amber-800 dark:text-amber-400'
+                            }`}
+                          >
+                            {isEnglish ? 'Họ từ:' : 'Bộ thủ:'}
+                          </span>{' '}
                           {currentCard.radical}
                         </p>
                       )}
                       {currentCard.breakdown && (
                         <p className="text-gray-700 dark:text-slate-300">
-                          <span className="font-bold text-amber-800 dark:text-amber-400">Cấu tạo:</span>{' '}
+                          <span
+                            className={`font-bold ${
+                              isEnglish
+                                ? 'text-indigo-700 dark:text-indigo-400'
+                                : 'text-amber-800 dark:text-amber-400'
+                            }`}
+                          >
+                            {isEnglish ? 'Liên quan:' : 'Cấu tạo:'}
+                          </span>{' '}
                           {currentCard.breakdown}
                         </p>
                       )}
-                      {currentCard.mnemonic && (
+                      {(currentCard.meta?.tipVi || currentCard.mnemonic) && (
                         <p className="text-amber-900 dark:text-amber-200 bg-amber-50 dark:bg-amber-900/20 p-2 rounded-xl">
-                          💡 <span className="font-bold">Mẹo nhớ:</span> {currentCard.mnemonic}
+                          💡 <span className="font-bold">Mẹo nhớ:</span>{' '}
+                          {currentCard.meta?.tipVi || currentCard.mnemonic}
                         </p>
                       )}
                       {currentCard.example && (
-                        <div className="pt-1 border-t border-stone-100 dark:border-slate-800">
-                          <p className="chinese-font font-semibold text-gray-900 dark:text-white">
-                            {currentCard.example}
-                          </p>
-                          {currentCard.examplePinyin && (
-                            <p className="font-mono text-red-600 dark:text-red-400">{currentCard.examplePinyin}</p>
-                          )}
-                          {currentCard.exampleMeaning && (
-                            <p className="text-gray-500 dark:text-slate-400 italic">{currentCard.exampleMeaning}</p>
+                        <div className="pt-1 border-t border-stone-100 dark:border-slate-800 flex items-start justify-between gap-2">
+                          <div className="min-w-0">
+                            <p
+                              className={`${
+                                isEnglish ? '' : 'chinese-font'
+                              } font-semibold text-gray-900 dark:text-white`}
+                            >
+                              {currentCard.example}
+                            </p>
+                            {!isEnglish && currentCard.examplePinyin && (
+                              <p className="font-mono text-red-600 dark:text-red-400">
+                                {currentCard.examplePinyin}
+                              </p>
+                            )}
+                            {currentCard.exampleMeaning && (
+                              <p className="text-gray-500 dark:text-slate-400 italic">
+                                {currentCard.exampleMeaning}
+                              </p>
+                            )}
+                          </div>
+                          {isEnglish && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                speakEnglish(currentCard.example!, {
+                                  accent: 'us',
+                                  audioUrl: getEnAudioUrl(currentCard.meta, 'ex'),
+                                });
+                              }}
+                              className="p-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 shrink-0"
+                              title="Nghe câu ví dụ"
+                            >
+                              <Volume2 className="w-3.5 h-3.5" />
+                            </button>
                           )}
                         </div>
                       )}
@@ -446,9 +741,8 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
           <div className="flex items-center gap-3 flex-wrap text-xs">
             {(
               [
-                ['pinyin', 'Pinyin'],
-                ['hvd', 'Hán Việt'],
-                ['radical', 'Bộ thủ'],
+                ['pinyin', isEnglish ? 'Phiên âm IPA' : 'Pinyin'],
+                ['hvd', isEnglish ? 'CEFR' : 'Hán Việt'],
                 ['meaning', 'Nghĩa'],
               ] as const
             ).map(([key, label]) => (
@@ -457,7 +751,7 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
                   type="checkbox"
                   checked={showCols[key]}
                   onChange={() => setShowCols((s) => ({ ...s, [key]: !s[key] }))}
-                  className="rounded text-red-600"
+                  className={`rounded ${isEnglish ? 'text-indigo-600' : 'text-red-600'}`}
                 />
                 <span>{label}</span>
               </label>
@@ -470,10 +764,9 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
             <thead className="bg-stone-50 dark:bg-slate-800/70 text-gray-500 dark:text-slate-400 uppercase font-bold">
               <tr>
                 <th className="p-4">#</th>
-                <th className="p-4">Hán tự</th>
-                {showCols.pinyin && <th className="p-4">Pinyin</th>}
-                {showCols.hvd && <th className="p-4">Hán Việt</th>}
-                {showCols.radical && <th className="p-4">Bộ thủ / Mẹo</th>}
+                <th className="p-4">{isEnglish ? 'Từ tiếng Anh' : 'Hán tự'}</th>
+                {showCols.pinyin && <th className="p-4">{isEnglish ? 'Phiên âm IPA' : 'Pinyin'}</th>}
+                {showCols.hvd && <th className="p-4">{isEnglish ? 'CEFR' : 'Hán Việt'}</th>}
                 {showCols.meaning && <th className="p-4">Nghĩa tiếng Việt</th>}
                 <th className="p-4 text-right">Thao tác</th>
               </tr>
@@ -481,13 +774,14 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
             <tbody className="divide-y divide-stone-100 dark:divide-slate-800">
               {tableList.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="p-8 text-center text-gray-500 dark:text-slate-400">
+                  <td colSpan={6} className="p-8 text-center text-gray-500 dark:text-slate-400">
                     Không có từ vựng nào khớp với bộ lọc hiện tại.
                   </td>
                 </tr>
               ) : (
                 tableList.map((v, idx) => {
                   const isMarked = Boolean(markedMap[v.id]);
+                  const thumbUrl = isEnglish ? getEnImageUrl(v.meta, 'thumb') : null;
                   return (
                     <tr
                       key={v.id}
@@ -495,47 +789,120 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
                     >
                       <td className="p-4 text-gray-400 font-mono">{idx + 1}</td>
                       <td className="p-4">
-                        <span className="chinese-serif text-lg font-bold text-gray-900 dark:text-white">
-                          {v.hanzi}
-                        </span>
+                        <div className="flex items-center gap-2.5">
+                          {thumbUrl && !failedThumbIds[v.id] && (
+                            <img
+                              src={thumbUrl}
+                              alt={v.hanzi}
+                              loading="lazy"
+                              onError={() =>
+                                setFailedThumbIds((prev) => ({ ...prev, [v.id]: true }))
+                              }
+                              onClick={() => setSelectedVocabId(v.id)}
+                              className="w-10 h-10 rounded-xl object-cover border border-stone-200 dark:border-slate-700 bg-stone-50 dark:bg-slate-800 shrink-0 cursor-pointer hover:scale-105 transition"
+                            />
+                          )}
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <button
+                              type="button"
+                              onClick={() => setSelectedVocabId(v.id)}
+                              className={`${
+                                isEnglish ? 'text-base tracking-tight' : 'chinese-serif text-lg'
+                              } font-bold text-gray-900 dark:text-white hover:text-purple-600 dark:hover:text-purple-400 underline decoration-dotted underline-offset-4 decoration-stone-300 dark:decoration-slate-700 hover:decoration-purple-400 transition text-left`}
+                              title={`Xem chi tiết từ "${v.hanzi}"`}
+                            >
+                              {v.hanzi}
+                            </button>
+                            {v.type && v.type !== 'Từ vựng' && (
+                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-stone-100 dark:bg-slate-800 text-gray-500 dark:text-slate-400 hidden sm:inline">
+                                {v.type}
+                              </span>
+                            )}
+                          </div>
+                        </div>
                       </td>
                       {showCols.pinyin && (
-                        <td className="p-4 font-mono font-semibold text-red-600 dark:text-red-400">
+                        <td
+                          className={`p-4 font-mono font-semibold ${
+                            isEnglish
+                              ? 'text-indigo-600 dark:text-indigo-400'
+                              : 'text-red-600 dark:text-red-400'
+                          }`}
+                        >
                           {v.pinyin}
                         </td>
                       )}
                       {showCols.hvd && (
-                        <td className="p-4 uppercase text-amber-700 dark:text-amber-400 font-semibold">
-                          {v.sinoVietnamese || '—'}
-                        </td>
-                      )}
-                      {showCols.radical && (
-                        <td className="p-4 text-gray-600 dark:text-slate-300 max-w-xs">
-                          {v.radical || '—'}
+                        <td className="p-4 uppercase font-semibold">
+                          {isEnglish ? (
+                            <span className="px-2 py-0.5 rounded-md bg-sky-50 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300 text-[11px]">
+                              {v.meta?.cefr || v.sinoVietnamese || 'A1'}
+                            </span>
+                          ) : (
+                            <span className="text-amber-700 dark:text-amber-400">
+                              {v.sinoVietnamese || '—'}
+                            </span>
+                          )}
                         </td>
                       )}
                       {showCols.meaning && (
-                        <td className="p-4 font-medium text-gray-800 dark:text-slate-200 max-w-xs">
+                        <td className="p-4 font-medium text-gray-800 dark:text-slate-200 max-w-md">
                           {v.meaning}
                         </td>
                       )}
                       <td className="p-4">
                         <div className="flex items-center justify-end gap-1.5">
                           <button
-                            onClick={() => speakChinese(v.hanzi)}
-                            className="p-1.5 rounded-lg bg-stone-100 dark:bg-slate-800 border border-transparent dark:border-slate-700 hover:bg-red-50 dark:hover:bg-red-900/40 text-gray-600 dark:text-slate-300 hover:text-red-600 dark:hover:text-red-300 dark:hover:border-red-700 transition active:scale-95"
-                            title="Phát âm"
+                            type="button"
+                            onClick={() => setSelectedVocabId(v.id)}
+                            className="p-1.5 rounded-lg bg-stone-100 dark:bg-slate-800 border border-transparent dark:border-slate-700 hover:bg-purple-50 dark:hover:bg-purple-950/40 text-purple-600 dark:text-purple-400 dark:hover:border-purple-700 transition active:scale-95"
+                            title="Xem chi tiết từ vựng"
                           >
-                            <Volume2 className="w-3.5 h-3.5" />
+                            <Eye className="w-3.5 h-3.5" />
                           </button>
+                          {isEnglish ? (
+                            <>
+                              <button
+                                type="button"
+                                onClick={() => playVocabWord(v, 'us')}
+                                className="px-2 py-1 rounded-lg bg-stone-100 dark:bg-slate-800 border border-transparent dark:border-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 text-gray-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-300 font-bold text-[10px] inline-flex items-center gap-0.5 transition active:scale-95"
+                                title="Phát âm giọng Mỹ (US)"
+                              >
+                                <Volume2 className="w-3 h-3" /> US
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => playVocabWord(v, 'uk')}
+                                className="px-2 py-1 rounded-lg bg-stone-100 dark:bg-slate-800 border border-transparent dark:border-slate-700 hover:bg-sky-50 dark:hover:bg-sky-900/40 text-gray-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-300 font-bold text-[10px] inline-flex items-center gap-0.5 transition active:scale-95"
+                                title="Phát âm giọng Anh (UK)"
+                              >
+                                <Volume2 className="w-3 h-3" /> UK
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button
+                                type="button"
+                                onClick={() => speakChinese(v.hanzi)}
+                                className="p-1.5 rounded-lg bg-stone-100 dark:bg-slate-800 border border-transparent dark:border-slate-700 hover:bg-red-50 dark:hover:bg-red-900/40 text-gray-600 dark:text-slate-300 hover:text-red-600 dark:hover:text-red-300 dark:hover:border-red-700 transition active:scale-95"
+                                title="Phát âm"
+                              >
+                                <Volume2 className="w-3.5 h-3.5" />
+                              </button>
+                              {onOpenWriter && (
+                                <button
+                                  type="button"
+                                  onClick={() => onOpenWriter(v)}
+                                  className="p-1.5 rounded-lg bg-stone-100 dark:bg-slate-800 border border-transparent dark:border-slate-700 hover:bg-amber-50 dark:hover:bg-amber-900/40 text-gray-600 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-300 dark:hover:border-amber-700 transition active:scale-95"
+                                  title="Tập viết chữ Hán"
+                                >
+                                  <PenTool className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                            </>
+                          )}
                           <button
-                            onClick={() => onOpenWriter(v)}
-                            className="p-1.5 rounded-lg bg-stone-100 dark:bg-slate-800 border border-transparent dark:border-slate-700 hover:bg-amber-50 dark:hover:bg-amber-900/40 text-gray-600 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-300 dark:hover:border-amber-700 transition active:scale-95"
-                            title="Tập viết chữ Hán"
-                          >
-                            <PenTool className="w-3.5 h-3.5" />
-                          </button>
-                          <button
+                            type="button"
                             onClick={() => onToggleMarked(v.id)}
                             className={`p-1.5 rounded-lg border transition active:scale-95 ${
                               isMarked
@@ -556,6 +923,46 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
           </table>
         </div>
       </div>
+
+      {/* Modal Xem chi tiết từ vựng trong buổi học */}
+      {selectedVocab && (
+        <VocabDetailModal
+          lang={effectiveLang}
+          vocab={selectedVocab}
+          lessonTitle={lesson.title}
+          currentIndex={detailIndex}
+          totalCount={detailNavList.length}
+          onPrev={
+            detailNavList.length > 1 && detailIndex >= 0
+              ? () => {
+                  const prev =
+                    detailNavList[(detailIndex - 1 + detailNavList.length) % detailNavList.length];
+                  if (prev) setSelectedVocabId(prev.id);
+                }
+              : undefined
+          }
+          onNext={
+            detailNavList.length > 1 && detailIndex >= 0
+              ? () => {
+                  const next = detailNavList[(detailIndex + 1) % detailNavList.length];
+                  if (next) setSelectedVocabId(next.id);
+                }
+              : undefined
+          }
+          isMarked={Boolean(markedMap[selectedVocab.id])}
+          markActionMode="toggle"
+          onToggleMarked={() => {
+            if (!canUseBookmark) {
+              onRequireBookmarkAccess?.();
+              return;
+            }
+            onToggleMarked(selectedVocab.id);
+          }}
+          onOpenWriter={isEnglish ? undefined : onOpenWriter}
+          onOpenAiDictionary={onOpenAiDictionary}
+          onClose={() => setSelectedVocabId(null)}
+        />
+      )}
     </div>
   );
 };

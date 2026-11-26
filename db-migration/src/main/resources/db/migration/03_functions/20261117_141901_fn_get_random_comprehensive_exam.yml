@@ -2,7 +2,7 @@ databaseChangeLog:
   - changeSet:
       id: 20261117_141901_fn_get_random_comprehensive_exam
       author: chinese-study
-      comment: Function boc ngau nhien 50 cau hoi tong hop theo danh sach bai chon hoac toan bo bai he thong
+      comment: Function boc ngau nhien 50 cau hoi tong hop theo ngon ngu va danh sach bai chon
       runOnChange: true
       changes:
         - sql:
@@ -11,10 +11,12 @@ databaseChangeLog:
             stripComments: false
             sql: |-
               DROP FUNCTION IF EXISTS fn_get_random_comprehensive_exam(INTEGER);
+              DROP FUNCTION IF EXISTS fn_get_random_comprehensive_exam(INTEGER, TEXT[]);
 
               CREATE OR REPLACE FUNCTION fn_get_random_comprehensive_exam(
                 p_total_limit INTEGER DEFAULT 50,
-                p_lesson_ids TEXT[] DEFAULT NULL
+                p_lesson_ids TEXT[] DEFAULT NULL,
+                p_lang TEXT DEFAULT 'zh'
               )
               RETURNS TABLE (
                 id TEXT,
@@ -34,7 +36,8 @@ databaseChangeLog:
               AS $$
               WITH scale AS (
                 SELECT GREATEST(COALESCE(p_total_limit, 50), 1)::numeric / 50.0 AS factor,
-                       GREATEST(COALESCE(p_total_limit, 50), 1)::int AS total_limit
+                       GREATEST(COALESCE(p_total_limit, 50), 1)::int AS total_limit,
+                       COALESCE(NULLIF(lower(btrim(p_lang)), ''), 'zh') AS lang_code
               ),
               pool AS (
                 SELECT
@@ -69,11 +72,12 @@ databaseChangeLog:
                   ) AS lesson_cat_rn
                 FROM quiz_questions q
                 JOIN lessons l ON l.id = q.lesson_id
+                CROSS JOIN scale s
                 WHERE q.scope = 'comprehensive_test'
                   AND q.is_deleted = 0
                   AND l.is_deleted = 0
                   AND (
-                    ((p_lesson_ids IS NULL OR cardinality(p_lesson_ids) = 0) AND l.is_system = TRUE)
+                    ((p_lesson_ids IS NULL OR cardinality(p_lesson_ids) = 0) AND l.is_system = TRUE AND l.language_code = s.lang_code)
                     OR (p_lesson_ids IS NOT NULL AND cardinality(p_lesson_ids) > 0 AND q.lesson_id = ANY(p_lesson_ids))
                   )
               ),
@@ -144,4 +148,4 @@ databaseChangeLog:
       rollback:
         - sql:
             dbms: postgresql
-            sql: DROP FUNCTION IF EXISTS fn_get_random_comprehensive_exam(INTEGER, TEXT[]);
+            sql: DROP FUNCTION IF EXISTS fn_get_random_comprehensive_exam(INTEGER, TEXT[], TEXT);

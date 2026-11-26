@@ -301,38 +301,88 @@ export async function updateUserDisplayName(
   return updateUserProfile(userId, { displayName });
 }
 
-export async function getMarkedVocabMap(userId: string): Promise<Record<string, MarkedVocabRecord>> {
+export async function getMarkedVocabMap(
+  userId: string
+): Promise<Record<string, MarkedVocabRecord>> {
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
     const map = memoryStore.markedByUser.get(userId);
     const result: Record<string, MarkedVocabRecord> = {};
     if (map) {
       map.forEach((v, k) => {
-        if (v.isDeleted !== 1) {
-          result[k] = v;
-        }
+        if (v.isDeleted !== 1) result[k] = v;
       });
     }
     return result;
   }
 
   const pool = getPool()!;
-  const res = await pool.query<{
-    vocab_id: string;
-    note: string | null;
-    marked_at: Date;
-  }>(
-    `SELECT m.vocab_id, m.note, m.marked_at
-     FROM user_marked_vocab m
-     JOIN vocabularies v ON v.id = m.vocab_id AND v.is_deleted = 0
-     JOIN lessons l ON l.id = v.lesson_id AND l.is_deleted = 0
-     WHERE m.user_id = $1::uuid
-       AND m.is_deleted = 0`,
-    [userId]
-  );
+  type MarkMapRow = { vocab_id: string; note: string | null; marked_at: Date };
+  let rows: MarkMapRow[];
+  try {
+    const res = await pool.query<MarkMapRow>(
+      `WITH canonical_vocab AS (
+         SELECT
+           id,
+           FIRST_VALUE(id) OVER (
+             PARTITION BY lesson_id, btrim(hanzi)
+             ORDER BY
+               CASE WHEN id ~ '^v[0-9]+_[0-9]+$' THEN 0 ELSE 1 END ASC,
+               CASE WHEN sino_vietnamese IS NOT NULL AND btrim(sino_vietnamese) <> '' THEN 0 ELSE 1 END ASC,
+               CASE WHEN radical IS NOT NULL AND radical NOT ILIKE 'Bộ cấu tạo [%' THEN 0 ELSE 1 END ASC,
+               sort_order ASC,
+               id ASC
+           ) AS keeper_id
+         FROM vocabularies
+         WHERE is_deleted = 0
+       )
+       SELECT DISTINCT ON (cv.keeper_id)
+         cv.keeper_id AS vocab_id, m.note, m.marked_at
+       FROM user_marked_vocab m
+       JOIN canonical_vocab cv ON cv.id = m.vocab_id
+       JOIN vocabularies v ON v.id = cv.keeper_id AND v.is_deleted = 0
+       JOIN lessons l ON l.id = v.lesson_id AND l.is_deleted = 0
+       WHERE m.user_id = $1::uuid
+         AND m.is_deleted = 0
+         AND l.language_code = 'zh'
+       ORDER BY cv.keeper_id, m.marked_at DESC`,
+      [userId]
+    );
+    rows = res.rows;
+  } catch (err) {
+    if (!isUndefinedColumnError(err)) throw err;
+    const res = await pool.query<MarkMapRow>(
+      `WITH canonical_vocab AS (
+         SELECT
+           id,
+           FIRST_VALUE(id) OVER (
+             PARTITION BY lesson_id, btrim(hanzi)
+             ORDER BY
+               CASE WHEN id ~ '^v[0-9]+_[0-9]+$' THEN 0 ELSE 1 END ASC,
+               CASE WHEN sino_vietnamese IS NOT NULL AND btrim(sino_vietnamese) <> '' THEN 0 ELSE 1 END ASC,
+               CASE WHEN radical IS NOT NULL AND radical NOT ILIKE 'Bộ cấu tạo [%' THEN 0 ELSE 1 END ASC,
+               sort_order ASC,
+               id ASC
+           ) AS keeper_id
+         FROM vocabularies
+         WHERE is_deleted = 0
+       )
+       SELECT DISTINCT ON (cv.keeper_id)
+         cv.keeper_id AS vocab_id, m.note, m.marked_at
+       FROM user_marked_vocab m
+       JOIN canonical_vocab cv ON cv.id = m.vocab_id
+       JOIN vocabularies v ON v.id = cv.keeper_id AND v.is_deleted = 0
+       JOIN lessons l ON l.id = v.lesson_id AND l.is_deleted = 0
+       WHERE m.user_id = $1::uuid
+         AND m.is_deleted = 0
+       ORDER BY cv.keeper_id, m.marked_at DESC`,
+      [userId]
+    );
+    rows = res.rows;
+  }
 
   const result: Record<string, MarkedVocabRecord> = {};
-  for (const r of res.rows) {
+  for (const r of rows) {
     result[r.vocab_id] = {
       vocabId: r.vocab_id,
       note: r.note,
@@ -386,7 +436,23 @@ export async function toggleMarkedVocab(
   let shouldMark = marked;
   if (shouldMark === undefined) {
     const existing = await pool.query(
-      'SELECT 1 FROM user_marked_vocab WHERE user_id = $1::uuid AND vocab_id = $2 AND is_deleted = 0',
+      `SELECT 1
+       FROM user_marked_vocab m
+       WHERE m.user_id = $1::uuid
+         AND m.is_deleted = 0
+         AND (
+           m.vocab_id = $2
+           OR m.vocab_id IN (
+             SELECT v2.id
+             FROM vocabularies v1
+             JOIN vocabularies v2
+               ON v2.lesson_id = v1.lesson_id
+              AND btrim(v2.hanzi) = btrim(v1.hanzi)
+              AND v2.is_deleted = 0
+             WHERE v1.id = $2
+           )
+         )
+       LIMIT 1`,
       [userId, vocabId]
     );
     shouldMark = existing.rowCount === 0;
@@ -396,7 +462,20 @@ export async function toggleMarkedVocab(
     await pool.query(
       `UPDATE user_marked_vocab
        SET is_deleted = 1, deleted_at = NOW()
-       WHERE user_id = $1::uuid AND vocab_id = $2 AND is_deleted = 0`,
+       WHERE user_id = $1::uuid
+         AND is_deleted = 0
+         AND (
+           vocab_id = $2
+           OR vocab_id IN (
+             SELECT v2.id
+             FROM vocabularies v1
+             JOIN vocabularies v2
+               ON v2.lesson_id = v1.lesson_id
+              AND btrim(v2.hanzi) = btrim(v1.hanzi)
+              AND v2.is_deleted = 0
+             WHERE v1.id = $2
+           )
+         )`,
       [userId, vocabId]
     );
     return { marked: false, record: null };
@@ -465,22 +544,92 @@ export async function getMarkedVocabCards(userId: string): Promise<MarkedVocabCa
   }
 
   const pool = getPool()!;
-  const res = await pool.query(
-    `SELECT
-       v.id, v.hanzi, v.pinyin, v.sino_vietnamese, v.meaning, v.word_type,
-       v.radical, v.breakdown, v.mnemonic, v.example_hanzi, v.example_pinyin, v.example_meaning,
-       l.id AS lesson_id, l.title AS lesson_title,
-       m.note, m.marked_at
-     FROM user_marked_vocab m
-     JOIN vocabularies v ON v.id = m.vocab_id AND v.is_deleted = 0
-     JOIN lessons l ON l.id = v.lesson_id AND l.is_deleted = 0
-     WHERE m.user_id = $1::uuid
-       AND m.is_deleted = 0
-     ORDER BY l.is_system DESC, l.sort_order ASC, l.created_at ASC, v.sort_order ASC, m.marked_at DESC`,
-    [userId]
-  );
+  let rows: any[];
+  try {
+    const res = await pool.query(
+      `WITH canonical_vocab AS (
+         SELECT
+           id,
+           FIRST_VALUE(id) OVER (
+             PARTITION BY lesson_id, btrim(hanzi)
+             ORDER BY
+               CASE WHEN id ~ '^v[0-9]+_[0-9]+$' THEN 0 ELSE 1 END ASC,
+               CASE WHEN sino_vietnamese IS NOT NULL AND btrim(sino_vietnamese) <> '' THEN 0 ELSE 1 END ASC,
+               CASE WHEN radical IS NOT NULL AND radical NOT ILIKE 'Bộ cấu tạo [%' THEN 0 ELSE 1 END ASC,
+               sort_order ASC,
+               id ASC
+           ) AS keeper_id
+         FROM vocabularies
+         WHERE is_deleted = 0
+       ),
+       dedup_marks AS (
+         SELECT DISTINCT ON (cv.keeper_id)
+           cv.keeper_id AS vocab_id,
+           m.note,
+           m.marked_at
+         FROM user_marked_vocab m
+         JOIN canonical_vocab cv ON cv.id = m.vocab_id
+         WHERE m.user_id = $1::uuid
+           AND m.is_deleted = 0
+         ORDER BY cv.keeper_id, m.marked_at DESC
+       )
+       SELECT
+         v.id, v.hanzi, v.pinyin, v.sino_vietnamese, v.meaning, v.word_type,
+         v.radical, v.breakdown, v.mnemonic, v.example_hanzi, v.example_pinyin, v.example_meaning,
+         l.id AS lesson_id, l.title AS lesson_title,
+         dm.note, dm.marked_at
+       FROM dedup_marks dm
+       JOIN vocabularies v ON v.id = dm.vocab_id AND v.is_deleted = 0
+       JOIN lessons l ON l.id = v.lesson_id AND l.is_deleted = 0
+       WHERE l.language_code = 'zh'
+       ORDER BY l.is_system DESC, l.sort_order ASC, l.created_at ASC, v.sort_order ASC, dm.marked_at DESC`,
+      [userId]
+    );
+    rows = res.rows;
+  } catch (err) {
+    if (!isUndefinedColumnError(err)) throw err;
+    const res = await pool.query(
+      `WITH canonical_vocab AS (
+         SELECT
+           id,
+           FIRST_VALUE(id) OVER (
+             PARTITION BY lesson_id, btrim(hanzi)
+             ORDER BY
+               CASE WHEN id ~ '^v[0-9]+_[0-9]+$' THEN 0 ELSE 1 END ASC,
+               CASE WHEN sino_vietnamese IS NOT NULL AND btrim(sino_vietnamese) <> '' THEN 0 ELSE 1 END ASC,
+               CASE WHEN radical IS NOT NULL AND radical NOT ILIKE 'Bộ cấu tạo [%' THEN 0 ELSE 1 END ASC,
+               sort_order ASC,
+               id ASC
+           ) AS keeper_id
+         FROM vocabularies
+         WHERE is_deleted = 0
+       ),
+       dedup_marks AS (
+         SELECT DISTINCT ON (cv.keeper_id)
+           cv.keeper_id AS vocab_id,
+           m.note,
+           m.marked_at
+         FROM user_marked_vocab m
+         JOIN canonical_vocab cv ON cv.id = m.vocab_id
+         WHERE m.user_id = $1::uuid
+           AND m.is_deleted = 0
+         ORDER BY cv.keeper_id, m.marked_at DESC
+       )
+       SELECT
+         v.id, v.hanzi, v.pinyin, v.sino_vietnamese, v.meaning, v.word_type,
+         v.radical, v.breakdown, v.mnemonic, v.example_hanzi, v.example_pinyin, v.example_meaning,
+         l.id AS lesson_id, l.title AS lesson_title,
+         dm.note, dm.marked_at
+       FROM dedup_marks dm
+       JOIN vocabularies v ON v.id = dm.vocab_id AND v.is_deleted = 0
+       JOIN lessons l ON l.id = v.lesson_id AND l.is_deleted = 0
+       ORDER BY l.is_system DESC, l.sort_order ASC, l.created_at ASC, v.sort_order ASC, dm.marked_at DESC`,
+      [userId]
+    );
+    rows = res.rows;
+  }
 
-  return res.rows.map((r) => ({
+  return rows.map((r) => ({
     id: r.id,
     hanzi: r.hanzi,
     pinyin: r.pinyin,
@@ -568,17 +717,34 @@ export async function listTestAttempts(userId: string): Promise<TestAttemptRecor
   }
 
   const pool = getPool()!;
+  let rows: any[];
+  try {
     const res = await pool.query(
-    `SELECT a.id, a.lesson_id, a.exam_title, l.title AS lesson_title, a.score, a.total_questions, a.correct_count, a.duration_seconds, a.answers, a.submitted_at
-     FROM test_attempts a
-     LEFT JOIN lessons l ON l.id = a.lesson_id AND l.is_deleted = 0
-     WHERE a.user_id = $1::uuid
-       AND a.is_deleted = 0
-     ORDER BY a.submitted_at DESC`,
-    [userId]
-  );
+      `SELECT a.id, a.lesson_id, a.exam_title, l.title AS lesson_title, a.score, a.total_questions, a.correct_count, a.duration_seconds, a.answers, a.submitted_at
+       FROM test_attempts a
+       LEFT JOIN lessons l ON l.id = a.lesson_id AND l.is_deleted = 0
+       WHERE a.user_id = $1::uuid
+         AND a.is_deleted = 0
+         AND COALESCE(l.language_code, a.language_code, 'zh') = 'zh'
+       ORDER BY a.submitted_at DESC`,
+      [userId]
+    );
+    rows = res.rows;
+  } catch (err) {
+    if (!isUndefinedColumnError(err)) throw err;
+    const res = await pool.query(
+      `SELECT a.id, a.lesson_id, a.exam_title, l.title AS lesson_title, a.score, a.total_questions, a.correct_count, a.duration_seconds, a.answers, a.submitted_at
+       FROM test_attempts a
+       LEFT JOIN lessons l ON l.id = a.lesson_id AND l.is_deleted = 0
+       WHERE a.user_id = $1::uuid
+         AND a.is_deleted = 0
+       ORDER BY a.submitted_at DESC`,
+      [userId]
+    );
+    rows = res.rows;
+  }
 
-  return res.rows.map((r) => ({
+  return rows.map((r) => ({
     id: r.id,
     lessonId: r.lesson_id,
     examTitle: r.exam_title,
@@ -592,7 +758,9 @@ export async function listTestAttempts(userId: string): Promise<TestAttemptRecor
   }));
 }
 
-export async function getUserLessonTestSummary(userId: string): Promise<LessonTestSummaryRecord[]> {
+export async function getUserLessonTestSummary(
+  userId: string
+): Promise<LessonTestSummaryRecord[]> {
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
     const userAttempts = (memoryStore.attemptsByUser.get(userId) || []).filter((a) =>
@@ -780,6 +948,7 @@ export async function saveGameScore(
     memoryStore.ensureLoaded();
     const id = crypto.randomUUID();
     const playedAt = new Date().toISOString();
+    const lesson = memoryStore.lessons.find((l) => l.id === payload.lessonId && l.isDeleted !== 1);
     memoryStore.gameScores.push({
       id,
       userId,
@@ -793,7 +962,6 @@ export async function saveGameScore(
       deletedAt: null,
     });
     const user = memoryStore.users.find((u) => u.id === userId);
-    const lesson = memoryStore.lessons.find((l) => l.id === payload.lessonId && l.isDeleted !== 1);
     return {
       id,
       userId,
@@ -958,7 +1126,7 @@ export async function listGameLeaderboard(options: {
   params.push(safeLimit);
   const limitParam = `$${params.length}`;
 
-  const runQuery = async (includeAvatar: boolean) =>
+  const runQuery = async (includeAvatar: boolean, filterLang: boolean) =>
     pool.query<{
       id: string;
       user_id: string;
@@ -989,7 +1157,7 @@ export async function listGameLeaderboard(options: {
        FROM game_scores g
        JOIN users u ON u.id = g.user_id
        JOIN lessons l ON l.id = g.lesson_id
-       WHERE ${clauses.join(' AND ')}
+       WHERE ${[...clauses, ...(filterLang ? ["l.language_code = 'zh'"] : [])].join(' AND ')}
        ORDER BY g.score DESC, g.duration_seconds ASC, g.played_at DESC
        LIMIT ${limitParam}`,
       params
@@ -998,10 +1166,15 @@ export async function listGameLeaderboard(options: {
   try {
     let res;
     try {
-      res = await runQuery(true);
+      res = await runQuery(true, true);
     } catch (err) {
       if (!isUndefinedColumnError(err)) throw err;
-      res = await runQuery(false);
+      try {
+        res = await runQuery(true, false);
+      } catch (innerErr) {
+        if (!isUndefinedColumnError(innerErr)) throw innerErr;
+        res = await runQuery(false, false);
+      }
     }
     return res.rows.map((r) => ({
       id: r.id,
@@ -1083,7 +1256,7 @@ export async function listTestLeaderboard(options: {
   const params: Array<string | number> = isComp ? [safeLimit] : [lessonFilter!, safeLimit];
   const limitParam = isComp ? '$1' : '$2';
 
-  const runQuery = async (includeAvatar: boolean) =>
+  const runQuery = async (includeAvatar: boolean, filterLang: boolean) =>
     pool.query<{
       id: string;
       user_id: string;
@@ -1118,6 +1291,7 @@ export async function listTestLeaderboard(options: {
        ${isComp ? 'LEFT' : ''} JOIN lessons l ON l.id = a.lesson_id AND l.is_deleted = 0
        WHERE a.is_deleted = 0
          AND u.is_deleted = 0
+         ${filterLang ? "AND COALESCE(l.language_code, a.language_code, 'zh') = 'zh'" : ''}
          AND ${isComp ? 'a.lesson_id IS NULL' : 'a.lesson_id = $1'}
        ORDER BY a.score DESC, a.correct_count DESC, a.duration_seconds ASC, a.submitted_at DESC
        LIMIT ${limitParam}`,
@@ -1126,10 +1300,15 @@ export async function listTestLeaderboard(options: {
 
   let res;
   try {
-    res = await runQuery(true);
+    res = await runQuery(true, true);
   } catch (err) {
     if (!isUndefinedColumnError(err)) throw err;
-    res = await runQuery(false);
+    try {
+      res = await runQuery(true, false);
+    } catch (innerErr) {
+      if (!isUndefinedColumnError(innerErr)) throw innerErr;
+      res = await runQuery(false, false);
+    }
   }
 
   return res.rows.map((r) => ({
@@ -1308,54 +1487,111 @@ export async function getDashboardSummary(
     }
   } else {
     const pool = getPool()!;
-    const [lessonsRes, attemptsRes, marksRes] = await Promise.all([
-      pool.query<{
-        id: string;
-        title: string;
-        hsk_level: string;
-        unit: string | null;
-        vocab_count: string;
-        grammar_count: string;
-        text_count: string;
-      }>(
+    let hasLangCol = true;
+    type DashboardLessonRow = {
+      id: string;
+      title: string;
+      hsk_level: string;
+      unit: string | null;
+      vocab_count: string;
+      grammar_count: string;
+      text_count: string;
+    };
+    let lessonsRes;
+    try {
+      lessonsRes = await pool.query<DashboardLessonRow>(
         `SELECT
            l.id,
            l.title,
            l.hsk_level,
            l.unit,
-           (SELECT COUNT(*) FROM vocabularies v WHERE v.lesson_id = l.id AND v.is_deleted = 0) AS vocab_count,
-           (SELECT COUNT(*) FROM grammars g WHERE g.lesson_id = l.id AND g.is_deleted = 0) AS grammar_count,
+           (SELECT COUNT(DISTINCT btrim(v.hanzi)) FROM vocabularies v WHERE v.lesson_id = l.id AND v.is_deleted = 0) AS vocab_count,
+           (SELECT COUNT(DISTINCT btrim(g.title)) FROM grammars g WHERE g.lesson_id = l.id AND g.is_deleted = 0) AS grammar_count,
+           (SELECT COUNT(*) FROM texts t WHERE t.lesson_id = l.id AND t.is_deleted = 0) AS text_count
+         FROM lessons l
+         WHERE l.is_deleted = 0
+           AND l.language_code = 'zh'
+           AND (l.is_system = TRUE OR l.owner_id = $1::uuid)
+         ORDER BY l.is_system DESC, l.sort_order ASC, l.created_at ASC`,
+        [userId]
+      );
+    } catch (err) {
+      if (!isUndefinedColumnError(err)) throw err;
+      hasLangCol = false;
+      lessonsRes = await pool.query<DashboardLessonRow>(
+        `SELECT
+           l.id,
+           l.title,
+           l.hsk_level,
+           l.unit,
+           (SELECT COUNT(DISTINCT btrim(v.hanzi)) FROM vocabularies v WHERE v.lesson_id = l.id AND v.is_deleted = 0) AS vocab_count,
+           (SELECT COUNT(DISTINCT btrim(g.title)) FROM grammars g WHERE g.lesson_id = l.id AND g.is_deleted = 0) AS grammar_count,
            (SELECT COUNT(*) FROM texts t WHERE t.lesson_id = l.id AND t.is_deleted = 0) AS text_count
          FROM lessons l
          WHERE l.is_deleted = 0 AND (l.is_system = TRUE OR l.owner_id = $1::uuid)
          ORDER BY l.is_system DESC, l.sort_order ASC, l.created_at ASC`,
         [userId]
-      ),
-      pool.query<{
-        lesson_id: string | null;
-        score: number;
-        duration_seconds: number;
-        answers: Record<string, number> | null;
-        submitted_at: Date;
-      }>(
-        `SELECT lesson_id, score, duration_seconds, answers, submitted_at
-         FROM test_attempts
-         WHERE user_id = $1::uuid AND is_deleted = 0
-         ORDER BY submitted_at DESC`,
-        [userId]
-      ),
-      pool.query<{
-        vocab_id: string;
-        lesson_id: string;
-        marked_at: Date;
-      }>(
-        `SELECT m.vocab_id, v.lesson_id, m.marked_at
-         FROM user_marked_vocab m
-         JOIN vocabularies v ON v.id = m.vocab_id AND v.is_deleted = 0
-         JOIN lessons l ON l.id = v.lesson_id AND l.is_deleted = 0
-         WHERE m.user_id = $1::uuid AND m.is_deleted = 0`,
-        [userId]
-      ),
+      );
+    }
+
+    const [attemptsRes, marksRes] = await Promise.all([
+      hasLangCol
+        ? pool.query<{
+            lesson_id: string | null;
+            score: number;
+            duration_seconds: number;
+            answers: Record<string, number> | null;
+            submitted_at: Date;
+          }>(
+            `SELECT a.lesson_id, a.score, a.duration_seconds, a.answers, a.submitted_at
+             FROM test_attempts a
+             LEFT JOIN lessons l ON l.id = a.lesson_id AND l.is_deleted = 0
+             WHERE a.user_id = $1::uuid
+               AND a.is_deleted = 0
+               AND COALESCE(l.language_code, a.language_code, 'zh') = 'zh'
+             ORDER BY a.submitted_at DESC`,
+            [userId]
+          )
+        : pool.query<{
+            lesson_id: string | null;
+            score: number;
+            duration_seconds: number;
+            answers: Record<string, number> | null;
+            submitted_at: Date;
+          }>(
+            `SELECT lesson_id, score, duration_seconds, answers, submitted_at
+             FROM test_attempts
+             WHERE user_id = $1::uuid AND is_deleted = 0
+             ORDER BY submitted_at DESC`,
+            [userId]
+          ),
+      hasLangCol
+        ? pool.query<{
+            vocab_id: string;
+            lesson_id: string;
+            marked_at: Date;
+          }>(
+            `SELECT m.vocab_id, v.lesson_id, m.marked_at
+             FROM user_marked_vocab m
+             JOIN vocabularies v ON v.id = m.vocab_id AND v.is_deleted = 0
+             JOIN lessons l ON l.id = v.lesson_id AND l.is_deleted = 0
+             WHERE m.user_id = $1::uuid
+               AND m.is_deleted = 0
+               AND l.language_code = 'zh'`,
+            [userId]
+          )
+        : pool.query<{
+            vocab_id: string;
+            lesson_id: string;
+            marked_at: Date;
+          }>(
+            `SELECT m.vocab_id, v.lesson_id, m.marked_at
+             FROM user_marked_vocab m
+             JOIN vocabularies v ON v.id = m.vocab_id AND v.is_deleted = 0
+             JOIN lessons l ON l.id = v.lesson_id AND l.is_deleted = 0
+             WHERE m.user_id = $1::uuid AND m.is_deleted = 0`,
+            [userId]
+          ),
     ]);
 
     lessons = lessonsRes.rows.map((r) => ({
@@ -1386,20 +1622,38 @@ export async function getDashboardSummary(
     }));
 
     try {
-      const gamesRes = await pool.query<{
-        lesson_id: string;
-        game_mode: GameMode;
-        score: number;
-        max_score: number | null;
-        duration_seconds: number;
-        played_at: Date;
-      }>(
-        `SELECT lesson_id, game_mode, score, max_score, duration_seconds, played_at
-         FROM game_scores
-         WHERE user_id = $1::uuid AND is_deleted = 0
-         ORDER BY played_at DESC`,
-        [userId]
-      );
+      const gamesRes = hasLangCol
+        ? await pool.query<{
+            lesson_id: string;
+            game_mode: GameMode;
+            score: number;
+            max_score: number | null;
+            duration_seconds: number;
+            played_at: Date;
+          }>(
+            `SELECT g.lesson_id, g.game_mode, g.score, g.max_score, g.duration_seconds, g.played_at
+             FROM game_scores g
+             JOIN lessons l ON l.id = g.lesson_id AND l.is_deleted = 0
+             WHERE g.user_id = $1::uuid
+               AND g.is_deleted = 0
+               AND l.language_code = 'zh'
+             ORDER BY g.played_at DESC`,
+            [userId]
+          )
+        : await pool.query<{
+            lesson_id: string;
+            game_mode: GameMode;
+            score: number;
+            max_score: number | null;
+            duration_seconds: number;
+            played_at: Date;
+          }>(
+            `SELECT lesson_id, game_mode, score, max_score, duration_seconds, played_at
+             FROM game_scores
+             WHERE user_id = $1::uuid AND is_deleted = 0
+             ORDER BY played_at DESC`,
+            [userId]
+          );
       games = gamesRes.rows.map((r) => ({
         lessonId: r.lesson_id,
         gameMode: r.game_mode,
@@ -1409,7 +1663,7 @@ export async function getDashboardSummary(
         playedAt: r.played_at.toISOString(),
       }));
     } catch (err) {
-      if (!isUndefinedTableError(err)) throw err;
+      if (!isUndefinedTableError(err) && !isUndefinedColumnError(err)) throw err;
       games = [];
     }
   }
