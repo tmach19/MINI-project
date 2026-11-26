@@ -14,14 +14,26 @@ Tài liệu chuẩn hóa các rule, pattern tối ưu và quy trình kiểm ch�
 
 ---
 
-## 1. Kiến trúc Dual-Mode (PostgreSQL + In-Memory Fallback)
+## 1. Kiến trúc Chung, Dual-Mode & Nguyên tắc Gọn File
 
-- Mọi repository trong `backend/src/repositories/` **bắt buộc** giữ hành vi nhất quán giữa chế độ `postgres` và chế độ `memory` (`memoryStore` đọc từ `data.js`).
+### 1.1. Ưu tiên tích hợp — Không tạo thêm file mới không cần thiết
+- **Tích hợp vào file/module sẵn có trước khi nghĩ tới tạo file mới**: Mọi helper, hook, type hoặc UI component nhỏ (dưới ~80 dòng, hoặc chỉ phục vụ 1–2 component liên quan) phải đặt chung vào file hiện có cùng miền thay vì tách ra file nhỏ lẻ:
+  - Input/field dùng cho form buổi học (như `AutoResizeTextarea`) → đặt chung trong `frontend/src/components/common/LessonMetaFields.tsx`.
+  - Modal primitives / error banner / nút đóng → đặt chung trong `frontend/src/components/common/ModalShell.tsx`.
+  - Helper cấu hình ngôn ngữ, URL route, CDN media → đặt chung trong `frontend/src/languages/config.ts`.
+  - Hằng số & tiện ích dùng chung → đặt chung trong `frontend/src/lib/constants.ts`.
+- **Chỉ tạo file mới** khi đó là 1 màn hình/modal lớn độc lập thực sự, 1 route/service mới, hoặc 1 Liquibase changeset theo chuẩn timestamp.
+- **Không nhân đôi hạ tầng dùng chung**: Dùng chung 1 `frontend/`, 1 `db-migration/`, 1 `database/` và 1 PostgreSQL DB cho cả `backend/` (`zh`) và `en-backend/` (`en`).
+
+### 1.2. Kiến trúc Dual-Mode (PostgreSQL + In-Memory Fallback) & 2 Backend Services
+- Mọi repository trong `backend/src/repositories/` và `en-backend/src/repositories/` **bắt buộc** giữ hành vi nhất quán giữa chế độ `postgres` và chế độ `memory` (`memoryStore` đọc từ `data.js` cho `zh` hoặc `database/en/lessons-a1.json` cho `en`).
 - Khi thay đổi logic truy vấn, sắp xếp, tìm kiếm hoặc chấm điểm ở PostgreSQL, phải cập nhật logic tương đương trong nhánh `if (getDbMode() === 'memory')`.
-- Cấu hình SSL PostgreSQL cho môi trường cloud (Render → Supabase) dùng helper `sanitizeSslConnectionString` trong `backend/src/db/pool.ts` — không tự sửa connection string thủ công ở nơi khác.
-- Cấu trúc deploy tách root directory:
-  - `frontend/` → Vercel (SPA fallback qua `frontend/vercel.json`).
-  - `backend/` → Render.
+- Dùng chung 1 PostgreSQL DB phân tách dữ liệu bằng `language_code = 'zh' | 'en'`: mọi query trên `backend/` lọc cứng `'zh'` (kèm fallback nếu DB chưa có cột `42703`), mọi query trên `en-backend/` lọc cứng `'en'`, còn xác thực/RBAC dùng chung `users` + `JWT_SECRET` (SSO 2 chiều `/` ⇄ `/en`).
+- Cấu hình SSL PostgreSQL cho môi trường cloud (Render → Supabase) dùng helper `sanitizeSslConnectionString` trong `src/db/pool.ts` — không tự sửa connection string thủ công ở nơi khác.
+- Cấu trúc deploy monorepo tách root directory:
+  - `frontend/` → Vercel (`VITE_API_BASE`, `VITE_EN_API_BASE`, SPA fallback qua `frontend/vercel.json`; trong `vite.config.ts` luôn đặt proxy `/api-en` trước `/api/` để tránh trùng tiền tố).
+  - `backend/` → Render (port `4000`, `Build Command: npm install --include=dev && npm run build` khi `NODE_ENV=production`).
+  - `en-backend/` → Render (port `4001`, dùng chung `DATABASE_URL` & `JWT_SECRET`, `Build Command: npm install --include=dev && npm run build`).
   - `db-migration/` → Spring Boot 3 + Liquibase YAML (chạy vào Local PG và Supabase).
 
 ---
@@ -93,11 +105,12 @@ Tài liệu chuẩn hóa các rule, pattern tối ưu và quy trình kiểm ch�
 
 Trên Windows PowerShell, nối lệnh bằng `;` (không dùng `&&`) và kiểm tra `$LASTEXITCODE`:
 
-1. **Backend**:
+1. **Backend (`backend/` & `en-backend/`)**:
    ```powershell
    Push-Location backend; npm run typecheck; if ($LASTEXITCODE -ne 0) { Pop-Location; exit $LASTEXITCODE }; npm run build; $ec = $LASTEXITCODE; Pop-Location; exit $ec
+   Push-Location en-backend; npm run typecheck; if ($LASTEXITCODE -ne 0) { Pop-Location; exit $LASTEXITCODE }; npm run build; $ec = $LASTEXITCODE; Pop-Location; exit $ec
    ```
-   - Chạy thêm smoke test node trên `backend/dist/` (chế độ In-Memory) và/hoặc `BEGIN ... ROLLBACK` trên PostgreSQL local nếu sửa repository/function DB.
+   - Chạy thêm smoke test node trên `dist/` (chế độ In-Memory) và/hoặc `BEGIN ... ROLLBACK` trên PostgreSQL local nếu sửa repository/function DB.
 2. **Frontend**:
    ```powershell
    Push-Location frontend; npm run typecheck; if ($LASTEXITCODE -ne 0) { Pop-Location; exit $LASTEXITCODE }; npm run build; $ec = $LASTEXITCODE; Pop-Location; exit $ec

@@ -1,6 +1,43 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { CEFR_LEVELS, HSK_LEVELS } from '../../lib/constants';
 import type { LanguageCode } from '../../types';
+
+interface AutoResizeTextareaProps
+  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> {
+  value: string;
+  onChange: (value: string) => void;
+  minRows?: number;
+}
+
+export const AutoResizeTextarea: React.FC<AutoResizeTextareaProps> = ({
+  value,
+  onChange,
+  minRows = 1,
+  className = '',
+  style,
+  ...rest
+}) => {
+  const ref = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${el.scrollHeight}px`;
+  }, [value]);
+
+  return (
+    <textarea
+      ref={ref}
+      rows={minRows}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className={`resize-none overflow-hidden leading-relaxed ${className}`}
+      style={style}
+      {...rest}
+    />
+  );
+};
 
 interface LessonMetaFieldsProps {
   lang?: LanguageCode;
@@ -67,11 +104,11 @@ export const LessonMetaFields: React.FC<LessonMetaFieldsProps> = ({
 
       <div>
         <label className={labelCls}>Mô tả tóm tắt</label>
-        <input
-          type="text"
+        <AutoResizeTextarea
+          minRows={1}
           value={description}
-          onChange={(e) => onChangeDescription(e.target.value)}
-          placeholder="Tóm tắt trọng tâm buổi học..."
+          onChange={onChangeDescription}
+          placeholder="Tóm tắt trọng tâm buổi học... (Enter / Shift+Enter để xuống dòng)"
           className={`w-full ${inputPad} text-xs rounded-xl border border-stone-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white`}
         />
       </div>

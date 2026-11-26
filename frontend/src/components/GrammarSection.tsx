@@ -76,8 +76,9 @@ export const GrammarSection: React.FC<GrammarSectionProps> = ({ lang, lesson }) 
               <div className="flex-grow">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white">{g.title}</h3>
                 {g.formula && (
-                  <div className="inline-flex items-center gap-2 mt-2 px-4 py-2 bg-white dark:bg-slate-800 rounded-xl border border-blue-200 dark:border-blue-800 text-xs font-mono font-bold text-blue-700 dark:text-blue-300">
-                    <Calculator className="w-3.5 h-3.5 text-blue-500" /> Công thức: {g.formula}
+                  <div className="inline-flex items-start gap-2 mt-2 px-4 py-2 bg-white dark:bg-slate-800 rounded-xl border border-blue-200 dark:border-blue-800 text-xs font-mono font-bold text-blue-700 dark:text-blue-300">
+                    <Calculator className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" />
+                    <span className="whitespace-pre-line">Công thức: {g.formula}</span>
                   </div>
                 )}
               </div>
@@ -100,7 +101,7 @@ export const GrammarSection: React.FC<GrammarSectionProps> = ({ lang, lesson }) 
                   <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <strong className="font-bold">Lưu ý cho người Việt:</strong>
-                    <div className="mt-1 leading-relaxed">{g.notes}</div>
+                    <div className="mt-1 leading-relaxed whitespace-pre-line">{g.notes}</div>
                   </div>
                 </div>
               )}

@@ -13,7 +13,7 @@ import {
   Trash2,
   Upload,
 } from 'lucide-react';
-import { LessonMetaFields } from './common/LessonMetaFields';
+import { AutoResizeTextarea, LessonMetaFields } from './common/LessonMetaFields';
 import { ErrorBanner, ModalCloseButton, ModalShell } from './common/ModalShell';
 import {
   downloadSampleExcel,
@@ -494,7 +494,7 @@ export const LessonModal: React.FC<LessonModalProps> = ({
                 {vocabRows.map((row, idx) => (
                   <div
                     key={idx}
-                    className="p-3 rounded-2xl border border-stone-200 dark:border-slate-700 bg-stone-50/60 dark:bg-slate-800/40 grid grid-cols-1 md:grid-cols-6 gap-2 items-center"
+                    className="p-3 rounded-2xl border border-stone-200 dark:border-slate-700 bg-stone-50/60 dark:bg-slate-800/40 grid grid-cols-1 md:grid-cols-6 gap-2 items-start"
                   >
                     <input
                       placeholder={isEnglish ? 'Từ tiếng Anh *' : 'Hán tự *'}
@@ -518,22 +518,24 @@ export const LessonModal: React.FC<LessonModalProps> = ({
                       }
                       className="p-2 text-xs rounded-lg border border-stone-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-mono"
                     />
-                    <input
-                      placeholder="Nghĩa tiếng Việt *"
+                    <AutoResizeTextarea
+                      minRows={1}
+                      placeholder="Nghĩa tiếng Việt * (Shift+Enter xuống dòng)"
                       value={row.meaning}
-                      onChange={(e) =>
+                      onChange={(val) =>
                         setVocabRows((list) =>
-                          list.map((item, i) => (i === idx ? { ...item, meaning: e.target.value } : item))
+                          list.map((item, i) => (i === idx ? { ...item, meaning: val } : item))
                         )
                       }
                       className="p-2 text-xs rounded-lg border border-stone-300 dark:border-slate-700 bg-white dark:bg-slate-800 md:col-span-2"
                     />
-                    <input
+                    <AutoResizeTextarea
+                      minRows={1}
                       placeholder={isEnglish ? 'Word family / Mẹo' : 'Bộ thủ / Mẹo'}
                       value={row.radical}
-                      onChange={(e) =>
+                      onChange={(val) =>
                         setVocabRows((list) =>
-                          list.map((item, i) => (i === idx ? { ...item, radical: e.target.value } : item))
+                          list.map((item, i) => (i === idx ? { ...item, radical: val } : item))
                         )
                       }
                       className="p-2 text-xs rounded-lg border border-stone-300 dark:border-slate-700 bg-white dark:bg-slate-800"
@@ -569,7 +571,7 @@ export const LessonModal: React.FC<LessonModalProps> = ({
                   key={idx}
                   className="p-3 rounded-2xl border border-stone-200 dark:border-slate-700 bg-stone-50/60 dark:bg-slate-800/40 space-y-2"
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-start">
                     <input
                       placeholder="Tên cấu trúc (vd: Câu chữ 是)"
                       value={g.title}
@@ -580,24 +582,26 @@ export const LessonModal: React.FC<LessonModalProps> = ({
                       }
                       className="p-2 text-xs rounded-lg border border-stone-300 dark:border-slate-700 bg-white dark:bg-slate-800"
                     />
-                    <input
-                      placeholder="Công thức (vd: A + 是 + B)"
+                    <AutoResizeTextarea
+                      minRows={1}
+                      placeholder="Công thức (vd: A + 是 + B · Shift+Enter xuống dòng)"
                       value={g.formula}
-                      onChange={(e) =>
+                      onChange={(val) =>
                         setGrammarRows((list) =>
-                          list.map((item, i) => (i === idx ? { ...item, formula: e.target.value } : item))
+                          list.map((item, i) => (i === idx ? { ...item, formula: val } : item))
                         )
                       }
                       className="p-2 text-xs rounded-lg border border-stone-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-mono"
                     />
                   </div>
-                  <div className="flex items-center gap-2">
-                    <input
-                      placeholder="Giải thích ngắn..."
+                  <div className="flex items-start gap-2">
+                    <AutoResizeTextarea
+                      minRows={2}
+                      placeholder="Giải thích chi tiết & ví dụ... (Enter / Shift+Enter để xuống dòng)"
                       value={g.explanation}
-                      onChange={(e) =>
+                      onChange={(val) =>
                         setGrammarRows((list) =>
-                          list.map((item, i) => (i === idx ? { ...item, explanation: e.target.value } : item))
+                          list.map((item, i) => (i === idx ? { ...item, explanation: val } : item))
                         )
                       }
                       className="flex-grow p-2 text-xs rounded-lg border border-stone-300 dark:border-slate-700 bg-white dark:bg-slate-800"
@@ -605,7 +609,7 @@ export const LessonModal: React.FC<LessonModalProps> = ({
                     <button
                       type="button"
                       onClick={() => setGrammarRows((list) => list.filter((_, i) => i !== idx))}
-                      className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg"
+                      className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg shrink-0"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>

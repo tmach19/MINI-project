@@ -57,11 +57,11 @@ export const LoadingScreen: React.FC<{ lang?: LanguageCode }> = ({ lang }) => {
 
   if (isEnglish) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-4 bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen flex items-center justify-center px-4 bg-slate-50 dark:bg-slate-950">
         <div
           className="relative flex items-center justify-center pop-in"
           role="status"
-          aria-label="Đang tải English Studio"
+          aria-label="Đang tải"
         >
           <div className="absolute w-24 h-24 rounded-full bg-indigo-500/15 dark:bg-indigo-500/20 blur-xl" />
           <svg className="w-20 h-20 animate-spin relative" viewBox="0 0 80 80" fill="none">
@@ -88,14 +88,6 @@ export const LoadingScreen: React.FC<{ lang?: LanguageCode }> = ({ lang }) => {
           <div className="absolute w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-600 via-blue-600 to-sky-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/25">
             <span className="font-black tracking-tight text-lg">EN</span>
           </div>
-        </div>
-        <div className="text-center space-y-0.5">
-          <p className="text-sm font-bold text-slate-800 dark:text-slate-100 tracking-tight">
-            English Studio
-          </p>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            Đang kết nối lộ trình Tiếng Anh CEFR...
-          </p>
         </div>
       </div>
     );

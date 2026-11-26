@@ -860,7 +860,7 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
                         </td>
                       )}
                       {showCols.meaning && (
-                        <td className="p-4 font-medium text-gray-800 dark:text-slate-200 max-w-md">
+                        <td className="p-4 font-medium text-gray-800 dark:text-slate-200 max-w-md whitespace-pre-line">
                           {isEnglish ? <EnglishMeaningLines vocab={v} /> : v.meaning}
                         </td>
                       )}
