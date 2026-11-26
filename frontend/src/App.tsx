@@ -426,15 +426,56 @@ export default function App() {
     };
   }, [activeLang, currentLessonId, user?.id, langPack.lessonStorageKey]);
 
+  const enCefrLevelOrder = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+  const getLessonCefrKey = (l: LessonSummary): string => {
+    const m = (l.hskLevel || '').match(/\b(A1|A2|B1|B2|C1|C2)\b/i);
+    if (m) return m[1].toUpperCase();
+    const u = (l.unit || '').match(/^(A1|A2|B1|B2|C1|C2)\b/i);
+    if (u) return u[1].toUpperCase();
+    return 'Khác';
+  };
+
+  const enLevelGroups = useMemo(() => {
+    if (!isEnglish) return [] as Array<{ level: string; items: LessonSummary[] }>;
+    const byLvl = new Map<string, LessonSummary[]>();
+    for (const l of lessons) {
+      const k = getLessonCefrKey(l);
+      const arr = byLvl.get(k) || [];
+      arr.push(l);
+      byLvl.set(k, arr);
+    }
+    return Array.from(byLvl.keys())
+      .sort((a, b) => {
+        const ia = enCefrLevelOrder.indexOf(a);
+        const ib = enCefrLevelOrder.indexOf(b);
+        if (ia !== -1 && ib !== -1) return ia - ib;
+        if (ia !== -1) return -1;
+        if (ib !== -1) return 1;
+        return a.localeCompare(b, 'vi');
+      })
+      .map((level) => ({ level, items: byLvl.get(level)! }));
+  }, [lessons, isEnglish]);
+
+  const activeEnLevel = useMemo(() => {
+    if (!isEnglish) return '';
+    const cur = lessons.find((l) => l.id === currentLessonId);
+    if (cur) return getLessonCefrKey(cur);
+    return enLevelGroups[0]?.level || '';
+  }, [isEnglish, lessons, currentLessonId, enLevelGroups]);
+
   const groupedLessons = useMemo(() => {
+    const source =
+      isEnglish && enLevelGroups.length > 1
+        ? enLevelGroups.find((g) => g.level === activeEnLevel)?.items || lessons
+        : lessons;
     const groups: Record<string, LessonSummary[]> = {};
-    lessons.forEach((l) => {
+    source.forEach((l) => {
       const unit = l.unit || 'Chung';
       if (!groups[unit]) groups[unit] = [];
       groups[unit].push(l);
     });
     return groups;
-  }, [lessons]);
+  }, [lessons, isEnglish, enLevelGroups, activeEnLevel]);
 
   const handleAuthSuccess = async (token: string, loggedUser: UserProfile) => {
     setStoredToken(token);
@@ -737,6 +778,26 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-end min-w-0 flex-1">
+            {isEnglish && enLevelGroups.length > 1 && (
+              <select
+                value={activeEnLevel}
+                onChange={(e) => {
+                  const chosen = enLevelGroups.find((g) => g.level === e.target.value);
+                  if (chosen && chosen.items[0]) {
+                    setCurrentLessonId(chosen.items[0].id);
+                    navigateView('study');
+                  }
+                }}
+                aria-label="Chọn cấp độ CEFR"
+                className="pl-2.5 pr-6 py-2 bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800/80 rounded-xl text-xs font-extrabold text-indigo-700 dark:text-indigo-300 shrink-0"
+              >
+                {enLevelGroups.map((g) => (
+                  <option key={g.level} value={g.level}>
+                    {g.level} ({g.items.length})
+                  </option>
+                ))}
+              </select>
+            )}
             <select
               value={currentLessonId}
               onChange={(e) => {
@@ -749,7 +810,8 @@ export default function App() {
                 <optgroup key={unit} label={unit}>
                   {items.map((l) => (
                     <option key={l.id} value={l.id}>
-                      {l.title} ({l.vocabCount} từ)
+                      {isEnglish ? l.title.replace(/\s*-\s*CEFR\s+[A-C][12]\s*$/i, '') : l.title} (
+                      {l.vocabCount} từ)
                     </option>
                   ))}
                 </optgroup>

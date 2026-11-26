@@ -7,6 +7,7 @@ import {
   BookOpen,
   Check,
   CheckCircle2,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Compass,
@@ -254,6 +255,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   const isEnglish = lang === 'en';
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showRoadmapModal, setShowRoadmapModal] = useState(false);
+  const [roadmapSearch, setRoadmapSearch] = useState('');
+  const [expandedRoadmapLevels, setExpandedRoadmapLevels] = useState<Record<string, boolean>>({});
   const [showNotifPopover, setShowNotifPopover] = useState(false);
   const [activityView, setActivityView] = useState<'week' | 'heatmap'>('week');
   const [dailyGoalMinutes, setDailyGoalMinutes] = useState<number>(() => {
@@ -307,6 +310,84 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     [dashboard, lessons, currentLessonId, lang]
   );
 
+
+  const roadmapGroups = useMemo(() => {
+    const CEFR_ORDER = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+    const extractLevelKey = (l: LessonSummary): string => {
+      const raw = (l.hskLevel || '').trim();
+      if (isEnglish) {
+        const m = raw.match(/\b(A1|A2|B1|B2|C1|C2)\b/i);
+        if (m) return m[1].toUpperCase();
+        const u = (l.unit || '').match(/^(A1|A2|B1|B2|C1|C2)\b/i);
+        if (u) return u[1].toUpperCase();
+        return raw || 'Khác';
+      }
+      return raw || 'Khác';
+    };
+
+    const q = roadmapSearch.trim().toLowerCase();
+    const map = new Map<string, LessonSummary[]>();
+    for (const l of lessons) {
+      if (
+        q &&
+        ![l.title, l.hskLevel, l.unit]
+          .filter(Boolean)
+          .some((v) => v!.toLowerCase().includes(q))
+      ) {
+        continue;
+      }
+      const key = extractLevelKey(l);
+      const arr = map.get(key) || [];
+      arr.push(l);
+      map.set(key, arr);
+    }
+
+    const keys = Array.from(map.keys()).sort((a, b) => {
+      if (isEnglish) {
+        const ia = CEFR_ORDER.indexOf(a);
+        const ib = CEFR_ORDER.indexOf(b);
+        if (ia !== -1 && ib !== -1) return ia - ib;
+        if (ia !== -1) return -1;
+        if (ib !== -1) return 1;
+      }
+      return a.localeCompare(b, 'vi', { numeric: true });
+    });
+
+    return keys.map((key) => {
+      const items = map.get(key)!;
+      const totalVocab = items.reduce((sum, x) => sum + (x.vocabCount || 0), 0);
+      const hasCurrent = items.some((x) => x.id === currentLessonId);
+      return { key, items, totalVocab, hasCurrent };
+    });
+  }, [lessons, roadmapSearch, isEnglish, currentLessonId]);
+
+  useEffect(() => {
+    if (!showRoadmapModal) return;
+    setRoadmapSearch('');
+    const activeGroup = roadmapGroups.find((g) => g.hasCurrent) || roadmapGroups[0];
+    if (activeGroup) {
+      setExpandedRoadmapLevels({ [activeGroup.key]: true });
+    }
+  }, [showRoadmapModal]);
+
+  const getRoadmapLevelBadgeClass = (key: string): string => {
+    switch (key) {
+      case 'A1':
+        return 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800';
+      case 'A2':
+        return 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
+      case 'B1':
+        return 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800';
+      case 'B2':
+        return 'bg-violet-100 dark:bg-violet-900/50 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-800';
+      case 'C1':
+        return 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800';
+      case 'C2':
+        return 'bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800';
+      default:
+        return 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800';
+    }
+  };
 
   const heroLesson = data.continueLesson;
 
@@ -1538,65 +1619,152 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           onClick={() => setShowRoadmapModal(false)}
         >
           <div
-            className="w-full max-w-2xl max-h-[82vh] bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col overflow-hidden"
+            className="w-full max-w-2xl max-h-[84vh] bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
-              <div>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <GitBranch className="w-4 h-4 text-red-600" />
-                  Lộ trình bài học ({lessons.length} bài)
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                  Chọn bài bất kỳ để mở ngay giáo trình tương ứng.
-                </p>
+            <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-800 space-y-3">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <GitBranch className={`w-4 h-4 ${isEnglish ? 'text-indigo-500' : 'text-red-600'}`} />
+                    Lộ trình bài học ({lessons.length} bài)
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    {isEnglish
+                      ? 'Bấm vào từng cấp độ A1–C2 để mở danh sách bài học tương ứng.'
+                      : 'Chọn bài bất kỳ để mở ngay giáo trình tương ứng.'}
+                  </p>
+                </div>
+                <ModalCloseButton onClick={() => setShowRoadmapModal(false)} />
               </div>
-              <ModalCloseButton onClick={() => setShowRoadmapModal(false)} />
+
+              <div className="relative">
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="text"
+                  value={roadmapSearch}
+                  onChange={(e) => setRoadmapSearch(e.target.value)}
+                  placeholder="Tìm nhanh theo tên bài, chủ đề hoặc cấp độ (vd: B1, Du lịch, Giáo dục)..."
+                  className="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+                />
+              </div>
             </div>
 
-            <div className="p-4 overflow-y-auto space-y-2">
-              {lessons.map((l) => {
-                const isCurrent = l.id === currentLessonId;
-                return (
-                  <button
-                    key={l.id}
-                    type="button"
-                    onClick={() => {
-                      setShowRoadmapModal(false);
-                      onOpenLesson(l.id, 'vocab');
-                    }}
-                    className={`w-full text-left p-3.5 rounded-xl border transition flex items-center justify-between gap-3 ${
-                      isCurrent
-                        ? 'bg-red-50/70 dark:bg-red-950/30 border-red-300 dark:border-red-800'
-                        : 'bg-slate-50/60 dark:bg-slate-800/40 border-slate-200/70 dark:border-slate-800 hover:border-red-300 dark:hover:border-red-700'
-                    }`}
-                  >
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-xs font-bold text-slate-900 dark:text-white truncate">
-                          {l.title}
-                        </span>
-                        <span className="px-2 py-0.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-[10px] font-semibold text-slate-600 dark:text-slate-300">
-                          {l.hskLevel}
-                        </span>
-                        {isCurrent && (
-                          <span className="px-2 py-0.5 rounded-full bg-red-600 text-white text-[10px] font-bold">
-                            Đang chọn
+            <div className="p-4 overflow-y-auto space-y-2.5">
+              {roadmapGroups.length === 0 ? (
+                <div className="py-10 text-center text-xs text-slate-400">
+                  Không tìm thấy bài học phù hợp với “{roadmapSearch}”.
+                </div>
+              ) : (
+                roadmapGroups.map((group) => {
+                  const isSearching = Boolean(roadmapSearch.trim());
+                  const isOpen = isSearching || Boolean(expandedRoadmapLevels[group.key]);
+                  return (
+                    <div
+                      key={group.key}
+                      className="rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/20 overflow-hidden"
+                    >
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpandedRoadmapLevels((prev) => ({
+                            ...prev,
+                            [group.key]: !prev[group.key],
+                          }))
+                        }
+                        className="w-full px-4 py-3 flex items-center justify-between gap-3 hover:bg-slate-100/70 dark:hover:bg-slate-800/60 transition text-left"
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0 flex-wrap">
+                          <span
+                            className={`px-2.5 py-0.5 rounded-lg border text-xs font-extrabold tracking-wide ${getRoadmapLevelBadgeClass(group.key)}`}
+                          >
+                            {group.key}
                           </span>
-                        )}
-                      </div>
-                      <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 tabular-nums">
-                        {l.vocabCount} từ vựng • {l.grammarCount} ngữ pháp • {l.textCount} bài khóa
-                      </div>
+                          <span className="text-xs font-bold text-slate-800 dark:text-slate-100 tabular-nums">
+                            {group.items.length} bài
+                          </span>
+                          <span className="text-[11px] text-slate-500 dark:text-slate-400 tabular-nums">
+                            • {group.totalVocab.toLocaleString('vi-VN')} từ vựng
+                          </span>
+                          {group.hasCurrent && (
+                            <span
+                              className={`px-2 py-0.5 rounded-full text-[10px] font-bold text-white ${
+                                isEnglish ? 'bg-indigo-600' : 'bg-red-600'
+                              }`}
+                            >
+                              Đang học
+                            </span>
+                          )}
+                        </div>
+                        <ChevronDown
+                          className={`w-4 h-4 text-slate-400 shrink-0 transition-transform duration-200 ${
+                            isOpen ? 'rotate-180' : '-rotate-90'
+                          }`}
+                        />
+                      </button>
+
+                      {isOpen && (
+                        <div className="px-3 pb-3 pt-1 space-y-1.5 border-t border-slate-100 dark:border-slate-800/80">
+                          {group.items.map((l) => {
+                            const isCurrent = l.id === currentLessonId;
+                            const cleanTitle = isEnglish
+                              ? l.title.replace(/\s*-\s*CEFR\s+[A-C][12]\s*$/i, '')
+                              : l.title;
+                            return (
+                              <button
+                                key={l.id}
+                                type="button"
+                                onClick={() => {
+                                  setShowRoadmapModal(false);
+                                  onOpenLesson(l.id, 'vocab');
+                                }}
+                                className={`w-full text-left p-3 rounded-xl border transition flex items-center justify-between gap-3 ${
+                                  isCurrent
+                                    ? isEnglish
+                                      ? 'bg-indigo-50/80 dark:bg-indigo-950/40 border-indigo-400 dark:border-indigo-700'
+                                      : 'bg-red-50/70 dark:bg-red-950/30 border-red-300 dark:border-red-800'
+                                    : isEnglish
+                                      ? 'bg-white dark:bg-slate-900/70 border-slate-200/70 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-700'
+                                      : 'bg-white dark:bg-slate-900/70 border-slate-200/70 dark:border-slate-800 hover:border-red-300 dark:hover:border-red-700'
+                                }`}
+                              >
+                                <div className="min-w-0">
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <span className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                                      {cleanTitle}
+                                    </span>
+                                    {isCurrent && (
+                                      <span
+                                        className={`px-2 py-0.5 rounded-full text-white text-[10px] font-bold ${
+                                          isEnglish ? 'bg-indigo-600' : 'bg-red-600'
+                                        }`}
+                                      >
+                                        Đang chọn
+                                      </span>
+                                    )}
+                                  </div>
+                                  <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 tabular-nums">
+                                    {l.vocabCount} từ vựng • {l.grammarCount} ngữ pháp • {l.textCount} bài khóa
+                                  </div>
+                                </div>
+                                <CheckCircle2
+                                  className={`w-4 h-4 shrink-0 ${
+                                    isCurrent
+                                      ? isEnglish
+                                        ? 'text-indigo-500'
+                                        : 'text-red-600'
+                                      : 'text-slate-300 dark:text-slate-600'
+                                  }`}
+                                />
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
-                    <CheckCircle2
-                      className={`w-4 h-4 shrink-0 ${
-                        isCurrent ? 'text-red-600' : 'text-slate-300 dark:text-slate-600'
-                      }`}
-                    />
-                  </button>
-                );
-              })}
+                  );
+                })
+              )}
             </div>
           </div>
         </div>
