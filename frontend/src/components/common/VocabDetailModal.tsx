@@ -13,6 +13,11 @@ import {
 import { getEnAudioUrl, getEnImageUrl } from '../../languages/config';
 import { api } from '../../lib/api';
 import { speakChinese, speakEnglish } from '../../lib/audio';
+import {
+  cleanEnglishSenseVi,
+  EnglishMeaningLines,
+  getPosBadgeClass,
+} from './EnglishMeaningLines';
 import { ModalCloseButton, ModalShell } from './ModalShell';
 import type {
   AiDictionaryEntry,
@@ -470,9 +475,13 @@ export const VocabDetailModal: React.FC<VocabDetailModalProps> = ({
               <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-1">
                 Nghĩa tiếng Việt
               </span>
-              <p className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-snug">
-                {vocab.meaning}
-              </p>
+              {isEnglish ? (
+                <EnglishMeaningLines vocab={vocab} size="lg" />
+              ) : (
+                <p className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-snug">
+                  {vocab.meaning}
+                </p>
+              )}
             </div>
 
             {isEnglish && meta?.senses && meta.senses.length > 0 && (
@@ -484,12 +493,14 @@ export const VocabDetailModal: React.FC<VocabDetailModalProps> = ({
                   >
                     <div className="flex items-baseline gap-2 flex-wrap">
                       {sense.pos && (
-                        <span className="px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 text-[10px] font-bold">
+                        <span
+                          className={`px-1.5 py-0.5 rounded border font-mono text-[10px] font-bold ${getPosBadgeClass(sense.pos)}`}
+                        >
                           {sense.pos}
                         </span>
                       )}
                       <span className="font-semibold text-slate-900 dark:text-white">
-                        {sense.vi}
+                        {cleanEnglishSenseVi(sense.vi)}
                       </span>
                     </div>
                     {sense.en && (

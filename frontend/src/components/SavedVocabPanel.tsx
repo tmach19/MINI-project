@@ -10,6 +10,7 @@ import {
   Volume2,
 } from 'lucide-react';
 import { getEnAudioUrl, getEnImageUrl } from '../languages/config';
+import { EnglishMeaningLines } from './common/EnglishMeaningLines';
 import { api } from '../lib/api';
 import { speakChinese, speakEnglish } from '../lib/audio';
 import { LoadingCard } from './common/LoadingState';
@@ -269,7 +270,7 @@ export const SavedVocabPanel: React.FC<SavedVocabPanelProps> = ({
                         >
                           {card.hanzi}
                         </button>
-                        {card.type && (
+                        {!isEnglish && card.type && (
                           <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hidden sm:inline">
                             {card.type}
                           </span>
@@ -293,7 +294,7 @@ export const SavedVocabPanel: React.FC<SavedVocabPanelProps> = ({
                       )}
                     </td>
                     <td className="py-3 px-3.5 text-slate-800 dark:text-slate-200 font-medium max-w-xs">
-                      {card.meaning}
+                      {isEnglish ? <EnglishMeaningLines vocab={card} /> : card.meaning}
                     </td>
                     <td className="py-3 px-3.5">
                       {onOpenLesson ? (

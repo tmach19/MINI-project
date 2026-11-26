@@ -90,7 +90,16 @@ async function apiFetch<T>(
 
   const base = getActiveApiBase(langOverride);
   const res = await fetch(`${base}${path}`, { ...init, headers });
-  const data = await res.json().catch(() => ({}));
+  const contentType = (res.headers.get('content-type') || '').toLowerCase();
+  if (!contentType.includes('application/json')) {
+    if (!res.ok) {
+      throw new Error(`Lỗi API (${res.status})`);
+    }
+    throw new Error('Không kết nối được tới máy chủ API (máy chủ trả về dữ liệu không hợp lệ).');
+  }
+  const data = await res.json().catch(() => {
+    throw new Error('Phản hồi từ máy chủ API không đúng định dạng JSON.');
+  });
   if (!res.ok) {
     throw new Error(data.error || `Lỗi API (${res.status})`);
   }

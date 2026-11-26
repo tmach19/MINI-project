@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Search, Sparkles, Volume2, X } from 'lucide-react';
 import { getEnAudioUrl, getEnImageUrl } from '../languages/config';
+import { EnglishMeaningLines } from './common/EnglishMeaningLines';
 import { api } from '../lib/api';
 import { speakChinese, speakEnglish } from '../lib/audio';
 import { ModalShell } from './common/ModalShell';
@@ -178,7 +179,13 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                         <Volume2 className="w-3.5 h-3.5" />
                       </button>
                     </div>
-                    <p className="text-sm text-gray-700 dark:text-slate-200 font-medium">{item.meaning}</p>
+                    {isEnglish ? (
+                      <div className="mt-1">
+                        <EnglishMeaningLines vocab={item} size="sm" />
+                      </div>
+                    ) : (
+                      <p className="text-sm text-gray-700 dark:text-slate-200 font-medium">{item.meaning}</p>
+                    )}
                     <p className="text-[11px] text-gray-400 dark:text-slate-400">
                       {item.hskLevel} • {item.lessonTitle}
                     </p>

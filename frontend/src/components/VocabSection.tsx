@@ -14,6 +14,7 @@ import {
 import { getEnAudioUrl, getEnImageUrl } from '../languages/config';
 import { soundFx, speakChinese, speakEnglish } from '../lib/audio';
 import { shuffleArray } from '../lib/constants';
+import { EnglishMeaningLines, groupEnglishMeaningsByPos } from './common/EnglishMeaningLines';
 import { VocabDetailModal } from './common/VocabDetailModal';
 import type { LanguageCode, LessonDetail, MarkedVocabRecord, VocabularyItem } from '../types';
 
@@ -361,7 +362,14 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
                             : 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300'
                         }`}
                       >
-                        {currentCard.type || 'Từ vựng'}
+                        {isEnglish
+                          ? groupEnglishMeaningsByPos(currentCard)
+                              .map((r) => r.pos)
+                              .filter(Boolean)
+                              .join(' · ') ||
+                            currentCard.type ||
+                            'Từ vựng'
+                          : currentCard.type || 'Từ vựng'}
                       </span>
                       {isEnglish ? (
                         <>
@@ -575,9 +583,15 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
                           Hán Việt: [ {currentCard.sinoVietnamese} ]
                         </div>
                       )}
-                      <div className="text-xl font-bold text-gray-900 dark:text-white mt-1">
-                        {currentCard.meaning}
-                      </div>
+                      {isEnglish ? (
+                        <div className="mt-1.5">
+                          <EnglishMeaningLines vocab={currentCard} size="lg" centered />
+                        </div>
+                      ) : (
+                        <div className="text-xl font-bold text-gray-900 dark:text-white mt-1">
+                          {currentCard.meaning}
+                        </div>
+                      )}
                       {isEnglish && currentCard.meta?.senses?.[0]?.en && (
                         <div className="text-xs text-slate-500 dark:text-slate-400 italic mt-0.5">
                           {currentCard.meta.senses[0].en}
@@ -813,7 +827,7 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
                             >
                               {v.hanzi}
                             </button>
-                            {v.type && v.type !== 'Từ vựng' && (
+                            {!isEnglish && v.type && v.type !== 'Từ vựng' && (
                               <span className="text-[10px] px-1.5 py-0.5 rounded bg-stone-100 dark:bg-slate-800 text-gray-500 dark:text-slate-400 hidden sm:inline">
                                 {v.type}
                               </span>
@@ -847,7 +861,7 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
                       )}
                       {showCols.meaning && (
                         <td className="p-4 font-medium text-gray-800 dark:text-slate-200 max-w-md">
-                          {v.meaning}
+                          {isEnglish ? <EnglishMeaningLines vocab={v} /> : v.meaning}
                         </td>
                       )}
                       <td className="p-4">

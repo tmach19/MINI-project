@@ -132,10 +132,11 @@ export default function App() {
 
   const refreshLessons = async (targetLang: LanguageCode = activeLang) => {
     const res = await api.listLessons(targetLang);
-    setLessons(res.lessons);
+    const list = Array.isArray(res?.lessons) ? res.lessons : [];
+    setLessons(list);
     setCurrentLessonId((prevId) => {
-      if (res.lessons.length > 0 && !res.lessons.some((l) => l.id === prevId)) {
-        return res.lessons[0].id;
+      if (list.length > 0 && !list.some((l) => l.id === prevId)) {
+        return list[0].id;
       }
       return prevId;
     });
@@ -143,15 +144,15 @@ export default function App() {
 
   const refreshUserProgress = async (targetLang: LanguageCode = activeLang) => {
     const progRes = await api.getProgress(targetLang);
-    setMarkedMap(progRes.markedMap);
-    setAttempts(progRes.attempts);
+    setMarkedMap(progRes?.markedMap && typeof progRes.markedMap === 'object' ? progRes.markedMap : {});
+    setAttempts(Array.isArray(progRes?.attempts) ? progRes.attempts : []);
   };
 
   const refreshCurrentUserProfile = async () => {
     if (!getStoredToken()) return;
     try {
       const me = await api.me();
-      setUser(me.user);
+      if (me?.user) setUser(me.user);
     } catch {
       // Bỏ qua nếu phiên đã hết hạn
     }
