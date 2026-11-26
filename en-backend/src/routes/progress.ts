@@ -21,15 +21,14 @@ import type { GameMode, LanguageCode } from '../types/domain.js';
 
 const router = Router();
 
-function parseOptionalLang(raw: unknown): LanguageCode | undefined {
-  if (typeof raw !== 'string' || !raw.trim()) return undefined;
+function parseServiceLang(raw: unknown): LanguageCode {
   return normalizeLanguageCode(raw);
 }
 
 router.get('/progress', requireAuth, async (req, res, next) => {
   try {
     const userId = req.user!.userId;
-    const lang = parseOptionalLang(req.query.lang);
+    const lang = parseServiceLang(req.query.lang);
     const [markedMap, markedCards, attempts] = await Promise.all([
       getMarkedVocabMap(userId, lang),
       getMarkedVocabCards(userId, lang),
@@ -47,7 +46,7 @@ router.get('/dashboard', requireAuth, async (req, res, next) => {
       typeof req.query.lessonId === 'string' && req.query.lessonId.trim()
         ? req.query.lessonId.trim()
         : undefined;
-    const lang = normalizeLanguageCode(req.query.lang);
+    const lang = parseServiceLang(req.query.lang);
     const summary = await getDashboardSummary(req.user!.userId, preferredLessonId, lang);
     res.json({ dashboard: summary });
   } catch (err) {
@@ -57,7 +56,7 @@ router.get('/dashboard', requireAuth, async (req, res, next) => {
 
 router.get('/progress/marked', requireAuth, async (req, res, next) => {
   try {
-    const lang = parseOptionalLang(req.query.lang);
+    const lang = parseServiceLang(req.query.lang);
     const cards = await getMarkedVocabCards(req.user!.userId, lang);
     res.json({ cards });
   } catch (err) {
@@ -132,11 +131,13 @@ router.get('/tests/lesson-summary', requireAuth, async (req, res, next) => {
 router.get('/tests/attempts', requireAuth, async (req, res, next) => {
   try {
     const lessonIdParam = req.query.lessonId;
-    const lang = parseOptionalLang(req.query.lang);
+    const lang = parseServiceLang(req.query.lang);
     if (typeof lessonIdParam === 'string' && lessonIdParam.trim()) {
       const details = await getUserLessonAttemptDetails(
         req.user!.userId,
-        lessonIdParam === '__comprehensive__' ? null : lessonIdParam.trim()
+        lessonIdParam === '__comprehensive__' ? null : lessonIdParam.trim(),
+        50,
+        lang
       );
       res.json({ attempts: details });
       return;

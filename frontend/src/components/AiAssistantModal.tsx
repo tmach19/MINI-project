@@ -21,6 +21,7 @@ import {
   X,
 } from 'lucide-react';
 import { getEnAudioUrl, getLanguagePack } from '../languages/config';
+import { getPosBadgeClass, parseEnglishMeaningWithPos } from './common/EnglishMeaningLines';
 import { api } from '../lib/api';
 import { speakText } from '../lib/audio';
 import type {
@@ -757,8 +758,16 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                           {hit.pinyin}
                         </span>
                         {hit.sinoVietnamese && (
-                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 font-bold uppercase">
-                            {hit.sinoVietnamese}
+                          <span
+                            className={`text-[10px] px-1.5 py-0.5 rounded font-bold uppercase ${
+                              isEnglish
+                                ? 'bg-sky-100 dark:bg-sky-900/40 text-sky-800 dark:text-sky-300'
+                                : 'bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300'
+                            }`}
+                          >
+                            {isEnglish
+                              ? hit.sinoVietnamese.replace(/^CEFR\s*[:\-]?\s*/i, '').trim()
+                              : hit.sinoVietnamese}
                           </span>
                         )}
                       </div>
@@ -771,19 +780,45 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                     </div>
 
                     <div className="flex items-center gap-1 flex-shrink-0">
-                      <button
-                        type="button"
-                        onClick={() =>
-                          speakText(hit.hanzi, lang, {
-                            accent: 'us',
-                            audioUrl: isEnglish ? getEnAudioUrl(hit.meta, 'us') : null,
-                          })
-                        }
-                        className="p-1.5 rounded-lg bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-gray-600 dark:text-slate-300 hover:text-red-600"
-                        title="Nghe phát âm"
-                      >
-                        <Volume2 className="w-3.5 h-3.5" />
-                      </button>
+                      {isEnglish ? (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              speakText(hit.hanzi, 'en', {
+                                accent: 'us',
+                                audioUrl: getEnAudioUrl(hit.meta, 'us'),
+                              })
+                            }
+                            className="px-2 py-1 rounded-lg bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-[11px] font-bold text-indigo-700 dark:text-indigo-300 hover:border-indigo-400 inline-flex items-center gap-1"
+                            title="Nghe phát âm giọng Mỹ (US)"
+                          >
+                            <Volume2 className="w-3 h-3" /> US
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              speakText(hit.hanzi, 'en', {
+                                accent: 'uk',
+                                audioUrl: getEnAudioUrl(hit.meta, 'uk'),
+                              })
+                            }
+                            className="px-2 py-1 rounded-lg bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-[11px] font-bold text-sky-700 dark:text-sky-300 hover:border-sky-400 inline-flex items-center gap-1"
+                            title="Nghe phát âm giọng Anh (UK)"
+                          >
+                            <Volume2 className="w-3 h-3" /> UK
+                          </button>
+                        </>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => speakText(hit.hanzi, lang)}
+                          className="p-1.5 rounded-lg bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-gray-600 dark:text-slate-300 hover:text-red-600"
+                          title="Nghe phát âm"
+                        >
+                          <Volume2 className="w-3.5 h-3.5" />
+                        </button>
+                      )}
                       {!isEnglish && onOpenWriter && (
                         <button
                           type="button"
@@ -881,43 +916,125 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                         </span>
                       )}
                       {dictResult.aiResult.sinoVietnamese && (
-                        <span className="px-2.5 py-0.5 rounded-lg bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 text-xs font-bold uppercase">
-                          {isEnglish ? 'CEFR: ' : 'Hán Việt: '}
-                          {dictResult.aiResult.sinoVietnamese}
+                        <span
+                          className={`px-2.5 py-0.5 rounded-lg text-xs font-bold uppercase ${
+                            isEnglish
+                              ? 'bg-sky-100 dark:bg-sky-900/40 text-sky-800 dark:text-sky-300'
+                              : 'bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300'
+                          }`}
+                        >
+                          {isEnglish
+                            ? dictResult.aiResult.sinoVietnamese
+                                .replace(/^CEFR\s*[:\-]?\s*/i, '')
+                                .trim()
+                            : `Hán Việt: ${dictResult.aiResult.sinoVietnamese}`}
                         </span>
                       )}
-                      {dictResult.aiResult.wordType && (
+                      {!isEnglish && dictResult.aiResult.wordType && (
                         <span className="px-2.5 py-0.5 rounded-lg bg-stone-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 text-[11px] font-semibold">
                           {dictResult.aiResult.wordType}
                         </span>
                       )}
                     </div>
-                    <p className="text-base font-bold text-gray-900 dark:text-white">
-                      {dictResult.aiResult.meaning}
-                    </p>
+                    {(!isEnglish ||
+                      dictResult.aiResult.isSentence ||
+                      dictResult.aiResult.meanings.length === 0) && (
+                      <p className="text-base font-bold text-gray-900 dark:text-white">
+                        {dictResult.aiResult.meaning}
+                      </p>
+                    )}
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => speakText(dictResult.aiResult!.hanzi, lang)}
-                    className="px-3.5 py-2 rounded-xl bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs font-bold inline-flex items-center gap-1.5 self-start hover:bg-red-100"
-                  >
-                    <Volume2 className="w-4 h-4" /> Nghe phát âm
-                  </button>
+                  {isEnglish ? (
+                    <div className="flex items-center gap-1.5 self-start shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const word = dictResult.aiResult!.hanzi;
+                          const matched = dictResult.localHits.find(
+                            (h) => h.hanzi.trim().toLowerCase() === word.trim().toLowerCase()
+                          );
+                          speakText(word, 'en', {
+                            accent: 'us',
+                            audioUrl: getEnAudioUrl(matched?.meta, 'us'),
+                          });
+                        }}
+                        className="px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-sm transition active:scale-95"
+                        title="Nghe phát âm giọng Mỹ (US)"
+                      >
+                        <Volume2 className="w-3.5 h-3.5" /> US
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const word = dictResult.aiResult!.hanzi;
+                          const matched = dictResult.localHits.find(
+                            (h) => h.hanzi.trim().toLowerCase() === word.trim().toLowerCase()
+                          );
+                          speakText(word, 'en', {
+                            accent: 'uk',
+                            audioUrl: getEnAudioUrl(matched?.meta, 'uk'),
+                          });
+                        }}
+                        className="px-3 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-sm transition active:scale-95"
+                        title="Nghe phát âm giọng Anh (UK)"
+                      >
+                        <Volume2 className="w-3.5 h-3.5" /> UK
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => speakText(dictResult.aiResult!.hanzi, lang)}
+                      className="px-3.5 py-2 rounded-xl bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs font-bold inline-flex items-center gap-1.5 self-start hover:bg-red-100"
+                    >
+                      <Volume2 className="w-4 h-4" /> Nghe phát âm
+                    </button>
+                  )}
                 </div>
 
-                {/* Extra meanings */}
-                {dictResult.aiResult.meanings.length > 1 && (
-                  <div className="flex flex-wrap gap-1.5">
-                    {dictResult.aiResult.meanings.map((m, idx) => (
-                      <span
-                        key={`${m}-${idx}`}
-                        className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-slate-800 text-xs text-gray-700 dark:text-slate-300"
-                      >
-                        {idx + 1}. {m}
-                      </span>
-                    ))}
+                {/* Meanings list */}
+                {isEnglish && !dictResult.aiResult.isSentence && dictResult.aiResult.meanings.length > 0 ? (
+                  <div className="space-y-1.5">
+                    {dictResult.aiResult.meanings.map((m, idx) => {
+                      const parsed = parseEnglishMeaningWithPos(m, dictResult.aiResult?.wordType);
+                      return (
+                        <div
+                          key={`${m}-${idx}`}
+                          className="px-3 py-2 rounded-xl bg-stone-50 dark:bg-slate-800/60 border border-stone-200/70 dark:border-slate-800 flex items-baseline gap-2.5 flex-wrap"
+                        >
+                          {parsed.posLabel ? (
+                            <span
+                              className={`px-2 py-0.5 rounded-md border text-[11px] font-bold shrink-0 ${getPosBadgeClass(parsed.pos)}`}
+                            >
+                              {parsed.posLabel}
+                            </span>
+                          ) : (
+                            <span className="text-[11px] font-mono font-bold text-slate-400 shrink-0">
+                              {idx + 1}.
+                            </span>
+                          )}
+                          <span className="text-sm font-semibold text-gray-900 dark:text-white leading-snug">
+                            {parsed.text}
+                          </span>
+                        </div>
+                      );
+                    })}
                   </div>
+                ) : (
+                  !isEnglish &&
+                  dictResult.aiResult.meanings.length > 1 && (
+                    <div className="flex flex-wrap gap-1.5">
+                      {dictResult.aiResult.meanings.map((m, idx) => (
+                        <span
+                          key={`${m}-${idx}`}
+                          className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-slate-800 text-xs text-gray-700 dark:text-slate-300"
+                        >
+                          {idx + 1}. {m}
+                        </span>
+                      ))}
+                    </div>
+                  )
                 )}
 
                 {/* Radical / Breakdown / Mnemonic / Grammar */}

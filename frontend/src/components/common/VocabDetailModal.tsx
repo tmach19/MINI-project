@@ -334,23 +334,14 @@ export const VocabDetailModal: React.FC<VocabDetailModalProps> = ({
       >
         <div className="space-y-1.5 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span
-              className={`px-2.5 py-0.5 rounded-lg border text-[11px] font-bold ${
-                isEnglish
-                  ? 'bg-indigo-50 dark:bg-indigo-950/50 border-indigo-200/70 dark:border-indigo-900/60 text-indigo-700 dark:text-indigo-300'
-                  : 'bg-red-50 dark:bg-red-950/50 border-red-200/70 dark:border-red-900/60 text-red-700 dark:text-red-300'
-              }`}
-            >
-              {resolvedDetail.wordType || 'Từ vựng'}
-            </span>
-            {isEnglish && (meta?.cefr || resolvedDetail.sinoVietnamese) && (
-              <span className="px-2 py-0.5 rounded-md bg-sky-100 dark:bg-sky-900/40 text-sky-800 dark:text-sky-300 text-[11px] font-bold uppercase tracking-wider">
-                CEFR {meta?.cefr || resolvedDetail.sinoVietnamese}
+            {!isEnglish && (
+              <span className="px-2.5 py-0.5 rounded-lg border text-[11px] font-bold bg-red-50 dark:bg-red-950/50 border-red-200/70 dark:border-red-900/60 text-red-700 dark:text-red-300">
+                {resolvedDetail.wordType || 'Từ vựng'}
               </span>
             )}
-            {isEnglish && meta?.topic && (
-              <span className="px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200/70 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 text-[11px] font-semibold">
-                {meta.topic}
+            {isEnglish && (meta?.cefr || resolvedDetail.sinoVietnamese) && (
+              <span className="px-2 py-0.5 rounded-md bg-sky-100 dark:bg-sky-900/40 text-sky-800 dark:text-sky-300 text-[11px] font-bold uppercase tracking-wider">
+                {meta?.cefr || resolvedDetail.sinoVietnamese}
               </span>
             )}
             {lessonTitle &&
@@ -367,11 +358,11 @@ export const VocabDetailModal: React.FC<VocabDetailModalProps> = ({
                   <span className="truncate">{lessonTitle}</span>
                   <ExternalLink className="w-3 h-3 shrink-0 opacity-75" />
                 </button>
-              ) : (
+              ) : !isEnglish ? (
                 <span className="px-2.5 py-0.5 rounded-lg bg-stone-100 dark:bg-slate-800 text-[11px] font-semibold text-slate-600 dark:text-slate-300 truncate max-w-[260px]">
                   {lessonTitle}
                 </span>
-              ))}
+              ) : null)}
           </div>
 
           <div className="flex items-baseline gap-3 flex-wrap pt-0.5">
@@ -472,46 +463,46 @@ export const VocabDetailModal: React.FC<VocabDetailModalProps> = ({
 
           <div className="space-y-2.5 min-w-0 flex-1">
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-1">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-1.5">
                 Nghĩa tiếng Việt
               </span>
               {isEnglish ? (
-                <EnglishMeaningLines vocab={vocab} size="lg" />
+                hasRichEnMeta && meta?.senses ? (
+                  <div className="space-y-1.5">
+                    {meta.senses.map((sense, sIdx) => (
+                      <div
+                        key={`${sense.pos}-${sIdx}`}
+                        className="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-stone-200/70 dark:border-slate-700/80 space-y-0.5"
+                      >
+                        <div className="flex items-baseline gap-2 flex-wrap">
+                          {sense.pos && (
+                            <span
+                              className={`px-1.5 py-0.5 rounded border font-mono text-[10px] font-bold ${getPosBadgeClass(sense.pos)}`}
+                            >
+                              {sense.pos}
+                            </span>
+                          )}
+                          <span className="text-sm font-bold text-slate-900 dark:text-white leading-snug">
+                            {cleanEnglishSenseVi(sense.vi)}
+                          </span>
+                        </div>
+                        {sense.en && (
+                          <p className="text-[11px] text-slate-500 dark:text-slate-400 italic">
+                            {sense.en}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <EnglishMeaningLines vocab={vocab} size="lg" />
+                )
               ) : (
                 <p className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-snug">
                   {vocab.meaning}
                 </p>
               )}
             </div>
-
-            {isEnglish && meta?.senses && meta.senses.length > 0 && (
-              <div className="space-y-1.5 pt-1 border-t border-stone-200/70 dark:border-slate-700/70">
-                {meta.senses.map((sense, sIdx) => (
-                  <div
-                    key={`${sense.pos}-${sIdx}`}
-                    className="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-stone-200/70 dark:border-slate-700/80 space-y-0.5"
-                  >
-                    <div className="flex items-baseline gap-2 flex-wrap">
-                      {sense.pos && (
-                        <span
-                          className={`px-1.5 py-0.5 rounded border font-mono text-[10px] font-bold ${getPosBadgeClass(sense.pos)}`}
-                        >
-                          {sense.pos}
-                        </span>
-                      )}
-                      <span className="font-semibold text-slate-900 dark:text-white">
-                        {cleanEnglishSenseVi(sense.vi)}
-                      </span>
-                    </div>
-                    {sense.en && (
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 italic">
-                        {sense.en}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
 
             {!isEnglish && resolvedDetail.extraMeanings.length > 1 && (
               <div className="flex flex-wrap gap-1.5 pt-1">
@@ -528,53 +519,9 @@ export const VocabDetailModal: React.FC<VocabDetailModalProps> = ({
           </div>
         </div>
 
-        {/* ENGLISH-SPECIFIC: Collocations, Word Family, Synonyms / Antonyms, Tip & Note */}
+        {/* ENGLISH-SPECIFIC: Word Family, Synonyms / Antonyms, Tip & Note */}
         {isEnglish ? (
           <>
-            {meta?.collocations && meta.collocations.length > 0 && (
-              <div className="space-y-2">
-                <h5 className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Cụm từ hay dùng (Collocations)
-                </h5>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {meta.collocations.map((col, idx) => (
-                    <div
-                      key={`${col.en}-${idx}`}
-                      className="p-2.5 rounded-2xl bg-stone-50 dark:bg-slate-800/50 border border-stone-200/70 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500/70 flex items-center justify-between gap-2 transition group"
-                    >
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (!onOpenAiDictionary) return;
-                          onClose();
-                          onOpenAiDictionary(col.en);
-                        }}
-                        className="text-left min-w-0 flex-1"
-                        title={onOpenAiDictionary ? `Tra "${col.en}" trong Từ điển AI` : col.en}
-                      >
-                        <div className="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">
-                          {renderHighlightedExample(col.en, vocab.hanzi, true)}
-                        </div>
-                        {col.vi && (
-                          <p className="text-[11px] text-slate-600 dark:text-slate-300 truncate">
-                            {col.vi}
-                          </p>
-                        )}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => speakEnglish(col.en, { accent: 'us' })}
-                        className="p-1.5 rounded-lg bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 text-slate-500 hover:text-indigo-600 shrink-0"
-                        title={`Nghe "${col.en}"`}
-                      >
-                        <Volume2 className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {((meta?.wordFamily && meta.wordFamily.length > 0) ||
               (meta?.synonyms && meta.synonyms.length > 0) ||
               (meta?.antonyms && meta.antonyms.length > 0)) && (
@@ -962,9 +909,9 @@ export const VocabDetailModal: React.FC<VocabDetailModalProps> = ({
                 onOpenAiDictionary(word);
               }}
               className="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-sm transition"
-              title={`Tra cứu "${vocab.hanzi}" trong Từ điển & Gia sư AI`}
+              title={`Phân tích chi tiết "${vocab.hanzi}" bằng AI`}
             >
-              <Sparkles className="w-3.5 h-3.5" /> Từ điển AI
+              <Sparkles className="w-3.5 h-3.5" /> AI chi tiết
             </button>
           )}
           {onToggleMarked &&

@@ -11,11 +11,13 @@ databaseChangeLog:
             stripComments: false
             sql: |-
               DROP FUNCTION IF EXISTS fn_get_user_lesson_attempt_details(UUID, TEXT, INTEGER);
+              DROP FUNCTION IF EXISTS fn_get_user_lesson_attempt_details(UUID, TEXT, INTEGER, TEXT);
 
               CREATE OR REPLACE FUNCTION fn_get_user_lesson_attempt_details(
                 p_user_id UUID,
                 p_lesson_id TEXT,
-                p_limit INTEGER DEFAULT 50
+                p_limit INTEGER DEFAULT 50,
+                p_lang TEXT DEFAULT NULL
               )
               RETURNS TABLE (
                 id UUID,
@@ -40,11 +42,16 @@ databaseChangeLog:
                 a.duration_seconds,
                 a.submitted_at
               FROM test_attempts a
+              LEFT JOIN lessons l ON l.id = a.lesson_id AND l.is_deleted = 0
               WHERE a.user_id = p_user_id
                 AND a.is_deleted = 0
                 AND (
                   (p_lesson_id IS NULL AND a.lesson_id IS NULL)
                   OR a.lesson_id = p_lesson_id
+                )
+                AND (
+                  NULLIF(lower(btrim(p_lang)), '') IS NULL
+                  OR COALESCE(l.language_code, a.language_code, 'zh') = lower(btrim(p_lang))
                 )
               ORDER BY a.submitted_at DESC
               LIMIT GREATEST(COALESCE(p_limit, 50), 1);
@@ -52,4 +59,4 @@ databaseChangeLog:
       rollback:
         - sql:
             dbms: postgresql
-            sql: DROP FUNCTION IF EXISTS fn_get_user_lesson_attempt_details(UUID, TEXT, INTEGER);
+            sql: DROP FUNCTION IF EXISTS fn_get_user_lesson_attempt_details(UUID, TEXT, INTEGER, TEXT);

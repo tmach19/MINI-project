@@ -26,7 +26,7 @@ interface SavedVocabPanelProps {
   lang?: LanguageCode;
   userId: string;
   lessons: LessonSummary[];
-  onToggleMarked?: (vocabId: string) => Promise<void> | void;
+  onToggleMarked?: (vocabId: string) => Promise<boolean | void> | void;
   onOpenLesson?: (lessonId: string, tab?: 'vocab' | 'test') => void;
   onOpenWriter?: (vocab: VocabularyItem) => void;
   onOpenAiDictionary?: (word: string) => void;
@@ -119,24 +119,40 @@ export const SavedVocabPanel: React.FC<SavedVocabPanelProps> = ({
 
   const handleUnmarkCard = async (vocabId: string) => {
     if (!onToggleMarked) return;
-    setRemovingId(vocabId);
-    try {
-      let nextSelectedAfterRemove: string | null = selectedCardId;
-      if (selectedCardId === vocabId) {
-        const curIdx = filteredMarkedCards.findIndex((c) => c.id === vocabId);
-        const remaining = filteredMarkedCards.filter((c) => c.id !== vocabId);
-        if (remaining.length === 0) {
-          nextSelectedAfterRemove = null;
-        } else {
-          const targetIdx = Math.min(Math.max(0, curIdx), remaining.length - 1);
-          nextSelectedAfterRemove = remaining[targetIdx].id;
-        }
+    const prevCards = markedCards;
+    const prevSelectedId = selectedCardId;
+
+    let nextSelectedAfterRemove: string | null = selectedCardId;
+    if (selectedCardId === vocabId) {
+      const curIdx = filteredMarkedCards.findIndex((c) => c.id === vocabId);
+      const remaining = filteredMarkedCards.filter((c) => c.id !== vocabId);
+      if (remaining.length === 0) {
+        nextSelectedAfterRemove = null;
+      } else {
+        const targetIdx = Math.min(Math.max(0, curIdx), remaining.length - 1);
+        nextSelectedAfterRemove = remaining[targetIdx].id;
       }
-      await onToggleMarked(vocabId);
-      setMarkedCards((prev) => prev.filter((c) => c.id !== vocabId));
-      setSelectedCardId(nextSelectedAfterRemove);
+    }
+
+    // Optimistic UI: ẩn ngay thẻ vừa bỏ đánh dấu (0ms)
+    setMarkedError(null);
+    setRemovingId(vocabId);
+    setMarkedCards((prev) => prev.filter((c) => c.id !== vocabId));
+    setSelectedCardId(nextSelectedAfterRemove);
+
+    try {
+      const result = await onToggleMarked(vocabId);
+      if (result === false) {
+        setMarkedCards(prevCards);
+        setSelectedCardId(prevSelectedId);
+        setMarkedError('Không thể bỏ đánh dấu từ. Vui lòng thử lại.');
+      }
+    } catch (err) {
+      setMarkedCards(prevCards);
+      setSelectedCardId(prevSelectedId);
+      setMarkedError(err instanceof Error ? err.message : 'Không thể bỏ đánh dấu từ.');
     } finally {
-      setRemovingId(null);
+      setRemovingId((cur) => (cur === vocabId ? null : cur));
     }
   };
 

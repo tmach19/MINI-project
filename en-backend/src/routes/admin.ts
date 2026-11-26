@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { PERMISSION_CODES } from '../config/rbacCatalog.js';
-import { requirePermission } from '../middleware/auth.js';
+import { invalidateAuthUserCache, requirePermission } from '../middleware/auth.js';
 import {
   listPermissionsCatalog,
   listRolesWithPermissions,
@@ -52,6 +52,7 @@ router.put(
 
       try {
         const role = await updateRolePermissions(roleId, permissionIds);
+        invalidateAuthUserCache();
         res.json({ role });
       } catch (err) {
         res.status(400).json({ error: (err as Error).message });
@@ -94,6 +95,7 @@ router.put(
           res.status(404).json({ error: 'Không tìm thấy tài khoản.' });
           return;
         }
+        invalidateAuthUserCache(targetId);
         res.json({ user: updated });
       } catch (err) {
         res.status(400).json({ error: (err as Error).message });
@@ -126,6 +128,7 @@ router.put(
           res.status(404).json({ error: 'Không tìm thấy tài khoản.' });
           return;
         }
+        invalidateAuthUserCache(targetId);
         res.json({ user: updated });
       } catch (err) {
         res.status(400).json({ error: (err as Error).message });

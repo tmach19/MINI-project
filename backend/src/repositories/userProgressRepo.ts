@@ -679,23 +679,43 @@ export async function saveTestAttempt(
   }
 
   const pool = getPool()!;
-  const res = await pool.query<{ id: string; submitted_at: Date }>(
-    `INSERT INTO test_attempts (user_id, lesson_id, exam_title, score, total_questions, correct_count, duration_seconds, answers)
-     VALUES ($1::uuid, $2, $3, $4, $5, $6, $7, $8::jsonb)
-     RETURNING id, submitted_at`,
-    [
-      userId,
-      payload.lessonId || null,
-      payload.examTitle || null,
-      payload.score,
-      payload.totalQuestions,
-      payload.correctCount,
-      payload.durationSeconds,
-      JSON.stringify(payload.answers || {}),
-    ]
-  );
-
-  const row = res.rows[0];
+  let row: { id: string; submitted_at: Date };
+  try {
+    const res = await pool.query<{ id: string; submitted_at: Date }>(
+      `INSERT INTO test_attempts (user_id, lesson_id, language_code, exam_title, score, total_questions, correct_count, duration_seconds, answers)
+       VALUES ($1::uuid, $2, 'zh', $3, $4, $5, $6, $7, $8::jsonb)
+       RETURNING id, submitted_at`,
+      [
+        userId,
+        payload.lessonId || null,
+        payload.examTitle || null,
+        payload.score,
+        payload.totalQuestions,
+        payload.correctCount,
+        payload.durationSeconds,
+        JSON.stringify(payload.answers || {}),
+      ]
+    );
+    row = res.rows[0];
+  } catch (err) {
+    if (!isUndefinedColumnError(err)) throw err;
+    const res = await pool.query<{ id: string; submitted_at: Date }>(
+      `INSERT INTO test_attempts (user_id, lesson_id, exam_title, score, total_questions, correct_count, duration_seconds, answers)
+       VALUES ($1::uuid, $2, $3, $4, $5, $6, $7, $8::jsonb)
+       RETURNING id, submitted_at`,
+      [
+        userId,
+        payload.lessonId || null,
+        payload.examTitle || null,
+        payload.score,
+        payload.totalQuestions,
+        payload.correctCount,
+        payload.durationSeconds,
+        JSON.stringify(payload.answers || {}),
+      ]
+    );
+    row = res.rows[0];
+  }
   return {
     id: row.id,
     lessonId: payload.lessonId || null,
@@ -837,7 +857,7 @@ export async function getUserLessonTestSummary(
   }
 
   const pool = getPool()!;
-  const res = await pool.query<{
+  type SummaryRow = {
     lesson_id: string;
     lesson_title: string;
     attempt_count: number;
@@ -849,9 +869,25 @@ export async function getUserLessonTestSummary(
     avg_duration_seconds: number | null;
     last_submitted_at: Date | null;
     status: 'passed' | 'failed' | 'unattempted';
-  }>('SELECT * FROM fn_get_user_lesson_test_summary($1::uuid)', [userId]);
+  };
+  let rows: SummaryRow[];
+  try {
+    const res = await pool.query<SummaryRow>(
+      'SELECT * FROM fn_get_user_lesson_test_summary($1::uuid, $2)',
+      [userId, 'zh']
+    );
+    rows = res.rows;
+  } catch (err) {
+    const code = (err as { code?: string } | null)?.code;
+    if (code !== '42883') throw err;
+    const res = await pool.query<SummaryRow>(
+      'SELECT * FROM fn_get_user_lesson_test_summary($1::uuid)',
+      [userId]
+    );
+    rows = res.rows;
+  }
 
-  return res.rows.map((r) => ({
+  return rows.map((r) => ({
     lessonId: r.lesson_id,
     lessonTitle: r.lesson_title,
     attemptCount: Number(r.attempt_count || 0),
@@ -891,7 +927,8 @@ export async function getUserLessonAttemptDetails(
   }
 
   const pool = getPool()!;
-  const res = await pool.query<{
+  const safeLimit = Math.max(1, Math.min(200, Math.round(Number(limit) || 50)));
+  type AttemptDetailRow = {
     id: string;
     lesson_id: string | null;
     exam_title: string | null;
@@ -900,15 +937,39 @@ export async function getUserLessonAttemptDetails(
     correct_count: number;
     duration_seconds: number;
     submitted_at: Date;
-  }>(
-    `SELECT d.id, d.lesson_id, t.exam_title, d.score, d.total_questions, d.correct_count, d.duration_seconds, d.submitted_at
-     FROM fn_get_user_lesson_attempt_details($1::uuid, $2, $3) d
-     LEFT JOIN test_attempts t ON t.id = d.id AND t.is_deleted = 0
-     ORDER BY d.submitted_at DESC`,
-    [userId, lessonId, limit]
-  );
+  };
 
-  return res.rows.map((r) => ({
+  let rows: AttemptDetailRow[];
+  try {
+    const res = await pool.query<AttemptDetailRow>(
+      `SELECT a.id, a.lesson_id, a.exam_title, a.score, a.total_questions, a.correct_count, a.duration_seconds, a.submitted_at
+       FROM test_attempts a
+       LEFT JOIN lessons l ON l.id = a.lesson_id AND l.is_deleted = 0
+       WHERE a.user_id = $1::uuid
+         AND a.is_deleted = 0
+         AND (
+           ($2::text IS NULL AND a.lesson_id IS NULL)
+           OR ($2::text IS NOT NULL AND a.lesson_id = $2::text)
+         )
+         AND COALESCE(l.language_code, a.language_code, 'zh') = 'zh'
+       ORDER BY a.submitted_at DESC
+       LIMIT $3`,
+      [userId, lessonId, safeLimit]
+    );
+    rows = res.rows;
+  } catch (err) {
+    if (!isUndefinedColumnError(err)) throw err;
+    const res = await pool.query<AttemptDetailRow>(
+      `SELECT d.id, d.lesson_id, t.exam_title, d.score, d.total_questions, d.correct_count, d.duration_seconds, d.submitted_at
+       FROM fn_get_user_lesson_attempt_details($1::uuid, $2, $3) d
+       LEFT JOIN test_attempts t ON t.id = d.id AND t.is_deleted = 0
+       ORDER BY d.submitted_at DESC`,
+      [userId, lessonId, safeLimit]
+    );
+    rows = res.rows;
+  }
+
+  return rows.map((r) => ({
     id: r.id,
     lessonId: r.lesson_id,
     examTitle: r.exam_title,

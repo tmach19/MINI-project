@@ -48,7 +48,7 @@ export const TestHistoryPanel: React.FC<TestHistoryPanelProps> = ({
   const isEnglish = lang === 'en';
   const [comprehensiveAttempts, setComprehensiveAttempts] = useState<LessonAttemptDetailRecord[]>(() =>
     attempts
-      .filter((a) => !a.lessonId)
+      .filter((a) => !a.lessonId && (!a.languageCode || a.languageCode === lang))
       .map((a) => ({
         id: a.id,
         lessonId: a.lessonId,
@@ -102,9 +102,31 @@ export const TestHistoryPanel: React.FC<TestHistoryPanelProps> = ({
   }, [lessonDropdownOpen]);
 
   useEffect(() => {
+    setExpandedLessonIds({});
+    setLessonDetailsCache({});
+    setLessonTestSummaries([]);
     setComprehensiveAttempts(
       attempts
-        .filter((a) => !a.lessonId)
+        .filter((a) => !a.lessonId && (!a.languageCode || a.languageCode === lang))
+        .map((a) => ({
+          id: a.id,
+          lessonId: a.lessonId,
+          examTitle: a.examTitle ?? null,
+          score: a.score,
+          totalQuestions: a.totalQuestions,
+          correctCount: a.correctCount,
+          durationSeconds: a.durationSeconds,
+          submittedAt: a.submittedAt,
+        }))
+    );
+    setHistorySelectedLessonIds(lessons.map((l) => l.id));
+    didInitHistoryLessons.current = lessons.length > 0;
+  }, [lang]);
+
+  useEffect(() => {
+    setComprehensiveAttempts(
+      attempts
+        .filter((a) => !a.lessonId && (!a.languageCode || a.languageCode === lang))
         .map((a) => ({
           id: a.id,
           lessonId: a.lessonId,
@@ -117,7 +139,7 @@ export const TestHistoryPanel: React.FC<TestHistoryPanelProps> = ({
         }))
     );
     setLessonDetailsCache({});
-  }, [attempts]);
+  }, [attempts, lang]);
 
   const loadAttemptsFromDb = useCallback(async () => {
     setLoadingAttempts(true);
@@ -147,7 +169,7 @@ export const TestHistoryPanel: React.FC<TestHistoryPanelProps> = ({
     if (nextExpanded && !lessonDetailsCache[lessonId] && !loadingDetailIds[lessonId]) {
       setLoadingDetailIds((prev) => ({ ...prev, [lessonId]: true }));
       try {
-        const res = await api.getLessonAttemptDetails(lessonId);
+        const res = await api.getLessonAttemptDetails(lessonId, lang);
         setLessonDetailsCache((prev) => ({ ...prev, [lessonId]: res.attempts }));
       } catch (err) {
         setAttemptsError(
@@ -400,7 +422,9 @@ export const TestHistoryPanel: React.FC<TestHistoryPanelProps> = ({
                 const lessonCountNote = scopeMatch
                   ? `Tổng hợp ${scopeMatch[2].trim()}`
                   : rawTitle === 'Kiểm tra tổng hợp'
-                    ? 'Tổng hợp 26 bài'
+                    ? isEnglish
+                      ? 'Tổng hợp CEFR A1'
+                      : 'Tổng hợp 26 bài'
                     : null;
 
                 return (

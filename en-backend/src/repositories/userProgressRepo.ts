@@ -308,7 +308,7 @@ export async function getMarkedVocabMap(
   userId: string,
   lang?: LanguageCode
 ): Promise<Record<string, MarkedVocabRecord>> {
-  const safeLang = lang ? normalizeLanguageCode(lang) : null;
+  const safeLang: LanguageCode = normalizeLanguageCode(lang);
 
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
@@ -535,7 +535,7 @@ export async function getMarkedVocabCards(
   userId: string,
   lang?: LanguageCode
 ): Promise<MarkedVocabCard[]> {
-  const safeLang = lang ? normalizeLanguageCode(lang) : null;
+  const safeLang: LanguageCode = normalizeLanguageCode(lang);
 
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
@@ -773,7 +773,7 @@ export async function listTestAttempts(
   userId: string,
   lang?: LanguageCode
 ): Promise<TestAttemptRecord[]> {
-  const safeLang = lang ? normalizeLanguageCode(lang) : null;
+  const safeLang: LanguageCode = normalizeLanguageCode(lang);
 
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
@@ -967,14 +967,22 @@ export async function getUserLessonTestSummary(
 export async function getUserLessonAttemptDetails(
   userId: string,
   lessonId: string | null,
-  limit = 50
+  limit = 50,
+  lang?: LanguageCode
 ): Promise<LessonAttemptDetailRecord[]> {
+  const safeLang: LanguageCode = normalizeLanguageCode(lang);
+  const safeLimit = Math.max(1, Math.min(200, Math.round(Number(limit) || 50)));
+
   if (getDbMode() === 'memory') {
     memoryStore.ensureLoaded();
     const list = (memoryStore.attemptsByUser.get(userId) || [])
-      .filter((a) => (lessonId === null ? a.lessonId === null : a.lessonId === lessonId))
+      .filter(
+        (a) =>
+          (a.languageCode || 'en') === safeLang &&
+          (lessonId === null ? a.lessonId === null : a.lessonId === lessonId)
+      )
       .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt))
-      .slice(0, Math.max(1, limit));
+      .slice(0, safeLimit);
 
     return list.map((a) => ({
       id: a.id,
@@ -989,7 +997,7 @@ export async function getUserLessonAttemptDetails(
   }
 
   const pool = getPool()!;
-  const res = await pool.query<{
+  type AttemptDetailRow = {
     id: string;
     lesson_id: string | null;
     exam_title: string | null;
@@ -998,15 +1006,32 @@ export async function getUserLessonAttemptDetails(
     correct_count: number;
     duration_seconds: number;
     submitted_at: Date;
-  }>(
-    `SELECT d.id, d.lesson_id, t.exam_title, d.score, d.total_questions, d.correct_count, d.duration_seconds, d.submitted_at
-     FROM fn_get_user_lesson_attempt_details($1::uuid, $2, $3) d
-     LEFT JOIN test_attempts t ON t.id = d.id AND t.is_deleted = 0
-     ORDER BY d.submitted_at DESC`,
-    [userId, lessonId, limit]
-  );
+  };
 
-  return res.rows.map((r) => ({
+  let rows: AttemptDetailRow[];
+  try {
+    const res = await pool.query<AttemptDetailRow>(
+      `SELECT a.id, a.lesson_id, a.exam_title, a.score, a.total_questions, a.correct_count, a.duration_seconds, a.submitted_at
+       FROM test_attempts a
+       LEFT JOIN lessons l ON l.id = a.lesson_id AND l.is_deleted = 0
+       WHERE a.user_id = $1::uuid
+         AND a.is_deleted = 0
+         AND (
+           ($2::text IS NULL AND a.lesson_id IS NULL)
+           OR ($2::text IS NOT NULL AND a.lesson_id = $2::text)
+         )
+         AND COALESCE(l.language_code, a.language_code, 'zh') = $3
+       ORDER BY a.submitted_at DESC
+       LIMIT $4`,
+      [userId, lessonId, safeLang, safeLimit]
+    );
+    rows = res.rows;
+  } catch (err) {
+    if (!isUndefinedColumnError(err)) throw err;
+    return [];
+  }
+
+  return rows.map((r) => ({
     id: r.id,
     lessonId: r.lesson_id,
     examTitle: r.exam_title,

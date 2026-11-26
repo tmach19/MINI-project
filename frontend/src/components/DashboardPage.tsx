@@ -64,7 +64,7 @@ interface DashboardPageProps {
   onOpenAdmin: () => void;
   onOpenSearch: () => void;
   onOpenAiDictionary: (query?: string) => void;
-  onToggleMarked?: (vocabId: string) => Promise<void> | void;
+  onToggleMarked?: (vocabId: string) => Promise<boolean | void> | void;
   onOpenWriter?: (vocab: VocabularyItem) => void;
   onRequireAuth: () => void;
   onLogout: () => void;

@@ -102,6 +102,96 @@ const sslRaw = String(merged.database?.ssl ?? 'auto').toLowerCase();
 const databaseSsl: 'auto' | boolean =
   sslRaw === 'true' ? true : sslRaw === 'false' ? false : 'auto';
 
+export type AiProviderName = 'gemini' | 'groq' | 'openrouter' | 'openai-compatible';
+
+export interface AiProviderConfig {
+  name: AiProviderName;
+  apiKey: string;
+  model: string;
+  baseUrl: string;
+}
+
+function buildAiProviders(): AiProviderConfig[] {
+  const preferred = String(process.env.AI_PROVIDER || merged.ai?.provider || 'gemini')
+    .trim()
+    .toLowerCase();
+  const normalizedPreferred: AiProviderName =
+    preferred === 'groq' || preferred === 'openrouter' || preferred === 'gemini'
+      ? preferred
+      : preferred === 'openai' || preferred === 'openai-compatible'
+        ? 'openai-compatible'
+        : 'gemini';
+
+  const byName = new Map<AiProviderName, AiProviderConfig>();
+
+  const geminiKey = String(process.env.GEMINI_API_KEY || merged.ai?.apiKey || '').trim();
+  if (geminiKey) {
+    byName.set('gemini', {
+      name: 'gemini',
+      apiKey: geminiKey,
+      model: String(process.env.GEMINI_MODEL || merged.ai?.model || 'gemini-3.5-flash-lite').trim(),
+      baseUrl: String(
+        process.env.GEMINI_BASE_URL || 'https://generativelanguage.googleapis.com/v1beta'
+      ).trim(),
+    });
+  }
+
+  const groqKey = String(
+    process.env.GROQ_API_KEY || (normalizedPreferred === 'groq' ? process.env.AI_API_KEY : '') || ''
+  ).trim();
+  if (groqKey) {
+    byName.set('groq', {
+      name: 'groq',
+      apiKey: groqKey,
+      model: String(
+        process.env.GROQ_MODEL ||
+          (normalizedPreferred === 'groq' ? process.env.AI_MODEL : '') ||
+          'qwen/qwen3-32b'
+      ).trim(),
+      baseUrl: String(process.env.GROQ_BASE_URL || 'https://api.groq.com/openai/v1').trim(),
+    });
+  }
+
+  const openRouterKey = String(
+    process.env.OPENROUTER_API_KEY ||
+      (normalizedPreferred === 'openrouter' ? process.env.AI_API_KEY : '') ||
+      ''
+  ).trim();
+  if (openRouterKey) {
+    byName.set('openrouter', {
+      name: 'openrouter',
+      apiKey: openRouterKey,
+      model: String(
+        process.env.OPENROUTER_MODEL ||
+          (normalizedPreferred === 'openrouter' ? process.env.AI_MODEL : '') ||
+          'qwen/qwen3-235b-a22b:free'
+      ).trim(),
+      baseUrl: String(process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1').trim(),
+    });
+  }
+
+  const customKey = String(
+    normalizedPreferred === 'openai-compatible' ? process.env.AI_API_KEY || '' : ''
+  ).trim();
+  const customBaseUrl = String(process.env.AI_BASE_URL || merged.ai?.baseUrl || '').trim();
+  if (customKey) {
+    byName.set('openai-compatible', {
+      name: 'openai-compatible',
+      apiKey: customKey,
+      model: String(process.env.AI_MODEL || merged.ai?.model || 'gpt-4o-mini').trim(),
+      baseUrl: customBaseUrl || 'https://api.openai.com/v1',
+    });
+  }
+
+  const order: AiProviderName[] = Array.from(
+    new Set<AiProviderName>([normalizedPreferred, 'gemini', 'groq', 'openrouter', 'openai-compatible'])
+  );
+  return order.map((n) => byName.get(n)).filter((x): x is AiProviderConfig => Boolean(x));
+}
+
+const aiProviders = buildAiProviders();
+const primaryAi = aiProviders[0];
+
 export const env = {
   port: Number(merged.server?.port || 4000),
   corsOrigin: String(merged.server?.corsOrigin || 'http://localhost:5173'),
@@ -114,10 +204,11 @@ export const env = {
   jwtExpiresIn: String(merged.security?.jwtExpiresIn || '7d'),
   legacyDataPath: path.resolve(backendRoot, merged.legacy?.dataPath || '../data.js'),
   ai: {
-    provider: String(merged.ai?.provider || 'gemini').trim().toLowerCase(),
-    apiKey: String(merged.ai?.apiKey || process.env.AI_API_KEY || '').trim(),
-    model: String(merged.ai?.model || process.env.AI_MODEL || 'gemini-3.5-flash-lite').trim(),
-    baseUrl: String(merged.ai?.baseUrl || '').trim(),
+    provider: primaryAi?.name || 'gemini',
+    apiKey: primaryAi?.apiKey || '',
+    model: primaryAi?.model || 'gemini-3.5-flash-lite',
+    baseUrl: primaryAi?.baseUrl || '',
+    providers: aiProviders,
     timeoutMs: Number(merged.ai?.timeoutMs || 45000),
   },
   retention: {

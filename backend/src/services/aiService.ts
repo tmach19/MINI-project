@@ -1,4 +1,4 @@
-import { env } from '../config/env.js';
+import { env, type AiProviderConfig } from '../config/env.js';
 import {
   buildGameGradingCacheKey,
   getCachedGameGrade,
@@ -48,7 +48,7 @@ export interface DictionaryLookupResponse {
 }
 
 export function isAiConfigured(): boolean {
-  return Boolean(env.ai.apiKey);
+  return env.ai.providers.length > 0;
 }
 
 export function getAiPublicStatus() {
@@ -56,7 +56,36 @@ export function getAiPublicStatus() {
     configured: isAiConfigured(),
     provider: env.ai.provider,
     model: env.ai.model,
+    fallbackCount: Math.max(0, env.ai.providers.length - 1),
   };
+}
+
+const providerCooldownUntil = new Map<string, number>();
+
+function markProviderCooldown(providerName: string, err: unknown): void {
+  const msg = String((err as Error)?.message || '').toLowerCase();
+  let durationMs = 30_000;
+  if (
+    msg.includes('(401)') ||
+    msg.includes('(403)') ||
+    msg.includes('suspended') ||
+    msg.includes('disabled') ||
+    msg.includes('deleted') ||
+    msg.includes('invalid api key')
+  ) {
+    durationMs = 5 * 60_000;
+  } else if (msg.includes('(429)') || msg.includes('quota') || msg.includes('rate')) {
+    durationMs = 60_000;
+  }
+  providerCooldownUntil.set(providerName, Date.now() + durationMs);
+}
+
+function getOrderedActiveProviders(exclude?: Set<string>): AiProviderConfig[] {
+  const now = Date.now();
+  const candidates = env.ai.providers.filter((p) => !exclude?.has(p.name));
+  const healthy = candidates.filter((p) => (providerCooldownUntil.get(p.name) || 0) <= now);
+  const cooling = candidates.filter((p) => (providerCooldownUntil.get(p.name) || 0) > now);
+  return [...healthy, ...cooling];
 }
 
 function normalizeDirection(dir?: string): TranslationDirection {
@@ -130,10 +159,14 @@ async function callGeminiSingleModel(
     temperature?: number;
     maxOutputTokens?: number;
     tools?: Array<Record<string, any>>;
-  }
+  },
+  providerCfg?: AiProviderConfig
 ): Promise<GeminiTurnResult> {
+  const cfg = providerCfg || env.ai.providers.find((p) => p.name === 'gemini');
+  const apiKey = cfg?.apiKey || env.ai.apiKey;
   const baseUrl =
-    env.ai.baseUrl.replace(/\/+$/, '') || 'https://generativelanguage.googleapis.com/v1beta';
+    (cfg?.baseUrl || env.ai.baseUrl).replace(/\/+$/, '') ||
+    'https://generativelanguage.googleapis.com/v1beta';
   const url = `${baseUrl}/models/${encodeURIComponent(model)}:generateContent`;
 
   const thinkingConfig = buildGeminiThinkingConfig(model);
@@ -159,7 +192,7 @@ async function callGeminiSingleModel(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-goog-api-key': env.ai.apiKey,
+        'x-goog-api-key': apiKey,
       },
       body: JSON.stringify(body),
       signal: controller.signal,
@@ -209,21 +242,24 @@ async function callGeminiSingleModel(
   }
 }
 
-async function callGeminiTurn(options: {
-  systemInstruction: string;
-  contents: GeminiContentTurn[];
-  jsonMode?: boolean;
-  temperature?: number;
-  maxOutputTokens?: number;
-  tools?: Array<Record<string, any>>;
-}): Promise<GeminiTurnResult & { usedModel: string }> {
-  const primary = env.ai.model || 'gemini-3.5-flash-lite';
+async function callGeminiTurn(
+  options: {
+    systemInstruction: string;
+    contents: GeminiContentTurn[];
+    jsonMode?: boolean;
+    temperature?: number;
+    maxOutputTokens?: number;
+    tools?: Array<Record<string, any>>;
+  },
+  providerCfg?: AiProviderConfig
+): Promise<GeminiTurnResult & { usedModel: string }> {
+  const primary = providerCfg?.model || env.ai.model || 'gemini-3.5-flash-lite';
   const candidates = Array.from(new Set([primary, ...GEMINI_FALLBACK_MODELS]));
 
   let lastErr: Error | null = null;
   for (const model of candidates) {
     try {
-      const turn = await callGeminiSingleModel(model, options);
+      const turn = await callGeminiSingleModel(model, options, providerCfg);
       return { ...turn, usedModel: model };
     } catch (err) {
       if (err instanceof RetryableGeminiError) {
@@ -236,28 +272,34 @@ async function callGeminiTurn(options: {
   throw lastErr || new Error('Không thể kết nối tới Gemini API lúc này.');
 }
 
-async function callGemini(options: {
-  systemInstruction: string;
-  contents: GeminiContentTurn[];
-  jsonMode?: boolean;
-  temperature?: number;
-  maxOutputTokens?: number;
-}): Promise<{ text: string; usedModel: string }> {
-  const res = await callGeminiTurn(options);
+async function callGemini(
+  options: {
+    systemInstruction: string;
+    contents: GeminiContentTurn[];
+    jsonMode?: boolean;
+    temperature?: number;
+    maxOutputTokens?: number;
+  },
+  providerCfg?: AiProviderConfig
+): Promise<{ text: string; usedModel: string }> {
+  const res = await callGeminiTurn(options, providerCfg);
   return { text: res.text, usedModel: res.usedModel };
 }
 
-async function callOpenAiCompatible(options: {
-  systemInstruction: string;
-  messages: Array<{ role: 'user' | 'assistant'; content: string }>;
-  jsonMode?: boolean;
-  temperature?: number;
-  maxTokens?: number;
-}): Promise<string> {
-  const baseUrl = env.ai.baseUrl.replace(/\/+$/, '') || 'https://api.openai.com/v1';
+async function callOpenAiCompatible(
+  options: {
+    systemInstruction: string;
+    messages: Array<{ role: 'user' | 'assistant'; content: string }>;
+    jsonMode?: boolean;
+    temperature?: number;
+    maxTokens?: number;
+  },
+  providerCfg: AiProviderConfig
+): Promise<string> {
+  const baseUrl = providerCfg.baseUrl.replace(/\/+$/, '') || 'https://api.openai.com/v1';
   const url = `${baseUrl}/chat/completions`;
   const body: Record<string, any> = {
-    model: env.ai.model,
+    model: providerCfg.model,
     temperature: options.temperature ?? 0.3,
     max_tokens: options.maxTokens ?? 1400,
     messages: [{ role: 'system', content: options.systemInstruction }, ...options.messages],
@@ -272,7 +314,7 @@ async function callOpenAiCompatible(options: {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${env.ai.apiKey}`,
+        Authorization: `Bearer ${providerCfg.apiKey}`,
       },
       body: JSON.stringify(body),
       signal: controller.signal,
@@ -280,16 +322,20 @@ async function callOpenAiCompatible(options: {
     const data = (await res.json().catch(() => ({}))) as Record<string, any>;
     if (!res.ok) {
       const apiMsg = data?.error?.message || `HTTP ${res.status}`;
-      throw new Error(`Lỗi AI API (${res.status}): ${apiMsg}`);
+      throw new Error(`Lỗi ${providerCfg.name.toUpperCase()} API (${res.status}): ${apiMsg}`);
     }
-    const text = data?.choices?.[0]?.message?.content;
-    if (typeof text !== 'string' || !text.trim()) {
+    const rawText = data?.choices?.[0]?.message?.content;
+    if (typeof rawText !== 'string' || !rawText.trim()) {
       throw new Error('AI API không trả về nội dung hợp lệ.');
     }
-    return text.trim();
+    const cleaned = rawText.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+    if (!cleaned) {
+      throw new Error('AI API không trả về nội dung hợp lệ.');
+    }
+    return cleaned;
   } catch (err) {
     if ((err as Error).name === 'AbortError') {
-      throw new Error('Kết nối tới AI API quá thời gian chờ.');
+      throw new Error(`Kết nối tới ${providerCfg.name.toUpperCase()} API quá thời gian chờ.`);
     }
     throw err;
   } finally {
@@ -304,40 +350,66 @@ async function generateAiResponse(options: {
   jsonMode?: boolean;
   temperature?: number;
   maxOutputTokens?: number;
+  excludeProviders?: Set<string>;
 }): Promise<{ text: string; usedModel: string }> {
   if (!isAiConfigured()) {
-    console.warn('[AI] Chưa cấu hình GEMINI_API_KEY hoặc AI_API_KEY trong backend/.env.');
+    console.warn('[AI] Chưa cấu hình API key AI nào trong backend/.env.');
     throw new Error('Dịch vụ trợ lý AI hiện đang tạm thời gián đoạn. Vui lòng thử lại sau.');
   }
 
   const cleanHistory = (options.history || []).slice(-10);
+  const providers = getOrderedActiveProviders(options.excludeProviders);
+  let lastErr: Error | null = null;
 
-  if (env.ai.provider === 'openai-compatible') {
-    const text = await callOpenAiCompatible({
-      systemInstruction: options.systemInstruction,
-      messages: [...cleanHistory, { role: 'user', content: options.userPrompt }],
-      jsonMode: options.jsonMode,
-      temperature: options.temperature,
-      maxTokens: options.maxOutputTokens,
-    });
-    return { text, usedModel: env.ai.model };
+  for (let i = 0; i < providers.length; i++) {
+    const providerCfg = providers[i];
+    try {
+      if (providerCfg.name === 'gemini') {
+        const contents = [
+          ...cleanHistory.map((m) => ({
+            role: (m.role === 'assistant' ? 'model' : 'user') as 'user' | 'model',
+            parts: [{ text: m.content }],
+          })),
+          { role: 'user' as const, parts: [{ text: options.userPrompt }] },
+        ];
+        const res = await callGemini(
+          {
+            systemInstruction: options.systemInstruction,
+            contents,
+            jsonMode: options.jsonMode,
+            temperature: options.temperature,
+            maxOutputTokens: options.maxOutputTokens,
+          },
+          providerCfg
+        );
+        providerCooldownUntil.delete(providerCfg.name);
+        return res;
+      }
+
+      const text = await callOpenAiCompatible(
+        {
+          systemInstruction: options.systemInstruction,
+          messages: [...cleanHistory, { role: 'user', content: options.userPrompt }],
+          jsonMode: options.jsonMode,
+          temperature: options.temperature,
+          maxTokens: options.maxOutputTokens,
+        },
+        providerCfg
+      );
+      providerCooldownUntil.delete(providerCfg.name);
+      return { text, usedModel: `${providerCfg.name}:${providerCfg.model}` };
+    } catch (err) {
+      lastErr = err as Error;
+      markProviderCooldown(providerCfg.name, err);
+      if (i < providers.length - 1) {
+        console.warn(
+          `[AI Failover] ${providerCfg.name} lỗi (${lastErr.message}) -> tự chuyển sang ${providers[i + 1].name}`
+        );
+      }
+    }
   }
 
-  const contents = [
-    ...cleanHistory.map((m) => ({
-      role: (m.role === 'assistant' ? 'model' : 'user') as 'user' | 'model',
-      parts: [{ text: m.content }],
-    })),
-    { role: 'user' as const, parts: [{ text: options.userPrompt }] },
-  ];
-
-  return callGemini({
-    systemInstruction: options.systemInstruction,
-    contents,
-    jsonMode: options.jsonMode,
-    temperature: options.temperature,
-    maxOutputTokens: options.maxOutputTokens,
-  });
+  throw lastErr || new Error('Dịch vụ trợ lý AI hiện đang tạm thời gián đoạn. Vui lòng thử lại sau.');
 }
 
 function normalizeExamples(raw: unknown): AiDictionaryExample[] {
@@ -662,7 +734,11 @@ Quy tắc trình bày & gọi tool khi trong phạm vi:
 6. Nếu người học muốn tạo đề ôn tập từ các bài đã chọn hoặc các bài điểm yếu, hãy chủ động gọi \`generate_review_exam\` với đúng \`lessonIds\` (không cần gọi thêm \`open_study_target\` vì thẻ kết quả đã có nút vào làm bài ngay).
 7. Muốn đánh dấu từ vựng thì PHẢI tìm đúng \`vocabId\` thật qua \`search_curriculum_vocab\` hoặc \`get_lesson_detail\` trước, tuyệt đối không tự bịa \`vocabId\`.${lessonContextBlock}`;
 
-  if (env.ai.provider === 'openai-compatible' || !options.user) {
+  const orderedNow = getOrderedActiveProviders();
+  const topProvider = orderedNow[0];
+  const hasNonGeminiFallback = orderedNow.some((p) => p.name !== 'gemini');
+
+  if (!topProvider || topProvider.name !== 'gemini' || !options.user) {
     const { text: reply, usedModel } = await generateAiResponse({
       systemInstruction,
       history: options.history,
@@ -683,7 +759,7 @@ Quy tắc trình bày & gọi tool khi trong phạm vi:
   }
 
   if (!isAiConfigured()) {
-    console.warn('[AI] Chưa cấu hình GEMINI_API_KEY hoặc AI_API_KEY trong backend/.env.');
+    console.warn('[AI] Chưa cấu hình API key AI nào trong backend/.env.');
     throw new Error('Dịch vụ trợ lý AI hiện đang tạm thời gián đoạn. Vui lòng thử lại sau.');
   }
 
@@ -705,48 +781,80 @@ Quy tắc trình bày & gọi tool khi trong phạm vi:
 
   const toolsPayload = [{ functionDeclarations: AI_TOOL_DECLARATIONS }];
   let finalReply = '';
-  let finalModel = env.ai.model;
+  let finalModel = topProvider.model;
 
-  for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
-    const turn = await callGeminiTurn({
-      systemInstruction,
-      contents,
-      jsonMode: false,
-      temperature: 0.4,
-      tools: toolsPayload,
-    });
-    finalModel = turn.usedModel;
-
-    if (turn.functionCalls.length === 0) {
-      finalReply = turn.text;
-      break;
-    }
-
-    // Bắt buộc giữ nguyên rawParts (gồm cả thoughtSignature) cho Gemini 3/4
-    contents.push({ role: 'model', parts: turn.rawParts });
-
-    const responseParts: Array<Record<string, any>> = [];
-    for (const fc of turn.functionCalls) {
-      const result = await executeAiTool(fc.name, fc.args, toolCtx);
-      responseParts.push({
-        functionResponse: {
-          name: fc.name,
-          response: result,
+  try {
+    for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
+      const turn = await callGeminiTurn(
+        {
+          systemInstruction,
+          contents,
+          jsonMode: false,
+          temperature: 0.4,
+          tools: toolsPayload,
         },
-      });
-    }
-    contents.push({ role: 'user', parts: responseParts });
-  }
+        topProvider
+      );
+      finalModel = turn.usedModel;
 
-  if (!finalReply) {
-    const fallbackTurn = await callGeminiTurn({
+      if (turn.functionCalls.length === 0) {
+        finalReply = turn.text;
+        break;
+      }
+
+      // Bắt buộc giữ nguyên rawParts (gồm cả thoughtSignature) cho Gemini 3/4
+      contents.push({ role: 'model', parts: turn.rawParts });
+
+      const responseParts: Array<Record<string, any>> = [];
+      for (const fc of turn.functionCalls) {
+        const result = await executeAiTool(fc.name, fc.args, toolCtx);
+        responseParts.push({
+          functionResponse: {
+            name: fc.name,
+            response: result,
+          },
+        });
+      }
+      contents.push({ role: 'user', parts: responseParts });
+    }
+
+    if (!finalReply) {
+      const fallbackTurn = await callGeminiTurn(
+        {
+          systemInstruction,
+          contents,
+          jsonMode: false,
+          temperature: 0.4,
+        },
+        topProvider
+      );
+      finalModel = fallbackTurn.usedModel;
+      finalReply = fallbackTurn.text;
+    }
+    providerCooldownUntil.delete('gemini');
+  } catch (err) {
+    markProviderCooldown('gemini', err);
+    if (!hasNonGeminiFallback) throw err;
+    console.warn(
+      `[AI Failover] Gemini chat lỗi (${(err as Error).message}) -> tự chuyển sang provider dự phòng`
+    );
+    const { text: reply, usedModel } = await generateAiResponse({
       systemInstruction,
-      contents,
+      history: options.history,
+      userPrompt: options.message.trim(),
       jsonMode: false,
-      temperature: 0.4,
+      temperature: 0.45,
+      excludeProviders: new Set(['gemini']),
     });
-    finalModel = fallbackTurn.usedModel;
-    finalReply = fallbackTurn.text;
+    return {
+      reply: sanitizeUserFacingReply(reply),
+      model: usedModel,
+      lessonTitle: lessonTitles[0] || null,
+      lessonTitles,
+      toolExecutions: toolCtx.executions,
+      pendingActions: toolCtx.pendingActions,
+      effects: toolCtx.effects,
+    };
   }
 
   return {

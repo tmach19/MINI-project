@@ -1,7 +1,8 @@
 // Web Audio API Sound Effects & Multi-language TTS (MP3 CDN / Backend MP3 proxy + Web Speech fallback)
 import type { LanguageCode, TextItem } from '../types';
 
-const API_BASE = import.meta.env.VITE_API_BASE || '/api';
+const API_BASE = (import.meta.env.VITE_API_BASE || '/api').replace(/\/+$/, '');
+const EN_API_BASE = (import.meta.env.VITE_EN_API_BASE || '/api-en').replace(/\/+$/, '');
 
 export type TtsVoiceKey =
   | 'female'
@@ -332,29 +333,24 @@ export function stopChineseSpeech(): void {
   }
 }
 
-export function speakChinese(
-  text: string,
-  rate = 1,
-  onEnd?: () => void,
-  voice?: TtsVoiceKey
+function fetchAndPlayTts(
+  url: string,
+  rate: number,
+  onEnd: (() => void) | undefined,
+  onFallback: () => void
 ): void {
-  const clean = text.trim();
-  if (!clean) {
-    onEnd?.();
-    return;
-  }
-
   stopChineseSpeech();
   const seq = playSeq;
   const controller = new AbortController();
   currentAbort = controller;
 
-  const voiceQuery = voice ? `&voice=${encodeURIComponent(voice)}` : '';
-  const url = `${API_BASE}/tts?text=${encodeURIComponent(clean)}${voiceQuery}`;
-
   fetch(url, { signal: controller.signal })
     .then(async (res) => {
       if (!res.ok) throw new Error(`TTS HTTP ${res.status}`);
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('text/html')) {
+        throw new Error('TTS endpoint returned HTML');
+      }
       const blob = await res.blob();
       if (seq !== playSeq) return;
 
@@ -384,7 +380,7 @@ export function speakChinese(
         cleanup();
         if (seq === playSeq) {
           console.warn('[TTS] Audio element failed, falling back to speechSynthesis');
-          fallbackSpeechSynthesis(clean, rate, onEnd, voice);
+          onFallback();
         }
       };
 
@@ -393,8 +389,25 @@ export function speakChinese(
     .catch((err) => {
       if (seq !== playSeq || (err as Error).name === 'AbortError') return;
       console.warn('[TTS] /api/tts failed, falling back to speechSynthesis:', err);
-      fallbackSpeechSynthesis(clean, rate, onEnd, voice);
+      onFallback();
     });
+}
+
+export function speakChinese(
+  text: string,
+  rate = 1,
+  onEnd?: () => void,
+  voice?: TtsVoiceKey
+): void {
+  const clean = text.trim();
+  if (!clean) {
+    onEnd?.();
+    return;
+  }
+
+  const voiceQuery = voice ? `&voice=${encodeURIComponent(voice)}` : '';
+  const url = `${API_BASE}/tts?text=${encodeURIComponent(clean)}${voiceQuery}`;
+  fetchAndPlayTts(url, rate, onEnd, () => fallbackSpeechSynthesis(clean, rate, onEnd, voice));
 }
 
 function getEnglishVoices(accent: 'us' | 'uk' = 'us'): SpeechSynthesisVoice[] {
@@ -499,6 +512,26 @@ export function playAudioUrl(
   audio.play().catch(handleFail);
 }
 
+function speakEnglishViaEdgeTts(
+  text: string,
+  accent: 'us' | 'uk',
+  rate: number,
+  onEnd?: () => void,
+  voice?: TtsVoiceKey
+): void {
+  const clean = text.trim();
+  if (!clean) {
+    onEnd?.();
+    return;
+  }
+
+  const voiceQuery = voice ? `&voice=${encodeURIComponent(voice)}` : '';
+  const url = `${EN_API_BASE}/tts?text=${encodeURIComponent(clean)}&accent=${encodeURIComponent(accent)}${voiceQuery}`;
+  fetchAndPlayTts(url, rate, onEnd, () =>
+    fallbackEnglishSpeechSynthesis(clean, accent, rate, onEnd, voice)
+  );
+}
+
 export function speakEnglish(
   text: string,
   options?: {
@@ -523,14 +556,13 @@ export function speakEnglish(
 
   if (audioUrl) {
     playAudioUrl(audioUrl, rate, onEnd, () => {
-      if (clean) fallbackEnglishSpeechSynthesis(clean, accent, rate, onEnd, voice);
+      if (clean) speakEnglishViaEdgeTts(clean, accent, rate, onEnd, voice);
       else onEnd?.();
     });
     return;
   }
 
-  stopChineseSpeech();
-  fallbackEnglishSpeechSynthesis(clean, accent, rate, onEnd, voice);
+  speakEnglishViaEdgeTts(clean, accent, rate, onEnd, voice);
 }
 
 export function speakText(

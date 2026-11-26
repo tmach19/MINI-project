@@ -1,0 +1,101 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20261126_170501_seed_en_a2_lessons
+      author: chinese-study
+      comment: Nap lo trinh 45 bai hoc Tieng Anh CEFR A2 (1039 tu Word Atlas da dich Tieng Viet)
+      runOnChange: true
+      runInTransaction: false
+      changes:
+        - sqlFile:
+            path: ../sql/seed_en_a2_data.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+            stripComments: true
+            encoding: utf8
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: |-
+              UPDATE lessons
+              SET is_deleted = 1, deleted_at = NOW()
+              WHERE language_code = 'en' AND id LIKE 'en-a2-%' AND is_deleted = 0;
+  - changeSet:
+      id: 20261126_170502_seed_en_b1_lessons
+      author: chinese-study
+      comment: Nap lo trinh 63 bai hoc Tieng Anh CEFR B1 (1465 tu Word Atlas da dich Tieng Viet)
+      runOnChange: true
+      runInTransaction: false
+      changes:
+        - sqlFile:
+            path: ../sql/seed_en_b1_data.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+            stripComments: true
+            encoding: utf8
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: |-
+              UPDATE lessons
+              SET is_deleted = 1, deleted_at = NOW()
+              WHERE language_code = 'en' AND id LIKE 'en-b1-%' AND is_deleted = 0;
+  - changeSet:
+      id: 20261126_170503_seed_en_b2_lessons
+      author: chinese-study
+      comment: Nap lo trinh 87 bai hoc Tieng Anh CEFR B2 (2127 tu Word Atlas da dich Tieng Viet)
+      runOnChange: true
+      runInTransaction: false
+      changes:
+        - sqlFile:
+            path: ../sql/seed_en_b2_data.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+            stripComments: true
+            encoding: utf8
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: |-
+              UPDATE lessons
+              SET is_deleted = 1, deleted_at = NOW()
+              WHERE language_code = 'en' AND id LIKE 'en-b2-%' AND is_deleted = 0;
+  - changeSet:
+      id: 20261126_170504_seed_en_c1_lessons
+      author: chinese-study
+      comment: Nap lo trinh 66 bai hoc Tieng Anh CEFR C1 (1608 tu Word Atlas da dich Tieng Viet)
+      runOnChange: true
+      runInTransaction: false
+      changes:
+        - sqlFile:
+            path: ../sql/seed_en_c1_data.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+            stripComments: true
+            encoding: utf8
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: |-
+              UPDATE lessons
+              SET is_deleted = 1, deleted_at = NOW()
+              WHERE language_code = 'en' AND id LIKE 'en-c1-%' AND is_deleted = 0;
+  - changeSet:
+      id: 20261126_170505_seed_en_c2_lessons
+      author: chinese-study
+      comment: Nap lo trinh 15 bai hoc Tieng Anh CEFR C2 (274 tu Word Atlas da dich Tieng Viet)
+      runOnChange: true
+      runInTransaction: false
+      changes:
+        - sqlFile:
+            path: ../sql/seed_en_c2_data.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+            stripComments: true
+            encoding: utf8
+      rollback:
+        - sql:
+            dbms: postgresql
+            sql: |-
+              UPDATE lessons
+              SET is_deleted = 1, deleted_at = NOW()
+              WHERE language_code = 'en' AND id LIKE 'en-c2-%' AND is_deleted = 0;

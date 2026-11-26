@@ -112,6 +112,9 @@ export function getPosBadgeClass(pos: string): string {
     case 'n.':
       return 'bg-indigo-50 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 border-indigo-200/70 dark:border-indigo-700/60';
     case 'v.':
+    case 'phr. v.':
+    case 'modal v.':
+    case 'aux.':
       return 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border-emerald-200/70 dark:border-emerald-700/60';
     case 'adj.':
       return 'bg-purple-50 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 border-purple-200/70 dark:border-purple-700/60';
@@ -123,6 +126,111 @@ export function getPosBadgeClass(pos: string): string {
     default:
       return 'bg-stone-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-stone-200 dark:border-slate-700';
   }
+}
+
+const POS_VI_LABELS: Record<string, string> = {
+  'n.': 'Danh từ (n.)',
+  'v.': 'Động từ (v.)',
+  'adj.': 'Tính từ (adj.)',
+  'adv.': 'Trạng từ (adv.)',
+  'prep.': 'Giới từ (prep.)',
+  'conj.': 'Liên từ (conj.)',
+  'pron.': 'Đại từ (pron.)',
+  'det.': 'Từ hạn định (det.)',
+  'num.': 'Số từ (num.)',
+  'art.': 'Mạo từ (art.)',
+  'int.': 'Thán từ (interj.)',
+  'interj.': 'Thán từ (interj.)',
+  'aux.': 'Trợ động từ (aux.)',
+  'modal v.': 'Động từ khuyết thiếu',
+  'phr. v.': 'Cụm động từ (phr. v.)',
+  idiom: 'Thành ngữ (idiom)',
+};
+
+const VI_POS_TO_KEY: ReadonlyArray<[RegExp, string]> = [
+  [/^(?:cụm động từ|phrasal verb|phr\.?\s*v\.?)/i, 'phr. v.'],
+  [/^(?:động từ khuyết thiếu|modal\s*v\.?)/i, 'modal v.'],
+  [/^(?:trợ động từ|aux\.?)/i, 'aux.'],
+  [/^(?:thành ngữ|idiom)/i, 'idiom'],
+  [/^(?:danh từ|noun|n\.)/i, 'n.'],
+  [/^(?:động từ|verb|v\.)/i, 'v.'],
+  [/^(?:tính từ|adjective|adj\.)/i, 'adj.'],
+  [/^(?:trạng từ|phó từ|adverb|adv\.)/i, 'adv.'],
+  [/^(?:giới từ|preposition|prep\.)/i, 'prep.'],
+  [/^(?:liên từ|conjunction|conj\.)/i, 'conj.'],
+  [/^(?:đại từ|pronoun|pron\.)/i, 'pron.'],
+  [/^(?:từ hạn định|determiner|det\.)/i, 'det.'],
+  [/^(?:thán từ|interjection|interj\.|int\.)/i, 'interj.'],
+  [/^(?:mạo từ|article|art\.)/i, 'art.'],
+  [/^(?:số từ|number|num\.)/i, 'num.'],
+];
+
+export function formatEnglishPosViLabel(pos: string): string {
+  const key = pos.trim().toLowerCase();
+  return POS_VI_LABELS[key] || pos;
+}
+
+function detectSinglePosFromWordType(wordType?: string | null): string {
+  const raw = (wordType || '').trim();
+  if (!raw || /[,;/·]/.test(raw)) return '';
+  for (const [rx, key] of VI_POS_TO_KEY) {
+    if (rx.test(raw)) return key;
+  }
+  return '';
+}
+
+export function parseEnglishMeaningWithPos(
+  raw: string,
+  fallbackWordType?: string | null
+): { pos: string; posLabel: string; text: string } {
+  const trimmed = (raw || '').trim();
+  if (!trimmed) return { pos: '', posLabel: '', text: '' };
+
+  // 1. Dạng chuẩn ngắn: "adv. Ra khỏi...", "phr. v. Chạy hết...", "idiom: ..."
+  const shortMatch = trimmed.match(
+    /^\(?\s*(phr\.?\s*v\.?|modal\s*v\.?|idiom|(?:n|v|adj|adv|prep|conj|pron|num|det|int|interj|aux|art)\.)\s*\)?\s*[:\-–—]?\s*(.+)$/i
+  );
+  if (shortMatch) {
+    const rawKey = shortMatch[1].toLowerCase().replace(/\s+/g, ' ').trim();
+    const pos =
+      rawKey.startsWith('phr')
+        ? 'phr. v.'
+        : rawKey.startsWith('modal')
+          ? 'modal v.'
+          : rawKey === 'idiom'
+            ? 'idiom'
+            : rawKey.endsWith('.')
+              ? rawKey
+              : `${rawKey}.`;
+    return {
+      pos,
+      posLabel: formatEnglishPosViLabel(pos),
+      text: shortMatch[2].trim(),
+    };
+  }
+
+  // 2. Dạng tiếng Việt: "Trạng từ (adv.): Ra khỏi..." hoặc "Động từ: ..."
+  const viMatch = trimmed.match(
+    /^(cụm động từ|động từ khuyết thiếu|trợ động từ|thành ngữ|danh từ|động từ|tính từ|trạng từ|phó từ|giới từ|liên từ|đại từ|từ hạn định|thán từ|mạo từ|số từ)(?:\s*\([^)]*\))?\s*[:\-–—]\s*(.+)$/i
+  );
+  if (viMatch) {
+    for (const [rx, key] of VI_POS_TO_KEY) {
+      if (rx.test(viMatch[1])) {
+        return {
+          pos: key,
+          posLabel: formatEnglishPosViLabel(key),
+          text: viMatch[2].trim(),
+        };
+      }
+    }
+  }
+
+  const singleFallback = detectSinglePosFromWordType(fallbackWordType);
+  return {
+    pos: singleFallback,
+    posLabel: singleFallback ? formatEnglishPosViLabel(singleFallback) : '',
+    text: trimmed,
+  };
 }
 
 export function cleanEnglishSenseVi(text?: string | null): string {

@@ -66,11 +66,37 @@ export function hasUserPermission(user: UserProfile, requiredCodes: string[]): b
   return requiredCodes.some((code) => user.permissions.includes(code));
 }
 
+const AUTH_USER_CACHE_TTL_MS = 15_000;
+const MAX_AUTH_USER_CACHE_ITEMS = 500;
+const authUserCache = new Map<string, { user: UserProfile; expiresAt: number }>();
+
+export function invalidateAuthUserCache(userId?: string): void {
+  if (userId) authUserCache.delete(userId);
+  else authUserCache.clear();
+}
+
 export async function resolveCurrentUser(req: Request): Promise<UserProfile | null> {
   if (!req.user) return null;
   if (req.currentUser) return req.currentUser;
+
+  const now = Date.now();
+  const cached = authUserCache.get(req.user.userId);
+  if (cached && cached.expiresAt > now) {
+    req.currentUser = cached.user;
+    return cached.user;
+  }
+
   const user = await findUserById(req.user.userId);
-  if (user) req.currentUser = user;
+  if (user) {
+    if (authUserCache.size >= MAX_AUTH_USER_CACHE_ITEMS) {
+      const oldestKey = authUserCache.keys().next().value;
+      if (oldestKey) authUserCache.delete(oldestKey);
+    }
+    authUserCache.set(req.user.userId, { user, expiresAt: now + AUTH_USER_CACHE_TTL_MS });
+    req.currentUser = user;
+  } else {
+    authUserCache.delete(req.user.userId);
+  }
   return user;
 }
 

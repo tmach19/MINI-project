@@ -75,15 +75,20 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
       setDisplayNameError('Tên hiển thị tối đa 60 ký tự.');
       return;
     }
+    const prevUser = user;
     setSavingDisplayName(true);
     setDisplayNameError(null);
-    setDisplayNameSavedMsg(null);
+    setDisplayNameSavedMsg('Đã cập nhật tên hiển thị.');
+    // Optimistic UI: cập nhật tên hiển thị ngay lập tức
+    onUpdateUser?.({ ...user, displayName: clean });
+    setEditingDisplayName(false);
     try {
       const res = await api.updateProfile({ displayName: clean });
       onUpdateUser?.(res.user);
-      setEditingDisplayName(false);
-      setDisplayNameSavedMsg('Đã cập nhật tên hiển thị.');
     } catch (err) {
+      onUpdateUser?.(prevUser);
+      setEditingDisplayName(true);
+      setDisplayNameSavedMsg(null);
       setDisplayNameError(err instanceof Error ? err.message : 'Không cập nhật được tên hiển thị.');
     } finally {
       setSavingDisplayName(false);

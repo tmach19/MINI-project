@@ -1,6 +1,6 @@
 import { Router, type RequestHandler } from 'express';
 import bcrypt from 'bcryptjs';
-import { requireAuth, signToken } from '../middleware/auth.js';
+import { invalidateAuthUserCache, requireAuth, signToken } from '../middleware/auth.js';
 import {
   createUser,
   findUserByEmail,
@@ -154,6 +154,7 @@ const handleUpdateProfile: RequestHandler = async (req, res, next) => {
       res.status(404).json({ error: 'Không tìm thấy tài khoản.' });
       return;
     }
+    invalidateAuthUserCache(req.user!.userId);
     res.json({ user: updated });
   } catch (err) {
     next(err);

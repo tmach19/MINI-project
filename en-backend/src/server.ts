@@ -8,6 +8,7 @@ import adminRouter from './routes/admin.js';
 import aiRouter from './routes/ai.js';
 import lessonsRouter from './routes/lessons.js';
 import progressRouter from './routes/progress.js';
+import ttsRouter from './routes/tts.js';
 import { startRetentionScheduler } from './services/retentionService.js';
 
 const app = express();
@@ -44,6 +45,7 @@ app.use('/api/admin', adminRouter);
 app.use('/api/ai', aiRouter);
 app.use('/api', lessonsRouter);
 app.use('/api', progressRouter);
+app.use('/api', ttsRouter);
 
 app.use(
   (

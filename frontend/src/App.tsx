@@ -105,6 +105,8 @@ export default function App() {
   const [deletingLesson, setDeletingLesson] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const prevLangRef = useRef<LanguageCode>(initialRoute.lang);
+  const markRequestSeqRef = useRef<Record<string, number>>({});
+  const lessonCacheRef = useRef<Map<string, LessonDetail>>(new Map());
 
   useEffect(() => {
     const root = document.documentElement;
@@ -390,18 +392,39 @@ export default function App() {
   useEffect(() => {
     if (!currentLessonId) return;
     localStorage.setItem(langPack.lessonStorageKey, currentLessonId);
-    setLoadingLesson(true);
+    const cacheKey = `${activeLang}:${currentLessonId}:${user?.id || 'guest'}`;
+    const cached = lessonCacheRef.current.get(cacheKey);
+    let cancelled = false;
+
+    if (cached) {
+      setCurrentLesson(cached);
+      setLoadingLesson(false);
+    } else {
+      setLoadingLesson(true);
+    }
+
     api
       .getLesson(currentLessonId)
       .then((res) => {
+        if (cancelled) return;
+        lessonCacheRef.current.set(cacheKey, res.lesson);
         setCurrentLesson(res.lesson);
         setErrorMsg(null);
       })
       .catch((err) => {
-        setErrorMsg((err as Error).message);
+        if (cancelled) return;
+        if (!cached) {
+          setErrorMsg((err as Error).message);
+        }
       })
-      .finally(() => setLoadingLesson(false));
-  }, [currentLessonId, user?.id, langPack.lessonStorageKey]);
+      .finally(() => {
+        if (!cancelled) setLoadingLesson(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [activeLang, currentLessonId, user?.id, langPack.lessonStorageKey]);
 
   const groupedLessons = useMemo(() => {
     const groups: Record<string, LessonSummary[]> = {};
@@ -430,26 +453,62 @@ export default function App() {
     refreshLessons();
   };
 
-  const handleToggleMarked = async (vocabId: string) => {
+  const handleToggleMarked = async (vocabId: string): Promise<boolean> => {
     if (!user) {
       setShowAuthModal(true);
-      return;
+      return false;
     }
     if (!canBookmarkVocab) {
       setErrorMsg('Tài khoản của bạn hiện không có quyền đánh dấu từ vựng.');
-      return;
+      return false;
     }
 
-    const isMarked = Boolean(markedMap[vocabId]);
-    const nextMarked = !isMarked;
+    const prevRecord = markedMap[vocabId];
+    const nextMarked = !prevRecord;
+    const seq = (markRequestSeqRef.current[vocabId] || 0) + 1;
+    markRequestSeqRef.current[vocabId] = seq;
 
-    const res = await api.toggleMarkVocab({ vocabId, marked: nextMarked });
+    // Optimistic UI: cập nhật màu cờ tức thì (0ms)
     setMarkedMap((prev) => {
       const copy = { ...prev };
-      if (res.marked && res.record) copy[vocabId] = res.record;
-      else delete copy[vocabId];
+      if (nextMarked) {
+        copy[vocabId] = {
+          vocabId,
+          note: null,
+          markedAt: new Date().toISOString(),
+        };
+      } else {
+        delete copy[vocabId];
+      }
       return copy;
     });
+
+    try {
+      const res = await api.toggleMarkVocab({ vocabId, marked: nextMarked });
+      if (markRequestSeqRef.current[vocabId] === seq) {
+        setMarkedMap((prev) => {
+          const copy = { ...prev };
+          if (res.marked && res.record) copy[vocabId] = res.record;
+          else delete copy[vocabId];
+          return copy;
+        });
+      }
+      return true;
+    } catch (err) {
+      // Rollback nếu lưu DB thất bại
+      if (markRequestSeqRef.current[vocabId] === seq) {
+        setMarkedMap((prev) => {
+          const copy = { ...prev };
+          if (prevRecord) copy[vocabId] = prevRecord;
+          else delete copy[vocabId];
+          return copy;
+        });
+      }
+      setErrorMsg(
+        err instanceof Error ? err.message : 'Không thể cập nhật trạng thái đánh dấu từ.'
+      );
+      return false;
+    }
   };
 
   const handleSaveTestAttempt = async (payload: {
@@ -485,9 +544,17 @@ export default function App() {
   }) => {
     if (lessonModalMode === 'edit' && currentLesson) {
       const res = await api.updateLesson(currentLesson.id, payload);
+      lessonCacheRef.current.set(
+        `${activeLang}:${res.lesson.id}:${user?.id || 'guest'}`,
+        res.lesson
+      );
       setCurrentLesson(res.lesson);
     } else {
       const res = await api.createLesson({ ...payload, languageCode: activeLang });
+      lessonCacheRef.current.set(
+        `${activeLang}:${res.lesson.id}:${user?.id || 'guest'}`,
+        res.lesson
+      );
       setCurrentLessonId(res.lesson.id);
       setCurrentLesson(res.lesson);
     }
@@ -523,7 +590,9 @@ export default function App() {
     setDeletingLesson(true);
     setDeleteError(null);
     try {
-      await api.deleteLesson(currentLesson.id);
+      const deletedId = currentLesson.id;
+      await api.deleteLesson(deletedId);
+      lessonCacheRef.current.delete(`${activeLang}:${deletedId}:${user?.id || 'guest'}`);
       setShowDeleteConfirm(false);
       await refreshLessons();
     } catch (err) {

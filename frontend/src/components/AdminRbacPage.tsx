@@ -126,9 +126,18 @@ export const AdminRbacPage: React.FC<AdminRbacPageProps> = ({
 
   const handleRoleChange = async (targetUser: AdminUserRbacRow, nextRole: 'admin' | 'user') => {
     if (targetUser.role === nextRole) return;
+    const prevUsers = users;
     setError(null);
     setNotice(null);
     setUpdatingRoleUserId(targetUser.id);
+
+    // Optimistic UI: chuyển trạng thái vai trò ngay lập tức
+    setUsers((prev) =>
+      prev.map((u) =>
+        u.id === targetUser.id ? { ...u, role: nextRole, isSuperAdmin: nextRole === 'admin' } : u
+      )
+    );
+
     try {
       const res = await api.updateAdminUserRole(targetUser.id, nextRole);
       setUsers((prev) => prev.map((u) => (u.id === targetUser.id ? res.user : u)));
@@ -141,6 +150,7 @@ export const AdminRbacPage: React.FC<AdminRbacPageProps> = ({
         await onRefreshCurrentUser();
       }
     } catch (err) {
+      setUsers(prevUsers);
       setError((err as Error).message);
     } finally {
       setUpdatingRoleUserId(null);
