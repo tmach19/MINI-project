@@ -3,6 +3,8 @@ import {
   Award,
   BarChart3,
   Bookmark,
+  Check,
+  ChevronDown,
   Edit3,
   Gamepad2,
   GitBranch,
@@ -104,6 +106,10 @@ export default function App() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deletingLesson, setDeletingLesson] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [lessonPickerOpen, setLessonPickerOpen] = useState(false);
+  const [lessonPickerSearch, setLessonPickerSearch] = useState('');
+  const [expandedPickerLevels, setExpandedPickerLevels] = useState<Record<string, boolean>>({});
+  const lessonPickerRef = useRef<HTMLDivElement>(null);
   const prevLangRef = useRef<LanguageCode>(initialRoute.lang);
   const markRequestSeqRef = useRef<Record<string, number>>({});
   const lessonCacheRef = useRef<Map<string, LessonDetail>>(new Map());
@@ -463,19 +469,73 @@ export default function App() {
     return enLevelGroups[0]?.level || '';
   }, [isEnglish, lessons, currentLessonId, enLevelGroups]);
 
+  const activeLessonSummary = useMemo(
+    () => lessons.find((l) => l.id === currentLessonId) || lessons[0] || null,
+    [lessons, currentLessonId]
+  );
+
+  const filteredEnLevelGroups = useMemo(() => {
+    if (!isEnglish) return [];
+    const q = lessonPickerSearch.trim().toLowerCase();
+    if (!q) return enLevelGroups;
+    return enLevelGroups
+      .map((g) => ({
+        level: g.level,
+        items: g.items.filter((l) =>
+          [l.title, l.hskLevel, l.unit]
+            .filter(Boolean)
+            .some((v) => v!.toLowerCase().includes(q))
+        ),
+      }))
+      .filter((g) => g.items.length > 0);
+  }, [isEnglish, enLevelGroups, lessonPickerSearch]);
+
+  useEffect(() => {
+    if (!lessonPickerOpen) return;
+    const onMouseDown = (e: MouseEvent) => {
+      if (lessonPickerRef.current && !lessonPickerRef.current.contains(e.target as Node)) {
+        setLessonPickerOpen(false);
+      }
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLessonPickerOpen(false);
+    };
+    window.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [lessonPickerOpen]);
+
+  const getCefrPillClass = (lvl: string): string => {
+    switch (lvl) {
+      case 'A1':
+        return 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800';
+      case 'A2':
+        return 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
+      case 'B1':
+        return 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800';
+      case 'B2':
+        return 'bg-violet-100 dark:bg-violet-900/50 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-800';
+      case 'C1':
+        return 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800';
+      case 'C2':
+        return 'bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800';
+      default:
+        return 'bg-stone-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-stone-200 dark:border-slate-700';
+    }
+  };
+
   const groupedLessons = useMemo(() => {
-    const source =
-      isEnglish && enLevelGroups.length > 1
-        ? enLevelGroups.find((g) => g.level === activeEnLevel)?.items || lessons
-        : lessons;
     const groups: Record<string, LessonSummary[]> = {};
-    source.forEach((l) => {
+    lessons.forEach((l) => {
       const unit = l.unit || 'Chung';
       if (!groups[unit]) groups[unit] = [];
       groups[unit].push(l);
     });
     return groups;
-  }, [lessons, isEnglish, enLevelGroups, activeEnLevel]);
+  }, [lessons]);
 
   const handleAuthSuccess = async (token: string, loggedUser: UserProfile) => {
     setStoredToken(token);
@@ -778,45 +838,172 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-end min-w-0 flex-1">
-            {isEnglish && enLevelGroups.length > 1 && (
+            {isEnglish ? (
+              <div ref={lessonPickerRef} className="relative min-w-0 flex-1 sm:flex-initial max-w-full sm:max-w-[280px] md:max-w-sm">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setLessonPickerOpen((open) => {
+                      const next = !open;
+                      if (next) {
+                        setLessonPickerSearch('');
+                        if (activeEnLevel) setExpandedPickerLevels({ [activeEnLevel]: true });
+                      }
+                      return next;
+                    });
+                  }}
+                  className="w-full px-2.5 sm:px-3 py-1.5 bg-stone-100 dark:bg-slate-800 hover:bg-stone-200/80 dark:hover:bg-slate-700/80 border border-stone-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-gray-800 dark:text-slate-100 flex items-center justify-between gap-2 transition"
+                  title="Chọn bài học theo cấp độ CEFR A1–C2"
+                >
+                  <span className="flex items-center gap-1.5 min-w-0">
+                    {activeEnLevel && (
+                      <span
+                        className={`px-1.5 py-0.5 rounded-md border text-[10px] font-extrabold shrink-0 ${getCefrPillClass(activeEnLevel)}`}
+                      >
+                        {activeEnLevel}
+                      </span>
+                    )}
+                    <span className="truncate">
+                      {activeLessonSummary
+                        ? activeLessonSummary.title.replace(/\s*-\s*CEFR\s+[A-C][12]\s*$/i, '')
+                        : 'Chọn bài học'}
+                    </span>
+                  </span>
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 text-slate-400 shrink-0 transition-transform ${
+                      lessonPickerOpen ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+
+                {lessonPickerOpen && (
+                  <div className="absolute left-0 sm:left-auto sm:right-0 mt-2 w-[310px] sm:w-[370px] max-w-[92vw] bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-700 rounded-2xl shadow-2xl z-50 overflow-hidden flex flex-col max-h-[70vh]">
+                    <div className="p-2.5 border-b border-stone-100 dark:border-slate-800">
+                      <div className="relative">
+                        <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                        <input
+                          type="text"
+                          autoFocus
+                          value={lessonPickerSearch}
+                          onChange={(e) => setLessonPickerSearch(e.target.value)}
+                          placeholder="Tìm nhanh bài, chủ đề hoặc A1–C2..."
+                          className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-stone-50 dark:bg-slate-800 border border-stone-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="overflow-y-auto p-2 space-y-1.5">
+                      {filteredEnLevelGroups.length === 0 ? (
+                        <div className="py-6 text-center text-xs text-slate-400">
+                          Không tìm thấy bài học phù hợp.
+                        </div>
+                      ) : (
+                        filteredEnLevelGroups.map((group) => {
+                          const isSearching = Boolean(lessonPickerSearch.trim());
+                          const isOpen = isSearching || Boolean(expandedPickerLevels[group.level]);
+                          const hasCurrent = group.level === activeEnLevel;
+                          return (
+                            <div
+                              key={group.level}
+                              className="rounded-xl border border-stone-200/70 dark:border-slate-800 bg-stone-50/50 dark:bg-slate-800/30 overflow-hidden"
+                            >
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setExpandedPickerLevels((prev) => ({
+                                    ...prev,
+                                    [group.level]: !prev[group.level],
+                                  }))
+                                }
+                                className="w-full px-3 py-2 flex items-center justify-between gap-2 hover:bg-stone-100/80 dark:hover:bg-slate-800/70 transition text-left"
+                              >
+                                <div className="flex items-center gap-2 min-w-0">
+                                  <span
+                                    className={`px-2 py-0.5 rounded-md border text-[11px] font-extrabold ${getCefrPillClass(group.level)}`}
+                                  >
+                                    {group.level}
+                                  </span>
+                                  <span className="text-xs font-bold text-slate-800 dark:text-slate-100 tabular-nums">
+                                    {group.items.length} bài
+                                  </span>
+                                  {hasCurrent && (
+                                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
+                                  )}
+                                </div>
+                                <ChevronDown
+                                  className={`w-3.5 h-3.5 text-slate-400 shrink-0 transition-transform ${
+                                    isOpen ? 'rotate-180' : '-rotate-90'
+                                  }`}
+                                />
+                              </button>
+
+                              {isOpen && (
+                                <div className="px-1.5 pb-1.5 pt-1 space-y-0.5 border-t border-stone-200/60 dark:border-slate-800">
+                                  {group.items.map((l) => {
+                                    const isSelected = l.id === currentLessonId;
+                                    const cleanTitle = l.title.replace(
+                                      /\s*-\s*CEFR\s+[A-C][12]\s*$/i,
+                                      ''
+                                    );
+                                    return (
+                                      <button
+                                        key={l.id}
+                                        type="button"
+                                        onClick={() => {
+                                          setCurrentLessonId(l.id);
+                                          setLessonPickerOpen(false);
+                                          navigateView('study');
+                                        }}
+                                        className={`w-full px-2.5 py-1.5 rounded-lg text-left text-xs flex items-center justify-between gap-2 transition ${
+                                          isSelected
+                                            ? 'bg-indigo-600 text-white font-bold'
+                                            : 'text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-800 font-medium'
+                                        }`}
+                                      >
+                                        <span className="truncate">{cleanTitle}</span>
+                                        <span
+                                          className={`text-[10px] shrink-0 tabular-nums inline-flex items-center gap-1 ${
+                                            isSelected
+                                              ? 'text-indigo-100'
+                                              : 'text-slate-400 dark:text-slate-500'
+                                          }`}
+                                        >
+                                          {l.vocabCount} từ
+                                          {isSelected && <Check className="w-3 h-3" />}
+                                        </span>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
               <select
-                value={activeEnLevel}
+                value={currentLessonId}
                 onChange={(e) => {
-                  const chosen = enLevelGroups.find((g) => g.level === e.target.value);
-                  if (chosen && chosen.items[0]) {
-                    setCurrentLessonId(chosen.items[0].id);
-                    navigateView('study');
-                  }
+                  setCurrentLessonId(e.target.value);
+                  navigateView('study');
                 }}
-                aria-label="Chọn cấp độ CEFR"
-                className="pl-2.5 pr-6 py-2 bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800/80 rounded-xl text-xs font-extrabold text-indigo-700 dark:text-indigo-300 shrink-0"
+                className="pl-2.5 sm:pl-3 pr-6 sm:pr-7 py-2 bg-stone-100 dark:bg-slate-800 border border-stone-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-gray-800 dark:text-slate-100 min-w-0 flex-1 sm:flex-initial max-w-full sm:max-w-[230px] md:max-w-xs truncate"
               >
-                {enLevelGroups.map((g) => (
-                  <option key={g.level} value={g.level}>
-                    {g.level} ({g.items.length})
-                  </option>
+                {Object.entries(groupedLessons).map(([unit, items]) => (
+                  <optgroup key={unit} label={unit}>
+                    {items.map((l) => (
+                      <option key={l.id} value={l.id}>
+                        {l.title} ({l.vocabCount} từ)
+                      </option>
+                    ))}
+                  </optgroup>
                 ))}
               </select>
             )}
-            <select
-              value={currentLessonId}
-              onChange={(e) => {
-                setCurrentLessonId(e.target.value);
-                navigateView('study');
-              }}
-              className="pl-2.5 sm:pl-3 pr-6 sm:pr-7 py-2 bg-stone-100 dark:bg-slate-800 border border-stone-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-gray-800 dark:text-slate-100 min-w-0 flex-1 sm:flex-initial max-w-full sm:max-w-[230px] md:max-w-xs truncate"
-            >
-              {Object.entries(groupedLessons).map(([unit, items]) => (
-                <optgroup key={unit} label={unit}>
-                  {items.map((l) => (
-                    <option key={l.id} value={l.id}>
-                      {isEnglish ? l.title.replace(/\s*-\s*CEFR\s+[A-C][12]\s*$/i, '') : l.title} (
-                      {l.vocabCount} từ)
-                    </option>
-                  ))}
-                </optgroup>
-              ))}
-            </select>
 
             <button
               onClick={() => setShowSearchModal(true)}

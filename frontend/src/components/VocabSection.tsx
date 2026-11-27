@@ -76,6 +76,7 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
   const [selectedVocabId, setSelectedVocabId] = useState<string | null>(null);
   const [failedThumbIds, setFailedThumbIds] = useState<Record<string, boolean>>({});
   const [cardImgError, setCardImgError] = useState(false);
+  const [cardImgLoaded, setCardImgLoaded] = useState(false);
   const [showCols, setShowCols] = useState({
     pinyin: true,
     hvd: true,
@@ -162,30 +163,35 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
 
   useEffect(() => {
     setCardImgError(false);
+    setCardImgLoaded(false);
   }, [currentCard?.id]);
 
-  // Preload ưu tiên ảnh của 4 thẻ kế tiếp & thẻ trước đó + ảnh full của thẻ hiện tại (cho modal Xem chi tiết)
+  // Ưu tiên 100% băng thông cho ảnh thẻ đang xem (t=0ms), sau đó mới preload thẻ kề bên và ảnh full
   useEffect(() => {
     if (!isEnglish || flashcardList.length === 0) return;
-    const offsets = [0, 1, 2, 3, 4, -1];
-    for (const offset of offsets) {
-      const idx = (safeIndex + offset + flashcardList.length) % flashcardList.length;
-      const item = flashcardList[idx];
-      if (item) preloadImage(getEnImageUrl(item.meta, 'thumb'));
-    }
-    if (currentCard) {
-      preloadImage(getEnImageUrl(currentCard.meta, 'full'));
-    }
-  }, [isEnglish, flashcardList, safeIndex, currentCard]);
+    const delayMs = cardImgLoaded ? 0 : 180;
+    const timer = window.setTimeout(() => {
+      const offsets = [1, 2, -1, 3];
+      for (const offset of offsets) {
+        const idx = (safeIndex + offset + flashcardList.length) % flashcardList.length;
+        const item = flashcardList[idx];
+        if (item) preloadImage(getEnImageUrl(item.meta, 'thumb'));
+      }
+      if (currentCard) {
+        preloadImage(getEnImageUrl(currentCard.meta, 'full'));
+      }
+    }, delayMs);
+    return () => window.clearTimeout(timer);
+  }, [isEnglish, flashcardList, safeIndex, currentCard, cardImgLoaded]);
 
-  // Khi vào bài mới, tải ngầm nhẹ toàn bộ ảnh thumb của bài (~25 ảnh × 10KB ≈ 250KB) khi trình duyệt rảnh
+  // Trì hoãn preload toàn bộ ảnh còn lại trong bài sau 450ms (tự huỷ nếu người dùng đổi bài nhanh -> tiết kiệm egress)
   useEffect(() => {
     if (!isEnglish || baseVocab.length === 0) return;
     const timer = window.setTimeout(() => {
       for (const item of baseVocab) {
         preloadImage(getEnImageUrl(item.meta, 'thumb'));
       }
-    }, 180);
+    }, 450);
     return () => window.clearTimeout(timer);
   }, [isEnglish, baseVocab]);
 
@@ -417,15 +423,25 @@ export const VocabSection: React.FC<VocabSectionProps> = ({
 
                   <div className="my-auto flex flex-col items-center py-2 sm:py-4 px-2 gap-2.5">
                     {isEnglish && getEnImageUrl(currentCard.meta, 'thumb') && !cardImgError && (
-                      <img
-                        key={currentCard.id}
-                        src={getEnImageUrl(currentCard.meta, 'thumb')!}
-                        alt={currentCard.hanzi}
-                        loading="eager"
-                        decoding="async"
-                        onError={() => setCardImgError(true)}
-                        className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border border-stone-200 dark:border-slate-700 shadow-sm bg-stone-50 dark:bg-slate-800"
-                      />
+                      <div
+                        className={`w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-stone-200 dark:border-slate-700 shadow-sm bg-stone-100 dark:bg-slate-800 ${
+                          cardImgLoaded ? '' : 'animate-pulse'
+                        }`}
+                      >
+                        <img
+                          key={currentCard.id}
+                          src={getEnImageUrl(currentCard.meta, 'thumb')!}
+                          alt={currentCard.hanzi}
+                          loading="eager"
+                          decoding="async"
+                          fetchPriority="high"
+                          onLoad={() => setCardImgLoaded(true)}
+                          onError={() => setCardImgError(true)}
+                          className={`w-full h-full object-cover transition-opacity duration-200 ${
+                            cardImgLoaded ? 'opacity-100' : 'opacity-0'
+                          }`}
+                        />
+                      </div>
                     )}
                     <div
                       className={
